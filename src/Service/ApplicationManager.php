@@ -4,8 +4,8 @@
 namespace App\Service;
 
 use App\Entity\Application;
-use App\Model\ApplicationStatus;
-use App\Type\InterviewStatusType;
+use App\Entity\ApplicationStatus;
+use App\Entity\InterviewStatusType;
 
 class ApplicationManager
 {

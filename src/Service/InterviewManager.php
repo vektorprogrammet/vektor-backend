@@ -10,7 +10,7 @@ use App\Mailer\Mailer;
 use App\Role\Roles;
 use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;
-use App\Type\InterviewStatusType;
+use App\Entity\InterviewStatusType;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;

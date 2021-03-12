@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Type\InterviewStatusType;
+use App\Entity\InterviewStatusType;
 
 class InterviewDistribution
 {

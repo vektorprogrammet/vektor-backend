@@ -6,7 +6,7 @@ use App\Entity\AdmissionPeriod;
 use App\Entity\Interview;
 use App\Entity\Semester;
 use App\Entity\User;
-use App\Type\InterviewStatusType;
+use App\Entity\InterviewStatusType;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 

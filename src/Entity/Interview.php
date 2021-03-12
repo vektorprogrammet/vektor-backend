@@ -2,13 +2,23 @@
 
 namespace App\Entity;
 
-use App\Type\InterviewStatusType;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Symfony\Component\Validator\Constraints as Assert;
+
+# Static constants:
+abstract class InterviewStatusType
+{
+    const PENDING = 0;
+    const ACCEPTED = 1;
+    const REQUEST_NEW_TIME = 2;
+    const CANCELLED = 3;
+    const NO_CONTACT = 4;
+}
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InterviewRepository")

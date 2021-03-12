@@ -50,6 +50,6 @@ class FieldTypeHelpExtension extends AbstractTypeExtension
      */
     public static function getExtendedTypes(): iterable
     {
-        // TODO: Implement getExtendedTypes() method.
+        return [FormType::class];
     }
 }
