@@ -1,0 +1,50 @@
+{
+  "name": "vektorprogrammet",
+  "version": "1.0.0",
+  "description": "This is the source code for vektorprogrammets new homepage.",
+  "main": " ",
+  "dependencies": {
+    "@coreui/coreui": "^3.4.0",
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "ckeditor": "^4.12.1",
+    "cropperjs": "^1.5.11",
+    "dropzone": "^5.8.1",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@popperjs/core": "^2.9.1",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "concurrently": "^6.0.0",
+    "cssnano": "^4.1.10",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-changed": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.1.0",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^5.0.0"
+  },
+  "scripts": {
+    "start": "concurrently --kill-others \"php -S localhost:8000 -t public\" \"npm run watch\"",
+    "watch": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vektorprogrammet/webpage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vektorprogrammet/webpage/issues"
+  },
+  "homepage": "https://github.com/vektorprogrammet/webpage#readme"
+}
