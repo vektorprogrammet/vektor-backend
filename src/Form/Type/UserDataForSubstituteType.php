@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\Repository\FieldOfStudyRepository;
+use App\Entity\Repository\FieldOfStudyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,7 +32,7 @@ class UserDataForSubstituteType extends AbstractType
             ))
             ->add('fieldOfStudy', EntityType::class, array(
                 'label' => 'Linje',
-                'class' => 'AppBundle:FieldOfStudy',
+                'class' => 'App:FieldOfStudy',
 
                 'query_builder' => function (FieldOfStudyRepository $er) {
                     return $er->createQueryBuilder('f')
@@ -47,7 +47,7 @@ class UserDataForSubstituteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\User',
+            'data_class' => 'App\Entity\User',
             'department' => null,
         ));
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -29,7 +29,7 @@ class TeamInterestType extends AbstractType
             ))
             ->add('potentialTeams', EntityType::class, array(
                 'label' => 'Hvilke team er du interessert i?',
-                'class' => 'AppBundle:Team',
+                'class' => 'App:Team',
                 'query_builder' => function (EntityRepository $entityRepository) use ($department) {
                     return $entityRepository->createQueryBuilder('team')
                         ->select('team')
@@ -49,7 +49,7 @@ class TeamInterestType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\TeamInterest',
+            'data_class' => 'App\Entity\TeamInterest',
             'department' => null,
         ));
     }
@@ -59,6 +59,6 @@ class TeamInterestType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_teaminterest';
+        return 'App_teaminterest';
     }
 }

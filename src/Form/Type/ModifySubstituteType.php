@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,7 +16,7 @@ class ModifySubstituteType extends AbstractType
         $options['label'] = false;
         $builder->add('days', DaysType::class, array(
             'label' => 'Dager som passer',
-            'data_class' => 'AppBundle\Entity\Application',
+            'data_class' => 'App\Entity\Application',
         ));
         $builder->add('user', UserDataForSubstituteType::class, array(
             'department' => $options['department'],
@@ -46,7 +46,7 @@ class ModifySubstituteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Application',
+            'data_class' => 'App\Entity\Application',
             'department' => null,
         ));
     }

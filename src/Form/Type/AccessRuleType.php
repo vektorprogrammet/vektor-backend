@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\AccessRule;
-use AppBundle\Entity\Role;
-use AppBundle\Entity\Team;
-use AppBundle\Entity\User;
+use App\Entity\AccessRule;
+use App\Entity\Role;
+use App\Entity\Team;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

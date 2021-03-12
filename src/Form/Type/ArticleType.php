@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -30,7 +30,7 @@ class ArticleType extends AbstractType
             ))
             ->add('departments', EntityType::class, array(
                 'label' => 'Regioner',
-                'class' => 'AppBundle:Department',
+                'class' => 'App:Department',
                 'multiple' => true,
                 'expanded' => true,
             ))
@@ -50,7 +50,7 @@ class ArticleType extends AbstractType
     {
         $resolver->setDefaults([
             'allow_extra_fields' => true,
-            'data_class' => 'AppBundle\Entity\Article'
+            'data_class' => 'App\Entity\Article'
         ]);
     }
 

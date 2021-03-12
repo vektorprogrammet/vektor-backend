@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,7 +13,7 @@ class CreateInterviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('interviewer', EntityType::class, array(
-            'class' => 'AppBundle:User',
+            'class' => 'App:User',
             'query_builder' => function (EntityRepository $er) use ($options) {
                 return $er->createQueryBuilder('u')
                     ->select('u')
@@ -26,7 +26,7 @@ class CreateInterviewType extends AbstractType
         ));
 
         $builder->add('interviewSchema', EntityType::class, array(
-            'class' => 'AppBundle:InterviewSchema',
+            'class' => 'App:InterviewSchema',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('i')
                     ->select('i')
@@ -38,7 +38,7 @@ class CreateInterviewType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Interview',
+            'data_class' => 'App\Entity\Interview',
             'roles' => [],
         ));
     }

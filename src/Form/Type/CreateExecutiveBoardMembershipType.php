@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\Repository\SemesterRepository;
-use AppBundle\Entity\Repository\UserRepository;
+use App\Entity\Repository\SemesterRepository;
+use App\Entity\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +21,7 @@ class CreateExecutiveBoardMembershipType extends AbstractType
         $builder
             ->add('user', EntityType::class, array(
                 'label' => 'Bruker',
-                'class' => 'AppBundle:User',
+                'class' => 'App:User',
                 'query_builder' => function (UserRepository $ur) {
                     return $ur->createQueryBuilder('u')
                         ->Join('u.fieldOfStudy', 'fos')
@@ -39,14 +39,14 @@ class CreateExecutiveBoardMembershipType extends AbstractType
             ))
             ->add('startSemester', EntityType::class, array(
                 'label' => 'Start semester',
-                'class' => 'AppBundle:Semester',
+                'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
             ))
             ->add('endSemester', EntityType::class, array(
                 'label' => 'Slutt semester (Valgfritt)',
-                'class' => 'AppBundle:Semester',
+                'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
@@ -57,7 +57,7 @@ class CreateExecutiveBoardMembershipType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\ExecutiveBoardMembership',
+            'data_class' => 'App\Entity\ExecutiveBoardMembership',
             'departmentId' => null
         ));
     }

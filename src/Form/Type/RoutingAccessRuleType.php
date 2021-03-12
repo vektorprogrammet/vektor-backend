@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\AccessRule;
+use App\Entity\AccessRule;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

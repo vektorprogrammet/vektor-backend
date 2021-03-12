@@ -13,7 +13,7 @@ var path = {
     dist: 'public/',
     src: 'assets/',
     /*scheduling: {
-        src: 'src/AppBundle/AssistantScheduling/Webapp'
+        src: 'src/App/AssistantScheduling/Webapp'
     }*/
 };
 

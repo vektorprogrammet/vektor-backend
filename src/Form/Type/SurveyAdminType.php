@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\Repository\DepartmentRepository;
+use App\Entity\Repository\DepartmentRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -12,7 +12,7 @@ class SurveyAdminType extends SurveyType
     {
         $builder->add('department', EntityType::class, array(
         'label' => 'Region',
-        'class' => 'AppBundle:Department',
+        'class' => 'App:Department',
         'placeholder' => 'Alle regioner',
         'empty_data' => null,
         'query_builder' => function (DepartmentRepository $er) {

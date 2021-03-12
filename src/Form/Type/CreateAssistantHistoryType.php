@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\Repository\SemesterRepository;
+use App\Entity\Repository\SemesterRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,7 +21,7 @@ class CreateAssistantHistoryType extends AbstractType
         $builder
             ->add('Semester', EntityType::class, array(
                 'label' => 'Semester',
-                'class' => 'AppBundle:Semester',
+                'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
@@ -41,7 +41,7 @@ class CreateAssistantHistoryType extends AbstractType
             ))
             ->add('School', EntityType::class, array(
                 'label' => 'Skole',
-                'class' => 'AppBundle:School',
+                'class' => 'App:School',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                         ->orderBy('s.name', 'ASC')
@@ -78,7 +78,7 @@ class CreateAssistantHistoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\AssistantHistory',
+            'data_class' => 'App\Entity\AssistantHistory',
             'department' => null,
         ));
     }

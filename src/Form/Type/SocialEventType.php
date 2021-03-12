@@ -67,7 +67,7 @@ class SocialEventType extends AbstractType
 
             ->add('department', EntityType::class, array(
                 'label' => 'Hvilken region skal arrangementet gjelde for?',
-                'class' => 'AppBundle:Department',
+                'class' => 'App:Department',
                 'data' => $this->department,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('d')
@@ -77,7 +77,7 @@ class SocialEventType extends AbstractType
             ))
             ->add('semester', EntityType::class, array(
                 'label' => 'Hvilket semester skal arrangementet gjelde for?',
-                'class' => 'AppBundle:Semester',
+                'class' => 'App:Semester',
                 'data' => $this->semester,
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
@@ -86,7 +86,7 @@ class SocialEventType extends AbstractType
             ))
             ->add('role', EntityType::class, array(
                 'label' => 'Hvilke type brukere kan melde seg på arrangementet?',
-                'class' => 'AppBundle:Role',
+                'class' => 'App:Role',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('r')
                         ->select('r')

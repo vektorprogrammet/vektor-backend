@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\User;
-use AppBundle\Entity\UserGroupCollection;
-use AppBundle\Entity\Department;
-use AppBundle\Entity\Semester;
-use AppBundle\Entity\Team;
+use App\Entity\User;
+use App\Entity\UserGroupCollection;
+use App\Entity\Department;
+use App\Entity\Semester;
+use App\Entity\Team;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

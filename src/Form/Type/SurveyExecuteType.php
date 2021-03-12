@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\Department;
+use App\Entity\Department;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +21,7 @@ class SurveyExecuteType extends AbstractType
         $builder->add('school', EntityType::class, array(
             'label' => 'School',
             'placeholder' => 'Velg Skole',
-            'class' => 'AppBundle:School',
+            'class' => 'App:School',
             'query_builder' => function (EntityRepository $er) use ($semester, $department) {
                 return $er
                     ->createQueryBuilder('school')
@@ -49,7 +49,7 @@ class SurveyExecuteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\SurveyTaken',
+            'data_class' => 'App\Entity\SurveyTaken',
         ));
     }
 

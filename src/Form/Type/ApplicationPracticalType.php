@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,7 +15,7 @@ class ApplicationPracticalType extends AbstractType
     {
         $builder->add('days', DaysType::class, array(
             'label' => 'Er det noen dager som IKKE passer for deg?',
-            'data_class' => 'AppBundle\Entity\Application',
+            'data_class' => 'App\Entity\Application',
         ));
 
         $builder->add('yearOfStudy', ChoiceType::class, [
@@ -74,7 +74,7 @@ class ApplicationPracticalType extends AbstractType
 
         $builder->add('potentialTeams', EntityType::class, array(
             'label' => 'Hvilke team er du eventuelt interessert i?',
-            'class' => 'AppBundle:Team',
+            'class' => 'App:Team',
             'query_builder' => function (EntityRepository $entityRepository) {
                 return $entityRepository->createQueryBuilder('c');
             },
@@ -87,7 +87,7 @@ class ApplicationPracticalType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Application',
+            'data_class' => 'App\Entity\Application',
             'inherit_data' => true,
             'teams' => null,
         ));

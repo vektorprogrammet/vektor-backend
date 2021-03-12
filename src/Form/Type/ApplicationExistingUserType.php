@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,7 +12,7 @@ class ApplicationExistingUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('applicationPractical', ApplicationPracticalType::class, array(
-            'data_class' => 'AppBundle\Entity\Application',
+            'data_class' => 'App\Entity\Application',
             'teams' => $options['teams'],
         ));
 
@@ -25,7 +25,7 @@ class ApplicationExistingUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Application',
+            'data_class' => 'App\Entity\Application',
             'teams' => null,
         ));
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\Repository\PositionRepository;
-use AppBundle\Entity\Repository\SemesterRepository;
-use AppBundle\Entity\Repository\UserRepository;
+use App\Entity\Repository\PositionRepository;
+use App\Entity\Repository\SemesterRepository;
+use App\Entity\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,7 +23,7 @@ class CreateTeamMembershipType extends AbstractType
         $builder
             ->add('user', EntityType::class, array(
                 'label' => 'Bruker',
-                'class' => 'AppBundle:User',
+                'class' => 'App:User',
                 'query_builder' => function (UserRepository $ur) {
                     return $ur->createQueryBuilder('u')
                         ->orderBy('u.firstName', 'ASC')
@@ -45,7 +45,7 @@ class CreateTeamMembershipType extends AbstractType
             ))
             ->add('position', EntityType::class, array(
                 'label' => 'Stillingstittel',
-                'class' => 'AppBundle:Position',
+                'class' => 'App:Position',
                 'query_builder' => function (PositionRepository $pr) {
                     return $pr->createQueryBuilder('p')
                         ->orderBy('p.name', 'ASC');
@@ -53,14 +53,14 @@ class CreateTeamMembershipType extends AbstractType
             ))
             ->add('startSemester', EntityType::class, array(
                 'label' => 'Start semester',
-                'class' => 'AppBundle:Semester',
+                'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
             ))
             ->add('endSemester', EntityType::class, array(
                 'label' => 'Slutt semester (Valgfritt)',
-                'class' => 'AppBundle:Semester',
+                'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
@@ -74,7 +74,7 @@ class CreateTeamMembershipType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\TeamMembership',
+            'data_class' => 'App\Entity\TeamMembership',
             'department' => null
         ));
     }

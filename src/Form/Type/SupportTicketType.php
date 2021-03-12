@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Entity\Department;
-use AppBundle\Entity\Repository\DepartmentRepository;
+use App\Entity\Department;
+use App\Entity\Repository\DepartmentRepository;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
@@ -74,7 +74,7 @@ class SupportTicketType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\SupportTicket',
+            'data_class' => 'App\Entity\SupportTicket',
             'department_repository' => null
         ));
     }
