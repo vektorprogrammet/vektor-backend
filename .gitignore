@@ -1,16 +1,69 @@
+/bootstrap/compiled.php
+.env.*.php
+.env.php
+.env
 
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
+
+### PhpStorm ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+.idea/
+
+*.iml
+
+## File-based project format:
+*.ipr
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+/.idea/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+npm-debug.log
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+
+### Symfony ###
+/app/bootstrap.php.cache
+/var/bootstrap.php.cache
+/var/SymfonyRequirements.php
+/config/parameters.yml
+/var/cache/*
+!var/cache/.gitkeep
+/var/data
+!/var/data/.gitkeep
+/var/log/*
+!var/log/.gitkeep
+/app/phpunit.xml
+/bin/
+/composer.phar
 /vendor/
-###< symfony/framework-bundle ###
+/signatures/
+/public/assets/
+/public/bundles/
+/public/images/
+/public/fonts/
+/public/webfonts/
+/public/files/
+/public/js/
+/public/vendor/
+/public/css
+/public/static
+/public/media/
+!/public/media/.gitkeep
 
-###> symfony/phpunit-bridge ###
-.phpunit
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
+#npm
+/node_modules/
+
+.php_cs.cache
+
+
