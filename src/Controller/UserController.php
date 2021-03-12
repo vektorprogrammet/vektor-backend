@@ -8,7 +8,7 @@ use App\Entity\AssistantHistory;
 use App\Entity\Semester;
 use App\Service\ApplicationManager;
 use App\Service\ContentModeManager;
-use App\Twig\Extension\RoleExtension;
+use App\Twig\RoleExtension;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

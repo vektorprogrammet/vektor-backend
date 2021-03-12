@@ -1,19 +1,68 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<!--[if IE 9]>
+<html class="lt-ie10" lang="no"> <![endif]-->
+<html class="no-js" lang="no">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <title>{% block title %}Vektorprogrammet{% endblock %}</title>
+
+    <!-- Facebook meta data -->
+    <meta property="og:type" content="website"/>
+    {% if app.request.attributes.get('_route') is not null %}
+        <meta property="og:url" content="http://vektorprogrammet.no/{{ path(app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params')) }}"/>
+    {% endif %}
+    <meta property="og:title" content="{{ block('title') }}"/>
+    <meta property="og:image"
+          content="http://vektorprogrammet.no{% block facebookImage %}{{ 'images/vektor_stor.png' }}{% endblock %}"/>
+    <meta property="og:description"
+          content="{% block facebookDescription %}Vektorprogrammet er Norges største organisasjon som jobber for å øke interessen for matematikk og realfag blant elever i grunnskolen. Vi sender realfagssterke studenter til barne- og ungdomsskoler hvor de fungerer som lærerens assistent.{% endblock %}"/>
+    <meta property="og:site_name" content="Vektorprogrammet"/>
+    <meta name="google-site-verification" content="XyfzSmbT9GhK1IQVmIVqquZemQ6-jFJadLKk5fhgH5w" />
+
+    <!-- Color for header in mobile browsers -->
+    <meta name="theme-color" content="#6FCEEE"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#6FCEEE"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#6FCEEE"><!-- iOS Safari -->
+
+    <link rel="icon" type="image/x-icon" href="{{ 'favicon.ico' }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&subset=latin" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin" rel="stylesheet">
+    <link rel="stylesheet" href="{{ 'css/app.css' }}">
+
+
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body class="body">
+{% block header %}
+    <div>Header</div>
+{% endblock %}
+{% include 'common/flash.html.twig' %}
+{% block body %}
+    <p>
+        Content
+    </p>
+{% endblock %}
+{% block footer %}
+    {% include 'base/footer.html.twig' %}
+{% endblock %}
+
+
+<script src="{{ 'js/access_control.js' }}"></script>
+
+
+
+
+
+<script src="{{ '/js/vendor.js' }}"></script>
+<script src="{{ '/js/mobile_nav.js' }}"></script>
+<script src="{{ '/js/button_deactivator.js' }}"></script>
+{% block javascripts %}{% endblock %}
+
+
+
+</body>
 </html>

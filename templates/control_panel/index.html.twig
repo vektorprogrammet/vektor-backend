@@ -1,0 +1,40 @@
+{% extends 'adminBase.html.twig' %}
+{% block title %}Kontrollpanel{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset_with_version('css/pages/admin/home.css') }}">
+{% endblock %}
+
+{% block default_breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('home') }}">Forsiden</a>
+    </li>
+    <li class="breadcrumb-item active">
+        Kontrollpanel
+    </li>
+{% endblock %}
+
+
+{% block body %}
+    <div class="control-panel">
+        <h2 class="text-center my-3">Kontrollpanel</h2>
+        <div class="sbs my-5">
+            {{ render(controller('App:ControlPanel:showSBS')) }}
+        </div>
+
+        <div class="row">
+            {% if admissionPeriod and admissionPeriod.hasActiveAdmission %}
+                {{ render(controller("App:Widget:applicationGraph")) }}
+            {% endif %}
+
+            {{ render(controller("App:Widget:availableSurveys")) }}
+            {{ render(controller("App:Widget:interviews")) }}
+            {{ render(controller("App:Widget:receipts")) }}
+            {{ render(controller("App:Widget:changelog")) }}
+            {{ render(controller("App:Widget:feedback",{'request': app.request})) }}
+
+            {% if not admissionPeriod or not admissionPeriod.hasActiveAdmission %}
+                {{ render(controller("App:Widget:applicationGraph")) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

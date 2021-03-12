@@ -1,2 +1,18 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+
+services:
+
+    App\Twig\:
+        resource: "../../src/Twig/SafeHtmlExtension.php"
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: twig.extension }
+
+    App\Twig\AssetExtension:
+        arguments:
+            $rootDir: '%kernel.project_dir%'
+
+    App\Twig\SafeHtmlExtension:
+        arguments:

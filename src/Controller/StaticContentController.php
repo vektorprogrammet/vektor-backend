@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\StaticContent;
-use App\Twig\Extension\RoleExtension;
+use App\Twig\RoleExtension;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

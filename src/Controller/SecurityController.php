@@ -6,13 +6,12 @@ use App\Entity\Application;
 use App\Role\Roles;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends BaseController
 {
-    public function loginAction()
+    public function loginAction(AuthenticationUtils $authenticationUtils)
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
