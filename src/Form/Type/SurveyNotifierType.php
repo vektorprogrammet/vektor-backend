@@ -1,10 +1,10 @@
 <?php
 
-namespace src\Form\Type;
+namespace App\Form\Type;
 
-use src\Entity\Survey;
-use src\Entity\SurveyNotificationCollection;
-use src\Entity\UserGroup;
+use App\Entity\Survey;
+use App\Entity\SurveyNotificationCollection;
+use App\Entity\UserGroup;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

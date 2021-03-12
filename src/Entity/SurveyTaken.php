@@ -1,7 +1,11 @@
 <?php
 
-namespace src\Entity;
+namespace App\Entity;
 
+use App\Entity\School;
+use App\Entity\Survey;
+use App\Entity\SurveyAnswer;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,14 +13,12 @@ use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="survey_taken")
- * @ORM\Entity(repositoryClass="src\Entity\Repository\SurveyTakenRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\Repository\SurveyTakenRepository")
  */
 class SurveyTaken implements JsonSerializable
 {
     /**
-     * @ORM\Id
+     * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,7 +26,7 @@ class SurveyTaken implements JsonSerializable
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="src\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
      */
     protected $user;

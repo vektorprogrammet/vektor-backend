@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Form\Type;
+namespace App\Form\Type;
 
 use DateTime;
 use Symfony\Component\Form\AbstractType;

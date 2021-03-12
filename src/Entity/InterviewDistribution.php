@@ -1,8 +1,8 @@
 <?php
 
-namespace src\Entity;
+namespace App\Entity;
 
-use src\Type\InterviewStatusType;
+use App\Type\InterviewStatusType;
 
 class InterviewDistribution
 {

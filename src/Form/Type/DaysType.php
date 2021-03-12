@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Form\Type;
+namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -95,7 +95,7 @@ class DaysType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'src\Entity\Application',
+            'data_class' => 'App\Entity\Application',
             'inherit_data' => true,
             'label' => '',
         ));
