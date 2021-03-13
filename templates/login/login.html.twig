@@ -16,10 +16,10 @@
             {% endif %}
 
             {% if message is defined %}
-                <p>{{ message }}</p> <!-- SAFE HTML! -->
+                <p>{{ message|safe_html }}</p>
             {% endif %}
 
-            <form action="#" method="post">
+            <form action="{{ path('login_check') }}" method="post">
                 <div class="form-group">
                     <label for="form-username">Brukernavn / e-post</label>
                     <input
@@ -53,7 +53,7 @@
 
                 <p class="mt-4 d-flex">
                     <button class="btn btn-primary" type="submit">Logg inn</button>
-                    <a class="ml-auto" href="#">Glemt passord?</a>
+                    <a class="ml-auto" href="{{ path('reset_password') }}">Glemt passord?</a>
                 </p>
             </form>
 

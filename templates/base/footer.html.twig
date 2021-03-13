@@ -24,13 +24,13 @@
                 <div class="footer-content">
                     <h5>Sitemap</h5>
                     <ul>
-                        <li><a href="#">Assistenter</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">For skoler</a></li>
-                        <li><a href="#">For foreldre</a></li>
-                        <li><a href="#">Om oss</a></li>
-                        <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Nyheter</a></li>
+                        <li><a href="{{ path('assistants') }}">Assistenter</a></li>
+                        <li><a href="{{ path('team') }}">Team</a></li>
+                        <li><a href="{{ path('teachers') }}">For skoler</a></li>
+                        <li><a href="{{ path('parents') }}">For foreldre</a></li>
+                        <li><a href="{{ path('about_new') }}">Om oss</a></li>
+                        <li><a href="{{ path('contact') }}">Kontakt</a></li>
+                        <li><a href="{{ path('news') }}">Nyheter</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <div class="footer-content">
                     <h5>Sponsorer og samarbeidspartnere</h5>
                     <ul>
-                        {% for sponsor in [] %}
+                        {% for sponsor in get_sponsors() %}
                             <li><a href="{{ sponsor.url }}" target="_blank"> {{ sponsor.name }} </a></li>
                         {% endfor %}
                     </ul>
