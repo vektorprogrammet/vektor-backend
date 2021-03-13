@@ -3,11 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Department;
-use Exception;
 use Monolog\Logger;
-use Nexy\Slack\Attachment;
-use Nexy\Slack\Client;
-use Nexy\Slack\Message;
+use phpDocumentor\Reflection\Types\Object_;
+use Symfony\Component\Notifier\NotifierInterface;
 
 class SlackMessenger
 {
@@ -17,18 +15,19 @@ class SlackMessenger
     private $logger;
     private $disableDelivery;
 
+
     /**
      * SlackMessenger constructor.
      *
-     * @param Client $slackClient
+     * @param NotifierInterface $notifier
      * @param string $notificationChannel
      * @param string $logChannel
      * @param bool   $disableDelivery
      * @param Logger $logger
      */
-    public function __construct(Client $slackClient, string $notificationChannel, string $logChannel, bool $disableDelivery, Logger $logger)
+    public function __construct(NotifierInterface $notifier, string $notificationChannel, string $logChannel, bool $disableDelivery, Logger $logger)
     {
-        $this->slackClient = $slackClient;
+        $this->slackClient = $notifier;
         $this->notificationChannel = $notificationChannel;
         $this->logChannel = $logChannel;
         $this->logger = $logger;
@@ -37,17 +36,12 @@ class SlackMessenger
 
     public function notify(string $messageBody)
     {
-        $message = $this->slackClient->createMessage();
 
-        $message
-            ->to($this->notificationChannel)
-            ->setText($messageBody);
-
-        $this->send($message);
     }
 
     public function log(string $messageBody, array $attachmentData = [])
     {
+        /*
         $message = $this->slackClient->createMessage();
         $message->to($this->logChannel);
         $attachment = $this->createAttachment($attachmentData);
@@ -59,10 +53,12 @@ class SlackMessenger
         }
 
         $this->send($message);
+        */
     }
 
     public function messageDepartment(string $messageBody, Department $department)
     {
+        /*
         if (!$department->getSlackChannel()) {
             return;
         }
@@ -74,10 +70,12 @@ class SlackMessenger
             ->setText($messageBody);
 
         $this->send($message);
+        */
     }
     
-    public function send(Message $message)
+    public function send(object $message)
     {
+        /*
         if ($message->getChannel() === null) {
             $message->setChannel($this->logChannel);
         }
@@ -91,47 +89,15 @@ class SlackMessenger
         }
 
         $this->logger->info("Slack message sent to {$message->getChannel()}: {$message->getText()}");
+        */
     }
     
-    public function createMessage(): Message
+    public function createMessage(): object # previously imported Message
     {
+        /*
         return $this->slackClient->createMessage();
+        */
+        return new Object_();
     }
 
-    private function createAttachment(array $data)
-    {
-        $attachment = new Attachment();
-        $hasData = false;
-
-        if (isset($data['color'])) {
-            $attachment->setColor($data['color']);
-            $hasData = true;
-        }
-
-        if (isset($data['author_name'])) {
-            $attachment->setAuthorName($data['author_name']);
-            $hasData = true;
-        }
-
-        if (isset($data['author_icon'])) {
-            $attachment->setAuthorIcon($data['author_icon']);
-            $hasData = true;
-        }
-
-        if (isset($data['text'])) {
-            $attachment->setText($data['text']);
-            $hasData = true;
-        }
-
-        if (isset($data['footer'])) {
-            $attachment->setFooter($data['footer']);
-            $hasData = true;
-        }
-
-        if (!$hasData) {
-            return null;
-        }
-
-        return $attachment;
-    }
 }

@@ -10,9 +10,8 @@ use App\Service\GeoLocation;
 
 class HomeController extends BaseController
 {
-    public function showAction()
+    public function showAction(GeoLocation $geoLocation)
     {
-        $geoLocation = $this->get(GeoLocation::class);
         $assistantsCount = count($this->getDoctrine()->getRepository(User::class)->findAssistants());
         $teamMembersCount = count($this->getDoctrine()->getRepository(User::class)->findTeamMembers());
         $articles = $this->getDoctrine()->getRepository(Article::class)->findStickyAndLatestArticles();
