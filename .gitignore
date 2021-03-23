@@ -66,4 +66,6 @@ crashlytics-build.properties
 
 .php_cs.cache
 
-
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

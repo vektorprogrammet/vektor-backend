@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -12,15 +13,20 @@ class AssetExtension extends AbstractExtension
     private $rootDir;
 
     /**
+     * @var KernelInterface
+     */
+    private $appKernel;
+
+    /**
      * AssetExtension constructor.
      *
      * @param Packages $packages
-     * @param string   $rootDir
+     * @param KernelInterface $appKernel
      */
-    public function __construct(Packages $packages, string $rootDir)
+    public function __construct(Packages $packages, KernelInterface $appKernel)
     {
         $this->packages = $packages;
-        $this->rootDir = $rootDir;
+        $this->rootDir=$appKernel->getProjectDir();
     }
 
     /**
