@@ -17,7 +17,7 @@ class SponsorsController extends BaseController
      *
      * @return Response
      */
-    public function sponsorsShowAction()
+    public function sponsorsShow()
     {
         $sponsors = $this->getDoctrine()
             ->getRepository(Sponsor::class)
@@ -36,7 +36,7 @@ class SponsorsController extends BaseController
      *
      * @return RedirectResponse|Response
      */
-    public function sponsorEditAction(Sponsor $sponsor = null, Request $request)
+    public function sponsorEdit(Sponsor $sponsor = null, Request $request)
     {
         $isCreate = $sponsor === null;
         $oldImgPath = "";
@@ -83,7 +83,7 @@ class SponsorsController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function deleteSponsorAction(Sponsor $sponsor)
+    public function deleteSponsor(Sponsor $sponsor)
     {
         if ($sponsor->getLogoImagePath()) {
             $this->get(FileUploader::class)->deleteSponsor($sponsor->getLogoImagePath());

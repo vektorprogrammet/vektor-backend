@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * AdmissionAdminController is the controller responsible for administrative admission actions,
+ * AdmissionAdminController is the controller responsible for administrative admission s,
  * such as showing and deleting applications.
  */
 class AdmissionAdminController extends BaseController
@@ -32,9 +32,9 @@ class AdmissionAdminController extends BaseController
      *
      * @return Response
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
-        return $this->showNewApplicationsAction($request);
+        return $this->showNewApplications($request);
     }
 
 
@@ -42,7 +42,7 @@ class AdmissionAdminController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showNewApplicationsAction(Request $request)
+    public function showNewApplications(Request $request)
     {
         $semester = $this->getSemesterOrThrow404($request);
         $department = $this->getDepartmentOrThrow404($request);
@@ -74,7 +74,7 @@ class AdmissionAdminController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showAssignedApplicationsAction(Request $request)
+    public function showAssignedApplications(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -114,7 +114,7 @@ class AdmissionAdminController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showInterviewedApplicationsAction(Request $request)
+    public function showInterviewedApplications(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -148,7 +148,7 @@ class AdmissionAdminController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showExistingApplicationsAction(Request $request)
+    public function showExistingApplications(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -181,7 +181,7 @@ class AdmissionAdminController extends BaseController
      *
      * @return JsonResponse
      */
-    public function deleteApplicationByIdAction(Application $application)
+    public function deleteApplicationById(Application $application)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -199,7 +199,7 @@ class AdmissionAdminController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function deleteApplicationExistingAssistantAction(Application $application)
+    public function deleteApplicationExistingAssistant(Application $application)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($application);
@@ -221,7 +221,7 @@ class AdmissionAdminController extends BaseController
      *
      * @return JsonResponse
      */
-    public function bulkDeleteApplicationAction(Request $request)
+    public function bulkDeleteApplication(Request $request)
     {
         // Get the ids from the form
         $applicationIds = array_map('intval', $request->request->get('application')['id']);
@@ -247,7 +247,7 @@ class AdmissionAdminController extends BaseController
         ]);
     }
 
-    public function createApplicationAction(Request $request)
+    public function createApplication(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $department = $this->getUser()->getDepartment();
@@ -289,7 +289,7 @@ class AdmissionAdminController extends BaseController
         ));
     }
 
-    public function showApplicationAction(Application $application)
+    public function showApplication(Application $application)
     {
         if (!$application->getPreviousParticipation()) {
             throw $this->createNotFoundException('Søknaden finnes ikke');
@@ -304,7 +304,7 @@ class AdmissionAdminController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showTeamInterestAction(Request $request)
+    public function showTeamInterest(Request $request)
     {
         $user = $this->getUser();
         $department = $this->getDepartmentOrThrow404($request);

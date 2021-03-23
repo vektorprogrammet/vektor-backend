@@ -10,7 +10,7 @@ use App\Service\GeoLocation;
 
 class BoardAndTeamController extends BaseController
 {
-    public function showAction()
+    public function show()
     {
         // Find all departments
         $departments = $this->getDoctrine()->getRepository(Department::class)->findActive();

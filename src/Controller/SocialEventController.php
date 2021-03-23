@@ -16,7 +16,7 @@ class SocialEventController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -38,7 +38,7 @@ class SocialEventController extends BaseController
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function createSocialEventAction(Request $request)
+    public function createSocialEvent(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -67,7 +67,7 @@ class SocialEventController extends BaseController
         ));
     }
 
-    public function editSocialEventAction(SocialEvent $social_event, Request $request)
+    public function editSocialEvent(SocialEvent $social_event, Request $request)
     {
         $form = $this->createForm(SocialEventType::class, $social_event, array(
             'department'        => $social_event->getDepartment(),
@@ -97,7 +97,7 @@ class SocialEventController extends BaseController
      * @param SocialEvent $event
      * @return RedirectResponse
      */
-    public function deleteSocialEventAction(Request $request, SocialEvent $event)
+    public function deleteSocialEvent(Request $request, SocialEvent $event)
     {
         # NOTE: this function will permanently remove the event.
         $semester = $this->getSemesterOrThrow404($request);

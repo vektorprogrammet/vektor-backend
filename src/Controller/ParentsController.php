@@ -4,7 +4,7 @@ namespace App\Controller;
 
 class ParentsController extends BaseController
 {
-    public function indexAction()
+    public function index()
     {
         return $this->render('/parents/parents.html.twig');
     }

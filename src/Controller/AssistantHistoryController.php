@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
-    public function deleteAction(AssistantHistory $assistantHistory)
+    public function delete(AssistantHistory $assistantHistory)
     {
         if (!$this->isGranted(Roles::ADMIN) && $assistantHistory->getUser()->getDepartment() !== $this->getUser()->getDepartment()) {
             $this->createAccessDeniedException();
@@ -28,7 +28,7 @@ class AssistantHistoryController extends BaseController
         return $this->redirectToRoute('participanthistory_show');
     }
 
-    public function editAction(Request $request, AssistantHistory $assistantHistory)
+    public function edit(Request $request, AssistantHistory $assistantHistory)
     {
         $em = $this->getDoctrine()->getManager();
 

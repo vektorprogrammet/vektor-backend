@@ -10,7 +10,7 @@ use App\Service\GeoLocation;
 
 class HomeController extends BaseController
 {
-    public function showAction(GeoLocation $geoLocation)
+    public function show(GeoLocation $geoLocation)
     {
         $assistantsCount = count($this->getDoctrine()->getRepository(User::class)->findAssistants());
         $teamMembersCount = count($this->getDoctrine()->getRepository(User::class)->findTeamMembers());
@@ -37,7 +37,7 @@ class HomeController extends BaseController
         ]);
     }
 
-    public function postAction()
+    public function post()
     {
         return $this->redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1", 301);
     }

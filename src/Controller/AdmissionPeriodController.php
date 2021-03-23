@@ -10,15 +10,15 @@ use App\Form\Type\CreateAdmissionPeriodType;
 
 class AdmissionPeriodController extends BaseController
 {
-    public function showAction()
+    public function show()
     {
         // Finds the departmentId for the current logged in user
         $department = $this->getUser()->getDepartment();
 
-        return $this->showByDepartmentAction($department);
+        return $this->showByDepartment($department);
     }
 
-    public function showByDepartmentAction(Department $department)
+    public function showByDepartment(Department $department)
     {
         $admissionPeriods = $this->getDoctrine()
             ->getRepository(AdmissionPeriod::class)
@@ -33,7 +33,7 @@ class AdmissionPeriodController extends BaseController
         ));
     }
 
-    public function createAdmissionPeriodAction(Request $request, Department $department)
+    public function createAdmissionPeriod(Request $request, Department $department)
     {
         $admissionPeriod = new AdmissionPeriod();
         $admissionPeriods = $department->getAdmissionPeriods()->toArray();
@@ -67,7 +67,7 @@ class AdmissionPeriodController extends BaseController
         ));
     }
 
-    public function updateAdmissionPeriodAction(Request $request, AdmissionPeriod $admissionPeriod)
+    public function updateAdmissionPeriod(Request $request, AdmissionPeriod $admissionPeriod)
     {
         $form = $this->createForm(EditAdmissionPeriodType::class, $admissionPeriod);
 
@@ -89,7 +89,7 @@ class AdmissionPeriodController extends BaseController
         ));
     }
 
-    public function deleteAction(AdmissionPeriod $admissionPeriod)
+    public function delete(AdmissionPeriod $admissionPeriod)
     {
         $em = $this->getDoctrine()->getManager();
         $infoMeeting = $admissionPeriod->getInfoMeeting();

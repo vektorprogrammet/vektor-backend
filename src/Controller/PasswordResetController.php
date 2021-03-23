@@ -23,7 +23,7 @@ class PasswordResetController extends BaseController
      *
      * Shows the request new password page
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         //Creates new PasswordResetType Form
         $form = $this->createForm(PasswordResetType::class);
@@ -68,7 +68,7 @@ class PasswordResetController extends BaseController
         return $this->render('reset_password/reset_password.html.twig', array('form' => $form->createView()));
     }
 
-    public function showConfirmationAction()
+    public function showConfirmation()
     {
         return $this->render('reset_password/confirmation.html.twig');
     }
@@ -81,7 +81,7 @@ class PasswordResetController extends BaseController
      *
      * This function resets stores the new password when the user goes to the url for resetting the password
      */
-    public function resetPasswordAction($resetCode, Request $request)
+    public function resetPassword($resetCode, Request $request)
     {
         $passwordManager = $this->get(PasswordManager::class);
 

@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * InterviewController is the controller responsible for interview actions,
+ * InterviewController is the controller responsible for interview s,
  * such as showing, assigning and conducting interviews.
  */
 class InterviewController extends BaseController
@@ -47,7 +47,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse|Response
      */
-    public function conductAction(Request $request, Application $application)
+    public function conduct(Request $request, Application $application)
     {
         if ($application->getInterview() === null) {
             throw $this->createNotFoundException();
@@ -109,7 +109,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function cancelAction(Interview $interview)
+    public function cancel(Interview $interview)
     {
         $interview->setCancelled(true);
         $manager = $this->getDoctrine()->getManager();
@@ -126,7 +126,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function showAction(Application $application)
+    public function show(Application $application)
     {
         if (null === $interview = $application->getInterview()) {
             throw $this->createNotFoundException('Interview not found.');
@@ -153,7 +153,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function deleteInterviewAction(Interview $interview, Request $request)
+    public function deleteInterview(Interview $interview, Request $request)
     {
         $interview->getApplication()->setInterview(null);
 
@@ -174,7 +174,7 @@ class InterviewController extends BaseController
      *
      * @return JsonResponse
      */
-    public function bulkDeleteInterviewAction(Request $request)
+    public function bulkDeleteInterview(Request $request)
     {
         // Get the ids from the form
         $applicationIds = $request->request->get('application')['id'];
@@ -208,7 +208,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function scheduleAction(Request $request, Application $application)
+    public function schedule(Request $request, Application $application)
     {
         if (null === $interview = $application->getInterview()) {
             throw $this->createNotFoundException('Interview not found.');
@@ -301,7 +301,7 @@ class InterviewController extends BaseController
      *
      * @return JsonResponse
      */
-    public function assignAction(Request $request, $id = null)
+    public function assign(Request $request, $id = null)
     {
         if ($id === null) {
             throw $this->createNotFoundException();
@@ -338,7 +338,7 @@ class InterviewController extends BaseController
     }
 
     /**
-     * This method has the same purpose as assignAction, but assigns a bulk of applications at once.
+     * This method has the same purpose as assign, but assigns a bulk of applications at once.
      * It does not use the normal form validation routine, but manually updates each application.
      * This is because in addition to the standard form fields given by assignInterviewType, a list of application ids
      * are given by the bulk form checkboxes (see admission_admin twigs).
@@ -349,7 +349,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse|Response
      */
-    public function bulkAssignAction(Request $request)
+    public function bulkAssign(Request $request)
     {
         // Finds all the roles above admin in the hierarchy, used to populate dropdown menu with all admins
         $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([Roles::TEAM_MEMBER]);
@@ -396,7 +396,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function acceptByResponseCodeAction(Interview $interview)
+    public function acceptByResponseCode(Interview $interview)
     {
         $interview->acceptInterview();
         $manager = $this->getDoctrine()->getManager();
@@ -423,7 +423,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function requestNewTimeAction(Request $request, Interview $interview)
+    public function requestNewTime(Request $request, Interview $interview)
     {
         if (!$interview->isPending()) {
             throw $this->createNotFoundException();
@@ -461,7 +461,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function respondAction(Interview $interview)
+    public function respond(Interview $interview)
     {
         $applicationStatus = $this->get(ApplicationManager::class)->getApplicationStatus($interview->getApplication());
 
@@ -477,7 +477,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function cancelByResponseCodeAction(Request $request, Interview $interview)
+    public function cancelByResponseCode(Request $request, Interview $interview)
     {
         if (!$interview->isPending()) {
             throw $this->createNotFoundException();
@@ -516,7 +516,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function editStatusAction(Request $request, Interview $interview)
+    public function editStatus(Request $request, Interview $interview)
     {
         $status = intval($request->get('status'));
         try {
@@ -533,7 +533,7 @@ class InterviewController extends BaseController
         );
     }
 
-    public function assignCoInterviewerAction(Interview $interview)
+    public function assignCoInterviewer(Interview $interview)
     {
         if ($interview->getUser() === $this->getUser()) {
             return $this->render('error/control_panel_error.html.twig', array(
@@ -562,7 +562,7 @@ class InterviewController extends BaseController
         return $this->redirectToRoute('applications_show_assigned');
     }
 
-    public function adminAssignCoInterviewerAction(Request $request, Interview $interview)
+    public function adminAssignCoInterviewer(Request $request, Interview $interview)
     {
         $semester = $interview->getApplication()->getSemester();
         $department = $interview->getApplication()->getDepartment();
@@ -598,7 +598,7 @@ class InterviewController extends BaseController
         ));
     }
 
-    public function clearCoInterviewerAction(Interview $interview)
+    public function clearCoInterviewer(Interview $interview)
     {
         $interview->setCoInterviewer(null);
         $em = $this->getDoctrine()->getManager();

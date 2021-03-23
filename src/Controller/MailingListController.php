@@ -15,7 +15,7 @@ class MailingListController extends BaseController
      *
      * @return Response
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $form = $this->createForm(GenerateMailingListType::class);
         $form->handleRequest($request);
@@ -56,7 +56,7 @@ class MailingListController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function showAssistantsAction(Request $request)
+    public function showAssistants(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -72,7 +72,7 @@ class MailingListController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function showTeamAction(Request $request)
+    public function showTeam(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -88,7 +88,7 @@ class MailingListController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function showAllAction(Request $request)
+    public function showAll(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

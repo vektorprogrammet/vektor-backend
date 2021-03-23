@@ -32,7 +32,7 @@ class TeamInterestController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function showTeamInterestFormAction(Department $department, Request $request)
+    public function showTeamInterestForm(Department $department, Request $request)
     {
         $semester = $this->getDoctrine()->getRepository(Semester::class)->findCurrentSemester();
         if ($semester === null) {

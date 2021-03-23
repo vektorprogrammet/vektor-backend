@@ -21,7 +21,7 @@ class StandController extends BaseController
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

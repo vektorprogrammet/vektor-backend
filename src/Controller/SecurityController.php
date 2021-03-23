@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends BaseController
 {
-    public function loginAction(AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -32,7 +32,7 @@ class SecurityController extends BaseController
      * @return RedirectResponse
      * @throws NonUniqueResultException
      */
-    public function loginRedirectAction()
+    public function loginRedirect()
     {
         if ($this->get('security.authorization_checker')->isGranted(Roles::TEAM_MEMBER)) {
             return $this->redirectToRoute('control_panel');
@@ -43,7 +43,7 @@ class SecurityController extends BaseController
         }
     }
 
-    public function loginCheckAction()
+    public function loginCheck()
     {
         return $this->redirectToRoute('home');
     }

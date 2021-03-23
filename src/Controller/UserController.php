@@ -22,7 +22,7 @@ class UserController extends BaseController
      *
      * @return Response
      */
-    public function myPageAction()
+    public function myPage()
     {
         $user = $this->getUser();
 
@@ -57,7 +57,7 @@ class UserController extends BaseController
      *
      * @return Response
      */
-    public function myPartnerAction()
+    public function myPartner()
     {
         if (!$this->getUser()->isActive()) {
             throw $this->createAccessDeniedException();
@@ -113,7 +113,7 @@ class UserController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function changeContentModeAction(Request $request, string $mode)
+    public function changeContentMode(Request $request, string $mode)
     {
         if (!$this->get(RoleExtension::class)->userCanEditPage()) {
             throw $this->createAccessDeniedException();

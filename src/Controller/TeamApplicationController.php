@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TeamApplicationController extends BaseController
 {
-    public function showApplicationAction(TeamApplication $application)
+    public function showApplication(TeamApplication $application)
     {
         $user = $this->getUser();
         $activeUserHistoriesInTeam = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeamAndUser($application->getTeam(), $user);
@@ -29,7 +29,7 @@ class TeamApplicationController extends BaseController
         ));
     }
 
-    public function showAllApplicationsAction(Team $team)
+    public function showAllApplications(Team $team)
     {
         $applications = $this->getDoctrine()->getRepository(TeamApplication::class)->findByTeam($team);
         $user = $this->getUser();
@@ -44,7 +44,7 @@ class TeamApplicationController extends BaseController
         ));
     }
 
-    public function deleteTeamApplicationByIdAction(TeamApplication $teamApplication)
+    public function deleteTeamApplicationById(TeamApplication $teamApplication)
     {
         $manager = $this->getDoctrine()->getManager();
 
@@ -54,7 +54,7 @@ class TeamApplicationController extends BaseController
         return $this->redirectToRoute('team_application_show_all', array('id' => $teamApplication->getTeam()->getId()));
     }
 
-    public function showAction(Team $team, Request $request)
+    public function show(Team $team, Request $request)
     {
         if (!$team->getAcceptApplicationAndDeadline()) {
             throw new NotFoundHttpException();
@@ -87,7 +87,7 @@ class TeamApplicationController extends BaseController
      * @Route("/team/application/bekreftelse/{team_name}", name="team_application_confirmation")
      * @return Response
      */
-    public function confirmationAction($team_name)
+    public function confirmation($team_name)
     {
         return $this->render('team/confirmation.html.twig', array(
             'team_name' => $team_name,

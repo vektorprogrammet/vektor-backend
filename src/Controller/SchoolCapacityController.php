@@ -21,7 +21,7 @@ class SchoolCapacityController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function createAction(Request $request)
+    public function create(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $currentSemester = $this->getSemesterOrThrow404($request);
@@ -46,7 +46,7 @@ class SchoolCapacityController extends BaseController
         ));
     }
 
-    public function editAction(Request $request, SchoolCapacity $capacity)
+    public function edit(Request $request, SchoolCapacity $capacity)
     {
         $form = $this->createForm(SchoolCapacityEditType::class, $capacity);
         $form->handleRequest($request);

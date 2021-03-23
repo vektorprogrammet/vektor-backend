@@ -13,7 +13,7 @@ class ControlPanelController extends BaseController
      *
      * @param Request $request
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -27,7 +27,7 @@ class ControlPanelController extends BaseController
         ));
     }
 
-    public function showSBSAction()
+    public function showSBS()
     {
         $sbsData = $this->get(SbsData::class);
         $currentAdmissionPeriod = $this->getUser()->getDepartment()->getCurrentAdmissionPeriod();

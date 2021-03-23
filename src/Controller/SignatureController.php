@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class SignatureController extends BaseController
 {
-    public function showSignatureImageAction($imageName)
+    public function showSignatureImage($imageName)
     {
         $user = $this->getUser();
 

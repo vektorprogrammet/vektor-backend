@@ -32,7 +32,7 @@ class ArticleController extends BaseController
      *
      * @return Response
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -62,7 +62,7 @@ class ArticleController extends BaseController
      *
      * @return Response
      */
-    public function showFilterAction(Request $request, $department)
+    public function showFilter(Request $request, $department)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -91,7 +91,7 @@ class ArticleController extends BaseController
      *
      * @return Response
      */
-    public function showSpecificAction(Article $article)
+    public function showSpecific(Article $article)
     {
         if (!$article->isPublished()) {
             throw $this->createNotFoundException();
@@ -106,7 +106,7 @@ class ArticleController extends BaseController
      *
      * @return Response
      */
-    public function showOtherAction($excludeId)
+    public function showOther($excludeId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -121,7 +121,7 @@ class ArticleController extends BaseController
      *
      * @return Response
      */
-    public function showCarouselAction()
+    public function showCarousel()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -138,7 +138,7 @@ class ArticleController extends BaseController
      *
      * @return Response
      */
-    public function showDepartmentNewsAction($id)
+    public function showDepartmentNews($id)
     {
         $em = $this->getDoctrine()->getManager();
 

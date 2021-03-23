@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserAdminController extends BaseController
 {
-    public function createUserAction(Request $request, Department $department = null)
+    public function createUser(Request $request, Department $department = null)
     {
         if (!$this->isGranted(Roles::TEAM_LEADER) || $department === null) {
             $department = $this->getUser()->getDepartment();
@@ -50,7 +50,7 @@ class UserAdminController extends BaseController
         ));
     }
 
-    public function showAction()
+    public function show()
     {
         // Finds all the departments
         $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();
@@ -69,7 +69,7 @@ class UserAdminController extends BaseController
         ));
     }
 
-    public function showUsersByDepartmentAction(Department $department)
+    public function showUsersByDepartment(Department $department)
     {
         // Finds all the departments
         $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();
@@ -86,7 +86,7 @@ class UserAdminController extends BaseController
         ));
     }
 
-    public function deleteUserByIdAction(User $user)
+    public function deleteUserById(User $user)
     {
         if ($user === $this->getUser()) {
             $this->addFlash("error", "Du kan ikke slette deg selv.");
@@ -102,7 +102,7 @@ class UserAdminController extends BaseController
         return $this->redirectToRoute('useradmin_filter_users_by_department', array('id' => $user->getDepartment()->getId()));
     }
 
-    public function sendActivationMailAction(User $user)
+    public function sendActivationMail(User $user)
     {
         $this->get(UserRegistration::class)->sendActivationCode($user);
 

@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReceiptController extends BaseController
 {
-    public function showAction()
+    public function show()
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
         $refundedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
@@ -48,7 +48,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function showIndividualAction(User $user)
+    public function showIndividual(User $user)
     {
         $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($user);
 
@@ -62,7 +62,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function createAction(Request $request)
+    public function create(Request $request)
     {
         $receipt = new Receipt();
         $receipt->setUser($this->getUser());
@@ -103,7 +103,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function editAction(Request $request, Receipt $receipt)
+    public function edit(Request $request, Receipt $receipt)
     {
         $user = $this->getUser();
 
@@ -152,7 +152,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function editStatusAction(Request $request, Receipt $receipt)
+    public function editStatus(Request $request, Receipt $receipt)
     {
         $status = $request->get('status');
         if ($status !== Receipt::STATUS_PENDING &&
@@ -184,7 +184,7 @@ class ReceiptController extends BaseController
         return $this->redirectToRoute('receipts_show_individual', ['user' => $receipt->getUser()->getId()]);
     }
 
-    public function adminEditAction(Request $request, Receipt $receipt)
+    public function adminEdit(Request $request, Receipt $receipt)
     {
         $form = $this->createForm(ReceiptType::class, $receipt, array(
             'picture_required' => false,
@@ -225,7 +225,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function deleteAction(Request $request, Receipt $receipt)
+    public function delete(Request $request, Receipt $receipt)
     {
         $user = $this->getUser();
         $isTeamLeader = $this->get(RoleManager::class)->userIsGranted($user, Roles::TEAM_LEADER);

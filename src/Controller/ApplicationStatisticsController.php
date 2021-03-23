@@ -16,7 +16,7 @@ class ApplicationStatisticsController extends BaseController
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

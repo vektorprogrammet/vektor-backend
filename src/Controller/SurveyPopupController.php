@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SurveyPopupController extends AbstractController
 {
-    public function nextSurveyAction()
+    public function nextSurvey()
     {
         $survey = null;
         $user = $this->getUser();

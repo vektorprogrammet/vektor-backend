@@ -19,7 +19,7 @@ class SemesterController extends AbstractController
      *
      * @return Response
      */
-    public function showAction()
+    public function show()
     {
         $semesters = $this->getDoctrine()->getRepository(Semester::class)->findAllOrderedByAge();
 
@@ -35,7 +35,7 @@ class SemesterController extends AbstractController
      * @return RedirectResponse|Response
      * @throws NonUniqueResultException
      */
-    public function createSemesterAction(Request $request)
+    public function createSemester(Request $request)
     {
         $semester = new Semester();
 
@@ -70,7 +70,7 @@ class SemesterController extends AbstractController
         ));
     }
 
-    public function deleteAction(Semester $semester)
+    public function delete(Semester $semester)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($semester);

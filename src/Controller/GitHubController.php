@@ -11,7 +11,7 @@ class GitHubController extends BaseController
 {
     private $repositoryName = 'vektorprogrammet/vektorprogrammet';
 
-    public function deployAction(Request $request)
+    public function deploy(Request $request)
     {
         // Check if request is from GitHub
         $ipIsFromGitHub = $this->ipIsFromGitHub($request->getClientIp());

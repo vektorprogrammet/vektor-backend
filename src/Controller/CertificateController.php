@@ -26,7 +26,7 @@ class CertificateController extends BaseController
      *
      * @return RedirectResponse|Response
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

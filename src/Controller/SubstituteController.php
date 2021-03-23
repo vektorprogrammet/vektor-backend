@@ -19,7 +19,7 @@ class SubstituteController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         // No department specified, get the user's department and call showBySemester with
         // either current or latest semester for that department
@@ -43,7 +43,7 @@ class SubstituteController extends BaseController
         ));
     }
 
-    public function showModifyFormAction(Request $request, Application $application)
+    public function showModifyForm(Request $request, Application $application)
     {
         // Only substitutes should be modified with this form
         if (!$application->isSubstitute()) {
@@ -77,7 +77,7 @@ class SubstituteController extends BaseController
         ));
     }
 
-    public function deleteSubstituteByIdAction(Application $application)
+    public function deleteSubstituteById(Application $application)
     {
         $application->setSubstitute(false);
 
@@ -92,7 +92,7 @@ class SubstituteController extends BaseController
         ));
     }
 
-    public function createSubstituteFromApplicationAction(Application $application)
+    public function createSubstituteFromApplication(Application $application)
     {
         if ($application->isSubstitute()) {
             // User is already substitute

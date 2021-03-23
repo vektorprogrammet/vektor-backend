@@ -13,7 +13,7 @@ use UnexpectedValueException;
 
 class UserGroupCollectionController extends BaseController
 {
-    public function createUserGroupCollectionAction(Request $request, UserGroupCollection $userGroupCollection = null)
+    public function createUserGroupCollection(Request $request, UserGroupCollection $userGroupCollection = null)
     {
         if ($isCreate = $userGroupCollection === null) {
             $userGroupCollection = new UserGroupCollection();
@@ -60,7 +60,7 @@ class UserGroupCollectionController extends BaseController
         ));
     }
 
-    public function userGroupCollectionsAction()
+    public function userGroupCollections()
     {
         $userGroupCollections =$this->getDoctrine()->getManager()->getRepository(UserGroupCollection::class)->findAll();
 
@@ -69,7 +69,7 @@ class UserGroupCollectionController extends BaseController
         ));
     }
 
-    public function deleteUserGroupCollectionAction(UserGroupCollection $userGroupCollection)
+    public function deleteUserGroupCollection(UserGroupCollection $userGroupCollection)
     {
         if (!$userGroupCollection->isDeletable()) {
             $response['success'] = false;

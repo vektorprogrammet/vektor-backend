@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * SurveyController is the controller responsible for survey actions,
+ * SurveyController is the controller responsible for survey s,
  * such as showing, assigning and conducting surveys.
  */
 class SurveyController extends BaseController
@@ -39,7 +39,7 @@ class SurveyController extends BaseController
      *
      * @return Response
      */
-    public function showAction(Request $request, Survey $survey)
+    public function show(Request $request, Survey $survey)
     {
         $surveyTaken = $this->get(SurveyManager::class)->initializeSurveyTaken($survey);
         if ($survey->getTargetAudience() === Survey::$SCHOOL_SURVEY || $survey->getTargetAudience() === Survey::$ASSISTANT_SURVEY) {
@@ -47,7 +47,7 @@ class SurveyController extends BaseController
                 'validation_groups' => array('schoolSpecific'),
             ));
         } elseif ($survey->getTargetAudience() === Survey::$TEAM_SURVEY) {
-            return $this->showUserAction($request, $survey);
+            return $this->showUser($request, $survey);
         } else {
             $form = $this->createForm(SurveyExecuteType::class, $surveyTaken);
         }
@@ -90,7 +90,7 @@ class SurveyController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function showIdAction(Request $request, Survey $survey, string $userid)
+    public function showId(Request $request, Survey $survey, string $userid)
     {
         $em = $this->getDoctrine()->getManager();
         $notification = $em->getRepository(SurveyNotification::class)->findByUserIdentifier($userid);
@@ -114,11 +114,11 @@ class SurveyController extends BaseController
 
         $user = $notification->getUser();
 
-        return $this->showUserMainAction($request, $survey, $user, $userid);
+        return $this->showUserMain($request, $survey, $user, $userid);
     }
 
 
-    public function showUserAction(Request $request, Survey $survey)
+    public function showUser(Request $request, Survey $survey)
     {
         $user = $this->getUser();
         if ($survey->getTargetAudience() === Survey::$SCHOOL_SURVEY) {
@@ -126,10 +126,10 @@ class SurveyController extends BaseController
         } elseif ($user === null) {
             throw new AccessDeniedException("Logg inn for å ta undersøkelsen!");
         }
-        return $this->showUserMainAction($request, $survey, $user);
+        return $this->showUserMain($request, $survey, $user);
     }
 
-    private function showUserMainAction(Request $request, Survey $survey, User $user, string $identifier = null)
+    private function showUserMain(Request $request, Survey $survey, User $user, string $identifier = null)
     {
         $surveyTaken = $this->get(SurveyManager::class)->initializeUserSurveyTaken($survey, $user);
         $form = $this->createForm(SurveyExecuteType::class, $surveyTaken);
@@ -198,7 +198,7 @@ class SurveyController extends BaseController
         ));
     }
 
-    public function showAdminAction(Request $request, Survey $survey)
+    public function showAdmin(Request $request, Survey $survey)
     {
         if ($survey->getTargetAudience() === Survey::$TEAM_SURVEY) {
             throw new InvalidArgumentException("Er team undersøkelse og har derfor ingen admin utfylling");
@@ -234,7 +234,7 @@ class SurveyController extends BaseController
         ));
     }
 
-    public function createSurveyAction(Request $request)
+    public function createSurvey(Request $request)
     {
         $survey = new Survey();
         $survey->setDepartment($this->getUser()->getDepartment());
@@ -264,7 +264,7 @@ class SurveyController extends BaseController
         ));
     }
 
-    public function copySurveyAction(Request $request, Survey $survey)
+    public function copySurvey(Request $request, Survey $survey)
     {
         $this->ensureAccess($survey);
 
@@ -309,7 +309,7 @@ class SurveyController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function showSurveysAction(Request $request)
+    public function showSurveys(Request $request)
     {
         $semester = $this->getSemesterOrThrow404($request);
         $department = $this->getDepartmentOrThrow404($request);
@@ -352,7 +352,7 @@ class SurveyController extends BaseController
         ));
     }
 
-    public function editSurveyAction(Request $request, Survey $survey)
+    public function editSurvey(Request $request, Survey $survey)
     {
         $this->ensureAccess($survey);
 
@@ -388,7 +388,7 @@ class SurveyController extends BaseController
      *
      * @return JsonResponse
      */
-    public function deleteSurveyAction(Survey $survey)
+    public function deleteSurvey(Survey $survey)
     {
         $this->ensureAccess($survey);
 
@@ -404,9 +404,9 @@ class SurveyController extends BaseController
      *
      * @param Survey $survey
      * @return Response
-     * @see SurveyController::getSurveyResultAction
+     * @see SurveyController::getSurveyResult
      */
-    public function resultSurveyAction(Survey $survey)
+    public function resultSurvey(Survey $survey)
     {
         $this->ensureAccess($survey);
 
@@ -432,7 +432,7 @@ class SurveyController extends BaseController
      * @param Survey $survey
      * @return JsonResponse
      */
-    public function getSurveyResultAction(Survey $survey)
+    public function getSurveyResult(Survey $survey)
     {
         $this->ensureAccess($survey);
         return new JsonResponse($this->get(SurveyManager::class)->surveyResultToJson($survey));
@@ -445,7 +445,7 @@ class SurveyController extends BaseController
      * @param Survey $survey
      * @return Response
      */
-    public function getSurveyResultCSVAction(Survey $survey):Response
+    public function getSurveyResultCSV(Survey $survey):Response
     {
         $this->ensureAccess($survey);
         $sm = $this->get(SurveyManager::class);
@@ -453,7 +453,7 @@ class SurveyController extends BaseController
         return CsvUtil::makeCsvResponse($csv_string);
     }
 
-    public function toggleReservedFromPopUpAction()
+    public function toggleReservedFromPopUp()
     {
         $user = $this->getUser();
         if ($user === null) {
@@ -465,7 +465,7 @@ class SurveyController extends BaseController
         return new JsonResponse();
     }
 
-    public function closePopUpAction()
+    public function closePopUp()
     {
         $user = $this->getUser();
         $user->setLastPopUpTime(new DateTime());

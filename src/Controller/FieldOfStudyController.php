@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FieldOfStudyController extends BaseController
 {
-    public function showAction()
+    public function show()
     {
         $department = $this->getUser()->getFieldOfStudy()->getDepartment();
         $fieldOfStudies = $this->getDoctrine()->getRepository(FieldOfStudy::class)->findByDepartment($department);
@@ -20,7 +20,7 @@ class FieldOfStudyController extends BaseController
         ));
     }
 
-    public function editAction(Request $request, FieldOfStudy $fieldOfStudy = null)
+    public function edit(Request $request, FieldOfStudy $fieldOfStudy = null)
     {
         $isEdit = true;
         if ($fieldOfStudy === null) {

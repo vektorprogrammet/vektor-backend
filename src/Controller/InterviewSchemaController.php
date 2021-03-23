@@ -12,36 +12,36 @@ use App\Form\Type\InterviewSchemaType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * InterviewController is the controller responsible for interview actions,
+ * InterviewController is the controller responsible for interview s,
  * such as showing, assigning and conducting interviews.
  */
 class InterviewSchemaController extends BaseController
 {
     /**
      * Shows and handles the submission of the create interview schema form.
-     * Uses the same form as the edit action.
+     * Uses the same form as the edit .
      *
      * @param Request $request
      *
      * @return RedirectResponse|Response
      */
-    public function createSchemaAction(Request $request)
+    public function createSchema(Request $request)
     {
         $schema = new InterviewSchema();
 
-        return $this->editSchemaAction($request, $schema);
+        return $this->editSchema($request, $schema);
     }
 
     /**
      * Shows and handles the submission of the edit interview schema form.
-     * Uses the same form as the create action.
+     * Uses the same form as the create .
      *
      * @param Request         $request
      * @param InterviewSchema $schema
      *
      * @return RedirectResponse|Response
      */
-    public function editSchemaAction(Request $request, InterviewSchema $schema)
+    public function editSchema(Request $request, InterviewSchema $schema)
     {
         $form = $this->createForm(InterviewSchemaType::class, $schema);
         $form->handleRequest($request);
@@ -65,7 +65,7 @@ class InterviewSchemaController extends BaseController
      *
      * @return Response
      */
-    public function showSchemasAction()
+    public function showSchemas()
     {
         $schemas = $this->getDoctrine()->getRepository(InterviewSchema::class)->findAll();
 
@@ -80,7 +80,7 @@ class InterviewSchemaController extends BaseController
      *
      * @return JsonResponse
      */
-    public function deleteSchemaAction(InterviewSchema $schema)
+    public function deleteSchema(InterviewSchema $schema)
     {
         try {
             if ($this->isGranted(Roles::TEAM_LEADER)) {

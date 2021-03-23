@@ -15,7 +15,7 @@ use App\Form\Type\ArticleType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * ArticleAdminController is the controller responsible for the administrative article actions,
+ * ArticleAdminController is the controller responsible for the administrative article s,
  * such as creating and deleting articles.
  */
 class ArticleAdminController extends BaseController
@@ -30,7 +30,7 @@ class ArticleAdminController extends BaseController
      *
      * @return Response
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -56,7 +56,7 @@ class ArticleAdminController extends BaseController
      *
      * @return Response
      */
-    public function showDraftAction(Article $article)
+    public function showDraft(Article $article)
     {
         return $this->render('article/show.html.twig', array('article' => $article, 'isDraft' => true));
     }
@@ -68,7 +68,7 @@ class ArticleAdminController extends BaseController
      *
      * @return RedirectResponse|Response
      */
-    public function createAction(Request $request)
+    public function create(Request $request)
     {
         $article       = new Article();
         $form          = $this->createForm(ArticleType::class, $article);
@@ -125,7 +125,7 @@ class ArticleAdminController extends BaseController
      *
      * @return RedirectResponse|Response
      */
-    public function editAction(Request $request, Article $article)
+    public function edit(Request $request, Article $article)
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -172,7 +172,7 @@ class ArticleAdminController extends BaseController
      *
      * @return JsonResponse
      */
-    public function stickyAction(Article $article)
+    public function sticky(Article $article)
     {
         try {
             if ($article->getSticky()) {
@@ -204,7 +204,7 @@ class ArticleAdminController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function deleteAction(Article $article)
+    public function delete(Article $article)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($article);

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PositionController extends BaseController
 {
-    public function showPositionsAction()
+    public function showPositions()
     {
         // Find all the positions
         $positions = $this->getDoctrine()->getRepository(Position::class)->findAll();
@@ -19,7 +19,7 @@ class PositionController extends BaseController
         ));
     }
 
-    public function editPositionAction(Request $request, Position $position = null)
+    public function editPosition(Request $request, Position $position = null)
     {
         $isCreate = $position === null;
         if ($isCreate) {
@@ -51,7 +51,7 @@ class PositionController extends BaseController
         ));
     }
 
-    public function removePositionAction(Position $position)
+    public function removePosition(Position $position)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($position);

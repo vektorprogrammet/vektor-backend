@@ -27,7 +27,7 @@ class AccountController extends BaseController
      * @throws InvalidClassConstructorException
      * @throws NonUniqueResultException
      */
-    public function loginAction(Request $request)
+    public function login(Request $request)
     {
         $response = new JsonResponse();
 
@@ -72,7 +72,7 @@ class AccountController extends BaseController
      *
      * @return Response
      */
-    public function logoutAction()
+    public function logout()
     {
         try {
             $this->get('security.token_storage')->setToken(null);
@@ -91,7 +91,7 @@ class AccountController extends BaseController
      * @return Response
      * @throws InvalidClassConstructorException
      */
-    public function getUserAction()
+    public function getUser()
     {
         if (!$this->getUser()) {
             return new JsonResponse(null);

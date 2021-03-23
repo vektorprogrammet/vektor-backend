@@ -9,7 +9,7 @@ use App\Service\SlackMessenger;
 class FeedbackController extends BaseController
 {
     //shows form for submitting a new feedback
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $feedback = new Feedback;
         $user = $this->getUser();
@@ -44,7 +44,7 @@ class FeedbackController extends BaseController
         ));
     }
     //Shows a specific feedback
-    public function showAction(Request $request, Feedback $feedback)
+    public function show(Request $request, Feedback $feedback)
     {
         return $this->render('feedback_admin/feedback_admin_show.html.twig', array(
             'feedback' => $feedback,
@@ -53,7 +53,7 @@ class FeedbackController extends BaseController
     }
 
     //Lists all feedbacks
-    public function showAllAction(Request $request)
+    public function showAll(Request $request)
     {
         $paginator  = $this->get('knp_paginator');
 
@@ -74,7 +74,7 @@ class FeedbackController extends BaseController
             'title' => 'Alle tilbakemeldinger'
         ));
     }
-    public function deleteAction(Feedback $feedback)
+    public function delete(Feedback $feedback)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($feedback);

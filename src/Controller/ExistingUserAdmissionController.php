@@ -28,7 +28,7 @@ class ExistingUserAdmissionController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();

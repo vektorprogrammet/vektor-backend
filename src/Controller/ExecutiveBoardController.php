@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExecutiveBoardController extends BaseController
 {
-    public function showAction()
+    public function show()
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
@@ -23,7 +23,7 @@ class ExecutiveBoardController extends BaseController
         ));
     }
 
-    public function showAdminAction()
+    public function showAdmin()
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
         $members = $this->getDoctrine()->getRepository(ExecutiveBoardMembership::class)->findAll();
@@ -44,7 +44,7 @@ class ExecutiveBoardController extends BaseController
         ));
     }
 
-    public function addUserToBoardAction(Request $request, Department $department)
+    public function addUserToBoard(Request $request, Department $department)
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
@@ -80,7 +80,7 @@ class ExecutiveBoardController extends BaseController
         ));
     }
 
-    public function removeUserFromBoardByIdAction(ExecutiveBoardMembership $member)
+    public function removeUserFromBoardById(ExecutiveBoardMembership $member)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($member);
@@ -91,7 +91,7 @@ class ExecutiveBoardController extends BaseController
         return $this->redirect($this->generateUrl('executive_board_show'));
     }
 
-    public function updateBoardAction(Request $request)
+    public function updateBoard(Request $request)
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
@@ -135,7 +135,7 @@ class ExecutiveBoardController extends BaseController
      *
      * @return Response
      */
-    public function editMemberHistoryAction(Request $request, ExecutiveBoardMembership $member)
+    public function editMemberHistory(Request $request, ExecutiveBoardMembership $member)
     {
         $user = $member->getUser(); // Store the $user object before the form touches our $member object with spooky user data
         $form = $this->createForm(CreateExecutiveBoardMembershipType::class, $member, [

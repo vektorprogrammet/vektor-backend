@@ -8,12 +8,12 @@ use App\Form\Type\CreateDepartmentType;
 
 class DepartmentController extends BaseController
 {
-    public function showAction()
+    public function show()
     {
         return $this->render('department_admin/index.html.twig', array());
     }
 
-    public function createDepartmentAction(Request $request)
+    public function createDepartment(Request $request)
     {
         $department = new Department();
 
@@ -36,7 +36,7 @@ class DepartmentController extends BaseController
         ));
     }
 
-    public function deleteDepartmentByIdAction(Department $department)
+    public function deleteDepartmentById(Department $department)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($department);
@@ -47,7 +47,7 @@ class DepartmentController extends BaseController
         return $this->redirectToRoute("departmentadmin_show");
     }
 
-    public function updateDepartmentAction(Request $request, Department $department)
+    public function updateDepartment(Request $request, Department $department)
     {
         $form = $this->createForm(CreateDepartmentType::class, $department);
 

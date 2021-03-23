@@ -38,9 +38,9 @@ class AssistantController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function admissionByShortNameAction(Request $request, Department $department)
+    public function admissionByShortName(Request $request, Department $department)
     {
-        return $this->indexAction($request, $department);
+        return $this->index($request, $department);
     }
     
     /**
@@ -52,14 +52,14 @@ class AssistantController extends BaseController
      *
      * @return Response
      */
-    public function admissionCaseInsensitiveAction(Request $request, $city)
+    public function admissionCaseInsensitive(Request $request, $city)
     {
         $city = str_replace(array('æ', 'ø','å'), array('Æ','Ø','Å'), $city); // Make sqlite happy
         $department = $this->getDoctrine()
                 ->getRepository(Department::class)
                 ->findOneByCityCaseInsensitive($city);
         if ($department !== null) {
-            return $this->indexAction($request, $department);
+            return $this->index($request, $department);
         } else {
             throw $this->createNotFoundException("Fant ingen avdeling $city.");
         }
@@ -75,9 +75,9 @@ class AssistantController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function admissionAction(Request $request, Department $department = null)
+    public function admission(Request $request, Department $department = null)
     {
-        return $this->indexAction($request, $department);
+        return $this->index($request, $department);
     }
 
     /**
@@ -87,7 +87,7 @@ class AssistantController extends BaseController
      *
      * @return Response
      */
-    public function indexAction(Request $request, Department $specificDepartment = null, $scrollToAdmissionForm = false)
+    public function index(Request $request, Department $specificDepartment = null, $scrollToAdmissionForm = false)
     {
         $admissionManager = $this->get(ApplicationAdmission::class);
         $em = $this->getDoctrine()->getManager();
@@ -163,7 +163,7 @@ class AssistantController extends BaseController
      * @Route("/assistenter/opptak/bekreftelse", name="application_confirmation")
      * @return Response
      */
-    public function confirmationAction()
+    public function confirmation()
     {
         return $this->render('admission/application_confirmation.html.twig');
     }
@@ -180,10 +180,10 @@ class AssistantController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function subscribePageAction(Request $request, Department $department)
+    public function subscribePage(Request $request, Department $department)
     {
         if (!$department->activeAdmission()) {
-            return $this->indexAction($request, $department);
+            return $this->index($request, $department);
         }
         $admissionManager = $this->get(ApplicationAdmission::class);
         $em = $this->getDoctrine()->getManager();

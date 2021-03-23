@@ -4,7 +4,7 @@ namespace App\Controller;
 
 class TeacherController extends BaseController
 {
-    public function indexAction()
+    public function index()
     {
         return $this->render('teacher/index.html.twig');
     }

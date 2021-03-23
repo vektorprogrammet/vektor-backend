@@ -26,7 +26,7 @@ use TFox\MpdfPortBundle\Response\PDFResponse;
 
 class ProfileController extends BaseController
 {
-    public function showAction()
+    public function show()
     {
         // Get the user currently signed in
         $user = $this->getUser();
@@ -51,7 +51,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function showSpecificProfileAction(User $user)
+    public function showSpecificProfile(User $user)
     {
         // If the user clicks their own public profile redirect them to their own profile site
         if ($user === $this->getUser()) {
@@ -84,7 +84,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function deactivateUserAction(User $user)
+    public function deactivateUser(User $user)
     {
         $user->setActive(false);
 
@@ -94,7 +94,7 @@ class ProfileController extends BaseController
         return $this->redirectToRoute('specific_profile', ['id' => $user->getId()]);
     }
 
-    public function activateUserAction(User $user)
+    public function activateUser(User $user)
     {
         $user->setActive(true);
 
@@ -104,7 +104,7 @@ class ProfileController extends BaseController
         return $this->redirectToRoute('specific_profile', ['id' => $user->getId()]);
     }
 
-    public function activateNewUserAction(Request $request, $newUserCode)
+    public function activateNewUser(Request $request, $newUserCode)
     {
         $user = $this->get(UserRegistration::class)->activateUserByNewUserCode($newUserCode);
 
@@ -141,7 +141,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function changeRoleAction(Request $request, User $user)
+    public function changeRole(Request $request, User $user)
     {
         $response = array();
 
@@ -171,7 +171,7 @@ class ProfileController extends BaseController
         return new JsonResponse($response);
     }
 
-    public function downloadCertificateAction(Request $request, User $user)
+    public function downloadCertificate(Request $request, User $user)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -208,7 +208,7 @@ class ProfileController extends BaseController
         return new PDFResponse($mpdfService->generatePdf($html));
     }
 
-    public function editProfileInformationAction(Request $request)
+    public function editProfileInformation(Request $request)
     {
         $user            = $this->getUser();
         $oldCompanyEmail = $user->getCompanyEmail();
@@ -236,7 +236,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function editProfilePasswordAction(Request $request)
+    public function editProfilePassword(Request $request)
     {
         $user = $this->getUser();
 
@@ -258,7 +258,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function editProfileInformationAdminAction(Request $request, User $user)
+    public function editProfileInformationAdmin(Request $request, User $user)
     {
         $form            = $this->createForm(EditUserType::class, $user, array(
             'department' => $user->getDepartment(),
@@ -284,7 +284,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function editCompanyEmailAction(Request $request, User $user)
+    public function editCompanyEmail(Request $request, User $user)
     {
         $oldCompanyEmail = $user->getCompanyEmail();
         $form            = $this->createForm(UserCompanyEmailType::class, $user);

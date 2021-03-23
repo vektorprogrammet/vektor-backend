@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ChangeLogController extends BaseController
 {
-    public function createChangeLogAction(Request $request)
+    public function createChangeLog(Request $request)
     {
         $changeLogItem = new ChangeLogItem();
         $form = $this->createForm(ChangeLogType::class, $changeLogItem);
@@ -29,7 +29,7 @@ class ChangeLogController extends BaseController
         ));
     }
 
-    public function editChangeLogAction(Request $request, ChangeLogItem $changeLogItem)
+    public function editChangeLog(Request $request, ChangeLogItem $changeLogItem)
     {
         $form = $this->createForm(ChangeLogType::class, $changeLogItem);
         $form->handleRequest($request);
@@ -48,7 +48,7 @@ class ChangeLogController extends BaseController
         ));
     }
 
-    public function deleteChangeLogAction(ChangeLogItem $changeLogItem)
+    public function deleteChangeLog(ChangeLogItem $changeLogItem)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($changeLogItem);
@@ -59,7 +59,7 @@ class ChangeLogController extends BaseController
         return $this->redirect($this->generateUrl('changelog_show_all'));
     }
 
-    public function showAction()
+    public function show()
     {
         $em = $this->getDoctrine()->getManager();
         $changeLogItems = $em->getRepository(ChangeLogItem::class)->findAllOrderedByDate();

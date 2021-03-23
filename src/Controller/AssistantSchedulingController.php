@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AssistantSchedulingController extends BaseController
 {
-    public function indexAction()
+    public function index()
     {
         return $this->render('assistant_scheduling/index.html.twig');
     }
@@ -24,7 +24,7 @@ class AssistantSchedulingController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getAssistantsAction()
+    public function getAssistants()
     {
         $user = $this->getUser();
 
@@ -90,7 +90,7 @@ class AssistantSchedulingController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getSchoolsAction()
+    public function getSchools()
     {
         $user = $this->getUser();
         $department = $user->getFieldOfStudy()->getDepartment();

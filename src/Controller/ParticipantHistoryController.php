@@ -14,7 +14,7 @@ class ParticipantHistoryController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function showAction(Request $request)
+    public function show(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

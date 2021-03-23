@@ -21,7 +21,7 @@ class AccessRuleController extends AbstractController
      * @Route("/kontrollpanel/admin/accessrules", name="access_rules_show")
      * @return Response
      */
-    public function indexAction()
+    public function index()
     {
         $customRules = $this->getDoctrine()->getRepository(AccessRule::class)->findCustomRules();
         $routingRules = $this->getDoctrine()->getRepository(AccessRule::class)->findRoutingRules();
@@ -48,7 +48,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRuleAction(Request $request, AccessRule $accessRule = null)
+    public function createRule(Request $request, AccessRule $accessRule = null)
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
@@ -92,7 +92,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRoutingRuleAction(Request $request, AccessRule $accessRule = null)
+    public function createRoutingRule(Request $request, AccessRule $accessRule = null)
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
@@ -134,14 +134,14 @@ class AccessRuleController extends AbstractController
      * @param AccessRule $rule
      * @return Response
      */
-    public function copyAccessRuleAction(Request $request, AccessRule $rule)
+    public function copyAccessRule(Request $request, AccessRule $rule)
     {
         $clone = clone $rule;
         if ($rule->isRoutingRule()) {
-            return $this->createRoutingRuleAction($request, $clone);
+            return $this->createRoutingRule($request, $clone);
         }
         
-        return $this->createRuleAction($request, $clone);
+        return $this->createRule($request, $clone);
     }
 
     /**
@@ -153,7 +153,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule $accessRule
      * @return Response
      */
-    public function deleteAction(AccessRule $accessRule)
+    public function delete(AccessRule $accessRule)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($accessRule);

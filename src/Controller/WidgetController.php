@@ -22,7 +22,7 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function interviewsAction(Request $request)
+    public function interviews(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -38,7 +38,7 @@ class WidgetController extends BaseController
         return $this->render('widgets/interviews_widget.html.twig', ['applications' => $applicationsAssignedToUser]);
     }
 
-    public function receiptsAction()
+    public function receipts()
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
         $sorter = $this->container->get(Sorter::class);
@@ -62,7 +62,7 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function applicationGraphAction(Request $request)
+    public function applicationGraph(Request $request)
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -90,7 +90,7 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function availableSurveysAction(Request $request)
+    public function availableSurveys(Request $request)
     {
         $semester = $this->getSemesterOrThrow404($request);
 
@@ -104,7 +104,7 @@ class WidgetController extends BaseController
         ]);
     }
 
-    public function changelogAction()
+    public function changelog()
     {
         $changeLogItems = $this->getDoctrine()->getRepository(ChangeLogItem::class)->findAllOrderedByDate();
         $changeLogItems = array_reverse($changeLogItems);
@@ -114,7 +114,7 @@ class WidgetController extends BaseController
         ]);
     }
 
-    public function feedbackAction(Request $request)
+    public function feedback(Request $request)
     {
         $feedback = new Feedback;
         $form = $this->createForm(FeedBackType::class, $feedback);

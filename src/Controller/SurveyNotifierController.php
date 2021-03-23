@@ -21,7 +21,7 @@ class SurveyNotifierController extends BaseController
      * @param SurveyNotificationCollection|null $surveyNotificationCollection
      * @return Response
      */
-    public function createSurveyNotifierAction(Request $request, SurveyNotificationCollection $surveyNotificationCollection = null)
+    public function createSurveyNotifier(Request $request, SurveyNotificationCollection $surveyNotificationCollection = null)
     {
         $isUserGroupCollectionEmpty = empty($this->getDoctrine()->getManager()->getRepository(UserGroupCollection::class)->findAll());
         if ($isUserGroupCollectionEmpty) {
@@ -79,7 +79,7 @@ class SurveyNotifierController extends BaseController
     }
 
 
-    public function surveyNotificationCollectionsAction()
+    public function surveyNotificationCollections()
     {
         $surveyNotificationCollections =$this->getDoctrine()->getManager()->getRepository(SurveyNotificationCollection::class)->findAll();
 
@@ -89,7 +89,7 @@ class SurveyNotifierController extends BaseController
     }
 
 
-    public function sendSurveyNotificationsAction(SurveyNotificationCollection $surveyNotificationCollection)
+    public function sendSurveyNotifications(SurveyNotificationCollection $surveyNotificationCollection)
     {
         if ($surveyNotificationCollection->getTimeOfNotification() > new DateTime() || $surveyNotificationCollection->isAllSent()) {
             throw new AccessDeniedException();
@@ -109,7 +109,7 @@ class SurveyNotifierController extends BaseController
 
 
 
-    public function deleteSurveyNotifierAction(SurveyNotificationCollection $surveyNotificationCollection)
+    public function deleteSurveyNotifier(SurveyNotificationCollection $surveyNotificationCollection)
     {
         if ($surveyNotificationCollection->isActive()) {
             throw new AccessDeniedException();

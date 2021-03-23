@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SchoolAdminController extends BaseController
 {
-    public function showSpecificSchoolAction(School $school)
+    public function showSpecificSchool(School $school)
     {
         // This prevents admins to see other departments' schools
         if (!$this->isGranted(Roles::TEAM_LEADER) &&
@@ -35,7 +35,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function delegateSchoolToUserAction(Request $request, User $user)
+    public function delegateSchoolToUser(Request $request, User $user)
     {
         $department = $user->getDepartment();
 
@@ -70,7 +70,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function showUsersByDepartmentSuperadminAction(Department $department)
+    public function showUsersByDepartmentSuperadmin(Department $department)
     {
         $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();
 
@@ -84,7 +84,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function showUsersByDepartmentAction()
+    public function showUsersByDepartment()
     {
         $user = $this->getUser();
 
@@ -105,7 +105,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function showAction()
+    public function show()
     {
         // Finds the department for the current logged in user
         $department = $this->getUser()->getDepartment();
@@ -123,7 +123,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function showSchoolsByDepartmentAction(Department $department)
+    public function showSchoolsByDepartment(Department $department)
     {
         // Finds the schools for the given department
         $activeSchools = $this->getDoctrine()->getRepository(School::class)->findActiveSchoolsByDepartment($department);
@@ -137,7 +137,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function updateSchoolAction(Request $request, School $school)
+    public function updateSchool(Request $request, School $school)
     {
         // Create the formType
         $form = $this->createForm(CreateSchoolType::class, $school);
@@ -161,7 +161,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function createSchoolForDepartmentAction(Request $request, Department $department)
+    public function createSchoolForDepartment(Request $request, Department $department)
     {
         $school = new School();
 
@@ -188,7 +188,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function deleteSchoolByIdAction(School $school)
+    public function deleteSchoolById(School $school)
     {
         try {
             // This deletes the given school
@@ -209,7 +209,7 @@ class SchoolAdminController extends BaseController
         return new JsonResponse($response);
     }
 
-    public function removeUserFromSchoolAction(AssistantHistory $assistantHistory)
+    public function removeUserFromSchool(AssistantHistory $assistantHistory)
     {
         try {
             // This deletes the assistant history

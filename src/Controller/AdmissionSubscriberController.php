@@ -24,7 +24,7 @@ class AdmissionSubscriberController extends BaseController
      *
      * @return Response
      */
-    public function subscribePageAction(Request $request, Department $department)
+    public function subscribePage(Request $request, Department $department)
     {
         $subscriber = new AdmissionSubscriber();
         $subscriber->setDepartment($department);
@@ -56,7 +56,7 @@ class AdmissionSubscriberController extends BaseController
      *
      * @return Response
      */
-    public function subscribeAction(Request $request)
+    public function subscribe(Request $request)
     {
         $email = $request->request->get('email');
         $departmentId = $request->request->get('department');
@@ -84,7 +84,7 @@ class AdmissionSubscriberController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function unsubscribeAction($code)
+    public function unsubscribe($code)
     {
         $subscriber = $this->getDoctrine()->getRepository(AdmissionSubscriber::class)->findByUnsubscribeCode($code);
         $this->addFlash('title', 'Opptaksvarsel - Avmelding');

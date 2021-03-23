@@ -27,7 +27,7 @@ class TeamAdminController extends BaseController
      *
      * @return Response
      */
-    public function showAction(Department $department = null)
+    public function show(Department $department = null)
     {
         if ($department === null) {
             $department = $this->getUser()->getDepartment();
@@ -45,7 +45,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function updateTeamMembershipAction(Request $request, TeamMembership $teamMembership)
+    public function updateTeamMembership(Request $request, TeamMembership $teamMembership)
     {
         $department = $teamMembership->getTeam()->getDepartment();
 
@@ -72,7 +72,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function addUserToTeamAction(Request $request, Team $team)
+    public function addUserToTeam(Request $request, Team $team)
     {
         // Find the department of the team
         $department = $team->getDepartment();
@@ -111,7 +111,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function showSpecificTeamAction(Team $team)
+    public function showSpecificTeam(Team $team)
     {
         // Find all TeamMembership entities based on team
         $activeTeamMemberships   = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
@@ -148,7 +148,7 @@ class TeamAdminController extends BaseController
         return $a->getStartSemester()->getStartDate() < $b->getStartSemester()->getStartDate();
     }
 
-    public function updateTeamAction(Request $request, Team $team)
+    public function updateTeam(Request $request, Team $team)
     {
         // Find the department of the team
         $department   = $team->getDepartment();
@@ -189,7 +189,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function showTeamsByDepartmentAction(Department $department)
+    public function showTeamsByDepartment(Department $department)
     {
         // Find teams that are connected to the department of the department ID sent in by the request
         $teams = $this->getDoctrine()->getRepository(Team::class)->findByDepartment($department);
@@ -201,7 +201,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function createTeamForDepartmentAction(Request $request, Department $department)
+    public function createTeamForDepartment(Request $request, Department $department)
     {
         // Create a new Team entity
         $team = new Team();
@@ -244,7 +244,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function removeUserFromTeamByIdAction(TeamMembership $teamMembership)
+    public function removeUserFromTeamById(TeamMembership $teamMembership)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($teamMembership);
@@ -255,7 +255,7 @@ class TeamAdminController extends BaseController
         return $this->redirectToRoute('teamadmin_show_specific_team', [ 'id' => $teamMembership->getTeam()->getId() ]);
     }
 
-    public function deleteTeamByIdAction(Team $team)
+    public function deleteTeamById(Team $team)
     {
         $em = $this->getDoctrine()->getManager();
 

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProfilePhotoController extends BaseController
 {
-    public function showEditProfilePhotoAction(User $user)
+    public function showEditProfilePhoto(User $user)
     {
         $loggedInUser = $this->getUser();
         if ($user !== $loggedInUser && !$this->isGranted(Roles::TEAM_LEADER)) {
@@ -22,7 +22,7 @@ class ProfilePhotoController extends BaseController
         ));
     }
 
-    public function editProfilePhotoUploadAction(User $user, Request $request)
+    public function editProfilePhotoUpload(User $user, Request $request)
     {
         $loggedInUser = $this->getUser();
         if ($user !== $loggedInUser && !$this->isGranted(Roles::TEAM_LEADER)) {
