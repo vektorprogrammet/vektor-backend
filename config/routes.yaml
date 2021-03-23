@@ -21,44 +21,44 @@ home:
 
 home_post:
     path: /
-    controller: App\Controller\Home:post
+    controller: App\Controller\HomeController::post
     methods: [POST]
 
 students:
     path: /studenter
-    controller: App\Controller\Assistant:index
+    controller: App\Controller\AssistantController::index
     methods: [GET]
 
 schools:
     path: /skoler
-    controller: App\Controller\Teacher:index
+    controller: App\Controller\TeacherController::index
     methods: [GET]
 
 businesses:
     path: /bedrifter
-    controller: App\Controller\AboutVektor:show
+    controller: App\Controller\AboutVektorController:Controller::show
     methods: [GET]
 
 about:
     path: /omvektor
-    controller: App\Controller\AboutVektor:show
+    controller: App\Controller\AboutVektorController:Controller::show
     methods: [GET]
 
 faq:
     path: /faq
-    controller: App\Controller\AboutVektor:show
+    controller: App\Controller\AboutVektorController:Controller::show
     methods: [GET]
 
 parents:
     path: /foreldre
-    controller: App\Controller\Parents:index
+    controller: App\Controller\ParentsController::index
     methods: [GET]
 
 # Updates static content
 # Not meant for rendering a page. Receives a post request and updates the database.
 update_static_content:
     path: /updatestaticcontent
-    controller: App\Controller\StaticContent:update
+    controller: App\Controller\StaticContentController::update
     methods: [POST]
 
 ##########################################
@@ -67,7 +67,7 @@ update_static_content:
 
 control_panel:
     path: /kontrollpanel
-    controller: App\Controller\ControlPanel:show
+    controller: App\Controller\ControlPanelController::show
     methods: [GET]
 
 
@@ -77,26 +77,26 @@ control_panel:
 
 changelog_create:
     path: /kontrollpanel/changelog/create
-    controller: App\Controller\ChangeLog:createChangeLog
+    controller: App\Controller\ChangeLogController::createChangeLog
     methods: [GET, POST]
 
 changelogitem_edit:
     path: /kontrollpanel/changelog/edit/{id}
-    controller: App\Controller\ChangeLog:editChangeLog
+    controller: App\Controller\ChangeLogController::editChangeLog
     methods: [GET, POST]
     requirements:
         id: \d+
 
 changelogitem_delete:
     path: /kontrollpanel/changelog/delete/{id}
-    controller: App\Controller\ChangeLog:deleteChangeLog
+    controller: App\Controller\ChangeLogController::deleteChangeLog
     methods: [POST]
     requirements:
         id: \d+
 
 changelog_show_all:
     path: /kontrollpanel/changelog/show/all
-    controller: App\Controller\ChangeLog:show
+    controller: App\Controller\ChangeLogController::show
     methods: [GET]
 
 ##########################################
@@ -105,21 +105,21 @@ changelog_show_all:
 
 survey_show:
     path: /undersokelse/{id}
-    controller: App\Controller\Survey:show
+    controller: App\Controller\SurveyController::show
     methods: [GET, POST]
     requirements:
         id: \d+
 
 survey_show_user:
     path: /undersokelse/u/{id}
-    controller: App\Controller\Survey:showUser
+    controller: App\Controller\SurveyController::showUser
     methods: [GET, POST]
     requirements:
         id: \d+
 
 survey_show_user_id:
     path: /undersokelse/u/{id}/{userid}
-    controller: App\Controller\Survey:showId
+    controller: App\Controller\SurveyController::showId
     methods: [GET, POST]
     requirements:
         id: \d+
@@ -127,7 +127,7 @@ survey_show_user_id:
 
 survey_show_admin:
     path: /kontrollpanel/undersokelse/{id}
-    controller: App\Controller\Survey:showAdmin
+    controller: App\Controller\SurveyController::showAdmin
     methods: [GET, POST]
     requirements:
         id: \d+
@@ -135,7 +135,7 @@ survey_show_admin:
 
 survey_team_show_admin:
     path: /kontrollpanel/undersokelse/{id}
-    controller: App\Controller\Survey:showAdmin
+    controller: App\Controller\SurveyController::showAdmin
     methods: [GET, POST]
     requirements:
         id: \d+
@@ -143,92 +143,92 @@ survey_team_show_admin:
 
 survey_create:
     path: /kontrollpanel/undersokelse/opprett
-    controller: App\Controller\Survey:createSurvey
+    controller: App\Controller\SurveyController::createSurvey
     methods: [GET, POST]
 
 survey_edit:
     path: /kontrollpanel/undersokelse/endre/{id}
-    controller: App\Controller\Survey:editSurvey
+    controller: App\Controller\SurveyController::editSurvey
     methods: [GET, POST]
     requirements:
         id: \d+
 
 survey_delete:
     path: /kontrollpanel/undersokelse/slett/{id}
-    controller: App\Controller\Survey:deleteSurvey
+    controller: App\Controller\SurveyController::deleteSurvey
     methods: [POST]
     requirements:
         id: \d+
 
 survey_copy:
     path: /kontrollpanel/undersokelse/kopier/{id}
-    controller: App\Controller\Survey:copySurvey
+    controller: App\Controller\SurveyController::copySurvey
     methods: [GET, POST]
     requirements:
         id: \d+
 
 survey_results:
     path: /kontrollpanel/undersokelse/resultater/{id}
-    controller: App\Controller\Survey:resultSurvey
+    controller: App\Controller\SurveyController::resultSurvey
     methods: [GET]
     requirements:
         id: \d+
 
 survey_get_results_csv:
     path: /kontrollpanel/undersokelse/resultater/{id}.csv
-    controller: App\Controller\Survey:getSurveyResultCSV
+    controller: App\Controller\SurveyController::getSurveyResultCSV
     methods: [GET]
     requirements:
         id: \d+
 
 survey_get_all_results:
     path: /kontrollpanel/api/undersokelse/resultat/{id}
-    controller: App\Controller\Survey:getSurveyResult
+    controller: App\Controller\SurveyController::getSurveyResult
     methods: [GET]
     requirements:
         id: \d+
 
 survey_popup_reserve:
     path:   /togglepopup
-    controller: App\Controller\Survey:toggleReservedFromPopUp
+    controller: App\Controller\SurveyController::toggleReservedFromPopUp
     methods: [POST]
     requirements:
         id: \d+
 
 survey_popup_close:
     path:   /closepopup
-    controller: App\Controller\Survey:closePopUp
+    controller: App\Controller\SurveyController::closePopUp
     methods: [POST]
     requirements:
         id: \d+
 
 survey_notifiers:
     path: /kontrollpanel/undersokelsevarsel
-    controller: App\Controller\SurveyNotifier:surveyNotificationCollections
+    controller: App\Controller\SurveyNotifierController::surveyNotificationCollections
     methods: [GET]
 
 survey_notifier_create:
     path: /kontrollpanel/undersokelsevarsel/opprett
-    controller: App\Controller\SurveyNotifier:createSurveyNotifier
+    controller: App\Controller\SurveyNotifierController::createSurveyNotifier
     methods: [GET, POST]
 
 survey_notifier_edit:
     path: /kontrollpanel/undersokelsevarsel/rediger/{id}
-    controller: App\Controller\SurveyNotifier:createSurveyNotifier
+    controller: App\Controller\SurveyNotifierController::createSurveyNotifier
     methods: [GET, POST]
     requirements:
         id: \d+
 
 survey_notifier_delete:
     path: /kontrollpanel/undersokelsevarsel/slett/{id}
-    controller: App\Controller\SurveyNotifier:deleteSurveyNotifier
+    controller: App\Controller\SurveyNotifierController::deleteSurveyNotifier
     methods: [POST]
     requirements:
         id: \d+
 
 survey_notifier_send:
     path: /kontrollpanel/undersokelsevarsel/send/{id}
-    controller: App\Controller\SurveyNotifier:sendSurveyNotifications
+    controller: App\Controller\SurveyNotifierController::sendSurveyNotifications
     methods: [GET, POST]
     requirements:
         id: \d+
@@ -239,19 +239,19 @@ survey_notifier_send:
 ##########################################
 usergroup_collections:
     path: /kontrollpanel/brukergruppesamling
-    controller: App\Controller\UserGroupCollection:userGroupCollections
+    controller: App\Controller\UserGroupCollectionController::userGroupCollections
     methods: [GET]
 
 
 usergroup_collection_create:
     path: /kontrollpanel/brukergruppesamling/opprett
-    controller: App\Controller\UserGroupCollection:createUserGroupCollection
+    controller: App\Controller\UserGroupCollectionController::createUserGroupCollection
     methods: [GET, POST]
 
 
 usergroup_collection_edit:
     path: /kontrollpanel/brukergruppesamling/opprett/{id}
-    controller: App\Controller\UserGroupCollection:createUserGroupCollection
+    controller: App\Controller\UserGroupCollectionController::createUserGroupCollection
     methods: [GET, POST]
     requirements:
         id: \d+
@@ -259,7 +259,7 @@ usergroup_collection_edit:
 
 usergroup_collection_delete:
     path: /kontrollpanel/brukergruppesamling/slett/{id}
-    controller: App\Controller\UserGroupCollection:deleteUserGroupCollection
+    controller: App\Controller\UserGroupCollectionController::deleteUserGroupCollection
     methods: [POST]
     requirements:
         id: \d+
@@ -270,25 +270,25 @@ usergroup_collection_delete:
 
 social_event_show:
     path: /kontrollpanel/arrangementer
-    controller: App\Controller\SocialEvent:show
+    controller: App\Controller\SocialEventController::show
     methods: [GET]
 
 
 social_event_create:
     path: /kontrollpanel/arrangement/opprett
-    controller: App\Controller\SocialEvent:createSocialEvent
+    controller: App\Controller\SocialEventController::createSocialEvent
     methods: [GET, POST]
 
 social_event_edit:
     path: /kontrollpanel/arrangement/endre/{id}
-    controller: App\Controller\SocialEvent:editSocialEvent
+    controller: App\Controller\SocialEventController::editSocialEvent
     methods: [GET, POST]
     requirements:
         id: \d+
 
 social_event_delete:
     path: /kontrollpanel/arrangement/slett/{id}
-    controller: App\Controller\SocialEvent:deleteSocialEvent
+    controller: App\Controller\SocialEventController::deleteSocialEvent
     methods: [POST]
     requirements:
         id: \d+
@@ -299,7 +299,7 @@ social_event_delete:
 
 statistics_application_show:
     path: /kontrollpanel/statistikk/opptak
-    controller: App\Controller\ApplicationStatistics:show
+    controller: App\Controller\ApplicationStatisticsController::show
     methods: [GET]
     requirements:
         DepartmentController:: \d+
@@ -312,7 +312,7 @@ statistics_application_show:
 
 boardandteam_show:
     path: /styretogteam
-    controller: App\Controller\BoardAndTeam:show
+    controller: App\Controller\BoardAndTeamController::show
     methods: [GET]
 
 
@@ -322,17 +322,17 @@ boardandteam_show:
 
 profile:
     path:   /profile
-    controller: App\Controller\Profile:show
+    controller: App\Controller\ProfileController::show
     methods: [GET]
 
 profile_activate_with_user_code:
     path: /bruker/aktiver/{newUserCode}
-    controller: App\Controller\Profile:activateNewUser
+    controller: App\Controller\ProfileController::activateNewUser
     methods: [GET, POST]
 
 profile_activate_user:
     path:   /profile/aktiv/{id}
-    controller: App\Controller\Profile:activateUser
+    controller: App\Controller\ProfileController::activateUser
     methods: [POST]
     requirements:
         id: \d+
@@ -1285,7 +1285,7 @@ generate_all_mail_list:
 
 assistants:
     path: /assistenter/{id}
-    controller: App\Controller\Assistant:index
+    controller: App\Controller\AssistantController::index
     defaults:
         id: null
     methods: [GET, POST]
@@ -1298,11 +1298,12 @@ team:
 
 teachers:
     path: /laerere
-    controller: App\Controller\Teacher:index
+    controller: App\Controller\TeacherController::index
 
 about_new:
     path: /om
-    controller: App\Controller\AboutVektor:show
+    controller: App\Controller\AboutVektorController:Controller::show
+    
 ##########################################
 #               Feedback                 #
 ##########################################
