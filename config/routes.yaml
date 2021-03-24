@@ -36,17 +36,17 @@ schools:
 
 businesses:
     path: /bedrifter
-    controller: App\Controller\AboutVektorController:Controller::show
+    controller: App\Controller\AboutVektorController::show
     methods: [GET]
 
 about:
     path: /omvektor
-    controller: App\Controller\AboutVektorController:Controller::show
+    controller: App\Controller\AboutVektorController::show
     methods: [GET]
 
 faq:
     path: /faq
-    controller: App\Controller\AboutVektorController:Controller::show
+    controller: App\Controller\AboutVektorController::show
     methods: [GET]
 
 parents:
