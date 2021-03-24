@@ -15,6 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends BaseController
 {
+    private $geoLocation;
+
+    public function __construct(GeoLocation $geoLocation)
+    {
+        $this->geoLocation=$geoLocation;
+
+    }
 
     /**
      * @Route("/kontakt/avdeling/{id}",
@@ -33,7 +40,7 @@ class ContactController extends BaseController
     public function index(Request $request, Department $department = null)
     {
         if ($department === null) {
-            $department = $this->get(GeoLocation::class)
+            $department = $this->geoLocation
                 ->findNearestDepartment($this->getDoctrine()->getRepository(Department::class)->findAll());
         }
 

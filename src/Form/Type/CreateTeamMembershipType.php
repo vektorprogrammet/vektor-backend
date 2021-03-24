@@ -2,9 +2,9 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Repository\PositionRepository;
-use App\Entity\Repository\SemesterRepository;
-use App\Entity\Repository\UserRepository;
+use App\Repository\PositionRepository;
+use App\Repository\SemesterRepository;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

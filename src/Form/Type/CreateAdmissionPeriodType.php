@@ -3,7 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\AdmissionPeriod;
-use App\Entity\Repository\SemesterRepository;
+use App\Repository\SemesterRepository;
 use App\Entity\Semester;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

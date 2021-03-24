@@ -2,7 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Repository\DepartmentRepository;
+use App\Repository\DepartmentRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 

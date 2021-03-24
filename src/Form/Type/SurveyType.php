@@ -2,7 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Repository\SemesterRepository;
+use App\Repository\SemesterRepository;
 use App\Entity\Survey;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
