@@ -1,0 +1,23 @@
+twig:
+  default_path: '%kernel.project_dir%/templates'
+
+  globals:
+    googleAnalyticsId: '%env(googleAnalyticsId)%'
+
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    tags:
+      - { name: twig.extension }
+
+  App\Twig\:
+    resource: "../../src/Twig"
+
+  # >Not needed, has been replaced getProjectDir method of KernelInterface
+  #App\Twig\AssetExtension:
+  #    arguments:
+  #        $rootDir: '%kernel.project_dir%'
+
+

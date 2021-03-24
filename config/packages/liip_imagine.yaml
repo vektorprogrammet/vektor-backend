@@ -1,0 +1,105 @@
+# app/config/config.yml
+liip_imagine:
+
+    resolvers:
+        default:
+            web_path:
+                web_root: ~ %kernel.project_dir%/public
+                cache_prefix: media/cache
+
+    loaders:
+        default:
+            filesystem:
+                data_root: ~  %kernel.project_dir%/public
+
+    driver:               gd
+    cache:                default
+    data_loader:          default
+    default_image:        null
+    default_filter_set_settings:
+        quality:              100
+        jpeg_quality:         ~
+        png_compression_level:  ~
+        png_compression_filter: ~
+        animated:             false
+        format:               ~
+        cache:                ~
+        data_loader:          ~
+        default_image:        null
+        filters: []
+        post_processors: []
+    controller:
+        filter_action:          liip_imagine.controller:filterAction
+        filter_runtime_action:  liip_imagine.controller:filterRuntimeAction
+        redirect_response_code: 301
+    webp:
+        generate:    false
+        quality:     100
+        cache:       ~
+        data_loader: ~
+        post_processors: []
+    filter_sets:
+
+       # Prototype
+       # NOTE: This came with the default configuration. Should probably be removed in the future
+       #name:
+       #     quality:              100
+       #     jpeg_quality:         ~
+       #     png_compression_level:  ~
+       #     png_compression_filter: ~
+       #     animated:             false
+       #     format:               ~
+       #     cache:                ~
+       #     data_loader:          ~
+       #     default_image:        null
+       #     filters:
+
+                # Prototype
+       #         name:                 []
+
+       #     post_processors:
+
+                # Prototype
+       #         name:                 []
+
+        article_crop:
+            quality: 100
+            filters:
+                relative_resize: { scale: 2.5 }
+                crop: { start: [ 10, 20 ], size: [ 120, 90 ] }
+            # TODO: This should probably not be removed, hacky workaround
+            #max_500px:
+            #    quality: 85
+            #    filters:
+            #        downscale:
+            #            max: [ 500, 500 ]
+
+        article_large:
+            quality: 85
+            filters:
+                downscale:
+                    max: [ 900, 900 ]
+
+        article_small:
+            quality: 85
+            filters:
+                downscale:
+                    max: [ 500, 500 ]
+
+        profile_img:
+            quality: 85
+            filters:
+                downscale:
+                    max: [ 400, 400 ]
+
+        profile_img_small:
+            quality: 85
+            filters:
+                downscale:
+                    max: [ 200, 200 ]
+
+        profile_img_tiny:
+            quality: 85
+            filters:
+                downscale:
+                    max: [ 40, 40 ]

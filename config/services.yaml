@@ -30,6 +30,8 @@ parameters:
     # Team images
     team_images: 'images/team_images'
 
+    googleAnalyticsId: '%env(googleAnalyticsId)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
