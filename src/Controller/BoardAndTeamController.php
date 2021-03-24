@@ -10,11 +10,17 @@ use App\Service\GeoLocation;
 
 class BoardAndTeamController extends BaseController
 {
+    private $geoLocation;
+
+    public function __construct(GeoLocation $geoLocation)
+    {
+        $this->geoLocation=$geoLocation;
+    }
     public function show()
     {
         // Find all departments
         $departments = $this->getDoctrine()->getRepository(Department::class)->findActive();
-        $departments = $this->get(GeoLocation::class)->sortDepartmentsByDistanceFromClient($departments);
+        $departments = $this->geoLocation->sortDepartmentsByDistanceFromClient($departments);
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
         $numberOfTeams = 0;
