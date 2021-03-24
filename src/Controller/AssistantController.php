@@ -15,10 +15,27 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AssistantController extends BaseController
 {
+    private $applicationAdmission;
+    private $geoLocation;
+    private $filterService;
+    private $kernel;
+
+    public function __construct(ApplicationAdmission $applicationAdmission,
+                                GeoLocation $geoLocation,
+                                FilterService $filterService,
+                                KernelInterface $kernel)
+    {
+        $this->applicationAdmission=$applicationAdmission;
+        $this->geoLocation=$geoLocation;
+        $this->filterService=$filterService;
+        $this->kernel=$kernel;
+    }
+
     /**
      * @deprecated This resource is only here to serve old urls (e.g. in old emails)
      *
@@ -89,12 +106,12 @@ class AssistantController extends BaseController
      */
     public function index(Request $request, Department $specificDepartment = null, $scrollToAdmissionForm = false)
     {
-        $admissionManager = $this->get(ApplicationAdmission::class);
+        $admissionManager = $this->applicationAdmission;
         $em = $this->getDoctrine()->getManager();
 
         $departments = $em->getRepository(Department::class)->findActive();
-        $departments = $this->get(GeoLocation::class)->sortDepartmentsByDistanceFromClient($departments);
-        $departmentsWithActiveAdmission = $this->get(FilterService::class)->filterDepartmentsByActiveAdmission($departments, true);
+        $departments = $this->geoLocation->sortDepartmentsByDistanceFromClient($departments);
+        $departmentsWithActiveAdmission = $this->filterService->filterDepartmentsByActiveAdmission($departments, true);
 
         $departmentInUrl = $specificDepartment !== null;
         if (!$departmentInUrl) {
@@ -112,7 +129,7 @@ class AssistantController extends BaseController
             $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
                 'validation_groups' => array('admission'),
                 'departmentId' => $department->getId(),
-                'environment' => $this->get('kernel')->getEnvironment(),
+                'environment' => $this->kernel->getEnvironment(),
             ))->getForm();
 
             $form->handleRequest($request);
@@ -192,7 +209,7 @@ class AssistantController extends BaseController
         $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
             'validation_groups' => array('admission'),
             'departmentId' => $department->getId(),
-            'environment' => $this->get('kernel')->getEnvironment(),
+            'environment' => $this->kernel->getEnvironment(),
         ))->getForm();
 
         $form->handleRequest($request);
