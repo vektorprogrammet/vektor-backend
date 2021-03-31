@@ -415,7 +415,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $userAdmin->setPhone('47658937');
         $userAdmin->setUserName('admin');
         $userAdmin->setPassword('1234');
-        $userAdmin->addRole($this->getReference('role-4'));
+        $userAdmin->addRole('ROLE_ADMIN');
         $userAdmin->setFieldOfStudy($this->getReference('fos-1'));
         $userAdmin->setPicturePath('images/harold.jpg');
         $userAdmin->setAccountNumber('1234.56.78903');

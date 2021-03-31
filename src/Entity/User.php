@@ -436,11 +436,11 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * Add roles.
      *
-     * @param Role $roles
+     * @param string $roles
      *
      * @return User
      */
-    public function addRole(Role $roles)
+    public function addRole(string $roles)
     {
         $this->roles[] = $roles;
 
