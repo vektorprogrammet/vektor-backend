@@ -541,9 +541,9 @@ admissionadmin_show_application:
 
 applications_show_new:
     path: /kontrollpanel/opptak/nye
+    controller: App\Controller\AdmissionAdminController::showNewApplications
     defaults:
-        _controller: AppBundle:AdmissionAdminController::showNewApplications
-        DepartmentController:: null
+        department: null
         semester: null
     methods: [GET]
 
@@ -603,7 +603,7 @@ useradmin_show:
     controller: App\Controller\UserAdminController::show
     methods: [GET]
 
-useradmin_filter_users_by_DepartmentController::
+useradmin_filter_users_by_department:
     path: /kontrollpanel/brukeradmin/avdeling/{id}
     controller: App\Controller\UserAdminController::showUsersByDepartment
     methods: [GET]
