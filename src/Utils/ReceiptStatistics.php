@@ -3,7 +3,7 @@
 
 namespace App\Utils;
 
-use AppBundle\Entity\Receipt;
+use App\Entity\Receipt;
 use DateTime;
 
 class ReceiptStatistics
