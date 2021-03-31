@@ -6,7 +6,7 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
-        ROLE_TEAM_MEMBER:       ROLE_USER
+        ROLE_TEAM_MEMBER: ROLE_USER
         ROLE_TEAM_LEADER: [ROLE_USER, ROLE_TEAM_MEMBER, ROLE_ALLOWED_TO_SWITCH]
         ROLE_ADMIN: [ROLE_USER, ROLE_TEAM_MEMBER, ROLE_TEAM_LEADER, ROLE_ALLOWED_TO_SWITCH]
 
@@ -30,11 +30,11 @@ security:
                 property: companyEmail
     firewalls:
         dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
             provider: chain_provider
         admin_area:
-            pattern:    ^/admin
+            pattern: ^/admin
             http_basic: ~
             provider: chain_provider
         secured_area:
