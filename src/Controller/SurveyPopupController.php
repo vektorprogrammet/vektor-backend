@@ -13,12 +13,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SurveyPopupController extends AbstractController
 {
+    private $roleManager;
+
+    public function __construct(RoleManager $roleManager)
+    {
+        $this->roleManager = $roleManager;
+    }
     public function nextSurvey()
     {
         $survey = null;
         $user = $this->getUser();
         $userShouldSeePopUp = $user !== null &&
-            $this->get(RoleManager::class)->userIsGranted($user, Roles::TEAM_MEMBER) &&
+            $this->roleManager->userIsGranted($user, Roles::TEAM_MEMBER) &&
             !$user->getReservedFromPopUp() &&
             $user->getLastPopUpTime()->diff(new DateTime())->days >= 1;
 
