@@ -18,22 +18,23 @@
     <div class="control-panel">
         <h2 class="text-center my-3">Kontrollpanel</h2>
         <div class="sbs my-5">
-            {{ render(controller('AppBundle:ControlPanel:showSBS')) }}
+            {{ render(controller('App\\Controller\\ControlPanelController::showSBS')) }}
         </div>
 
         <div class="row">
             {% if admissionPeriod and admissionPeriod.hasActiveAdmission %}
-                {{ render(controller("AppBundle:Widget:applicationGraph")) }}
+                {{ render(controller('App\\Controller\\WidgetController::applicationGraph')) }}
             {% endif %}
 
-            {{ render(controller("AppBundle:Widget:availableSurveys")) }}
-            {{ render(controller("AppBundle:Widget:interviews")) }}
-            {{ render(controller("AppBundle:Widget:receipts")) }}
-            {{ render(controller("AppBundle:Widget:changelog")) }}
-            {{ render(controller("AppBundle:Widget:feedback",{'request': app.request})) }}
+            {{ render(controller('App\\Controller\\WidgetController::availableSurveys')) }}
+            {{ render(controller('App\\Controller\\WidgetController::interviews')) }}
+            {{ render(controller('App\\Controller\\WidgetController::receipts')) }}
+            {{ render(controller('App\\Controller\\WidgetController::changelog')) }}
+            {{ render(controller('App\\Controller\\WidgetController::interviews')) }}
+            {{ render(controller("AppBundle:Widget:feedback",{'request': app.request})) }} {# TODO: Fix this #}
 
             {% if not admissionPeriod or not admissionPeriod.hasActiveAdmission %}
-                {{ render(controller("AppBundle:Widget:applicationGraph")) }}
+                {{ render(controller('App\\Controller\\WidgetController::applicationGraph')) }}
             {% endif %}
         </div>
     </div>
