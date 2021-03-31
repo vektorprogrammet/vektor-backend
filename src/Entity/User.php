@@ -130,11 +130,12 @@ class User implements EquatableInterface, UserInterface, Serializable
 
     /**
      * @var Role[]
+     * @ORM\Column(type="json")
      * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
      * @ORM\JoinColumn(onDelete="cascade")
      * @Assert\Valid
      */
-    private $roles;
+    private $roles = [];
 
     /**
      * @ORM\column(type="string", nullable=true)
@@ -269,13 +270,13 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return Role[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        if (is_array($this->roles)) {
-            return $this->roles;
-        }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
-        return $this->roles->toArray();
+        return array_unique($roles);
     }
 
     /**
