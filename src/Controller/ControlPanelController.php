@@ -8,6 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ControlPanelController extends BaseController
 {
+    private $sbsData;
+
+    public function __construct(SbsData $sbsData)
+    {
+        $this->sbsData=$sbsData;
+    }
 
     /**
      *
@@ -29,7 +35,7 @@ class ControlPanelController extends BaseController
 
     public function showSBS()
     {
-        $sbsData = $this->get(SbsData::class);
+        $sbsData = $this->sbsData;
         $currentAdmissionPeriod = $this->getUser()->getDepartment()->getCurrentAdmissionPeriod();
 
         if ($currentAdmissionPeriod) {

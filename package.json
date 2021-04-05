@@ -1,7 +1,7 @@
 {
   "name": "vektorprogrammet",
   "version": "1.0.0",
-  "description": "This is the source code for vektorprogrammets new homepage.",
+  "description": "Vektorprogrammets homepage",
   "main": " ",
   "dependencies": {
     "@coreui/coreui": "^3.4.0",

@@ -18,6 +18,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WidgetController extends BaseController
 {
+    private $sorter;
+    private $admissionStatistics;
+
+    public function __construct(Sorter $sorter, AdmissionStatistics $admissionStatistics)
+    {
+        $this->sorter=$sorter;
+        $this->admissionStatistics=$admissionStatistics;
+    }
     /**
      * @param Request $request
      * @return Response|null
@@ -41,7 +49,7 @@ class WidgetController extends BaseController
     public function receipts()
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
-        $sorter = $this->container->get(Sorter::class);
+        $sorter = $this->sorter;
 
         $sorter->sortUsersByReceiptSubmitTime($usersWithReceipts);
         $sorter->sortUsersByReceiptStatus($usersWithReceipts);
@@ -67,7 +75,7 @@ class WidgetController extends BaseController
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
 
-        $admissionStatistics = $this->get(AdmissionStatistics::class);
+        $admissionStatistics = $this->admissionStatistics;
 
         $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);

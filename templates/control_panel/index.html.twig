@@ -31,7 +31,8 @@
             {{ render(controller('App\\Controller\\WidgetController::receipts')) }}
             {{ render(controller('App\\Controller\\WidgetController::changelog')) }}
             {{ render(controller('App\\Controller\\WidgetController::interviews')) }}
-            {{ render(controller("AppBundle:Widget:feedback",{'request': app.request})) }} {# TODO: Fix this #}
+            {# {{ render(controller("AppBundle:Widget:feedback",{'request': app.request})) }} {# TODO: Fix this #} #}
+            {# {{ render(controller("App\\Controller\\WidgetController::feedback")) }} {# TODO: Fix this (these two are the same)#} #}
 
             {% if not admissionPeriod or not admissionPeriod.hasActiveAdmission %}
                 {{ render(controller('App\\Controller\\WidgetController::applicationGraph')) }}

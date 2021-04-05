@@ -924,7 +924,7 @@ schooladmin_show_users_of_department_superadmin:
     requirements:
         id: \d+
 
-schooladmin_show_users_of_Department:
+schooladmin_show_users_of_department:
     path: /kontrollpanel/skoleadmin/brukere
     controller: App\Controller\SchoolAdminController::showUsersByDepartment
     methods: [GET]
