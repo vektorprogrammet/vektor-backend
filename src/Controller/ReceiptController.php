@@ -18,6 +18,13 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReceiptController extends BaseController
 {
+    private $sorter;
+
+    public function __construct(Sorter $sorter)
+    {
+        $this->sorter=$sorter;
+    }
+
     public function show()
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
@@ -32,7 +39,7 @@ class ReceiptController extends BaseController
         $pendingReceiptStatistics = new ReceiptStatistics($pendingReceipts);
         $rejectedReceiptStatistics = new ReceiptStatistics($rejectedReceipts);
 
-        $sorter = $this->container->get(Sorter::class);
+        $sorter = $this->sorter;
 
         $sorter->sortUsersByReceiptSubmitTime($usersWithReceipts);
         $sorter->sortUsersByReceiptStatus($usersWithReceipts);
@@ -69,7 +76,7 @@ class ReceiptController extends BaseController
 
         $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($this->getUser());
 
-        $sorter = $this->container->get(Sorter::class);
+        $sorter = $this->sorter;
         $sorter->sortReceiptsBySubmitTime($receipts);
         $sorter->sortReceiptsByStatus($receipts);
 
@@ -92,6 +99,7 @@ class ReceiptController extends BaseController
             return $this->redirectToRoute('receipt_create');
         }
 
+        # TODO: Cannot call isValid without isSubmitted. This has to be rewritten
         if (!$form->isValid()) {
             $receipt->setPicturePath(null);
         }
