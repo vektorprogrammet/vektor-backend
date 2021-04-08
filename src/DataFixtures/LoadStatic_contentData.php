@@ -30,7 +30,6 @@ class LoadStatic_contentData extends AbstractFixture
             'teacher-how-to-use' => '<h2>Enkelt &aring; bruke assistenter i undervisningen</h2><p>Assistentene kan brukes som hjelp i undervisningen. Her er noen forslag vi har gode erfaringer med:</p><ul><li>Hjelpe til med oppgavel&oslash;sing i klasserom</li><li>Utfordre de sterkeste elevene med vanskeligere oppgaver</li><li>Engasjere elever med matteleker, g&aring;ter og spill</li><li>Arbeid med elever p&aring; grupperom</li></ul>',
 
             'vektor_i_media' => '<p>Vektorprogrammet i media:</p><p>VG: Studenter hjelper elever med matte</p><p>NRK: Studenter hjelper elever med matte</p><p>DAGBLADET: Studenter hjelper elever med matte</p><p>AFTENPOSTEN: Studenter hjelper elever med matte</p>',
-            'contact-header' => '<h1>Organisasjonen</h1><p>Vektorprogrammet er en stor organisasjon med assistenter i 4 norske byer. Under kan du kontakte vektorprogrammet i n&aelig;rmeste by eller hovedstyret for generelle henvendelser.&nbsp;</p>',
 
 
         );
