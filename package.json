@@ -36,10 +36,11 @@
   "scripts": {
     "go": "symfony server:start",
     "start": "concurrently --kill-others \"php -S localhost:8000 -t public\" \"npm run watch\"",
+    "setup": "php ./composer.phar install --no-scripts && npm install && npm run build:dev && mkdir -p ./var/data && touch ./var/data/dev.db  && php bin/console doctrine:schema:drop --force --env=dev && php bin/console doctrine:schema:create --env=dev && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:fixtures:load --env=dev -n && php bin/console doctrine:migrations:sync-metadata-storage --env=dev -n",
     "watch": "gulp",
     "build:dev": "gulp build:dev",
     "db:reload": "npm run db:update",
-    "db:update": "php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:fixtures:load -n --env=dev && php bin/console doctrine:migrations:version -n --delete --all --env=dev && php bin/console doctrine:migrations:version -n --add --all --env=dev"
+    "db:update": "mkdir -p ./var/data && touch ./var/data/dev.db && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:fixtures:load -n --env=dev && php bin/console doctrine:migrations:version -n --delete --all --env=dev && php bin/console doctrine:migrations:version -n --add --all --env=dev"
   },
   "repository": {
     "type": "git",
