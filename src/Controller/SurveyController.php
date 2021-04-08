@@ -31,10 +31,12 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class SurveyController extends BaseController
 {
     private $SurveyManager;
+    private $AccessControlService;
 
-    public function __construct(SurveyManager $surveyManager)
+    public function __construct(SurveyManager $surveyManager, AccessControlService $accessControlService)
     {
         $this->SurveyManager=$surveyManager;
+        $this->AccessControlService=$accessControlService;
 
     }
     /**
@@ -245,7 +247,7 @@ class SurveyController extends BaseController
         $survey = new Survey();
         $survey->setDepartment($this->getUser()->getDepartment());
 
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $form = $this->createForm(SurveyAdminType::class, $survey);
         } else {
             $form = $this->createForm(SurveyType::class, $survey);
@@ -280,7 +282,7 @@ class SurveyController extends BaseController
         $currentSemester = $em->getRepository(Semester::class)->findCurrentSemester();
         $surveyClone->setSemester($currentSemester);
 
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $form = $this->createForm(SurveyAdminType::class, $surveyClone);
         } else {
             $form = $this->createForm(SurveyType::class, $surveyClone);
@@ -335,7 +337,7 @@ class SurveyController extends BaseController
 
 
         $globalSurveys = array();
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $globalSurveys = $this->getDoctrine()->getRepository(Survey::class)->findBy(
                 [
                     'semester' => $semester,
@@ -362,7 +364,7 @@ class SurveyController extends BaseController
     {
         $this->ensureAccess($survey);
 
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $form = $this->createForm(SurveyAdminType::class, $survey);
         } else {
             $form = $this->createForm(SurveyType::class, $survey);
@@ -494,7 +496,7 @@ class SurveyController extends BaseController
     {
         $user = $this->getUser();
 
-        $isSurveyAdmin = $this->get(AccessControlService::class)->checkAccess("survey_admin");
+        $isSurveyAdmin = $this->AccessControlService->checkAccess("survey_admin");
         $isSameDepartment = $survey->getDepartment() === $user->getDepartment();
 
         if ($survey->isConfidential() && !$isSurveyAdmin) {
