@@ -25,6 +25,12 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class AdmissionAdminController extends BaseController
 {
+    private $InterviewCounter;
+
+    public function __construct(InterviewCounter $interviewCounter)
+    {
+        $this->InterviewCounter=$interviewCounter;
+    }
     /**
      * Shows the admission admin page. Shows only applications for the department of the logged in user.
      * This works as the restricted admission management method, only allowing users to manage applications within their department.
@@ -93,7 +99,7 @@ class AdmissionAdminController extends BaseController
 
         if ($admissionPeriod !== null) {
             $applications = $applicationRepo->findAssignedApplicants($admissionPeriod);
-            $interviewDistributions = $this->get(InterviewCounter::class)
+            $interviewDistributions = $this->InterviewCounter
                 ->createInterviewDistributions($applications, $admissionPeriod);
             $cancelledApplications = $applicationRepo->findCancelledApplicants($admissionPeriod);
             $applicationsAssignedToUser = $applicationRepo->findAssignedByUserAndAdmissionPeriod($this->getUser(), $admissionPeriod);
@@ -131,7 +137,7 @@ class AdmissionAdminController extends BaseController
                 ->findInterviewedApplicants($admissionPeriod);
         }
 
-        $counter = $this->get(InterviewCounter::class);
+        $counter = $this->InterviewCounter;
 
         return $this->render('admission_admin/interviewed_applications_table.html.twig', array(
             'status' => 'interviewed',
