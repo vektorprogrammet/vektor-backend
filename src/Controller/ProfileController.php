@@ -26,6 +26,13 @@ use TFox\MpdfPortBundle\Response\PDFResponse;
 
 class ProfileController extends BaseController
 {
+    private $RoleManager;
+
+    public function __construct(RoleManager $roleManager)
+    {
+        $this->RoleManager=$roleManager;
+    }
+
     public function show()
     {
         // Get the user currently signed in
@@ -66,7 +73,7 @@ class ProfileController extends BaseController
         // Find the executive board history of the user
         $executiveBoardMemberships = $em->getRepository(ExecutiveBoardMembership::class)->findByUser($user);
 
-        $isGrantedAssistant = ($this->getUser() !== null && $this->get(RoleManager::class)->userIsGranted($this->getUser(), Roles::ASSISTANT));
+        $isGrantedAssistant = ($this->getUser() !== null && $this->RoleManager->userIsGranted($this->getUser(), Roles::ASSISTANT));
 
         if (empty($teamMemberships) && empty($executiveBoardMemberships) && !$isGrantedAssistant) {
             throw $this->createAccessDeniedException();
@@ -145,7 +152,7 @@ class ProfileController extends BaseController
     {
         $response = array();
 
-        $roleManager = $this->get(RoleManager::class);
+        $roleManager = $this->RoleManager;
         $roleName    = $roleManager->mapAliasToRole($request->request->get('role'));
 
         if (! $roleManager->loggedInUserCanChangeRoleOfUsersWithRole($user, $roleName)) {
