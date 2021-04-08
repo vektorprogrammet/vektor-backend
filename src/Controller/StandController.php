@@ -13,7 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StandController extends BaseController
 {
+    private $AdmissionStatistics;
 
+    public function __construct(AdmissionStatistics $admissionStatistics)
+    {
+        $this->AdmissionStatistics=$admissionStatistics;
+
+    }
     /**
      * @Route("/kontrollpanel/stand", name="stand")
      *
@@ -26,7 +32,7 @@ class StandController extends BaseController
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
 
-        $admissionStatistics = $this->get(AdmissionStatistics::class);
+        $admissionStatistics = $this->AdmissionStatistics;
 
         $subscribers = $this->getDoctrine()->getRepository(AdmissionSubscriber::class)->findFromWebByDepartment($department);
         $subscribersInDepartmentAndSemester = $this->getDoctrine()->getRepository(AdmissionSubscriber::class)
