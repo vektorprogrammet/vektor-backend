@@ -1,22 +1,20 @@
-$('.nav-link.active').each(function () {
+$('.c-sidebar-nav-link.active').each(function () {
   const link = $(this);
-  link.closest('.nav-dropdown').addClass('open');
+  link.closest('.c-sidebar-nav-dropdown').addClass('c-show');
 });
 
-$('.nav-dropdown-toggle').each(function () {
+$('.c-sidebar-nav-dropdown-toggle').each(function () {
   const toggle = $(this);
   toggle.click(function (e) {
-    if (e.target !== e.currentTarget) {
-      toggle.closest('.nav-dropdown').toggleClass('open');
-    }
+      toggle.closest('.c-sidebar-nav-dropdown').toggleClass('c-show');
   });
 });
 
 function removeEmptyNavCategories() {
-  const navTitles = $('.nav-title');
+  const navTitles = $('.c-sidebar-nav-title');
   navTitles.each(function() {
     const title = $(this);
-    if (title.prev().hasClass('nav-title')) {
+    if (title.prev().hasClass('c-sidebar-nav-title')) {
       title.prev().remove();
     }
   });

@@ -1,43 +1,48 @@
-<div class="sidebar">
-    <nav class="sidebar-nav ps ps--active-y">
-        <ul class="nav">
-            <li><span class="navbar-toggler sidebar-toggler d-flex d-lg-none align-items-center float-right p-3"
+<div class="c-sidebar c-sidebar-dark c-sidebar-show">
+        <ul class="c-sidebar-nav">
+
+            <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
+            <!--<li>
+                <1<span class="navbar-toggler sidebar-toggler d-flex d-lg-none align-items-center float-right p-3"
                       data-toggle="sidebar-show">
                         <span class="fa fa-bars mr-2"></span> <small>lukk</small>
-                    </span></li>
+                    </span>
+            </li>-->
             <li class="text-center mt-2">
-                <a class="text-muted" href="{{ path('home') }}"><i class="fa fa-chevron-left"></i> Tilbake til forsiden</a>
+                <a class="text-secondary" href="{{ path('home') }}"><i class="fa fa-chevron-left"></i> Tilbake til forsiden</a>
             </li>
-            <li class="nav-item nav-dropdown">
-                <a class="nav-link nav-dropdown-toggle text-center mt-2" data-toggle="dropdown" href="#" role="button"
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle text-center mt-2" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="true" aria-expanded="false">
-                    <img class="img-avatar profile-photo" width="75"
-                         src="{{ asset(app.user.picturePath | imagine_filter('profile_img_small')) }}"
-                         alt="{{ app.user }}">
-                    <div class="mt-2">{{ app.user }}</div>
+                    <div class="d-flex flex-column w-100 align-items-center">
+                        <img class="img-avatar profile-photo" width="75"
+                             src="{{ asset(app.user.picturePath | imagine_filter('profile_img_small')) }}"
+                             alt="{{ app.user }}">
+                        <div class="mt-2">{{ app.user }}</div>
+                    </div>
                 </a>
-                <ul class="nav-dropdown-items">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('my_page') }}">
-                            <i class="fa fa-file nav-icon"></i> Min side</a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ path('my_page') }}">
+                            <i class="fa fa-file c-sidebar-nav-icon"></i> Min side</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('profile') }}">
-                            <i class="fa fa-user nav-icon"></i> Min profil</a>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ path('profile') }}">
+                            <i class="fa fa-user c-sidebar-nav-icon"></i> Min profil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('receipt_create') }}">
-                            <i class="fa fa-usd nav-icon"></i> Mine utlegg</a>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ path('receipt_create') }}">
+                            <i class="fa fa-usd c-sidebar-nav-icon"></i> Mine utlegg</a>
                     </li>
                     {% if app.user.isActiveAssistant() %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('my_partners') }}">
-                                <i class="fa fa-users nav-icon"></i> Mine vektorpartnere</a>
+                        <li class="c-sidebar-nav-item">
+                            <a class="c-sidebar-nav-link" href="{{ path('my_partners') }}">
+                                <i class="fa fa-users c-sidebar-nav-icon"></i> Mine vektorpartnere</a>
                         </li>
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('logout') }}">
-                            <i class="fa fa-lock nav-icon"></i> Logg ut</a>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ path('logout') }}">
+                            <i class="fa fa-lock c-sidebar-nav-icon"></i> Logg ut</a>
                     </li>
                 </ul>
                 <hr class="my-1">
@@ -49,17 +54,17 @@
                 name: 'Kontrollpanel'
             } %}
 
-            <li class="nav-title">Opptak</li>
+            <li class="c-sidebar-nav-title">Opptak</li>
             {% include 'base/admin/nav_link.html.twig' with {
                 route: 'admission_period_admin_show',
                 icon: 'clock-o',
                 name: 'Opptaksperioder',
                 activeRoutes: ['admission_period_admin_show', 'admission_period_create', 'admission_period_update']
             } %}
-            <li class="nav-item nav-dropdown">
-                <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="fa fa-users nav-icon"></i> Opptak</a>
-                <ul class="nav-dropdown-items">
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa fa-users c-sidebar-nav-icon"></i> Opptak</a>
+                <ul class="c-sidebar-nav-dropdown-items">
                     {% include 'base/admin/nav_link.html.twig' with {
                         route: 'admissionadmin_show',
                         icon: 'users',
@@ -106,7 +111,7 @@
                     name: 'Opptaksstatistikk',
                 } %}
 
-            <li class="nav-title">Assistenter</li>
+            <li class="c-sidebar-nav-title">Assistenter</li>
             {% include 'base/admin/nav_link.html.twig' with {
                 route: 'participanthistory_show',
                 icon: 'users',
@@ -133,7 +138,7 @@
                 } %}
             {% endif %}
 
-            <li class="nav-title">Team</li>
+            <li class="c-sidebar-nav-title">Team</li>
             {% include 'base/admin/nav_link.html.twig' with {
                 route: 'teamadmin_show',
                 icon: 'smile-o',
@@ -169,7 +174,7 @@
             {% endif %}
 
 
-            <li class="nav-title">Brukere</li>
+            <li class="c-sidebar-nav-title">Brukere</li>
             {% include 'base/admin/nav_link.html.twig' with {
                 route: 'useradmin_show',
                 icon: 'users',
@@ -198,7 +203,7 @@
             } %}
 
 
-            <li class="nav-title">Økonomi</li>
+            <li class="c-sidebar-nav-title">Økonomi</li>
             {% include 'base/admin/nav_link.html.twig' with {
                 route: 'sponsors_show',
                 icon: 'money',
@@ -219,7 +224,7 @@
             } %}
 
 
-            <li class="nav-title">Annet</li>
+            <li class="c-sidebar-nav-title">Annet</li>
             {% include 'base/admin/nav_link.html.twig' with {
                 route: 'social_event_show',
                 icon: 'calendar-plus',
@@ -319,7 +324,7 @@
             } %}
 
             {% if is_granted_admin() %}
-                <li class="nav-title">Admin</li>
+                <li class="c-sidebar-nav-title">Admin</li>
                 {% include 'base/admin/nav_link.html.twig' with {
                     route: 'access_rules_show',
                     icon: 'shield-alt',
@@ -331,7 +336,7 @@
 
             {% endif %}
 
-            <li class="nav-item mt-auto">
+            <li class="c-sidebar-nav-item mt-auto">
                 <div class="p-4">
                     <a href="{{ path('home') }}">
                         <img class="img-fluid mx-4" src="{{ asset_with_version('images/vektor-logo-grey-notext.svg') }}" alt="Vektor logo">
@@ -340,5 +345,5 @@
                 </div>
             </li>
         </ul>
-    </nav>
 </div>
+
