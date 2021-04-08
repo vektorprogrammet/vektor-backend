@@ -13,7 +13,7 @@ use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\Repository\SurveyTakenRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SurveyTakenRepository")
  */
 class SurveyTaken implements JsonSerializable
 {
