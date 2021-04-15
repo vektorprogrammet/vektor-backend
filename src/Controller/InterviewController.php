@@ -9,7 +9,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Event\InterviewConductedEvent;
 use App\Event\InterviewEvent;
-use App\Form\InterviewNewTimeType;
+use App\Form\Type\InterviewNewTimeType;
 use App\Form\Type\AddCoInterviewerType;
 use App\Form\Type\ApplicationInterviewType;
 use App\Form\Type\CancelInterviewConfirmationType;

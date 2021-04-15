@@ -59,7 +59,7 @@ class ReceiptController extends BaseController
     {
         $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($user);
 
-        $sorter = $this->container->get(Sorter::class);
+        $sorter = $this->sorter;
         $sorter->sortReceiptsBySubmitTime($receipts);
         $sorter->sortReceiptsByStatus($receipts);
 
