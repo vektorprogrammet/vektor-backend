@@ -46,7 +46,14 @@ class InterviewManager
      * @param RouterInterface $router
      * @param SmsSenderInterface $smsSender
      */
-    public function __construct(TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authorizationChecker, Mailer $mailer, Environment $twig, LoggerInterface $logger, EntityManagerInterface $em, RouterInterface $router, SmsSenderInterface $smsSender)
+    public function __construct(TokenStorageInterface $tokenStorage,
+                                AuthorizationCheckerInterface $authorizationChecker,
+                                Mailer $mailer,
+                                Environment $twig,
+                                LoggerInterface $logger,
+                                EntityManagerInterface $em,
+                                RouterInterface $router,
+                                SmsSenderInterface $smsSender)
     {
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
