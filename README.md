@@ -1,17 +1,21 @@
 # vektor-backend
 
-(Currently in progress)
+(Work in progress)
 
 ## Set up development environment
 ### Requirements:
 - [PHP](http://php.net/downloads.php) version 7.4
 - [Node](https://nodejs.org/en/) version 14
-- [Git](https://git-scm.com/)
+### Recommended:
+- [Symfony CLI](https://symfony.com/download)
+
+### PHP dependencies
+- php7.4-zip
+- php7.4-gd
+- php7.4-sqlite3
+
 
 ### Setup:
-
-#### Clone files:
-`git clone https://github.com/vektorprogrammet/vektor-backend.git`
 
 ##### UNIX:
 `npm run setup`
@@ -22,7 +26,7 @@
 `npm start`
 
 ##### Alternatively
-you can also run the app using symfony's own local web server with `npm run start:symfony`
+`symfony server:start` (requires Symfony CLI)
 
 #### Build static files
 When adding new images or other non-code files, you can run:
