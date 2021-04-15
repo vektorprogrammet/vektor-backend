@@ -20,6 +20,11 @@ body {
 .card-header {
   font-size: 16px;
 }
+.img-avatar{
+  max-width: 100%;
+  height: auto;
+  border-radius: 50em;
+}
 
 .app-header {
   .dropdown-item {
@@ -39,9 +44,6 @@ body {
 html:not([dir=rtl]) {
   .sidebar-show {
     &.sidebar-fixed {
-      .main {
-        margin-left: $sidebar-width;
-      }
       .breadcrumb {
         .navbar-toggler {
           display: none;
@@ -84,12 +86,6 @@ html:not([dir=rtl]) {
           }
         }
       }
-    }
-  }
-
-  .sidebar-lg-show.sidebar-fixed .main {
-    @media (min-width: 576px) and (min-width: 992px) {
-      margin-left: $sidebar-width;
     }
   }
 
