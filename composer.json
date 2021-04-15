@@ -21,7 +21,7 @@
         "liip/imagine-bundle": "^2.5",
         "phpdocumentor/reflection-docblock": "^5.2",
         "ramsey/uuid": "^4.1",
-        "sensio/framework-extra-bundle": "^5.1",
+        "sensio/framework-extra-bundle": "^6.1",
         "symfony/asset": "5.2.*",
         "symfony/console": "5.2.*",
         "symfony/dependency-injection": "5.2.*",
