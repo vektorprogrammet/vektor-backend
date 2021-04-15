@@ -1,19 +1,16 @@
-<div class="c-sidebar c-sidebar-dark c-sidebar-show">
+<div class="c-sidebar c-sidebar-dark c-sidebar-lg-show" id="sidebar">
         <ul class="c-sidebar-nav">
 
-            <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
-            <!--<li>
-                <1<span class="navbar-toggler sidebar-toggler d-flex d-lg-none align-items-center float-right p-3"
-                      data-toggle="sidebar-show">
+            <li>
+                <button class="navbar-toggler c-class-toggler d-lg-none mfe-auto d-flex align-items-center float-right p-3" type="button" data-target="#sidebar" data-class="c-sidebar-show">
                         <span class="fa fa-bars mr-2"></span> <small>lukk</small>
-                    </span>
-            </li>-->
+                </button>
+            </li>
             <li class="text-center mt-2">
                 <a class="text-secondary" href="{{ path('home') }}"><i class="fa fa-chevron-left"></i> Tilbake til forsiden</a>
             </li>
             <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle text-center mt-2" data-toggle="dropdown" href="#" role="button"
-                   aria-haspopup="true" aria-expanded="false">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <div class="d-flex flex-column w-100 align-items-center">
                         <img class="img-avatar profile-photo" width="75"
                              src="{{ asset(app.user.picturePath | imagine_filter('profile_img_small')) }}"
@@ -62,7 +59,7 @@
                 activeRoutes: ['admission_period_admin_show', 'admission_period_create', 'admission_period_update']
             } %}
             <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa fa-users c-sidebar-nav-icon"></i> Opptak</a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     {% include 'base/admin/nav_link.html.twig' with {

@@ -106,12 +106,6 @@ function vendor () {
   r = r && gulp.src(['node_modules/ckeditor/**/*', path.src + 'js/ckeditor/**/*'])
       .pipe(gulp.dest('public/vendor/ckeditor/'));
 
-  r = r && gulp.src(path.src + '/js/coreui.js')
-    .pipe(gulp.dest('public/vendor/'));
-
-  r = r && gulp.src('node_modules/@coreui/coreui/dist/js/coreui.min.js')
-    .pipe(gulp.dest('public/vendor/'));
-
   r = r && gulp.src('node_modules/bootstrap/dist/js/bootstrap.min.js')
     .pipe(gulp.dest('public/js'));
 
@@ -122,7 +116,8 @@ function vendor () {
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/popper.js/dist/umd/popper.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
-    'node_modules/moment/min/moment.min.js'
+    'node_modules/moment/min/moment.min.js',
+    'node_modules/@coreui/coreui/dist/js/coreui.bundle.js',
   ])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest(path.dist + 'js/'));
