@@ -30,9 +30,7 @@
     <link rel="stylesheet" href="{{ asset_with_version('css/control_panel.css') }}">
     {% block stylesheets %}{% endblock %}
 </head>
-<body class="app sidebar-fixed aside-menu-fixed pace-done sidebar-lg-show">
-
-<div class="c-app">
+<body class="c-app">
     {% include 'base/admin/main_navigation.html.twig' %}
     <main class="c-wrapper">
         <ol class="breadcrumb navbar">
@@ -66,7 +64,6 @@
             {% endblock %}
         </div>
     </main>
-</div>
 
 
 {{ render(controller('App\\Controller\\SurveyPopupController::nextSurvey')) }}
