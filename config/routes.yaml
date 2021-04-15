@@ -853,7 +853,7 @@ departmentadmin_show:
     controller: App\Controller\DepartmentController::show
     methods: [GET]
 
-departmentadmin_create_Department:
+departmentadmin_create_department:
     path: /kontrollpanel/avdelingadmin/opprett
     controller: App\Controller\DepartmentController::createDepartment
     methods: [GET, POST]

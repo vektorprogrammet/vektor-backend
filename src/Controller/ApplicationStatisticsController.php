@@ -11,6 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationStatisticsController extends BaseController
 {
+    private $AssistantHistoryData;
+    private $ApplicationData;
+
+    public function __construct(AssistantHistoryData $assistantHistoryData, ApplicationData $applicationData)
+    {
+        $this->AssistantHistoryData=$assistantHistoryData;
+        $this->ApplicationData=$applicationData;
+    }
     /**
      * @param Request $request
      * @return Response
@@ -24,10 +32,10 @@ class ApplicationStatisticsController extends BaseController
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
-        $assistantHistoryData = $this->get(AssistantHistoryData::class);
+        $assistantHistoryData = $this->AssistantHistoryData;
         $assistantHistoryData->setSemester($semester)->setDepartment($department);
 
-        $applicationData = $this->get(ApplicationData::class);
+        $applicationData = $this->ApplicationData;
         if ($admissionPeriod !== null) {
             $applicationData->setAdmissionPeriod($admissionPeriod);
         }

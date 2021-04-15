@@ -30,7 +30,15 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class SurveyController extends BaseController
 {
+    private $SurveyManager;
+    private $AccessControlService;
 
+    public function __construct(SurveyManager $surveyManager, AccessControlService $accessControlService)
+    {
+        $this->SurveyManager=$surveyManager;
+        $this->AccessControlService=$accessControlService;
+
+    }
     /**
      * Shows the given survey.
      *
@@ -41,7 +49,7 @@ class SurveyController extends BaseController
      */
     public function show(Request $request, Survey $survey)
     {
-        $surveyTaken = $this->get(SurveyManager::class)->initializeSurveyTaken($survey);
+        $surveyTaken = $this->SurveyManager->initializeSurveyTaken($survey);
         if ($survey->getTargetAudience() === Survey::$SCHOOL_SURVEY || $survey->getTargetAudience() === Survey::$ASSISTANT_SURVEY) {
             $form = $this->createForm(SurveyExecuteType::class, $surveyTaken, array(
                 'validation_groups' => array('schoolSpecific'),
@@ -131,7 +139,7 @@ class SurveyController extends BaseController
 
     private function showUserMain(Request $request, Survey $survey, User $user, string $identifier = null)
     {
-        $surveyTaken = $this->get(SurveyManager::class)->initializeUserSurveyTaken($survey, $user);
+        $surveyTaken = $this->SurveyManager->initializeUserSurveyTaken($survey, $user);
         $form = $this->createForm(SurveyExecuteType::class, $surveyTaken);
         $form->handleRequest($request);
 
@@ -203,8 +211,8 @@ class SurveyController extends BaseController
         if ($survey->getTargetAudience() === Survey::$TEAM_SURVEY) {
             throw new InvalidArgumentException("Er team undersøkelse og har derfor ingen admin utfylling");
         }
-        $surveyTaken = $this->get(SurveyManager::class)->initializeSurveyTaken($survey);
-        $surveyTaken = $this->get(SurveyManager::class)->predictSurveyTakenAnswers($surveyTaken);
+        $surveyTaken = $this->SurveyManager->initializeSurveyTaken($survey);
+        $surveyTaken = $this->SurveyManager->predictSurveyTakenAnswers($surveyTaken);
 
         $form = $this->createForm(SurveyExecuteType::class, $surveyTaken);
         $form->handleRequest($request);
@@ -239,7 +247,7 @@ class SurveyController extends BaseController
         $survey = new Survey();
         $survey->setDepartment($this->getUser()->getDepartment());
 
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $form = $this->createForm(SurveyAdminType::class, $survey);
         } else {
             $form = $this->createForm(SurveyType::class, $survey);
@@ -274,7 +282,7 @@ class SurveyController extends BaseController
         $currentSemester = $em->getRepository(Semester::class)->findCurrentSemester();
         $surveyClone->setSemester($currentSemester);
 
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $form = $this->createForm(SurveyAdminType::class, $surveyClone);
         } else {
             $form = $this->createForm(SurveyType::class, $surveyClone);
@@ -329,7 +337,7 @@ class SurveyController extends BaseController
 
 
         $globalSurveys = array();
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $globalSurveys = $this->getDoctrine()->getRepository(Survey::class)->findBy(
                 [
                     'semester' => $semester,
@@ -356,7 +364,7 @@ class SurveyController extends BaseController
     {
         $this->ensureAccess($survey);
 
-        if ($this->get(AccessControlService::class)->checkAccess("survey_admin")) {
+        if ($this->AccessControlService->checkAccess("survey_admin")) {
             $form = $this->createForm(SurveyAdminType::class, $survey);
         } else {
             $form = $this->createForm(SurveyType::class, $survey);
@@ -488,7 +496,7 @@ class SurveyController extends BaseController
     {
         $user = $this->getUser();
 
-        $isSurveyAdmin = $this->get(AccessControlService::class)->checkAccess("survey_admin");
+        $isSurveyAdmin = $this->AccessControlService->checkAccess("survey_admin");
         $isSameDepartment = $survey->getDepartment() === $user->getDepartment();
 
         if ($survey->isConfidential() && !$isSurveyAdmin) {
