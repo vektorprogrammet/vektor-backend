@@ -685,7 +685,7 @@ admission_period_admin_show:
     controller: App\Controller\AdmissionPeriodController::show
     methods: [GET]
 
-admission_period_admin_show_by_Department:
+admission_period_admin_show_by_department:
     path: /kontrollpanel/opptaksperiode/{id}
     controller: App\Controller\AdmissionPeriodController::showByDepartment
     methods: [GET]
@@ -811,14 +811,14 @@ teamadmin_add_user_to_team:
     requirements:
         id: \d+
 
-teamadmin_create_team_for_Department:
+teamadmin_create_team_for_department:
     path: /kontrollpanel/teamadmin/avdeling/opprett/{id}
     controller: App\Controller\TeamAdminController::createTeamForDepartment
     methods: [GET, POST]
     requirements:
         id: \d+
 
-teamadmin_filter_teams_by_Department:
+teamadmin_filter_teams_by_department:
     path: /kontrollpanel/teamadmin/avdeling/{id}
     controller: App\Controller\TeamAdminController::showTeamsByDepartment
     methods: [GET]
@@ -876,14 +876,14 @@ schooladmin_show:
     controller: App\Controller\SchoolAdminController::show
     methods: [GET]
 
-schooladmin_filter_schools_by_Department:
+schooladmin_filter_schools_by_department:
     path: /kontrollpanel/skoleadmin/avdeling/{id}
     controller: App\Controller\SchoolAdminController::showSchoolsByDepartment
     methods: [GET]
     requirements:
         id: \d+
 
-schooladmin_create_school_by_Department:
+schooladmin_create_school_by_department:
     path: /kontrollpanel/skoleadmin/opprett/{id}
     controller: App\Controller\SchoolAdminController::createSchoolForDepartment
     methods: [GET, POST]
