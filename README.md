@@ -49,3 +49,4 @@ done when doing `npm start`)
 
 ### Add new entities to the database and reload fixtures
 `npm run db:update` or `npm run db:reload`
+
