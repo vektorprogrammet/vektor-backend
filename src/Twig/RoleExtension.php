@@ -38,7 +38,6 @@ class RoleExtension extends AbstractExtension
             new TwigFunction('is_granted_team_member', [$this, 'isGrantedTeamMember']),
             new TwigFunction('is_granted_team_leader', [$this, 'isGrantedTeamLeader']),
             new TwigFunction('is_granted_admin', [$this, 'isGrantedAdmin']),
-            new TwigFunction('can_edit_page', [$this, 'userCanEditPage']),
             new TwigFunction('user_is_granted_assistant', [$this, 'userIsGrantedAssistant']),
             new TwigFunction('user_is_granted_team_member', [$this, 'userIsGrantedTeamMember']),
             new TwigFunction('user_is_granted_team_leader', [$this, 'userIsGrantedTeamLeader']),
@@ -99,22 +98,5 @@ class RoleExtension extends AbstractExtension
     public function userIsInExecutiveBoard(User $user)
     {
         return $this->roleManager->userIsInExecutiveBoard($user);
-    }
-
-    public function userCanEditPage(User $user = null)
-    {
-        if ($user === null) {
-            $token = $this->tokenStorage->getToken();
-            if (!$token) {
-                return false;
-            }
-            $user = $token->getUser();
-        }
-
-        if (!$user || !is_object($user) || get_class($user) !== User::class) {
-            return false;
-        }
-
-        return $this->roleManager->userIsGranted($user, Roles::ADMIN) || $this->roleManager->userIsInExecutiveBoard($user);
     }
 }
