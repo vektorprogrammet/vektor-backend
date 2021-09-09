@@ -80,6 +80,15 @@ services:
     App\Google\GoogleAPI:
         arguments: ['%google_api%', '@App\Google\GoogleUsers', '@App\Google\GoogleGroups']
 
+    # FileUploader
+    App\Service\FileUploader:
+        arguments:
+            $logoFolder: 'images/Logo images'
+            $signatureFolder: '../signatures'
+            $receiptFolder: 'images/receipts'
+            $sponsorFolder: 'images/Logo images'
+            $articleFolder: 'images/article_images'
+            $profilePhotoFolder: 'images/Profile photos'
 
     # GeoLocation
     App\Service\GeoLocation:
