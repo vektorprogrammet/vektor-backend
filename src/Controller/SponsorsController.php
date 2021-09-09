@@ -13,6 +13,15 @@ use Symfony\Component\HttpFoundation\Response;
 class SponsorsController extends BaseController
 {
     /**
+     * @var FileUploader
+     */
+    private $fileUploader;
+
+    public function __construct(FileUploader $fileUploader){
+        $this->fileUploader = $fileUploader;
+    }
+
+    /**
      * @Route("/kontrollpanel/sponsorer", name="sponsors_show")
      *
      * @return Response
@@ -50,8 +59,8 @@ class SponsorsController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if (!is_null($request->files->get('sponsor')['logoImagePath'])) {
-                $imgPath = $this->get(FileUploader::class)->uploadSponsor($request);
-                $this->get(FileUploader::class)->deleteSponsor($oldImgPath);
+                $imgPath = $this->fileUploader->uploadSponsor($request);
+                $this->fileUploader->deleteSponsor($oldImgPath);
 
                 $sponsor->setLogoImagePath($imgPath);
             } else {
@@ -86,7 +95,7 @@ class SponsorsController extends BaseController
     public function deleteSponsor(Sponsor $sponsor)
     {
         if ($sponsor->getLogoImagePath()) {
-            $this->get(FileUploader::class)->deleteSponsor($sponsor->getLogoImagePath());
+            $this->fileUploader->deleteSponsor($sponsor->getLogoImagePath());
         }
 
         $em = $this->getDoctrine()->getManager();
