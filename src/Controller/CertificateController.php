@@ -15,6 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 class CertificateController extends BaseController
 {
     /**
+     * @var FileUploader
+     */
+    private $fileUploader;
+
+    public function __construct(FileUploader $fileUploader){
+        $this->fileUploader=$fileUploader;
+
+    }
+    /**
      * @Route(
      *     "/kontrollpanel/attest/{id}",
      *     name="certificate_show",
@@ -49,8 +58,8 @@ class CertificateController extends BaseController
             $isImageUpload = $request->files->get('create_signature')['signature_path'] !== null;
 
             if ($isImageUpload) {
-                $signaturePath = $this->get(FileUploader::class)->uploadSignature($request);
-                $this->get(FileUploader::class)->deleteSignature($oldPath);
+                $signaturePath = $this->fileUploader->uploadSignature($request);
+                $this->fileUploader->deleteSignature($oldPath);
 
                 $signature->setSignaturePath($signaturePath);
             } else {
