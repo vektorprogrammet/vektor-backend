@@ -12,6 +12,7 @@ use App\Service\RoleManager;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
 use DateTime;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -19,10 +20,20 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ReceiptController extends BaseController
 {
     private $sorter;
+    /**
+     * @var FileUploader
+     */
+    private $fileUploader;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function __construct(Sorter $sorter)
+    public function __construct(Sorter $sorter, FileUploader $fileUploader, EventDispatcherInterface $eventDispatcher)
     {
         $this->sorter=$sorter;
+        $this->fileUploader=$fileUploader;
+        $this->eventDispatcher=$eventDispatcher;
     }
 
     public function show()
@@ -84,24 +95,25 @@ class ReceiptController extends BaseController
 
         $form->handleRequest($request);
 
+
+        // User has posted a receipt
         if ($form->isSubmitted() && $form->isValid()) {
             $isImageUpload = $request->files->get('receipt', ['picture_path']) !== null;
             if ($isImageUpload) {
-                $path = $this->get(FileUploader::class)->uploadReceipt($request);
+                $path = $this->fileUploader->uploadReceipt($request);
                 $receipt->setPicturePath($path);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($receipt);
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(ReceiptEvent::CREATED, new ReceiptEvent($receipt));
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::CREATED);
 
             return $this->redirectToRoute('receipt_create');
         }
-
-        # TODO: Cannot call isValid without isSubmitted. This has to be rewritten
-        if (!$form->isValid()) {
-            $receipt->setPicturePath(null);
+        // Else: User is viewing receipt page (no receipt exist: path=null)
+        else {
+            $receipt->setPicturePath("");
         }
 
         return $this->render('receipt/my_receipts.html.twig', array(

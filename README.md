@@ -50,3 +50,10 @@ done when doing `npm start`)
 ### Add new entities to the database and reload fixtures
 `npm run db:update` or `npm run db:reload`
 
+
+### Dev:
+Load db-schema:
+`php bin/console doctrine:schema:update --force`
+
+Load fixtures:
+`php bin/console doctrine:fixtures:load`
