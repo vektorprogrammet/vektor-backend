@@ -6,7 +6,6 @@
 #}
 
 {% if is_granted_admin() %}
-    <script> var dump_file = "{{ path('update_static_content') }}" </script>
     <script src="{{ asset_with_version('vendor/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset_with_version('vendor/ckeditor/adapters/jquery.js') }}"></script>
     <script src="{{ asset_with_version('js/ckeditor/createCkeditorInstances.js') }}"></script>
