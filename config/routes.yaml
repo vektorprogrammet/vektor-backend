@@ -31,27 +31,27 @@ students:
 
 schools:
     path: /skoler
-    controller: App\Controller\TeacherController::index
+    controller: App\Controller\PublicStaticPageController::showTeacherPage
     methods: [GET]
 
 businesses:
     path: /bedrifter
-    controller: App\Controller\AboutVektorController::show
+    controller: App\Controller\PublicStaticPageController::showAboutPage
     methods: [GET]
 
 about:
     path: /omvektor
-    controller: App\Controller\AboutVektorController::show
+    controller: App\Controller\PublicStaticPageController::showAboutPage
     methods: [GET]
 
 faq:
     path: /faq
-    controller: App\Controller\AboutVektorController::show
+    controller: App\Controller\PublicStaticPageController::showAboutPage
     methods: [GET]
 
 parents:
     path: /foreldre
-    controller: App\Controller\ParentsController::index
+    controller: App\Controller\PublicStaticPageController::showParentsPage
     methods: [GET]
 
 
@@ -1294,11 +1294,11 @@ team:
 
 teachers:
     path: /laerere
-    controller: App\Controller\TeacherController::index
+    controller: App\Controller\PublicStaticPageController::showParentsPage
 
 about_new:
     path: /om
-    controller: App\Controller\AboutVektorController:Controller::show
+    controller: App\Controller\PublicStaticPageController::showAboutPage
     
 ##########################################
 #               Feedback                 #
