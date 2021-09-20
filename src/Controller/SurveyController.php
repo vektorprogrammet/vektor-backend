@@ -279,7 +279,7 @@ class SurveyController extends BaseController
         $surveyClone = $survey->copy();
 
         $em = $this->getDoctrine()->getManager();
-        $currentSemester = $em->getRepository(Semester::class)->findCurrentSemester();
+        $currentSemester = $this->getCurrentSemester();
         $surveyClone->setSemester($currentSemester);
 
         if ($this->AccessControlService->checkAccess("survey_admin")) {
