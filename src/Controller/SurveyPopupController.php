@@ -8,10 +8,9 @@ use App\Entity\Survey;
 use App\Role\Roles;
 use App\Service\RoleManager;
 use DateTime;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class SurveyPopupController extends AbstractController
+class SurveyPopupController extends BaseController
 {
     private $roleManager;
 
@@ -29,15 +28,19 @@ class SurveyPopupController extends AbstractController
             $user->getLastPopUpTime()->diff(new DateTime())->days >= 1;
 
         if ($userShouldSeePopUp) {
-            $semester = $this->getDoctrine()->getRepository(Semester::class)->findCurrentSemester();
+            $semester = $this->getCurrentSemester();
 
-            $surveys = $this->getDoctrine()
-                ->getRepository(Survey::class)
-                ->findAllNotTakenByUserAndSemester($this->getUser(), $semester);
+            if ($semester !== null) {
+                $surveys = $this->getDoctrine()
+                    ->getRepository(Survey::class)
+                    ->findAllNotTakenByUserAndSemester($this->getUser(), $semester);
 
-            if (!empty($surveys)) {
-                $survey = end($surveys);
+                if (!empty($surveys)) {
+                    $survey = end($surveys);
+                }
             }
+
+
         }
 
 
