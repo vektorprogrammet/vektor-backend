@@ -14,6 +14,6 @@
 {% endblock %}
 {% block body %}
     <div class="row">
-        {{ render(controller("AppBundle:Widget:feedback",{'request': app.request})) }} {# TODO: Fix this #}
+        {{ render(controller('App\\Controller\\WidgetController::feedback', {'request': app.request})) }}
     </div>
 {% endblock %}

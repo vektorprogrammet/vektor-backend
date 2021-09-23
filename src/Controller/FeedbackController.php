@@ -3,11 +3,24 @@ namespace App\Controller;
 
 use App\Entity\Feedback;
 use App\Form\Type\FeedbackType;
+use Knp\Component\Pager\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\SlackMessenger;
 
 class FeedbackController extends BaseController
 {
+
+    /**
+     * @var Paginator
+     */
+    private $paginator;
+
+    public function __construct(PaginatorInterface $paginator)
+    {
+        $this->paginator = $paginator;
+    }
+
     //shows form for submitting a new feedback
     public function index(Request $request)
     {
@@ -55,7 +68,7 @@ class FeedbackController extends BaseController
     //Lists all feedbacks
     public function showAll(Request $request)
     {
-        $paginator  = $this->get('knp_paginator');
+        $paginator  = $this->paginator;
 
         $repository = $this->getDoctrine()->getRepository(Feedback::class);
 
