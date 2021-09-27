@@ -14,15 +14,15 @@ class FeedbackController extends BaseController
     /**
      * @var Paginator
      */
-    private $paginator;
+    private $paginatorInterface;
     /**
      * @var SlackMessenger
      */
     private $slackMessenger;
 
-    public function __construct(PaginatorInterface $paginator, SlackMessenger $slackMessenger)
+    public function __construct(PaginatorInterface $paginatorInterface, SlackMessenger $slackMessenger)
     {
-        $this->paginator = $paginator;
+        $this->paginatorInterface = $paginatorInterface;
         $this->slackMessenger = $slackMessenger;
     }
 
@@ -73,7 +73,7 @@ class FeedbackController extends BaseController
     //Lists all feedbacks
     public function showAll(Request $request)
     {
-        $paginator  = $this->paginator;
+        $paginator  = $this->paginatorInterface;
 
         $repository = $this->getDoctrine()->getRepository(Feedback::class);
 
