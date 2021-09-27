@@ -6,6 +6,7 @@ use App\Service\FileUploader;
 use App\Service\LogService;
 use App\Service\SlugMaker;
 use Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,16 @@ class ArticleAdminController extends BaseController
     const NUM_ARTICLES = 10;
 
     /**
+     * @var PaginatorInterface
+     */
+    private $paginatorInterface;
+
+    public function __construct(PaginatorInterface $paginatorInterface) {
+        $this->paginatorInterface = $paginatorInterface;
+    }
+
+
+    /**
      * Shows the main page of the article administration.
      *
      * @param Request $request
@@ -37,7 +48,7 @@ class ArticleAdminController extends BaseController
         $articles = $em->getRepository(Article::class)->findAllArticles();
 
         // Uses the knp_paginator bundle to separate the articles into pages.
-        $paginator  = $this->get('knp_paginator');
+        $paginator  = $this->paginatorInterface;
         $pagination = $paginator->paginate(
             $articles,
             $request->query->get('page', 1),
