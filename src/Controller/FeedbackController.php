@@ -15,10 +15,15 @@ class FeedbackController extends BaseController
      * @var Paginator
      */
     private $paginator;
+    /**
+     * @var SlackMessenger
+     */
+    private $slackMessenger;
 
-    public function __construct(PaginatorInterface $paginator)
+    public function __construct(PaginatorInterface $paginator, SlackMessenger $slackMessenger)
     {
         $this->paginator = $paginator;
+        $this->slackMessenger = $slackMessenger;
     }
 
     //shows form for submitting a new feedback
@@ -44,7 +49,7 @@ class FeedbackController extends BaseController
             $em->flush();
 
             //Notifies on slack (NotificationChannel)
-            $messenger = $this->container->get(SlackMessenger::class);
+            $messenger = $this->slackMessenger;
             $messenger->notify($feedback->getSlackMessageBody());
 
             $this->addFlash("success", "Tilbakemeldingen har blitt registrert, tusen takk!");
