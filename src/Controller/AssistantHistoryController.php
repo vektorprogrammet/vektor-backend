@@ -10,6 +10,16 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
+    /**
+     * @var LogService
+     */
+    private $logService;
+
+    public function __construct(LogService $logService)
+    {
+        $this->logService = $logService;
+    }
+
     public function delete(AssistantHistory $assistantHistory)
     {
         if (!$this->isGranted(Roles::ADMIN) && $assistantHistory->getUser()->getDepartment() !== $this->getUser()->getDepartment()) {
@@ -20,7 +30,7 @@ class AssistantHistoryController extends BaseController
         $em->remove($assistantHistory);
         $em->flush();
 
-        $this->get(LogService::class)->info(
+        $this->logService->info(
             "{$this->getUser()} deleted {$assistantHistory->getUser()}'s assistant history on ".
             "{$assistantHistory->getSchool()->getName()} {$assistantHistory->getSemester()->getName()}"
         );

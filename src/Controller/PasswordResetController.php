@@ -17,6 +17,15 @@ use Symfony\Component\HttpFoundation\Response;
 class PasswordResetController extends BaseController
 {
     /**
+     * @var LogService
+     */
+    private $logService;
+
+    public function __construct(LogService $logService){
+        $this->logService = $logService;
+
+    }
+    /**
      * @param Request $request
      *
      * @return Response
@@ -40,15 +49,15 @@ class PasswordResetController extends BaseController
                 $ending   = '@vektorprogrammet.no';
                 if (strlen($email) > strlen($ending) && substr($email, strlen($email) - strlen($ending)) === $ending) {
                     $errorMsg = 'Kan ikke resette passord med "@vektorprogrammet.no"-adresse. Prøv din private e-post';
-                    $this->get(LogService::class)->info("Password reset rejected: Someone tried to reset password with a company email: $email");
+                    $this->logService->info("Password reset rejected: Someone tried to reset password with a company email: $email");
                 }
                 $this->get('session')->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
             } elseif (!$passwordReset->getUser()->isActive()) {
                 $errorMsg = "Brukeren med denne e-postadressen er deaktivert. Ta kontakt med it@vektorprogrammet.no for å aktivere brukeren din.";
                 $this->get('session')->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
-                $this->get(LogService::class)->notice("Password reset rejected: Someone tried to reset the password for an inactive account: $email");
+                $this->logService->notice("Password reset rejected: Someone tried to reset the password for an inactive account: $email");
             } else {
-                $this->get(LogService::class)->info("{$passwordReset->getUser()} requested a password reset");
+                $this->logService->info("{$passwordReset->getUser()} requested a password reset");
                 $oldPasswordResets = $this->getDoctrine()->getRepository(PasswordReset::class)->findByUser($passwordReset->getUser());
                 $em = $this->getDoctrine()->getManager();
 
@@ -105,7 +114,7 @@ class PasswordResetController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            $this->get(LogService::class)->info("{$passwordReset->getUser()} successfully created a new password from the reset link");
+            $this->logService->info("{$passwordReset->getUser()} successfully created a new password from the reset link");
 
             return $this->redirectToRoute('login_route');
         }

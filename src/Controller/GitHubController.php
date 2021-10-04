@@ -10,6 +10,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class GitHubController extends BaseController
 {
     private $repositoryName = 'vektorprogrammet/vektorprogrammet';
+    /**
+     * @var LogService
+     */
+    private $logService;
+
+    public function __construct(LogService $logService){
+        $this->logService = $logService;
+    }
 
     public function deploy(Request $request)
     {
@@ -31,13 +39,13 @@ class GitHubController extends BaseController
 
         // Execute deploy script if there is a push to master
         if ($isCorrectRepository && $isMaster && $commit !== null) {
-            $this->get(LogService::class)->info(
+            $this->logService->info(
                 "New commit on master by *$committer*:\n".
                 "```$message```\n".
                 "Deploying changes..."
             );
             shell_exec($this->getParameter('kernel.root_dir').'/../deploy.sh');
-            $this->get(LogService::class)->info('Deploy complete');
+            $this->logService->info('Deploy complete');
 
             return new JsonResponse(['status' => 'Deployed']);
         } else {

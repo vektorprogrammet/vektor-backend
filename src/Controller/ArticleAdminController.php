@@ -28,9 +28,14 @@ class ArticleAdminController extends BaseController
      * @var PaginatorInterface
      */
     private $paginatorInterface;
+    /**
+     * @var LogService
+     */
+    private $logService;
 
-    public function __construct(PaginatorInterface $paginatorInterface) {
+    public function __construct(PaginatorInterface $paginatorInterface, LogService $logService) {
         $this->paginatorInterface = $paginatorInterface;
+        $this->logService = $logService;
     }
 
 
@@ -113,7 +118,7 @@ class ArticleAdminController extends BaseController
                 'Artikkelen har blitt publisert.'
             );
 
-            $this->get(LogService::class)->info("A new article \"{$article->getTitle()}\" by {$article->getAuthor()} has been published");
+            $this->logService->info("A new article \"{$article->getTitle()}\" by {$article->getAuthor()} has been published");
 
             return new JsonResponse("ok");
         } elseif ($form->isSubmitted()) {
@@ -161,7 +166,7 @@ class ArticleAdminController extends BaseController
                 'Endringene har blitt publisert.'
             );
 
-            $this->get(LogService::class)->info("The article \"{$article->getTitle()}\" was edited by {$this->getUser()}");
+            $this->logService->info("The article \"{$article->getTitle()}\" was edited by {$this->getUser()}");
 
             return new JsonResponse("ok");
         } elseif ($form->isSubmitted()) {

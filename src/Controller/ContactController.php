@@ -16,10 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends BaseController
 {
     private $geoLocation;
+    /**
+     * @var LogService
+     */
+    private $logService;
 
-    public function __construct(GeoLocation $geoLocation)
+    public function __construct(GeoLocation $geoLocation, LogService $logService)
     {
-        $this->geoLocation=$geoLocation;
+        $this->geoLocation = $geoLocation;
+        $this->logService = $logService;
 
     }
 
@@ -52,7 +57,7 @@ class ContactController extends BaseController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $supportTicket->getDepartment() === null) {
-            $this->get(LogService::class)->error("Could not send support ticket. Department was null.\n$supportTicket");
+            $this->logService->error("Could not send support ticket. Department was null.\n$supportTicket");
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('event_dispatcher')
