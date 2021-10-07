@@ -36,11 +36,17 @@ class ArticleAdminController extends BaseController
      * @var SlugMaker
      */
     private $slugMaker;
+    /**
+     * @var FileUploader
+     */
+    private $fileUploader;
 
-    public function __construct(PaginatorInterface $paginatorInterface, LogService $logService, SlugMaker $slugMaker) {
+    public function __construct(PaginatorInterface $paginatorInterface, LogService $logService,
+                                SlugMaker $slugMaker, FileUploader $fileUploader) {
         $this->paginatorInterface = $paginatorInterface;
         $this->logService = $logService;
         $this->slugMaker = $slugMaker;
+        $this->fileUploader = $fileUploader;
     }
 
 
@@ -106,8 +112,8 @@ class ArticleAdminController extends BaseController
             // Set the author to the currently logged in user
             $article->setAuthor($this->getUser());
 
-            $imageSmall = $this->get(FileUploader::class)->uploadArticleImage($request, 'imgsmall');
-            $imageLarge = $this->get(FileUploader::class)->uploadArticleImage($request, 'imglarge');
+            $imageSmall = $this->fileUploader->uploadArticleImage($request, 'imgsmall');
+            $imageLarge = $this->fileUploader->uploadArticleImage($request, 'imglarge');
             if (!$imageSmall || !$imageLarge) {
                 return new JsonResponse("Error", 400);
             }
@@ -154,11 +160,11 @@ class ArticleAdminController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $imageSmall = $this->get(FileUploader::class)->uploadArticleImage($request, 'imgsmall');
+            $imageSmall = $this->fileUploader->uploadArticleImage($request, 'imgsmall');
             if ($imageSmall) {
                 $article->setImageSmall($imageSmall);
             }
-            $imageLarge = $this->get(FileUploader::class)->uploadArticleImage($request, 'imglarge');
+            $imageLarge = $this->fileUploader->uploadArticleImage($request, 'imglarge');
             if ($imageLarge) {
                 $article->setImageLarge($imageLarge);
             }

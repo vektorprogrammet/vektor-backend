@@ -144,9 +144,9 @@ class ReceiptController extends BaseController
 
             if ($isImageUpload) {
                 // Delete the old image file
-                $this->get(FileUploader::class)->deleteReceipt($oldPicturePath);
+                $this->fileUploader->deleteReceipt($oldPicturePath);
 
-                $path = $this->get(FileUploader::class)->uploadReceipt($request);
+                $path = $this->fileUploader->uploadReceipt($request);
                 $receipt->setPicturePath($path);
             } else {
                 $receipt->setPicturePath($oldPicturePath);
@@ -217,9 +217,9 @@ class ReceiptController extends BaseController
 
             if ($isImageUpload) {
                 // Delete the old image file
-                $this->get(FileUploader::class)->deleteReceipt($oldPicturePath);
+                $this->fileUploader->deleteReceipt($oldPicturePath);
 
-                $path = $this->get(FileUploader::class)->uploadReceipt($request);
+                $path = $this->fileUploader->uploadReceipt($request);
                 $receipt->setPicturePath($path);
             } else {
                 $receipt->setPicturePath($oldPicturePath);
@@ -257,7 +257,7 @@ class ReceiptController extends BaseController
         }
 
         // Delete the image file
-        $this->get(FileUploader::class)->deleteReceipt($receipt->getPicturePath());
+        $this->fileUploader->deleteReceipt($receipt->getPicturePath());
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($receipt);

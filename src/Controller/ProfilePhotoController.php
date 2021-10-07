@@ -10,6 +10,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProfilePhotoController extends BaseController
 {
+    /**
+     * @var FileUploader
+     */
+    private $fileUploader;
+
+    public function __construct(FileUploader $fileUploader)
+    {
+        $this->fileUploader = $fileUploader;
+    }
+
     public function showEditProfilePhoto(User $user)
     {
         $loggedInUser = $this->getUser();
@@ -29,12 +39,12 @@ class ProfilePhotoController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        $picturePath = $this->get(FileUploader::class)->uploadProfileImage($request);
+        $picturePath = $this->fileUploader->uploadProfileImage($request);
         if (!$picturePath) {
             return new JsonResponse("Kunne ikke laste inn bildet", 400);
         }
 
-        $this->get(FileUploader::class)->deleteProfileImage($user->getPicturePath());
+        $this->fileUploader->deleteProfileImage($user->getPicturePath());
         $user->setPicturePath($picturePath);
 
         $this->getDoctrine()->getManager()->flush();
