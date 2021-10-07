@@ -14,6 +14,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExecutiveBoardController extends BaseController
 {
+    /**
+     * @var RoleManager
+     */
+    private $roleManager;
+
+    public function __construct(RoleManager $roleManager)
+    {
+        $this->roleManager = $roleManager;
+    }
+
     public function show()
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
@@ -68,7 +78,7 @@ class ExecutiveBoardController extends BaseController
             $em->persist($member);
             $em->flush();
 
-            $this->get(RoleManager::class)->updateUserRole($member->getUser());
+            $this->roleManager->updateUserRole($member->getUser());
 
             return $this->redirect($this->generateUrl('executive_board_show'));
         }
@@ -86,7 +96,7 @@ class ExecutiveBoardController extends BaseController
         $em->remove($member);
         $em->flush();
 
-        $this->get(RoleManager::class)->updateUserRole($member->getUser());
+        $this->roleManager->updateUserRole($member->getUser());
 
         return $this->redirect($this->generateUrl('executive_board_show'));
     }

@@ -11,7 +11,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateUserRolesCommand extends Command
 {
-    #TODO: Use dependency-injection for dependencies
+    public function __construct(RoleManager $roleManager)
+    {
+        $this->roleManager = $roleManager;
+
+        parent::__construct();
+    }
+
     /**
      * @var ObjectManager
      */
@@ -52,7 +58,6 @@ HELP
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->entityManager = $this->getContainer()->get('doctrine')->getManager();
-        $this->roleManager = $this->getContainer()->get(RoleManager::class);
 
         $this->rolesUpdatedCount = 0;
     }
