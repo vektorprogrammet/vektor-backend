@@ -53,7 +53,6 @@ class AccessRule
     private $teams;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role")
      */
     private $roles;
 
@@ -154,7 +153,7 @@ class AccessRule
     }
 
     /**
-     * @return Role[]
+     * @return string[]
      */
     public function getRoles()
     {
@@ -162,7 +161,7 @@ class AccessRule
     }
 
     /**
-     * @param Role[] $roles
+     * @param string[] $roles
      *
      * @return AccessRule
      */

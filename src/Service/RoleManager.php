@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\ExecutiveBoardMembership;
-use App\Entity\Role;
 use App\Entity\Semester;
 use App\Entity\User;
 use App\Google\GoogleUsers;
@@ -194,7 +193,6 @@ class RoleManager
             return false;
         }
 
-        $role = $this->em->getRepository(Role::class)->findByRoleName($role);
         $roleNeedsToUpdate = array_search($role, $user->getRoles()) === false;
 
         if ($roleNeedsToUpdate) {

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\AssistantHistory;
 use App\Entity\ExecutiveBoardMembership;
-use App\Entity\Role;
 use App\Entity\Signature;
 use App\Entity\TeamMembership;
 use App\Entity\User;
@@ -171,8 +170,7 @@ class ProfileController extends BaseController
         }
 
         try {
-            $role = $this->getDoctrine()->getRepository(Role::class)->findByRoleName($roleName);
-            $user->setRoles(array( $role ));
+            $user->setRoles(array( $roleName ));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Role;
 use App\Entity\User;
 use App\Mailer\MailerInterface;
 use App\Role\Roles;
@@ -85,7 +84,7 @@ class UserRegistration
         $user->setActive('1');
 
         if (count($user->getRoles()) === 0) {
-            $role = $this->em->getRepository(Role::class)->findByRoleName(Roles::ASSISTANT);
+            $role = Roles::ASSISTANT;
             $user->addRole($role);
         }
 

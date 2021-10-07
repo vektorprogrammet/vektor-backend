@@ -6,7 +6,6 @@ use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\Department;
 use App\Entity\Interview;
-use App\Entity\Role;
 use App\Entity\User;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
@@ -89,7 +88,7 @@ class ApplicationAdmission
         }
 
         if (count($application->getUser()->getRoles()) === 0) {
-            $role = $this->em->getRepository(Role::class)->findByRoleName(Roles::ASSISTANT);
+            $role = Roles::ASSISTANT;
             $application->getUser()->addRole($role);
         }
     }

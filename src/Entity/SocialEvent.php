@@ -62,12 +62,6 @@ class SocialEvent
      */
     private $endTime;
 
-    /**
-     * @var Role
-     * @ORM\ManyToOne(targetEntity="Role")
-     * @ORM\JoinColumn(referencedColumnName="id")
-     *
-     */
     private $role;
 
     /**
@@ -221,18 +215,18 @@ class SocialEvent
     }
 
     /**
-     * @return Role|null
+     * @return string|null
      */
-    public function getRole(): ?Role
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
     /**
-     * @param Role $role
+     * @param string $role
      * @return SocialEvent
      */
-    public function setRole(Role $role): SocialEvent
+    public function setRole(string $role): SocialEvent
     {
         $this->role = $role;
         return $this;

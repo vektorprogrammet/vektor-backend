@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\AccessRule;
+use App\Role\Roles;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -20,12 +21,11 @@ class LoadAccessRuleData extends AbstractFixture implements OrderedFixtureInterf
 
         $manager->persist($rule);
 
-        $adminRule = $this->getReference("role-4");
         $rule = new AccessRule();
         $rule->setName("Survey Admin");
         $rule->setResource("survey_admin");
         $rule->setMethod('GET');
-        $rule->setRoles(array($adminRule));
+        $rule->setRoles(array(Roles::ADMIN));
 
 
         $manager->persist($rule);

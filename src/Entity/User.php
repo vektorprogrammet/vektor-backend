@@ -129,11 +129,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     private $lastPopUpTime;
 
     /**
-     * @var Role[]
      * @ORM\Column(type="json")
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     * @ORM\JoinColumn(onDelete="cascade")
-     * @Assert\Valid
      */
     private $roles = [];
 
@@ -268,14 +264,11 @@ class User implements EquatableInterface, UserInterface, Serializable
     }
 
     /**
-     * @return Role[]
+     * @return string[]
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_ADMIN';  # TODO: remove this line and uncomment the next. Temp workaround to acces control panel
-        //$roles[] = 'ROLE_USER';  #
 
         return array_unique($roles);
     }
@@ -437,13 +430,14 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * Add roles.
      *
-     * @param string $roles
+     * @param string $role
      *
      * @return User
      */
-    public function addRole(string $roles)
+    public function addRole(string $role)
     {
-        $this->roles[] = $roles;
+        $this->roles[] = $role;
+        $this->roles = array_unique($this->roles->toArray());
 
         return $this;
     }
@@ -451,9 +445,9 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * Remove roles.
      *
-     * @param Role $roles
+     * @param string $roles
      */
-    public function removeRole(Role $roles)
+    public function removeRole(string $roles)
     {
         $this->roles->removeElement($roles);
     }

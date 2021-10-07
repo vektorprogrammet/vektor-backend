@@ -8,6 +8,7 @@ use App\Service\RoleManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class RoleExtension extends AbstractExtension
@@ -44,6 +45,18 @@ class RoleExtension extends AbstractExtension
             new TwigFunction('user_is_granted_admin', [$this, 'userIsGrantedAdmin']),
             new TwigFunction('user_is_in_executive_board', [$this, 'userIsInExecutiveBoard']),
         );
+    }
+
+    public function getFilters()
+    {
+        return array(
+            new TwigFilter('get_role_name', [$this, 'getRoleName']),
+        );
+    }
+
+    public function getRoleName($role)
+    {
+        return Roles::GetRoleName($role);
     }
 
     public function isGrantedAssistant()

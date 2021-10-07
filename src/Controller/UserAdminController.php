@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\User;
 use App\Form\Type\CreateUserType;
-use App\Entity\Role;
 use App\Role\Roles;
 use App\Service\UserRegistration;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +30,7 @@ class UserAdminController extends BaseController
 
         // The fields of the form is checked if they contain the correct information
         if ($form->isSubmitted() && $form->isValid()) {
-            $role = $this->getDoctrine()->getRepository(Role::class)->findByRoleName(Roles::ASSISTANT);
+            $role = Roles::ASSISTANT;
             $user->addRole($role);
 
             $em = $this->getDoctrine()->getManager();
