@@ -32,10 +32,15 @@ class ArticleAdminController extends BaseController
      * @var LogService
      */
     private $logService;
+    /**
+     * @var SlugMaker
+     */
+    private $slugMaker;
 
-    public function __construct(PaginatorInterface $paginatorInterface, LogService $logService) {
+    public function __construct(PaginatorInterface $paginatorInterface, LogService $logService, SlugMaker $slugMaker) {
         $this->paginatorInterface = $paginatorInterface;
         $this->logService = $logService;
+        $this->slugMaker = $slugMaker;
     }
 
 
@@ -92,7 +97,7 @@ class ArticleAdminController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $this->get(SlugMaker::class)->setSlugFor($article);
+            $this->slugMaker->setSlugFor($article);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
