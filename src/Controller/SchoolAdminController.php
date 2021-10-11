@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Event\AssistantHistoryCreatedEvent;
 use App\Role\Roles;
 use Exception;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\School;
 use App\Form\Type\CreateSchoolType;
@@ -16,6 +17,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SchoolAdminController extends BaseController
 {
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     public function showSpecificSchool(School $school)
     {
         // This prevents admins to see other departments' schools
@@ -58,7 +66,7 @@ class SchoolAdminController extends BaseController
             $em->persist($assistantHistory);
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(AssistantHistoryCreatedEvent::NAME, new AssistantHistoryCreatedEvent($assistantHistory));
+            $this->eventDispatcher->dispatch(new AssistantHistoryCreatedEvent($assistantHistory), AssistantHistoryCreatedEvent::NAME);
 
             return $this->redirect($this->generateUrl('schooladmin_show_users_of_department'));
         }

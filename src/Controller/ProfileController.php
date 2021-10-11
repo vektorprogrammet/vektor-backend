@@ -18,6 +18,7 @@ use App\Service\LogService;
 use App\Service\RoleManager;
 use App\Service\UserRegistration;
 use Exception;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -31,11 +32,16 @@ class ProfileController extends BaseController
      * @var LogService
      */
     private $logService;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function __construct(RoleManager $roleManager, LogService $logService)
+    public function __construct(RoleManager $roleManager, LogService $logService, EventDispatcherInterface $eventDispatcher)
     {
         $this->RoleManager = $roleManager;
         $this->logService = $logService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function show()
@@ -237,7 +243,7 @@ class ProfileController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(UserEvent::EDITED, new UserEvent($user, $oldCompanyEmail));
+            $this->eventDispatcher->dispatch(new UserEvent($user, $oldCompanyEmail), UserEvent::EDITED);
 
             return $this->redirect($this->generateUrl('profile'));
         }
@@ -285,7 +291,7 @@ class ProfileController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(UserEvent::EDITED, new UserEvent($user, $oldCompanyEmail));
+            $this->eventDispatcher->dispatch(new UserEvent($user, $oldCompanyEmail), UserEvent::EDITED);
 
             return $this->redirect($this->generateUrl('specific_profile', array( 'id' => $user->getId() )));
         }
@@ -306,7 +312,7 @@ class ProfileController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(UserEvent::COMPANY_EMAIL_EDITED, new UserEvent($user, $oldCompanyEmail));
+            $this->eventDispatcher->dispatch(new UserEvent($user, $oldCompanyEmail), UserEvent::COMPANY_EMAIL_EDITED);
 
             return $this->redirectToRoute('specific_profile', [ 'id' => $user->getId() ]);
         }

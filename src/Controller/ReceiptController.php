@@ -197,11 +197,11 @@ class ReceiptController extends BaseController
         $em->flush();
 
         if ($status === Receipt::STATUS_REFUNDED) {
-            $this->get('event_dispatcher')->dispatch(ReceiptEvent::REFUNDED, new ReceiptEvent($receipt));
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt),ReceiptEvent::REFUNDED);
         } elseif ($status === Receipt::STATUS_REJECTED) {
-            $this->get('event_dispatcher')->dispatch(ReceiptEvent::REJECTED, new ReceiptEvent($receipt));
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::REJECTED);
         } elseif ($status === Receipt::STATUS_PENDING) {
-            $this->get('event_dispatcher')->dispatch(ReceiptEvent::PENDING, new ReceiptEvent($receipt));
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::PENDING);
         }
 
         return $this->redirectToRoute('receipts_show_individual', ['user' => $receipt->getUser()->getId()]);
@@ -263,7 +263,7 @@ class ReceiptController extends BaseController
         $em->remove($receipt);
         $em->flush();
 
-        $this->get('event_dispatcher')->dispatch(ReceiptEvent::DELETED, new ReceiptEvent($receipt));
+        $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::DELETED);
 
         return $this->redirect($request->headers->get('referer'));
     }

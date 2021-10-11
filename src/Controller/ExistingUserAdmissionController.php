@@ -9,6 +9,7 @@ use App\Form\Type\ApplicationExistingUserType;
 use App\Service\ApplicationAdmission;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ExistingUserAdmissionController extends BaseController
 {
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * @Route("/eksisterendeopptak",
      *     name="admission_existing_user",
@@ -52,7 +60,7 @@ class ExistingUserAdmissionController extends BaseController
             $em->persist($application);
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(ApplicationCreatedEvent::NAME, new ApplicationCreatedEvent($application));
+            $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
             $this->addFlash("success", "Søknad mottatt!");
 
             return $this->redirectToRoute('my_page');
