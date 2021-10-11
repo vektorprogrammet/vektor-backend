@@ -12,6 +12,7 @@ use App\Event\ApplicationCreatedEvent;
 use App\Form\Type\ApplicationType;
 use App\Role\Roles;
 use App\Service\InterviewCounter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,10 +27,12 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class AdmissionAdminController extends BaseController
 {
     private $InterviewCounter;
+    private $eventDispatcher;
 
-    public function __construct(InterviewCounter $interviewCounter)
+    public function __construct(InterviewCounter $interviewCounter, EventDispatcherInterface $eventDispatcher)
     {
-        $this->InterviewCounter=$interviewCounter;
+        $this->InterviewCounter = $interviewCounter;
+        $this->eventDispatcher = $eventDispatcher;
     }
     /**
      * Shows the admission admin page. Shows only applications for the department of the logged in user.
@@ -283,7 +286,7 @@ class AdmissionAdminController extends BaseController
 
             $this->addFlash('admission-notice', 'Søknaden er registrert.');
 
-            $this->get('event_dispatcher')->dispatch(ApplicationCreatedEvent::NAME, new ApplicationCreatedEvent($application));
+            $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
 
             return $this->redirectToRoute('register_applicant', array('id' => $department->getId()));
         }

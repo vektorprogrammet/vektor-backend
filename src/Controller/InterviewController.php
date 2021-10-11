@@ -22,6 +22,7 @@ use App\Service\InterviewManager;
 use DateTime;
 use InvalidArgumentException;
 use Exception;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,6 +36,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class InterviewController extends BaseController
 {
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * @Route("/kontrollpanel/intervju/conduct/{id}",
      *     name="interview_conduct",
@@ -87,7 +95,7 @@ class InterviewController extends BaseController
                 $em->persist($interview);
                 $em->flush();
 
-                $this->get('event_dispatcher')->dispatch(InterviewConductedEvent::NAME, new InterviewConductedEvent($application));
+                $this->eventDispatcher->dispatch(new InterviewConductedEvent($application), InterviewConductedEvent::NAME);
             }
 
             return $this->redirectToRoute('applications_show_interviewed', array(
@@ -261,7 +269,7 @@ class InterviewController extends BaseController
 
             // Send email if the send button was clicked
             if ($form->get('saveAndSend')->isClicked()) {
-                $this->get('event_dispatcher')->dispatch(InterviewEvent::SCHEDULE, new InterviewEvent($interview, $data));
+                $this->eventDispatcher->dispatch(new InterviewEvent($interview, $data), InterviewEvent::SCHEDULE);
             }
 
             return $this->redirectToRoute('applications_show_assigned', array('department' => $application->getDepartment()->getId(), 'semester' => $application->getSemester()->getId()));
@@ -557,7 +565,7 @@ class InterviewController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $em->persist($interview);
         $em->flush();
-        $this->get('event_dispatcher')->dispatch(InterviewEvent::COASSIGN, new InterviewEvent($interview));
+        $this->eventDispatcher->dispatch(new InterviewEvent($interview), InterviewEvent::COASSIGN);
 
         return $this->redirectToRoute('applications_show_assigned');
     }

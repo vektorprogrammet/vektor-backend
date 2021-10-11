@@ -13,6 +13,7 @@ use App\Service\FilterService;
 use App\Service\GeoLocation;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -24,16 +25,19 @@ class AssistantController extends BaseController
     private $geoLocation;
     private $filterService;
     private $kernel;
+    private $eventDispatcher;
 
     public function __construct(ApplicationAdmission $applicationAdmission,
                                 GeoLocation $geoLocation,
                                 FilterService $filterService,
-                                KernelInterface $kernel)
+                                KernelInterface $kernel,
+                                EventDispatcherInterface $eventDispatcher)
     {
-        $this->applicationAdmission=$applicationAdmission;
-        $this->geoLocation=$geoLocation;
-        $this->filterService=$filterService;
-        $this->kernel=$kernel;
+        $this->applicationAdmission = $applicationAdmission;
+        $this->geoLocation = $geoLocation;
+        $this->filterService = $filterService;
+        $this->kernel = $kernel;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -157,7 +161,7 @@ class AssistantController extends BaseController
                 $em->persist($application);
                 $em->flush();
 
-                $this->get('event_dispatcher')->dispatch(ApplicationCreatedEvent::NAME, new ApplicationCreatedEvent($application));
+                $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
 
                 return $this->redirectToRoute('application_confirmation');
             }
@@ -227,7 +231,7 @@ class AssistantController extends BaseController
             $em->persist($application);
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(ApplicationCreatedEvent::NAME, new ApplicationCreatedEvent($application));
+            $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
 
             $this->addFlash('success', $application->getUser()->getEmail().' har blitt registrert. Du vil få en e-post med kvittering på søknaden.');
             return $this->redirectToRoute('application_stand_form', ['shortName' => $department->getShortName()]);

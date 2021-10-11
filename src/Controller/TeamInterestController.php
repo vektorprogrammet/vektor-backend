@@ -9,6 +9,7 @@ use App\Entity\TeamInterest;
 use App\Form\Type\TeamInterestType;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,15 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TeamInterestController extends BaseController
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     /**
      * @Route(name="team_interest_form",
@@ -52,7 +62,7 @@ class TeamInterestController extends BaseController
             $manager->persist($teamInterest);
             $manager->flush();
 
-            $this->get('event_dispatcher')->dispatch(TeamInterestCreatedEvent::NAME, new TeamInterestCreatedEvent($teamInterest));
+            $this->eventDispatcher->dispatch(new TeamInterestCreatedEvent($teamInterest), TeamInterestCreatedEvent::NAME);
 
             return $this->redirectToRoute('team_interest_form', array(
                 'id' => $department->getId(),

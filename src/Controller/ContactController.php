@@ -9,6 +9,7 @@ use App\Event\SupportTicketCreatedEvent;
 use App\Form\Type\SupportTicketType;
 use App\Service\GeoLocation;
 use App\Service\LogService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,11 +21,16 @@ class ContactController extends BaseController
      * @var LogService
      */
     private $logService;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function __construct(GeoLocation $geoLocation, LogService $logService)
+    public function __construct(GeoLocation $geoLocation, LogService $logService, EventDispatcherInterface $eventDispatcher)
     {
         $this->geoLocation = $geoLocation;
         $this->logService = $logService;
+        $this->eventDispatcher = $eventDispatcher;
 
     }
 
@@ -60,8 +66,8 @@ class ContactController extends BaseController
             $this->logService->error("Could not send support ticket. Department was null.\n$supportTicket");
         }
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('event_dispatcher')
-            ->dispatch(SupportTicketCreatedEvent::NAME, new SupportTicketCreatedEvent($supportTicket));
+            $this->eventDispatcher
+            ->dispatch(new SupportTicketCreatedEvent($supportTicket), SupportTicketCreatedEvent::NAME);
 
             return $this->redirectToRoute('contact_department', array('id' => $supportTicket->getDepartment()->getId()));
         }
