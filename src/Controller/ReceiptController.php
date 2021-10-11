@@ -162,14 +162,11 @@ class ReceiptController extends BaseController
             $em->persist($receipt);
             $em->flush();
 
-            $this->get('event_dispatcher')->dispatch(ReceiptEvent::EDITED, new ReceiptEvent($receipt));
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::EDITED);
 
             return $this->redirectToRoute('receipt_create');
         }
 
-        if (!$form->isValid()) {
-            $receipt->setPicturePath($oldPicturePath);
-        }
 
         return $this->render('receipt/edit_receipt.html.twig', array(
             'form' => $form->createView(),
