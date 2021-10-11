@@ -9,7 +9,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateTeamMembershipCommand extends Command
 {
-    #TODO: Use dependency-injection for dependencies
+
+    /**
+     * @var TeamMembershipService
+     */
+    private $teamMembershipService;
+    public function __construct(TeamMembershipService $teamMembershipService)
+    {
+        $this->teamMembershipService = $teamMembershipService;
+        parent::__construct();
+
+    }
+
     /**
      * @var TeamMembershipService
      */
@@ -27,7 +38,7 @@ class UpdateTeamMembershipCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->notifier = $this->getContainer()->get(TeamMembershipService::class);
+        $this->notifier = $this->teamMembershipService;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -419,10 +419,10 @@ class SurveyController extends BaseController
         $this->ensureAccess($survey);
 
         if ($survey->getTargetAudience() === Survey::$SCHOOL_SURVEY) {
-            $textAnswers = $this->get(SurveyManager::class)
+            $textAnswers = $this->SurveyManager
                 ->getTextAnswerWithSchoolResults($survey);
         } else {
-            $textAnswers = $this->get(SurveyManager::class)
+            $textAnswers = $this->SurveyManager
                 ->getTextAnswerWithTeamResults($survey);
         }
 
@@ -443,7 +443,7 @@ class SurveyController extends BaseController
     public function getSurveyResult(Survey $survey)
     {
         $this->ensureAccess($survey);
-        return new JsonResponse($this->get(SurveyManager::class)->surveyResultToJson($survey));
+        return new JsonResponse($this->SurveyManager->surveyResultToJson($survey));
     }
 
     /**
@@ -456,7 +456,7 @@ class SurveyController extends BaseController
     public function getSurveyResultCSV(Survey $survey):Response
     {
         $this->ensureAccess($survey);
-        $sm = $this->get(SurveyManager::class);
+        $sm = $this->SurveyManager;
         $csv_string = $sm->surveyResultsToCsv($survey);
         return CsvUtil::makeCsvResponse($csv_string);
     }
@@ -468,7 +468,7 @@ class SurveyController extends BaseController
             return null;
         }
 
-        $this->get(SurveyManager::class)->toggleReservedFromPopUp($this->getUser());
+        $this->SurveyManager->toggleReservedFromPopUp($this->getUser());
 
         return new JsonResponse();
     }

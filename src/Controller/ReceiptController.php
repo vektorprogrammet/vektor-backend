@@ -28,12 +28,18 @@ class ReceiptController extends BaseController
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
+    /**
+     * @var RoleManager
+     */
+    private $roleManager;
 
-    public function __construct(Sorter $sorter, FileUploader $fileUploader, EventDispatcherInterface $eventDispatcher)
+    public function __construct(Sorter $sorter, FileUploader $fileUploader,
+                                EventDispatcherInterface $eventDispatcher, RoleManager $roleManager)
     {
         $this->sorter=$sorter;
         $this->fileUploader=$fileUploader;
         $this->eventDispatcher=$eventDispatcher;
+        $this->roleManager = $roleManager;
     }
 
     public function show()
@@ -144,9 +150,9 @@ class ReceiptController extends BaseController
 
             if ($isImageUpload) {
                 // Delete the old image file
-                $this->get(FileUploader::class)->deleteReceipt($oldPicturePath);
+                $this->fileUploader->deleteReceipt($oldPicturePath);
 
-                $path = $this->get(FileUploader::class)->uploadReceipt($request);
+                $path = $this->fileUploader->uploadReceipt($request);
                 $receipt->setPicturePath($path);
             } else {
                 $receipt->setPicturePath($oldPicturePath);
@@ -217,9 +223,9 @@ class ReceiptController extends BaseController
 
             if ($isImageUpload) {
                 // Delete the old image file
-                $this->get(FileUploader::class)->deleteReceipt($oldPicturePath);
+                $this->fileUploader->deleteReceipt($oldPicturePath);
 
-                $path = $this->get(FileUploader::class)->uploadReceipt($request);
+                $path = $this->fileUploader->uploadReceipt($request);
                 $receipt->setPicturePath($path);
             } else {
                 $receipt->setPicturePath($oldPicturePath);
@@ -248,7 +254,7 @@ class ReceiptController extends BaseController
     public function delete(Request $request, Receipt $receipt)
     {
         $user = $this->getUser();
-        $isTeamLeader = $this->get(RoleManager::class)->userIsGranted($user, Roles::TEAM_LEADER);
+        $isTeamLeader = $this->roleManager->userIsGranted($user, Roles::TEAM_LEADER);
 
         $userCanDeleteReceipt = $isTeamLeader || ($user === $receipt->getUser() && $receipt->getStatus() === Receipt::STATUS_PENDING);
 
@@ -257,7 +263,7 @@ class ReceiptController extends BaseController
         }
 
         // Delete the image file
-        $this->get(FileUploader::class)->deleteReceipt($receipt->getPicturePath());
+        $this->fileUploader->deleteReceipt($receipt->getPicturePath());
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($receipt);

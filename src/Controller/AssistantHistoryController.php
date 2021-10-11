@@ -15,8 +15,9 @@ class AssistantHistoryController extends BaseController
      */
     private $logService;
 
-    public function __construct(LogService $logService) {
-        $this->logService=$logService;
+    public function __construct(LogService $logService)
+    {
+        $this->logService = $logService;
     }
 
     public function delete(AssistantHistory $assistantHistory)

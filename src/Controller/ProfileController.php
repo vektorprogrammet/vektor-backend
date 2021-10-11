@@ -27,10 +27,15 @@ use TFox\MpdfPortBundle\Response\PDFResponse;
 class ProfileController extends BaseController
 {
     private $RoleManager;
+    /**
+     * @var LogService
+     */
+    private $logService;
 
-    public function __construct(RoleManager $roleManager)
+    public function __construct(RoleManager $roleManager, LogService $logService)
     {
-        $this->RoleManager=$roleManager;
+        $this->RoleManager = $roleManager;
+        $this->logService = $logService;
     }
 
     public function show()
@@ -137,7 +142,7 @@ class ProfileController extends BaseController
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_secured_area', serialize($token));
 
-            $this->get(LogService::class)->info("User $user activated with new user code");
+            $this->logService->info("User $user activated with new user code");
 
             return $this->redirectToRoute('my_page');
         }

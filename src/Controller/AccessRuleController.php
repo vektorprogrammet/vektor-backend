@@ -16,7 +16,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessRuleController extends AbstractController
 {
-    
+    /**
+     * @var AccessControlService
+     */
+    private $accessControlService;
+
+    public function __construct(AccessControlService $accessControlService)
+    {
+        $this->accessControlService = $accessControlService;
+    }
+
     /**
      * @Route("/kontrollpanel/admin/accessrules", name="access_rules_show")
      * @return Response
@@ -60,7 +69,7 @@ class AccessRuleController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get(AccessControlService::class)->createRule($accessRule);
+            $this->accessControlService->createRule($accessRule);
 
             if ($isCreate) {
                 $this->addFlash("success", "Access rule created");
@@ -98,7 +107,7 @@ class AccessRuleController extends AbstractController
             $accessRule = new AccessRule();
         }
         $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([ Roles::TEAM_MEMBER ]);
-        $routes = $this->get(AccessControlService::class)->getRoutes();
+        $routes = $this->accessControlService->getRoutes();
         $form = $this->createForm(RoutingAccessRuleType::class, $accessRule, [
             'routes' => $routes,
             'roles' => $roles
@@ -107,7 +116,7 @@ class AccessRuleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $accessRule->setIsRoutingRule(true);
-            $this->get(AccessControlService::class)->createRule($accessRule);
+            $this->accessControlService->createRule($accessRule);
 
             if ($isCreate) {
                 $this->addFlash("success", "Access rule created");

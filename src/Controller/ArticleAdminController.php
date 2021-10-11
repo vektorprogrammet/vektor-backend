@@ -28,9 +28,25 @@ class ArticleAdminController extends BaseController
      * @var PaginatorInterface
      */
     private $paginatorInterface;
+    /**
+     * @var LogService
+     */
+    private $logService;
+    /**
+     * @var SlugMaker
+     */
+    private $slugMaker;
+    /**
+     * @var FileUploader
+     */
+    private $fileUploader;
 
-    public function __construct(PaginatorInterface $paginatorInterface) {
+    public function __construct(PaginatorInterface $paginatorInterface, LogService $logService,
+                                SlugMaker $slugMaker, FileUploader $fileUploader) {
         $this->paginatorInterface = $paginatorInterface;
+        $this->logService = $logService;
+        $this->slugMaker = $slugMaker;
+        $this->fileUploader = $fileUploader;
     }
 
 
@@ -87,7 +103,7 @@ class ArticleAdminController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $this->get(SlugMaker::class)->setSlugFor($article);
+            $this->slugMaker->setSlugFor($article);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -96,8 +112,8 @@ class ArticleAdminController extends BaseController
             // Set the author to the currently logged in user
             $article->setAuthor($this->getUser());
 
-            $imageSmall = $this->get(FileUploader::class)->uploadArticleImage($request, 'imgsmall');
-            $imageLarge = $this->get(FileUploader::class)->uploadArticleImage($request, 'imglarge');
+            $imageSmall = $this->fileUploader->uploadArticleImage($request, 'imgsmall');
+            $imageLarge = $this->fileUploader->uploadArticleImage($request, 'imglarge');
             if (!$imageSmall || !$imageLarge) {
                 return new JsonResponse("Error", 400);
             }
@@ -113,7 +129,7 @@ class ArticleAdminController extends BaseController
                 'Artikkelen har blitt publisert.'
             );
 
-            $this->get(LogService::class)->info("A new article \"{$article->getTitle()}\" by {$article->getAuthor()} has been published");
+            $this->logService->info("A new article \"{$article->getTitle()}\" by {$article->getAuthor()} has been published");
 
             return new JsonResponse("ok");
         } elseif ($form->isSubmitted()) {
@@ -144,11 +160,11 @@ class ArticleAdminController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $imageSmall = $this->get(FileUploader::class)->uploadArticleImage($request, 'imgsmall');
+            $imageSmall = $this->fileUploader->uploadArticleImage($request, 'imgsmall');
             if ($imageSmall) {
                 $article->setImageSmall($imageSmall);
             }
-            $imageLarge = $this->get(FileUploader::class)->uploadArticleImage($request, 'imglarge');
+            $imageLarge = $this->fileUploader->uploadArticleImage($request, 'imglarge');
             if ($imageLarge) {
                 $article->setImageLarge($imageLarge);
             }
@@ -161,7 +177,7 @@ class ArticleAdminController extends BaseController
                 'Endringene har blitt publisert.'
             );
 
-            $this->get(LogService::class)->info("The article \"{$article->getTitle()}\" was edited by {$this->getUser()}");
+            $this->logService->info("The article \"{$article->getTitle()}\" was edited by {$this->getUser()}");
 
             return new JsonResponse("ok");
         } elseif ($form->isSubmitted()) {
