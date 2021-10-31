@@ -37,7 +37,7 @@ class ChangeLogType extends AbstractType
             ],
             'required' => true,
             'auto_initialize' => false,
-
+            'html5' => false,
             ))
         ->add('description', CKEditorType::class, array(
         'required' => false,
@@ -48,7 +48,6 @@ class ChangeLogType extends AbstractType
         'label' => 'Lang beskrivelse (valgfritt)',
         'attr' => array('class' => 'hide'),
             ))
-
         ->add('save', SubmitType::class, array(
             'label' => 'Lagre',
             ));

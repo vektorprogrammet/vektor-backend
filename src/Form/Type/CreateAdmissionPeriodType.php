@@ -33,12 +33,14 @@ class CreateAdmissionPeriodType extends AbstractType
             ->add('startDate', DateTimeType::class, array(
                 'label' => 'Opptak starttidspunkt',
                 'widget' => 'single_text',
-                'format' => 'dd.MM.yyyy HH:mm',
+                'format' => 'dd.MM.yyyy HH:mm', 
+                'html5' => false,
             ))
             ->add('endDate', DateTimeType::class, array(
                 'label' => 'Opptak sluttidspunkt',
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy HH:mm',
+                'html5' => false,
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Opprett',
