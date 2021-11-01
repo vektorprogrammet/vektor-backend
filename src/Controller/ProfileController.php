@@ -16,13 +16,14 @@ use App\Role\Roles;
 use App\Service\LogService;
 use App\Service\RoleManager;
 use App\Service\UserRegistration;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use TFox\MpdfPortBundle\Response\PDFResponse;
 
 class ProfileController extends BaseController
 {
@@ -47,15 +48,11 @@ class ProfileController extends BaseController
     {
         // Get the user currently signed in
         $user = $this->getUser();
-
         $em = $this->getDoctrine()->getManager();
-
         // Fetch the assistant history of the user
         $assistantHistory = $em->getRepository(AssistantHistory::class)->findByUser($user);
-
         // Find the team history of the user
         $teamMemberships = $em->getRepository(TeamMembership::class)->findByUser($user);
-
         // Find the executive board history of the user
         $executiveBoardMemberships = $em->getRepository(ExecutiveBoardMembership::class)->findByUser($user);
 
@@ -217,11 +214,23 @@ class ProfileController extends BaseController
             'signature'             => $signature,
             'additional_comment'    => $additional_comment,
             'department'            => $department,
-            'base_dir'              => $this->get('kernel')->getRootDir() . '/../public' . $request->getBasePath(),
+            'base_dir'              => $this->getParameter('kernel.project_dir') . '/public',
         ));
-        $mpdfService = $this->get('t_fox_mpdf_port.pdf');
+        $options = new Options();
+        $options->setIsRemoteEnabled(true);
+        $options->setChroot("/../");
 
-        return new PDFResponse($mpdfService->generatePdf($html));
+        $dompdf = new Dompdf($options);
+        $dompdf->setPaper('A4');
+
+        $html = preg_replace('/>\s+</', "><", $html);
+        $dompdf->loadHtml($html);
+
+        $dompdf->render();
+
+        $dompdf->stream( $filename='attest.pdf');
+
+        return null;
     }
 
     public function editProfileInformation(Request $request)
