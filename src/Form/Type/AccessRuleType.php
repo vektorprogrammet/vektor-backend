@@ -3,13 +3,14 @@
 namespace App\Form\Type;
 
 use App\Entity\AccessRule;
-use App\Entity\Role;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Role\Roles;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,11 +26,11 @@ class AccessRuleType extends AbstractType
         $builder
             ->add("name", TextType::class)
             ->add("resource", TextType::class)
-            ->add("roles", EntityType::class, [
-                'label' => false,
-                "expanded" => true,
-                "multiple" => true,
-                "class" => Role::class,
+            ->add("roles", ChoiceType::class, [
+                Roles::GetRoleName(Roles::ASSISTANT) => Roles::ASSISTANT,
+                Roles::GetRoleName(Roles::TEAM_MEMBER) => Roles::TEAM_MEMBER,
+                Roles::GetRoleName(Roles::TEAM_LEADER) => Roles::TEAM_LEADER,
+                Roles::GetRoleName(Roles::ADMIN) => Roles::ADMIN,
             ])
             ->add("teams", EntityType::class, [
                 'label' => false,

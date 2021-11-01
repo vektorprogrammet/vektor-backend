@@ -39,12 +39,12 @@ class ReversedRoleHierarchy extends RoleHierarchy
     {
         $roles = [];
         foreach ($roleNames as $roleName) {
-            $roles[] = new Role($roleName);
+            $roles[] = $roleName;
         }
 
         $results = [];
-        foreach ($this->getReachableRoles($roles) as $parent) {
-            $results[] = $parent->getRole();
+        foreach ($this->getReachableRoleNames($roles) as $parent) {
+            $results[] = $parent;
         }
 
         return $results;

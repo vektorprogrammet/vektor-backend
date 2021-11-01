@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Role;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -12,7 +11,7 @@ class RoleRepository extends EntityRepository
     /**
      * @param string $roleName
      *
-     * @return Role
+     * @return string
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
