@@ -17,6 +17,17 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class UserController extends BaseController
 {
+
+    /**
+     * @var ApplicationManager
+     */
+    private $applicationManager;
+
+    public function __construct(ApplicationManager $applicationManager)
+    {
+        $this->applicationManager = $applicationManager;
+    }
+
     /**
      * @Route("/min-side", name="my_page")
      *
@@ -41,7 +52,7 @@ class UserController extends BaseController
 
         $applicationStatus = null;
         if (null !== $activeApplication) {
-            $applicationStatus = $this->get(ApplicationManager::class)->getApplicationStatus($activeApplication);
+            $applicationStatus = $this->applicationManager->getApplicationStatus($activeApplication);
         }
         $activeAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($user);
 
