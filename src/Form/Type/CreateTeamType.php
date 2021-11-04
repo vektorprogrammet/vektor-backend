@@ -39,6 +39,7 @@ class CreateTeamType extends AbstractType
                 'format' => 'dd.MM.yyyy HH:mm',
                 'widget' => 'single_text',
                 'required' => false,
+                'html5' => false,
             ))
             ->add('active', CheckboxType::class, array(
                 'label' => 'Aktivt team',

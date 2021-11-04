@@ -46,6 +46,7 @@ class SocialEventType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'label' => 'Starttid for arrangement',
+                'html5' => false,
                 'attr' => array(
                     'placeholder' => 'Klikk for å velge tidspunkt',
                     'autocomplete' => 'off'
@@ -56,6 +57,7 @@ class SocialEventType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'label' => 'Sluttid for arrangement',
+                'html5' => false,
                 'attr' => array(
                     'placeholder' => 'Klikk for å velge tidspunkt',
                     'autocomplete' => 'off'

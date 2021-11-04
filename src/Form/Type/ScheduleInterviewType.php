@@ -26,6 +26,7 @@ class ScheduleInterviewType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'label' => 'Tidspunkt',
+                'html5' => false,
                 'attr' => array('placeholder' => 'Klikk for å velge tidspunkt'),
             ))
 
