@@ -29,31 +29,35 @@
                                 <h3 class="text-center text-muted my-3">{{ school }} - {{ assistantHistory.day }}er</h3>
                             </div>
 
-                            {% for group in [1,2] if assistantHistory.activeInGroup(group) %}
-                                <div class="col-12 col-md-6{{ not (assistantHistory.activeInGroup(1) and assistantHistory.activeInGroup(2)) ? ' offset-md-3':'' }}">
-                                    <h5 class="text-center my-3">Bolk {{ group }}</h5>
-                                    <div class="partners group-{{ group }}">
-                                        {% for partner in partners if partner.activeInGroup(group) %}
-                                            <div class="partner">
-                                                <img
-                                                        src="{{ asset_with_version(partner.user.picturePath) }}"
-                                                        alt="{{ partner.user }}"
-                                                        class="img-fluid rounded-circle mb-3 profile-photo">
-                                                <h5 class="mb-0">
-                                                    <a class="text-dark-blue"
-                                                       href="{{ path('specific_profile', {'id': partner.user.id}) }}">
-                                                        {{ partner.user }}
-                                                    </a>
-                                                </h5>
-                                                <p>
-                                                    <a class="text-default" href="tel:{{ partner.user.phone }}">
-                                                        <i class="fa fa-phone"></i> {{ partner.user.phone }}
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        {% endfor %}
+                            {% for group in [1,2] %}
+                                {% if assistantHistory.activeInGroup(group) %}
+                                    <div class="col-12 col-md-6{{ not (assistantHistory.activeInGroup(1) and assistantHistory.activeInGroup(2)) ? ' offset-md-3':'' }}">
+                                        <h5 class="text-center my-3">Bolk {{ group }}</h5>
+                                        <div class="partners group-{{ group }}">
+                                            {% for partner in partners %}
+                                                {% if partner.activeInGroup(group) %}
+                                                    <div class="partner">
+                                                        <img
+                                                                src="{{ asset_with_version(partner.user.picturePath) }}"
+                                                                alt="{{ partner.user }}"
+                                                                class="img-fluid rounded-circle mb-3 profile-photo">
+                                                        <h5 class="mb-0">
+                                                            <a class="text-dark-blue"
+                                                               href="{{ path('specific_profile', {'id': partner.user.id}) }}">
+                                                                {{ partner.user }}
+                                                            </a>
+                                                        </h5>
+                                                        <p>
+                                                            <a class="text-default" href="tel:{{ partner.user.phone }}">
+                                                                <i class="fa fa-phone"></i> {{ partner.user.phone }}
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     {% endfor %}
