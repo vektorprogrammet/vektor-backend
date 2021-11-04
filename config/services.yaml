@@ -84,7 +84,7 @@ services:
     App\Service\FileUploader:
         arguments:
             $logoFolder: 'images/Logo images'
-            $signatureFolder: '../signatures'
+            $signatureFolder: './signatures'
             $receiptFolder: 'images/receipts'
             $sponsorFolder: 'images/Logo images'
             $articleFolder: 'images/article_images'
