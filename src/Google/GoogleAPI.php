@@ -3,7 +3,6 @@
 namespace App\Google;
 
 
-use PhpParser\Node\Expr\Array_;
 
 class GoogleAPI
 {
@@ -11,7 +10,7 @@ class GoogleAPI
     private $groupService;
     private $disabled;
 
-    public function __construct(Array_ $apiOptions, GoogleUsers $userService, GoogleGroups $groupService)
+    public function __construct(array $apiOptions, GoogleUsers $userService, GoogleGroups $groupService)
     {
         $this->userService = $userService;
         $this->groupService = $groupService;

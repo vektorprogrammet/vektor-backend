@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "^7.4",
@@ -19,6 +19,7 @@
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^3.0",
+        "google/apiclient": "^2.11",
         "knplabs/knp-paginator-bundle": "^5.6",
         "liip/imagine-bundle": "^2.5",
         "phpdocumentor/reflection-docblock": "^5.2",
@@ -108,6 +109,12 @@
         "symfony": {
             "allow-contrib": false,
             "require": "5.2.*"
+        },
+        "extra": {
+            "google/apiclient-services": [
+                "Drive",
+                "Gmail"
+            ]
         }
     }
 }
