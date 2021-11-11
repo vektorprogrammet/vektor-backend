@@ -20,6 +20,7 @@
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^3.0",
         "google/apiclient": "^2.11",
+        "helios-ag/fm-elfinder-bundle": "^10.1",
         "knplabs/knp-paginator-bundle": "^5.6",
         "liip/imagine-bundle": "^2.5",
         "phpdocumentor/reflection-docblock": "^5.2",
@@ -94,7 +95,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "elfinder:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -108,7 +110,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": "true",
             "require": "5.2.*"
         },
         "extra": {
