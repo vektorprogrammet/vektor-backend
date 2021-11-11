@@ -29,6 +29,16 @@ class UserController extends BaseController
     }
 
     /**
+     * @var ApplicationManager
+     */
+    private $applicationManager;
+
+    public function __construct(ApplicationManager $applicationManager)
+    {
+        $this->applicationManager = $applicationManager;
+    }
+
+    /**
      * @Route("/min-side", name="my_page")
      *
      * @return Response
