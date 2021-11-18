@@ -1104,6 +1104,9 @@ interview_edit_status:
 #                File browser            #
 ##########################################
 #ElFinder routes
+elfinder:
+    resource: "@FMElfinderBundle/Resources/config/routing.yaml"
+
 # TODO TODO TODO
 #elfinder:
 #    path: /kontrollpanel/elfinder/{instance}/{homeFolder}
