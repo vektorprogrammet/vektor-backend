@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\AppBundle\Type;
+namespace App\Tests\Type;
 
 use App\Entity\Position;
 use App\Form\Type\CreatePositionType;

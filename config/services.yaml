@@ -42,7 +42,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind: 
             App\Sms\SmsSenderInterface: '@App\Sms\SmsSender'
-            AppBundle\Mailer\MailerInterface: '@App\Mailer\Mailer'
+            App\Mailer\MailerInterface: '@App\Mailer\Mailer'
 
 
 

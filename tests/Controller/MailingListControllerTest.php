@@ -3,7 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Tests\BaseWebTestCase;
-use AppBundle\Entity\User;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 class MailingListControllerTest extends BaseWebTestCase

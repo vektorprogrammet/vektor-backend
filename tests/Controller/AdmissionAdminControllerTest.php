@@ -3,7 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Tests\BaseWebTestCase;
-use AppBundle\Entity\Interview;
+use App\Entity\Interview;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 class AdmissionAdminControllerTest extends BaseWebTestCase

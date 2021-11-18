@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\AppBundle\Sms;
+namespace App\Tests\Sms;
 
 use App\Service\LogService;
 use App\Sms\GatewayAPI;
