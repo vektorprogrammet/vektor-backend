@@ -110,8 +110,8 @@
     },
     "extra": {
         "symfony": {
-            "require": "5.3.*"
-            "allow-contrib": "true",
+            "require": "5.3.*",
+            "allow-contrib": "true"
         },
         "extra": {
             "google/apiclient-services": [
