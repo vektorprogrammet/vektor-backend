@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\AppBundle\Extension;
+namespace App\Tests\Extension;
 
 use App\Entity\AdmissionPeriod;
 use App\Entity\Department;

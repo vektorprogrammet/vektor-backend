@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\AppBundle\Util;
+namespace App\Tests\Util;
 
 use App\Utils\TimeUtil;
 use DateTime;
