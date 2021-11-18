@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Department;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Article;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,15 @@ class ArticleController extends BaseController
 
     // Number of articles shown in the other news side bar.
     const NUM_OTHER_ARTICLES = 8;
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+
+    public function __construct(PaginatorInterface $paginator)
+    {
+        $this->paginator = $paginator;
+    }
 
     /**
      * Shows the news page.
@@ -41,8 +51,7 @@ class ArticleController extends BaseController
         $departments = $em->getRepository(Department::class)->findAllDepartments();
 
         // Uses the knp_paginator bundle to separate the articles into pages
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
+        $pagination = $this->paginator->paginate(
             $articles,
             $request->query->get('page', 1),
             self::NUM_ARTICLES
@@ -71,8 +80,7 @@ class ArticleController extends BaseController
         $departments = $em->getRepository(Department::class)->findAllDepartments();
 
         // Uses the knp_paginator bundle to separate the articles into pages
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
+        $pagination = $this->paginator->paginate(
             $articles,
             $request->query->get('page', 1),
             self::NUM_ARTICLES

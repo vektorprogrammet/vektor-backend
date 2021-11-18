@@ -30,6 +30,8 @@ parameters:
     # Team images
     team_images: 'images/team_images'
 
+    locale: 'no'
+
     googleAnalyticsId: '%env(googleAnalyticsId)%'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
