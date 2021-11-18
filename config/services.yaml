@@ -38,6 +38,11 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind: 
+            App\Sms\SmsSenderInterface: '@App\Sms\SmsSender'
+            AppBundle\Mailer\MailerInterface: '@App\Mailer\Mailer'
+
+
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -66,7 +71,7 @@ services:
     App\Google\Gmail:
         parent: App\Google\GoogleService
         calls:
-            - [setDefaultEmail, ['%default_from_email%']]
+            - [setDefaultEmail, ['vektorbot@vektorprogrammet.no']]
 
     App\Google\GoogleUsers:
         parent: App\Google\GoogleService
@@ -109,3 +114,24 @@ services:
             $notificationChannel: '%env(SLACK_NOTIFICATION_CHANNEL)%'
             $logChannel: '%env(SLACK_LOG_CHANNEL)%'
             $disableDelivery: '%env(SLACK_DISABLE_DELIVERY)%'
+    # SMS GatewayAPI
+    App\Sms\GatewayAPI:
+        arguments:
+            $smsOptions: 
+                api_token: 'xxxxxxx'
+                disable_delivery: true
+                max_length: 1200
+                country_code: '47'
+    # SmsSender
+    App\Sms\SmsSender:
+        arguments:
+            $env: '%kernel.environment%'
+    # EmailSender
+    App\Service\EmailSender:
+        arguments:
+            $defaultEmail: 'vektorbot@vektorprogrammet.no'
+            $economyEmail: 'okonomi@vektorprogrammet.no'
+    # Mailer
+    App\Mailer\Mailer:
+        arguments:
+            $env: '%kernel.environment%'

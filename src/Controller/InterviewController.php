@@ -37,10 +37,12 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class InterviewController extends BaseController
 {
     private $eventDispatcher;
+	private $interviewManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, InterviewManager $interviewManager)
     {
         $this->eventDispatcher = $eventDispatcher;
+		$this->interviewManager = $interviewManager;
     }
 
     /**
@@ -68,10 +70,10 @@ class InterviewController extends BaseController
         }
 
         // If the interview has not yet been conducted, create up to date answer objects for all questions in schema
-        $interview = $this->get(InterviewManager::class)->initializeInterviewAnswers($application->getInterview());
+        $interview = $this->interviewManager->initializeInterviewAnswers($application->getInterview());
 
         // Only admin and above, or the assigned interviewer, or the co interviewer should be able to conduct an interview
-        if (!$this->get(InterviewManager::class)->loggedInUserCanSeeInterview($interview)) {
+        if (!$this->interviewManager->loggedInUserCanSeeInterview($interview)) {
             throw $this->createAccessDeniedException();
         }
 
@@ -141,7 +143,7 @@ class InterviewController extends BaseController
         }
 
         // Only accessible for admin and above, or team members belonging to the same department as the interview
-        if (!$this->get(InterviewManager::class)->loggedInUserCanSeeInterview($interview) ||
+        if (!$this->interviewManager->loggedInUserCanSeeInterview($interview) ||
             $this->getUser() === $application->getUser()
         ) {
             throw $this->createAccessDeniedException();
@@ -222,12 +224,12 @@ class InterviewController extends BaseController
             throw $this->createNotFoundException('Interview not found.');
         }
         // Only admin and above, or the assigned interviewer should be able to book an interview
-        if (!$this->get(InterviewManager::class)->loggedInUserCanSeeInterview($interview)) {
+        if (!$this->interviewManager->loggedInUserCanSeeInterview($interview)) {
             throw $this->createAccessDeniedException();
         }
 
         // Set the default data for the form
-        $defaultData = $this->get(InterviewManager::class)->getDefaultScheduleFormData($interview);
+        $defaultData = $this->interviewManager->getDefaultScheduleFormData($interview);
 
         $form = $this->createForm(ScheduleInterviewType::class, $defaultData);
 
@@ -376,7 +378,7 @@ class InterviewController extends BaseController
 
             // Update or create new interviews for all the given applications
             foreach ($applications as $application) {
-                $this->get(InterviewManager::class)->assignInterviewerToApplication($interviewer, $application);
+                $this->interviewManager->assignInterviewerToApplication($interviewer, $application);
 
                 $application->getInterview()->setInterviewSchema($schema);
                 $em->persist($application);
@@ -448,7 +450,7 @@ class InterviewController extends BaseController
             $manager->persist($interview);
             $manager->flush();
 
-            $this->get(InterviewManager::class)->sendRescheduleEmail($interview);
+            $this->interviewManager->sendRescheduleEmail($interview);
             $this->addFlash('success', "Forspørsel om ny intervjutid er sendt. Vi tar kontakt med deg når vi har funnet en ny intervjutid.");
 
             if ($interview->getUser() === $this->getUser()) {
@@ -502,7 +504,7 @@ class InterviewController extends BaseController
             $manager->persist($interview);
             $manager->flush();
 
-            $this->get(InterviewManager::class)->sendCancelEmail($interview);
+            $this->interviewManager->sendCancelEmail($interview);
             $this->addFlash('success', "Du har kansellert intervjuet ditt.");
 
             if ($interview->getUser() === $this->getUser()) {
