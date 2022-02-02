@@ -15,7 +15,6 @@ class FileUploader
     private $receiptFolder;
     private $profilePhotoFolder;
     private $articleFolder;
-    private $sponsorFolder;
 
     /**
      * FileUploader constructor.
@@ -25,16 +24,14 @@ class FileUploader
      * @param string $receiptFolder
      * @param string $profilePhotoFolder
      * @param string $articleFolder
-     * @param string $sponsorFolder
      */
-    public function __construct(string $signatureFolder, string $logoFolder, string $receiptFolder, string $profilePhotoFolder, string $articleFolder, string $sponsorFolder)
+    public function __construct(string $signatureFolder, string $logoFolder, string $receiptFolder, string $profilePhotoFolder, string $articleFolder)
     {
         $this->signatureFolder = $signatureFolder;
         $this->logoFolder = $logoFolder;
         $this->receiptFolder = $receiptFolder;
         $this->profilePhotoFolder = $profilePhotoFolder;
         $this->articleFolder = $articleFolder;
-        $this->sponsorFolder = $sponsorFolder;
     }
 
     /**
@@ -46,7 +43,7 @@ class FileUploader
     {
         $file = $this->getFileFromRequest($request);
 
-        return $this->uploadFile($file, $this->sponsorFolder);
+        return $this->uploadFile($file, $this->logoFolder);
     }
 
     /**
@@ -61,17 +58,6 @@ class FileUploader
         return $this->uploadFile($file, $this->signatureFolder);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return string
-     */
-    public function uploadLogo(Request $request)
-    {
-        $file = $this->getFileFromRequest($request);
-
-        return $this->uploadFile($file, $this->logoFolder);
-    }
 
     /**
      * @param Request $request
@@ -167,7 +153,7 @@ class FileUploader
 
         $fileName = $this->getFileNameFromPath($path);
 
-        $this->deleteFile("$this->sponsorFolder/$fileName");
+        $this->deleteFile("$this->logoFolder/$fileName");
     }
 
     public function deleteSignature(string $path)

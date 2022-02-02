@@ -93,7 +93,6 @@ services:
             $logoFolder: 'images/Logo images'
             $signatureFolder: './signatures'
             $receiptFolder: 'images/receipts'
-            $sponsorFolder: 'images/Logo images'
             $articleFolder: 'images/article_images'
             $profilePhotoFolder: 'images/Profile photos'
 
