@@ -10,11 +10,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class FileUploader
 {
-    private $signatureFolder;
-    private $logoFolder;
-    private $receiptFolder;
-    private $profilePhotoFolder;
-    private $articleFolder;
+    private string $signatureFolder;
+    private string $logoFolder;
+    private string $receiptFolder;
+    private string $profilePhotoFolder;
+    private string $articleFolder;
 
     /**
      * FileUploader constructor.
@@ -25,7 +25,11 @@ class FileUploader
      * @param string $profilePhotoFolder
      * @param string $articleFolder
      */
-    public function __construct(string $signatureFolder, string $logoFolder, string $receiptFolder, string $profilePhotoFolder, string $articleFolder)
+    public function __construct(string $signatureFolder,
+                                string $logoFolder,
+                                string $receiptFolder,
+                                string $profilePhotoFolder,
+                                string $articleFolder)
     {
         $this->signatureFolder = $signatureFolder;
         $this->logoFolder = $logoFolder;
@@ -39,10 +43,9 @@ class FileUploader
      *
      * @return string absolute file path
      */
-    public function uploadSponsor(Request $request)
+    public function uploadSponsor(Request $request): string
     {
-        $file = $this->getFileFromRequest($request);
-
+        $file = $this->getAndVerifyFile($request, array('image/*'));
         return $this->uploadFile($file, $this->logoFolder);
     }
 
@@ -51,10 +54,9 @@ class FileUploader
      *
      * @return string absolute file path
      */
-    public function uploadSignature(Request $request)
+    public function uploadSignature(Request $request): string
     {
-        $file = $this->getFileFromRequest($request);
-
+        $file = $this->getAndVerifyFile($request, array('image/*'));
         return $this->uploadFile($file, $this->signatureFolder);
     }
 
@@ -64,27 +66,19 @@ class FileUploader
      *
      * @return string
      */
-    public function uploadReceipt(Request $request)
+    public function uploadReceipt(Request $request): string
     {
-        $file = $this->getFileFromRequest($request);
-
-        $mimeType = $file->getMimeType();
-        $fileType = explode('/', $mimeType)[0];
-        if ($fileType === 'image') {
-            return $this->uploadFile($file, $this->receiptFolder);
-        } else {
-            throw new BadRequestHttpException('Filtypen må være et bilde.');
-        }
+        $file = $this->getAndVerifyFile($request, array('image/*', 'application/pdf'));
+        return $this->uploadFile($file, $this->receiptFolder);
     }
 
     /**
  * @param Request $request
- *
  * @return string
  */
-    public function uploadProfileImage(Request $request)
+    public function uploadProfileImage(Request $request): string
     {
-        $file = $this->getFileFromRequest($request);
+        $file = $this->getAndVerifyFile($request, array('image/*'));
 
         $mimeType = $file->getMimeType();
         $fileType = explode('/', $mimeType)[0];
@@ -97,25 +91,44 @@ class FileUploader
 
     /**
      * @param Request $request
-     *
      * @param string $id
-     *
      * @return string
      */
-    public function uploadArticleImage(Request $request, string $id)
+    public function uploadArticleImage(Request $request, string $id): ?string
     {
-        $file = $this->getFileFromRequest($request, $id);
+        $file = $this->getAndVerifyFile($request, array('image/*'), $id);
         if (!$file) {
             return null;
         }
+        return $this->uploadFile($file, $this->articleFolder);
+    }
 
+    /**
+     * @param Request $request
+     * @param array $valid_mime_types
+     * @param null $id
+     * @return false|mixed
+     */
+    public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id=null) {
+        // e.g: array('image/*') for valid_mime_types to accept all subtypes of file image
+
+        $file = FileUploader::getFileFromRequest($request, $id);
         $mimeType = $file->getMimeType();
+
         $fileType = explode('/', $mimeType)[0];
-        if ($fileType === 'image') {
-            return $this->uploadFile($file, $this->articleFolder);
-        } else {
-            throw new BadRequestHttpException('Filtypen må være et bilde.');
-        }
+        $fileSubType = explode('/', $mimeType)[1];
+
+        foreach ($valid_mime_types as $valid_mime_type) {
+            $validType = explode('/', $valid_mime_type)[0];
+            $validSubType = explode('/', $valid_mime_type)[1];
+
+            if ($fileType === $validType &&
+                ($fileSubType === $validSubType || $validSubType === "*")) {
+                    return $file;
+                }
+            }
+
+        throw new BadRequestHttpException('Filtypen er ikke gyldig.');
     }
 
     /**
@@ -124,7 +137,7 @@ class FileUploader
      *
      * @return string absolute file path
      */
-    public function uploadFile(UploadedFile $file, string $targetFolder)
+    public function uploadFile(UploadedFile $file, string $targetFolder): string
     {
         $fileExt = $file->guessExtension();
         $fileName = $this->generateRandomFileNameWithExtension($fileExt);
@@ -152,7 +165,6 @@ class FileUploader
         }
 
         $fileName = $this->getFileNameFromPath($path);
-
         $this->deleteFile("$this->logoFolder/$fileName");
     }
 
@@ -163,7 +175,6 @@ class FileUploader
         }
 
         $fileName = $this->getFileNameFromPath($path);
-
         $this->deleteFile("$this->signatureFolder/$fileName");
     }
 
@@ -174,7 +185,6 @@ class FileUploader
         }
 
         $fileName = $this->getFileNameFromPath($path);
-
         $this->deleteFile("$this->receiptFolder/$fileName");
     }
 
@@ -185,7 +195,6 @@ class FileUploader
         }
 
         $fileName = $this->getFileNameFromPath($path);
-
         $this->deleteFile("$this->profilePhotoFolder/$fileName");
     }
 
@@ -198,7 +207,7 @@ class FileUploader
         }
     }
 
-    private function getFileFromRequest(Request $request, $id = null)
+    private static function getFileFromRequest(Request $request, $id = null)
     {
         $fileKey = $id !== null ? $id : current($request->files->keys());
         $file = $request->files->get($fileKey);
@@ -210,17 +219,17 @@ class FileUploader
         return $file;
     }
 
-    private function generateRandomFileNameWithExtension(string $fileExtension)
+    private function generateRandomFileNameWithExtension(string $fileExtension): string
     {
         return uniqid().'.'.$fileExtension;
     }
 
-    private function getRelativePath(string $targetDir, string $fileName)
+    private function getRelativePath(string $targetDir, string $fileName): string
     {
         return "$targetDir/$fileName";
     }
 
-    private function getAbsolutePath(string $targetDir, string $fileName)
+    private function getAbsolutePath(string $targetDir, string $fileName): string
     {
         // Removes ../, ./, //
         $absoluteTargetDir = preg_replace('/\.+\/|\/\//i', '', $targetDir);
