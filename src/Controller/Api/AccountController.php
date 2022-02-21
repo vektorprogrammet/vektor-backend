@@ -8,15 +8,25 @@ use App\Entity\User;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use BCC\AutoMapperBundle\Mapper\Exception\InvalidClassConstructorException;
 use Exception;
 
 class AccountController extends BaseController
 {
+    private TokenStorageInterface $tokenStorage;
+    private SessionInterface $session;
+
+    public function __construct(TokenStorageInterface $tokenStorage, SessionInterface $session)
+    {
+        $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
+    }
 
     /**
      * @Route(path="api/account/login", methods={"GET", "POST"})
@@ -56,8 +66,8 @@ class AccountController extends BaseController
         }
 
         $token = new UsernamePasswordToken($user, null, 'secured_area', $user->getRoles());
-        $this->get('security.token_storage')->setToken($token);
-        $this->get('session')->set('_security_secured_area', serialize($token));
+        $this->tokenStorage->setToken($token);
+        $this->session->set('_security_secured_area', serialize($token));
 
         $mapper = $this->get('bcc_auto_mapper.mapper');
         $mapper->createMap(User::class, UserDto::class);
@@ -75,7 +85,7 @@ class AccountController extends BaseController
     public function logout()
     {
         try {
-            $this->get('security.token_storage')->setToken(null);
+            $this->tokenStorage->setToken(null);
             return new JsonResponse("Logout successful");
         } catch (Exception $e) {
             $response = new JsonResponse();

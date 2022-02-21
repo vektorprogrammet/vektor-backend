@@ -22,26 +22,29 @@ use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class ProfileController extends BaseController
 {
-    private $RoleManager;
-    /**
-     * @var LogService
-     */
-    private $logService;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    private RoleManager $RoleManager;
+    private LogService $logService;
+    private EventDispatcherInterface $eventDispatcher;
+    private TokenStorageInterface $tokenStorage;
+    private SessionInterface $session;
 
-    public function __construct(RoleManager $roleManager, LogService $logService, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(RoleManager $roleManager,
+                                LogService $logService,
+                                EventDispatcherInterface $eventDispatcher,
+                                TokenStorageInterface $tokenStorage,
+                                SessionInterface $session) {
         $this->RoleManager = $roleManager;
         $this->logService = $logService;
         $this->eventDispatcher = $eventDispatcher;
+        $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
     }
 
     public function show()
@@ -141,8 +144,8 @@ class ProfileController extends BaseController
             $em->flush();
 
             $token = new UsernamePasswordToken($user, null, 'secured_area', $user->getRoles());
-            $this->get('security.token_storage')->setToken($token);
-            $this->get('session')->set('_security_secured_area', serialize($token));
+            $this->tokenStorage->setToken($token);
+            $this->session->set('_security_secured_area', serialize($token));
 
             $this->logService->info("User $user activated with new user code");
 
