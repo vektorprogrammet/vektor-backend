@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * App\Entity\User.
@@ -30,6 +31,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *      message="Dette brukernavnet er allerede i bruk.",
  *      groups={"create_user", "username", "edit_user"}
  * )
+ * @ApiResource()
  */
 class User implements EquatableInterface, UserInterface, Serializable
 {
@@ -858,10 +860,10 @@ class User implements EquatableInterface, UserInterface, Serializable
     public function isAdmin(): bool
     {
         foreach ($this->roles as $role) {
-            if ($role->getRole() === Roles::ADMIN) {
+            if ($role === Roles::ADMIN) {
                 return true;
             }
-        }
+         }
 
         return false;
     }

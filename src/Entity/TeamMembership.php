@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Table(name="team_membership")
  * @ORM\Entity(repositoryClass="App\Repository\TeamMembershipRepository")
+ * @ApiResource
  */
 class TeamMembership implements TeamMembershipInterface
 {

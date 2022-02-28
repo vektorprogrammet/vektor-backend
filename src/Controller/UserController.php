@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UserController extends BaseController
 {
@@ -28,6 +29,14 @@ class UserController extends BaseController
         $this->applicationManager = $applicationManager;
     }
 
+    /**
+     * @Route("/api/me")
+     * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function apiMe()
+    {
+        return $this->json($this->getUser());
+    }
 
     /**
      * @Route("/min-side", name="my_page")

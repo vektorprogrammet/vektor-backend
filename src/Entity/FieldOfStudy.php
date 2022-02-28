@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Table(name="field_of_study")
  * @ORM\Entity(repositoryClass="App\Repository\FieldOfStudyRepository")
+ * @ApiResource
  */
 class FieldOfStudy
 {

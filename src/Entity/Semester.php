@@ -5,11 +5,13 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="semester")
  * @ORM\Entity(repositoryClass="App\Repository\SemesterRepository")
+ * @ApiResource
  */
 class Semester implements PeriodInterface
 {

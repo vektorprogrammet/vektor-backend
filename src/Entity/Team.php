@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Table(name="team")
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     fields={"department", "name"},
  *     message="Et team med dette navnet finnes allerede i avdelingen.",
  * )
+ * @ApiResource
  */
 class Team implements TeamInterface
 {

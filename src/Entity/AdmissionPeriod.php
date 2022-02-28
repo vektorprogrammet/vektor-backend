@@ -6,12 +6,14 @@ use App\Utils\TimeUtil;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * DepartmentSpecificSemester
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AdmissionPeriodRepository")
+ * @ApiResource
  */
 class AdmissionPeriod implements PeriodInterface
 {
