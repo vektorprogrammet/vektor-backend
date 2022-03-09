@@ -6,7 +6,6 @@ namespace App\Tests\Service;
 
 use App\Entity\AccessRule;
 use App\Entity\Repository\UnhandledAccessRuleRepository;
-use App\Entity\Role;
 use App\Entity\Team;
 use App\Entity\UnhandledAccessRule;
 use App\Entity\User;
@@ -40,9 +39,11 @@ class AccessControlTest extends BaseKernelTestCase {
 	{
 		$kernel = $this->createKernel();
 		$kernel->boot();
+		$container = static::getContainer();
 
-		$this->service = $kernel->getContainer()->get(AccessControlService::class);
-		$em = $kernel->getContainer()->get('doctrine')->getManager();
+
+		$this->service = $container->get(AccessControlService::class);
+		$em = $container->get('doctrine')->getManager();
 		$this->unhandledRepo = $em->getRepository(UnhandledAccessRule::class);
 		$this->inactiveUser = $em->getRepository(User::class)->findUserByEmail('inactive@mail.com');
 		$this->assistant = $em->getRepository(User::class)->findUserByEmail('assistant@gmail.com');
@@ -53,8 +54,8 @@ class AccessControlTest extends BaseKernelTestCase {
 		$this->inactiveExecutiveBoardMember = $em->getRepository(User::class)->findUserByEmail('jan-per-gustavio@gmail.com');
 		$this->admin = $em->getRepository(User::class)->findUserByEmail('admin@gmail.com');
 		$this->team = $em->getRepository(Team::class)->find(1);
-		$this->teamMemberRole = $em->getRepository(Role::class)->findByRoleName(Roles::TEAM_MEMBER);
-		$this->teamLeaderRole = $em->getRepository(Role::class)->findByRoleName(Roles::TEAM_LEADER);
+		$this->teamMemberRole = Roles::TEAM_MEMBER;
+		$this->teamLeaderRole = Roles::TEAM_LEADER;
 	}
 
 	public function testHasAccessWhenRuleDoesNotExist() {

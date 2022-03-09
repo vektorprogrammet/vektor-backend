@@ -8,7 +8,7 @@ class StudentsControllerTest extends BaseWebTestCase
 {
     public function testShow()
     {
-        $client = static::createClient();
+        $client = $this->createAnonymousClient();
 
         $crawler = $client->request('GET', '/studenter');
 
@@ -17,6 +17,7 @@ class StudentsControllerTest extends BaseWebTestCase
 
         // Assert that we have the correct amount of data
         $this->assertEquals(1, $crawler->filter('h1:contains("Assistenter")')->count());
-        $this->assertEquals(1, $crawler->filter('p:contains("Vektorprogrammet er en studentorganisasjon som sender realfagssterke studenter")')->count());
+        $this->assertEquals(1, $crawler->filter('h2:contains("Lærerassistent i matematikk")')->count());
+        $this->assertEquals(1, $crawler->filter('p:contains("sender realfagssterke studenter til grunnskolen for å hjelpe elevene med matematikk")')->count());
     }
 }

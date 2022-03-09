@@ -87,6 +87,7 @@ class AccessControlService
             return $this->checkAccessToResourceAndMethod($user, $resource);
         }
 
+
         if (! is_array($resources)) {
             throw new InvalidArgumentException();
         }

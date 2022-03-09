@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\EventSubscriber\:
+        resource: "../src/EventSubscriber"
+        tags:
+            - { name: kernel.event_subscriber }
+    App\EventSubscriber\DbSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }

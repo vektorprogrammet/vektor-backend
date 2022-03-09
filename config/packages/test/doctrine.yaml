@@ -1,0 +1,8 @@
+doctrine:
+  dbal:
+    dbname: Symfony
+    user: root
+    password: null
+    host: localhost
+    driver: pdo_sqlite
+    path: '%kernel.project_dir%/var/data/dev.db'

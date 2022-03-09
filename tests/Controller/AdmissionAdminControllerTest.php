@@ -5,6 +5,7 @@ namespace App\Tests\Controller;
 use App\Tests\BaseWebTestCase;
 use App\Entity\Interview;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class AdmissionAdminControllerTest extends BaseWebTestCase
 {
@@ -211,7 +212,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
      *
      * @return string
      */
-    private function getResponseCodeFromEmail(Client $client)
+    private function getResponseCodeFromEmail(KernelBrowser $client)
     {
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
         $this->assertEquals(1, $mailCollector->getMessageCount());

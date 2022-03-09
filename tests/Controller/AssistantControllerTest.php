@@ -68,6 +68,6 @@ class AssistantControllerTest extends BaseWebTestCase
         $form["application_${departmentId}[user][fieldOfStudy]"] = $fieldOfStudyId;
         $form["application_${departmentId}[yearOfStudy]"] = '1. klasse';
 
-        $this->createAnonymousClient()->submit($form);
+        $result = $this->createAnonymousClient()->submit($form);
     }
 }

@@ -5,25 +5,13 @@ namespace App\Tests\Controller;
 use App\Tests\BaseWebTestCase;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class MailingListControllerTest extends BaseWebTestCase
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
-
-    public function setUp() : void
-    {
-        self::bootKernel();
-        $this->em = static::$kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
-    }
-
     public function testAddOneTeamMember()
     {
-        $client = self::createAdminClient();
+        $client = $this->createAdminClient();
 
         $lengthTeamOld = $this->generateListCountChars($client, 'Team');
 
@@ -39,7 +27,9 @@ class MailingListControllerTest extends BaseWebTestCase
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $user = $this->em->getRepository(User::class)->find($userID);
+		$em = self::getContainer()->get('doctrine')->getManager();
+
+        $user = $em->getRepository(User::class)->find($userID);
         $this->assertNotNull($user);
         $userEmailLength = strlen($user->getCompanyEmail());
 
@@ -49,15 +39,9 @@ class MailingListControllerTest extends BaseWebTestCase
         $this->assertEquals($lengthTeamOld + $userEmailLength + 2, $lengthTeamNew);
     }
 
-    protected function tearDown() : void
-    {
-        parent::tearDown();
-        $this->em->close();
-    }
-
     public function testTeamAddAssistantIsAll()
     {
-        $client = self::createAdminClient();
+        $client = $this->createAdminClient();
 
         $lengthAssistants = $this->generateListCountChars($client, 'Assistent');
         $lengthTeam = $this->generateListCountChars($client, 'Team');
@@ -75,7 +59,7 @@ class MailingListControllerTest extends BaseWebTestCase
      *
      * @return int
      */
-    private function generateListCountChars(Client $client, string $type)
+    private function generateListCountChars(KernelBrowser $client, string $type)
     {
         $crawler = $this->goTo('/kontrollpanel/epostlister', $client);
         $form = $crawler->selectButton('Generer')->form();

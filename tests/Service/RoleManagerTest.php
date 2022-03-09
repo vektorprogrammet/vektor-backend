@@ -27,9 +27,8 @@ class RoleManagerTest extends KernelTestCase
     {
         $kernel = $this->createKernel();
         $kernel->boot();
-
-        $this->em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $this->roleManager = $kernel->getContainer()->get(RoleManager::class);
+		$this->em = self::getContainer()->get('doctrine')->getManager();
+        $this->roleManager = self::getContainer()->get(RoleManager::class);
 
         $this->mockUsers = [
             // Assistants
@@ -72,8 +71,6 @@ class RoleManagerTest extends KernelTestCase
         foreach ($this->mockUsers as $user) {
             $this->assertThatUserWithEmailHasRole($user->getEmail(), $user->getRoleAfterExecution());
         }
-
-        \TestDataManager::restoreDatabase();
     }
 
     private function updateAllUserRoles()
@@ -87,7 +84,7 @@ class RoleManagerTest extends KernelTestCase
     private function assertThatUserWithEmailHasRole(string $email, string $role)
     {
         $user = $this->em->getRepository(User::class)->findUserByEmail($email);
-        $this->assertEquals($role, current($user->getRoles())->getRole());
+        $this->assertContains($role, $user->getRoles());
     }
 }
 

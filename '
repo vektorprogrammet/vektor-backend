@@ -35,6 +35,8 @@ parameters:
     googleAnalyticsId: '%env(googleAnalyticsId)%'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     admission_notifier_limit:  100
+imports:
+    - { resource: event_subscribers.yml }
 
 services:
     # default configuration for services in *this* file
@@ -44,8 +46,6 @@ services:
         bind: 
             App\Sms\SmsSenderInterface: '@App\Sms\SmsSender'
             App\Mailer\MailerInterface: '@App\Mailer\Mailer'
-            Psr\Log\LoggerInterface: '@App\Service\LogService'
-            $env: '%kernel.environment%'
 
 
 

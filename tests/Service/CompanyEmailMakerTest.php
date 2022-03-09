@@ -18,7 +18,7 @@ class CompanyEmailMakerTest extends KernelTestCase
         $kernel = $this->createKernel();
         $kernel->boot();
 
-        $this->emailMaker = $kernel->getContainer()->get(CompanyEmailMaker::class);
+        $this->emailMaker = self::getContainer()->get(CompanyEmailMaker::class);
     }
 
     public function testFirstNameAsEmail()
@@ -60,10 +60,10 @@ class CompanyEmailMakerTest extends KernelTestCase
         $user->setFirstName('FirstæØå');
         $user->setLastName('LastÆøå');
 
-        $blackList = ['firstaeoa@vektorprogrammet.no'];
+        $blackList = ['firstaeoeaa@vektorprogrammet.no'];
 
         $this->emailMaker->setCompanyEmailFor($user, $blackList);
-        self::assertEquals('firstaeoa.lastaeoa@vektorprogrammet.no', $user->getCompanyEmail());
+        self::assertEquals('firstaeoeaa.lastaeoeaa@vektorprogrammet.no', $user->getCompanyEmail());
     }
     public function testAccentCharacters()
     {

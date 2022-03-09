@@ -24,7 +24,7 @@ class SorterTest extends KernelTestCase
         $kernel = $this->createKernel();
         $kernel->boot();
 
-        $this->sorter = $kernel->getContainer()->get(Sorter::class);
+        $this->sorter = self::getContainer()->get(Sorter::class);
 
         $this->mockReceipts = [
             new Receipt(),

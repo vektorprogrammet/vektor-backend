@@ -30,9 +30,12 @@ class AccessRuleControllerTest extends BaseWebTestCase {
 	}
 
 	public function testCreateRoutingAccessRule() {
-		$anonClient = $this->createAnonymousClient();
+		$this->anonymousGoTo("/kontrollpanel");
+		$anonClient = static::createAnonymousClient();
 
 		$anonClient->request('GET', '/assistenter');
+		$client = $this->createAdminClient();
+
 		$this->assertEquals(200, $anonClient->getResponse()->getStatusCode());
 
 		$crawler = $this->anonymousGoTo("/");
@@ -41,12 +44,12 @@ class AccessRuleControllerTest extends BaseWebTestCase {
 		$this->assertGreaterThan(0, $forbiddenLinksBefore->count());
 
 		$countBefore = $this->countTableRows("/kontrollpanel/admin/accessrules");
-		$client = $this->createAdminClient();
 		$crawler = $this->goTo("/kontrollpanel/admin/accessrules/routing/create", $client);
 		$form = $crawler->selectButton("Save")->form();
 
 		$form["routing_access_rule[name]"] = "Test Rule";
 		$form["routing_access_rule[resource]"] = "assistants";
+		$form["routing_access_rule[method]"] = "GET";
 		$form["routing_access_rule[roles][0]"]->tick();
 		$client->submit($form);
 
@@ -54,6 +57,7 @@ class AccessRuleControllerTest extends BaseWebTestCase {
 
 		$this->assertGreaterThan($countBefore, $countAfter);
 
+		$anonClient = $this->createAnonymousClient();
 		$anonClient->request('GET', '/assistenter');
 		$this->assertEquals(403, $anonClient->getResponse()->getStatusCode());
 

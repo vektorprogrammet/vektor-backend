@@ -29,7 +29,7 @@ class InterviewControllerTest extends BaseWebTestCase
 
         $form['application[interview][interviewAnswers][0][answer]'] = 'Test answer';
         $form['application[interview][interviewAnswers][1][answer]'] = 'Test answer';
-        $form['application[applicationPractical][teamInterest]'] = $teamInterest;
+        $form['application[applicationPractical][teamInterest]'] = $teamInterest ? 1 : 0;
 
         $form['application[interview][interviewScore][explanatoryPower]']->select(5);
         $form['application[interview][interviewScore][roleModel]']->select(4);
@@ -114,10 +114,10 @@ class InterviewControllerTest extends BaseWebTestCase
 
 
         // Team user who is assigned the interview
-        $client = static::createClient(array(), array(
+		$client->setServerParameters(array(
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+		));
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/conduct/5');
 

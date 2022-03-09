@@ -41,7 +41,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         $file = tempnam(sys_get_temp_dir(), 'rec');
         imagepng(imagecreatetruecolor(1, 1), $file);
 
-        $photo = new UploadedFile($file, 'receipt.png', null, null, null, true);
+        $photo = new UploadedFile($file, 'receipt.png', null, null, true);
 
         $crawler = $client->request('GET', '/utlegg');
         $form = $crawler->selectButton('Be om refusjon')->form();
@@ -94,7 +94,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         $file = tempnam(sys_get_temp_dir(), 'rec');
         imagepng(imagecreatetruecolor(1, 1), $file);
 
-        $photo = new UploadedFile($file, 'receipt.png', null, null, null, true);
+        $photo = new UploadedFile($file, 'receipt.png', null, null, true);
 
         $crawler = $client->request('GET', '/kontrollpanel/utlegg/rediger/2');
         $form = $crawler->selectButton('Lagre')->form();
@@ -125,6 +125,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Anonymous has no access
         $client = $this->createAnonymousClient();
         $client->request('GET', '/utlegg');
+		$this->assertEquals(302, $client->getResponse()->getStatusCode());
         $crawler = $client->followRedirect();
         $this->assertGreaterThanOrEqual(1, $crawler->filter('button:contains("Logg inn")')->count());
     }

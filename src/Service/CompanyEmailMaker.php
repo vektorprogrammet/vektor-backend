@@ -50,8 +50,8 @@ class CompanyEmailMaker
 
     private function replaceNorwegianCharacters($string)
     {
-        setlocale(LC_ALL, 'nb_NO');
-        $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string); //Converts accents and norwegian characters
+        setlocale(LC_CTYPE, 'nb_NO');
+        $string = iconv('UTF-8', 'US-ASCII//TRANSLIT', $string); //Converts accents and norwegian characters
         $string = preg_replace("/[^A-Za-z0-9 ]/", '', $string); //Removes ' and `after iconv(), and other invalid characters
         return $string;
     }
