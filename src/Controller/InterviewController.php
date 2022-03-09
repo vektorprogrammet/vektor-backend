@@ -36,13 +36,17 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class InterviewController extends BaseController
 {
-    private $eventDispatcher;
-	private $interviewManager;
+    private EventDispatcherInterface $eventDispatcher;
+	private InterviewManager $interviewManager;
+    private ReversedRoleHierarchy $reversedRoleHierarchy;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, InterviewManager $interviewManager)
+    public function __construct(EventDispatcherInterface $eventDispatcher,
+                                InterviewManager $interviewManager,
+                                ReversedRoleHierarchy $reversedRoleHierarchy)
     {
         $this->eventDispatcher = $eventDispatcher;
 		$this->interviewManager = $interviewManager;
+        $this->reversedRoleHierarchy = $reversedRoleHierarchy;
     }
 
     /**
@@ -320,7 +324,7 @@ class InterviewController extends BaseController
         $application = $em->getRepository(Application::class)->find($id);
         $user = $application->getUser();
         // Finds all the roles above admin in the hierarchy, used to populate dropdown menu with all admins
-        $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([Roles::TEAM_MEMBER]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
 
         $form = $this->createForm(CreateInterviewType::class, $application, [
             'roles' => $roles
@@ -362,7 +366,8 @@ class InterviewController extends BaseController
     public function bulkAssign(Request $request)
     {
         // Finds all the roles above admin in the hierarchy, used to populate dropdown menu with all admins
-        $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([Roles::TEAM_MEMBER]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
+        dump($roles);
         $form = $this->createForm(CreateInterviewType::class, null, [
             'roles' => $roles
         ]);
