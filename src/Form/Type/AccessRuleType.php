@@ -27,10 +27,14 @@ class AccessRuleType extends AbstractType
             ->add("name", TextType::class)
             ->add("resource", TextType::class)
             ->add("roles", ChoiceType::class, [
-                Roles::GetRoleName(Roles::ASSISTANT) => Roles::ASSISTANT,
-                Roles::GetRoleName(Roles::TEAM_MEMBER) => Roles::TEAM_MEMBER,
-                Roles::GetRoleName(Roles::TEAM_LEADER) => Roles::TEAM_LEADER,
-                Roles::GetRoleName(Roles::ADMIN) => Roles::ADMIN,
+                "choices" => [
+                    (Roles::TEAM_MEMBER) => Roles::TEAM_MEMBER,
+                    (Roles::TEAM_LEADER) => Roles::TEAM_LEADER,
+                    (Roles::ASSISTANT) => Roles::ASSISTANT,
+                    (Roles::ADMIN) => Roles::ADMIN,
+                ],
+                "expanded" => true,
+                "multiple" => true,
             ])
             ->add("teams", EntityType::class, [
                 'label' => false,
@@ -52,8 +56,7 @@ class AccessRuleType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->select('u')
-                        ->join('u.roles', 'r')
-                        ->where('r.role IN (:roles)')
+                        ->where('u.roles IN (:roles)')
                         ->orderBy('u.firstName')
                         ->setParameter('roles', $this->roles);
                 },

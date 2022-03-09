@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessRuleController extends AbstractController
 {
-    /**
-     * @var AccessControlService
-     */
-    private $accessControlService;
 
-    public function __construct(AccessControlService $accessControlService)
+    private AccessControlService $accessControlService;
+    private ReversedRoleHierarchy $reversedRoleHierarcy;
+
+    public function __construct(AccessControlService $accessControlService, ReversedRoleHierarchy $reversedRoleHierarchy)
     {
         $this->accessControlService = $accessControlService;
+        $this->reversedRoleHierarcy = $reversedRoleHierarchy;
     }
 
     /**
@@ -62,7 +62,7 @@ class AccessRuleController extends AbstractController
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarcy->getParentRoles([ Roles::TEAM_MEMBER ]);
         $form = $this->createForm(AccessRuleType::class, $accessRule, [
             'roles' => $roles
         ]);
@@ -106,7 +106,7 @@ class AccessRuleController extends AbstractController
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarcy->getParentRoles([ Roles::TEAM_MEMBER ]);
         $routes = $this->accessControlService->getRoutes();
         $form = $this->createForm(RoutingAccessRuleType::class, $accessRule, [
             'routes' => $routes,

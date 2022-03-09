@@ -2,7 +2,9 @@
 
 namespace App\Form\Type;
 
+use App\Role\Roles;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -50,7 +52,7 @@ class SocialEventType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Klikk for å velge tidspunkt',
                     'autocomplete' => 'off'
-                    ),
+                ),
             ))
 
             ->add('endTime', DateTimeType::class, array(
@@ -61,7 +63,7 @@ class SocialEventType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Klikk for å velge tidspunkt',
                     'autocomplete' => 'off'
-                    ),
+                ),
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Lagre',
@@ -86,18 +88,16 @@ class SocialEventType extends AbstractType
                 },
                 'required' => true,
             ))
-            ->add('role', EntityType::class, array(
+            ->add("role", ChoiceType::class, [
                 'label' => 'Hvilke type brukere kan melde seg på arrangementet?',
-                'class' => 'App:Role',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('r')
-                        ->select('r')
-                        ->where('r.role IN (:roles)')
-                        ->orderBy('r.role')
-                        ->setParameter('roles', ['ROLE_USER', 'ROLE_TEAM_MEMBER']);
-                },
-                'required' => true,
-            ))
+                "choices" => [
+                    (Roles::TEAM_MEMBER) => Roles::TEAM_MEMBER,
+                    (Roles::TEAM_LEADER) => Roles::TEAM_LEADER,
+                    (Roles::ASSISTANT) => Roles::ASSISTANT,
+                    (Roles::ADMIN) => Roles::ADMIN,
+                ],
+                "expanded" => true,
+            ])
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

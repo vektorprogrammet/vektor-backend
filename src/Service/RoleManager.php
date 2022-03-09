@@ -117,7 +117,8 @@ class RoleManager
             return false;
         }
 
-        $userRole = $user->getRoles();
+        //TODO: Roles need to be refactored, user may have multiple roles?
+        $userRole = $user->getRoles()[0];
 
         $userAccessLevel = array_search($userRole, $roles);
         $roleAccessLevel = array_search($role, $roles);
