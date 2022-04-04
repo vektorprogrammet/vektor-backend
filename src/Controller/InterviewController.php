@@ -365,13 +365,22 @@ class InterviewController extends BaseController
      */
     public function bulkAssign(Request $request)
     {
-        // Finds all the roles above admin in the hierarchy, used to populate dropdown menu with all admins
-        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
-        dump($roles);
-        $form = $this->createForm(CreateInterviewType::class, null, [
-            'roles' => $roles
-        ]);
+        // Find all who is
+        //      TEAM_MEMBER or TEAM_LEADER or ADMIN
+        // used to populate dropdown
+        //$roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
 
+        //dump($roles); --> Outputs:
+        /*  array:3 [
+              0 => "ROLE_TEAM_MEMBER"
+              1 => "ROLE_TEAM_LEADER"
+              2 => "ROLE_ADMIN"
+              ]
+         */
+
+        $form = $this->createForm(CreateInterviewType::class, null, [
+        //    'roles' => $roles
+        ]);
         if ($request->isMethod('POST')) {
             $em = $this->getDoctrine()->getManager();
             // Get the info from the form
