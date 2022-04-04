@@ -33,7 +33,9 @@
     <link rel="stylesheet" href="{{ asset_with_version('css/app.css') }}">
 
 
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
 </head>
 <body class="body">
@@ -78,7 +80,9 @@
 <script src="{{ asset_with_version('/js/vendor.js') }}"></script>
 <script src="{{ asset_with_version('/js/mobile_nav.js') }}"></script>
 <script src="{{ asset_with_version('/js/button_deactivator.js') }}"></script>
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 
 
 
