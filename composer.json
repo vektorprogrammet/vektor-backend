@@ -50,7 +50,7 @@
         "symfony/slack-notifier": "5.3.*",
         "symfony/string": "5.3.*",
         "symfony/swiftmailer-bundle": "^3.5",
-        "symfony/translation": "5.3.*",
+        "symfony/translation": "5.4.*",
         "symfony/twig-bundle": "^5.3",
         "symfony/validator": "5.3.*",
         "symfony/web-link": "5.3.*",
