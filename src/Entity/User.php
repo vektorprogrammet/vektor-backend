@@ -174,7 +174,7 @@ class User implements EquatableInterface, UserInterface, Serializable
 
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
+        $this->roles = [];
         $this->certificateRequests = new ArrayCollection();
         $this->interviews = new ArrayCollection();
         $this->isActive = true;
@@ -258,7 +258,7 @@ class User implements EquatableInterface, UserInterface, Serializable
         $this->isActive = $isActive;
     }
 
-    public function setRoles($roles)
+    public function setRoles(Array $roles)
     {
         $this->roles = $roles;
     }
@@ -266,7 +266,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return string[]
      */
-    public function getRoles(): array
+    public function getRoles(): Array
     {
         $roles = $this->roles;
 
@@ -437,7 +437,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     public function addRole(string $role)
     {
         $this->roles[] = $role;
-        $this->roles = array_unique($this->roles->toArray());
+        $this->roles = array_unique($this->roles);
 
         return $this;
     }

@@ -53,6 +53,7 @@ class AccessRule
     private $teams;
 
     /**
+     * @ORM\Column(type="json")
      */
     private $roles;
 
@@ -61,6 +62,7 @@ class AccessRule
         $this->isRoutingRule = false;
         $this->forExecutiveBoard = false;
         $this->method = "GET";
+        $this->roles = [];
     }
 
 

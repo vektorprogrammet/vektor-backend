@@ -25,7 +25,7 @@ class LoadAccessRuleData extends AbstractFixture implements OrderedFixtureInterf
         $rule->setName("Survey Admin");
         $rule->setResource("survey_admin");
         $rule->setMethod('GET');
-        $rule->setRoles(array(Roles::ADMIN));
+        $rule->setRoles([Roles::ADMIN]);
 
 
         $manager->persist($rule);
