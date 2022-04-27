@@ -39,14 +39,17 @@ class InterviewController extends BaseController
     private EventDispatcherInterface $eventDispatcher;
 	private InterviewManager $interviewManager;
     private ReversedRoleHierarchy $reversedRoleHierarchy;
+    private ApplicationManager $applicationManager;
 
     public function __construct(EventDispatcherInterface $eventDispatcher,
                                 InterviewManager $interviewManager,
-                                ReversedRoleHierarchy $reversedRoleHierarchy)
+                                ReversedRoleHierarchy $reversedRoleHierarchy,
+                                ApplicationManager $applicationManager)
     {
         $this->eventDispatcher = $eventDispatcher;
 		$this->interviewManager = $interviewManager;
         $this->reversedRoleHierarchy = $reversedRoleHierarchy;
+        $this->applicationManager = $applicationManager;
     }
 
     /**
@@ -365,18 +368,7 @@ class InterviewController extends BaseController
      */
     public function bulkAssign(Request $request)
     {
-        // Find all who is
-        //      TEAM_MEMBER or TEAM_LEADER or ADMIN
-        // used to populate dropdown
         //$roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
-
-        //dump($roles); --> Outputs:
-        /*  array:3 [
-              0 => "ROLE_TEAM_MEMBER"
-              1 => "ROLE_TEAM_LEADER"
-              2 => "ROLE_ADMIN"
-              ]
-         */
 
         $form = $this->createForm(CreateInterviewType::class, null, [
         //    'roles' => $roles
@@ -487,7 +479,7 @@ class InterviewController extends BaseController
      */
     public function respond(Interview $interview)
     {
-        $applicationStatus = $this->get(ApplicationManager::class)->getApplicationStatus($interview->getApplication());
+        $applicationStatus = $this->applicationManager->getApplicationStatus($interview->getApplication());
 
         return $this->render('interview/response.html.twig', array(
             'interview' => $interview,
