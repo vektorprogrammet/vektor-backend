@@ -146,38 +146,3 @@
     font-weight:700;
   }
 }
-
-.news {
-
-  .carousel {
-    margin: 32px auto;
-    max-width: 900px;
-    h2 {
-      font-size: 40px;
-      margin-bottom: 20px;
-    }
-    .carousel-caption {
-      position: static;
-    }
-    a {
-      color: $dark-blue;
-      &:hover {
-        text-decoration: none;
-      }
-    }
-    .carousel-indicators {
-      position: static;
-      li {
-        background-color: $vektor-blue;
-        width: 25px;
-        height: 20px;
-        &.active {
-          background-color: $dark-blue;
-        }
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
