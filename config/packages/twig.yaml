@@ -20,4 +20,6 @@ services:
   #    arguments:
   #        $rootDir: '%kernel.project_dir%'
 
-
+when@test:
+    twig:
+        strict_variables: true
