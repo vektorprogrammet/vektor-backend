@@ -47,7 +47,7 @@ class InterviewController extends BaseController
                                 ApplicationManager $applicationManager)
     {
         $this->eventDispatcher = $eventDispatcher;
-		$this->interviewManager = $interviewManager;
+        $this->interviewManager = $interviewManager;
         $this->reversedRoleHierarchy = $reversedRoleHierarchy;
         $this->applicationManager = $applicationManager;
     }
