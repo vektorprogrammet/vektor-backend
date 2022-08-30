@@ -37,7 +37,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class InterviewController extends BaseController
 {
     private EventDispatcherInterface $eventDispatcher;
-	private InterviewManager $interviewManager;
+    private InterviewManager $interviewManager;
     private ReversedRoleHierarchy $reversedRoleHierarchy;
     private ApplicationManager $applicationManager;
 
