@@ -21,12 +21,6 @@ parameters:
     # Receipt images
     receipt_images: 'images/receipts'
 
-    # Article images
-    article_images: 'images/article_images'
-
-    # Newsletter images
-    newsletter_images: 'images/newsletter_images'
-
     # Team images
     team_images: 'images/team_images'
 
@@ -99,7 +93,6 @@ services:
             $logoFolder: 'images/Logo images'
             $signatureFolder: './signatures'
             $receiptFolder: 'images/receipts'
-            $articleFolder: 'images/article_images'
             $profilePhotoFolder: 'images/Profile photos'
 
     # GeoLocation

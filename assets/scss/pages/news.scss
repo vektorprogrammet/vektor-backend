@@ -2,23 +2,6 @@
 img {
   max-width: 100%;
 }
-.news-carousel {
-  display: none;
-}
-
-.news-carousel-text {
-
-  // Small screens
-  @media only screen {
-    text-align: center;
-  }
-
-  // Medium screens and over
-  @media only screen and (min-width: 40.063em) {
-    text-align: inherit;
-  }
-
-}
 
 .article-box {
   margin-bottom: 20px;
