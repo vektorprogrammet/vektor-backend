@@ -17,7 +17,6 @@ class CreateInterviewType extends AbstractType
             'query_builder' => function (EntityRepository $er) use ($options) {
                 return $er->createQueryBuilder('u')
                     ->select('u')
-
                     ->where("u.roles = :_admin")
                     ->orWhere("u.roles = :_teamleader")
                     ->orWhere("u.roles = :_teammember")
