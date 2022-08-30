@@ -435,59 +435,6 @@ reset_password_confirmation:
     controller: App\Controller\PasswordResetController::showConfirmation
     methods: [GET]
 
-##########################################
-#               Article                  #
-##########################################
-
-news:
-    path: /nyheter
-    controller: App\Controller\ArticleController::show
-    methods: [GET]
-
-article_show:
-    path: /nyhet/{slug}
-    controller: App\Controller\ArticleController::showSpecific
-    methods: [GET]
-
-old_article_show:
-    path: /artikkel/{slug}
-    controller: App\Controller\ArticleController::showSpecific
-    methods: [GET]
-
-article_filter:
-    path: /nyheter/{department}
-    controller: App\Controller\ArticleController::showFilter
-    methods: [GET]
-
-
-##########################################
-#             ArticleAdmin               #
-##########################################
-
-articleadmin_show:
-    path: /kontrollpanel/artikkeladmin
-    controller: App\Controller\ArticleAdminController::show
-    methods: [GET]
-
-articleadmin_create:
-    path: /kontrollpanel/artikkeladmin/opprett
-    controller: App\Controller\ArticleAdminController::create
-    methods: [GET, POST]
-
-articleadmin_edit:
-    path: /kontrollpanel/artikkeladmin/rediger/{id}
-    controller: App\Controller\ArticleAdminController::edit
-    methods: [GET, POST]
-
-articleadmin_sticky:
-    path: /kontrollpanel/artikkeladmin/sticky/{id}
-    controller: App\Controller\ArticleAdminController::sticky
-    methods: [POST]
-
-articleadmin_delete:
-    path: /kontrollpanel/artikkeladmin/slett/{id}
-    controller: App\Controller\ArticleAdminController::delete
-    methods: [POST]
 
 ##########################################
 #            AdmissionAdmin              #

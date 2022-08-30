@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\AssistantHistory;
 use App\Entity\Department;
 use App\Entity\User;
@@ -14,7 +13,6 @@ class HomeController extends BaseController
     {
         $assistantsCount = count($this->getDoctrine()->getRepository(User::class)->findAssistants());
         $teamMembersCount = count($this->getDoctrine()->getRepository(User::class)->findTeamMembers());
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findStickyAndLatestArticles();
 
         $departments = $this->getDoctrine()->getRepository(Department::class)->findAll();
         $departmentsWithActiveAdmission = $this->getDoctrine()->getRepository(Department::class)->findAllWithActiveAdmission();
@@ -33,7 +31,6 @@ class HomeController extends BaseController
             'ipWasLocated' => $ipWasLocated,
             'departmentsWithActiveAdmission' => $departmentsWithActiveAdmission,
             'closestDepartment' => $closestDepartment,
-            'news' => $articles,
         ]);
     }
 
