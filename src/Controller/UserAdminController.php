@@ -11,6 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserAdminController extends BaseController
 {
+    private UserRegistration $userRegistration;
+
+    public function __construct(UserRegistration $userRegistration)
+    {
+        $this->userRegistration = $userRegistration;
+    }
+
     public function createUser(Request $request, Department $department = null)
     {
         if (!$this->isGranted(Roles::TEAM_LEADER) || $department === null) {
@@ -37,7 +44,7 @@ class UserAdminController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            $this->get(UserRegistration::class)->sendActivationCode($user);
+            $this->userRegistration->sendActivationCode($user);
 
             return $this->redirectToRoute('useradmin_show');
         }
@@ -103,7 +110,7 @@ class UserAdminController extends BaseController
 
     public function sendActivationMail(User $user)
     {
-        $this->get(UserRegistration::class)->sendActivationCode($user);
+        $this->userRegistration->sendActivationCode($user);
 
         return $this->redirectToRoute('useradmin_show');
     }
