@@ -117,7 +117,7 @@ class RoleManager
             return false;
         }
 
-        $userRole = $user->getRoles();
+        $userRole = $user->getRoles()[0];
 
         $userAccessLevel = array_search($userRole, $roles);
         $roleAccessLevel = array_search($role, $roles);

@@ -36,13 +36,20 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class InterviewController extends BaseController
 {
-    private $eventDispatcher;
-	private $interviewManager;
+    private EventDispatcherInterface $eventDispatcher;
+    private InterviewManager $interviewManager;
+    private ReversedRoleHierarchy $reversedRoleHierarchy;
+    private ApplicationManager $applicationManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, InterviewManager $interviewManager)
+    public function __construct(EventDispatcherInterface $eventDispatcher,
+                                InterviewManager $interviewManager,
+                                ReversedRoleHierarchy $reversedRoleHierarchy,
+                                ApplicationManager $applicationManager)
     {
         $this->eventDispatcher = $eventDispatcher;
-		$this->interviewManager = $interviewManager;
+        $this->interviewManager = $interviewManager;
+        $this->reversedRoleHierarchy = $reversedRoleHierarchy;
+        $this->applicationManager = $applicationManager;
     }
 
     /**
@@ -320,7 +327,7 @@ class InterviewController extends BaseController
         $application = $em->getRepository(Application::class)->find($id);
         $user = $application->getUser();
         // Finds all the roles above admin in the hierarchy, used to populate dropdown menu with all admins
-        $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([Roles::TEAM_MEMBER]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
 
         $form = $this->createForm(CreateInterviewType::class, $application, [
             'roles' => $roles
@@ -361,12 +368,11 @@ class InterviewController extends BaseController
      */
     public function bulkAssign(Request $request)
     {
-        // Finds all the roles above admin in the hierarchy, used to populate dropdown menu with all admins
-        $roles = $this->get(ReversedRoleHierarchy::class)->getParentRoles([Roles::TEAM_MEMBER]);
-        $form = $this->createForm(CreateInterviewType::class, null, [
-            'roles' => $roles
-        ]);
+        //$roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
 
+        $form = $this->createForm(CreateInterviewType::class, null, [
+        //    'roles' => $roles
+        ]);
         if ($request->isMethod('POST')) {
             $em = $this->getDoctrine()->getManager();
             // Get the info from the form
@@ -473,7 +479,7 @@ class InterviewController extends BaseController
      */
     public function respond(Interview $interview)
     {
-        $applicationStatus = $this->get(ApplicationManager::class)->getApplicationStatus($interview->getApplication());
+        $applicationStatus = $this->applicationManager->getApplicationStatus($interview->getApplication());
 
         return $this->render('interview/response.html.twig', array(
             'interview' => $interview,

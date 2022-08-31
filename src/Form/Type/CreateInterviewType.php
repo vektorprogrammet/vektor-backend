@@ -17,10 +17,14 @@ class CreateInterviewType extends AbstractType
             'query_builder' => function (EntityRepository $er) use ($options) {
                 return $er->createQueryBuilder('u')
                     ->select('u')
-                    ->join('u.roles', 'r')
-                    ->where('r.role IN (:roles)')
-                    ->orderBy('u.firstName')
-                    ->setParameter('roles', $options['roles']);
+                    ->where("u.roles = :_admin")
+                    ->orWhere("u.roles = :_teamleader")
+                    ->orWhere("u.roles = :_teammember")
+                    ->setParameter("_admin", "[\"ROLE_ADMIN\"]")
+                    ->setParameter("_teamleader", "[\"ROLE_TEAM_LEADER\"]")
+                    ->setParameter("_teammember", "[\"ROLE_TEAM_MEMBER\"]")
+                    ->orderBy('u.firstName');
+                    //->setParameter('roles', $options['roles']);
             },
             'group_by' => 'fieldOfStudy.department.city',
         ));
