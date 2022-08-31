@@ -5,11 +5,9 @@ namespace App\Controller;
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\ChangeLogItem;
-use App\Entity\Feedback;
 use App\Entity\Receipt;
 use App\Entity\Survey;
 use App\Entity\User;
-use App\Form\Type\FeedbackType;
 use App\Service\AdmissionStatistics;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
@@ -125,15 +123,10 @@ class WidgetController extends BaseController
         ]);
     }
 
-    public function feedback(Request $request)
+    public function feedback()
     {
-        $feedback = new Feedback;
-        $form = $this->createForm(FeedBackType::class, $feedback);
-        $form->handleRequest($request);
-
         return $this->render('widgets/feedback_widget.html.twig', array(
             'title' => 'Feedback',
-            'form' => $form->createView()
         ));
     }
 }
