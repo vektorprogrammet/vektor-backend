@@ -122,11 +122,4 @@ class WidgetController extends BaseController
             'changeLogItems' => array_slice($changeLogItems, 0, 5)
         ]);
     }
-
-    public function feedback()
-    {
-        return $this->render('widgets/feedback_widget.html.twig', array(
-            'title' => 'Feedback',
-        ));
-    }
 }
