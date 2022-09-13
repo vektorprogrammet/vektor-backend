@@ -1228,19 +1228,4 @@ about_new:
 feedback_admin_index:
     path: /kontrollpanel/feedback
     controller: App\Controller\FeedbackController::index
-    methods: [GET, POST]
-    
-feedback_admin_list:
-    path: /kontrollpanel/feedback/list
-    controller: App\Controller\FeedbackController::showAll
     methods: [GET]
-    
-feedback_admin_show:
-    path: /kontrollpanel/feedback/show/{id}
-    controller: App\Controller\FeedbackController::show
-    methods: [GET]
-    
-feedback_admin_delete:
-    path: /kontrollpanel/feedback/delete/{id}
-    controller: App\Controller\FeedbackController::delete
-    methods: [POST]

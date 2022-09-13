@@ -5,15 +5,25 @@
 {% block breadcrumb %}
     <li class="breadcrumb-item active">{{ title }}</li>
 {% endblock %}
-{% block breadcrumb_menu %}
-    <div class="btn-group">
-        <a class="btn text-primary btn-sm" href="{{ path('feedback_admin_list') }}">
-            <i class="fa fa-list"></i> Tilbakemeldinger
-            </a>
-    </div>
-{% endblock %}
+
 {% block body %}
     <div class="row">
-        {{ render(controller('App\\Controller\\WidgetController::feedback', {'request': app.request})) }}
+        <div class="col-12 col-md-6 col-xxxl-4">
+            <div class="card">
+                <div class="card-header">
+                    Send en melding til IT-teamet!
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Har du et spørsmål til IT-teamet?</li>
+                        <li>Får du opp en feilmelding når du prøver å gjøre noe?</li>
+                        <li>Har du en god ide til en ny funksjonalitet?</li>
+                    </ul>
+                    <strong>IT-teamet vil gjerne høre fra deg.</strong>
+                    <br>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScp2flgGKjBf5xqVPWBc0pHBCe-BSZq30U8F560POwm1PSAmw/viewform?usp=sf_link">Link: Google-Form</a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
