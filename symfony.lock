@@ -1,4 +1,18 @@
 {
+    "api-platform/core": {
+        "version": "2.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.5",
+            "ref": "05b57782a78c21a664a42055dc11cf1954ca36bb"
+        },
+        "files": [
+            "config/packages/api_platform.yaml",
+            "config/routes/api_platform.yaml",
+            "src/Entity/.gitignore"
+        ]
+    },
     "brick/math": {
         "version": "0.9.2"
     },
@@ -129,6 +143,9 @@
             "config/packages/ewz_recaptcha.yaml"
         ]
     },
+    "fig/link-util": {
+        "version": "1.1.2"
+    },
     "firebase/php-jwt": {
         "version": "v5.2.1"
     },
@@ -239,6 +256,18 @@
     "monolog/monolog": {
         "version": "2.2.0"
     },
+    "nelmio/cors-bundle": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "config/packages/nelmio_cors.yaml"
+        ]
+    },
     "nikic/php-parser": {
         "version": "v4.10.4"
     },
@@ -265,6 +294,9 @@
     },
     "phpseclib/phpseclib": {
         "version": "3.0.5"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "1.8.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -564,6 +596,9 @@
             "config/packages/routing.yaml",
             "config/routes.yaml"
         ]
+    },
+    "symfony/runtime": {
+        "version": "v5.4.7"
     },
     "symfony/security-bundle": {
         "version": "5.4",
