@@ -1635,16 +1635,16 @@
         },
         {
             "name": "excelwebzone/recaptcha-bundle",
-            "version": "v1.5.32",
+            "version": "v1.5.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/excelwebzone/EWZRecaptchaBundle.git",
-                "reference": "c4dcc715fa765a16ace2ca51ddc9ae276cc5dd59"
+                "reference": "8dad97a2017dcb650c18ff17ff1b8c54c1847dac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/c4dcc715fa765a16ace2ca51ddc9ae276cc5dd59",
-                "reference": "c4dcc715fa765a16ace2ca51ddc9ae276cc5dd59",
+                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/8dad97a2017dcb650c18ff17ff1b8c54c1847dac",
+                "reference": "8dad97a2017dcb650c18ff17ff1b8c54c1847dac",
                 "shasum": ""
             },
             "require": {
@@ -1689,9 +1689,9 @@
             ],
             "support": {
                 "issues": "https://github.com/excelwebzone/EWZRecaptchaBundle/issues",
-                "source": "https://github.com/excelwebzone/EWZRecaptchaBundle/tree/v1.5.32"
+                "source": "https://github.com/excelwebzone/EWZRecaptchaBundle/tree/v1.5.35"
             },
-            "time": "2022-02-03T17:58:00+00:00"
+            "time": "2022-04-22T16:52:19+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -9968,16 +9968,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.3.9",
+            "version": "v3.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "6ff9b0e440fa66f97f207e181c41340ddfa5683d"
+                "reference": "8442df056c51b706793adf80a9fd363406dd3674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/6ff9b0e440fa66f97f207e181c41340ddfa5683d",
-                "reference": "6ff9b0e440fa66f97f207e181c41340ddfa5683d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/8442df056c51b706793adf80a9fd363406dd3674",
+                "reference": "8442df056c51b706793adf80a9fd363406dd3674",
                 "shasum": ""
             },
             "require": {
@@ -10028,7 +10028,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.3.9"
+                "source": "https://github.com/twigphp/Twig/tree/v3.3.10"
             },
             "funding": [
                 {
@@ -10040,7 +10040,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-25T09:37:52+00:00"
+            "time": "2022-04-06T06:47:41+00:00"
         },
         {
             "name": "webmozart/assert",
