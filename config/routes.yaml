@@ -66,34 +66,6 @@ control_panel:
 
 
 ##########################################
-#                Changelog               #
-##########################################
-
-changelog_create:
-    path: /kontrollpanel/changelog/create
-    controller: App\Controller\ChangeLogController::createChangeLog
-    methods: [GET, POST]
-
-changelogitem_edit:
-    path: /kontrollpanel/changelog/edit/{id}
-    controller: App\Controller\ChangeLogController::editChangeLog
-    methods: [GET, POST]
-    requirements:
-        id: \d+
-
-changelogitem_delete:
-    path: /kontrollpanel/changelog/delete/{id}
-    controller: App\Controller\ChangeLogController::deleteChangeLog
-    methods: [POST]
-    requirements:
-        id: \d+
-
-changelog_show_all:
-    path: /kontrollpanel/changelog/show/all
-    controller: App\Controller\ChangeLogController::show
-    methods: [GET]
-
-##########################################
 #                Survey                  #
 ##########################################
 

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
-use App\Entity\ChangeLogItem;
 use App\Entity\Receipt;
 use App\Entity\Survey;
 use App\Entity\User;
@@ -110,16 +109,6 @@ class WidgetController extends BaseController
 
         return $this->render('widgets/available_surveys_widget.html.twig', [
             'availableSurveys' => $surveys,
-        ]);
-    }
-
-    public function changelog()
-    {
-        $changeLogItems = $this->getDoctrine()->getRepository(ChangeLogItem::class)->findAllOrderedByDate();
-        $changeLogItems = array_reverse($changeLogItems);
-
-        return $this->render('widgets/changelog_widget.html.twig', [
-            'changeLogItems' => array_slice($changeLogItems, 0, 5)
         ]);
     }
 }
