@@ -103,7 +103,6 @@
             "elfinder:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
             "php bin/console ckeditor:install",
             "php bin/console assets:install public"
         ],
