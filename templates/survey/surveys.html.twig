@@ -1,7 +1,7 @@
 {% extends 'adminBase.html.twig' %}
 
 {% block title %}
-    Skjemaer for spørreundersøkelser
+    Spørreundersøkelser
 {% endblock %}
 
 {% block breadcrumb %}
@@ -9,25 +9,12 @@
 {% endblock %}
 
 {% block breadcrumb_menu %}
-    <div class="btn-group">
-        {% include 'common/department_semester_dropdowns.html.twig' with { 'path': 'surveys' } %}
-        <a href="{{ path('survey_create') }}" class="btn btn-outline-success text-success">
-            <i class="fa fa-plus"></i> Ny undersøkelse
-        </a>
-    </div>
 {% endblock %}
 
 
 {% block body %}
-
-    {% include 'survey/survey_table.html.twig' with {'surveys': surveysWithDepartment, 'cardTitle' : "Undersøkelser #{ department } #{ semester }"} %}
-
-    {% if has_access_to('survey_admin') %}
-
-        {% include 'survey/survey_table.html.twig' with {'surveys': globalSurveys, 'cardTitle' : "Globale undersøkelser #{ semester }" } %}
-
-    {% endif %}
-
-
+    <h1 style="color:red">Undersøkelser utfases</h1>
+    <h2 style="color: lightcoral">- Benytt Google Forms for å lage undersøkelsen</h2>
+    <h2 style="color: lightcoral">- Generer deretter e-postliste (/kontrollpanel/epostlister) for å sende ut lenke til undersøkelsen</h2><br>
 
 {% endblock %}
