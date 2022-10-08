@@ -222,17 +222,6 @@
 
 
             <li class="c-sidebar-nav-title">Annet</li>
-            {% include 'base/admin/nav_link.html.twig' with {
-                route: 'surveys',
-                icon: 'comment-o',
-                name: 'Undersøkelser',
-                activeRoutes: [
-                    'survey_create',
-                    'survey_edit',
-                    'survey_copy',
-                    'survey_results',
-                ]
-            } %}
 
             {% include 'base/admin/nav_link.html.twig' with {
                 route: 'departmentadmin_show',

@@ -66,14 +66,6 @@ control_panel:
 
 
 ##########################################
-#                Survey                  #
-##########################################
-surveys:
-    path: /kontrollpanel/undersokelse/admin
-    controller: App\Controller\SurveyController::showSurveys
-    methods: [GET]
-
-##########################################
 #                Usergroupings           #
 ##########################################
 usergroup_collections:
