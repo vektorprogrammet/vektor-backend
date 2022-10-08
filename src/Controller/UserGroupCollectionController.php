@@ -13,6 +13,14 @@ use UnexpectedValueException;
 
 class UserGroupCollectionController extends BaseController
 {
+
+    private UserGroupCollectionManager $userGroupCollectionManager;
+
+    public function __construct(UserGroupCollectionManager $userGroupCollectionManager)
+    {
+        $this->userGroupCollectionManager = $userGroupCollectionManager;
+    }
+
     public function createUserGroupCollection(Request $request, UserGroupCollection $userGroupCollection = null)
     {
         if ($isCreate = $userGroupCollection === null) {
@@ -41,7 +49,7 @@ class UserGroupCollectionController extends BaseController
             }
 
             try {
-                $this->get(UserGroupCollectionManager::class)->initializeUserGroupCollection($userGroupCollection);
+                $this->userGroupCollectionManager->initializeUserGroupCollection($userGroupCollection);
                 $this->addFlash("success", "Brukergruppering laget");
                 return $this->redirect($this->generateUrl('usergroup_collections'));
             } catch (InvalidArgumentException $e) {
