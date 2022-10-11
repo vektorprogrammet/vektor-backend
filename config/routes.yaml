@@ -54,6 +54,15 @@ parents:
     controller: App\Controller\PublicStaticPageController::showParentsPage
     methods: [GET]
 
+teachers:
+    path: /laerere
+    controller: App\Controller\PublicStaticPageController::showTeacherPage
+
+about_new:
+    path: /om
+    controller: App\Controller\PublicStaticPageController::showAboutPage
+
+
 
 ##########################################
 #                Control Panel           #
@@ -1186,14 +1195,6 @@ team:
     path: /team
     controller: App\Controller\BoardAndTeamController::show
 
-teachers:
-    path: /laerere
-    controller: App\Controller\PublicStaticPageController::showParentsPage
-
-about_new:
-    path: /om
-    controller: App\Controller\PublicStaticPageController::showAboutPage
-    
 ##########################################
 #               Feedback                 #
 ##########################################
