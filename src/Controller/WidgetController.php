@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\Receipt;
-use App\Entity\Survey;
 use App\Entity\User;
 use App\Service\AdmissionStatistics;
 use App\Service\Sorter;
@@ -88,27 +87,6 @@ class WidgetController extends BaseController
         return $this->render('widgets/application_graph_widget.html.twig', [
             'appData' => $appData,
             'semester' => $semester,
-        ]);
-    }
-
-
-    /**
-     * @param Request $request
-     * @return Response|null
-     */
-    public function availableSurveys(Request $request)
-    {
-        $semester = $this->getSemesterOrThrow404($request);
-
-        $surveys = [];
-        if ($semester !== null) {
-            $surveys = $this->getDoctrine()
-                ->getRepository(Survey::class)
-                ->findAllNotTakenByUserAndSemester($this->getUser(), $semester);
-        }
-
-        return $this->render('widgets/available_surveys_widget.html.twig', [
-            'availableSurveys' => $surveys,
         ]);
     }
 }
