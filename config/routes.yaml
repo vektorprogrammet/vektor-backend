@@ -54,6 +54,15 @@ parents:
     controller: App\Controller\PublicStaticPageController::showParentsPage
     methods: [GET]
 
+teachers:
+    path: /laerere
+    controller: App\Controller\PublicStaticPageController::showTeacherPage
+
+about_new:
+    path: /om
+    controller: App\Controller\PublicStaticPageController::showAboutPage
+
+
 
 ##########################################
 #                Control Panel           #
@@ -63,37 +72,6 @@ control_panel:
     path: /kontrollpanel
     controller: App\Controller\ControlPanelController::show
     methods: [GET]
-
-
-##########################################
-#                Usergroupings           #
-##########################################
-usergroup_collections:
-    path: /kontrollpanel/brukergruppesamling
-    controller: App\Controller\UserGroupCollectionController::userGroupCollections
-    methods: [GET]
-
-
-usergroup_collection_create:
-    path: /kontrollpanel/brukergruppesamling/opprett
-    controller: App\Controller\UserGroupCollectionController::createUserGroupCollection
-    methods: [GET, POST]
-
-
-usergroup_collection_edit:
-    path: /kontrollpanel/brukergruppesamling/opprett/{id}
-    controller: App\Controller\UserGroupCollectionController::createUserGroupCollection
-    methods: [GET, POST]
-    requirements:
-        id: \d+
-
-
-usergroup_collection_delete:
-    path: /kontrollpanel/brukergruppesamling/slett/{id}
-    controller: App\Controller\UserGroupCollectionController::deleteUserGroupCollection
-    methods: [POST]
-    requirements:
-        id: \d+
 
 
 ##########################################
@@ -1051,14 +1029,6 @@ team:
     path: /team
     controller: App\Controller\BoardAndTeamController::show
 
-teachers:
-    path: /laerere
-    controller: App\Controller\PublicStaticPageController::showParentsPage
-
-about_new:
-    path: /om
-    controller: App\Controller\PublicStaticPageController::showAboutPage
-    
 ##########################################
 #               Feedback                 #
 ##########################################
