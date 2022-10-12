@@ -13,7 +13,6 @@ use App\Form\Type\ApplicationType;
 use App\Role\Roles;
 use App\Service\InterviewCounter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -202,12 +201,6 @@ class AdmissionAdminController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/kontrollpanel/application/existing/delete/{id}", name="delete_application_existing_user")
-     * @param Application $application
-     *
-     * @return RedirectResponse
-     */
     public function deleteApplicationExistingAssistant(Application $application)
     {
         $em = $this->getDoctrine()->getManager();

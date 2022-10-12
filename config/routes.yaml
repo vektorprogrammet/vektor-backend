@@ -358,10 +358,18 @@ admissionadmin_team_interest:
         DepartmentController:: \d+
         semester: \d+
 
+delete_application_existing_user:
+    path: /kontrollpanel/application/existing/delete/{id}
+    controller: App\Controller\AdmissionAdminController::deleteApplicationExistingAssistant
+    methods: [POST]
+    requirements:
+        id: \d+
+
+
 ##########################################
 #                User                    #
 ##########################################
-min_side:
+my_page:
     path: /min-side
     controller: App\Controller\UserController::myPage
     methods: [GET]
