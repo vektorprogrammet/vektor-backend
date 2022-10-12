@@ -73,6 +73,19 @@ control_panel:
     controller: App\Controller\ControlPanelController::show
     methods: [GET]
 
+##########################################
+#             Semester                   #
+##########################################
+semester_show:
+    path: /kontrollpanel/semesteradmin
+    controller: App\Controller\SemesterController::show
+    methods: [GET]
+
+semester_create:
+    path: /kontrollpanel/semesteradmin/opprett
+    controller: App\Controller\SemesterController::createSemester
+    methods: [GET, POST]
+
 
 ##########################################
 #             Statistics                 #
@@ -931,8 +944,6 @@ signature_image_show:
 ##########################################
 #              Field of study            #
 ##########################################
-
-
 
 create_field_of_study:
     path: /kontrollpanel/linje
