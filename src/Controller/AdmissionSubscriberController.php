@@ -15,15 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionSubscriberController extends BaseController
 {
-    /**
-     * @Route("/interesseliste/{shortName}", name="interest_list", requirements={"shortName"="\w+"})
-     * @Route("/interesseliste/{id}", name="interest_list_by_id", requirements={"id"="\d+"})
-     *
-     * @param Request $request
-     * @param Department $department
-     *
-     * @return Response
-     */
+
     public function subscribePage(Request $request, Department $department)
     {
         $subscriber = new AdmissionSubscriber();
@@ -49,13 +41,6 @@ class AdmissionSubscriberController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/opptak/notification", name="admission_subscribe")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function subscribe(Request $request)
     {
         $email = $request->request->get('email');
@@ -78,12 +63,6 @@ class AdmissionSubscriberController extends BaseController
         return new JsonResponse(null, 201);
     }
 
-    /**
-     * @Route("/opptak/notification/unsubscribe/{code}", name="admission_unsubscribe")
-     * @param string $code
-     *
-     * @return RedirectResponse
-     */
     public function unsubscribe($code)
     {
         $subscriber = $this->getDoctrine()->getRepository(AdmissionSubscriber::class)->findByUnsubscribeCode($code);

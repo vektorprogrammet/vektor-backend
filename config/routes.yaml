@@ -365,6 +365,35 @@ delete_application_existing_user:
     requirements:
         id: \d+
 
+##########################################
+#          AdmissionSubscriber           #
+##########################################
+interest_list:
+    path: /intereseliste/{shortName}
+    controller: App\Controller\AdmissionSubscriberController::subscribePage
+    methods: [GET]
+    requirements:
+        shortName: \w+
+
+interest_list_by_id:
+    path: /interesseliste/{id}
+    controller: App\Controller\AdmissionSubscriberController::subscribePage
+    methods: [GET]
+    requirements:
+        id: \d+
+
+admission_subscribe:
+    path: /opptak/notification
+    controller: App\Controller\AdmissionSubscriberController::subscribe
+    methods: [POST]
+
+admission_unsubscribe:
+    path: /opptak/notification/unsubscribe/{code}
+    controller: App\Controller\AdmissionSubscriberController::unsubscribe
+    methods: [POST]
+    requirements:
+        code: \w+
+
 
 ##########################################
 #                User                    #
