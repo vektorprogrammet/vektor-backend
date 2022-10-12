@@ -359,6 +359,20 @@ admissionadmin_team_interest:
         semester: \d+
 
 ##########################################
+#                User                    #
+##########################################
+min_side:
+    path: /min-side
+    controller: App\Controller\UserController::myPage
+    methods: [GET]
+
+profil_partnere:
+    path: /profil/partnere
+    controller: App\Controller\UserController::myPartner
+    methods: [GET]
+
+
+##########################################
 #              UserAdmin                 #
 ##########################################
 

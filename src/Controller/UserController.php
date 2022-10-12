@@ -18,9 +18,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class UserController extends BaseController
 {
 
-    /**
-     * @var ApplicationManager
-     */
     private ApplicationManager $applicationManager;
 
     public function __construct(ApplicationManager $applicationManager)
@@ -28,12 +25,6 @@ class UserController extends BaseController
         $this->applicationManager = $applicationManager;
     }
 
-
-    /**
-     * @Route("/min-side", name="my_page")
-     *
-     * @return Response
-     */
     public function myPage()
     {
         $user = $this->getUser();
@@ -64,11 +55,6 @@ class UserController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/profil/partnere", name="my_partners")
-     *
-     * @return Response
-     */
     public function myPartner()
     {
         if (!$this->getUser()->isActive()) {
@@ -114,37 +100,4 @@ class UserController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("profil/mode/{mode}",
-     *     name="content_mode",
-     *     methods={"POST"}
-     *     )
-     *
-     * @param Request $request
-     * @param string $mode
-     *
-     * @return RedirectResponse
-     */
-    public function changeContentMode(Request $request, string $mode)
-    {
-        if (!$this->get(RoleExtension::class)->userCanEditPage()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        if ($mode !== 'read-mode' && $mode !== 'edit-mode') {
-            throw new BadRequestHttpException('Invalid mode');
-        }
-
-        $isEditMode = $mode === 'edit-mode';
-
-        if ($isEditMode) {
-            $this->get(ContentModeManager::class)->changeToEditMode();
-        } else {
-            $this->get(ContentModeManager::class)->changeToReadMode();
-        }
-
-        $this->addFlash($isEditMode ? 'warning' : 'info', $isEditMode ? 'Du er nå i redigeringsmodus' : 'Du er nå i lesemodus');
-
-        return $this->redirect($request->headers->get('referer'));
-    }
 }
