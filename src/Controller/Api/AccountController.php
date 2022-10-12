@@ -28,15 +28,6 @@ class AccountController extends BaseController
         $this->session = $session;
     }
 
-    /**
-     * @Route(path="api/account/login", methods={"GET", "POST"})
-     *
-     * @param Request $request
-     *
-     * @return Response
-     * @throws InvalidClassConstructorException
-     * @throws NonUniqueResultException
-     */
     public function login(Request $request)
     {
         $response = new JsonResponse();
@@ -77,11 +68,6 @@ class AccountController extends BaseController
         return new JsonResponse($userDto);
     }
 
-    /**
-     * @Route(path="api/account/logout", methods={"POST"})
-     *
-     * @return Response
-     */
     public function logout()
     {
         try {
@@ -95,12 +81,7 @@ class AccountController extends BaseController
         }
     }
 
-    /**
-     * @Route(path="api/account/user", methods={"GET"})
-     *
-     * @return Response
-     * @throws InvalidClassConstructorException
-     */
+
     public function getUser()
     {
         if (!$this->getUser()) {
@@ -116,16 +97,6 @@ class AccountController extends BaseController
     }
 
 
-    /**
-     * @param Request $request
-     *
-     * @Route(
-     *     path="api/account/get_department",
-     *     methods={"GET"}
-     * )
-     *
-     * @return Response
-     */
     public function getDepartmentApi(Request $request)
     {
         if (!$this->getUser()) {
