@@ -21,11 +21,6 @@ class SponsorsController extends BaseController
         $this->fileUploader = $fileUploader;
     }
 
-    /**
-     * @Route("/kontrollpanel/sponsorer", name="sponsors_show")
-     *
-     * @return Response
-     */
     public function sponsorsShow()
     {
         $sponsors = $this->getDoctrine()
@@ -37,14 +32,6 @@ class SponsorsController extends BaseController
         ));
     }
 
-    /**
-     * @Route("/kontrollpanel/sponsor/create", name="sponsor_create")
-     * @Route("/kontrollpanel/sponsor/edit/{id}", name="sponsor_edit")
-     * @param Sponsor|null $sponsor
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     public function sponsorEdit(Sponsor $sponsor = null, Request $request)
     {
         $isCreate = $sponsor === null;
@@ -86,12 +73,6 @@ class SponsorsController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/kontrollpanel/sponsor/delete/{id}", name="sponsor_delete")
-     * @param Sponsor $sponsor
-     *
-     * @return RedirectResponse
-     */
     public function deleteSponsor(Sponsor $sponsor)
     {
         if ($sponsor->getLogoImagePath()) {

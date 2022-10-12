@@ -792,6 +792,33 @@ school_capacity_edit:
         id: \d+
 
 ##########################################
+#              Sponsor                   #
+##########################################
+sponsors_show:
+    path: /kontrollpanel/sponsorer/
+    controller: App\Controller\SponsorController::sponsorsShow
+    methods: [GET]
+
+sponsor_create:
+    path: /kontrollpanel/sponsor/create
+    controller: App\Controller\SponsorController::sponsorsShow
+    methods: [GET, POST]
+
+sponsor_edit:
+    path: /kontrollpanel/sponsor/edit/{id}
+    controller: App\Controller\SponsorController::sponsorEdit
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+sponsor_delete:
+    path: /kontrollpanel/sponsor/delete/{id}
+    controller: App\Controller\SponsorController::deleteSponsor
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+##########################################
 #              Interview                 #
 ##########################################
 interview_clear_co_interviewer:
