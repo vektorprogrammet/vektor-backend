@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WidgetController extends BaseController
 {
-    private $sorter;
-    private $admissionStatistics;
+    private Sorter $sorter;
+    private AdmissionStatistics $admissionStatistics;
 
     public function __construct(Sorter $sorter, AdmissionStatistics $admissionStatistics)
     {

@@ -20,11 +20,11 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class AssistantController extends BaseController
 {
-    private $applicationAdmission;
-    private $geoLocation;
-    private $filterService;
-    private $kernel;
-    private $eventDispatcher;
+    private ApplicationAdmission $applicationAdmission;
+    private GeoLocation $geoLocation;
+    private FilterService $filterService;
+    private KernelInterface $kernel;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(ApplicationAdmission $applicationAdmission,
                                 GeoLocation $geoLocation,

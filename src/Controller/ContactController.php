@@ -15,15 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends BaseController
 {
-    private $geoLocation;
-    /**
-     * @var LogService
-     */
-    private $logService;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    private GeoLocation $geoLocation;
+    private LogService $logService;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(GeoLocation $geoLocation, LogService $logService, EventDispatcherInterface $eventDispatcher)
     {

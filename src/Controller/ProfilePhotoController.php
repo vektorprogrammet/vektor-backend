@@ -10,10 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProfilePhotoController extends BaseController
 {
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
+    private FileUploader $fileUploader;
 
     public function __construct(FileUploader $fileUploader)
     {

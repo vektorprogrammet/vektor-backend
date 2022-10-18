@@ -10,10 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
-    /**
-     * @var LogService
-     */
-    private $logService;
+    private LogService $logService;
 
     public function __construct(LogService $logService)
     {

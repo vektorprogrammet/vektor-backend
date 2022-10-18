@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExistingUserAdmissionController extends BaseController
 {
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {

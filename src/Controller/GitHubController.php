@@ -10,10 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class GitHubController extends BaseController
 {
     private $repositoryName = 'vektorprogrammet/vektorprogrammet';
-    /**
-     * @var LogService
-     */
-    private $logService;
+    private LogService $logService;
 
     public function __construct(LogService $logService){
         $this->logService = $logService;

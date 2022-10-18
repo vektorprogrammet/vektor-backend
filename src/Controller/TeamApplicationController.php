@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeamApplicationController extends BaseController
 {
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
