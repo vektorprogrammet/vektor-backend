@@ -982,7 +982,7 @@ interview_cancel_by_response:
 interview_edit_status:
     path: kontrollpanel/intervju/status/{id}
     controller: App\Controller\InterviewController::editStatus
-    methods: [POST]
+    methods: [POST]`
     requirements:
         id: \d+
 
@@ -1136,6 +1136,13 @@ executive_board_remove_user_from_board_by_id:
 executive_board_update:
     path: /kontrollpanel/hovedstyret/oppdater
     controller: App\Controller\ExecutiveBoardController::updateBoard
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+edit_executive_board_membership:
+    path: /kontrollpanel/hovedstyret/rediger_medlem/{id}
+    controller: App\Controller\ExecutiveBoardController::editMemberHistory
     methods: [GET, POST]
     requirements:
         id: \d+

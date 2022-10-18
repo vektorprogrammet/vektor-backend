@@ -134,12 +134,6 @@ class ExecutiveBoardController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/hovedstyret/rediger_medlem/{id}",
-     *     name="edit_executive_board_membership",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Request $request
      * @param ExecutiveBoardMembership $member
      *
