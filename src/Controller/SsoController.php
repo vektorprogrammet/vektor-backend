@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SsoController extends BaseController
 {
+    public function error($response, $message){
+        $response->setStatusCode(401);
+        $response->setContent($message);
+        return $response;
+    }
     public function login(Request $request)
     {
         $response = new JsonResponse();
@@ -17,31 +22,23 @@ class SsoController extends BaseController
         $password = $request->get('password');
 
         if (!$username || !$password) {
-            $response->setStatusCode(401);
-            $response->setContent('Username or password not provided');
-            return $response;
+            $this->error($response,'Username or password not provided');
         }
 
         try {
             $user = $this->getDoctrine()->getRepository(User::class)->findByUsernameOrEmail($username);
         } catch (NoResultException $e) {
-            $response->setStatusCode(401);
-            $response->setContent('Username does not exist');
-            return $response;
+            $this->error($response,'Username does not exist');
         }
 
         $validPassword = $this->get('security.password_encoder')->isPasswordValid($user, $password);
         if (!$validPassword) {
-            $response->setStatusCode(401);
-            $response->setContent('Wrong password');
-            return $response;
+            $this->error($response,'Wrong password');
         }
 
         $activeInTeam = count($user->getActiveMemberships()) > 0;
         if (!$activeInTeam) {
-            $response->setStatusCode(401);
-            $response->setContent('User does not have any active team memberships');
-            return $response;
+            $this->error($response,'User does not have any active team memberships');
         }
 
         return new JsonResponse([
