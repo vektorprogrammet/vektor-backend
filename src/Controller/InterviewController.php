@@ -53,12 +53,6 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/intervju/conduct/{id}",
-     *     name="interview_conduct",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     *     )
-     *
      * @param Request $request
      * @param Application $application
      *

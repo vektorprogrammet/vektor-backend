@@ -986,6 +986,13 @@ interview_edit_status:
     requirements:
         id: \d+
 
+interview_conduct:
+    path: /kontrollpanel/intervju/conduct/{id}
+    controller: App\Controller\InterviewController::conduct
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
 ##########################################
 #                File browser            #
 ##########################################
