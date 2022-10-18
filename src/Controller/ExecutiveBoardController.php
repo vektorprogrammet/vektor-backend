@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
 use App\Service\RoleManager;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CreateExecutiveBoardType;
 use App\Form\Type\CreateExecutiveBoardMembershipType;

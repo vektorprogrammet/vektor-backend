@@ -7,7 +7,6 @@ use App\Entity\AdmissionSubscriber;
 use App\Entity\Application;
 use App\Service\AdmissionStatistics;
 use Doctrine\ORM\NonUniqueResultException;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

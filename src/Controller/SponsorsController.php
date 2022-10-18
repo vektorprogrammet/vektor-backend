@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Sponsor;
 use App\Form\Type\SponsorType;
 use App\Service\FileUploader;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

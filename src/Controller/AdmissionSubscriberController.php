@@ -7,7 +7,6 @@ use App\Entity\Department;
 use App\Form\Type\AdmissionSubscriberType;
 use App\Service\AdmissionNotifier;
 use InvalidArgumentException;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
