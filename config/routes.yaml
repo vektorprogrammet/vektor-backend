@@ -1264,19 +1264,19 @@ feedback_admin_index:
 ##########################################
 access_rules_show:
     path: /kontrollpanel/admin/accessrules
-    controller: App\Controller\AccessRulesController::index
+    controller: App\Controller\AccessRuleController::index
     methods: [GET]
 
 access_rules_edit:
     path: /kontrollpanel/admin/accessrules/edit/{id}
-    controller: App\Controller\AccessRulesController::createRule
+    controller: App\Controller\AccessRuleController::createRule
     methods: [GET, POST]
     requirements:
         id: \d+
 
 access_rules_create:
        path: /kontrollpanel/admin/accessrules/create"
-       controller: App\Controller\AccessRulesController::createRule
+       controller: App\Controller\AccessRuleController::createRule
        methods: [GET, POST]
        defaults:
            id: null
@@ -1285,14 +1285,14 @@ access_rules_create:
 
 access_rules_edit_routing:
     path: /kontrollpanel/admin/accessrules/routing/edit/{id}
-    controller: App\Controller\AccessRulesController::createRoutingRule
+    controller: App\Controller\AccessRuleController::createRoutingRule
     methods: [GET, POST]
     requirements:
         id: \d+
 
 access_rules_create_routing:
     path: /kontrollpanel/admin/accessrules/routing/create
-    controller: App\Controller\AccessRulesController::createRoutingRule
+    controller: App\Controller\AccessRuleController::createRoutingRule
     methods: [GET, POST]
     defaults:
         id: null
@@ -1301,14 +1301,14 @@ access_rules_create_routing:
 
 access_rules_copy:
     path: /kontrollpanel/admin/accessrules/copy/{id}
-    controller: App\Controller\AccessRulesController::copyAccessRule
+    controller: App\Controller\AccessRuleController::copyAccessRule
     methods: [GET, POST]
     requirements:
         id: \d+
 
 access_rules_delete:
     path: /kontrollpanel/admin/accessrules/delete/{id}
-    controller: App\Controller\AccessRulesController::delete
+    controller: App\Controller\AccessRuleController::delete
     methods: [POST]
     requirements:
         id: \d+
