@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class SsoController extends BaseController
 {
-    public function login(Request $request)
+    public function login(Request $request, PersistenceManagerRegistry $doctrine)
     {
         $response = new JsonResponse();
 
@@ -23,11 +25,12 @@ class SsoController extends BaseController
         }
 
         try {
-            $user = $this->getDoctrine()->getRepository(User::class)->findByUsernameOrEmail($username);
+            $user = $doctrine->getRepository(User::class)->findByUsernameOrEmail($username);
         } catch (NoResultException $e) {
             $response->setStatusCode(401);
             $response->setContent('Username does not exist');
             return $response;
+        } catch (NonUniqueResultException $e) {
         }
 
         $validPassword = $this->get('security.password_encoder')->isPasswordValid($user, $password);
