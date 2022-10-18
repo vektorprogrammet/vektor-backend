@@ -1174,6 +1174,10 @@ edit_executive_board_membership:
     requirements:
         id: \d+
 
+team:
+    path: /team
+    controller: App\Controller\BoardAndTeamController::show
+
 ##########################################
 #              Mailing Lists             #
 ##########################################
@@ -1207,6 +1211,10 @@ generate_all_mail_list:
         DepartmentController:: \d+
         semester: \d+
 
+
+##########################################
+#              Assistants                #
+##########################################
 assistants:
     path: /assistenter/{id}
     controller: App\Controller\AssistantController::index
@@ -1216,9 +1224,31 @@ assistants:
     requirements:
         id: \d+
 
-team:
-    path: /team
-    controller: App\Controller\BoardAndTeamController::show
+application_stand_form:
+    path: /stand/opptak/{shortName}
+    controller: App\Controller\AssistantController::subscribePage
+    requirements:
+        shortName: \w+
+
+application_confirmation:
+    path: /assistenter/opptak/bekreftelse
+    controller: App\Controller\AssistantController::confirmation
+    methods: [GET]
+
+opptak:
+    path: /opptak
+    controller: App\Controller\AssistantController::admission
+    methods: [GET, POST]
+
+admission_show_by_city_case_insensitive:
+    path: /opptak/{city}
+    controller: App\Controller\AssistantController::admissionCaseInsensitive
+    methods: [GET]
+
+admission_show_specific_department_by_city_case_insensitive:
+    path: /avdeling/{city}
+    controller: App\Controller\AssistantController::admissionCaseInsensitive
+    methods: [GET]
 
 ##########################################
 #               Feedback                 #
