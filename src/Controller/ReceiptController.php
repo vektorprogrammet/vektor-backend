@@ -122,6 +122,11 @@ class ReceiptController extends BaseController
             $receipt->setPicturePath("");
         }
 
+        if ($form->isSubmitted() && !$form->isValid()&& $receipt->getPicturePath() == "") {
+
+            $this->addFlash('warning', "Bildefilen er for stor. Maks størrelse er 2 MiB.");
+        }
+
         return $this->render('receipt/my_receipts.html.twig', array(
             'form' => $form->createView(),
             'receipt' => $receipt,
