@@ -11,7 +11,6 @@ use App\Event\TeamMembershipEvent;
 use App\Form\Type\CreateTeamMembershipType;
 use App\Form\Type\CreateTeamType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,12 +24,6 @@ class TeamAdminController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/team/avdeling/{id}",
-     *     name="teamadmin_show",
-     *     defaults={"id":null},
-     *     methods={"GET"}
-     *     )
-     *
      * @param Department|null $department
      *
      * @return Response

@@ -617,10 +617,14 @@ team_application_delete:
     requirements:
         id: \d+
 
-#teamadmin_show:
-# path: /kontrollpanel/teamadmin
-# controller: App\Controller\TeamAdminController::show
-# methods: [GET]
+teamadmin_show:
+    path: /kontrollpanel/team/avdeling/{id}
+    controller: App\Controller\TeamAdminController::show
+    methods: [GET]
+    defaults:
+        id: null
+    requirements:
+        id: \d+
 
 teamadmin_create_position:
     path: /kontrollpanel/teamadmin/opprett/stilling
