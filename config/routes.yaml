@@ -309,6 +309,15 @@ reset_password_confirmation:
 
 
 ##########################################
+#         ConfirmationController         #
+##########################################
+confirmation:
+    path: /bekreftelse
+    controller: App\Controller\ConfirmationController::show
+    methods: [GET]
+
+
+##########################################
 #            AdmissionAdmin              #
 ##########################################
 
