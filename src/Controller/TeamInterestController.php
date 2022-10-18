@@ -13,7 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TeamInterestController extends BaseController
@@ -29,12 +28,6 @@ class TeamInterestController extends BaseController
     }
 
     /**
-     * @Route(name="team_interest_form",
-     *     path="/teaminteresse/{id}",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Department|NULL $department
      * @param Request $request
      *

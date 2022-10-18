@@ -395,6 +395,14 @@ delete_application_existing_user:
     requirements:
         id: \d+
 
+team_interest_form:
+    path: /teaminteresse/{id}
+    controller: App\Controller\TeamInterestController::showTeamInterestForm
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+
 ##########################################
 #          AdmissionSubscriber           #
 ##########################################
