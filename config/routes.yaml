@@ -63,6 +63,19 @@ about_new:
     controller: App\Controller\PublicStaticPageController::showAboutPage
 
 
+##########################################
+#                  Kontakt               #
+##########################################
+contact_department:
+    path: /kontakt/avdeling/{id}
+    controller: App\Controller\ContactController::index
+    methods: [GET, POST]
+
+contact:
+    path: /kontakt
+    controller: App\Controller\ContactController::index
+    methods: [GET, POST]
+
 
 ##########################################
 #                Control Panel           #
