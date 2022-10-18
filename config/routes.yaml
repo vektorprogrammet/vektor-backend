@@ -616,6 +616,11 @@ team_application_show:
     controller: App\Controller\TeamApplicationController::showApplication
     methods: [GET]
 
+team_application_confirmation:
+    path: /team/application/bekreftelse/{team_name}
+    controller: App\Controller\TeamApplicationController::confirmation
+    methods: [GET]
+
 team_application_show_all:
     path: /kontrollpanel/team/applications/{id}
     controller: App\Controller\TeamApplicationController::showAllApplications
