@@ -7,25 +7,20 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class LogService implements LoggerInterface
 {
-    private $monoLogger;
-    private $slackMessenger;
-    private $userService;
-    private $requestStack;
-    /**
-     * @var string
-     */
-    private $env;
+    private LoggerInterface $monoLogger;
+    private SlackMessenger $slackMessenger;
+    private UserService $userService;
+    private RequestStack $requestStack;
+    private string $env;
 
     /**
-     * LogService constructor.
-     *
-     * @param LoggerInterface $monoLogger
-     * @param SlackMessenger $slackMessenger
-     * @param UserService $userService
-     * @param RequestStack $requestStack
-     * @param string $env
+     * LogService constructor
      */
-    public function __construct(LoggerInterface $monoLogger, SlackMessenger $slackMessenger, UserService $userService, RequestStack $requestStack, string $env)
+    public function __construct(LoggerInterface $monoLogger,
+                                SlackMessenger $slackMessenger,
+                                UserService $userService,
+                                RequestStack $requestStack,
+                                string $env)
     {
         $this->monoLogger = $monoLogger;
         $this->slackMessenger = $slackMessenger;

@@ -14,22 +14,20 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RoleManager
 {
-    private $roles = array();
-    private $aliases = array();
-    private $authorizationChecker;
-    private $em;
-    private $logger;
-    private $googleUserService;
+    private array $roles = array();
+    private array $aliases = array();
+    private AuthorizationCheckerInterface $authorizationChecker;
+    private EntityManagerInterface $em;
+    private LoggerInterface $logger;
+    private GoogleUsers $googleUserService;
 
     /**
-     * RoleManager constructor.
-     *
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     * @param GoogleUsers $googleUserService
+     * RoleManager constructor
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, EntityManagerInterface $em, LoggerInterface $logger, GoogleUsers $googleUserService)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker,
+                                EntityManagerInterface $em,
+                                LoggerInterface $logger,
+                                GoogleUsers $googleUserService)
     {
         $this->roles = array(
             Roles::ASSISTANT,

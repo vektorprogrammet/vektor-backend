@@ -10,9 +10,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class BetaRedirecter
 {
-    private $tokenStorage;
-    private $roleManager;
+    private TokenStorageInterface $tokenStorage;
+    private RoleManager $roleManager;
 
+    /**
+     * BetaRedirecter constructor
+     */
     public function __construct(TokenStorageInterface $tokenStorage, RoleManager $roleManager)
     {
         $this->tokenStorage = $tokenStorage;
