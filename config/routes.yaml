@@ -87,6 +87,15 @@ semester_create:
     methods: [GET, POST]
 
 ##########################################
+#             Stand                      #
+##########################################
+stand:
+    path: /kontrollpanel/stand
+    controller: App\Controller\StandController::index
+    methods: [GET]
+
+
+##########################################
 #             Account                    #
 ##########################################
 api_login:

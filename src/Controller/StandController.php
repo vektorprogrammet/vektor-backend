@@ -21,8 +21,6 @@ class StandController extends BaseController
 
     }
     /**
-     * @Route("/kontrollpanel/stand", name="stand")
-     *
      * @param Request $request
      * @return Response
      * @throws NonUniqueResultException
