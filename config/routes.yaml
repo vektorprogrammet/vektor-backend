@@ -459,7 +459,7 @@ my_page:
     controller: App\Controller\UserController::myPage
     methods: [GET]
 
-profil_partnere:
+my_partners:
     path: /profil/partnere
     controller: App\Controller\UserController::myPartner
     methods: [GET]
