@@ -24,13 +24,6 @@ class CertificateController extends BaseController
 
     }
     /**
-     * @Route(
-     *     "/kontrollpanel/attest/{id}",
-     *     name="certificate_show",
-     *     defaults={"id": null},
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Request $request
      *
      * @return RedirectResponse|Response

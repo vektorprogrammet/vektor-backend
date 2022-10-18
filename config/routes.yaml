@@ -73,6 +73,18 @@ control_panel:
     controller: App\Controller\ControlPanelController::show
     methods: [GET]
 
+
+##########################################
+#           Certificate                  #
+##########################################
+certificate_show:
+    path: kontrollpanel/attest/{id}
+    controller: App\Controller\CertificateController::show
+    methods: [GET, POST]
+    defaults:
+        id: null
+
+
 ##########################################
 #             Semester                   #
 ##########################################
