@@ -9,7 +9,6 @@ use App\Form\Type\RoutingAccessRuleType;
 use App\Role\ReversedRoleHierarchy;
 use App\Role\Roles;
 use App\Service\AccessControlService;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +26,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules", name="access_rules_show")
      * @return Response
      */
     public function index()
@@ -43,16 +41,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/edit/{id}",
-     *     name="access_rules_edit",
-     *     requirements={"id"="\d+"}
-     * )
-     *
-     * @Route("/kontrollpanel/admin/accessrules/create",
-     *     name="access_rules_create",
-     *     defaults={"id": null},
-     *     requirements={"id"="\d+"}
-     * )
      * @param Request $request
      * @param AccessRule|null $accessRule
      * @return Response
@@ -87,16 +75,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/routing/edit/{id}",
-     *     name="access_rules_edit_routing",
-     *     requirements={"id"="\d+"}
-     * )
-     *
-     * @Route("/kontrollpanel/admin/accessrules/routing/create",
-     *     name="access_rules_create_routing",
-     *     defaults={"id": null},
-     *     requirements={"id"="\d+"}
-     * )
      * @param Request $request
      * @param AccessRule|null $accessRule
      * @return Response
@@ -134,11 +112,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/copy/{id}",
-     *     name="access_rules_copy",
-     *     requirements={"id"="\d+"}
-     * )
-     *
      * @param Request $request
      * @param AccessRule $rule
      * @return Response
@@ -154,11 +127,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/delete/{id}",
-     *     name="access_rules_delete",
-     *     requirements={"id"="\d+"},
-     *     methods={"POST"}
-     * )
      * @param AccessRule $accessRule
      * @return Response
      */

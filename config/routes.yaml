@@ -1257,3 +1257,58 @@ feedback_admin_index:
     path: /kontrollpanel/feedback
     controller: App\Controller\FeedbackController::index
     methods: [GET]
+
+
+##########################################
+#             Access Rules               #
+##########################################
+access_rules_show:
+    path: /kontrollpanel/admin/accessrules
+    controller: App\Controller\AccessRulesController::index
+    methods: [GET]
+
+access_rules_edit:
+    path: /kontrollpanel/admin/accessrules/edit/{id}
+    controller: App\Controller\AccessRulesController::createRule
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+access_rules_create:
+       path: /kontrollpanel/admin/accessrules/create"
+       controller: App\Controller\AccessRulesController::createRule
+       methods: [GET, POST]
+       defaults:
+           id: null
+       requirements:
+           id: \d+
+
+access_rules_edit_routing:
+    path: /kontrollpanel/admin/accessrules/routing/edit/{id}
+    controller: App\Controller\AccessRulesController::createRoutingRule
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+access_rules_create_routing:
+    path: /kontrollpanel/admin/accessrules/routing/create
+    controller: App\Controller\AccessRulesController::createRoutingRule
+    methods: [GET, POST]
+    defaults:
+        id: null
+    requirements:
+        id: \d+
+
+access_rules_copy:
+    path: /kontrollpanel/admin/accessrules/copy/{id}
+    controller: App\Controller\AccessRulesController::copyAccessRule
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+access_rules_delete:
+    path: /kontrollpanel/admin/accessrules/delete/{id}
+    controller: App\Controller\AccessRulesController::delete
+    methods: [POST]
+    requirements:
+        id: \d+
