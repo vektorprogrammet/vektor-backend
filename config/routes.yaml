@@ -401,6 +401,11 @@ admissionadmin_team_interest:
         DepartmentController:: \d+
         semester: \d+
 
+admission_existing_user:
+    path: /eksisterendeopptak
+    controller: App\Controller\ExistingUserAdmissionController::show
+    methods: [GET, POST]
+
 delete_application_existing_user:
     path: /kontrollpanel/application/existing/delete/{id}
     controller: App\Controller\AdmissionAdminController::deleteApplicationExistingAssistant

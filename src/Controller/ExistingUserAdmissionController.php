@@ -13,7 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class ExistingUserAdmissionController extends BaseController
 {
@@ -25,11 +24,6 @@ class ExistingUserAdmissionController extends BaseController
     }
 
     /**
-     * @Route("/eksisterendeopptak",
-     *     name="admission_existing_user",
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Request $request
      *
      * @return null|RedirectResponse|Response
