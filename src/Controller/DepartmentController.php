@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Department;
 use App\Form\Type\CreateDepartmentType;
+use Symfony\Component\HttpFoundation\Response;
 
 class DepartmentController extends BaseController
 {
-    public function show()
+    public function show(): Response
     {
         return $this->render('department_admin/index.html.twig', array());
     }
@@ -36,7 +38,7 @@ class DepartmentController extends BaseController
         ));
     }
 
-    public function deleteDepartmentById(Department $department)
+    public function deleteDepartmentById(Department $department): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($department);

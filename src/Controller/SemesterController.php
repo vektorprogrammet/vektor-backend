@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SemesterController extends AbstractController
 {
-    public function show()
+    public function show(): Response
     {
         $semesters = $this->getDoctrine()->getRepository(Semester::class)->findAllOrderedByAge();
 
@@ -58,7 +58,7 @@ class SemesterController extends AbstractController
         ));
     }
 
-    public function delete(Semester $semester)
+    public function delete(Semester $semester): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($semester);

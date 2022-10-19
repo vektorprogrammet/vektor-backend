@@ -9,7 +9,7 @@ class ConfirmationController extends BaseController
     /**
      * @return Response
      */
-    public function show()
+    public function show(): Response
     {
         return $this->render('confirmation/confirmation.html.twig');
     }

@@ -28,7 +28,7 @@ class AccessRuleController extends AbstractController
     /**
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         $customRules = $this->getDoctrine()->getRepository(AccessRule::class)->findCustomRules();
         $routingRules = $this->getDoctrine()->getRepository(AccessRule::class)->findRoutingRules();
@@ -45,7 +45,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRule(Request $request, AccessRule $accessRule = null)
+    public function createRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
@@ -79,7 +79,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRoutingRule(Request $request, AccessRule $accessRule = null)
+    public function createRoutingRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
@@ -116,7 +116,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule $rule
      * @return Response
      */
-    public function copyAccessRule(Request $request, AccessRule $rule)
+    public function copyAccessRule(Request $request, AccessRule $rule): Response
     {
         $clone = clone $rule;
         if ($rule->isRoutingRule()) {
@@ -130,7 +130,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule $accessRule
      * @return Response
      */
-    public function delete(AccessRule $accessRule)
+    public function delete(AccessRule $accessRule): Response
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($accessRule);

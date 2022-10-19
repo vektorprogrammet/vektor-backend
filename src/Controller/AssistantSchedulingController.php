@@ -11,10 +11,11 @@ use App\Entity\Semester;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class AssistantSchedulingController extends BaseController
 {
-    public function index()
+    public function index(): Response
     {
         return $this->render('assistant_scheduling/index.html.twig');
     }
@@ -24,7 +25,7 @@ class AssistantSchedulingController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getAssistants()
+    public function getAssistants(): JsonResponse
     {
         $user = $this->getUser();
 
@@ -90,7 +91,7 @@ class AssistantSchedulingController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getSchools()
+    public function getSchools(): JsonResponse
     {
         $user = $this->getUser();
         $department = $user->getFieldOfStudy()->getDepartment();
@@ -107,7 +108,7 @@ class AssistantSchedulingController extends BaseController
      *
      * @return array
      */
-    private function generateSchoolsFromSchoolCapacities($schoolCapacities)
+    private function generateSchoolsFromSchoolCapacities(array $schoolCapacities): array
     {
         //Use schoolCapacities to create School objects for the SA-Algorithm
         $schools = array();

@@ -45,7 +45,7 @@ class AssistantController extends BaseController
      *
      * @return Response
      */
-    public function admissionCaseInsensitive(Request $request, $city)
+    public function admissionCaseInsensitive(Request $request, $city): Response
     {
         $city = str_replace(array('æ', 'ø','å'), array('Æ','Ø','Å'), $city); // Make sqlite happy
         $department = $this->getDoctrine()
@@ -63,10 +63,8 @@ class AssistantController extends BaseController
      * @param Department|null $department
      *
      * @return Response
-     * @throws NoResultException
-     * @throws NonUniqueResultException
      */
-    public function admission(Request $request, Department $department = null)
+    public function admission(Request $request, Department $department = null): Response
     {
         return $this->index($request, $department);
     }
@@ -78,7 +76,9 @@ class AssistantController extends BaseController
      *
      * @return Response
      */
-    public function index(Request $request, Department $specificDepartment = null, $scrollToAdmissionForm = false)
+    public function index(Request $request,
+                          Department $specificDepartment = null,
+                          bool $scrollToAdmissionForm = false): Response
     {
         $admissionManager = $this->applicationAdmission;
         $em = $this->getDoctrine()->getManager();
@@ -98,7 +98,6 @@ class AssistantController extends BaseController
 
         $formViews = array();
 
-        /** @var Department $department */
         foreach ($departments as $department) {
             $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
                 'validation_groups' => array('admission'),
@@ -153,7 +152,7 @@ class AssistantController extends BaseController
     /**
      * @return Response
      */
-    public function confirmation()
+    public function confirmation(): Response
     {
         return $this->render('admission/application_confirmation.html.twig');
     }
@@ -166,7 +165,7 @@ class AssistantController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function subscribePage(Request $request, Department $department)
+    public function subscribePage(Request $request, Department $department): Response
     {
         if (!$department->activeAdmission()) {
             return $this->index($request, $department);

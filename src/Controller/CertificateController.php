@@ -64,7 +64,7 @@ class CertificateController extends BaseController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        // Finds all the the certificate requests
+        // Finds all the certificate requests
         $certificateRequests = $this->getDoctrine()->getRepository(CertificateRequest::class)->findAll();
 
         return $this->render('certificate/index.html.twig', array(

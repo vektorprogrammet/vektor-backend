@@ -9,14 +9,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GitHubController extends BaseController
 {
-    private $repositoryName = 'vektorprogrammet/vektorprogrammet';
+    private string $repositoryName = 'vektorprogrammet/vektorprogrammet';
     private LogService $logService;
 
     public function __construct(LogService $logService){
         $this->logService = $logService;
     }
 
-    public function deploy(Request $request)
+    public function deploy(Request $request): JsonResponse
     {
         // Check if request is from GitHub
         $ipIsFromGitHub = $this->ipIsFromGitHub($request->getClientIp());
@@ -50,7 +50,7 @@ class GitHubController extends BaseController
         }
     }
 
-    private function ipIsFromGitHub($ip)
+    private function ipIsFromGitHub($ip): bool
     {
         // Use curl to create a GET request to the GitHub api
         $ch = curl_init();
@@ -80,7 +80,7 @@ class GitHubController extends BaseController
         return false;
     }
 
-    private function cidrMatch($ip, $range)
+    private function cidrMatch($ip, $range): bool
     {
         list($subnet, $bits) = explode('/', $range);
         $ip = ip2long($ip);

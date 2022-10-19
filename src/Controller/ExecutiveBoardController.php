@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
 use App\Service\RoleManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CreateExecutiveBoardType;
 use App\Form\Type\CreateExecutiveBoardMembershipType;
@@ -20,7 +21,7 @@ class ExecutiveBoardController extends BaseController
         $this->roleManager = $roleManager;
     }
 
-    public function show()
+    public function show(): Response
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
@@ -29,7 +30,7 @@ class ExecutiveBoardController extends BaseController
         ));
     }
 
-    public function showAdmin()
+    public function showAdmin(): Response
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
         $members = $this->getDoctrine()->getRepository(ExecutiveBoardMembership::class)->findAll();
@@ -86,7 +87,7 @@ class ExecutiveBoardController extends BaseController
         ));
     }
 
-    public function removeUserFromBoardById(ExecutiveBoardMembership $member)
+    public function removeUserFromBoardById(ExecutiveBoardMembership $member): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($member);
@@ -135,7 +136,7 @@ class ExecutiveBoardController extends BaseController
      *
      * @return Response
      */
-    public function editMemberHistory(Request $request, ExecutiveBoardMembership $member)
+    public function editMemberHistory(Request $request, ExecutiveBoardMembership $member): Response
     {
         $user = $member->getUser(); // Store the $user object before the form touches our $member object with spooky user data
         $form = $this->createForm(CreateExecutiveBoardMembershipType::class, $member, [
