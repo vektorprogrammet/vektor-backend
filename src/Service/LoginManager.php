@@ -8,18 +8,16 @@ use Twig\Environment;
 
 class LoginManager
 {
-    private $twig;
-    private $authenticationUtils;
-    private $router;
+    private Environment $twig;
+    private AuthenticationUtils $authenticationUtils;
+    private RouterInterface $router;
 
     /**
-     * LoginManager constructor.
-     *
-     * @param $twig
-     * @param $authenticationUtils
-     * @param $router
+     * LoginManager constructor
      */
-    public function __construct(Environment $twig, AuthenticationUtils $authenticationUtils, RouterInterface $router)
+    public function __construct(Environment $twig,
+                                AuthenticationUtils $authenticationUtils,
+                                RouterInterface $router)
     {
         $this->twig = $twig;
         $this->authenticationUtils = $authenticationUtils;

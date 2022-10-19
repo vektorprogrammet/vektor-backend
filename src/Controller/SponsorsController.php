@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SponsorsController extends BaseController
 {
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
+    private FileUploader $fileUploader;
 
     public function __construct(FileUploader $fileUploader){
         $this->fileUploader = $fileUploader;

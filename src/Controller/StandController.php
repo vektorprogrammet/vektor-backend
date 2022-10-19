@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StandController extends BaseController
 {
-    private $AdmissionStatistics;
+    private AdmissionStatistics $AdmissionStatistics;
 
     public function __construct(AdmissionStatistics $admissionStatistics)
     {

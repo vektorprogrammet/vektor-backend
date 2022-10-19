@@ -16,16 +16,12 @@ use Twig\Environment;
 
 class ApplicationAdmission
 {
-    private $em;
-    private $twig;
-    private $loginManager;
+    private EntityManagerInterface $em;
+    private Environment $twig;
+    private LoginManager $loginManager;
 
     /**
-     * AdmissionManager constructor.
-     *
-     * @param EntityManagerInterface     $em
-     * @param Environment $twig
-     * @param LoginManager      $loginManager
+     * ApplicationAdmission constructor
      */
     public function __construct(EntityManagerInterface $em, Environment $twig, LoginManager $loginManager)
     {

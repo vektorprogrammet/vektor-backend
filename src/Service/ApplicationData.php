@@ -13,28 +13,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ApplicationData
 {
-    /**
-     * @var Department
-     */
-    private $department;
-    /**
-     * @var AdmissionPeriod
-     */
-    private $admissionPeriod;
-    /**
-     * @var ApplicationRepository
-     */
+    private Department $department;
+    private AdmissionPeriod $admissionPeriod;
     private $applicationRepository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
-     * ApplicationData constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param TokenStorageInterface  $ts
+     * ApplicationData constructor
      */
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts)
     {

@@ -20,13 +20,20 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdmissionNotifier
 {
-    private $em;
-    private $emailSender;
-    private $logger;
-    private $validator;
-    private $sendLimit;
+    private EntityManagerInterface $em;
+    private EmailSender $emailSender;
+    private LoggerInterface $logger;
+    private ValidatorInterface $validator;
+    private int $sendLimit;
 
-    public function __construct(EntityManagerInterface $em, EmailSender $emailSender, LoggerInterface $logger, ValidatorInterface $validator, int $sendLimit)
+    /**
+     * AdmissionNotifier constructor
+     */
+    public function __construct(EntityManagerInterface $em,
+                                EmailSender $emailSender,
+                                LoggerInterface $logger,
+                                ValidatorInterface $validator,
+                                int $sendLimit)
     {
         $this->em = $em;
         $this->emailSender = $emailSender;

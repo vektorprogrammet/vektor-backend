@@ -10,7 +10,7 @@ use App\Service\GeoLocation;
 
 class BoardAndTeamController extends BaseController
 {
-    private $geoLocation;
+    private GeoLocation $geoLocation;
 
     public function __construct(GeoLocation $geoLocation)
     {

@@ -16,12 +16,7 @@ class FileUploader
     private string $profilePhotoFolder;
 
     /**
-     * FileUploader constructor.
-     *
-     * @param string $signatureFolder
-     * @param string $logoFolder
-     * @param string $receiptFolder
-     * @param string $profilePhotoFolder
+     * FileUploader constructor
      */
     public function __construct(string $signatureFolder,
                                 string $logoFolder,

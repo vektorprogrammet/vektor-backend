@@ -8,8 +8,11 @@ use Swift_Message;
 
 class SlackMailer implements MailerInterface
 {
-    private $messenger;
+    private SlackMessenger $messenger;
 
+    /**
+     * SlackMailer constructor
+     */
     public function __construct(SlackMessenger $messenger)
     {
         $this->messenger = $messenger;

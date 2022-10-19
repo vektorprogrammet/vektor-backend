@@ -8,9 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CompanyEmailMaker
 {
-    private $em;
-    private $logger;
+    private EntityManagerInterface $em;
+    private LogService $logger;
 
+    /**
+     * CompanyEmailMaker constructor
+     */
     public function __construct(EntityManagerInterface $em, LogService $logger)
     {
         $this->em = $em;

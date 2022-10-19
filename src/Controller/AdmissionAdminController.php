@@ -25,8 +25,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class AdmissionAdminController extends BaseController
 {
-    private $InterviewCounter;
-    private $eventDispatcher;
+    private InterviewCounter $InterviewCounter;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(InterviewCounter $interviewCounter, EventDispatcherInterface $eventDispatcher)
     {

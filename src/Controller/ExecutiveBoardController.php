@@ -13,10 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExecutiveBoardController extends BaseController
 {
-    /**
-     * @var RoleManager
-     */
-    private $roleManager;
+    private RoleManager $roleManager;
 
     public function __construct(RoleManager $roleManager)
     {

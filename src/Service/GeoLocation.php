@@ -11,27 +11,22 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GeoLocation
 {
-    private $ipinfoToken;
+    private string $ipinfoToken;
     private $departmentRepo;
-    private $session;
-    private $requestStack;
-    private $logger;
-    /**
-     * @var array
-     */
-    private $ignoredAsns;
+    private SessionInterface $session;
+    private RequestStack $requestStack;
+    private LogService $logger;
+    private array $ignoredAsns;
 
     /**
-     * GeoLocation constructor.
-     *
-     * @param string $ipinfoToken
-     * @param array $ignoredAsns
-     * @param EntityManagerInterface $em
-     * @param SessionInterface $session
-     * @param RequestStack $requestStack
-     * @param LogService $logger
+     * GeoLocation constructor
      */
-    public function __construct(string $ipinfoToken, $ignoredAsns, EntityManagerInterface $em, SessionInterface $session, RequestStack $requestStack, LogService $logger)
+    public function __construct(string $ipinfoToken,
+                                array $ignoredAsns,
+                                EntityManagerInterface $em,
+                                SessionInterface $session,
+                                RequestStack $requestStack,
+                                LogService $logger)
     {
         $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);

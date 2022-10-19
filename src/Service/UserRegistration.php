@@ -11,16 +11,12 @@ use Twig\Environment;
 
 class UserRegistration
 {
-    private $twig;
-    private $em;
-    private $mailer;
+    private Environment $twig;
+    private EntityManagerInterface $em;
+    private MailerInterface $mailer;
 
     /**
-     * UserRegistration constructor.
-     *
-     * @param Environment $twig
-     * @param EntityManagerInterface     $em
-     * @param MailerInterface   $mailer
+     * UserRegistration constructor
      */
     public function __construct(Environment $twig, EntityManagerInterface $em, MailerInterface $mailer)
     {

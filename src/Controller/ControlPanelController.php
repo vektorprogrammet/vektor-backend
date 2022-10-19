@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ControlPanelController extends BaseController
 {
-    private $sbsData;
+    private SbsData $sbsData;
 
     public function __construct(SbsData $sbsData)
     {

@@ -9,16 +9,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 class InterviewNotificationManager
 {
-    private $slackMessenger;
-    private $applicationData;
-    private $router;
+    private SlackMessenger $slackMessenger;
+    private ApplicationData $applicationData;
+    private RouterInterface $router;
 
     /**
-     * InterviewNotificationManager constructor.
-     *
-     * @param SlackMessenger $slackMessenger
-     * @param ApplicationData $applicationData
-     * @param RouterInterface $router
+     * InterviewNotificationManager constructor
      */
     public function __construct(SlackMessenger $slackMessenger, ApplicationData $applicationData, RouterInterface $router)
     {
