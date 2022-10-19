@@ -17,7 +17,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Annotation\Route;
 
 class AssistantController extends BaseController
 {
@@ -39,35 +38,8 @@ class AssistantController extends BaseController
         $this->kernel = $kernel;
         $this->eventDispatcher = $eventDispatcher;
     }
-
-    /**
-     * @deprecated This resource is only here to serve old urls (e.g. in old emails)
-     *
-     * @Route("/opptak/{shortName}",
-     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
-     * @Route("/avdeling/{shortName}",
-     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
-     * @Route("/opptak/avdeling/{id}",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     *     )
-     *
-     * @param Request $request
-     * @param Department $department
-     *
-     * @return Response
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function admissionByShortName(Request $request, Department $department)
-    {
-        return $this->index($request, $department);
-    }
     
     /**
-     * @Route("/opptak/{city}", name="admission_show_by_city_case_insensitive")
-     * @Route("/avdeling/{city}", name="admission_show_specific_department_by_city_case_insensitive")
-     *
      * @param Request $request
      * @param $city
      *
@@ -87,8 +59,6 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @Route("/opptak", methods={"GET", "POST"})
-     *
      * @param Request $request
      * @param Department|null $department
      *
@@ -181,7 +151,6 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @Route("/assistenter/opptak/bekreftelse", name="application_confirmation")
      * @return Response
      */
     public function confirmation()
@@ -190,10 +159,6 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @Route("/stand/opptak/{shortName}",
-     *     name="application_stand_form",
-     *     requirements={"shortName"="\w+"})
-     *
      * @param Request $request
      * @param Department $department
      *

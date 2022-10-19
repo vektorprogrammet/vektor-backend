@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
 use App\Service\RoleManager;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CreateExecutiveBoardType;
 use App\Form\Type\CreateExecutiveBoardMembershipType;
@@ -134,12 +133,6 @@ class ExecutiveBoardController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/hovedstyret/rediger_medlem/{id}",
-     *     name="edit_executive_board_membership",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Request $request
      * @param ExecutiveBoardMembership $member
      *

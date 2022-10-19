@@ -7,7 +7,6 @@ use App\Entity\CertificateRequest;
 use App\Entity\Signature;
 use App\Form\Type\CreateSignatureType;
 use App\Service\FileUploader;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,13 +23,6 @@ class CertificateController extends BaseController
 
     }
     /**
-     * @Route(
-     *     "/kontrollpanel/attest/{id}",
-     *     name="certificate_show",
-     *     defaults={"id": null},
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Request $request
      *
      * @return RedirectResponse|Response

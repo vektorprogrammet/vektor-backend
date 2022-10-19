@@ -12,7 +12,6 @@ use App\Service\LogService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends BaseController
 {
@@ -35,14 +34,6 @@ class ContactController extends BaseController
     }
 
     /**
-     * @Route("/kontakt/avdeling/{id}",
-     *     name="contact_department",
-     *     methods={"GET", "POST"})
-     *
-     * @Route("/kontakt",
-     *     name="contact",
-     *     methods={"GET", "POST"})
-     *
      * @param Request $request
      * @param Department|null $department
      *

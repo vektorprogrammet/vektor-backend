@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class TeamApplicationController extends BaseController
 {
@@ -92,7 +91,6 @@ class TeamApplicationController extends BaseController
     }
 
     /**
-     * @Route("/team/application/bekreftelse/{team_name}", name="team_application_confirmation")
      * @return Response
      */
     public function confirmation($team_name)

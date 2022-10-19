@@ -23,7 +23,6 @@ use DateTime;
 use InvalidArgumentException;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,12 +52,6 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/intervju/conduct/{id}",
-     *     name="interview_conduct",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     *     )
-     *
      * @param Request $request
      * @param Application $application
      *
