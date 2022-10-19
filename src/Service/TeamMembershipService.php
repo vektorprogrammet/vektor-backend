@@ -22,7 +22,7 @@ class TeamMembershipService
         $this->dispatcher = $dispatcher;
     }
 
-    public function updateTeamMemberships()
+    public function updateTeamMemberships(): array
     {
         $teamMemberships = $this->em->getRepository(TeamMembership::class)->findBy(array('isSuspended' => false));
         $currentSemesterStartDate = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester()->getStartDate();

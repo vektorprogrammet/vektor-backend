@@ -35,7 +35,7 @@ class AssistantHistoryData
      *
      * @return $this
      */
-    public function setSemester(Semester $semester)
+    public function setSemester(Semester $semester): AssistantHistoryData
     {
         $this->semester = $semester;
         return $this;
@@ -46,7 +46,7 @@ class AssistantHistoryData
      *
      * @return AssistantHistoryData
      */
-    public function setDepartment($department)
+    public function setDepartment($department): AssistantHistoryData
     {
         $this->department = $department;
         return $this;

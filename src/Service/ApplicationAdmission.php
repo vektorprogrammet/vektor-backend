@@ -49,7 +49,7 @@ class ApplicationAdmission
         return $application;
     }
 
-    public function userHasAlreadyApplied(User $user)
+    public function userHasAlreadyApplied(User $user): bool
     {
         $fos = $user->getFieldOfStudy();
         if ($fos === null) {
@@ -67,7 +67,7 @@ class ApplicationAdmission
         return $this->userHasAlreadyAppliedInAdmissionPeriod($user, $admissionPeriod);
     }
 
-    public function userHasAlreadyAppliedInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod)
+    public function userHasAlreadyAppliedInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod): bool
     {
         $existingApplications = $this->em->getRepository(Application::class)->findByEmailInAdmissionPeriod($user->getEmail(), $admissionPeriod);
 
@@ -113,7 +113,7 @@ class ApplicationAdmission
         return $department;
     }
 
-    public function renderErrorPage(User $user = null)
+    public function renderErrorPage(User $user = null): ?Response
     {
         $content = null;
 

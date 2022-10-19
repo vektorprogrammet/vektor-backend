@@ -41,7 +41,7 @@ class GeoLocation
      * @return Department
      * @throws InvalidArgumentException
      */
-    public function findNearestDepartment($departments)
+    public function findNearestDepartment(array $departments): Department
     {
         if (empty($departments)) {
             throw new InvalidArgumentException('$departments cannot be empty');
@@ -85,7 +85,7 @@ class GeoLocation
      * @param Department[] $departments
      * @return Department[] $departments
      */
-    public function sortDepartmentsByDistanceFromClient($departments)
+    public function sortDepartmentsByDistanceFromClient(array $departments): array
     {
 //        $ip = '158.39.3.40'; // Oslo
 //        $ip = '146.185.181.87'; // Server location (Amsterdam)
@@ -169,7 +169,7 @@ class GeoLocation
         return $coords;
     }
 
-    public function distance(float $fromLat, float $fromLon, float $toLat, float $toLon)
+    public function distance(float $fromLat, float $fromLon, float $toLat, float $toLon): float
     {
         $theta = $fromLon - $toLon;
         $dist = sin(deg2rad($fromLat)) * sin(deg2rad($toLat)) +  cos(deg2rad($fromLat)) * cos(deg2rad($toLat)) * cos(deg2rad($theta));

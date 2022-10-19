@@ -149,7 +149,7 @@ class LogService implements LoggerInterface
         $this->slackMessenger->log("", $this->createAttachmentData($level, $message, $context));
     }
 
-    private function createAttachmentData($level, $message, array $data)
+    private function createAttachmentData($level, $message, array $data): array
     {
         $request = $this->requestStack->getMasterRequest();
         $method = $request ? $request->getMethod() : '';
@@ -169,7 +169,7 @@ class LogService implements LoggerInterface
         return array_merge($default, $data);
     }
 
-    private function getLogColor($level)
+    private function getLogColor($level): string
     {
         switch ($level) {
             case 'INFO':

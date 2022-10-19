@@ -18,7 +18,7 @@ class InterviewCounter
      *
      * @return int
      */
-    public function count(array $applications, string $suitable)
+    public function count(array $applications, string $suitable): int
     {
         $count = 0;
 
@@ -43,7 +43,7 @@ class InterviewCounter
      *
      * @return array
      */
-    public function createInterviewDistributions(array $applications, AdmissionPeriod $admissionPeriod)
+    public function createInterviewDistributions(array $applications, AdmissionPeriod $admissionPeriod): array
     {
         $interviewDistributions = array();
 
