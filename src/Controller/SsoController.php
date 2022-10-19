@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SsoController extends BaseController
 {
-    public function error($response, $message){
+    public function error($response, $message, $statusCode){
         $response->setStatusCode(401);
         $response->setContent($message);
         return $response;
@@ -22,23 +22,23 @@ class SsoController extends BaseController
         $password = $request->get('password');
 
         if (!$username || !$password) {
-            $this->error($response,'Username or password not provided');
+            return $this->error($response,'Username or password not provided');
         }
 
         try {
             $user = $this->getDoctrine()->getRepository(User::class)->findByUsernameOrEmail($username);
         } catch (NoResultException $e) {
-            $this->error($response,'Username does not exist');
+            return $this->error($response,'Username does not exist');
         }
 
         $validPassword = $this->get('security.password_encoder')->isPasswordValid($user, $password);
         if (!$validPassword) {
-            $this->error($response,'Wrong password');
+            return $this->error($response,'Wrong password');
         }
 
         $activeInTeam = count($user->getActiveMemberships()) > 0;
         if (!$activeInTeam) {
-            $this->error($response,'User does not have any active team memberships');
+            return $this->error($response,'User does not have any active team memberships');
         }
 
         return new JsonResponse([
