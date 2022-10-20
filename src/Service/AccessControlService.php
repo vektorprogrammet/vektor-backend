@@ -246,7 +246,7 @@ class AccessControlService
         return $resources;
     }
 
-    private function isControlPanelRoute(Route $resource)
+    private function isControlPanelRoute(Route $resource): bool
     {
         return substr($resource->getPath(), 0, 14) === "/kontrollpanel";
     }
@@ -259,7 +259,7 @@ class AccessControlService
             $this->isRoute($route);
     }
 
-    public function getPath(string $name)
+    public function getPath(string $name): string
     {
         if (! $this->isRoute($name)) {
             return $name;
@@ -268,7 +268,7 @@ class AccessControlService
         return $this->router->getRouteCollection()->get($name)->getPath();
     }
 
-    private function isRoute(string $name)
+    private function isRoute(string $name): bool
     {
         return $this->router->getRouteCollection()->get($name) !== null;
     }
@@ -285,7 +285,7 @@ class AccessControlService
         $this->preloadCache();
     }
 
-    private function unhandledRuleExists(string $resource, $method)
+    private function unhandledRuleExists(string $resource, $method): bool
     {
         return ! empty($this->getUnhandledRules($resource, $method));
     }
@@ -310,7 +310,7 @@ class AccessControlService
         return [];
     }
 
-    private function getKey(string $resource, string $method)
+    private function getKey(string $resource, string $method): string
     {
         return "$method-$resource";
     }

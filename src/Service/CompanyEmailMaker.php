@@ -20,7 +20,7 @@ class CompanyEmailMaker
         $this->logger = $logger;
     }
 
-    public function setCompanyEmailFor(User $user, $blackList)
+    public function setCompanyEmailFor(User $user, $blackList): ?string
     {
         $allCompanyEmails = $this->em->getRepository(User::class)->findAllCompanyEmails();
         $allEmails = array_merge($allCompanyEmails, $blackList);

@@ -17,7 +17,7 @@ class SponsorsController extends BaseController
         $this->fileUploader = $fileUploader;
     }
 
-    public function sponsorsShow()
+    public function sponsorsShow(): Response
     {
         $sponsors = $this->getDoctrine()
             ->getRepository(Sponsor::class)
@@ -69,7 +69,7 @@ class SponsorsController extends BaseController
         ]);
     }
 
-    public function deleteSponsor(Sponsor $sponsor)
+    public function deleteSponsor(Sponsor $sponsor): RedirectResponse
     {
         if ($sponsor->getLogoImagePath()) {
             $this->fileUploader->deleteSponsor($sponsor->getLogoImagePath());

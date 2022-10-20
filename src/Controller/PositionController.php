@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Position;
 use App\Form\Type\CreatePositionType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PositionController extends BaseController
 {
-    public function showPositions()
+    public function showPositions(): Response
     {
         // Find all the positions
         $positions = $this->getDoctrine()->getRepository(Position::class)->findAll();
@@ -51,7 +53,7 @@ class PositionController extends BaseController
         ));
     }
 
-    public function removePosition(Position $position)
+    public function removePosition(Position $position): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($position);

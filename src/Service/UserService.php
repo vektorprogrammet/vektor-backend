@@ -21,7 +21,7 @@ class UserService
     /**
      * @return null|User
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): ?User
     {
         $token = $this->tokenStorage->getToken();
         if (!$token) {

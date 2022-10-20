@@ -128,7 +128,7 @@ class RoleManager
      *
      * @return bool True if role was updated, false if no role changed
      */
-    public function updateUserRole(User $user)
+    public function updateUserRole(User $user): bool
     {
         if ($this->userIsInExecutiveBoard($user) || $this->userIsTeamLeader($user)) {
             $updated = $this->setUserRole($user, Roles::TEAM_LEADER);
@@ -146,24 +146,24 @@ class RoleManager
         return $updated;
     }
 
-    public function userIsInExecutiveBoard(User $user)
+    public function userIsInExecutiveBoard(User $user): bool
     {
         $executiveBoardMembership = $this->em->getRepository(ExecutiveBoardMembership::class)->findByUser($user);
 
         return !empty($executiveBoardMembership);
     }
 
-    private function userIsTeamLeader(User $user)
+    private function userIsTeamLeader(User $user): bool
     {
         return $this->userIsInATeam($user, true);
     }
 
-    private function userIsTeamMember(User $user)
+    private function userIsTeamMember(User $user): bool
     {
         return $this->userIsInATeam($user, false);
     }
 
-    private function userIsInATeam(User $user, bool $teamLeader)
+    private function userIsInATeam(User $user, bool $teamLeader): bool
     {
         $semester = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester();
         $teamMemberships = $user->getTeamMemberships();
@@ -181,7 +181,7 @@ class RoleManager
         return false;
     }
 
-    private function setUserRole(User $user, string $role)
+    private function setUserRole(User $user, string $role): bool
     {
         $isValidRole = $this->isValidRole($role);
         if (!$isValidRole) {

@@ -77,7 +77,7 @@ class InterviewManager
      *
      * @return Interview
      */
-    public function initializeInterviewAnswers(Interview $interview)
+    public function initializeInterviewAnswers(Interview $interview): Interview
     {
         $existingAnswers = $interview->getInterviewAnswers();
         if (!is_array($existingAnswers)) {

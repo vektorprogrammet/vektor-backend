@@ -40,7 +40,7 @@ class AdmissionSubscriberController extends BaseController
         ]);
     }
 
-    public function subscribe(Request $request)
+    public function subscribe(Request $request): JsonResponse
     {
         $email = $request->request->get('email');
         $departmentId = $request->request->get('department');
@@ -62,7 +62,7 @@ class AdmissionSubscriberController extends BaseController
         return new JsonResponse(null, 201);
     }
 
-    public function unsubscribe($code)
+    public function unsubscribe($code): RedirectResponse
     {
         $subscriber = $this->getDoctrine()->getRepository(AdmissionSubscriber::class)->findByUnsubscribeCode($code);
         $this->addFlash('title', 'Opptaksvarsel - Avmelding');

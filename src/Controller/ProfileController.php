@@ -20,8 +20,10 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -47,7 +49,7 @@ class ProfileController extends BaseController
         $this->session = $session;
     }
 
-    public function show()
+    public function show(): Response
     {
         // Get the user currently signed in
         $user = $this->getUser();
@@ -101,7 +103,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function deactivateUser(User $user)
+    public function deactivateUser(User $user): RedirectResponse
     {
         $user->setActive(false);
 
@@ -111,7 +113,7 @@ class ProfileController extends BaseController
         return $this->redirectToRoute('specific_profile', ['id' => $user->getId()]);
     }
 
-    public function activateUser(User $user)
+    public function activateUser(User $user): RedirectResponse
     {
         $user->setActive(true);
 
@@ -158,7 +160,7 @@ class ProfileController extends BaseController
         ));
     }
 
-    public function changeRole(Request $request, User $user)
+    public function changeRole(Request $request, User $user): JsonResponse
     {
         $response = array();
 
@@ -187,7 +189,7 @@ class ProfileController extends BaseController
         return new JsonResponse($response);
     }
 
-    public function downloadCertificate(Request $request, User $user)
+    public function downloadCertificate(Request $request, User $user): ?RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 

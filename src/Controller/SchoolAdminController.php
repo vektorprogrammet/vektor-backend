@@ -14,6 +14,7 @@ use App\Form\Type\CreateSchoolType;
 use App\Entity\AssistantHistory;
 use App\Form\Type\CreateAssistantHistoryType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class SchoolAdminController extends BaseController
 {
@@ -24,7 +25,7 @@ class SchoolAdminController extends BaseController
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function showSpecificSchool(School $school)
+    public function showSpecificSchool(School $school): Response
     {
         // This prevents admins to see other departments' schools
         if (!$this->isGranted(Roles::TEAM_LEADER) &&
@@ -78,7 +79,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function showUsersByDepartmentSuperadmin(Department $department)
+    public function showUsersByDepartmentSuperadmin(Department $department): Response
     {
         $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();
 
@@ -92,7 +93,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function showUsersByDepartment()
+    public function showUsersByDepartment(): Response
     {
         $user = $this->getUser();
 
@@ -113,7 +114,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function show()
+    public function show(): Response
     {
         // Finds the department for the current logged in user
         $department = $this->getUser()->getDepartment();
@@ -131,7 +132,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function showSchoolsByDepartment(Department $department)
+    public function showSchoolsByDepartment(Department $department): Response
     {
         // Finds the schools for the given department
         $activeSchools = $this->getDoctrine()->getRepository(School::class)->findActiveSchoolsByDepartment($department);
@@ -196,7 +197,7 @@ class SchoolAdminController extends BaseController
         ));
     }
 
-    public function deleteSchoolById(School $school)
+    public function deleteSchoolById(School $school): JsonResponse
     {
         try {
             // This deletes the given school
@@ -217,7 +218,7 @@ class SchoolAdminController extends BaseController
         return new JsonResponse($response);
     }
 
-    public function removeUserFromSchool(AssistantHistory $assistantHistory)
+    public function removeUserFromSchool(AssistantHistory $assistantHistory): JsonResponse
     {
         try {
             // This deletes the assistant history
@@ -234,7 +235,7 @@ class SchoolAdminController extends BaseController
 
             return new JsonResponse($response);
         }
-        // Send a respons to ajax
+        // Send a response to ajax
         return new JsonResponse($response);
     }
 }

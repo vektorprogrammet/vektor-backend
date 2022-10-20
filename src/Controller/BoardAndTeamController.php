@@ -7,6 +7,7 @@ use App\Entity\ExecutiveBoard;
 use App\Entity\Semester;
 use App\Entity\User;
 use App\Service\GeoLocation;
+use Symfony\Component\HttpFoundation\Response;
 
 class BoardAndTeamController extends BaseController
 {
@@ -16,7 +17,7 @@ class BoardAndTeamController extends BaseController
     {
         $this->geoLocation=$geoLocation;
     }
-    public function show()
+    public function show(): Response
     {
         // Find all departments
         $departments = $this->getDoctrine()->getRepository(Department::class)->findActive();
@@ -29,7 +30,6 @@ class BoardAndTeamController extends BaseController
         }
 
         $departmentStats = array();
-        /** @var Department $department */
         foreach ($departments as $department) {
             $currentSemester = $this->getCurrentSemester();
             $userRepository = $this->getDoctrine()->getRepository(User::class);

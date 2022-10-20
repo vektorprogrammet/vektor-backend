@@ -24,7 +24,7 @@ class UserController extends BaseController
         $this->applicationManager = $applicationManager;
     }
 
-    public function myPage()
+    public function myPage(): Response
     {
         $user = $this->getUser();
 
@@ -54,7 +54,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function myPartner()
+    public function myPartner(): Response
     {
         if (!$this->getUser()->isActive()) {
             throw $this->createAccessDeniedException();

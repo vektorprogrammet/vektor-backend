@@ -40,7 +40,7 @@ class AdmissionAdminController extends BaseController
      *
      * @return Response
      */
-    public function show(Request $request)
+    public function show(Request $request): ?Response
     {
         return $this->showNewApplications($request);
     }
@@ -48,9 +48,9 @@ class AdmissionAdminController extends BaseController
 
     /**
      * @param Request $request
-     * @return Response|null
+     * @return Response
      */
-    public function showNewApplications(Request $request)
+    public function showNewApplications(Request $request): Response
     {
         $semester = $this->getSemesterOrThrow404($request);
         $department = $this->getDepartmentOrThrow404($request);

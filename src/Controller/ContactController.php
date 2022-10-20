@@ -33,7 +33,7 @@ class ContactController extends BaseController
      *
      * @return Response
      */
-    public function index(Request $request, Department $department = null)
+    public function index(Request $request, Department $department = null): Response
     {
         if ($department === null) {
             $department = $this->geoLocation

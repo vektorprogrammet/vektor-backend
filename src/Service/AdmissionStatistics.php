@@ -31,7 +31,8 @@ class AdmissionStatistics
      *
      * @return array
      */
-    public function generateGraphDataFromApplicationsInAdmissionPeriod($applications, AdmissionPeriod $admissionPeriod)
+    public function generateGraphDataFromApplicationsInAdmissionPeriod(array $applications,
+                                                                       AdmissionPeriod $admissionPeriod): array
     {
         $endDate = $admissionPeriod->getEndDate();
         $extraDays = $this->calculatePaddingDays($endDate);
@@ -46,7 +47,8 @@ class AdmissionStatistics
      *
      * @return array
      */
-    public function generateCumulativeGraphDataFromApplicationsInAdmissionPeriod($applications, AdmissionPeriod $admissionPeriod)
+    public function generateCumulativeGraphDataFromApplicationsInAdmissionPeriod(array $applications,
+                                                                                 AdmissionPeriod $admissionPeriod): array
     {
         $endDate =  $admissionPeriod->getEndDate();
         $extraDays = $this->calculatePaddingDays($endDate);
@@ -55,7 +57,7 @@ class AdmissionStatistics
         return $this->populateCumulativeApplicationDataWithApplications($appData, $applications);
     }
 
-    private function initializeDataArray(PeriodInterface $admissionPeriod, int $extraDays = 0)
+    private function initializeDataArray(PeriodInterface $admissionPeriod, int $extraDays = 0): array
     {
         $subData = [];
 
@@ -82,7 +84,7 @@ class AdmissionStatistics
      *
      * @return array
      */
-    private function populateApplicationDataWithApplications($appData, $applications)
+    private function populateApplicationDataWithApplications(array $appData, array $applications): array
     {
         foreach ($applications as $application) {
             $date = $application->getCreated()->format('Y-m-d');
@@ -102,7 +104,7 @@ class AdmissionStatistics
      *
      * @return array
      */
-    private function populateCumulativeApplicationDataWithApplications($appData, $applications)
+    private function populateCumulativeApplicationDataWithApplications(array $appData, array $applications): array
     {
         $populatedAppData = $this->populateApplicationDataWithApplications($appData, $applications);
         $dates = array_keys($populatedAppData);
@@ -124,7 +126,7 @@ class AdmissionStatistics
      *
      * @return array
      */
-    private function populateSubscriberDataWithSubscribers($subData, $subscribers)
+    private function populateSubscriberDataWithSubscribers(array $subData, array $subscribers): array
     {
         foreach ($subscribers as $subscriber) {
             $date = $subscriber->getTimestamp()->format('Y-m-d');
@@ -142,7 +144,7 @@ class AdmissionStatistics
      * @param DateTime $endDate
      * @return int
      */
-    private function calculatePaddingDays($endDate)
+    private function calculatePaddingDays(DateTime $endDate): int
     {
         $today = new DateTime();
 

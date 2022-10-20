@@ -8,6 +8,7 @@ use App\Form\Type\CreateUserType;
 use App\Role\Roles;
 use App\Service\UserRegistration;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserAdminController extends BaseController
 {
@@ -56,7 +57,7 @@ class UserAdminController extends BaseController
         ));
     }
 
-    public function show()
+    public function show(): Response
     {
         // Finds all the departments
         $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();
@@ -75,7 +76,7 @@ class UserAdminController extends BaseController
         ));
     }
 
-    public function showUsersByDepartment(Department $department)
+    public function showUsersByDepartment(Department $department): Response
     {
         // Finds all the departments
         $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();

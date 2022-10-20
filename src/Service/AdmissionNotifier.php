@@ -115,9 +115,6 @@ class AdmissionNotifier
      * @param AdmissionSubscriber $subscriber
      * @param Semester $semester
      * @param Department $department
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     private function sendAdmissionNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
     {
@@ -174,9 +171,6 @@ class AdmissionNotifier
      * @param AdmissionSubscriber $subscriber
      * @param Semester $semester
      * @param Department $department
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     private function sendInfoMeetingNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
     {

@@ -26,7 +26,7 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function interviews(Request $request)
+    public function interviews(Request $request): ?Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -42,7 +42,7 @@ class WidgetController extends BaseController
         return $this->render('widgets/interviews_widget.html.twig', ['applications' => $applicationsAssignedToUser]);
     }
 
-    public function receipts()
+    public function receipts(): Response
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
         $sorter = $this->sorter;
@@ -66,7 +66,7 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function applicationGraph(Request $request)
+    public function applicationGraph(Request $request): ?Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

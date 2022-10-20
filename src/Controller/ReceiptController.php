@@ -13,7 +13,9 @@ use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
 use DateTime;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -33,7 +35,7 @@ class ReceiptController extends BaseController
         $this->roleManager = $roleManager;
     }
 
-    public function show()
+    public function show(): Response
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
         $refundedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
@@ -63,7 +65,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function showIndividual(User $user)
+    public function showIndividual(User $user): Response
     {
         $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($user);
 
@@ -171,7 +173,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function editStatus(Request $request, Receipt $receipt)
+    public function editStatus(Request $request, Receipt $receipt): RedirectResponse
     {
         $status = $request->get('status');
         if ($status !== Receipt::STATUS_PENDING &&
@@ -241,7 +243,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function delete(Request $request, Receipt $receipt)
+    public function delete(Request $request, Receipt $receipt): RedirectResponse
     {
         $user = $this->getUser();
         $isTeamLeader = $this->roleManager->userIsGranted($user, Roles::TEAM_LEADER);

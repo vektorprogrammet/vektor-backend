@@ -29,8 +29,6 @@ class TeamInterestController extends BaseController
      * @param Request $request
      *
      * @return RedirectResponse|Response
-     * @throws NoResultException
-     * @throws NonUniqueResultException
      */
     public function showTeamInterestForm(Department $department, Request $request)
     {

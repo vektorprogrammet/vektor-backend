@@ -17,18 +17,18 @@ class AccessRuleController extends AbstractController
 {
 
     private AccessControlService $accessControlService;
-    private ReversedRoleHierarchy $reversedRoleHierarcy;
+    private ReversedRoleHierarchy $reversedRoleHierarchy;
 
     public function __construct(AccessControlService $accessControlService, ReversedRoleHierarchy $reversedRoleHierarchy)
     {
         $this->accessControlService = $accessControlService;
-        $this->reversedRoleHierarcy = $reversedRoleHierarchy;
+        $this->reversedRoleHierarchy = $reversedRoleHierarchy;
     }
 
     /**
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         $customRules = $this->getDoctrine()->getRepository(AccessRule::class)->findCustomRules();
         $routingRules = $this->getDoctrine()->getRepository(AccessRule::class)->findRoutingRules();
@@ -45,12 +45,12 @@ class AccessRuleController extends AbstractController
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRule(Request $request, AccessRule $accessRule = null)
+    public function createRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarcy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
         $form = $this->createForm(AccessRuleType::class, $accessRule, [
             'roles' => $roles
         ]);
@@ -79,12 +79,12 @@ class AccessRuleController extends AbstractController
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRoutingRule(Request $request, AccessRule $accessRule = null)
+    public function createRoutingRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarcy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
         $routes = $this->accessControlService->getRoutes();
         $form = $this->createForm(RoutingAccessRuleType::class, $accessRule, [
             'routes' => $routes,
@@ -116,7 +116,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule $rule
      * @return Response
      */
-    public function copyAccessRule(Request $request, AccessRule $rule)
+    public function copyAccessRule(Request $request, AccessRule $rule): Response
     {
         $clone = clone $rule;
         if ($rule->isRoutingRule()) {
@@ -130,7 +130,7 @@ class AccessRuleController extends AbstractController
      * @param AccessRule $accessRule
      * @return Response
      */
-    public function delete(AccessRule $accessRule)
+    public function delete(AccessRule $accessRule): Response
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($accessRule);

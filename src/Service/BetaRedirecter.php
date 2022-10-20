@@ -22,7 +22,7 @@ class BetaRedirecter
         $this->roleManager = $roleManager;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): GetResponseEvent
     {
         if (!$event->isMasterRequest()) {
             return $event;
