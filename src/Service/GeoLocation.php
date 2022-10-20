@@ -16,13 +16,13 @@ class GeoLocation
     private SessionInterface $session;
     private RequestStack $requestStack;
     private LogService $logger;
-    private array $ignoredAsns;
+    private $ignoredAsns;
 
     /**
      * GeoLocation constructor
      */
     public function __construct(string $ipinfoToken,
-                                array $ignoredAsns,
+                                $ignoredAsns,
                                 EntityManagerInterface $em,
                                 SessionInterface $session,
                                 RequestStack $requestStack,
