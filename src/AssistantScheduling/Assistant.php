@@ -7,26 +7,11 @@ use JsonSerializable;
 
 class Assistant implements JsonSerializable
 {
-    /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var string
-     */
-    private $email;
-    /**
-     * @var string
-     */
-    private $assignedSchool; //Name of school
-    /**
-     * @var string
-     */
-    private $assignedDay;
-    /**
-     * @var array
-     */
-    private $availability; //An associative array. Key = weekday, Value = {0, 1, 2}. 0 is bad, 1 is ok, 2 is good. "Monday" => 2.
+    private string $name;
+    private string $email;
+    private string $assignedSchool; // Name of school
+    private string $assignedDay;
+    private array $availability; // An associative array. Key = weekday, Value = {0, 1, 2}. 0 is bad, 1 is ok, 2 is good. "Monday" => 2.
     /**
      * @var int
      */
@@ -35,30 +20,11 @@ class Assistant implements JsonSerializable
      * @var int
      */
     private $preferredGroup;
-    /**
-     * @var bool
-     */
-    private $doublePosition;
-
-    /**
-     * @var bool
-     */
-    private $previousParticipation;
-
-    /**
-     * @var int
-     */
-    private $score;
-
-    /**
-     * @var string
-     */
-    private $suitability;
-
-    /**
-     * @var Application
-     */
-    private $application;
+    private bool $doublePosition;
+    private bool $previousParticipation;
+    private int $score;
+    private string $suitability;
+    private Application $application;
 
     /**
      * Assistant constructor.
@@ -74,119 +40,77 @@ class Assistant implements JsonSerializable
     /**
      * @return bool
      */
-    public function isAssignedToSchool()
+    public function isAssignedToSchool(): bool
     {
         return !is_null($this->assignedSchool);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->application->getId();
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDoublePosition()
+    public function isDoublePosition(): bool
     {
         return $this->doublePosition;
     }
 
-    /**
-     * @param bool $doublePosition
-     */
-    public function setDoublePosition($doublePosition)
+    public function setDoublePosition(bool $doublePosition)
     {
         $this->doublePosition = $doublePosition;
     }
 
-    /**
-     * @return array
-     */
-    public function getAvailability()
+    public function getAvailability(): array
     {
         return $this->availability;
     }
 
-    /**
-     * @param array $availability
-     */
-    public function setAvailability($availability)
+    public function setAvailability(array $availability)
     {
         $this->availability = $availability;
     }
 
-    /**
-     * @return string
-     */
-    public function getAssignedSchool()
+    public function getAssignedSchool(): string
     {
         return $this->assignedSchool;
     }
 
-    /**
-     * @param string $assignedSchool
-     */
-    public function setAssignedSchool($assignedSchool)
+    public function setAssignedSchool(string $assignedSchool)
     {
         $this->assignedSchool = $assignedSchool;
     }
 
-    /**
-     * @return string
-     */
-    public function getAssignedDay()
+    public function getAssignedDay(): string
     {
         return $this->assignedDay;
     }
 
-    /**
-     * @param string $assignedDay
-     */
-    public function setAssignedDay($assignedDay)
+    public function setAssignedDay(string $assignedDay)
     {
         $this->assignedDay = $assignedDay;
     }
 
-    /**
-     * @return array
-     */
-    public function getAvailable()
+    public function getAvailable(): array
     {
         return $this->availability;
     }
 
-    /**
-     * @param array $availability
-     */
-    public function setAvailable($availability)
+    public function setAvailable(array $availability)
     {
         $this->availability = $availability;
     }
@@ -199,10 +123,7 @@ class Assistant implements JsonSerializable
         return $this->preferredGroup;
     }
 
-    /**
-     * @param int $preferredGroup
-     */
-    public function setPreferredGroup($preferredGroup)
+    public function setPreferredGroup(int $preferredGroup)
     {
         $this->preferredGroup = $preferredGroup;
     }
@@ -215,68 +136,42 @@ class Assistant implements JsonSerializable
         return $this->group;
     }
 
-    /**
-     * @param int $group
-     */
-    public function setGroup($group)
+    public function setGroup(int $group)
     {
         $this->group = $group;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPreviousParticipation()
+    public function isPreviousParticipation(): bool
     {
         return $this->previousParticipation;
     }
 
-    /**
-     * @param bool $previousParticipation
-     */
-    public function setPreviousParticipation($previousParticipation)
+    public function setPreviousParticipation(bool $previousParticipation)
     {
         $this->previousParticipation = $previousParticipation;
     }
 
-    /**
-     * @return int
-     */
-    public function getScore()
+    public function getScore(): int
     {
         return $this->score;
     }
 
-    /**
-     * @param int $score
-     */
-    public function setScore($score)
+    public function setScore(int $score)
     {
         $this->score = $score;
     }
 
-    /**
-     * @return string
-     */
-    public function getSuitability()
+    public function getSuitability(): string
     {
         return $this->suitability;
     }
 
-    /**
-     * @param string $suitability
-     */
-    public function setSuitability($suitability)
+    public function setSuitability(string $suitability)
     {
         $this->suitability = $suitability;
     }
 
-    /**
-     * @param School $school
-     * @param int    $group
-     * @param string $day
-     */
-    public function assignToSchool(School $school, $group, $day)
+    public function assignToSchool(School $school, int $group, string $day)
     {
         $this->setAssignedSchool($school->getName());
         if ($this->group == 1 && $group == 2 || $this->group == 2 && $group == 1) {
@@ -287,7 +182,7 @@ class Assistant implements JsonSerializable
         $this->setAssignedDay($day);
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array(
             'id' => $this->getId(),
@@ -306,34 +201,22 @@ class Assistant implements JsonSerializable
         );
     }
 
-    /**
-     * @return Application
-     */
-    public function getApplication()
+    public function getApplication(): Application
     {
         return $this->application;
     }
 
-    /**
-     * @param Application $application
-     */
-    public function setApplication($application)
+    public function setApplication(Application $application)
     {
         $this->application = $application;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }

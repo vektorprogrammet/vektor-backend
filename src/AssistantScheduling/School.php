@@ -6,95 +6,55 @@ use JsonSerializable;
 
 class School implements JsonSerializable
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private int $id;
+    private string $name;
 
     /**
-     * @var string
+     * Array: [Group, Day, Capacity]
      */
-    private $name;
-
-    /**
-     * Group
-     *   Day
-     *     Capacity.
-     *
-     * @var array
-     */
-    private $capacity;
+    private array $capacity;
 
     /**
      * School constructor.
-     *
-     * @param $capacity
-     * @param $name
-     * @param $id
      */
-    public function __construct($capacity, $name, $id)
+    public function __construct(array $capacity, string $name, int $id)
     {
         $this->capacity = $capacity;
         $this->name = $name;
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @param string $day
-     * @param int    $group
-     *
-     * @return int
-     */
-    public function capacityLeftOnDay($group, $day)
+    public function capacityLeftOnDay(int $group, string $day): int
     {
         return $this->capacity[$group][$day];
     }
 
-    /**
-     * @param string $day
-     * @param int    $group
-     */
-    public function addAssistant($group, $day)
+    public function addAssistant(int $group, string $day)
     {
         --$this->capacity[$group][$day];
     }
 
-    /**
-     * @return array
-     */
-    public function getCapacity()
+    public function getCapacity(): array
     {
         return $this->capacity;
     }
 
-    /**
-     * @param array $capacity
-     */
-    public function setCapacity($capacity)
+    public function setCapacity(array $capacity)
     {
         $this->capacity = $capacity;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFull()
+    public function isFull(): bool
     {
         foreach ($this->capacity as $weekDayCapacity) {
             foreach ($weekDayCapacity as $day => $capacityLeft) {
@@ -107,10 +67,7 @@ class School implements JsonSerializable
         return true;
     }
 
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array(
             'id' => $this->id,
