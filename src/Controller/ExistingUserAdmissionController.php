@@ -17,10 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 class ExistingUserAdmissionController extends BaseController
 {
     private EventDispatcherInterface $eventDispatcher;
+    private ApplicationAdmission $applicationAdmission;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, ApplicationAdmission $applicationAdmission)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->applicationAdmission = $applicationAdmission;
     }
 
     /**
@@ -34,7 +36,7 @@ class ExistingUserAdmissionController extends BaseController
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $admissionManager = $this->get(ApplicationAdmission::class);
+        $admissionManager = $this->applicationAdmission;
         if ($res = $admissionManager->renderErrorPage($user)) {
             return $res;
         }
