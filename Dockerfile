@@ -1,6 +1,6 @@
 FROM debian:buster-slim
 
-ENV NODE_VERSION 16
+ENV NODE_VERSION 14
 
 RUN apt-get update && \
     #Set up symfony-cli-repo for apt
