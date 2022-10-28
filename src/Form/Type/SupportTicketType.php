@@ -78,7 +78,7 @@ class SupportTicketType extends AbstractType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'support_ticket';
     }
