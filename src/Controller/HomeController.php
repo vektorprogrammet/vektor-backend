@@ -6,10 +6,12 @@ use App\Entity\AssistantHistory;
 use App\Entity\Department;
 use App\Entity\User;
 use App\Service\GeoLocation;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends BaseController
 {
-    public function show(GeoLocation $geoLocation)
+    public function show(GeoLocation $geoLocation): Response
     {
         $assistantsCount = count($this->getDoctrine()->getRepository(User::class)->findAssistants());
         $teamMembersCount = count($this->getDoctrine()->getRepository(User::class)->findTeamMembers());
@@ -34,7 +36,7 @@ class HomeController extends BaseController
         ]);
     }
 
-    public function post()
+    public function post(): RedirectResponse
     {
         return $this->redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1", 301);
     }

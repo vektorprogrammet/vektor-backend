@@ -43,7 +43,7 @@ class Sorter
      *
      * @return int
      */
-    public function newestReceipt(Receipt $receipt1, Receipt $receipt2)
+    public function newestReceipt(Receipt $receipt1, Receipt $receipt2): int
     {
         if ($receipt1->getSubmitDate() === $receipt2->getSubmitDate()) {
             return 0;
@@ -57,7 +57,7 @@ class Sorter
      *
      * @return bool success
      */
-    public function sortUsersByReceiptSubmitTime(&$users)
+    public function sortUsersByReceiptSubmitTime(&$users): bool
     {
         return usort($users, array($this, 'userWithNewestReceipt'));
     }
@@ -180,7 +180,7 @@ class Sorter
      *
      * @return int
      */
-    private function comparePositions($position1, $position2)
+    private function comparePositions(string $position1, string $position2): int
     {
         // Normalize
         $position1 = strtolower($position1);

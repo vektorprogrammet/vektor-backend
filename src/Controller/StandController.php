@@ -7,13 +7,12 @@ use App\Entity\AdmissionSubscriber;
 use App\Entity\Application;
 use App\Service\AdmissionStatistics;
 use Doctrine\ORM\NonUniqueResultException;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class StandController extends BaseController
 {
-    private $AdmissionStatistics;
+    private AdmissionStatistics $AdmissionStatistics;
 
     public function __construct(AdmissionStatistics $admissionStatistics)
     {
@@ -21,13 +20,11 @@ class StandController extends BaseController
 
     }
     /**
-     * @Route("/kontrollpanel/stand", name="stand")
-     *
      * @param Request $request
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

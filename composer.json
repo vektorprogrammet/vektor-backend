@@ -79,7 +79,11 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -103,7 +107,6 @@
             "elfinder:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
             "php bin/console ckeditor:install",
             "php bin/console assets:install public"
         ],

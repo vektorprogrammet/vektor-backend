@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\AdmissionPeriod;
 use App\Service\SbsData;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ControlPanelController extends BaseController
 {
-    private $sbsData;
+    private SbsData $sbsData;
 
     public function __construct(SbsData $sbsData)
     {
@@ -18,8 +19,9 @@ class ControlPanelController extends BaseController
     /**
      *
      * @param Request $request
+     * @return Response
      */
-    public function show(Request $request)
+    public function show(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -35,7 +37,7 @@ class ControlPanelController extends BaseController
         ));
     }
 
-    public function showSBS()
+    public function showSBS(): Response
     {
         $sbsData = $this->sbsData;
         $currentAdmissionPeriod = $this->getUser()->getDepartment()->getCurrentAdmissionPeriod();

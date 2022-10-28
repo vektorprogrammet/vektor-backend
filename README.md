@@ -6,6 +6,7 @@
 ### Requirements:
 - [PHP](http://php.net/downloads.php) version 7.4
 - [Node](https://nodejs.org/en/) version 14
+- [Yarn](https://yarnpkg.com)
 ### Recommended:
 - [Symfony CLI](https://symfony.com/download)
 
@@ -17,24 +18,39 @@
 
 ### Setup:
 
+##### Docker:
+Build docker image
+`yarn docker:build`
+
+Set up docker image
+`yarn docker:setup`
+
+Run commands in docker image:
+`yarn docker:run <CMD>`
+
+
 ##### UNIX:
-`npm run setup`
+`yarn setup`
 ##### Windows:
-`npm run setup:win`
+`yarn setup:win`
 
 #### Start server on http://localhost:8000
-`npm start`
+`yarn start`
 
 ##### Alternatively
 `symfony server:start` (requires Symfony CLI)
 
+##### Start server on Docker
+`yarn docker:run`
+
+
 #### Build static files
 When adding new images or other non-code files, you can run:
 
-`npm run build`
+`yarn build`
 
 so that the files are put in the correct places. (this is automatically
-done when doing `npm start`)
+done when doing `yarn start`)
 
 ### Users
 | Position     | Username   | Password |        Role        |
@@ -48,7 +64,7 @@ done when doing `npm start`)
 ## Database
 
 ### Add new entities to the database and reload fixtures
-`npm run db:update` or `npm run db:reload`
+`yarn db:update` or `yarn db:reload`
 
 
 ### Dev:

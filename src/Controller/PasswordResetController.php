@@ -16,10 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PasswordResetController extends BaseController
 {
-    /**
-     * @var LogService
-     */
-    private $logService;
+    private LogService $logService;
 
     public function __construct(LogService $logService){
         $this->logService = $logService;
@@ -32,7 +29,7 @@ class PasswordResetController extends BaseController
      *
      * Shows the request new password page
      */
-    public function show(Request $request)
+    public function show(Request $request): Response
     {
         //Creates new PasswordResetType Form
         $form = $this->createForm(PasswordResetType::class);
@@ -77,7 +74,7 @@ class PasswordResetController extends BaseController
         return $this->render('reset_password/reset_password.html.twig', array('form' => $form->createView()));
     }
 
-    public function showConfirmation()
+    public function showConfirmation(): Response
     {
         return $this->render('reset_password/confirmation.html.twig');
     }

@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\FieldOfStudy;
 use App\Form\Type\FieldOfStudyType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FieldOfStudyController extends BaseController
 {
-    public function show()
+    public function show(): Response
     {
         $department = $this->getUser()->getFieldOfStudy()->getDepartment();
         $fieldOfStudies = $this->getDoctrine()->getRepository(FieldOfStudy::class)->findByDepartment($department);

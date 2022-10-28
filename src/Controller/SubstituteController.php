@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AdmissionPeriod;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Application;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class SubstituteController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function show(Request $request)
+    public function show(Request $request): ?Response
     {
         // No department specified, get the user's department and call showBySemester with
         // either current or latest semester for that department
@@ -77,7 +78,7 @@ class SubstituteController extends BaseController
         ));
     }
 
-    public function deleteSubstituteById(Application $application)
+    public function deleteSubstituteById(Application $application): RedirectResponse
     {
         $application->setSubstitute(false);
 
@@ -92,7 +93,7 @@ class SubstituteController extends BaseController
         ));
     }
 
-    public function createSubstituteFromApplication(Application $application)
+    public function createSubstituteFromApplication(Application $application): RedirectResponse
     {
         if ($application->isSubstitute()) {
             // User is already substitute

@@ -8,11 +8,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserService
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
+    /**
+     * UserService constructor
+     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
@@ -21,7 +21,7 @@ class UserService
     /**
      * @return null|User
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): ?User
     {
         $token = $this->tokenStorage->getToken();
         if (!$token) {

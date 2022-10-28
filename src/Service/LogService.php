@@ -7,25 +7,20 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class LogService implements LoggerInterface
 {
-    private $monoLogger;
-    private $slackMessenger;
-    private $userService;
-    private $requestStack;
-    /**
-     * @var string
-     */
-    private $env;
+    private LoggerInterface $monoLogger;
+    private SlackMessenger $slackMessenger;
+    private UserService $userService;
+    private RequestStack $requestStack;
+    private string $env;
 
     /**
-     * LogService constructor.
-     *
-     * @param LoggerInterface $monoLogger
-     * @param SlackMessenger $slackMessenger
-     * @param UserService $userService
-     * @param RequestStack $requestStack
-     * @param string $env
+     * LogService constructor
      */
-    public function __construct(LoggerInterface $monoLogger, SlackMessenger $slackMessenger, UserService $userService, RequestStack $requestStack, string $env)
+    public function __construct(LoggerInterface $monoLogger,
+                                SlackMessenger $slackMessenger,
+                                UserService $userService,
+                                RequestStack $requestStack,
+                                string $env)
     {
         $this->monoLogger = $monoLogger;
         $this->slackMessenger = $slackMessenger;
@@ -154,7 +149,7 @@ class LogService implements LoggerInterface
         $this->slackMessenger->log("", $this->createAttachmentData($level, $message, $context));
     }
 
-    private function createAttachmentData($level, $message, array $data)
+    private function createAttachmentData($level, $message, array $data): array
     {
         $request = $this->requestStack->getMasterRequest();
         $method = $request ? $request->getMethod() : '';
@@ -174,7 +169,7 @@ class LogService implements LoggerInterface
         return array_merge($default, $data);
     }
 
-    private function getLogColor($level)
+    private function getLogColor($level): string
     {
         switch ($level) {
             case 'INFO':

@@ -11,13 +11,13 @@ use App\Event\TeamMembershipEvent;
 use App\Form\Type\CreateTeamMembershipType;
 use App\Form\Type\CreateTeamType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TeamAdminController extends BaseController
 {
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
@@ -25,17 +25,11 @@ class TeamAdminController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/team/avdeling/{id}",
-     *     name="teamadmin_show",
-     *     defaults={"id":null},
-     *     methods={"GET"}
-     *     )
-     *
      * @param Department|null $department
      *
      * @return Response
      */
-    public function show(Department $department = null)
+    public function show(Department $department = null): Response
     {
         if ($department === null) {
             $department = $this->getUser()->getDepartment();
@@ -119,7 +113,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function showSpecificTeam(Team $team)
+    public function showSpecificTeam(Team $team): Response
     {
         // Find all TeamMembership entities based on team
         $activeTeamMemberships   = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
@@ -151,7 +145,7 @@ class TeamAdminController extends BaseController
      *
      * @return bool
      */
-    private function sortTeamMembershipsByEndDate($a, $b)
+    private function sortTeamMembershipsByEndDate(TeamMembership $a, TeamMembership $b): bool
     {
         return $a->getStartSemester()->getStartDate() < $b->getStartSemester()->getStartDate();
     }
@@ -197,7 +191,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function showTeamsByDepartment(Department $department)
+    public function showTeamsByDepartment(Department $department): Response
     {
         // Find teams that are connected to the department of the department ID sent in by the request
         $teams = $this->getDoctrine()->getRepository(Team::class)->findByDepartment($department);
@@ -252,7 +246,7 @@ class TeamAdminController extends BaseController
         ));
     }
 
-    public function removeUserFromTeamById(TeamMembership $teamMembership)
+    public function removeUserFromTeamById(TeamMembership $teamMembership): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($teamMembership);
@@ -263,7 +257,7 @@ class TeamAdminController extends BaseController
         return $this->redirectToRoute('teamadmin_show_specific_team', [ 'id' => $teamMembership->getTeam()->getId() ]);
     }
 
-    public function deleteTeamById(Team $team)
+    public function deleteTeamById(Team $team): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 

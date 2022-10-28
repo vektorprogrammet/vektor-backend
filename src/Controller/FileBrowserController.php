@@ -13,13 +13,11 @@ class FileBrowserController extends BaseController
      *
      * @return Response
      */
-    public function browse()
+    public function browse(): Response
     {
-        $response = $this->forward('FMElfinderBundle:ElFinder:show', array(
+        return $this->forward('FMElfinderBundle:ElFinder:show', array(
             'instance' => 'admin_access',
         ));
-
-        return $response;
     }
 
     /**
@@ -31,7 +29,7 @@ class FileBrowserController extends BaseController
      *
      * @return BinaryFileResponse
      */
-    public function fileStream(Request $request)
+    public function fileStream(Request $request): BinaryFileResponse
     {
         $prefix = substr($request->getPathInfo(), 1); //removes leading '/'
         //Had some trouble with paths. Differenet behaviours on different systems...
@@ -49,7 +47,7 @@ class FileBrowserController extends BaseController
      *
      * @return Response
      */
-    public function showPublicFiles($folder)
+    public function showPublicFiles($folder): Response
     {
         //Read the public folder from paramters.yml
         $publicFolder = $this->container->getParameter('public_uploads');

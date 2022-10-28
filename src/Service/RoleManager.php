@@ -14,22 +14,20 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RoleManager
 {
-    private $roles = array();
-    private $aliases = array();
-    private $authorizationChecker;
-    private $em;
-    private $logger;
-    private $googleUserService;
+    private array $roles = array();
+    private array $aliases = array();
+    private AuthorizationCheckerInterface $authorizationChecker;
+    private EntityManagerInterface $em;
+    private LoggerInterface $logger;
+    private GoogleUsers $googleUserService;
 
     /**
-     * RoleManager constructor.
-     *
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     * @param GoogleUsers $googleUserService
+     * RoleManager constructor
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, EntityManagerInterface $em, LoggerInterface $logger, GoogleUsers $googleUserService)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker,
+                                EntityManagerInterface $em,
+                                LoggerInterface $logger,
+                                GoogleUsers $googleUserService)
     {
         $this->roles = array(
             Roles::ASSISTANT,
@@ -130,7 +128,7 @@ class RoleManager
      *
      * @return bool True if role was updated, false if no role changed
      */
-    public function updateUserRole(User $user)
+    public function updateUserRole(User $user): bool
     {
         if ($this->userIsInExecutiveBoard($user) || $this->userIsTeamLeader($user)) {
             $updated = $this->setUserRole($user, Roles::TEAM_LEADER);
@@ -148,24 +146,24 @@ class RoleManager
         return $updated;
     }
 
-    public function userIsInExecutiveBoard(User $user)
+    public function userIsInExecutiveBoard(User $user): bool
     {
         $executiveBoardMembership = $this->em->getRepository(ExecutiveBoardMembership::class)->findByUser($user);
 
         return !empty($executiveBoardMembership);
     }
 
-    private function userIsTeamLeader(User $user)
+    private function userIsTeamLeader(User $user): bool
     {
         return $this->userIsInATeam($user, true);
     }
 
-    private function userIsTeamMember(User $user)
+    private function userIsTeamMember(User $user): bool
     {
         return $this->userIsInATeam($user, false);
     }
 
-    private function userIsInATeam(User $user, bool $teamLeader)
+    private function userIsInATeam(User $user, bool $teamLeader): bool
     {
         $semester = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester();
         $teamMemberships = $user->getTeamMemberships();
@@ -183,7 +181,7 @@ class RoleManager
         return false;
     }
 
-    private function setUserRole(User $user, string $role)
+    private function setUserRole(User $user, string $role): bool
     {
         $isValidRole = $this->isValidRole($role);
         if (!$isValidRole) {

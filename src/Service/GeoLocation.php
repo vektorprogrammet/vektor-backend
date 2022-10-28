@@ -11,27 +11,22 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GeoLocation
 {
-    private $ipinfoToken;
+    private string $ipinfoToken;
     private $departmentRepo;
-    private $session;
-    private $requestStack;
-    private $logger;
-    /**
-     * @var array
-     */
+    private SessionInterface $session;
+    private RequestStack $requestStack;
+    private LogService $logger;
     private $ignoredAsns;
 
     /**
-     * GeoLocation constructor.
-     *
-     * @param string $ipinfoToken
-     * @param array $ignoredAsns
-     * @param EntityManagerInterface $em
-     * @param SessionInterface $session
-     * @param RequestStack $requestStack
-     * @param LogService $logger
+     * GeoLocation constructor
      */
-    public function __construct(string $ipinfoToken, $ignoredAsns, EntityManagerInterface $em, SessionInterface $session, RequestStack $requestStack, LogService $logger)
+    public function __construct(string $ipinfoToken,
+                                $ignoredAsns,
+                                EntityManagerInterface $em,
+                                SessionInterface $session,
+                                RequestStack $requestStack,
+                                LogService $logger)
     {
         $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);
@@ -46,7 +41,7 @@ class GeoLocation
      * @return Department
      * @throws InvalidArgumentException
      */
-    public function findNearestDepartment($departments)
+    public function findNearestDepartment(array $departments): Department
     {
         if (empty($departments)) {
             throw new InvalidArgumentException('$departments cannot be empty');
@@ -90,7 +85,7 @@ class GeoLocation
      * @param Department[] $departments
      * @return Department[] $departments
      */
-    public function sortDepartmentsByDistanceFromClient($departments)
+    public function sortDepartmentsByDistanceFromClient(array $departments): array
     {
 //        $ip = '158.39.3.40'; // Oslo
 //        $ip = '146.185.181.87'; // Server location (Amsterdam)
@@ -174,7 +169,7 @@ class GeoLocation
         return $coords;
     }
 
-    public function distance(float $fromLat, float $fromLon, float $toLat, float $toLon)
+    public function distance(float $fromLat, float $fromLon, float $toLat, float $toLon): float
     {
         $theta = $fromLon - $toLon;
         $dist = sin(deg2rad($fromLat)) * sin(deg2rad($toLat)) +  cos(deg2rad($fromLat)) * cos(deg2rad($toLat)) * cos(deg2rad($theta));

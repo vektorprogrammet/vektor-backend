@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Role\Roles;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TeamController extends BaseController
 {
-    public function show(Team $team)
+    public function show(Team $team): Response
     {
         if (!$team->isActive() && !$this->isGranted(Roles::TEAM_MEMBER)) {
             throw new NotFoundHttpException('Team not found');
@@ -19,7 +20,7 @@ class TeamController extends BaseController
         ));
     }
 
-    public function showByDepartmentAndTeam($departmentCity, $teamName)
+    public function showByDepartmentAndTeam($departmentCity, $teamName): Response
     {
         $teams = $this->getDoctrine()->getRepository(Team::class)->findByCityAndName($departmentCity, $teamName);
         if (count($teams) !== 1) {

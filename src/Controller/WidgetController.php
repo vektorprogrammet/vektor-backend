@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WidgetController extends BaseController
 {
-    private $sorter;
-    private $admissionStatistics;
+    private Sorter $sorter;
+    private AdmissionStatistics $admissionStatistics;
 
     public function __construct(Sorter $sorter, AdmissionStatistics $admissionStatistics)
     {
@@ -28,7 +28,7 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function interviews(Request $request)
+    public function interviews(Request $request): ?Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
@@ -44,7 +44,7 @@ class WidgetController extends BaseController
         return $this->render('widgets/interviews_widget.html.twig', ['applications' => $applicationsAssignedToUser]);
     }
 
-    public function receipts()
+    public function receipts(): Response
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
         $sorter = $this->sorter;
@@ -68,7 +68,7 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function applicationGraph(Request $request, Department $department, Semester $semester)
+    public function applicationGraph(Request $request, Department $department, Semester $semester): ?Response
     {
         if (is_null($department)) {
             $department = $this->getDepartmentOrThrow404($request);

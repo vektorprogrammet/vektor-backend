@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FrontEndController extends BaseController
 {
-    public function index()
+    public function index(): BinaryFileResponse
     {
         $indexFile = $this->get('kernel')->getRootDir() . '/../client/build/index.html';
         if (!file_exists($indexFile)) {

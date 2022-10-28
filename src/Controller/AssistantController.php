@@ -17,15 +17,14 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Annotation\Route;
 
 class AssistantController extends BaseController
 {
-    private $applicationAdmission;
-    private $geoLocation;
-    private $filterService;
-    private $kernel;
-    private $eventDispatcher;
+    private ApplicationAdmission $applicationAdmission;
+    private GeoLocation $geoLocation;
+    private FilterService $filterService;
+    private KernelInterface $kernel;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(ApplicationAdmission $applicationAdmission,
                                 GeoLocation $geoLocation,
@@ -39,41 +38,14 @@ class AssistantController extends BaseController
         $this->kernel = $kernel;
         $this->eventDispatcher = $eventDispatcher;
     }
-
-    /**
-     * @deprecated This resource is only here to serve old urls (e.g. in old emails)
-     *
-     * @Route("/opptak/{shortName}",
-     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
-     * @Route("/avdeling/{shortName}",
-     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
-     * @Route("/opptak/avdeling/{id}",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     *     )
-     *
-     * @param Request $request
-     * @param Department $department
-     *
-     * @return Response
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function admissionByShortName(Request $request, Department $department)
-    {
-        return $this->index($request, $department);
-    }
     
     /**
-     * @Route("/opptak/{city}", name="admission_show_by_city_case_insensitive")
-     * @Route("/avdeling/{city}", name="admission_show_specific_department_by_city_case_insensitive")
-     *
      * @param Request $request
      * @param $city
      *
      * @return Response
      */
-    public function admissionCaseInsensitive(Request $request, $city)
+    public function admissionCaseInsensitive(Request $request, $city): Response
     {
         $city = str_replace(array('æ', 'ø','å'), array('Æ','Ø','Å'), $city); // Make sqlite happy
         $department = $this->getDoctrine()
@@ -87,16 +59,12 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @Route("/opptak", methods={"GET", "POST"})
-     *
      * @param Request $request
      * @param Department|null $department
      *
      * @return Response
-     * @throws NoResultException
-     * @throws NonUniqueResultException
      */
-    public function admission(Request $request, Department $department = null)
+    public function admission(Request $request, Department $department = null): Response
     {
         return $this->index($request, $department);
     }
@@ -108,7 +76,9 @@ class AssistantController extends BaseController
      *
      * @return Response
      */
-    public function index(Request $request, Department $specificDepartment = null, $scrollToAdmissionForm = false)
+    public function index(Request $request,
+                          Department $specificDepartment = null,
+                          bool $scrollToAdmissionForm = false): Response
     {
         $admissionManager = $this->applicationAdmission;
         $em = $this->getDoctrine()->getManager();
@@ -128,7 +98,6 @@ class AssistantController extends BaseController
 
         $formViews = array();
 
-        /** @var Department $department */
         foreach ($departments as $department) {
             $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
                 'validation_groups' => array('admission'),
@@ -181,19 +150,14 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @Route("/assistenter/opptak/bekreftelse", name="application_confirmation")
      * @return Response
      */
-    public function confirmation()
+    public function confirmation(): Response
     {
         return $this->render('admission/application_confirmation.html.twig');
     }
 
     /**
-     * @Route("/stand/opptak/{shortName}",
-     *     name="application_stand_form",
-     *     requirements={"shortName"="\w+"})
-     *
      * @param Request $request
      * @param Department $department
      *
@@ -201,7 +165,7 @@ class AssistantController extends BaseController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function subscribePage(Request $request, Department $department)
+    public function subscribePage(Request $request, Department $department): Response
     {
         if (!$department->activeAdmission()) {
             return $this->index($request, $department);

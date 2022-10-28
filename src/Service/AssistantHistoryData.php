@@ -14,6 +14,9 @@ class AssistantHistoryData
     private $semester;
     private $department;
 
+    /**
+     * AssistantHistoryData constructor
+     */
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts, GeoLocation $geoLocation)
     {
         $this->assistantHistoryRepository = $em->getRepository(AssistantHistory::class);
@@ -32,7 +35,7 @@ class AssistantHistoryData
      *
      * @return $this
      */
-    public function setSemester(Semester $semester)
+    public function setSemester(Semester $semester): AssistantHistoryData
     {
         $this->semester = $semester;
         return $this;
@@ -43,7 +46,7 @@ class AssistantHistoryData
      *
      * @return AssistantHistoryData
      */
-    public function setDepartment($department)
+    public function setDepartment($department): AssistantHistoryData
     {
         $this->department = $department;
         return $this;

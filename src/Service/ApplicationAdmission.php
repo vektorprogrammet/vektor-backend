@@ -16,16 +16,12 @@ use Twig\Environment;
 
 class ApplicationAdmission
 {
-    private $em;
-    private $twig;
-    private $loginManager;
+    private EntityManagerInterface $em;
+    private Environment $twig;
+    private LoginManager $loginManager;
 
     /**
-     * AdmissionManager constructor.
-     *
-     * @param EntityManagerInterface     $em
-     * @param Environment $twig
-     * @param LoginManager      $loginManager
+     * ApplicationAdmission constructor
      */
     public function __construct(EntityManagerInterface $em, Environment $twig, LoginManager $loginManager)
     {
@@ -53,7 +49,7 @@ class ApplicationAdmission
         return $application;
     }
 
-    public function userHasAlreadyApplied(User $user)
+    public function userHasAlreadyApplied(User $user): bool
     {
         $fos = $user->getFieldOfStudy();
         if ($fos === null) {
@@ -71,7 +67,7 @@ class ApplicationAdmission
         return $this->userHasAlreadyAppliedInAdmissionPeriod($user, $admissionPeriod);
     }
 
-    public function userHasAlreadyAppliedInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod)
+    public function userHasAlreadyAppliedInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod): bool
     {
         $existingApplications = $this->em->getRepository(Application::class)->findByEmailInAdmissionPeriod($user->getEmail(), $admissionPeriod);
 
@@ -117,7 +113,7 @@ class ApplicationAdmission
         return $department;
     }
 
-    public function renderErrorPage(User $user = null)
+    public function renderErrorPage(User $user = null): ?Response
     {
         $content = null;
 

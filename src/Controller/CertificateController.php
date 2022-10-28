@@ -7,30 +7,19 @@ use App\Entity\CertificateRequest;
 use App\Entity\Signature;
 use App\Form\Type\CreateSignatureType;
 use App\Service\FileUploader;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends BaseController
 {
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
+    private FileUploader $fileUploader;
 
     public function __construct(FileUploader $fileUploader){
         $this->fileUploader=$fileUploader;
 
     }
     /**
-     * @Route(
-     *     "/kontrollpanel/attest/{id}",
-     *     name="certificate_show",
-     *     defaults={"id": null},
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Request $request
      *
      * @return RedirectResponse|Response
@@ -75,7 +64,7 @@ class CertificateController extends BaseController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        // Finds all the the certificate requests
+        // Finds all the certificate requests
         $certificateRequests = $this->getDoctrine()->getRepository(CertificateRequest::class)->findAll();
 
         return $this->render('certificate/index.html.twig', array(

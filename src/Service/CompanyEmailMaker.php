@@ -8,16 +8,19 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CompanyEmailMaker
 {
-    private $em;
-    private $logger;
+    private EntityManagerInterface $em;
+    private LogService $logger;
 
+    /**
+     * CompanyEmailMaker constructor
+     */
     public function __construct(EntityManagerInterface $em, LogService $logger)
     {
         $this->em = $em;
         $this->logger = $logger;
     }
 
-    public function setCompanyEmailFor(User $user, $blackList)
+    public function setCompanyEmailFor(User $user, $blackList): ?string
     {
         $allCompanyEmails = $this->em->getRepository(User::class)->findAllCompanyEmails();
         $allEmails = array_merge($allCompanyEmails, $blackList);

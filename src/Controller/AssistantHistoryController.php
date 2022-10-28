@@ -6,21 +6,19 @@ use App\Entity\AssistantHistory;
 use App\Role\Roles;
 use App\Form\Type\CreateAssistantHistoryType;
 use App\Service\LogService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
-    /**
-     * @var LogService
-     */
-    private $logService;
+    private LogService $logService;
 
     public function __construct(LogService $logService)
     {
         $this->logService = $logService;
     }
 
-    public function delete(AssistantHistory $assistantHistory)
+    public function delete(AssistantHistory $assistantHistory): RedirectResponse
     {
         if (!$this->isGranted(Roles::ADMIN) && $assistantHistory->getUser()->getDepartment() !== $this->getUser()->getDepartment()) {
             $this->createAccessDeniedException();

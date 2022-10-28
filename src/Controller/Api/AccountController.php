@@ -9,7 +9,6 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -28,15 +27,6 @@ class AccountController extends BaseController
         $this->session = $session;
     }
 
-    /**
-     * @Route(path="api/account/login", methods={"GET", "POST"})
-     *
-     * @param Request $request
-     *
-     * @return Response
-     * @throws InvalidClassConstructorException
-     * @throws NonUniqueResultException
-     */
     public function login(Request $request)
     {
         $response = new JsonResponse();
@@ -58,7 +48,7 @@ class AccountController extends BaseController
             return $response;
         }
 
-        $validPassword = $this->get('security.password_encoder')->isPasswordValid($user, $password);
+        $validPassword = $this->get('security.password_hasher')->isPasswordValid($user, $password);
         if (!$validPassword) {
             $response->setStatusCode(401);
             $response->setContent('Wrong password');
@@ -77,11 +67,6 @@ class AccountController extends BaseController
         return new JsonResponse($userDto);
     }
 
-    /**
-     * @Route(path="api/account/logout", methods={"POST"})
-     *
-     * @return Response
-     */
     public function logout()
     {
         try {
@@ -95,12 +80,7 @@ class AccountController extends BaseController
         }
     }
 
-    /**
-     * @Route(path="api/account/user", methods={"GET"})
-     *
-     * @return Response
-     * @throws InvalidClassConstructorException
-     */
+
     public function getUser()
     {
         if (!$this->getUser()) {
@@ -116,16 +96,6 @@ class AccountController extends BaseController
     }
 
 
-    /**
-     * @param Request $request
-     *
-     * @Route(
-     *     path="api/account/get_department",
-     *     methods={"GET"}
-     * )
-     *
-     * @return Response
-     */
     public function getDepartmentApi(Request $request)
     {
         if (!$this->getUser()) {

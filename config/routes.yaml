@@ -63,6 +63,19 @@ about_new:
     controller: App\Controller\PublicStaticPageController::showAboutPage
 
 
+##########################################
+#                  Kontakt               #
+##########################################
+contact_department:
+    path: /kontakt/avdeling/{id}
+    controller: App\Controller\ContactController::index
+    methods: [GET, POST]
+
+contact:
+    path: /kontakt
+    controller: App\Controller\ContactController::index
+    methods: [GET, POST]
+
 
 ##########################################
 #                Control Panel           #
@@ -71,6 +84,63 @@ about_new:
 control_panel:
     path: /kontrollpanel
     controller: App\Controller\ControlPanelController::show
+    methods: [GET]
+
+
+##########################################
+#           Certificate                  #
+##########################################
+certificate_show:
+    path: kontrollpanel/attest/{id}
+    controller: App\Controller\CertificateController::show
+    methods: [GET, POST]
+    defaults:
+        id: null
+
+
+##########################################
+#             Semester                   #
+##########################################
+semester_show:
+    path: /kontrollpanel/semesteradmin
+    controller: App\Controller\SemesterController::show
+    methods: [GET]
+
+semester_create:
+    path: /kontrollpanel/semesteradmin/opprett
+    controller: App\Controller\SemesterController::createSemester
+    methods: [GET, POST]
+
+##########################################
+#             Stand                      #
+##########################################
+stand:
+    path: /kontrollpanel/stand
+    controller: App\Controller\StandController::index
+    methods: [GET]
+
+
+##########################################
+#             Account                    #
+##########################################
+api_login:
+    path: /api/account/login
+    controller: App\Controller\AccountController::login
+    methods: [GET, POST]
+
+api_logout:
+    path: /api/account/logout
+    controller: App\Controller\AccountController::logout
+    methods: [POST]
+
+api_account_user:
+    path: /api/account/user
+    controller: App\Controller\AccountController::getUser
+    methods: [GET]
+
+api_account_get_department:
+    path: /api/account/get_department
+    controller: App\Controller\AccountController::getDepartmentApi
     methods: [GET]
 
 
@@ -252,6 +322,15 @@ reset_password_confirmation:
 
 
 ##########################################
+#         ConfirmationController         #
+##########################################
+confirmation:
+    path: /bekreftelse
+    controller: App\Controller\ConfirmationController::show
+    methods: [GET]
+
+
+##########################################
 #            AdmissionAdmin              #
 ##########################################
 
@@ -321,6 +400,70 @@ admissionadmin_team_interest:
     requirements:
         DepartmentController:: \d+
         semester: \d+
+
+admission_existing_user:
+    path: /eksisterendeopptak
+    controller: App\Controller\ExistingUserAdmissionController::show
+    methods: [GET, POST]
+
+delete_application_existing_user:
+    path: /kontrollpanel/application/existing/delete/{id}
+    controller: App\Controller\AdmissionAdminController::deleteApplicationExistingAssistant
+    methods: [POST]
+    requirements:
+        id: \d+
+
+team_interest_form:
+    path: /teaminteresse/{id}
+    controller: App\Controller\TeamInterestController::showTeamInterestForm
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+
+##########################################
+#          AdmissionSubscriber           #
+##########################################
+interest_list:
+    path: /intereseliste/{shortName}
+    controller: App\Controller\AdmissionSubscriberController::subscribePage
+    methods: [GET]
+    requirements:
+        shortName: \w+
+
+interest_list_by_id:
+    path: /interesseliste/{id}
+    controller: App\Controller\AdmissionSubscriberController::subscribePage
+    methods: [GET]
+    requirements:
+        id: \d+
+
+admission_subscribe:
+    path: /opptak/notification
+    controller: App\Controller\AdmissionSubscriberController::subscribe
+    methods: [POST]
+
+admission_unsubscribe:
+    path: /opptak/notification/unsubscribe/{code}
+    controller: App\Controller\AdmissionSubscriberController::unsubscribe
+    methods: [POST]
+    requirements:
+        code: \w+
+
+
+##########################################
+#                User                    #
+##########################################
+my_page:
+    path: /min-side
+    controller: App\Controller\UserController::myPage
+    methods: [GET]
+
+my_partners:
+    path: /profil/partnere
+    controller: App\Controller\UserController::myPartner
+    methods: [GET]
+
 
 ##########################################
 #              UserAdmin                 #
@@ -478,6 +621,11 @@ team_application_show:
     controller: App\Controller\TeamApplicationController::showApplication
     methods: [GET]
 
+team_application_confirmation:
+    path: /team/application/bekreftelse/{team_name}
+    controller: App\Controller\TeamApplicationController::confirmation
+    methods: [GET]
+
 team_application_show_all:
     path: /kontrollpanel/team/applications/{id}
     controller: App\Controller\TeamApplicationController::showAllApplications
@@ -492,10 +640,14 @@ team_application_delete:
     requirements:
         id: \d+
 
-#teamadmin_show:
-# path: /kontrollpanel/teamadmin
-# controller: App\Controller\TeamAdminController::show
-# methods: [GET]
+teamadmin_show:
+    path: /kontrollpanel/team/avdeling/{id}
+    controller: App\Controller\TeamAdminController::show
+    methods: [GET]
+    defaults:
+        id: null
+    requirements:
+        id: \d+
 
 teamadmin_create_position:
     path: /kontrollpanel/teamadmin/opprett/stilling
@@ -705,6 +857,33 @@ school_capacity_edit:
         id: \d+
 
 ##########################################
+#              Sponsor                   #
+##########################################
+sponsors_show:
+    path: /kontrollpanel/sponsorer
+    controller: App\Controller\SponsorsController::sponsorsShow
+    methods: [GET]
+
+sponsor_create:
+    path: /kontrollpanel/sponsor/create
+    controller: App\Controller\SponsorsController::sponsorsShow
+    methods: [GET, POST]
+
+sponsor_edit:
+    path: /kontrollpanel/sponsor/edit/{id}
+    controller: App\Controller\SponsorsController::sponsorEdit
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+sponsor_delete:
+    path: /kontrollpanel/sponsor/delete/{id}
+    controller: App\Controller\SponsorsController::deleteSponsor
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+##########################################
 #              Interview                 #
 ##########################################
 interview_clear_co_interviewer:
@@ -830,7 +1009,14 @@ interview_cancel_by_response:
 interview_edit_status:
     path: kontrollpanel/intervju/status/{id}
     controller: App\Controller\InterviewController::editStatus
-    methods: [POST]
+    methods: [POST]`
+    requirements:
+        id: \d+
+
+interview_conduct:
+    path: /kontrollpanel/intervju/conduct/{id}
+    controller: App\Controller\InterviewController::conduct
+    methods: [GET, POST]
     requirements:
         id: \d+
 
@@ -932,8 +1118,6 @@ signature_image_show:
 #              Field of study            #
 ##########################################
 
-
-
 create_field_of_study:
     path: /kontrollpanel/linje
     controller: App\Controller\FieldOfStudyController::edit
@@ -983,6 +1167,17 @@ executive_board_update:
     requirements:
         id: \d+
 
+edit_executive_board_membership:
+    path: /kontrollpanel/hovedstyret/rediger_medlem/{id}
+    controller: App\Controller\ExecutiveBoardController::editMemberHistory
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+team:
+    path: /team
+    controller: App\Controller\BoardAndTeamController::show
+
 ##########################################
 #              Mailing Lists             #
 ##########################################
@@ -1016,6 +1211,10 @@ generate_all_mail_list:
         DepartmentController:: \d+
         semester: \d+
 
+
+##########################################
+#              Assistants                #
+##########################################
 assistants:
     path: /assistenter/{id}
     controller: App\Controller\AssistantController::index
@@ -1025,9 +1224,31 @@ assistants:
     requirements:
         id: \d+
 
-team:
-    path: /team
-    controller: App\Controller\BoardAndTeamController::show
+application_stand_form:
+    path: /stand/opptak/{shortName}
+    controller: App\Controller\AssistantController::subscribePage
+    requirements:
+        shortName: \w+
+
+application_confirmation:
+    path: /assistenter/opptak/bekreftelse
+    controller: App\Controller\AssistantController::confirmation
+    methods: [GET]
+
+opptak:
+    path: /opptak
+    controller: App\Controller\AssistantController::admission
+    methods: [GET, POST]
+
+admission_show_by_city_case_insensitive:
+    path: /opptak/{city}
+    controller: App\Controller\AssistantController::admissionCaseInsensitive
+    methods: [GET]
+
+admission_show_specific_department_by_city_case_insensitive:
+    path: /avdeling/{city}
+    controller: App\Controller\AssistantController::admissionCaseInsensitive
+    methods: [GET]
 
 ##########################################
 #               Feedback                 #
@@ -1036,3 +1257,58 @@ feedback_admin_index:
     path: /kontrollpanel/feedback
     controller: App\Controller\FeedbackController::index
     methods: [GET]
+
+
+##########################################
+#             Access Rules               #
+##########################################
+access_rules_show:
+    path: /kontrollpanel/admin/accessrules
+    controller: App\Controller\AccessRuleController::index
+    methods: [GET]
+
+access_rules_edit:
+    path: /kontrollpanel/admin/accessrules/edit/{id}
+    controller: App\Controller\AccessRuleController::createRule
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+access_rules_create:
+       path: /kontrollpanel/admin/accessrules/create"
+       controller: App\Controller\AccessRuleController::createRule
+       methods: [GET, POST]
+       defaults:
+           id: null
+       requirements:
+           id: \d+
+
+access_rules_edit_routing:
+    path: /kontrollpanel/admin/accessrules/routing/edit/{id}
+    controller: App\Controller\AccessRuleController::createRoutingRule
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+access_rules_create_routing:
+    path: /kontrollpanel/admin/accessrules/routing/create
+    controller: App\Controller\AccessRuleController::createRoutingRule
+    methods: [GET, POST]
+    defaults:
+        id: null
+    requirements:
+        id: \d+
+
+access_rules_copy:
+    path: /kontrollpanel/admin/accessrules/copy/{id}
+    controller: App\Controller\AccessRuleController::copyAccessRule
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
+access_rules_delete:
+    path: /kontrollpanel/admin/accessrules/delete/{id}
+    controller: App\Controller\AccessRuleController::delete
+    methods: [POST]
+    requirements:
+        id: \d+

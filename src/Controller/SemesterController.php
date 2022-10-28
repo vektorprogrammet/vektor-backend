@@ -10,16 +10,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class SemesterController extends AbstractController
 {
-    /**
-     * @Route(name="semester_show", path="/kontrollpanel/semesteradmin")
-     *
-     * @return Response
-     */
-    public function show()
+    public function show(): Response
     {
         $semesters = $this->getDoctrine()->getRepository(Semester::class)->findAllOrderedByAge();
 
@@ -28,13 +22,7 @@ class SemesterController extends AbstractController
         ));
     }
 
-    /**
-     * @Route(name="semester_create", path="/kontrollpanel/semesteradmin/opprett")
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     * @throws NonUniqueResultException
-     */
+
     public function createSemester(Request $request)
     {
         $semester = new Semester();
@@ -70,7 +58,7 @@ class SemesterController extends AbstractController
         ));
     }
 
-    public function delete(Semester $semester)
+    public function delete(Semester $semester): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($semester);
