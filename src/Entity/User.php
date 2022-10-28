@@ -398,9 +398,21 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return string
      */
-    public function getUserName()
+    public function getUserIdentifier(): string
     {
         return $this->user_name;
+    }
+
+    /**
+     * @Deprecated -> remove when upgraded to Symfony 6.0
+     * Required for now because UserInterface has this method.
+     * DO NOT use this method. Use "getUserIdentifier()" instead.
+     *
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return 'not-in-use'; // just to ensure that function is not being used
     }
 
     /**
@@ -868,6 +880,6 @@ class User implements EquatableInterface, UserInterface, Serializable
 
     public function isEqualTo(UserInterface $user)
     {
-        return $this->password === $user->getPassword() && $this->user_name === $user->getUsername();
+        return $this->password === $user->getPassword() && $this->user_name === $user->getUserIdentifier();
     }
 }

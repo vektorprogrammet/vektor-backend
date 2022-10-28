@@ -46,7 +46,7 @@ class SsoController extends BaseController
 
         return new JsonResponse([
             'name' => $user->getFullName(),
-            'username' => $user->getUsername(),
+            'username' => $user->getUserIdentifier(),
             'email' => $user->getEmail(),
             'companyEmail' => $user->getCompanyEmail(),
         ]);
