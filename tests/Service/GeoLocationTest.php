@@ -59,7 +59,7 @@ class GeoLocationTest extends TestCase
 
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $requestStack->expects($this->any())
-                     ->method('getMasterRequest')
+                     ->method('getMainRequest')
                      ->willReturn(new class {
                          public $headers;
 
