@@ -18,7 +18,7 @@ class PasswordResetType extends AbstractType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'passwordReset'; // This must be unique
     }

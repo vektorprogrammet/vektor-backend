@@ -40,7 +40,7 @@ class ApplicationType extends AbstractType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'application'; // This must be unique
     }
