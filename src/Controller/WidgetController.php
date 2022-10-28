@@ -6,6 +6,8 @@ use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\Receipt;
 use App\Entity\User;
+use App\Entity\Department;
+use App\Entity\Semester;
 use App\Service\AdmissionStatistics;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
@@ -66,10 +68,14 @@ class WidgetController extends BaseController
      * @param Request $request
      * @return Response|null
      */
-    public function applicationGraph(Request $request)
+    public function applicationGraph(Request $request, Department $department, Semester $semester)
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        if (is_null($department)) {
+            $department = $this->getDepartmentOrThrow404($request);
+        }
+        if (is_null($semester)) {
+            $semester = $this->getSemesterOrThrow404($request);
+        }
         $appData = null;
 
         $admissionStatistics = $this->admissionStatistics;
