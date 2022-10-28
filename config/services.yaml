@@ -26,7 +26,6 @@ parameters:
 
     locale: 'no'
 
-    googleAnalyticsId: '%env(googleAnalyticsId)%'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     admission_notifier_limit:  100
 
