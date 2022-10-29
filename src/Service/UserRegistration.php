@@ -70,7 +70,7 @@ class UserRegistration
             return null;
         }
 
-        if ($user->getUserName() === null) {
+        if ($user->getUserIdentifier() === null) {
             // Set default username to email
             $user->setUserName($user->getEmail());
         }

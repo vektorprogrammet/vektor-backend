@@ -118,7 +118,7 @@ class UserEntityUnitTest extends TestCase
         $user->setUserName('petjo123');
 
         // Assert the result
-        $this->assertEquals('petjo123', $user->getUserName());
+        $this->assertEquals('petjo123', $user->getUserIdentifier());
     }
 
     // Check whether the setFieldOfStudy function is working correctly

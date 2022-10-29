@@ -29,7 +29,7 @@ class AssistantHistoryEntityUnitTest extends TestCase
         $assistantHistory->setUser($user);
 
         // Assert the result
-        $this->assertEquals('petjo', $assistantHistory->getUser()->getUsername());
+        $this->assertEquals('petjo', $assistantHistory->getUser()->getUserIdentifier());
     }
 
     // Check whether the setSemester function is working correctly
