@@ -118,7 +118,7 @@ class GeoLocation
 
     public function findCoordinates($ip)
     {
-        $ignoreGeo = $this->requestStack->getMasterRequest()->headers->get('ignore-geo');
+        $ignoreGeo = $this->requestStack->getMainRequest()->headers->get('ignore-geo');
         if (!$this->ipinfoToken || $ignoreGeo) {
             return null;
         }
@@ -193,9 +193,8 @@ class GeoLocation
             return $request->server->get('HTTP_FORWARDED');
         } elseif ($request->server->get('REMOTE_ADDR') !== null) {
             return $request->server->get('REMOTE_ADDR');
-        } else {
-            return null;
         }
+        return null;
     }
 
     private function ipIsFromAnIgnoredAsn($response) : bool
