@@ -3,17 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\Signature;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class SignatureController extends BaseController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     public function showSignatureImage($imageName): BinaryFileResponse
     {
         $user = $this->getUser();
 
-        $signature = $this->getDoctrine()->getRepository(Signature::class)->findByUser($user);
+        $signature = $this->doctrine->getRepository(Signature::class)->findByUser($user);
         if ($signature === null) {
             throw new NotFoundHttpException('Signature not found');
         }

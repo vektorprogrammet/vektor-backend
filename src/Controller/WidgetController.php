@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Service\AdmissionStatistics;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,11 +17,15 @@ class WidgetController extends BaseController
 {
     private Sorter $sorter;
     private AdmissionStatistics $admissionStatistics;
+    private ManagerRegistry $doctrine;
 
-    public function __construct(Sorter $sorter, AdmissionStatistics $admissionStatistics)
+    public function __construct(Sorter $sorter,
+                                AdmissionStatistics $admissionStatistics,
+                                ManagerRegistry $doctrine)
     {
         $this->sorter=$sorter;
         $this->admissionStatistics=$admissionStatistics;
+        $this->doctrine = $doctrine;
     }
     /**
      * @param Request $request
@@ -30,12 +35,12 @@ class WidgetController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
         $applicationsAssignedToUser = [];
 
         if ($admissionPeriod !== null) {
-            $applicationRepo = $this->getDoctrine()->getRepository(Application::class);
+            $applicationRepo = $this->doctrine->getRepository(Application::class);
             $applicationsAssignedToUser = $applicationRepo->findAssignedByUserAndAdmissionPeriod($this->getUser(), $admissionPeriod);
         }
 
@@ -44,13 +49,13 @@ class WidgetController extends BaseController
 
     public function receipts(): Response
     {
-        $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
+        $usersWithReceipts = $this->doctrine->getRepository(User::class)->findAllUsersWithReceipts();
         $sorter = $this->sorter;
 
         $sorter->sortUsersByReceiptSubmitTime($usersWithReceipts);
         $sorter->sortUsersByReceiptStatus($usersWithReceipts);
 
-        $pendingReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
+        $pendingReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
         $pendingReceiptStatistics = new ReceiptStatistics($pendingReceipts);
 
         $hasReceipts = !empty($pendingReceipts);
@@ -74,11 +79,11 @@ class WidgetController extends BaseController
 
         $admissionStatistics = $this->admissionStatistics;
 
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
         $applicationsInSemester = [];
         if ($admissionPeriod !== null) {
-            $applicationsInSemester = $this->getDoctrine()
+            $applicationsInSemester = $this->doctrine
                 ->getRepository(Application::class)
                 ->findByAdmissionPeriod($admissionPeriod);
             $appData = $admissionStatistics->generateCumulativeGraphDataFromApplicationsInAdmissionPeriod($applicationsInSemester, $admissionPeriod);

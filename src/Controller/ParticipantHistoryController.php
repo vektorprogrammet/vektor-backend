@@ -5,11 +5,19 @@ namespace App\Controller;
 use App\Entity\AssistantHistory;
 use App\Entity\TeamMembership;
 use App\Role\Roles;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ParticipantHistoryController extends BaseController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     /**
      * @param Request $request
      * @return Response|null
@@ -24,10 +32,10 @@ class ParticipantHistoryController extends BaseController
         }
 
         // Find all team memberships by department
-        $teamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findTeamMembershipsByDepartment($department);
+        $teamMemberships = $this->doctrine->getRepository(TeamMembership::class)->findTeamMembershipsByDepartment($department);
 
         // Find all assistantHistories by department
-        $assistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($department, $semester);
+        $assistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($department, $semester);
 
         return $this->render('participant_history/index.html.twig', array(
             'teamMemberships' => $teamMemberships,

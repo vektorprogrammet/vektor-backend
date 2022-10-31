@@ -13,6 +13,7 @@ use App\Service\FilterService;
 use App\Service\GeoLocation;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,18 +26,21 @@ class AssistantController extends BaseController
     private FilterService $filterService;
     private KernelInterface $kernel;
     private EventDispatcherInterface $eventDispatcher;
+    private ManagerRegistry $doctrine;
 
     public function __construct(ApplicationAdmission $applicationAdmission,
                                 GeoLocation $geoLocation,
                                 FilterService $filterService,
                                 KernelInterface $kernel,
-                                EventDispatcherInterface $eventDispatcher)
+                                EventDispatcherInterface $eventDispatcher,
+                                ManagerRegistry $doctrine)
     {
         $this->applicationAdmission = $applicationAdmission;
         $this->geoLocation = $geoLocation;
         $this->filterService = $filterService;
         $this->kernel = $kernel;
         $this->eventDispatcher = $eventDispatcher;
+        $this->doctrine = $doctrine;
     }
     
     /**
@@ -48,7 +52,7 @@ class AssistantController extends BaseController
     public function admissionCaseInsensitive(Request $request, $city): Response
     {
         $city = str_replace(array('æ', 'ø','å'), array('Æ','Ø','Å'), $city); // Make sqlite happy
-        $department = $this->getDoctrine()
+        $department = $this->doctrine
                 ->getRepository(Department::class)
                 ->findOneByCityCaseInsensitive($city);
         if ($department !== null) {
@@ -81,7 +85,7 @@ class AssistantController extends BaseController
                           bool $scrollToAdmissionForm = false): Response
     {
         $admissionManager = $this->applicationAdmission;
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         $departments = $em->getRepository(Department::class)->findActive();
         $departments = $this->geoLocation->sortDepartmentsByDistanceFromClient($departments);
@@ -171,7 +175,7 @@ class AssistantController extends BaseController
             return $this->index($request, $department);
         }
         $admissionManager = $this->get(ApplicationAdmission::class);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $application = new Application();
 
         $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(

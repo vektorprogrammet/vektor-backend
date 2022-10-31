@@ -10,6 +10,7 @@ use App\Event\TeamEvent;
 use App\Event\TeamMembershipEvent;
 use App\Form\Type\CreateTeamMembershipType;
 use App\Form\Type\CreateTeamType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
 class TeamAdminController extends BaseController
 {
     private EventDispatcherInterface $eventDispatcher;
+    private ManagerRegistry $doctrine;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher,
+                                ManagerRegistry $doctrine)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -36,8 +40,8 @@ class TeamAdminController extends BaseController
         }
 
         // Find teams that are connected to the department of the user
-        $activeTeams   = $this->getDoctrine()->getRepository(Team::class)->findActiveByDepartment($department);
-        $inactiveTeams = $this->getDoctrine()->getRepository(Team::class)->findInactiveByDepartment($department);
+        $activeTeams   = $this->doctrine->getRepository(Team::class)->findActiveByDepartment($department);
+        $inactiveTeams = $this->doctrine->getRepository(Team::class)->findInactiveByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('team_admin/index.html.twig', array(
@@ -58,7 +62,7 @@ class TeamAdminController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $teamMembership->setIsSuspended(false);
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($teamMembership);
             $em->flush();
 
@@ -82,7 +86,7 @@ class TeamAdminController extends BaseController
         // Create a new TeamMembership entity
         $teamMembership = new TeamMembership();
         $teamMembership->setUser($this->getUser());
-        $teamMembership->setPosition($this->getDoctrine()->getRepository(Position::class)->findOneBy(array( 'name' => 'Medlem' )));
+        $teamMembership->setPosition($this->doctrine->getRepository(Position::class)->findOneBy(array( 'name' => 'Medlem' )));
 
         // Create a new formType with the needed variables
         $form = $this->createForm(CreateTeamMembershipType::class, $teamMembership, [
@@ -98,7 +102,7 @@ class TeamAdminController extends BaseController
             $teamMembership->setTeam($team);
 
             // Persist the team to the database
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($teamMembership);
             $em->flush();
 
@@ -116,13 +120,13 @@ class TeamAdminController extends BaseController
     public function showSpecificTeam(Team $team): Response
     {
         // Find all TeamMembership entities based on team
-        $activeTeamMemberships   = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
-        $inActiveTeamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findInactiveTeamMembershipsByTeam($team);
+        $activeTeamMemberships   = $this->doctrine->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
+        $inActiveTeamMemberships = $this->doctrine->getRepository(TeamMembership::class)->findInactiveTeamMembershipsByTeam($team);
         usort($activeTeamMemberships, array( $this, 'sortTeamMembershipsByEndDate' ));
         usort($inActiveTeamMemberships, array( $this, 'sortTeamMembershipsByEndDate' ));
 
         $user                      = $this->getUser();
-        $currentUserTeamMembership = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByUser($user);
+        $currentUserTeamMembership = $this->doctrine->getRepository(TeamMembership::class)->findActiveTeamMembershipsByUser($user);
         $isUserInTeam              = false;
         foreach ($currentUserTeamMembership as $wh) {
             if (in_array($wh, $activeTeamMemberships)) {
@@ -166,7 +170,7 @@ class TeamAdminController extends BaseController
             //Don't persist if the preview button was clicked
             if (! $form->get('preview')->isClicked()) {
                 // Persist the team to the database
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->doctrine->getManager();
                 $em->persist($team);
                 $em->flush();
 
@@ -174,7 +178,7 @@ class TeamAdminController extends BaseController
 
                 return $this->redirect($this->generateUrl('teamadmin_show'));
             }
-            $teamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
+            $teamMemberships = $this->doctrine->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
 
             // Render the teampage as a preview
             return $this->render('team/team_page.html.twig', array(
@@ -194,7 +198,7 @@ class TeamAdminController extends BaseController
     public function showTeamsByDepartment(Department $department): Response
     {
         // Find teams that are connected to the department of the department ID sent in by the request
-        $teams = $this->getDoctrine()->getRepository(Team::class)->findByDepartment($department);
+        $teams = $this->doctrine->getRepository(Team::class)->findByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('team_admin/index.html.twig', array(
@@ -222,7 +226,7 @@ class TeamAdminController extends BaseController
             //Don't persist if the preview button was clicked
             if (! $form->get('preview')->isClicked()) {
                 // Persist the team to the database
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->doctrine->getManager();
                 $em->persist($team);
                 $em->flush();
 
@@ -248,7 +252,7 @@ class TeamAdminController extends BaseController
 
     public function removeUserFromTeamById(TeamMembership $teamMembership): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($teamMembership);
         $em->flush();
 
@@ -259,7 +263,7 @@ class TeamAdminController extends BaseController
 
     public function deleteTeamById(Team $team): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         foreach ($team->getTeamMemberships() as $teamMembership) {
             $teamMembership->setDeletedTeamName($team->getName());

@@ -6,24 +6,32 @@ use App\Entity\AssistantHistory;
 use App\Entity\Department;
 use App\Entity\User;
 use App\Service\GeoLocation;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends BaseController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     public function show(GeoLocation $geoLocation): Response
     {
-        $assistantsCount = count($this->getDoctrine()->getRepository(User::class)->findAssistants());
-        $teamMembersCount = count($this->getDoctrine()->getRepository(User::class)->findTeamMembers());
+        $assistantsCount = count($this->doctrine->getRepository(User::class)->findAssistants());
+        $teamMembersCount = count($this->doctrine->getRepository(User::class)->findTeamMembers());
 
-        $departments = $this->getDoctrine()->getRepository(Department::class)->findAll();
-        $departmentsWithActiveAdmission = $this->getDoctrine()->getRepository(Department::class)->findAllWithActiveAdmission();
+        $departments = $this->doctrine->getRepository(Department::class)->findAll();
+        $departmentsWithActiveAdmission = $this->doctrine->getRepository(Department::class)->findAllWithActiveAdmission();
         $departmentsWithActiveAdmission = $geoLocation->sortDepartmentsByDistanceFromClient($departmentsWithActiveAdmission);
         $closestDepartment = $geoLocation->findNearestDepartment($departments);
         $ipWasLocated = $geoLocation->findCoordinatesOfCurrentRequest();
 
-        $femaleAssistantCount = $this->getDoctrine()->getRepository(AssistantHistory::class)->numFemale();
-        $maleAssistantCount = $this->getDoctrine()->getRepository(AssistantHistory::class)->numMale();
+        $femaleAssistantCount = $this->doctrine->getRepository(AssistantHistory::class)->numFemale();
+        $maleAssistantCount = $this->doctrine->getRepository(AssistantHistory::class)->numMale();
 
         return $this->render('home/index.html.twig', [
             'assistantCount' => $assistantsCount + 600, // + Estimated number of assistants not registered in website

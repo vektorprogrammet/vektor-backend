@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AdmissionPeriod;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Application;
@@ -16,6 +17,13 @@ use App\Form\Type\ModifySubstituteType;
  */
 class SubstituteController extends BaseController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     /**
      * @param Request $request
      * @return Response|null
@@ -27,12 +35,12 @@ class SubstituteController extends BaseController
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
 
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         $substitutes = null;
         if ($admissionPeriod !== null) {
-            $substitutes = $this->getDoctrine()
+            $substitutes = $this->doctrine
                 ->getRepository(Application::class)
                 ->findSubstitutesByAdmissionPeriod($admissionPeriod);
         }
@@ -60,7 +68,7 @@ class SubstituteController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($application);
             $em->flush();
 
@@ -82,7 +90,7 @@ class SubstituteController extends BaseController
     {
         $application->setSubstitute(false);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->persist($application);
         $em->flush();
 
@@ -101,7 +109,7 @@ class SubstituteController extends BaseController
         }
         $application->setSubstitute(true);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->persist($application);
         $em->flush();
 

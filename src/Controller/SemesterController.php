@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Semester;
 use App\Form\Type\CreateSemesterType;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,9 +14,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SemesterController extends AbstractController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     public function show(): Response
     {
-        $semesters = $this->getDoctrine()->getRepository(Semester::class)->findAllOrderedByAge();
+        $semesters = $this->doctrine->getRepository(Semester::class)->findAllOrderedByAge();
 
         return $this->render('semester_admin/index.html.twig', array(
             'semesters' => $semesters,
@@ -36,7 +44,7 @@ class SemesterController extends AbstractController
         // The fields of the form is checked if they contain the correct information
         if ($form->isSubmitted() && $form->isValid()) {
             //Check if semester already exists
-            $existingSemester = $this->getDoctrine()->getManager()->getRepository(Semester::class)
+            $existingSemester = $this->doctrine->getManager()->getRepository(Semester::class)
                 ->findByTimeAndYear($semester->getSemesterTime(), $semester->getYear());
 
             //Return to semester page if semester already exists
@@ -45,7 +53,7 @@ class SemesterController extends AbstractController
                 return $this->redirectToRoute('semester_create');
             }
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($semester);
             $em->flush();
 
@@ -60,7 +68,7 @@ class SemesterController extends AbstractController
 
     public function delete(Semester $semester): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($semester);
         $em->flush();
 

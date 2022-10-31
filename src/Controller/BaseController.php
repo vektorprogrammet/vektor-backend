@@ -4,12 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Department;
 use App\Entity\Semester;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BaseController extends AbstractController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     /**
      * Tries to get department from the Request and opts to the user's department if none is found.
      * Returns null if none can be found this way.
@@ -25,7 +33,7 @@ class BaseController extends AbstractController
                 $department = $this->getUser()->getDepartment();
             }
         } else {
-            $department = $this->getDoctrine()->getRepository(Department::class)->find($departmentId);
+            $department = $this->doctrine->getRepository(Department::class)->find($departmentId);
         }
         return $department;
     }
@@ -42,7 +50,7 @@ class BaseController extends AbstractController
         if ($semesterId === null) {
             $semester = $this->getCurrentSemester();
         } else {
-            $semester = $this->getDoctrine()->getRepository(Semester::class)->find($semesterId);
+            $semester = $this->doctrine->getRepository(Semester::class)->find($semesterId);
         }
         return $semester;
     }
@@ -76,6 +84,6 @@ class BaseController extends AbstractController
 
     public function getCurrentSemester(): Semester
     {
-        return $this->getDoctrine()->getRepository(Semester::class)->findOrCreateCurrentSemester();
+        return $this->doctrine->getRepository(Semester::class)->findOrCreateCurrentSemester();
     }
 }

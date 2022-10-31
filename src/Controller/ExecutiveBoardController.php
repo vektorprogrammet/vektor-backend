@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
 use App\Service\RoleManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CreateExecutiveBoardType;
@@ -15,10 +16,12 @@ use Symfony\Component\HttpFoundation\Response;
 class ExecutiveBoardController extends BaseController
 {
     private RoleManager $roleManager;
+    private ManagerRegistry $doctrine;
 
-    public function __construct(RoleManager $roleManager)
+    public function __construct(RoleManager $roleManager, ManagerRegistry $doctrine)
     {
         $this->roleManager = $roleManager;
+        $this->doctrine = $doctrine;
     }
 
     public function show(): Response
@@ -32,8 +35,8 @@ class ExecutiveBoardController extends BaseController
 
     public function showAdmin(): Response
     {
-        $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
-        $members = $this->getDoctrine()->getRepository(ExecutiveBoardMembership::class)->findAll();
+        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
+        $members = $this->doctrine->getRepository(ExecutiveBoardMembership::class)->findAll();
         $activeMembers = [];
         $inactiveMembers = [];
         foreach ($members as $member) {
@@ -53,7 +56,7 @@ class ExecutiveBoardController extends BaseController
 
     public function addUserToBoard(Request $request, Department $department)
     {
-        $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
 
         // Create a new TeamMembership entity
         $member = new ExecutiveBoardMembership();
@@ -71,7 +74,7 @@ class ExecutiveBoardController extends BaseController
             $member->setBoard($board);
 
             // Persist the board to the database
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($member);
             $em->flush();
 
@@ -89,7 +92,7 @@ class ExecutiveBoardController extends BaseController
 
     public function removeUserFromBoardById(ExecutiveBoardMembership $member): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($member);
         $em->flush();
 
@@ -100,7 +103,7 @@ class ExecutiveBoardController extends BaseController
 
     public function updateBoard(Request $request)
     {
-        $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
 
         // Create the form
         $form = $this->createForm(CreateExecutiveBoardType::class, $board);
@@ -111,7 +114,7 @@ class ExecutiveBoardController extends BaseController
             //Don't persist if the preview button was clicked
             if (!$form->get('preview')->isClicked()) {
                 // Persist the board to the database
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->doctrine->getManager();
                 $em->persist($board);
                 $em->flush();
 
@@ -146,7 +149,7 @@ class ExecutiveBoardController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($member);
             $em->flush();
             return $this->redirectToRoute('executive_board_show');

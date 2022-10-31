@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PasswordReset;
 use App\Service\LogService;
 use App\Service\PasswordManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\NewPasswordType;
@@ -17,9 +18,12 @@ use Symfony\Component\HttpFoundation\Response;
 class PasswordResetController extends BaseController
 {
     private LogService $logService;
+    private ManagerRegistry $doctrine;
 
-    public function __construct(LogService $logService){
+    public function __construct(LogService $logService, ManagerRegistry $doctrine)
+    {
         $this->logService = $logService;
+        $this->doctrine = $doctrine;
 
     }
     /**
@@ -55,8 +59,8 @@ class PasswordResetController extends BaseController
                 $this->logService->notice("Password reset rejected: Someone tried to reset the password for an inactive account: $email");
             } else {
                 $this->logService->info("{$passwordReset->getUser()} requested a password reset");
-                $oldPasswordResets = $this->getDoctrine()->getRepository(PasswordReset::class)->findByUser($passwordReset->getUser());
-                $em = $this->getDoctrine()->getManager();
+                $oldPasswordResets = $this->doctrine->getRepository(PasswordReset::class)->findByUser($passwordReset->getUser());
+                $em = $this->doctrine->getManager();
 
                 foreach ($oldPasswordResets as $oldPasswordReset) {
                     $em->remove($oldPasswordReset);
@@ -106,7 +110,7 @@ class PasswordResetController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->remove($passwordReset);
             $em->persist($user);
             $em->flush();

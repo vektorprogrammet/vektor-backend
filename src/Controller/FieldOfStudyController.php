@@ -4,16 +4,24 @@ namespace App\Controller;
 
 use App\Entity\FieldOfStudy;
 use App\Form\Type\FieldOfStudyType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FieldOfStudyController extends BaseController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     public function show(): Response
     {
         $department = $this->getUser()->getFieldOfStudy()->getDepartment();
-        $fieldOfStudies = $this->getDoctrine()->getRepository(FieldOfStudy::class)->findByDepartment($department);
+        $fieldOfStudies = $this->doctrine->getRepository(FieldOfStudy::class)->findByDepartment($department);
 
         return $this->render('field_of_study/show_all.html.twig', array(
             'fieldOfStudies' => $fieldOfStudies,
@@ -38,7 +46,7 @@ class FieldOfStudyController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $fieldOfStudy->setDepartment($this->getUser()->getFieldOfStudy()->getDepartment());
-            $manager = $this->getDoctrine()->getManager();
+            $manager = $this->doctrine->getManager();
             $manager->persist($fieldOfStudy);
             $manager->flush();
 

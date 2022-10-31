@@ -16,6 +16,7 @@ use App\Role\Roles;
 use App\Service\LogService;
 use App\Service\RoleManager;
 use App\Service\UserRegistration;
+use Doctrine\Persistence\ManagerRegistry;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Exception;
@@ -36,24 +37,28 @@ class ProfileController extends BaseController
     private EventDispatcherInterface $eventDispatcher;
     private TokenStorageInterface $tokenStorage;
     private SessionInterface $session;
+    private ManagerRegistry $doctrine;
 
     public function __construct(RoleManager $roleManager,
                                 LogService $logService,
                                 EventDispatcherInterface $eventDispatcher,
                                 TokenStorageInterface $tokenStorage,
-                                SessionInterface $session) {
+                                SessionInterface $session,
+                                ManagerRegistry $doctrine)
+    {
         $this->RoleManager = $roleManager;
         $this->logService = $logService;
         $this->eventDispatcher = $eventDispatcher;
         $this->tokenStorage = $tokenStorage;
         $this->session = $session;
+        $this->doctrine = $doctrine;
     }
 
     public function show(): Response
     {
         // Get the user currently signed in
         $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         // Fetch the assistant history of the user
         $assistantHistory = $em->getRepository(AssistantHistory::class)->findByUser($user);
         // Find the team history of the user
@@ -77,7 +82,7 @@ class ProfileController extends BaseController
             return $this->redirectToRoute('profile');
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // Find the work history of the user
         $teamMemberships = $em->getRepository(TeamMembership::class)->findByUser($user);
@@ -107,7 +112,7 @@ class ProfileController extends BaseController
     {
         $user->setActive(false);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->flush();
 
         return $this->redirectToRoute('specific_profile', ['id' => $user->getId()]);
@@ -117,7 +122,7 @@ class ProfileController extends BaseController
     {
         $user->setActive(true);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->flush();
 
         return $this->redirectToRoute('specific_profile', ['id' => $user->getId()]);
@@ -141,7 +146,7 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -174,7 +179,7 @@ class ProfileController extends BaseController
         try {
             $user->setRoles(array( $roleName ));
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -191,7 +196,7 @@ class ProfileController extends BaseController
 
     public function downloadCertificate(Request $request, User $user): ?RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // Fetch the assistant history of the user
         $assistantHistory = $em->getRepository(AssistantHistory::class)->findByUser($user);
@@ -200,7 +205,7 @@ class ProfileController extends BaseController
         $teamMembership = $em->getRepository(TeamMembership::class)->findByUser($user);
 
         // Find the signature of the user creating the certificate
-        $signature = $this->getDoctrine()->getRepository(Signature::class)->findByUser($this->getUser());
+        $signature = $this->doctrine->getRepository(Signature::class)->findByUser($this->getUser());
 
         // Find department
         $department = $this->getUser()->getDepartment();
@@ -251,7 +256,7 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -275,7 +280,7 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -299,7 +304,7 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -321,7 +326,7 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->flush();
 
             $this->eventDispatcher->dispatch(new UserEvent($user, $oldCompanyEmail), UserEvent::COMPANY_EMAIL_EDITED);

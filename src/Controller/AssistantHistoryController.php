@@ -6,16 +6,19 @@ use App\Entity\AssistantHistory;
 use App\Role\Roles;
 use App\Form\Type\CreateAssistantHistoryType;
 use App\Service\LogService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
     private LogService $logService;
+    private ManagerRegistry $doctrine;
 
-    public function __construct(LogService $logService)
+    public function __construct(LogService $logService, ManagerRegistry $doctrine)
     {
         $this->logService = $logService;
+        $this->doctrine = $doctrine;
     }
 
     public function delete(AssistantHistory $assistantHistory): RedirectResponse
@@ -38,7 +41,7 @@ class AssistantHistoryController extends BaseController
 
     public function edit(Request $request, AssistantHistory $assistantHistory)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         $department = $assistantHistory->getUser()->getDepartment();
         $form = $this->createForm(CreateAssistantHistoryType::class, $assistantHistory, [
