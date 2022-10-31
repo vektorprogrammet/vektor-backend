@@ -14,11 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 class StandController extends BaseController
 {
     private AdmissionStatistics $AdmissionStatistics;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(AdmissionStatistics $admissionStatistics,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->AdmissionStatistics=$admissionStatistics;
         $this->doctrine = $doctrine;
     }

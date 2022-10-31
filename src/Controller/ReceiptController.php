@@ -26,7 +26,7 @@ class ReceiptController extends BaseController
     private FileUploader $fileUploader;
     private EventDispatcherInterface $eventDispatcher;
     private RoleManager $roleManager;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(Sorter $sorter,
                                 FileUploader $fileUploader,
@@ -34,6 +34,7 @@ class ReceiptController extends BaseController
                                 RoleManager $roleManager,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->sorter=$sorter;
         $this->fileUploader=$fileUploader;
         $this->eventDispatcher=$eventDispatcher;

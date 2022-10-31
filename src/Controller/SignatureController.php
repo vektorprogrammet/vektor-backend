@@ -10,10 +10,11 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class SignatureController extends BaseController
 {
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->doctrine = $doctrine;
     }
 

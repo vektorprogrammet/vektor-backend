@@ -40,7 +40,7 @@ class InterviewController extends BaseController
     private InterviewManager $interviewManager;
     private ReversedRoleHierarchy $reversedRoleHierarchy;
     private ApplicationManager $applicationManager;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(EventDispatcherInterface $eventDispatcher,
                                 InterviewManager $interviewManager,
@@ -48,6 +48,7 @@ class InterviewController extends BaseController
                                 ApplicationManager $applicationManager,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->eventDispatcher = $eventDispatcher;
         $this->interviewManager = $interviewManager;
         $this->reversedRoleHierarchy = $reversedRoleHierarchy;

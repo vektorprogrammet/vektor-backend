@@ -13,10 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 class ProfilePhotoController extends BaseController
 {
     private FileUploader $fileUploader;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(FileUploader $fileUploader, ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->fileUploader = $fileUploader;
         $this->doctrine = $doctrine;
     }

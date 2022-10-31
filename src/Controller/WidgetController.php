@@ -17,12 +17,13 @@ class WidgetController extends BaseController
 {
     private Sorter $sorter;
     private AdmissionStatistics $admissionStatistics;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(Sorter $sorter,
                                 AdmissionStatistics $admissionStatistics,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->sorter=$sorter;
         $this->admissionStatistics=$admissionStatistics;
         $this->doctrine = $doctrine;

@@ -19,13 +19,14 @@ class ContactController extends BaseController
     private GeoLocation $geoLocation;
     private LogService $logService;
     private EventDispatcherInterface $eventDispatcher;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(GeoLocation $geoLocation,
                                 LogService $logService,
                                 EventDispatcherInterface $eventDispatcher,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->geoLocation = $geoLocation;
         $this->logService = $logService;
         $this->eventDispatcher = $eventDispatcher;

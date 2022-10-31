@@ -14,11 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 class UserAdminController extends BaseController
 {
     private UserRegistration $userRegistration;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(UserRegistration $userRegistration,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->userRegistration = $userRegistration;
         $this->doctrine = $doctrine;
     }

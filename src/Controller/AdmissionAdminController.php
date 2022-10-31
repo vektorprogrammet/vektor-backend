@@ -28,12 +28,14 @@ class AdmissionAdminController extends BaseController
 {
     private InterviewCounter $InterviewCounter;
     private EventDispatcherInterface $eventDispatcher;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
+
 
     public function __construct(InterviewCounter $interviewCounter,
                                 EventDispatcherInterface $eventDispatcher,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->InterviewCounter = $interviewCounter;
         $this->eventDispatcher = $eventDispatcher;
         $this->doctrine = $doctrine;

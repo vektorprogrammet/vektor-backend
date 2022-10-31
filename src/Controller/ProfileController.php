@@ -37,7 +37,7 @@ class ProfileController extends BaseController
     private EventDispatcherInterface $eventDispatcher;
     private TokenStorageInterface $tokenStorage;
     private SessionInterface $session;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(RoleManager $roleManager,
                                 LogService $logService,
@@ -46,6 +46,7 @@ class ProfileController extends BaseController
                                 SessionInterface $session,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->RoleManager = $roleManager;
         $this->logService = $logService;
         $this->eventDispatcher = $eventDispatcher;

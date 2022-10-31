@@ -19,12 +19,13 @@ class ExistingUserAdmissionController extends BaseController
 {
     private EventDispatcherInterface $eventDispatcher;
     private ApplicationAdmission $applicationAdmission;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(EventDispatcherInterface $eventDispatcher, 
                                 ApplicationAdmission $applicationAdmission, 
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->eventDispatcher = $eventDispatcher;
         $this->applicationAdmission = $applicationAdmission;
         $this->doctrine = $doctrine;

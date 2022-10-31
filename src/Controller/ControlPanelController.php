@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 class ControlPanelController extends BaseController
 {
     private SbsData $sbsData;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(SbsData $sbsData, ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->sbsData = $sbsData;
         $this->doctrine = $doctrine;
+
     }
 
     /**

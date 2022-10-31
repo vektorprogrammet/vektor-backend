@@ -13,10 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 class AssistantHistoryController extends BaseController
 {
     private LogService $logService;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(LogService $logService, ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->logService = $logService;
         $this->doctrine = $doctrine;
     }

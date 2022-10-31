@@ -17,10 +17,11 @@ use App\Form\Type\ModifySubstituteType;
  */
 class SubstituteController extends BaseController
 {
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->doctrine = $doctrine;
     }
 

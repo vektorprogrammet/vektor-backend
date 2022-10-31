@@ -26,7 +26,7 @@ class AssistantController extends BaseController
     private FilterService $filterService;
     private KernelInterface $kernel;
     private EventDispatcherInterface $eventDispatcher;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ApplicationAdmission $applicationAdmission,
                                 GeoLocation $geoLocation,
@@ -35,6 +35,7 @@ class AssistantController extends BaseController
                                 EventDispatcherInterface $eventDispatcher,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->applicationAdmission = $applicationAdmission;
         $this->geoLocation = $geoLocation;
         $this->filterService = $filterService;

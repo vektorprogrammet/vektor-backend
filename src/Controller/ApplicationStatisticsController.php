@@ -14,12 +14,13 @@ class ApplicationStatisticsController extends BaseController
 {
     private AssistantHistoryData $AssistantHistoryData;
     private ApplicationData $ApplicationData;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(AssistantHistoryData $assistantHistoryData,
                                 ApplicationData $applicationData,
                                 ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->AssistantHistoryData = $assistantHistoryData;
         $this->ApplicationData = $applicationData;
         $this->doctrine = $doctrine;

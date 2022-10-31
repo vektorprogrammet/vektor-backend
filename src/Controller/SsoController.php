@@ -10,10 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SsoController extends BaseController
 {
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->doctrine = $doctrine;
     }
 

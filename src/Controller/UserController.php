@@ -19,10 +19,11 @@ class UserController extends BaseController
 {
 
     private ApplicationManager $applicationManager;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ApplicationManager $applicationManager, ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->applicationManager = $applicationManager;
         $this->doctrine = $doctrine;
     }

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SemesterController extends AbstractController
 {
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ManagerRegistry $doctrine)
     {

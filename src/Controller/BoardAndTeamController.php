@@ -13,10 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 class BoardAndTeamController extends BaseController
 {
     private GeoLocation $geoLocation;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(GeoLocation $geoLocation, ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->geoLocation = $geoLocation;
         $this->doctrine = $doctrine;
     }

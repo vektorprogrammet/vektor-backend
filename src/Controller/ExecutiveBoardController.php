@@ -16,10 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 class ExecutiveBoardController extends BaseController
 {
     private RoleManager $roleManager;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(RoleManager $roleManager, ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->roleManager = $roleManager;
         $this->doctrine = $doctrine;
     }

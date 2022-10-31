@@ -20,10 +20,11 @@ use Symfony\Component\HttpFoundation\Response;
 class SchoolAdminController extends BaseController
 {
     private EventDispatcherInterface $eventDispatcher;
-    private ManagerRegistry $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(EventDispatcherInterface $eventDispatcher, ManagerRegistry $doctrine)
     {
+        parent::__construct($doctrine);
         $this->eventDispatcher = $eventDispatcher;
         $this->doctrine = $doctrine;
     }
