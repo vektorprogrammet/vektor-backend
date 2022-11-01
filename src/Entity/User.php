@@ -243,7 +243,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * {@inheritdoc}
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -647,11 +647,11 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * {@inheritdoc}
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         // you *may* need a real salt depending on your encoder
         // see section on salt below
-        return;
+        return null;
     }
 
     /**
@@ -878,7 +878,7 @@ class User implements EquatableInterface, UserInterface, Serializable
         return false;
     }
 
-    public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user): bool
     {
         return $this->password === $user->getPassword() && $this->user_name === $user->getUserIdentifier();
     }
