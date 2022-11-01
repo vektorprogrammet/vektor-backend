@@ -25,7 +25,7 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('position-2', $position2);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }

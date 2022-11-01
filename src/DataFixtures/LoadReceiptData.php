@@ -114,7 +114,7 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('rec-superadmin', $receiptSuperAdmin);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 20;
     }

@@ -50,7 +50,7 @@ class LoadFieldOfStudyData extends AbstractFixture implements OrderedFixtureInte
         $this->addReference('fos-5', $fos5);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

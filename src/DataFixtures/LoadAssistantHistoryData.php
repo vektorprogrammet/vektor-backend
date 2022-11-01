@@ -56,7 +56,7 @@ class LoadAssistantHistoryData extends AbstractFixture implements OrderedFixture
         $this->addReference('ah-1', $ah1);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }
