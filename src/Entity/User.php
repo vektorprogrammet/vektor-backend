@@ -38,19 +38,19 @@ class User implements EquatableInterface, UserInterface, Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private $lastName;
+    private string $lastName;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private $firstName;
+    private string $firstName;
 
     /**
      * @var FieldOfStudy
@@ -65,42 +65,42 @@ class User implements EquatableInterface, UserInterface, Serializable
      * @ORM\Column(name="gender", type="boolean")
      * @Assert\NotBlank(groups={"admission", "create_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private $gender;
+    private bool $gender;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $picture_path;
+    private string $picture_path;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private $phone;
+    private string $phone;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true)
      */
-    private $accountNumber;
+    private string $accountNumber;
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
      * @Assert\NotBlank(groups={"username", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private $user_name;
+    private string $user_name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Assert\NotBlank(groups={"username", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      * @Assert\Email(groups={"admission", "create_user", "edit_user"}, message="Ikke gyldig e-post.")
      */
-    private $email;
+    private string $email;
 
 
     /**
@@ -109,18 +109,18 @@ class User implements EquatableInterface, UserInterface, Serializable
      * @CustomAssert\UniqueCompanyEmail
      * @CustomAssert\VektorEmail
      */
-    private $companyEmail;
+    private string $companyEmail;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private $isActive;
+    private bool $isActive;
 
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $reservedFromPopUp;
+    private bool $reservedFromPopUp;
 
 
     /**
@@ -136,7 +136,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @ORM\column(type="string", nullable=true)
      */
-    private $new_user_code;
+    private string $new_user_code;
 
     /**
      * @var AssistantHistory[]
@@ -184,7 +184,7 @@ class User implements EquatableInterface, UserInterface, Serializable
         $this->lastPopUpTime = new DateTime("2000-01-01");
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -197,17 +197,17 @@ class User implements EquatableInterface, UserInterface, Serializable
         return $this->getFieldOfStudy()->getDepartment();
     }
 
-    public function getGender()
+    public function getGender(): bool
     {
         return $this->gender;
     }
 
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -215,17 +215,17 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         return $this->getFirstName().' '.$this->getLastName();
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->isActive;
     }
@@ -264,9 +264,9 @@ class User implements EquatableInterface, UserInterface, Serializable
     }
 
     /**
-     * @return string[]
+     * @return array
      */
-    public function getRoles(): Array
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
@@ -280,7 +280,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName)
     {
         $this->lastName = $lastName;
 
@@ -294,7 +294,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName)
     {
         $this->firstName = $firstName;
 
@@ -322,7 +322,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setPicturePath($picturePath)
+    public function setPicturePath(string $picturePath)
     {
         $this->picture_path = $picturePath;
 
@@ -334,7 +334,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return string
      */
-    public function getPicturePath()
+    public function getPicturePath(): string
     {
         return $this->picture_path;
     }
@@ -346,7 +346,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone)
     {
         $this->phone = $phone;
 
@@ -358,7 +358,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -374,7 +374,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @param string $accountNumber
      */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(string $accountNumber)
     {
         $this->accountNumber = $accountNumber;
     }
@@ -386,7 +386,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setUserName($userName)
+    public function setUserName(string $userName)
     {
         $this->user_name = $userName;
 
@@ -471,7 +471,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setNewUserCode($newUserCode)
+    public function setNewUserCode(string $newUserCode)
     {
         $this->new_user_code = $newUserCode;
 
@@ -483,7 +483,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return string
      */
-    public function getNewUserCode()
+    public function getNewUserCode(): string
     {
         return $this->new_user_code;
     }
@@ -624,22 +624,22 @@ class User implements EquatableInterface, UserInterface, Serializable
             ) = unserialize($serialized);
     }
 
-    public function isAccountNonExpired()
+    public function isAccountNonExpired(): bool
     {
         return true;
     }
 
-    public function isAccountNonLocked()
+    public function isAccountNonLocked(): bool
     {
         return true;
     }
 
-    public function isCredentialsNonExpired()
+    public function isCredentialsNonExpired(): bool
     {
         return true;
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->isActive;
     }
@@ -689,7 +689,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return bool
      */
-    public function hasPendingReceipts()
+    public function hasPendingReceipts(): bool
     {
         $numberOfPendingReceipts = $this->getNumberOfPendingReceipts();
         return $numberOfPendingReceipts !== 0;
@@ -698,7 +698,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return int
      */
-    public function getNumberOfPendingReceipts()
+    public function getNumberOfPendingReceipts(): int
     {
         $num = 0;
         foreach ($this->receipts as $receipt) {
@@ -748,7 +748,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return string
      */
-    public function getCompanyEmail()
+    public function getCompanyEmail(): string
     {
         return $this->companyEmail;
     }
@@ -756,7 +756,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @param string $companyEmail
      */
-    public function setCompanyEmail($companyEmail)
+    public function setCompanyEmail(string $companyEmail)
     {
         $this->companyEmail = $companyEmail;
     }
