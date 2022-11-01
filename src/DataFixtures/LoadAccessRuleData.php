@@ -23,7 +23,7 @@ class LoadAccessRuleData extends AbstractFixture implements OrderedFixtureInterf
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

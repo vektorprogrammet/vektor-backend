@@ -36,7 +36,7 @@ class LoadTeamInterestData extends AbstractFixture implements OrderedFixtureInte
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }

@@ -79,7 +79,7 @@ class LoadDepartmentData extends AbstractFixture implements OrderedFixtureInterf
         $this->addReference('dep-4', $department4);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }

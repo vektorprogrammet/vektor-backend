@@ -63,7 +63,7 @@ class LoadInterviewQuestionData extends AbstractFixture implements OrderedFixtur
         $this->setReference('iq-8', $question8);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }

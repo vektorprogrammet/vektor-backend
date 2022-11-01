@@ -50,7 +50,7 @@ class LoadSemesterData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('semester-3', $semester3);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }
