@@ -1,7 +1,5 @@
 # vektor-backend
 
-(Work in progress)
-
 ## Set up development environment
 ### Requirements:
 - [PHP](http://php.net/downloads.php) version 7.4
@@ -9,12 +7,14 @@
 - [Yarn](https://yarnpkg.com)
 ### Recommended:
 - [Symfony CLI](https://symfony.com/download)
+- [Docker](https://www.docker.com/products/docker-desktop)
 
 ### PHP dependencies
 - php7.4-zip
 - php7.4-gd
 - php7.4-sqlite3
-
+- php7.4-xml
+- php7.4-mbstring
 
 ### Setup:
 
@@ -31,8 +31,6 @@ Run commands in docker image:
 
 ##### UNIX:
 `yarn setup`
-##### Windows:
-`yarn setup:win`
 
 #### Start server on http://localhost:8000
 `yarn start`
