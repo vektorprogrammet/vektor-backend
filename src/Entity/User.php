@@ -332,9 +332,9 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * Get picture_path.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPicturePath(): string
+    public function getPicturePath(): ?string
     {
         return $this->picture_path;
     }
