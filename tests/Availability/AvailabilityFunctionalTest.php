@@ -138,10 +138,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
             array('/omvektor'),
             array('/kontakt'),
 
-            array('/nyheter'),
-            array('/nyheter/ntnu'),
-            array('/nyhet/1'),
-
             array('/profile/1'),
 
             array('/opptak'),
@@ -202,7 +198,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
             array('/kontrollpanel/opprettsoker'),
             array('/kontrollpanel/brukeradmin/opprett'),
 
-            array('/kontrollpanel/artikkeladmin'),
 
             array('/kontrollpanel/vikar'),
             array('/kontrollpanel/vikar?department=1&semester=1'),
@@ -216,14 +211,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
             array('/kontrollpanel/utlegg'),
             array('/kontrollpanel/utlegg/2'),
-
-            array('/kontrollpanel/undersokelse/admin'),
-            array('/kontrollpanel/undersokelse/admin?department=1&semester=1'),
-            array('/kontrollpanel/undersokelse/opprett'),
-
-            array('/kontrollpanel/artikkeladmin'),
-            array('/kontrollpanel/artikkeladmin/opprett'),
-            array('/kontrollpanel/artikkeladmin/rediger/1'),
 
             array('/kontrollpanel/avdelingadmin'),
 
