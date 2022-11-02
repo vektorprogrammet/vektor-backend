@@ -184,7 +184,7 @@ class User implements EquatableInterface, UserInterface, Serializable
         $this->lastPopUpTime = new DateTime("2000-01-01");
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -197,17 +197,17 @@ class User implements EquatableInterface, UserInterface, Serializable
         return $this->getFieldOfStudy()->getDepartment();
     }
 
-    public function getGender()
+    public function getGender(): bool
     {
         return $this->gender;
     }
 
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -215,17 +215,17 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         return $this->getFirstName().' '.$this->getLastName();
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->isActive;
     }
@@ -264,9 +264,9 @@ class User implements EquatableInterface, UserInterface, Serializable
     }
 
     /**
-     * @return string[]
+     * @return array
      */
-    public function getRoles(): Array
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
@@ -280,7 +280,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName)
     {
         $this->lastName = $lastName;
 
@@ -294,7 +294,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName)
     {
         $this->firstName = $firstName;
 
@@ -322,7 +322,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setPicturePath($picturePath)
+    public function setPicturePath(string $picturePath)
     {
         $this->picture_path = $picturePath;
 
@@ -332,9 +332,9 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * Get picture_path.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPicturePath()
+    public function getPicturePath(): ?string
     {
         return $this->picture_path;
     }
@@ -346,7 +346,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone)
     {
         $this->phone = $phone;
 
@@ -358,7 +358,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -386,7 +386,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setUserName($userName)
+    public function setUserName(string $userName)
     {
         $this->user_name = $userName;
 
@@ -404,7 +404,8 @@ class User implements EquatableInterface, UserInterface, Serializable
     }
 
     /**
-     * @Deprecated -> remove when upgraded to Symfony 6.0
+     * Deprecated from Symfony 6
+     * Remove when upgraded to 6.0
      * Required for now because UserInterface has this method.
      * DO NOT use this method. Use "getUserIdentifier()" instead.
      *
@@ -412,7 +413,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      */
     public function getUsername(): string
     {
-        return 'not-in-use'; // just to ensure that function is not being used
+        return $this->user_name;
     }
 
     /**
@@ -471,7 +472,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return User
      */
-    public function setNewUserCode($newUserCode)
+    public function setNewUserCode(string $newUserCode)
     {
         $this->new_user_code = $newUserCode;
 
@@ -483,7 +484,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      *
      * @return string
      */
-    public function getNewUserCode()
+    public function getNewUserCode(): string
     {
         return $this->new_user_code;
     }
@@ -624,22 +625,22 @@ class User implements EquatableInterface, UserInterface, Serializable
             ) = unserialize($serialized);
     }
 
-    public function isAccountNonExpired()
+    public function isAccountNonExpired(): bool
     {
         return true;
     }
 
-    public function isAccountNonLocked()
+    public function isAccountNonLocked(): bool
     {
         return true;
     }
 
-    public function isCredentialsNonExpired()
+    public function isCredentialsNonExpired(): bool
     {
         return true;
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->isActive;
     }
@@ -689,7 +690,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return bool
      */
-    public function hasPendingReceipts()
+    public function hasPendingReceipts(): bool
     {
         $numberOfPendingReceipts = $this->getNumberOfPendingReceipts();
         return $numberOfPendingReceipts !== 0;
@@ -698,7 +699,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return int
      */
-    public function getNumberOfPendingReceipts()
+    public function getNumberOfPendingReceipts(): int
     {
         $num = 0;
         foreach ($this->receipts as $receipt) {
@@ -746,9 +747,9 @@ class User implements EquatableInterface, UserInterface, Serializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCompanyEmail()
+    public function getCompanyEmail(): ?string
     {
         return $this->companyEmail;
     }
@@ -756,7 +757,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @param string $companyEmail
      */
-    public function setCompanyEmail($companyEmail)
+    public function setCompanyEmail(string $companyEmail)
     {
         $this->companyEmail = $companyEmail;
     }
