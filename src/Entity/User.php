@@ -38,19 +38,19 @@ class User implements EquatableInterface, UserInterface, Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private string $lastName;
+    private $lastName;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private string $firstName;
+    private $firstName;
 
     /**
      * @var FieldOfStudy
@@ -65,42 +65,42 @@ class User implements EquatableInterface, UserInterface, Serializable
      * @ORM\Column(name="gender", type="boolean")
      * @Assert\NotBlank(groups={"admission", "create_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private bool $gender;
+    private $gender;
 
     /**
      * @ORM\Column(type="string")
      */
-    private string $picture_path;
+    private $picture_path;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private string $phone;
+    private $phone;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true)
      */
-    private string $accountNumber;
+    private $accountNumber;
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
      * @Assert\NotBlank(groups={"username", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private string $user_name;
+    private $user_name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Assert\NotBlank(groups={"username", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      */
-    private string $password;
+    private $password;
 
     /**
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(groups={"admission", "create_user", "edit_user"}, message="Dette feltet kan ikke være tomt.")
      * @Assert\Email(groups={"admission", "create_user", "edit_user"}, message="Ikke gyldig e-post.")
      */
-    private string $email;
+    private $email;
 
 
     /**
@@ -109,18 +109,18 @@ class User implements EquatableInterface, UserInterface, Serializable
      * @CustomAssert\UniqueCompanyEmail
      * @CustomAssert\VektorEmail
      */
-    private string $companyEmail;
+    private $companyEmail;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private bool $isActive;
+    private $isActive;
 
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private bool $reservedFromPopUp;
+    private $reservedFromPopUp;
 
 
     /**
@@ -136,7 +136,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @ORM\column(type="string", nullable=true)
      */
-    private string $new_user_code;
+    private $new_user_code;
 
     /**
      * @var AssistantHistory[]
@@ -374,7 +374,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @param string $accountNumber
      */
-    public function setAccountNumber(string $accountNumber)
+    public function setAccountNumber($accountNumber)
     {
         $this->accountNumber = $accountNumber;
     }
@@ -404,7 +404,8 @@ class User implements EquatableInterface, UserInterface, Serializable
     }
 
     /**
-     * @Deprecated -> remove when upgraded to Symfony 6.0
+     * Deprecated from Symfony 6
+     * Remove when upgraded to 6.0
      * Required for now because UserInterface has this method.
      * DO NOT use this method. Use "getUserIdentifier()" instead.
      *
@@ -412,7 +413,7 @@ class User implements EquatableInterface, UserInterface, Serializable
      */
     public function getUsername(): string
     {
-        return 'not-in-use'; // just to ensure that function is not being used
+        return $this->user_name;
     }
 
     /**
@@ -746,9 +747,9 @@ class User implements EquatableInterface, UserInterface, Serializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCompanyEmail(): string
+    public function getCompanyEmail(): ?string
     {
         return $this->companyEmail;
     }
