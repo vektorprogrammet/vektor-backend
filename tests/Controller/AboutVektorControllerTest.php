@@ -9,8 +9,9 @@ class AboutVektorControllerTest extends BaseWebTestCase
     public function testShow()
     {
         $crawler = $this->goTo('/omvektor');
+        $this->assertResponseIsSuccessful();
 
-        $this->assertEquals(1, $crawler->filter('h1:contains("Om Vektorprogrammet")')->count());
+        $this->assertSelectorTextContains('h1', 'Om Vektorprogrammet');
         $this->assertEquals(1, $crawler->filter('h2:contains("Ofte stilte spørsmål og svar")')->count());
     }
 }
