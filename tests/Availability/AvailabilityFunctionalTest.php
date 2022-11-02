@@ -128,7 +128,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
-    public function publicUrlProvider()
+    public function publicUrlProvider(): array
     {
         return array(
             array('/'),
@@ -152,7 +152,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function assistantUrlProvider()
+    public function assistantUrlProvider(): array
     {
         return array(
             array('/profile'),
@@ -162,7 +162,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function teamMemberUrlProvider()
+    public function teamMemberUrlProvider(): array
     {
         return array(
             array('/kontrollpanel'),
@@ -220,7 +220,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function teamLeaderUrlProvider()
+    public function teamLeaderUrlProvider(): array
     {
         return array(
 
@@ -261,7 +261,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function adminUrlProvider()
+    public function adminUrlProvider(): array
     {
         return array(
             array('/kontrollpanel/avdelingadmin/opprett'),
