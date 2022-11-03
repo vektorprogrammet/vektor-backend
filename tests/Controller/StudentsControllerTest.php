@@ -10,7 +10,7 @@ class StudentsControllerTest extends BaseWebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/studenter');
+        $crawler = $client->request('GET', '/assistenter');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Assistenter');
