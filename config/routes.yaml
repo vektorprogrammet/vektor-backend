@@ -997,52 +997,6 @@ interview_conduct:
         id: \d+
 
 ##########################################
-#                File browser            #
-##########################################
-# TODO: this route can probably be removed as well
-#ElFinder routes
-elfinder:
-    resource: "@FMElfinderBundle/Resources/config/routing.yaml"
-
-# TODO: commented out to see if it is in use. Remove if not
-#Route for opening a file browser window by a user of the website. Not related to ckeditor or any other subsystem.
-#file_browser:
-#    path: /filebrowser
-#    controller: App\Controller\FileBrowserController::browse
-#    methods: [GET]
-
-
-    #Use when loading for example image files in website
-    #uploads_folder_serve:
-    #   path: /Offentlige filer/{file_path}
-    #   controller: App\Controller\FileBrowser:fileStream
-    #   requirements:
-    #     file_path: .+
-
-    #Access to public files for users of the website (Requirement 11.3)
-    #public_files:
-    #  path: /public_files
-    # controller: App\Controller\FileBrowser:showPublicFiles
-
-##########################################
-#                File uploader           #
-##########################################
-file_uploader:
-    path: /file_upload/  #Fix this
-
-###########################################
-#                 File system             #
-#                                         #
-#  For streaming files (e.g. images, pdf) #
-###########################################
-public_files:
-    path: /Offentlige filer/{file_path}
-    controller: App\Controller\FileBrowserController::fileStream
-    methods: [GET]
-    requirements:
-        file_path: .+
-
-##########################################
 #               Substitute               #
 ##########################################
 
