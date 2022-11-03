@@ -137,18 +137,17 @@ statistics_application_show:
 #            BoardAndTeam                #
 ##########################################
 
-boardandteam_show:
-    path: /styretogteam
+team:
+    path: /team
     controller: App\Controller\BoardAndTeamController::show
     methods: [GET]
-
 
 ##########################################
 #               Profile                  #
 ##########################################
 
 profile:
-    path:   /profile
+    path: /profile
     controller: App\Controller\ProfileController::show
     methods: [GET]
 
@@ -158,33 +157,33 @@ profile_activate_with_user_code:
     methods: [GET, POST]
 
 profile_activate_user:
-    path:   /profile/aktiv/{id}
+    path: /profile/aktiv/{id}
     controller: App\Controller\ProfileController::activateUser
     methods: [POST]
     requirements:
         id: \d+
 
 profile_deactivate_user:
-    path:   /profile/deaktiv/{id}
+    path: /profile/deaktiv/{id}
     controller: App\Controller\ProfileController::deactivateUser
     methods: [POST]
     requirements:
         id: \d+
 
 profile_change_role:
-    path:   /profile/rolle/endre/{id}
+    path: /profile/rolle/endre/{id}
     controller: App\Controller\ProfileController::changeRole
     methods: [POST]
     requirements:
         id: \d+
 
 profile_certificate:
-    path:   /profile/attest/{id}
+    path: /profile/attest/{id}
     controller: App\Controller\ProfileController::downloadCertificate
     methods: [GET]
 
 specific_profile:
-    path:   /profile/{id}
+    path: /profile/{id}
     controller: App\Controller\ProfileController::showSpecificProfile
     methods: [GET]
     requirements:
@@ -198,17 +197,17 @@ edit_user_company_email:
         id: \d+
 
 profile_edit_admin:
-    path:   /kontrollpanel/profil/rediger/{id}
+    path: /kontrollpanel/profil/rediger/{id}
     controller: App\Controller\ProfileController::editProfileInformationAdmin
     methods: [GET, POST]
 
 profile_edit:
-    path:   /profil/rediger
+    path: /profil/rediger
     controller: App\Controller\ProfileController::editProfileInformation
     methods: [GET, POST]
 
 profile_edit_password:
-    path:   /profil/rediger/passord/
+    path: /profil/rediger/passord/
     controller: App\Controller\ProfileController::editProfilePassword
     methods: [GET, POST]
 
@@ -231,7 +230,7 @@ profile_upload_photo:
 ##########################################
 
 participanthistory_show:
-    path:   /kontrollpanel/deltakerhistorikk
+    path: /kontrollpanel/deltakerhistorikk
     controller: App\Controller\ParticipantHistoryController::show
     methods: [GET]
 
@@ -261,7 +260,7 @@ sso_login:
 ##########################################
 
 login_route:
-    path:   /login
+    path: /login
     controller: App\Controller\SecurityController::login
     methods: [GET]
 
@@ -271,7 +270,7 @@ login_redirect:
     methods: [GET]
 
 login_check:
-    path:   /login_check
+    path: /login_check
     controller: App\Controller\SecurityController::loginCheck
     methods: [POST]
 
@@ -401,7 +400,7 @@ team_interest_form:
 #          AdmissionSubscriber           #
 ##########################################
 interest_list:
-    path: /intereseliste/{shortName}
+    path: /interesseliste/{shortName}
     controller: App\Controller\AdmissionSubscriberController::subscribePage
     methods: [GET]
     requirements:
@@ -445,6 +444,7 @@ my_partners:
 #              UserAdmin                 #
 ##########################################
 
+# TODO: path useradmin_show does not work
 useradmin_show:
     path: /kontrollpanel/brukeradmin
     controller: App\Controller\UserAdminController::show
@@ -999,27 +999,17 @@ interview_conduct:
 ##########################################
 #                File browser            #
 ##########################################
+# TODO: this route can probably be removed as well
 #ElFinder routes
 elfinder:
     resource: "@FMElfinderBundle/Resources/config/routing.yaml"
 
-# TODO TODO TODO
-#elfinder:
-#    path: /kontrollpanel/elfinder/{instance}/{homeFolder}
-#    defaults: FMElfinderBundle:ElFinder:show, instance: default, homeFolder: ''
-#    methods: [GET]
-#ef_connect: #This one is used only internally by FMElfinderBundle?
-#    path:  /efconnect/{instance}/{homeFolder}
-#    defaults: FMElfinderBundle::ElFinder:load, instance: default, homeFolder: ''
-#    methods: [GET, POST]
-#
-
-
+# TODO: commented out to see if it is in use. Remove if not
 #Route for opening a file browser window by a user of the website. Not related to ckeditor or any other subsystem.
-file_browser:
-    path: /filebrowser
-    controller: App\Controller\FileBrowserController::browse
-    methods: [GET]
+#file_browser:
+#    path: /filebrowser
+#    controller: App\Controller\FileBrowserController::browse
+#    methods: [GET]
 
 
     #Use when loading for example image files in website
@@ -1150,9 +1140,6 @@ edit_executive_board_membership:
     requirements:
         id: \d+
 
-team:
-    path: /team
-    controller: App\Controller\BoardAndTeamController::show
 
 ##########################################
 #              Mailing Lists             #
