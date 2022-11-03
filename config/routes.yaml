@@ -24,28 +24,8 @@ home_post:
     controller: App\Controller\HomeController::post
     methods: [POST]
 
-students:
-    path: /studenter
-    controller: App\Controller\AssistantController::index
-    methods: [GET]
-
-schools:
-    path: /skoler
-    controller: App\Controller\PublicStaticPageController::showTeacherPage
-    methods: [GET]
-
-businesses:
-    path: /bedrifter
-    controller: App\Controller\PublicStaticPageController::showAboutPage
-    methods: [GET]
-
 about:
     path: /omvektor
-    controller: App\Controller\PublicStaticPageController::showAboutPage
-    methods: [GET]
-
-faq:
-    path: /faq
     controller: App\Controller\PublicStaticPageController::showAboutPage
     methods: [GET]
 
@@ -57,10 +37,6 @@ parents:
 teachers:
     path: /laerere
     controller: App\Controller\PublicStaticPageController::showTeacherPage
-
-about_new:
-    path: /om
-    controller: App\Controller\PublicStaticPageController::showAboutPage
 
 
 ##########################################
