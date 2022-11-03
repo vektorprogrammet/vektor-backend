@@ -71,3 +71,11 @@ Load db-schema:
 
 Load fixtures:
 `php bin/console doctrine:fixtures:load`
+
+
+## Tests
+**Run all tests:**\
+`php bin/phpunit --configuration phpunit.xml.dist`
+
+**Run individual test:**\
+`php bin/phpunit "path/to/test/TestName.php"`
