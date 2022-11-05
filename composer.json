@@ -10,6 +10,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "^7.4",
+        "ext-openssl": "*",
         "api-platform/core": "^2.6",
         "composer/package-versions-deprecated": "1.11.99.5",
         "doctrine/annotations": "^1.0",
