@@ -481,10 +481,8 @@ class User implements EquatableInterface, UserInterface, Serializable
 
     /**
      * Get new_user_code.
-     *
-     * @return string
      */
-    public function getNewUserCode(): string
+    public function getNewUserCode(): ?string
     {
         return $this->new_user_code;
     }
