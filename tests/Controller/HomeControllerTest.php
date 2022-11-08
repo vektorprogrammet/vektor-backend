@@ -8,7 +8,10 @@ class HomeControllerTest extends BaseWebTestCase
 {
     public function testShow()
     {
-        $crawler = $this->goTo('/');
+        // Create anonymous client
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Vektorprogrammet');
         $this->assertSelectorTextContains('h2', 'Hovedsponsorer');
