@@ -444,7 +444,6 @@ my_partners:
 #              UserAdmin                 #
 ##########################################
 
-# TODO: path useradmin_show does not work
 useradmin_show:
     path: /kontrollpanel/brukeradmin
     controller: App\Controller\UserAdminController::show
