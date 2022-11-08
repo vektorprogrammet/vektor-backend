@@ -1191,7 +1191,7 @@ access_rules_edit:
         id: \d+
 
 access_rules_create:
-       path: /kontrollpanel/admin/accessrules/create"
+       path: /kontrollpanel/admin/accessrules/create
        controller: App\Controller\AccessRuleController::createRule
        methods: [GET, POST]
        defaults:
