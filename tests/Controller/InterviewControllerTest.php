@@ -11,7 +11,7 @@ class InterviewControllerTest extends BaseWebTestCase
      * @param $client
      * @param $crawler
      */
-    private function fillAndSubmitInterviewFormWithTeamInterest($client, $crawler, bool $teamInterest)
+    private function fillAndSubmitInterviewFormWithTeamInterest($client, $crawler, $teamInterest)
     {
         // Find the form
         $form = $crawler->selectButton('Lagre og send kvittering')->form();
@@ -112,6 +112,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/intervju/vis/6');
         $this->verifyInterview($crawler);
 
+        self::ensureKernelShutdown();
 
         // Team user who is assigned the interview
         $client = static::createClient(array(), array(
@@ -308,7 +309,7 @@ class InterviewControllerTest extends BaseWebTestCase
         // Assert that we have the correct page
         $this->verifyCorrectInterview($crawler, 'Assistent', 'Johansen');
 
-        $this->fillAndSubmitInterviewFormWithTeamInterest(self::createAdminClient(), $crawler, false);
+        $this->fillAndSubmitInterviewFormWithTeamInterest(self::createAdminClient(), $crawler, 0);
 
         $rowsAfter = $this->countTableRows('/kontrollpanel/opptakadmin/teaminteresse?department=1&semester=1');
 
