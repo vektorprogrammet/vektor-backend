@@ -5,27 +5,17 @@ namespace App\Tests\Service;
 use App\Entity\Department;
 use App\Service\GeoLocation;
 use App\Service\LogService;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\HeaderBag;
+use Doctrine\Persistence\ObjectRepository;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class GeoLocationTest extends TestCase
+class GeoLocationTest extends WebTestCase
 {
-    /**
-     * @var GeoLocation
-     */
-    private $geoLocation;
-    /**
-     * @var Department
-     */
-    private $dep1;
-    /**
-     * @var Department
-     */
-    private $dep2;
+    private GeoLocation $geoLocation;
+    private Department $dep1;
+    private Department $dep2;
 
     protected function setUp() : void
     {
@@ -58,16 +48,6 @@ class GeoLocationTest extends TestCase
 
 
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
-        $requestStack->expects($this->any())
-                     ->method('getMainRequest')
-                     ->willReturn(new class {
-                         public $headers;
-
-                         public function __construct()
-                         {
-                             $this->headers = new HeaderBag();
-                         }
-                     });
 
         $logger = $this->getMockBuilder(LogService::class)
             ->disableOriginalConstructor()
