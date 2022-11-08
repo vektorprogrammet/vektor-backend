@@ -21,10 +21,16 @@ class SorterTest extends KernelTestCase
 
     protected function setUp() : void
     {
-        $kernel = $this->createKernel();
-        $kernel->boot();
+        // (1) boot the Symfony kernel
+        self::bootKernel();
 
-        $this->sorter = $kernel->getContainer()->get(Sorter::class);
+        // (2) use static::getContainer() to access the service container
+        $container = static::getContainer();
+
+        // (3) get service from the container
+        $sorter = $container->get(Sorter::class);
+
+        $this->sorter = $sorter;
 
         $this->mockReceipts = [
             new Receipt(),
