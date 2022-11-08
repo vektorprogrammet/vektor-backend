@@ -37,11 +37,10 @@ class ReceiptControllerTest extends BaseWebTestCase
 
         $receiptsBefore = $this->countTableRows('/utlegg', $client);
 
-        // Create a new image file
-        $file = tempnam(sys_get_temp_dir(), 'rec');
-        imagepng(imagecreatetruecolor(1, 1), $file);
-
-        $photo = new UploadedFile($file, 'receipt.png', null, null, null, true);
+        // Use image 'kvittering.jpg' as the new image
+        $photo = new UploadedFile(
+            __DIR__.'/../Fixtures/kvittering.jpg',
+            'kvittering.jpg');
 
         $crawler = $client->request('GET', '/utlegg');
         $form = $crawler->selectButton('Be om refusjon')->form();
@@ -90,11 +89,10 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Teamleader edits
         $client = $this->createTeamLeaderClient();
 
-        // Create a new image file
-        $file = tempnam(sys_get_temp_dir(), 'rec');
-        imagepng(imagecreatetruecolor(1, 1), $file);
-
-        $photo = new UploadedFile($file, 'receipt.png', null, null, null, true);
+        // Use image 'kvittering.jpg' as the new image
+        $photo = new UploadedFile(
+            __DIR__.'/../Fixtures/kvittering.jpg',
+            'kvittering.jpg');
 
         $crawler = $client->request('GET', '/kontrollpanel/utlegg/rediger/2');
         $form = $crawler->selectButton('Lagre')->form();
