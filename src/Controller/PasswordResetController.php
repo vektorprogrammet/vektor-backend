@@ -17,11 +17,14 @@ use Symfony\Component\HttpFoundation\Response;
 class PasswordResetController extends BaseController
 {
     private LogService $logService;
+    private PasswordManager $passwordManager;
 
-    public function __construct(LogService $logService){
+    public function __construct(LogService $logService, PasswordManager $passwordManager)
+    {
         $this->logService = $logService;
-
+        $this->passwordManager = $passwordManager;
     }
+
     /**
      * @param Request $request
      *
@@ -39,7 +42,7 @@ class PasswordResetController extends BaseController
         //Checks if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
-            $passwordReset = $this->get(PasswordManager::class)->createPasswordResetEntity($email);
+            $passwordReset = $this->passwordManager->createPasswordResetEntity($email);
 
             if ($passwordReset === null) {
                 $errorMsg = "Det finnes ingen brukere med denne e-postadressen";
@@ -65,7 +68,7 @@ class PasswordResetController extends BaseController
                 $em->persist($passwordReset);
                 $em->flush();
 
-                $this->get(PasswordManager::class)->sendResetCode($passwordReset);
+                $this->passwordManager->sendResetCode($passwordReset);
 
                 return $this->redirectToRoute('reset_password_confirmation');
             }
@@ -89,7 +92,7 @@ class PasswordResetController extends BaseController
      */
     public function resetPassword($resetCode, Request $request)
     {
-        $passwordManager = $this->get(PasswordManager::class);
+        $passwordManager = $this->passwordManager;
 
         if (!$passwordManager->resetCodeIsValid($resetCode) || $passwordManager->resetCodeHasExpired($resetCode)) {
             return $this->render('error/error_message.html.twig', array(
