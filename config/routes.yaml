@@ -6,10 +6,6 @@
 #_liip_imagine:
 #    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
 
-github_webook:
-    path: /webhook/github
-    controller: App\Controller\GitHubController::deploy
-    methods: [POST]
 
 ##########################################
 #             Static pages               #
@@ -129,7 +125,7 @@ statistics_application_show:
     controller: App\Controller\ApplicationStatisticsController::show
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 
@@ -339,7 +335,7 @@ applications_show_interviewed:
     controller: App\Controller\AdmissionAdminController::showInterviewedApplications
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 applications_show_existing:
@@ -347,7 +343,7 @@ applications_show_existing:
     controller: App\Controller\AdmissionAdminController::showExistingApplications
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 admissionadmin_delete_application_by_id:
@@ -373,7 +369,7 @@ admissionadmin_team_interest:
     controller: App\Controller\AdmissionAdminController::showTeamInterest
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 admission_existing_user:
@@ -1004,7 +1000,7 @@ substitute_show:
     controller: App\Controller\SubstituteController::show
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 substitute_delete:
@@ -1108,7 +1104,7 @@ generate_assistant_mail_list:
     controller: App\Controller\MailingListController::showAssistants
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 generate_team_mail_list:
@@ -1116,7 +1112,7 @@ generate_team_mail_list:
     controller: App\Controller\MailingListController::showTeam
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 generate_all_mail_list:
@@ -1124,7 +1120,7 @@ generate_all_mail_list:
     controller: App\Controller\MailingListController::showAll
     methods: [GET]
     requirements:
-        DepartmentController:: \d+
+        department: \d+
         semester: \d+
 
 
