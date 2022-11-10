@@ -12,9 +12,6 @@ var gulp = require('gulp'),
 var path = {
     dist: 'public/',
     src: 'assets/',
-    /*scheduling: {
-        src: 'src/App/AssistantScheduling/Webapp'
-    }*/
 };
 
 function stylesProd() {
@@ -123,28 +120,14 @@ function vendor () {
     .pipe(gulp.dest(path.dist + 'js/'));
 }
 
-/*
-function assistantSchedulingStaticFiles () {
-  var r = gulp.src(path.scheduling.src + '/dist/build.js')
-        .pipe(gulp.dest('public/js/scheduling'));
-    return r && gulp.src(path.scheduling.src + '/dist/build.js.map')
-        .pipe(gulp.dest('public/js/scheduling'));
-}
-*/
 
 function watch () {
     gulp.watch(path.src + 'scss/**/*.scss', stylesDev);
     gulp.watch(path.src + 'js/**/*.js', scriptsDev);
-
-    // gulp.watch(path.scheduling.src + '/**/*.vue', assistantSchedulingStaticFiles);
-    // gulp.watch(path.scheduling.src + '/src/**/*.js', assistantSchedulingStaticFiles);
-
     gulp.watch(path.src + 'images/*', imagesDev);
 }
-
 
 
 gulp.task('build:prod', gulp.parallel([stylesProd, scriptsProd, imagesProd, files, icons, vendor]));
 gulp.task('build:dev', gulp.parallel([stylesDev, scriptsDev, imagesDev, files, icons, vendor]));
 gulp.task('default', gulp.series(['build:dev', watch]));
-// gulp.task('build:scheduling', gulp.series([assistantSchedulingStaticFiles]));
