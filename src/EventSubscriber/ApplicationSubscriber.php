@@ -80,12 +80,16 @@ class ApplicationSubscriber implements EventSubscriberInterface
             ->setSubject('Søknad - Vektorassistent')
             ->setReplyTo($application->getDepartment()->getEmail())
             ->setTo($application->getUser()->getEmail())
-            ->setBody($this->twig->render($template, array(
-                'application'   => $application,
-                'new_user_code' => $newUserCode
-                )), 'text/html'
+            ->setBody(
+                $this->twig->render(
+                    $template,
+                    array(
+                        'application' => $application,
+                        'newUserCode' => $newUserCode,
+                    )
+                ),
+                'text/html'
             );
-
         $this->mailer->send($emailMessage);
     }
 }

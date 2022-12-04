@@ -106,7 +106,8 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         $supportTicket = $event->getSupportTicket();
 
         $notification =
-            "{$supportTicket->getDepartment()}: Ny melding mottatt fra *{$supportTicket->getName()}*. Meldingen ble sendt fra et kontaktskjema på vektorprogrammet.no. \n" .
+            "{$supportTicket->getDepartment()}: Ny melding mottatt fra *{$supportTicket->getName()}*. " .
+            "Meldingen ble sendt fra et kontaktskjema på vektorprogrammet.no. \n" .
             "Emne: `{$supportTicket->getSubject()}`\n" .
             "Meldingen har blitt videresendt til {$supportTicket->getDepartment()->getEmail()}";
 
