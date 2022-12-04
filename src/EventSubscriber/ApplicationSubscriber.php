@@ -21,10 +21,12 @@ class ApplicationSubscriber implements EventSubscriberInterface
     /**
      * ApplicationAdmissionSubscriber constructor.
      */
-    public function __construct(MailerInterface $mailer,
-                                Environment $twig,
-                                AdmissionNotifier $admissionNotifier,
-                                UserRegistration $userRegistrationService)
+    public function __construct(
+                            MailerInterface $mailer,
+                            Environment $twig,
+                            AdmissionNotifier $admissionNotifier,
+                            UserRegistration $userRegistrationService
+    )
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
@@ -79,9 +81,10 @@ class ApplicationSubscriber implements EventSubscriberInterface
             ->setReplyTo($application->getDepartment()->getEmail())
             ->setTo($application->getUser()->getEmail())
             ->setBody($this->twig->render($template, array(
-                'application'   => $application,
-                'new_user_code' => $newUserCode
-            )), 'text/html');
+                    'application'   => $application,
+                    'new_user_code' => $newUserCode
+                )), 'text/html'
+            );
 
         $this->mailer->send($emailMessage);
     }

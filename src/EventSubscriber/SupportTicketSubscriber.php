@@ -16,10 +16,12 @@ class SupportTicketSubscriber implements EventSubscriberInterface
     private LoggerInterface $logger;
     private SlackMessenger $slackMessenger;
 
-    public function __construct(EmailSender $emailSender,
-                                SlackMessenger $slackMessenger,
-                                SessionInterface $session,
-                                LoggerInterface $logger)
+    public function __construct(
+                            EmailSender $emailSender,
+                            SlackMessenger $slackMessenger,
+                            SessionInterface $session,
+                            LoggerInterface $logger
+    )
     {
         $this->emailSender    = $emailSender;
         $this->session        = $session;

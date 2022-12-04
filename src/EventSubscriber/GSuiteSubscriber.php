@@ -24,12 +24,12 @@ class GSuiteSubscriber implements EventSubscriberInterface
 
 
     public function __construct(
-                                LoggerInterface $logger,
-                                GoogleAPI $googleAPI,
-                                CompanyEmailMaker $emailMaker,
-                                GoogleUsers $userService,
-                                GoogleGroups $groupService,
-                                GoogleDrive $driveService
+                            LoggerInterface $logger,
+                            GoogleAPI $googleAPI,
+                            CompanyEmailMaker $emailMaker,
+                            GoogleUsers $userService,
+                            GoogleGroups $groupService,
+                            GoogleDrive $driveService
     )
     {
         $this->logger = $logger;
