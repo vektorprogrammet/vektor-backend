@@ -46,7 +46,8 @@ jobs:
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
       - name: Update database
-        run: php bin/console doctrine:schema:update --force
+        run: mkdir -p ./var/data && rm -rf ./var/data/dev.db && touch ./var/data/dev.db && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:migrations:sync-metadata-storage && php bin/console doctrine:fixtures:load -n --env=dev && php bin/console doctrine:migrations:version -n --delete --all --env=dev && php bin/console doctrine:migrations:version -n --add --all --env=dev
+        #run: php bin/console doctrine:schema:update --force
 
       # https://github.com/sensiolabs/security-checker
       #- name: Security check installed dependencies
@@ -68,14 +69,14 @@ jobs:
       #- name: Analyse PHP Code (PHPStan)
       #  run: vendor/bin/phpstan analyse src
 
-      - name: Cache node_modules
-        uses: actions/cache@v1
-        id: yarn-cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-yarn-cache-node-modules-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-node-modules-
+      #- name: Cache node_modules
+      #  uses: actions/cache@v1
+      #  id: yarn-cache-node-modules
+      #  with:
+      #    path: node_modules
+      #    key: ${{ runner.os }}-yarn-cache-node-modules-${{ hashFiles('**/yarn.lock') }}
+      #    restore-keys: |
+      #      ${{ runner.os }}-yarn-cache-node-modules-
 
       #- name: Yarn install
       #  if: steps.yarn-cache-node-modules.outputs.cache-hit != 'true'
