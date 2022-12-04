@@ -61,8 +61,8 @@ jobs:
       #  run: vendor/bin/phpmd src,tests text .phpmd-ruleset.xml
 
       # https://github.com/phpstan/phpstan
-      - name: Analyse PHP Code (PHPStan)
-        run: vendor/bin/phpstan analyse src
+      #- name: Analyse PHP Code (PHPStan)
+      #  run: vendor/bin/phpstan analyse src
 
       - name: Cache node_modules
         uses: actions/cache@v1
