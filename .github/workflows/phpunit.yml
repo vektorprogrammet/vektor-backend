@@ -5,7 +5,7 @@ on:
       - main
       - workflow
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, reopened]
 
 jobs:
   symfony:
