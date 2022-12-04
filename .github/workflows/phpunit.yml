@@ -97,5 +97,5 @@ jobs:
       # Tests
       - name: Run unit and functional tests
         run: |
-          php bin/phpunit
+          php bin/phpunit --configuration phpunit.xml.dist
       # php bin/phpunit --stop-on-failure
