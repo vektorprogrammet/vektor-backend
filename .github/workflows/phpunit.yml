@@ -80,11 +80,11 @@ jobs:
       #- name: Yarn build
       #  run: yarn run encore production
 
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v1
-        with:
-          name: build
-          path: public/build
+      #- name: Archive production artifacts
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: build
+      #    path: public/build
 
       # Symfony
       - name: Check the Symfony console

@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  #pull_request:
     #types: [opened, synchronize, reopened] #tmp disable for testing
 name: Main Workflow
 jobs:
