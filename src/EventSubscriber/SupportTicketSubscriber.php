@@ -16,7 +16,10 @@ class SupportTicketSubscriber implements EventSubscriberInterface
     private LoggerInterface $logger;
     private SlackMessenger $slackMessenger;
 
-    public function __construct(EmailSender $emailSender, SlackMessenger $slackMessenger, SessionInterface $session, LoggerInterface $logger)
+    public function __construct(EmailSender $emailSender,
+                                SlackMessenger $slackMessenger,
+                                SessionInterface $session,
+                                LoggerInterface $logger)
     {
         $this->emailSender    = $emailSender;
         $this->session        = $session;
@@ -33,12 +36,12 @@ class SupportTicketSubscriber implements EventSubscriberInterface
     {
         return array(
             SupportTicketCreatedEvent::NAME => array(
-                array( 'logEvent', 1 ),
-                array( 'sendTicketToDepartment', 0 ),
-                array( 'sendTicketReceipt', 0 ),
-                array( 'sendTicketToDepartmentSlackChannel', 0 ),
-                array( 'addFlashMessage', - 1 ),
-                array( 'sendSlackNotification', - 2 ),
+                array('logEvent', 1),
+                array('sendTicketToDepartment', 0),
+                array('sendTicketReceipt', 0),
+                array('sendTicketToDepartmentSlackChannel', 0),
+                array('addFlashMessage', - 1),
+                array('sendSlackNotification', - 2),
             ),
         );
     }

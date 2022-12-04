@@ -23,12 +23,14 @@ class GSuiteSubscriber implements EventSubscriberInterface
     private GoogleDrive $driveService;
 
 
-    public function __construct(LoggerInterface $logger,
+    public function __construct(
+                                LoggerInterface $logger,
                                 GoogleAPI $googleAPI,
                                 CompanyEmailMaker $emailMaker,
                                 GoogleUsers $userService,
                                 GoogleGroups $groupService,
-                                GoogleDrive $driveService)
+                                GoogleDrive $driveService
+    )
     {
         $this->logger = $logger;
         $this->googleAPI = $googleAPI;
@@ -140,7 +142,8 @@ class GSuiteSubscriber implements EventSubscriberInterface
         $oldEmail = $event->getOldEmail();
         if ($this->userExists($oldEmail)) {
             $this->userService->updateUser($oldEmail, $user);
-            $this->logger->info("G Suite account for *{$user}* with email *{$user->getCompanyEmail()}* has been updated.");
+            $this->logger
+                ->info("G Suite account for *{$user}* with email *{$user->getCompanyEmail()}* has been updated.");
         }
     }
 

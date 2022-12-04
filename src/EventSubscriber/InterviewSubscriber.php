@@ -97,7 +97,8 @@ class InterviewSubscriber implements EventSubscriberInterface
     public function addFlashMessage(InterviewConductedEvent $event)
     {
         $user = $event->getApplication()->getUser();
-        $message = "Intervjuet med $user ble lagret. En kvittering med et sammendrag av praktisk informasjon fra intervjuet blir sendt til {$user->getEmail()}.";
+        $message = "Intervjuet med $user ble lagret. En kvittering med et sammendrag av 
+                    praktisk informasjon fra intervjuet blir sendt til {$user->getEmail()}.";
 
         $this->session->getFlashBag()->add('success', $message);
     }

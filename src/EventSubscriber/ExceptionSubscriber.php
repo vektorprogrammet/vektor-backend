@@ -27,7 +27,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         return array(
             KernelEvents::EXCEPTION => array(
-                array( 'logException', 0 ),
+                array('logException', 0),
             ),
         );
     }
