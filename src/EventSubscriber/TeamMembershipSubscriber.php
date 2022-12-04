@@ -91,7 +91,10 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
 
         $endStr = $endSemester !== null ? 'to '.$endSemester->getName() : '';
 
-        $this->logger->info("TeamMembership deleted: $user (position: $position), active from $startSemester $endStr, was deleted from $team ($department)");
+        $this->logger->info(
+            "TeamMembership deleted: $user (position: $position), " .
+            "active from $startSemester $endStr, was deleted from $team ($department)"
+        );
     }
 
     public function activateTeamMembership(TeamMembershipEvent $event)

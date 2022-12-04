@@ -73,7 +73,8 @@ class ReceiptSubscriber implements EventSubscriberInterface
         $loggedInUser = $this->tokenStorage->getToken()->getUser();
         $status = $receipt->getStatus();
 
-        $this->logger->info($user->getDepartment() . ": $loggedInUser has changed status of receipt *$visualID* belonging to *$user* to $status");
+        $this->logger->info($user->getDepartment() .
+            ": $loggedInUser has changed status of receipt *$visualID* belonging to *$user* to $status");
     }
 
     public function logRefundedEvent(ReceiptEvent $event)
@@ -83,7 +84,8 @@ class ReceiptSubscriber implements EventSubscriberInterface
         $visualID = $receipt->getVisualId();
         $loggedInUser = $this->tokenStorage->getToken()->getUser();
 
-        $this->logger->info($user->getDepartment() . ": Receipt *$visualID* belonging to *$user* has been refunded by $loggedInUser.");
+        $this->logger->info($user->getDepartment() .
+            ": Receipt *$visualID* belonging to *$user* has been refunded by $loggedInUser.");
     }
 
     public function logRejectedEvent(ReceiptEvent $event)
@@ -93,7 +95,8 @@ class ReceiptSubscriber implements EventSubscriberInterface
         $visualID = $receipt->getVisualId();
         $loggedInUser = $this->tokenStorage->getToken()->getUser();
 
-        $this->logger->info($user->getDepartment() . ": Receipt *$visualID* belonging to *$user* has been rejected by $loggedInUser.");
+        $this->logger->info($user->getDepartment() .
+            ": Receipt *$visualID* belonging to *$user* has been rejected by $loggedInUser.");
     }
 
     public function sendCreatedEmail(ReceiptEvent $event)

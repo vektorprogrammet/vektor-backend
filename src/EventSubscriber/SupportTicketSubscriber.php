@@ -82,7 +82,8 @@ class SupportTicketSubscriber implements EventSubscriberInterface
     public function addFlashMessage(SupportTicketCreatedEvent $event)
     {
         $supportTicket = $event->getSupportTicket();
-        $message = 'Kontaktforespørsel sendt til '.$supportTicket->getDepartment()->getEmail().', takk for henvendelsen!';
+        $message = 'Kontaktforespørsel sendt til ' .
+            $supportTicket->getDepartment()->getEmail().', takk for henvendelsen!';
 
         $this->session->getFlashBag()->add('success', $message);
     }
