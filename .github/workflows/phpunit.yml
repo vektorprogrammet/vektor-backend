@@ -97,8 +97,5 @@ jobs:
       # Tests
       - name: Run unit and functional tests
         run: |
-          php bin/phpunit --stop-on-failure
-
-      # - name: Run Behat/Mink tests
-      #  run: |
-      #    php vendor/bin/behat
+          php bin/phpunit
+      # php bin/phpunit --stop-on-failure
