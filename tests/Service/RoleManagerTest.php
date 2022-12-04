@@ -67,8 +67,6 @@ class RoleManagerTest extends KernelTestCase
         foreach ($this->mockUsers as $user) {
             $this->assertThatUserWithEmailHasRole($user->getEmail(), $user->getRoleAfterExecution());
         }
-
-        //TestDataManager::restoreDatabase();
     }
 
     private function updateAllUserRoles()
