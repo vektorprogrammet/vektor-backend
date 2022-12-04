@@ -5,7 +5,7 @@ on:
       - main
       - workflow
   pull_request:
-    types: [opened, reopened]
+    types: [opened, synchronize, reopened]
 
 jobs:
   symfony:
@@ -16,6 +16,7 @@ jobs:
       fail-fast: true
       matrix:
         php-versions: ['7.4']
+
     steps:
       # https://github.com/actions/checkout (official)
       - name: Checkout
@@ -97,5 +98,4 @@ jobs:
       # Tests
       - name: Run unit and functional tests
         run: |
-          php bin/phpunit --configuration phpunit.xml.dist
-      # php bin/phpunit --stop-on-failure
+          php bin/phpunit --configuration phpunit.xml.dist --stop-on-failure
