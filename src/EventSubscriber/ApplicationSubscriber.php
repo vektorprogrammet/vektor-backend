@@ -81,8 +81,8 @@ class ApplicationSubscriber implements EventSubscriberInterface
             ->setReplyTo($application->getDepartment()->getEmail())
             ->setTo($application->getUser()->getEmail())
             ->setBody($this->twig->render($template, array(
-                    'application'   => $application,
-                    'new_user_code' => $newUserCode
+                'application'   => $application,
+                'new_user_code' => $newUserCode
                 )), 'text/html'
             );
 

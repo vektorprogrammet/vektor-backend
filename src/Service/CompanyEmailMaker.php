@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CompanyEmailMaker
 {
+    const EMAIL_DOMAIN = '@vektorprogrammet.no';
     private EntityManagerInterface $em;
     private LogService $logger;
 
@@ -28,14 +29,14 @@ class CompanyEmailMaker
         $fullName = strtolower($this->replaceNorwegianCharacters($user->getFullName()));
 
 
-        $email = preg_replace('/\s+/', '.', $firstName) . '@vektorprogrammet.no';
+        $email = preg_replace('/\s+/', '.', $firstName) . self::EMAIL_DOMAIN;
         if (array_search($email, $allEmails) !== false) {
-            $email = preg_replace('/\s+/', '.', $fullName) . '@vektorprogrammet.no';
+            $email = preg_replace('/\s+/', '.', $fullName) . self::EMAIL_DOMAIN;
         }
 
         $i = 2;
         while (array_search($email, $allEmails) !== false) {
-            $email = preg_replace('/\s+/', '.', $fullName) . $i .'@vektorprogrammet.no';
+            $email = preg_replace('/\s+/', '.', $fullName) . $i . self::EMAIL_DOMAIN;
             $i++;
         }
 
