@@ -18,10 +18,10 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
     private EntityManagerInterface $em;
 
     public function __construct(
-                            SessionInterface $session,
-                            LoggerInterface $logger,
-                            RoleManager $roleManager,
-                            EntityManagerInterface $em
+        SessionInterface $session,
+        LoggerInterface $logger,
+        RoleManager $roleManager,
+        EntityManagerInterface $em
     )
     {
         $this->session = $session;

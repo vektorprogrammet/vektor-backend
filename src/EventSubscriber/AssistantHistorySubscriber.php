@@ -22,9 +22,9 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
      * ApplicationAdmissionSubscriber constructor.
      */
     public function __construct(
-                            SessionInterface $session,
-                            EntityManagerInterface $em,
-                            UserRegistration $userRegistrationService
+        SessionInterface $session,
+        EntityManagerInterface $em,
+        UserRegistration $userRegistrationService
     )
     {
         $this->session = $session;

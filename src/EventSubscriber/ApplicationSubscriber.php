@@ -22,10 +22,10 @@ class ApplicationSubscriber implements EventSubscriberInterface
      * ApplicationAdmissionSubscriber constructor.
      */
     public function __construct(
-                            MailerInterface $mailer,
-                            Environment $twig,
-                            AdmissionNotifier $admissionNotifier,
-                            UserRegistration $userRegistrationService
+        MailerInterface $mailer,
+        Environment $twig,
+        AdmissionNotifier $admissionNotifier,
+        UserRegistration $userRegistrationService
     )
     {
         $this->mailer = $mailer;

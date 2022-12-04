@@ -18,10 +18,10 @@ class ReceiptSubscriber implements EventSubscriberInterface
     private TokenStorageInterface $tokenStorage;
 
     public function __construct(
-                            LoggerInterface $logger,
-                            EmailSender $emailSender,
-                            SessionInterface $session,
-                            TokenStorageInterface $tokenStorage
+        LoggerInterface $logger,
+        EmailSender $emailSender,
+        SessionInterface $session,
+        TokenStorageInterface $tokenStorage
     )
     {
         $this->logger = $logger;
