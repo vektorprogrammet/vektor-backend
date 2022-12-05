@@ -28,6 +28,8 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $this->assertGreaterThan($countBefore, $countAfter);
     }
 
+    // TODO: Fix Test
+    // Probably due to accesscontrol.js that does not load
     public function testCreateRoutingAccessRule()
     {
         $anonClient = $this->createAnonymousClient();
@@ -76,11 +78,13 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $this->assertGreaterThan($unhandledBefore, $unhandledAfter);
     }
 
+    // TODO: Fix Test
     public function testUnhandledRulesAreDeletedWhenRuleIsCreated()
     {
         $crawler = $this->adminGoTo('/kontrollpanel/admin/accessrules');
         $unhandledBefore = $crawler->filter('#unhandledModal tr td:contains("GET /kontrollpanel/admin/accessrules/routing/create")')->count();
-        $this->assertEquals(1, $unhandledBefore);
+
+        $this->assertEquals(1, $unhandledBefore); // TODO: this assert fails
 
         $crawler = $this->adminGoTo("/kontrollpanel/admin/accessrules/routing/create");
         $form = $crawler->selectButton("Save")->form();
