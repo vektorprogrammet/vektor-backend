@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Entity\AdmissionNotification;
 use App\Entity\InterviewAnswer;
