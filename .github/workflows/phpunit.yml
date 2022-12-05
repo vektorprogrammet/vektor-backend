@@ -35,7 +35,7 @@ jobs:
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      # print cache dir
+      # print cache dir # TODO: Delete this step
       - name: Print cache dir
         run: echo ${{ steps.composer-cache.outputs.dir }}
 
