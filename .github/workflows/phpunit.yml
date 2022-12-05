@@ -30,20 +30,20 @@ jobs:
           extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, sqlite3
           tools: composer:v2
 
-      # Composer
+      # Composer Cache Directory
       - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-        # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
+      # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
       - name: Cache composer dependencies
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }} # TODO fix: "cache not found for input keys: Linux-composer-"
           restore-keys: ${{ runner.os }}-composer-
 
-      # Install dependencies using composer
+      # Install dependencies with Composer Install
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
@@ -65,8 +65,8 @@ jobs:
         run: |
           php bin/console -V
           php bin/console about
+
       # Tests
       - name: Run unit and functional tests
         run: |
           php bin/phpunit --configuration phpunit.xml.dist --stop-on-failure
-        #php bin/phpunit --configuration phpunit.xml.dist
