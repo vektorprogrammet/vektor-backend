@@ -37,7 +37,7 @@ jobs:
 
         # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
       - name: Cache composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
