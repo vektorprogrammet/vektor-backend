@@ -2,7 +2,6 @@
 
 namespace App\Tests\Availability;
 
-
 use App\Tests\BaseWebTestCase;
 
 class AvailabilityFunctionalTest extends BaseWebTestCase

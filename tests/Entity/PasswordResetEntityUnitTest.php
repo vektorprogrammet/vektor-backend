@@ -24,7 +24,6 @@ class PasswordResetEntityUnitTest extends TestCase
     // Check whether the setDescription function is working correctly
     public function testSetHashedResetCode()
     {
-
         // new entity
         $passwordReset = new PasswordReset();
 
@@ -40,7 +39,6 @@ class PasswordResetEntityUnitTest extends TestCase
     // Check whether the setType function is working correctly
     public function testSetResetTime()
     {
-
         // new entity
         $passwordReset = new PasswordReset();
 

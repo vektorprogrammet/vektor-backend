@@ -16,7 +16,7 @@ abstract class BaseWebTestCase extends WebTestCase
 
 
 
-    protected static function createAnonymousClient() : KernelBrowser
+    protected static function createAnonymousClient(): KernelBrowser
     {
         if (self::$anonymousClient === null) {
             self::$anonymousClient = self::createClient();
@@ -25,7 +25,7 @@ abstract class BaseWebTestCase extends WebTestCase
         return self::$anonymousClient;
     }
 
-    protected static function createAssistantClient() : KernelBrowser
+    protected static function createAssistantClient(): KernelBrowser
     {
         if (self::$assistantClient === null) {
             self::$assistantClient = self::createClient(array(), array(
@@ -37,7 +37,7 @@ abstract class BaseWebTestCase extends WebTestCase
         return self::$assistantClient;
     }
 
-    protected static function createTeamMemberClient() : KernelBrowser
+    protected static function createTeamMemberClient(): KernelBrowser
     {
         if (self::$teamMemberClient === null) {
             self::$teamMemberClient = self::createClient(array(), array(
@@ -49,7 +49,7 @@ abstract class BaseWebTestCase extends WebTestCase
         return self::$teamMemberClient;
     }
 
-    protected static function createTeamLeaderClient() : KernelBrowser
+    protected static function createTeamLeaderClient(): KernelBrowser
     {
         if (self::$teamLeaderClient === null) {
             self::$teamLeaderClient = self::createClient(array(), array(
@@ -61,7 +61,7 @@ abstract class BaseWebTestCase extends WebTestCase
         return self::$teamLeaderClient;
     }
 
-    protected static function createAdminClient() : KernelBrowser
+    protected static function createAdminClient(): KernelBrowser
     {
         if (self::$adminClient === null) {
             self::$adminClient = self::createClient(array(), array(
@@ -73,7 +73,7 @@ abstract class BaseWebTestCase extends WebTestCase
         return self::$adminClient;
     }
 
-    protected function goTo(string $path, KernelBrowser $client = null) : Crawler
+    protected function goTo(string $path, KernelBrowser $client = null): Crawler
     {
         if ($client === null) {
             $client = self::createAnonymousClient();
@@ -86,32 +86,32 @@ abstract class BaseWebTestCase extends WebTestCase
         return $crawler;
     }
 
-    protected function anonymousGoTo(string $path) : Crawler
+    protected function anonymousGoTo(string $path): Crawler
     {
         return $this->goTo($path, self::createAnonymousClient());
     }
 
-    protected function assistantGoTo(string $path) : Crawler
+    protected function assistantGoTo(string $path): Crawler
     {
         return $this->goTo($path, self::createAssistantClient());
     }
 
-    protected function teamMemberGoTo(string $path) : Crawler
+    protected function teamMemberGoTo(string $path): Crawler
     {
         return $this->goTo($path, self::createTeamMemberClient());
     }
 
-    protected function teamLeaderGoTo(string $path) : Crawler
+    protected function teamLeaderGoTo(string $path): Crawler
     {
         return $this->goTo($path, self::createTeamLeaderClient());
     }
 
-    protected function adminGoTo(string $path) : Crawler
+    protected function adminGoTo(string $path): Crawler
     {
         return $this->goTo($path, self::createAdminClient());
     }
 
-    protected function countTableRows(string $path, KernelBrowser $client = null) : int
+    protected function countTableRows(string $path, KernelBrowser $client = null): int
     {
         if ($client === null) {
             $client = self::createAdminClient();
@@ -122,7 +122,7 @@ abstract class BaseWebTestCase extends WebTestCase
         return $crawler->filter('tr')->count();
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

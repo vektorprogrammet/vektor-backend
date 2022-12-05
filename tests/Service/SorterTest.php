@@ -19,7 +19,7 @@ class SorterTest extends KernelTestCase
     /** @var  Receipt[] */
     private $mockReceipts;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         // (1) boot the Symfony kernel
         self::bootKernel();
@@ -94,7 +94,7 @@ class SorterTest extends KernelTestCase
     public function testSortUsersByReceiptSubmitTime()
     {
         $this->sorter->sortUsersByReceiptSubmitTime($this->mockUsers);
-        
+
         $firstDate = $this->mockUsers[0]->getReceipts()[0]->getSubmitDate();
         $secondsSinceFirstDate = abs((new DateTime())->getTimestamp() - $firstDate->getTimestamp());
 

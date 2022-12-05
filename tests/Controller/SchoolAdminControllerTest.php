@@ -8,7 +8,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 {
     public function testCreateSchoolForDepartment()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -34,7 +33,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
     public function testUpdateSchool()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -64,7 +62,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
     public function testShowSchoolsByDepartment()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -91,7 +88,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
     public function testShowUsersByDepartment()
     {
-
         // TEAM
         $client = $this->createTeamMemberClient();
 

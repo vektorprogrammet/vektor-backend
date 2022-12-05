@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class TeamInterestEntityUnitTest extends TestCase
 {
-
     /**
      * @var TeamInterest
      */
