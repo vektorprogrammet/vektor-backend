@@ -258,7 +258,7 @@ class User implements EquatableInterface, UserInterface, Serializable
         $this->isActive = $isActive;
     }
 
-    public function setRoles(Array $roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
     }
@@ -620,7 +620,7 @@ class User implements EquatableInterface, UserInterface, Serializable
             $this->password,
             // see section on salt below
             // $this->salt
-            ) = unserialize($serialized);
+        ) = unserialize($serialized);
     }
 
     public function isAccountNonExpired(): bool
@@ -805,7 +805,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return bool
      */
-    public function getReservedFromPopUp() : bool
+    public function getReservedFromPopUp(): bool
     {
         return $this->reservedFromPopUp;
     }
@@ -821,7 +821,7 @@ class User implements EquatableInterface, UserInterface, Serializable
     /**
      * @return DateTime
      */
-    public function getLastPopUpTime() : DateTime
+    public function getLastPopUpTime(): DateTime
     {
         return $this->lastPopUpTime;
     }

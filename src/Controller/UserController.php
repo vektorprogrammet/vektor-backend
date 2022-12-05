@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class UserController extends BaseController
 {
-
     private ApplicationManager $applicationManager;
 
     public function __construct(ApplicationManager $applicationManager)
@@ -98,5 +97,4 @@ class UserController extends BaseController
             'semester' => $semester,
         ]);
     }
-
 }

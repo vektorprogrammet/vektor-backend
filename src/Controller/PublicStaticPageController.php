@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class PublicStaticPageController extends BaseController {
-
+class PublicStaticPageController extends BaseController
+{
     // AboutVektorController
     public function showAboutPage(): Response
     {
@@ -23,8 +23,4 @@ class PublicStaticPageController extends BaseController {
     {
         return $this->render('/parents/parents.html.twig');
     }
-
 }
-
-
-

@@ -28,7 +28,7 @@ class SlackMailer implements MailerInterface
 
         $from = $message->getFrom();
         $attachment->setFooter("From: " . (!is_array($from) ? $from : current($from) . " - " . key($from)));
-        
+
         $slackMessage->setText("Email sent");
         $slackMessage->setAttachments([$attachment]);
 

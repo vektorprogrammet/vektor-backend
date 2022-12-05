@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\User;
@@ -8,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CompanyEmailMaker
 {
-    const EMAIL_DOMAIN = '@vektorprogrammet.no';
+    public const EMAIL_DOMAIN = '@vektorprogrammet.no';
     private EntityManagerInterface $em;
     private LogService $logger;
 

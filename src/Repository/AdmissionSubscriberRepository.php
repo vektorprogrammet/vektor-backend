@@ -10,7 +10,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class AdmissionSubscriberRepository extends EntityRepository
 {
-
     /**
      * @param Department $department
      *

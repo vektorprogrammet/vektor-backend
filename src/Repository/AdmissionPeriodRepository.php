@@ -14,7 +14,6 @@ use Doctrine\ORM\NonUniqueResultException;
  */
 class AdmissionPeriodRepository extends EntityRepository
 {
-
     /**
      * @param Department $department
      *

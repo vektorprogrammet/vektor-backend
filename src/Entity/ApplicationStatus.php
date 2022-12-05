@@ -8,15 +8,15 @@ class ApplicationStatus
     private $nextAction;
     private $step;
 
-    const CANCELLED = -1;
-    const APPLICATION_NOT_RECEIVED = 0;
-    const APPLICATION_RECEIVED = 1;
-    const INVITED_TO_INTERVIEW = 2;
-    const INTERVIEW_ACCEPTED = 3;
-    const INTERVIEW_COMPLETED = 4;
-    const ASSIGNED_TO_SCHOOL = 5;
+    public const CANCELLED = -1;
+    public const APPLICATION_NOT_RECEIVED = 0;
+    public const APPLICATION_RECEIVED = 1;
+    public const INVITED_TO_INTERVIEW = 2;
+    public const INTERVIEW_ACCEPTED = 3;
+    public const INTERVIEW_COMPLETED = 4;
+    public const ASSIGNED_TO_SCHOOL = 5;
 
-    const APPLICATION_PROCESS = [
+    public const APPLICATION_PROCESS = [
         "Send inn søknad",
         "Bli invitert til intervju",
         "Godta intervjutidspunkt",

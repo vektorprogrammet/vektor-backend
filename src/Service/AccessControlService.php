@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\AccessRule;
@@ -24,10 +23,12 @@ class AccessControlService
     /**
      * AccessControlService constructor
      */
-    public function __construct(EntityManagerInterface $entityManager,
-                                RouterInterface $router,
-                                RoleManager $roleManager,
-                                UserService $userService)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        RouterInterface $router,
+        RoleManager $roleManager,
+        UserService $userService
+    )
     {
         $this->entityManager = $entityManager;
         $this->router        = $router;

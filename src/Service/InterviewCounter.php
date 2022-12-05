@@ -8,9 +8,9 @@ use App\Entity\InterviewDistribution;
 
 class InterviewCounter
 {
-    const YES = 'Ja';
-    const MAYBE = 'Kanskje';
-    const NO = 'Nei';
+    public const YES = 'Ja';
+    public const MAYBE = 'Kanskje';
+    public const NO = 'Nei';
 
     /**
      * @param Application[] $applications

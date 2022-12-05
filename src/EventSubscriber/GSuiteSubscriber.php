@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Event\TeamEvent;
 use App\Event\UserEvent;
@@ -30,8 +30,7 @@ class GSuiteSubscriber implements EventSubscriberInterface
         GoogleUsers $userService,
         GoogleGroups $groupService,
         GoogleDrive $driveService
-    )
-    {
+    ) {
         $this->logger = $logger;
         $this->googleAPI = $googleAPI;
         $this->emailMaker = $emailMaker;

@@ -7,9 +7,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class TeamEvent extends Event
 {
-    const CREATED = 'team.created';
-    const EDITED = 'team.edited';
-    const DELETED = 'team.deleted';
+    public const CREATED = 'team.created';
+    public const EDITED = 'team.edited';
+    public const DELETED = 'team.deleted';
 
     private $team;
     private $oldTeamEmail;

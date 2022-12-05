@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class InterviewConductedEvent extends Event
 {
-    const NAME = 'interview.conducted';
+    public const NAME = 'interview.conducted';
 
     private $application;
 

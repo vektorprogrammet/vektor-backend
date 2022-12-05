@@ -18,7 +18,6 @@ use Doctrine\ORM\NonUniqueResultException;
  */
 class ApplicationRepository extends EntityRepository
 {
-
     /**
      * @param User $user
      * @param AdmissionPeriod $admissionPeriod

@@ -4,7 +4,6 @@ namespace App\Entity;
 
 interface TeamInterface
 {
-
     /**
      * @return string
      */

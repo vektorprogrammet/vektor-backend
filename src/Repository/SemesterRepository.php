@@ -73,7 +73,7 @@ class SemesterRepository extends EntityRepository
      * @return Semester|null
      * @throws NonUniqueResultException
      */
-    public function findByTimeAndYear(string $semesterTime, string $year) : ? Semester
+    public function findByTimeAndYear(string $semesterTime, string $year): ?Semester
     {
         return $this->createQueryBuilder('Semester')
             ->select('Semester')
@@ -92,7 +92,7 @@ class SemesterRepository extends EntityRepository
      * @return Semester|null
      * @throws NonUniqueResultException|ORMException
      */
-    public function getNextActive(Semester $semester): ? Semester
+    public function getNextActive(Semester $semester): ?Semester
     {
         if ($semester === $this->findOrCreateCurrentSemester()) {
             return null;

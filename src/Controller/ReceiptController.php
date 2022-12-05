@@ -26,8 +26,12 @@ class ReceiptController extends BaseController
     private EventDispatcherInterface $eventDispatcher;
     private RoleManager $roleManager;
 
-    public function __construct(Sorter $sorter, FileUploader $fileUploader,
-                                EventDispatcherInterface $eventDispatcher, RoleManager $roleManager)
+    public function __construct(
+        Sorter $sorter,
+        FileUploader $fileUploader,
+        EventDispatcherInterface $eventDispatcher,
+        RoleManager $roleManager
+    )
     {
         $this->sorter=$sorter;
         $this->fileUploader=$fileUploader;
@@ -116,7 +120,6 @@ class ReceiptController extends BaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()&& $receipt->getPicturePath() == "") {
-
             $this->addFlash('warning', "Bildefilen er for stor. Maks størrelse er 2 MiB.");
         }
 
@@ -195,7 +198,7 @@ class ReceiptController extends BaseController
         $em->flush();
 
         if ($status === Receipt::STATUS_REFUNDED) {
-            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt),ReceiptEvent::REFUNDED);
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::REFUNDED);
         } elseif ($status === Receipt::STATUS_REJECTED) {
             $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::REJECTED);
         } elseif ($status === Receipt::STATUS_PENDING) {

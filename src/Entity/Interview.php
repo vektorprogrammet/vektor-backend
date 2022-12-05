@@ -12,11 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 # Static constants:
 abstract class InterviewStatusType
 {
-    const PENDING = 0;
-    const ACCEPTED = 1;
-    const REQUEST_NEW_TIME = 2;
-    const CANCELLED = 3;
-    const NO_CONTACT = 4;
+    public const PENDING = 0;
+    public const ACCEPTED = 1;
+    public const REQUEST_NEW_TIME = 2;
+    public const CANCELLED = 3;
+    public const NO_CONTACT = 4;
 }
 
 

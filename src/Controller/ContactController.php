@@ -24,7 +24,6 @@ class ContactController extends BaseController
         $this->geoLocation = $geoLocation;
         $this->logService = $logService;
         $this->eventDispatcher = $eventDispatcher;
-
     }
 
     /**
