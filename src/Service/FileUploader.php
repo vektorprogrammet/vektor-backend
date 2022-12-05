@@ -18,10 +18,12 @@ class FileUploader
     /**
      * FileUploader constructor
      */
-    public function __construct(string $signatureFolder,
-                                string $logoFolder,
-                                string $receiptFolder,
-                                string $profilePhotoFolder)
+    public function __construct(
+        string $signatureFolder,
+        string $logoFolder,
+        string $receiptFolder,
+        string $profilePhotoFolder
+    )
     {
         $this->signatureFolder = $signatureFolder;
         $this->logoFolder = $logoFolder;
@@ -87,7 +89,8 @@ class FileUploader
      * @param null $id
      * @return false|mixed
      */
-    public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id=null) {
+    public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id=null)
+    {
         // e.g: array('image/*') for valid_mime_types to accept all subtypes of file image
 
         $file = FileUploader::getFileFromRequest($request, $id);
@@ -102,9 +105,9 @@ class FileUploader
 
             if ($fileType === $validType &&
                 ($fileSubType === $validSubType || $validSubType === "*")) {
-                    return $file;
-                }
+                return $file;
             }
+        }
 
         throw new BadRequestHttpException('Filtypen er ikke gyldig.');
     }

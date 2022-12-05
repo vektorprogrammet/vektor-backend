@@ -9,7 +9,6 @@ namespace App\Entity;
  */
 interface DepartmentSemesterInterface
 {
-
     /**
      * @return Department
      */

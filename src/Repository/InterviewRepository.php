@@ -18,7 +18,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class InterviewRepository extends EntityRepository
 {
-
     /**
      * @param User $user
      *

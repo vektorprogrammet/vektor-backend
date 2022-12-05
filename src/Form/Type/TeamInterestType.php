@@ -42,7 +42,7 @@ class TeamInterestType extends AbstractType
                 'multiple' => true,
             ));
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

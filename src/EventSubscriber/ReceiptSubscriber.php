@@ -1,7 +1,6 @@
 <?php
 
-
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Event\ReceiptEvent;
 use App\Service\EmailSender;
@@ -22,8 +21,7 @@ class ReceiptSubscriber implements EventSubscriberInterface
         EmailSender $emailSender,
         SessionInterface $session,
         TokenStorageInterface $tokenStorage
-    )
-    {
+    ) {
         $this->logger = $logger;
         $this->emailSender = $emailSender;
         $this->session = $session;

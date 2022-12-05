@@ -79,7 +79,7 @@ class RoleExtension extends AbstractExtension
         return $this->isGranted(Roles::ADMIN);
     }
 
-    private function isGranted(string $role) : bool
+    private function isGranted(string $role): bool
     {
         if ($this->tokenStorage->getToken() === null) {
             return false;

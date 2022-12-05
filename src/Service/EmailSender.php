@@ -21,11 +21,13 @@ class EmailSender
     /**
      * EmailSender constructor
      */
-    public function __construct(MailerInterface $mailer,
-                                Environment $twig,
-                                RouterInterface $router,
-                                string $defaultEmail,
-                                string $economyEmail)
+    public function __construct(
+        MailerInterface $mailer,
+        Environment $twig,
+        RouterInterface $router,
+        string $defaultEmail,
+        string $economyEmail
+    )
     {
         $this->mailer = $mailer;
         $this->twig = $twig;

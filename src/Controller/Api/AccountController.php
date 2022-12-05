@@ -107,7 +107,7 @@ class AccountController extends BaseController
         if (!$department) {
             return new JsonResponse(null);
         }
-        
+
         // This is not a proper DTO, and should be changed, but as we really only need the id for now... :
         $departmentDto = array(
             "id" => $department->getId(),

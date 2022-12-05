@@ -15,9 +15,11 @@ class LoginManager
     /**
      * LoginManager constructor
      */
-    public function __construct(Environment $twig,
-                                AuthenticationUtils $authenticationUtils,
-                                RouterInterface $router)
+    public function __construct(
+        Environment $twig,
+        AuthenticationUtils $authenticationUtils,
+        RouterInterface $router
+    )
     {
         $this->twig = $twig;
         $this->authenticationUtils = $authenticationUtils;

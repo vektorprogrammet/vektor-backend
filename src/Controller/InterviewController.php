@@ -40,10 +40,12 @@ class InterviewController extends BaseController
     private ReversedRoleHierarchy $reversedRoleHierarchy;
     private ApplicationManager $applicationManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher,
-                                InterviewManager $interviewManager,
-                                ReversedRoleHierarchy $reversedRoleHierarchy,
-                                ApplicationManager $applicationManager)
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        InterviewManager $interviewManager,
+        ReversedRoleHierarchy $reversedRoleHierarchy,
+        ApplicationManager $applicationManager
+    )
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->interviewManager = $interviewManager;

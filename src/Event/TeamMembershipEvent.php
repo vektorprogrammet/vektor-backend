@@ -7,10 +7,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class TeamMembershipEvent extends Event
 {
-    const CREATED = 'team_membership.created';
-    const EDITED = 'team_membership.edited';
-    const DELETED = 'team_membership.deleted';
-    const EXPIRED = 'team_membership.expired';
+    public const CREATED = 'team_membership.created';
+    public const EDITED = 'team_membership.edited';
+    public const DELETED = 'team_membership.deleted';
+    public const EXPIRED = 'team_membership.expired';
 
     private $teamMembership;
 

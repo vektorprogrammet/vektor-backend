@@ -187,7 +187,7 @@ class AccessRule
      *
      * @return AccessRule
      */
-    public function setName($name) : AccessRule
+    public function setName($name): AccessRule
     {
         $this->name = $name;
 

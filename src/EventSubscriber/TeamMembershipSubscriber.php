@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Event\TeamMembershipEvent;
 use App\Service\RoleManager;
@@ -22,8 +22,7 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
         LoggerInterface $logger,
         RoleManager $roleManager,
         EntityManagerInterface $em
-    )
-    {
+    ) {
         $this->session = $session;
         $this->logger = $logger;
         $this->roleManager = $roleManager;

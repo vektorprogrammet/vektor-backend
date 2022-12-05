@@ -27,11 +27,13 @@ class AssistantController extends BaseController
     private KernelInterface $kernel;
     private EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(ApplicationAdmission $applicationAdmission,
-                                GeoLocation $geoLocation,
-                                FilterService $filterService,
-                                KernelInterface $kernel,
-                                EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        ApplicationAdmission $applicationAdmission,
+        GeoLocation $geoLocation,
+        FilterService $filterService,
+        KernelInterface $kernel,
+        EventDispatcherInterface $eventDispatcher
+    )
     {
         $this->applicationAdmission = $applicationAdmission;
         $this->geoLocation = $geoLocation;
@@ -99,9 +101,11 @@ class AssistantController extends BaseController
      *
      * @return Response
      */
-    public function index(Request $request,
-                          Department $specificDepartment = null,
-                          bool $scrollToAdmissionForm = false): Response
+    public function index(
+        Request $request,
+        Department $specificDepartment = null,
+        bool $scrollToAdmissionForm = false
+    ): Response
     {
         $admissionManager = $this->applicationAdmission;
         $em = $this->getDoctrine()->getManager();

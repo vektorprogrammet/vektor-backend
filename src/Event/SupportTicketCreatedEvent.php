@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class SupportTicketCreatedEvent extends Event
 {
-    const NAME = 'support_ticket.created';
+    public const NAME = 'support_ticket.created';
 
     private $supportTicket;
 

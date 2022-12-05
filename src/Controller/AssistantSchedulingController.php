@@ -51,8 +51,10 @@ class AssistantSchedulingController extends BaseController
             $doublePosition = $application->getDoublePosition();
             $preferredGroup = null;
             switch ($application->getPreferredGroup()) {
-                case 'Bolk 1': $preferredGroup = 1; break;
-                case 'Bolk 2': $preferredGroup = 2; break;
+                case 'Bolk 1': $preferredGroup = 1;
+                break;
+                case 'Bolk 2': $preferredGroup = 2;
+                break;
             }
             if ($doublePosition) {
                 $preferredGroup = null;

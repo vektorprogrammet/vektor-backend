@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Event\ApplicationCreatedEvent;
 use App\Service\AdmissionNotifier;
@@ -26,8 +26,7 @@ class ApplicationSubscriber implements EventSubscriberInterface
         Environment $twig,
         AdmissionNotifier $admissionNotifier,
         UserRegistration $userRegistrationService
-    )
-    {
+    ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->admissionNotifier = $admissionNotifier;
