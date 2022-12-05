@@ -10,7 +10,6 @@ class ContactEntityUnitTest extends TestCase
     // Check whether the setName function is working correctly
     public function testSetName()
     {
-
         // new assistantHistory entity
         $contact = new SupportTicket();
 
@@ -24,7 +23,6 @@ class ContactEntityUnitTest extends TestCase
     // Check whether the setEmail function is working correctly
     public function testSetEmail()
     {
-
         // new assistantHistory entity
         $contact = new SupportTicket();
 
@@ -38,7 +36,6 @@ class ContactEntityUnitTest extends TestCase
     // Check whether the setSubject function is working correctly
     public function testSetSubject()
     {
-
         // new assistantHistory entity
         $contact = new SupportTicket();
 
@@ -52,7 +49,6 @@ class ContactEntityUnitTest extends TestCase
     // Check whether the setBody function is working correctly
     public function testSetBody()
     {
-
         // new assistantHistory entity
         $contact = new SupportTicket();
 

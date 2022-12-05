@@ -13,7 +13,6 @@ class AssistantHistoryEntityUnitTest extends TestCase
     // Check whether the setUser function is working correctly
     public function testSetUser()
     {
-
         // new assistantHistory entity
         $assistantHistory = new AssistantHistory();
 
@@ -35,7 +34,6 @@ class AssistantHistoryEntityUnitTest extends TestCase
     // Check whether the setSemester function is working correctly
     public function testSetSemester()
     {
-
         // new assistantHistory entity
         $assistantHistory = new AssistantHistory();
 
@@ -55,7 +53,6 @@ class AssistantHistoryEntityUnitTest extends TestCase
     // Check whether the setSchool function is working correctly
     public function testSetSchool()
     {
-
         // new assistantHistory entity
         $assistantHistory = new AssistantHistory();
 
@@ -75,7 +72,6 @@ class AssistantHistoryEntityUnitTest extends TestCase
     // Check whether the setWorkdays function is working correctly
     public function testSetWorkdays()
     {
-
         // new assistantHistory entity
         $assistantHistory = new AssistantHistory();
 

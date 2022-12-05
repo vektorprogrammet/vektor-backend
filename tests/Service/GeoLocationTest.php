@@ -17,7 +17,7 @@ class GeoLocationTest extends WebTestCase
     private Department $dep1;
     private Department $dep2;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->dep1 = new Department();

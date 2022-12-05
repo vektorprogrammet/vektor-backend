@@ -14,7 +14,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the setName function is working correctly
     public function testSetName()
     {
-
         // new entity
         $department = new Department();
 
@@ -28,7 +27,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the setShortName function is working correctly
     public function testSetShortName()
     {
-
         // new entity
         $department = new Department();
 
@@ -42,7 +40,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the addFieldOfStudy function is working correctly
     public function testAddFieldOfStudy()
     {
-
         // new entity
         $department = new Department();
 
@@ -68,7 +65,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the removeFieldOfStudy function is working correctly
     public function testRemoveFieldOfStudy()
     {
-
         // new entity
         $department = new Department();
 
@@ -100,7 +96,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the setEmail function is working correctly
     public function testSetEmail()
     {
-
         // new entity
         $department = new Department();
 
@@ -114,7 +109,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the addSchool function is working correctly
     public function testAddSchool()
     {
-
         // new entity
         $department = new Department();
 
@@ -140,7 +134,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the removeSchool function is working correctly
     public function testRemoveSchool()
     {
-
         // new entity
         $department = new Department();
 
@@ -172,7 +165,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the setAddess function is working correctly
     public function testSetAddress()
     {
-
         // new entity
         $department = new Department();
 
@@ -200,7 +192,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the addTeam function is working correctly
     public function testAddTeam()
     {
-
         // new entity
         $department = new Department();
 
@@ -226,7 +217,6 @@ class DepartmentEntityUnitTest extends TestCase
     // Check whether the removeTeam function is working correctly
     public function testRemoveTeam()
     {
-
         // new entity
         $department = new Department();
 

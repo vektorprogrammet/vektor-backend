@@ -14,7 +14,7 @@ class ReceiptControllerTest extends BaseWebTestCase
      */
     private $imagePaths;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         // Keep track of all the initial files in the image folder
         $this->imagePaths = array();
@@ -40,7 +40,8 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Use image 'kvittering.jpg' as the new image
         $photo = new UploadedFile(
             __DIR__.'/../Fixtures/kvittering.jpg',
-            'kvittering.jpg');
+            'kvittering.jpg'
+        );
 
         $crawler = $client->request('GET', '/utlegg');
         $form = $crawler->selectButton('Be om refusjon')->form();
@@ -92,7 +93,8 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Use image 'kvittering.jpg' as the new image
         $photo = new UploadedFile(
             __DIR__.'/../Fixtures/kvittering.jpg',
-            'kvittering.jpg');
+            'kvittering.jpg'
+        );
 
         $crawler = $client->request('GET', '/kontrollpanel/utlegg/rediger/2');
         $form = $crawler->selectButton('Lagre')->form();
@@ -204,7 +206,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
