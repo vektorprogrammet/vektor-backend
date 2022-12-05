@@ -73,7 +73,7 @@ Load fixtures:
 `php bin/console doctrine:fixtures:load`
 
 Code style:
-### Code Style Fixer [php-cs-fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)
+### Code Style: [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)
 Install:
 ```
 mkdir -p tools/php-cs-fixer
