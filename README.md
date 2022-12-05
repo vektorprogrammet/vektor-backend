@@ -72,6 +72,17 @@ Load db-schema:
 Load fixtures:
 `php bin/console doctrine:fixtures:load`
 
+Code style:
+### Code Style: [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)
+Install:
+```
+mkdir -p tools/php-cs-fixer
+composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+```
+
+Then Run:
+`tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src`
+
 
 ## Tests
 **Run all tests:**\
