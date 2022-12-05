@@ -44,7 +44,7 @@ jobs:
 
       # Install dependencies using composer
       - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Update database
         run: mkdir -p ./var/data && rm -rf ./var/data/dev.db && touch ./var/data/dev.db && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:migrations:sync-metadata-storage && php bin/console doctrine:fixtures:load -n --env=dev && php bin/console doctrine:migrations:version -n --delete --all --env=dev && php bin/console doctrine:migrations:version -n --add --all --env=dev
