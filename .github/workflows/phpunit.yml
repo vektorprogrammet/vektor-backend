@@ -35,6 +35,10 @@ jobs:
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
+      # print cache dir
+      - name: Print cache dir
+        run: echo ${{ steps.composer-cache.outputs.dir }}
+
       # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
       - name: Cache composer dependencies
         uses: actions/cache@v3
