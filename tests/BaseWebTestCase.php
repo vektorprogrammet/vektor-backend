@@ -2,7 +2,6 @@
 
 namespace App\Tests;
 
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -33,8 +32,6 @@ abstract class BaseWebTestCase extends WebTestCase
                 'PHP_AUTH_USER' => 'assistent',
                 'PHP_AUTH_PW' => '1234',
             ));
-            $assistantUser = static::getContainer()->get(UserRepository::class)->findOneByUsername("assistent");
-            self::$assistantClient->loginUser($assistantUser);
         }
 
         return self::$assistantClient;
