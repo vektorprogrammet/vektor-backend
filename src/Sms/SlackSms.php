@@ -16,6 +16,9 @@ class SlackSms implements SmsSenderInterface
 
     public function send(Sms $sms)
     {
+        return;
+        // TODO: Reimplement SlackSMS, Nexy\Slack is deprecated
+        // Code commented out below.
         $message = $this->slackMessenger->createMessage();
 
         $attachment = new Attachment();
