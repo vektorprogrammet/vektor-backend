@@ -30,9 +30,6 @@ async function scriptsProd () {
   return gulp.src(path.src + 'js/**/*.js')
       .pipe(plumber())
       .pipe(changed(dest))
-      .pipe(babel({
-        presets: ["@babel/preset-env"]
-      }))
       .pipe(uglify())
       .pipe(gulp.dest(dest))
 }
