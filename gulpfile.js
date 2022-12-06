@@ -14,7 +14,7 @@ var path = {
     src: 'assets/',
 };
 
-function stylesProd() {
+async function stylesProd() {
   var dest = path.dist + 'css/';
   return gulp.src(path.src + 'scss/**/*.scss')
     .pipe(plumber())
@@ -25,19 +25,19 @@ function stylesProd() {
     .pipe(gulp.dest(dest))
 }
 
-function scriptsProd () {
+async function scriptsProd () {
   var dest = path.dist + 'js/';
   return gulp.src(path.src + 'js/**/*.js')
       .pipe(plumber())
       .pipe(changed(dest))
       .pipe(babel({
-        presets: ['env']
+        presets: ["@babel/preset-env"]
       }))
       .pipe(uglify())
       .pipe(gulp.dest(dest))
 }
 
-function imagesProd () {
+async function imagesProd () {
   var dest = path.dist + 'images/';
   return gulp.src(path.src + 'images/**/*')
       .pipe(plumber())
@@ -50,7 +50,7 @@ function imagesProd () {
       .pipe(gulp.dest(dest))
 }
 
-function stylesDev () {
+async function stylesDev () {
   var dest = path.dist + 'css/';
   return gulp.src(path.src + 'scss/**/*.scss')
       .pipe(plumber())
@@ -60,18 +60,15 @@ function stylesDev () {
       .pipe(gulp.dest(dest))
 }
 
-function scriptsDev () {
+async function scriptsDev () {
   var dest = path.dist + 'js/';
   return gulp.src(path.src + 'js/**/*.js')
       .pipe(plumber())
       .pipe(changed(dest))
-      .pipe(babel({
-        presets: ['env']
-      }))
       .pipe(gulp.dest(dest))
 }
 
-function imagesDev () {
+async function imagesDev () {
   var dest = path.dist + 'images/';
   return gulp.src(path.src + 'images/**/*')
       .pipe(plumber())
@@ -79,20 +76,20 @@ function imagesDev () {
       .pipe(gulp.dest(dest))
 }
 
-function icons () {
+async function icons () {
   var r = gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/**.*')
       .pipe(gulp.dest('public/webfonts/'));
   return r && gulp.src(path.src + 'webfonts/**.*')
     .pipe(gulp.dest('public/webfonts/'));
 }
 
-function files () {
+async function files () {
   return gulp.src(path.src + 'files/*')
       .pipe(changed('public/files/'))
       .pipe(gulp.dest('public/files/'))
 }
 
-function vendor () {
+async function vendor () {
 
   var r = gulp.src('node_modules/dropzone/**/*')
       .pipe(gulp.dest('public/vendor/dropzone/'));
@@ -121,7 +118,7 @@ function vendor () {
 }
 
 
-function watch () {
+async function watch () {
     gulp.watch(path.src + 'scss/**/*.scss', stylesDev);
     gulp.watch(path.src + 'js/**/*.js', scriptsDev);
     gulp.watch(path.src + 'images/*', imagesDev);
