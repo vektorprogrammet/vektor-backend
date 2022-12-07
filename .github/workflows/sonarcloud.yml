@@ -5,8 +5,8 @@ on:
       - main
   #pull_request:
     #types: [opened, synchronize, reopened] #tmp disable for testing
-name: SonarCloud Workflow
 
+name: SonarCloud Workflow
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
