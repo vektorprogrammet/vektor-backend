@@ -7,12 +7,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ReceiptEvent extends Event
 {
-    const CREATED = 'receipt.created';
-    const REFUNDED = 'receipt.refunded';
-    const REJECTED = 'receipt.rejected';
-    const PENDING = 'receipt.pending';
-    const EDITED = 'receipt.edited';
-    const DELETED = 'receipt.deleted';
+    public const CREATED = 'receipt.created';
+    public const REFUNDED = 'receipt.refunded';
+    public const REJECTED = 'receipt.rejected';
+    public const PENDING = 'receipt.pending';
+    public const EDITED = 'receipt.edited';
+    public const DELETED = 'receipt.deleted';
 
     private $receipt;
 

@@ -1,6 +1,6 @@
 <?php
-namespace App\Controller;
 
+namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,5 +12,4 @@ class FeedbackController extends BaseController
             'title' => 'Feedback'
         ));
     }
-
 }

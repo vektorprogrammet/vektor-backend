@@ -24,10 +24,12 @@ class RoleManager
     /**
      * RoleManager constructor
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker,
-                                EntityManagerInterface $em,
-                                LoggerInterface $logger,
-                                GoogleUsers $googleUserService)
+    public function __construct(
+        AuthorizationCheckerInterface $authorizationChecker,
+        EntityManagerInterface $em,
+        LoggerInterface $logger,
+        GoogleUsers $googleUserService
+    )
     {
         $this->roles = array(
             Roles::ASSISTANT,

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\AdmissionNotification;
@@ -29,11 +28,13 @@ class AdmissionNotifier
     /**
      * AdmissionNotifier constructor
      */
-    public function __construct(EntityManagerInterface $em,
-                                EmailSender $emailSender,
-                                LoggerInterface $logger,
-                                ValidatorInterface $validator,
-                                int $sendLimit)
+    public function __construct(
+        EntityManagerInterface $em,
+        EmailSender $emailSender,
+        LoggerInterface $logger,
+        ValidatorInterface $validator,
+        int $sendLimit
+    )
     {
         $this->em = $em;
         $this->emailSender = $emailSender;

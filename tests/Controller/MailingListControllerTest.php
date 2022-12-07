@@ -12,7 +12,7 @@ class MailingListControllerTest extends BaseWebTestCase
      */
     private $em;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         self::bootKernel();
         $this->em = static::$kernel->getContainer()
@@ -86,7 +86,7 @@ class MailingListControllerTest extends BaseWebTestCase
         return substr_count($crawler->filter('pre')->text(), '@');
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->em->close();

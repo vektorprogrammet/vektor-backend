@@ -11,7 +11,6 @@ class FieldOfStudyEntityUnitTest extends TestCase
     // Check whether the setName function is working correctly
     public function testSetName()
     {
-
         // new entity
         $fos = new FieldOfStudy();
 
@@ -25,7 +24,6 @@ class FieldOfStudyEntityUnitTest extends TestCase
     // Check whether the setShortName function is working correctly
     public function testSetShortName()
     {
-
         // new entity
         $fos = new FieldOfStudy();
 
@@ -39,7 +37,6 @@ class FieldOfStudyEntityUnitTest extends TestCase
     // Check whether the setDepartment function is working correctly
     public function testSetDepartment()
     {
-
         // new entity
         $fos = new FieldOfStudy();
 

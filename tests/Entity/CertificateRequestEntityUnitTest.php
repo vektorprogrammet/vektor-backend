@@ -11,7 +11,6 @@ class CertificateRequestEntityUnitTest extends TestCase
     // Check whether the setUser function is working correctly
     public function testSetUser()
     {
-
         // new entity
         $cr = new CertificateRequest();
 

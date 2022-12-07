@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\AdmissionPeriod;
@@ -12,7 +11,6 @@ use DateTime;
 
 class AdmissionStatistics
 {
-
     /**
      * @param AdmissionSubscriber[] $subscribers
      * @param Semester $semester
@@ -31,8 +29,10 @@ class AdmissionStatistics
      *
      * @return array
      */
-    public function generateGraphDataFromApplicationsInAdmissionPeriod(array $applications,
-                                                                       AdmissionPeriod $admissionPeriod): array
+    public function generateGraphDataFromApplicationsInAdmissionPeriod(
+        array $applications,
+        AdmissionPeriod $admissionPeriod
+    ): array
     {
         $endDate = $admissionPeriod->getEndDate();
         $extraDays = $this->calculatePaddingDays($endDate);
@@ -47,8 +47,10 @@ class AdmissionStatistics
      *
      * @return array
      */
-    public function generateCumulativeGraphDataFromApplicationsInAdmissionPeriod(array $applications,
-                                                                                 AdmissionPeriod $admissionPeriod): array
+    public function generateCumulativeGraphDataFromApplicationsInAdmissionPeriod(
+        array $applications,
+        AdmissionPeriod $admissionPeriod
+    ): array
     {
         $endDate =  $admissionPeriod->getEndDate();
         $extraDays = $this->calculatePaddingDays($endDate);

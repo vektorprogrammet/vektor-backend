@@ -10,11 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 class TeamMembershipEntityUnitTest extends TestCase
 {
-
     // Check whether the setUser function is working correctly
     public function testSetUser()
     {
-
         // new entity
         $wh = new TeamMembership();
 
@@ -32,7 +30,6 @@ class TeamMembershipEntityUnitTest extends TestCase
     // Check whether the setTeam function is working correctly
     public function testSetTeam()
     {
-
         // new entity
         $wh = new TeamMembership();
 
@@ -50,7 +47,6 @@ class TeamMembershipEntityUnitTest extends TestCase
     // Check whether the setPosition function is working correctly
     public function testSetPosition()
     {
-
         // new entity
         $wh = new TeamMembership();
 

@@ -21,12 +21,14 @@ class GeoLocation
     /**
      * GeoLocation constructor
      */
-    public function __construct(string $ipinfoToken,
-                                $ignoredAsns,
-                                EntityManagerInterface $em,
-                                SessionInterface $session,
-                                RequestStack $requestStack,
-                                LogService $logger)
+    public function __construct(
+        string $ipinfoToken,
+        $ignoredAsns,
+        EntityManagerInterface $em,
+        SessionInterface $session,
+        RequestStack $requestStack,
+        LogService $logger
+    )
     {
         $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);
@@ -197,7 +199,7 @@ class GeoLocation
         return null;
     }
 
-    private function ipIsFromAnIgnoredAsn($response) : bool
+    private function ipIsFromAnIgnoredAsn($response): bool
     {
         if (!isset($response['org'])) {
             return false;

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Event\TeamMembershipEvent;
 use App\Mailer\MailerInterface;

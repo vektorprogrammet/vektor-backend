@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessRuleController extends AbstractController
 {
-
     private AccessControlService $accessControlService;
     private ReversedRoleHierarchy $reversedRoleHierarchy;
 
@@ -55,7 +54,7 @@ class AccessRuleController extends AbstractController
             'roles' => $roles
         ]);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->accessControlService->createRule($accessRule);
 
@@ -64,7 +63,7 @@ class AccessRuleController extends AbstractController
             } else {
                 $this->addFlash("success", "Access rule edited");
             }
-            
+
             return $this->redirectToRoute("access_rules_show");
         }
         return $this->render('admin/access_rule/create.html.twig', array(
@@ -122,7 +121,7 @@ class AccessRuleController extends AbstractController
         if ($rule->isRoutingRule()) {
             return $this->createRoutingRule($request, $clone);
         }
-        
+
         return $this->createRule($request, $clone);
     }
 

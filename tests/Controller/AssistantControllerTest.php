@@ -12,6 +12,7 @@ class AssistantControllerTest extends BaseWebTestCase
 
         $applicationsBefore = $this->countTableRows($path);
 
+        self::ensureKernelShutdown();
         $this->createAndSubmitForm();
 
         $applicationsAfter = $this->countTableRows($path);

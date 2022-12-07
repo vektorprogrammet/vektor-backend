@@ -36,7 +36,7 @@ class AccessExtension extends AbstractExtension
      * @param null $user
      * @return boolean True if the user has access to the resource, false otherwise
      */
-    public function hasAccessTo($routes, $user = null) : bool
+    public function hasAccessTo($routes, $user = null): bool
     {
         return $this->accessControlService->checkAccess($routes, $user);
     }

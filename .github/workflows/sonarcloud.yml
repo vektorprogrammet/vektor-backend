@@ -1,17 +1,16 @@
 on:
-  # Trigger analysis when pushing in master or pull requests, and when creating
-  # a pull request.
+  # Trigger analysis when pushing in main or pull requests, and when creating a pull request.
   push:
     branches:
       - main
   #pull_request:
     #types: [opened, synchronize, reopened] #tmp disable for testing
-name: Main Workflow
+name: SonarCloud Workflow
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0

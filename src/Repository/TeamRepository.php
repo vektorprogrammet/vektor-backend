@@ -14,7 +14,6 @@ use Doctrine\ORM\QueryBuilder;
  */
 class TeamRepository extends EntityRepository
 {
-
     /**
      * @param Department $department
      *

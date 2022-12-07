@@ -6,7 +6,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class SupportTicket
 {
-
     /**
      * @var string $name
      * @Assert\NotBlank()

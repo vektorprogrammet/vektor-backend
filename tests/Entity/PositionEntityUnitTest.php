@@ -10,7 +10,6 @@ class PositionEntityUnitTest extends TestCase
     // Check whether the setName function is working correctly
     public function testSetName()
     {
-
         // new entity
         $position = new Position();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Entity\Semester;
 use App\Event\AssistantHistoryCreatedEvent;
@@ -25,8 +25,7 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
         SessionInterface $session,
         EntityManagerInterface $em,
         UserRegistration $userRegistrationService
-    )
-    {
+    ) {
         $this->session = $session;
         $this->em = $em;
         $this->userRegistrationService = $userRegistrationService;

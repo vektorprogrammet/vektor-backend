@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Event\SupportTicketCreatedEvent;
 use App\Service\EmailSender;
@@ -21,8 +21,7 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         SlackMessenger $slackMessenger,
         SessionInterface $session,
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->emailSender    = $emailSender;
         $this->session        = $session;
         $this->logger         = $logger;

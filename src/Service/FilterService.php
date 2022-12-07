@@ -8,7 +8,6 @@ use App\Entity\TeamMembershipInterface;
 
 class FilterService
 {
-
     /**
      * Returns only memberships in $team
      *

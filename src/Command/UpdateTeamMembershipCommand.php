@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateTeamMembershipCommand extends Command
 {
-
     /**
      * @var TeamMembershipService
      */
@@ -18,7 +17,6 @@ class UpdateTeamMembershipCommand extends Command
     {
         $this->teamMembershipService = $teamMembershipService;
         parent::__construct();
-
     }
 
     /**

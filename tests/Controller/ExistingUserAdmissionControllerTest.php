@@ -44,10 +44,10 @@ class ExistingUserAdmissionControllerTest extends BaseWebTestCase
         $assistantClient->submit($form);
     }
 
-	public function testDeniedIfNotHasBeenAssistant()
-	{
-		$crawler = $this->teamMemberGoTo('/eksisterendeopptak');
+    public function testDeniedIfNotHasBeenAssistant()
+    {
+        $crawler = $this->teamMemberGoTo('/eksisterendeopptak');
 
-		$this->assertEquals(1, $crawler->filter('h5:contains("Fant ingen assistenthistorikk for din bruker")')->count());
-	}
+        $this->assertEquals(1, $crawler->filter('h5:contains("Fant ingen assistenthistorikk for din bruker")')->count());
+    }
 }

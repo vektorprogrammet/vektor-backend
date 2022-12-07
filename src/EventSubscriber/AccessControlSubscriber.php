@@ -1,17 +1,15 @@
 <?php
 
-
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
 use App\Service\AccessControlService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class AccessControlSubscriber implements EventSubscriberInterface
 {
-
     private AccessControlService $accessControlService;
 
 
@@ -36,11 +34,11 @@ class AccessControlSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param RequestEvent $event
      */
-    public function checkAccess(GetResponseEvent $event)
+    public function checkAccess(RequestEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

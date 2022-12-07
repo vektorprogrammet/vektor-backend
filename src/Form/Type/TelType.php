@@ -11,7 +11,7 @@ class TelType extends AbstractType
     {
         return TextType::class;
     }
-    
+
     public function getBlockPrefix(): string
     {
         return 'tel';
