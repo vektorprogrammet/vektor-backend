@@ -7,4 +7,4 @@
     <br>
     <a href="{{asset(receipt.picturePath)}}" target="_blank" rel="noopener">Åpne PDF i ny fane</a>
 </div>
-<img class="img-fluid {{(receipt.picturePath matches '/\.pdf$/') ? 'd-none' : ''}}" src="{{ asset_with_version(receipt.picturePath) }}" id="receipt_picture" alt="Kvittering">
+<img class="img-fluid {{(receipt.picturePath matches '/\.pdf$/') ? 'd-none' : ''}}" src="{{ asset_with_version(receipt.picturePath) }}" id="receipt_picture">
