@@ -126,7 +126,7 @@ class InfoMeeting
     public function setLink($link)
     {
         if (strlen($link) > 0 && substr($link, 0, 4) !== 'http') {
-            $link = "http://$link";
+            $link = "https://$link";
         }
 
         $this->link = $link;
