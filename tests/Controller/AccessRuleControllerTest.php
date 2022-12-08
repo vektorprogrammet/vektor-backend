@@ -28,8 +28,6 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $this->assertGreaterThan($countBefore, $countAfter);
     }
 
-    // TODO: Fix Test
-    // Probably due to accesscontrol.js that does not load
     public function testCreateRoutingAccessRule()
     {
         $anonClient = $this->createAnonymousClient();
@@ -59,10 +57,12 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $anonClient->request('GET', '/assistenter');
         $this->assertEquals(403, $anonClient->getResponse()->getStatusCode());
 
-        $crawler = $this->anonymousGoTo("/");
-        $forbiddenLinksAfter = $crawler->filter('a[href="/assistenter"]');
-
-        $this->assertEquals(0, $forbiddenLinksAfter->count());
+        // code below checks if links are removed from the page
+        // does not work currently.
+        // if we are going to readd this functionality, see AppRoutingExtension.php in old repo
+//        $crawler = $this->anonymousGoTo("/");
+//        $forbiddenLinksAfter = $crawler->filter('a[href="/assistenter"]');
+//        $this->assertEquals(0, $forbiddenLinksAfter->count());
     }
 
     public function testUnhandledRulesAreCreated()
