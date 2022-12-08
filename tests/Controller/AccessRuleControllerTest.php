@@ -78,25 +78,24 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $this->assertGreaterThan($unhandledBefore, $unhandledAfter);
     }
 
-    // TODO: Fix Test
     public function testUnhandledRulesAreDeletedWhenRuleIsCreated()
     {
         $crawler = $this->adminGoTo('/kontrollpanel/admin/accessrules');
-        $unhandledBefore = $crawler->filter('#unhandledModal tr td:contains("GET /kontrollpanel/admin/accessrules/routing/create")')->count();
+        $unhandledBefore = $crawler->filter('#unhandledModal tr td:contains("GET /kontrollpanel/sponsorer")')->count();
 
-        $this->assertEquals(1, $unhandledBefore); // TODO: this assert fails
+        $this->assertEquals(1, $unhandledBefore);
 
         $crawler = $this->adminGoTo("/kontrollpanel/admin/accessrules/routing/create");
         $form = $crawler->selectButton("Save")->form();
         $form["routing_access_rule[name]"] = "Test Rule 2";
-        $form["routing_access_rule[resource]"] = "access_rules_create_routing";
+        $form["routing_access_rule[resource]"] = "sponsors_show";
         $form["routing_access_rule[roles][0]"]->tick();
 
         $client = $this->createAdminClient();
         $client->submit($form);
 
         $crawler = $this->adminGoTo('/kontrollpanel/admin/accessrules');
-        $unhandledAfter = $crawler->filter('#unhandledModal tr td:contains("GET /kontrollpanel/admin/accessrules/routing/create")')->count();
+        $unhandledAfter = $crawler->filter('#unhandledModal tr td:contains("GET /kontrollpanel/sponsorer")')->count();
 
         $this->assertEquals(0, $unhandledAfter);
     }
