@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-  #pull_request:
-    #types: [opened, synchronize, reopened] #tmp disable for testing
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 name: SonarCloud Workflow
 jobs:
