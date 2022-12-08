@@ -125,6 +125,11 @@ class GeoLocation
             return null;
         }
 
+        // Ensure that ip address is valid
+        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+            return null;
+        }
+
         $coords = $this->session->get('coords');
         if ($coords) {
             return $coords;
