@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SchoolCapacityController extends BaseController
 {
-
     /**
      * @param Request $request
      *

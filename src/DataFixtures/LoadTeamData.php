@@ -159,7 +159,7 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('team-2', $team2);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

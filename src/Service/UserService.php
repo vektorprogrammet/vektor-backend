@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\User;
@@ -35,7 +34,7 @@ class UserService
         return $user;
     }
 
-    public function getCurrentUserName() : string
+    public function getCurrentUserName(): string
     {
         $user = $this->getCurrentUser();
         if (!$user) {
@@ -45,7 +44,7 @@ class UserService
         return $user->__toString();
     }
 
-    public function getCurrentUserNameAndDepartment() : string
+    public function getCurrentUserNameAndDepartment(): string
     {
         $user = $this->getCurrentUser();
         if (!$user) {
@@ -56,7 +55,7 @@ class UserService
         return $user->__toString() . " ($department)";
     }
 
-    public function getCurrentProfilePicture() : string
+    public function getCurrentProfilePicture(): string
     {
         $user = $this->getCurrentUser();
 

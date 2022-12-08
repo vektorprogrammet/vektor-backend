@@ -253,7 +253,7 @@ class AssistantHistoryRepository extends EntityRepository
      * @return string[]
      *
      */
-    public function findAllBolkNames() : array
+    public function findAllBolkNames(): array
     {
         $bolkNames = $this->createQueryBuilder('ah')
             ->select('ah.bolk')

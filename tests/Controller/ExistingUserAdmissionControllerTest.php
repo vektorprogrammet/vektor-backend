@@ -11,6 +11,7 @@ class ExistingUserAdmissionControllerTest extends BaseWebTestCase
         $path = '/kontrollpanel/opptak/gamle';
 
         $applicationsBefore = $this->countTableRows($path);
+        self::ensureKernelShutdown();
 
         $this->createAndSubmitForm_preferredSchool('Gimse');
 
@@ -30,7 +31,7 @@ class ExistingUserAdmissionControllerTest extends BaseWebTestCase
         $submitButton = $crawler->selectButton('Søk');
         $form = $submitButton->form();
 
-        $form['application[applicationPractical][yearOfStudy]'] = 3;
+        $form['application[applicationPractical][yearOfStudy]'] = "3. klasse";
         $form['application[applicationPractical][days][monday]']->tick();
         $form['application[applicationPractical][days][tuesday]']->untick();
         $form['application[applicationPractical][days][wednesday]']->tick();
@@ -44,10 +45,10 @@ class ExistingUserAdmissionControllerTest extends BaseWebTestCase
         $assistantClient->submit($form);
     }
 
-	public function testDeniedIfNotHasBeenAssistant()
-	{
-		$crawler = $this->teamMemberGoTo('/eksisterendeopptak');
+    public function testDeniedIfNotHasBeenAssistant()
+    {
+        $crawler = $this->teamMemberGoTo('/eksisterendeopptak');
 
-		$this->assertEquals(1, $crawler->filter('h5:contains("Fant ingen assistenthistorikk for din bruker")')->count());
-	}
+        $this->assertEquals(1, $crawler->filter('h5:contains("Fant ingen assistenthistorikk for din bruker")')->count());
+    }
 }

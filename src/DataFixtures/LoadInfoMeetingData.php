@@ -43,7 +43,7 @@ class LoadInfoMeetingData extends AbstractFixture implements ContainerAwareInter
      *
      * @return integer
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 28;
     }

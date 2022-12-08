@@ -8,7 +8,6 @@ use App\Entity\InfoMeeting;
 
 class InfoMeetingValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the info meeting is valid.
      *

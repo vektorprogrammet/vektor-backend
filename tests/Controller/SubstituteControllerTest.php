@@ -6,19 +6,26 @@ use App\Tests\BaseWebTestCase;
 
 class SubstituteControllerTest extends BaseWebTestCase
 {
-    public function testShow()
+    /**
+     * Assert that team-leader has access to edit/delete buttons
+     */
+    public function testShowTeamLeader()
     {
-        // Team leader
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/vikar');
 
-        // Assert that we have the edit/delete buttons as admin
+        // Verify that edit/delete buttons show on page
         $this->assertGreaterThanOrEqual(1, $crawler->filter('a:contains("Rediger")')->count());
         $this->assertGreaterThanOrEqual(0, $crawler->filter('button:contains("Slett")')->count());
+    }
 
-        // Team member
+    /**
+     * Assert that team-member does not have access to edit/delete buttons
+     */
+    public function testShowTeamMember()
+    {
         $crawler = $this->teamMemberGoTo('/kontrollpanel/vikar');
 
-        // Assert that we don't have the edit/delete buttons as team
+        // Verify that edit/delete buttons don't show on page
         $this->assertEquals(0, $crawler->filter('a:contains("Slett")')->count());
         $this->assertEquals(0, $crawler->filter('a:contains("Rediger")')->count());
     }
@@ -33,9 +40,10 @@ class SubstituteControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $crawler->filter('td:contains("Team")')->count());
         $this->assertEquals(1, $crawler->filter('td:contains("Johansen")')->count());
 
-        // Assert that we have the edit/delete buttons as admin
-        $this->assertEquals(2, $crawler->filter('button:contains("Slett")')->count());
-        $this->assertEquals(2, $crawler->filter('a:contains("Rediger")')->count());
+        // Assert that edit/delete buttons show on page
+        // Note: Requires that at least 1 substitute is present in the database
+        $this->assertGreaterThan(0, $crawler->filter('button:contains("Slett")')->count());
+        $this->assertGreaterThan(0, $crawler->filter('a:contains("Rediger")')->count());
     }
 
     public function testIllegalCreateMethod()
@@ -57,6 +65,9 @@ class SubstituteControllerTest extends BaseWebTestCase
         $subCountAfter = $this->countTableRows('/kontrollpanel/vikar');
 
         $this->assertEquals(1, $subCountAfter - $subCountBefore);
+
+        // Delete the created substitute after test
+        $client->request('POST', '/kontrollpanel/vikar/slett/4');
     }
 
     public function testEdit()

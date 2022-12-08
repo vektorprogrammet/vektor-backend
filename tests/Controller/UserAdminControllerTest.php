@@ -8,7 +8,6 @@ class UserAdminControllerTest extends BaseWebTestCase
 {
     public function testCreateUser()
     {
-
         // TEAM
         $client = $this->createTeamLeaderClient();
 
@@ -36,7 +35,6 @@ class UserAdminControllerTest extends BaseWebTestCase
 
     public function testShowUsersByDepartment()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -55,7 +53,6 @@ class UserAdminControllerTest extends BaseWebTestCase
 
     public function testShow()
     {
-
         // TEAM
         $client = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'idaan',

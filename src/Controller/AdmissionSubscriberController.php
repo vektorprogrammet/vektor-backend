@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionSubscriberController extends BaseController
 {
-
     public function subscribePage(Request $request, Department $department)
     {
         $subscriber = new AdmissionSubscriber();

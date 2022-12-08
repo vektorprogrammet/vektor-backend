@@ -293,7 +293,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user->setPicturePath('images/defaultProfile.png');
         $manager->persist($user);
         $this->setReference('user-inactive', $user);
-        
+
         $user10 = new User();
         $user10->setActive('1');
         $user10->setEmail('aaf@b.c');
@@ -489,7 +489,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $this->setReference('user-admin', $userAdmin);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

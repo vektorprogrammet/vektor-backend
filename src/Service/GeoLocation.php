@@ -21,12 +21,14 @@ class GeoLocation
     /**
      * GeoLocation constructor
      */
-    public function __construct(string $ipinfoToken,
-                                $ignoredAsns,
-                                EntityManagerInterface $em,
-                                SessionInterface $session,
-                                RequestStack $requestStack,
-                                LogService $logger)
+    public function __construct(
+        string $ipinfoToken,
+        $ignoredAsns,
+        EntityManagerInterface $em,
+        SessionInterface $session,
+        RequestStack $requestStack,
+        LogService $logger
+    )
     {
         $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);
@@ -129,7 +131,7 @@ class GeoLocation
         }
 
         try {
-            $rawResponse = file_get_contents("http://ipinfo.io/$ip?token={$this->ipinfoToken}");
+            $rawResponse = file_get_contents("https://ipinfo.io/$ip?token={$this->ipinfoToken}");
             $response = json_decode($rawResponse, true);
         } catch (ErrorException $e) {
             $this->logger->warning("Could not get location from 
@@ -197,7 +199,7 @@ class GeoLocation
         return null;
     }
 
-    private function ipIsFromAnIgnoredAsn($response) : bool
+    private function ipIsFromAnIgnoredAsn($response): bool
     {
         if (!isset($response['org'])) {
             return false;

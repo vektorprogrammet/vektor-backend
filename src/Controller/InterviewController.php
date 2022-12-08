@@ -40,10 +40,12 @@ class InterviewController extends BaseController
     private ReversedRoleHierarchy $reversedRoleHierarchy;
     private ApplicationManager $applicationManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher,
-                                InterviewManager $interviewManager,
-                                ReversedRoleHierarchy $reversedRoleHierarchy,
-                                ApplicationManager $applicationManager)
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        InterviewManager $interviewManager,
+        ReversedRoleHierarchy $reversedRoleHierarchy,
+        ApplicationManager $applicationManager
+    )
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->interviewManager = $interviewManager;
@@ -239,7 +241,7 @@ class InterviewController extends BaseController
         $mapLink = $data['mapLink'];
         if ($form->isSubmitted()) {
             if ($mapLink && !(strpos($mapLink, 'http') === 0)) {
-                $mapLink = 'http://' . $mapLink;
+                $mapLink = 'https://' . $mapLink;
             }
         }
         $invalidMapLink = $form->isSubmitted() && !empty($mapLink) && !$this->validateLink($mapLink);

@@ -37,11 +37,14 @@ class ProfileController extends BaseController
     private TokenStorageInterface $tokenStorage;
     private SessionInterface $session;
 
-    public function __construct(RoleManager $roleManager,
-                                LogService $logService,
-                                EventDispatcherInterface $eventDispatcher,
-                                TokenStorageInterface $tokenStorage,
-                                SessionInterface $session) {
+    public function __construct(
+        RoleManager $roleManager,
+        LogService $logService,
+        EventDispatcherInterface $eventDispatcher,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session
+    )
+    {
         $this->RoleManager = $roleManager;
         $this->logService = $logService;
         $this->eventDispatcher = $eventDispatcher;
@@ -233,7 +236,7 @@ class ProfileController extends BaseController
 
         $dompdf->render();
 
-        $dompdf->stream( $filename='attest.pdf');
+        $dompdf->stream($filename='attest.pdf');
 
         return null;
     }

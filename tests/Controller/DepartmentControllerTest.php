@@ -68,7 +68,7 @@ class DepartmentControllerTest extends BaseWebTestCase
         $form['createDepartment[shortName]'] = 'Hgn';
         $form['createDepartment[email]'] = 'Hgn@mail.com';
         $form['createDepartment[address]'] = 'Storgata 9';
-        $form['createDepartment[city]'] = 'Trondheim'; // Not unique!
+        $form['createDepartment[city]'] = 'Oslo'; // Not unique!
 
         // submit the form
         $crawler = $client->submit($form);
@@ -76,7 +76,7 @@ class DepartmentControllerTest extends BaseWebTestCase
         // Assert not redirected
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // Assert body contains validation error
-        $this->assertEquals(1, $crawler->filter('div.invalid-feedback:contains("Verdien er allerede brukt")')->count());
+        $this->assertEquals(1, $crawler->filter('div.invalid-feedback:contains("This value is already used")')->count());
     }
 
     public function testUpdateDepartment()

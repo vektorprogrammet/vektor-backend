@@ -2,7 +2,6 @@
 
 namespace App\Tests\Entity;
 
-
 use App\Entity\AdmissionPeriod;
 use App\Entity\Department;
 use App\Entity\InfoMeeting;
@@ -57,7 +56,6 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     // Check whether the setstartDate function is working correctly
     public function testSetstartDate()
     {
-
         // New datetime variable
         $today = new DateTime('now');
 
@@ -74,7 +72,6 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     // Check whether the setendDate function is working correctly
     public function testSetendDate()
     {
-
         // New datetime variable
         $today = new DateTime('now');
 

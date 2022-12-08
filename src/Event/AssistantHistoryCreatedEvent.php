@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class AssistantHistoryCreatedEvent extends Event
 {
-    const NAME = 'assistant_history.created';
+    public const NAME = 'assistant_history.created';
 
     private $assistantHistory;
 

@@ -93,7 +93,6 @@ class TeamAdminController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             //set the team of the department
             $teamMembership->setTeam($team);
 

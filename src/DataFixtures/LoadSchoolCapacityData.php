@@ -31,7 +31,7 @@ class LoadSchoolCapacityData extends AbstractFixture implements OrderedFixtureIn
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

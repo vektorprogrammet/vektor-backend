@@ -17,6 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AssistantController extends BaseController
 {
@@ -26,11 +27,13 @@ class AssistantController extends BaseController
     private KernelInterface $kernel;
     private EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(ApplicationAdmission $applicationAdmission,
-                                GeoLocation $geoLocation,
-                                FilterService $filterService,
-                                KernelInterface $kernel,
-                                EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        ApplicationAdmission $applicationAdmission,
+        GeoLocation $geoLocation,
+        FilterService $filterService,
+        KernelInterface $kernel,
+        EventDispatcherInterface $eventDispatcher
+    )
     {
         $this->applicationAdmission = $applicationAdmission;
         $this->geoLocation = $geoLocation;
@@ -38,7 +41,29 @@ class AssistantController extends BaseController
         $this->kernel = $kernel;
         $this->eventDispatcher = $eventDispatcher;
     }
-    
+
+    /**
+     * @deprecated This resource is only here to serve old urls (e.g. in old emails)
+     *
+     * @Route("/opptak/{shortName}",
+     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
+     * @Route("/avdeling/{shortName}",
+     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
+     * @Route("/opptak/avdeling/{id}",
+     *     requirements={"id"="\d+"},
+     *     methods={"GET", "POST"}
+     *     )
+     *
+     * @param Request $request
+     * @param Department $department
+     *
+     * @return Response
+     */
+    public function admissionByShortName(Request $request, Department $department): Response
+    {
+        return $this->index($request, $department);
+    }
+
     /**
      * @param Request $request
      * @param $city
@@ -76,9 +101,11 @@ class AssistantController extends BaseController
      *
      * @return Response
      */
-    public function index(Request $request,
-                          Department $specificDepartment = null,
-                          bool $scrollToAdmissionForm = false): Response
+    public function index(
+        Request $request,
+        Department $specificDepartment = null,
+        bool $scrollToAdmissionForm = false
+    ): Response
     {
         $admissionManager = $this->applicationAdmission;
         $em = $this->getDoctrine()->getManager();

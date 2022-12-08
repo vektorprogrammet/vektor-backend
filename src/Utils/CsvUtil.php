@@ -12,7 +12,7 @@ class CsvUtil
      * @param string $csv_string the csv data as a string
      * @return Response a response object
      */
-    public static function makeCsvResponse(string $csv_string):Response
+    public static function makeCsvResponse(string $csv_string): Response
     {
         $response = new Response($csv_string);
         $response->headers->set('Content-Type', 'text/csv');
@@ -28,7 +28,7 @@ class CsvUtil
      * @param $sep - The separator between items. Default: ';'
      * @return string - The finished csv string
      */
-    public static function csvFromTable($columnMap, $rows, string $sep=';'):string
+    public static function csvFromTable($columnMap, $rows, string $sep=';'): string
     {
         //Export the two-dimensional csv array to a csv string
         $content = "";

@@ -61,7 +61,7 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('school-4', $school4);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }
