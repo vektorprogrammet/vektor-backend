@@ -241,7 +241,7 @@ class InterviewController extends BaseController
         $mapLink = $data['mapLink'];
         if ($form->isSubmitted()) {
             if ($mapLink && !(strpos($mapLink, 'http') === 0)) {
-                $mapLink = 'http://' . $mapLink;
+                $mapLink = 'https://' . $mapLink;
             }
         }
         $invalidMapLink = $form->isSubmitted() && !empty($mapLink) && !$this->validateLink($mapLink);

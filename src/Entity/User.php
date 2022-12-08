@@ -580,8 +580,8 @@ class User implements EquatableInterface, UserInterface, Serializable
 
     You may or may not need the code below depending on the algorithm you chose to hash and salt passwords with.
     The methods below are taken from the login guide on Symfony.com, which can be found here:
-    http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-    http://symfony.com/doc/current/cookbook/security/entity_provider.html
+    https://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    https://symfony.com/doc/current/cookbook/security/entity_provider.html
 
 
     */

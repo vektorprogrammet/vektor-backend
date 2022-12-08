@@ -2,7 +2,7 @@
 
 ## Set up development environment
 ### Requirements:
-- [PHP](http://php.net/downloads.php) version 7.4
+- [PHP](https://php.net/downloads.php) version 7.4
 - [Node](https://nodejs.org/en/) version 14
 - [Yarn](https://yarnpkg.com)
 ### Recommended:
