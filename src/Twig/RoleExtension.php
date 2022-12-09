@@ -32,7 +32,7 @@ class RoleExtension extends AbstractExtension
         return 'role_extension';
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('is_granted_assistant', [$this, 'isGrantedAssistant']),
@@ -47,7 +47,7 @@ class RoleExtension extends AbstractExtension
         );
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return array(
             new TwigFilter('get_role_name', [$this, 'getRoleName']),

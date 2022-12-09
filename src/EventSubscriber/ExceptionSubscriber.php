@@ -23,7 +23,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $this->fileLogger = $fileLogger;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             KernelEvents::EXCEPTION => array(

@@ -32,7 +32,7 @@ class AssetExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('asset_with_version', array($this, 'getAssetUrl')),

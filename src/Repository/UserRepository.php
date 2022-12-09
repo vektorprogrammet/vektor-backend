@@ -235,7 +235,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     These functions are used by UserProviderInterface
     */
 
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username): UserInterface
     {
         $q = $this
             ->createQueryBuilder('u')
@@ -259,7 +259,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $user;
     }
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
@@ -274,7 +274,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this->find($user->getId());
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $this->getEntityName() === $class
         || is_subclass_of($class, $this->getEntityName());

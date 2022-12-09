@@ -25,7 +25,7 @@ class TeamInterestSubscriber implements EventSubscriberInterface
         $this->session = $session;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(TeamInterestCreatedEvent::NAME => array(
             array('sendConfirmationMail', 0),
