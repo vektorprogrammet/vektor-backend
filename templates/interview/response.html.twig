@@ -43,7 +43,7 @@
                 <div class="col-12 text-center">
                     <h1 class="mb-0">Status vektorsøknad {{ interview.application.semester.name|lower }}</h1>
                     <img class="profile-photo rounded-circle mt-4 mb-3"
-                         src="{{ asset(interview.user.picturePath | imagine_filter('profile_img_small')) }}">
+                         src="{{ asset(interview.user.picturePath | imagine_filter('profile_img_small')) }}" alt="Profilbilde">
                     <p class="fs-16 mb-0">Søknad for</p>
                     <p class="mt-0 text-bold">{{ interview.user }}</p>
                 </div>
