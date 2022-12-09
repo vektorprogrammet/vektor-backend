@@ -57,6 +57,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $receiptsAfter - $receiptsBefore);
 
         // Teamleader can see it in the receipt table
+        self::ensureKernelShutdown();
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/utlegg');
         $this->assertEquals(1, $crawler->filter('td:contains("assistant@gmail.com")')->count());
     }

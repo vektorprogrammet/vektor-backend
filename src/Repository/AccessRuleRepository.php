@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class AccessRuleRepository extends EntityRepository
 {
-    public function findAll()
+    public function findAll(): array
     {
         return $this
             ->createQueryBuilder('rule')
