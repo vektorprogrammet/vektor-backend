@@ -15,11 +15,6 @@ home:
     controller: App\Controller\HomeController::show
     methods: [GET]
 
-home_post:
-    path: /
-    controller: App\Controller\HomeController::post
-    methods: [POST]
-
 about:
     path: /omvektor
     controller: App\Controller\PublicStaticPageController::showAboutPage

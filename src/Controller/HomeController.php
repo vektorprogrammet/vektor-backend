@@ -30,9 +30,4 @@ class HomeController extends BaseController
             'closestDepartment' => $closestDepartment,
         ]);
     }
-
-    public function post(): RedirectResponse
-    {
-        return $this->redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1", 301);
-    }
 }
