@@ -6,7 +6,10 @@ Opptaksstatistikk
 
 {% block javascripts %}
 {{ parent() }}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"
+        integrity="sha384-kxrh5D1Y4/UUilbzWQVzWKHpYwFGsB/TNcIDzWgUrV2bS0HzGDEdFq/dipr3Mgrd"
+        crossorigin="anonymous">
+</script>
 {% include 'statistics/chart_script.html.twig' %}
 {% endblock %}
 
