@@ -12,7 +12,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setEmail function is working correctly
     public function testSetEmail()
     {
-
         // new entity
         $user = new User();
 
@@ -26,7 +25,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setActive function is working correctly
     public function testsetActive()
     {
-
         // new entity
         $user = new User();
 
@@ -40,7 +38,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setLastName function is working correctly
     public function testSetLastName()
     {
-
         // new entity
         $user = new User();
 
@@ -54,7 +51,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setFirstname function is working correctly
     public function testSetFirstname()
     {
-
         // new entity
         $user = new User();
 
@@ -68,7 +64,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setGender function is working correctly
     public function testSetGender()
     {
-
         // new entity
         $user = new User();
 
@@ -82,7 +77,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setPicturePath function is working correctly
     public function testSetPicturePath()
     {
-
         // new entity
         $user = new User();
 
@@ -96,7 +90,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setPhone function is working correctly
     public function testSetPhone()
     {
-
         // new entity
         $user = new User();
 
@@ -110,7 +103,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setUserName function is working correctly
     public function testSetUserName()
     {
-
         // new entity
         $user = new User();
 
@@ -118,13 +110,12 @@ class UserEntityUnitTest extends TestCase
         $user->setUserName('petjo123');
 
         // Assert the result
-        $this->assertEquals('petjo123', $user->getUserName());
+        $this->assertEquals('petjo123', $user->getUserIdentifier());
     }
 
     // Check whether the setFieldOfStudy function is working correctly
     public function testSetFieldOfStudy()
     {
-
         // new entity
         $user = new User();
 
@@ -142,7 +133,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the addRole function is working correctly
     public function testAddRole()
     {
-
         // new entity
         $user = new User();
 
@@ -161,7 +151,6 @@ class UserEntityUnitTest extends TestCase
     // Check whether the setNewUserCode function is working correctly
     public function testSetNewUserCode()
     {
-
         // new entity
         $user = new User();
 

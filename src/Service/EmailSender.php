@@ -12,13 +12,22 @@ use Twig\Environment;
 
 class EmailSender
 {
-    private $mailer;
-    private $twig;
-    private $defaultEmail;
-    private $economyEmail;
-    private $router;
+    private MailerInterface $mailer;
+    private Environment $twig;
+    private string $defaultEmail;
+    private string $economyEmail;
+    private RouterInterface $router;
 
-    public function __construct(MailerInterface $mailer, Environment $twig, RouterInterface $router, string $defaultEmail, string $economyEmail)
+    /**
+     * EmailSender constructor
+     */
+    public function __construct(
+        MailerInterface $mailer,
+        Environment $twig,
+        RouterInterface $router,
+        string $defaultEmail,
+        string $economyEmail
+    )
     {
         $this->mailer = $mailer;
         $this->twig = $twig;

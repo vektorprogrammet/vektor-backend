@@ -55,7 +55,6 @@ class TeamAdminControllerTest extends BaseWebTestCase
 
     public function testShowPositions()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -109,7 +108,6 @@ class TeamAdminControllerTest extends BaseWebTestCase
 
     public function testUpdateTeam()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -153,7 +151,6 @@ class TeamAdminControllerTest extends BaseWebTestCase
 
     public function testShowTeamsByDepartment()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 

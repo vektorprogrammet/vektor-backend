@@ -13,13 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SchoolCapacityController extends BaseController
 {
-
     /**
      * @param Request $request
      *
      * @return RedirectResponse|Response
-     * @throws NoResultException
-     * @throws NonUniqueResultException
      */
     public function create(Request $request)
     {

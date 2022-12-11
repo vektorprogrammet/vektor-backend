@@ -12,9 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Receipt
 {
-    const STATUS_PENDING = 'pending';
-    const STATUS_REFUNDED = 'refunded';
-    const STATUS_REJECTED = 'rejected';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_REFUNDED = 'refunded';
+    public const STATUS_REJECTED = 'rejected';
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

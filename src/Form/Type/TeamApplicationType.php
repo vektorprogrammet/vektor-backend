@@ -54,7 +54,7 @@ class TeamApplicationType extends AbstractType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'app_bundle_team_application_type';
     }

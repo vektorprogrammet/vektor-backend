@@ -4,33 +4,29 @@ namespace App\Role;
 
 class Roles
 {
-    const ASSISTANT = 'ROLE_USER';
-    const TEAM_MEMBER = 'ROLE_TEAM_MEMBER';
-    const TEAM_LEADER = 'ROLE_TEAM_LEADER';
-    const ADMIN = 'ROLE_ADMIN';
+    public const ASSISTANT = 'ROLE_USER';
+    public const TEAM_MEMBER = 'ROLE_TEAM_MEMBER';
+    public const TEAM_LEADER = 'ROLE_TEAM_LEADER';
+    public const ADMIN = 'ROLE_ADMIN';
 
-    const ALIAS_ASSISTANT = 'assistant';
-    const ALIAS_TEAM_MEMBER = 'team_member';
-    const ALIAS_TEAM_LEADER = 'team_leader';
-    const ALIAS_ADMIN = 'admin';
+    public const ALIAS_ASSISTANT = 'assistant';
+    public const ALIAS_TEAM_MEMBER = 'team_member';
+    public const ALIAS_TEAM_LEADER = 'team_leader';
+    public const ALIAS_ADMIN = 'admin';
 
-    static function GetRoleName($role)
+    public static function GetRoleName($role)
     {
         $roleName = "";
-        if($role === Roles::ASSISTANT)
-        {
+        if ($role === Roles::ASSISTANT) {
             $roleName = "Bruker";
         }
-        if($role === Roles::TEAM_MEMBER)
-        {
+        if ($role === Roles::TEAM_MEMBER) {
             $roleName = "Teammedlem";
         }
-        if($role === Roles::TEAM_LEADER)
-        {
+        if ($role === Roles::TEAM_LEADER) {
             $roleName = "Teamleder";
         }
-        if($role === Roles::ADMIN)
-        {
+        if ($role === Roles::ADMIN) {
             $roleName = "Admin";
         }
         return $roleName;

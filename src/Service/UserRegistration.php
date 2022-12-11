@@ -11,16 +11,12 @@ use Twig\Environment;
 
 class UserRegistration
 {
-    private $twig;
-    private $em;
-    private $mailer;
+    private Environment $twig;
+    private EntityManagerInterface $em;
+    private MailerInterface $mailer;
 
     /**
-     * UserRegistration constructor.
-     *
-     * @param Environment $twig
-     * @param EntityManagerInterface     $em
-     * @param MailerInterface   $mailer
+     * UserRegistration constructor
      */
     public function __construct(Environment $twig, EntityManagerInterface $em, MailerInterface $mailer)
     {
@@ -29,7 +25,7 @@ class UserRegistration
         $this->mailer = $mailer;
     }
 
-    public function setNewUserCode(User $user)
+    public function setNewUserCode(User $user): string
     {
         $newUserCode = bin2hex(openssl_random_pseudo_bytes(16));
         $hashedNewUserCode = hash('sha512', $newUserCode, false);
@@ -41,7 +37,7 @@ class UserRegistration
         return $newUserCode;
     }
 
-    public function createActivationEmail(User $user, $newUserCode)
+    public function createActivationEmail(User $user, $newUserCode): Swift_Message
     {
         return (new Swift_Message())
             ->setSubject('Velkommen til Vektorprogrammet!')
@@ -66,7 +62,7 @@ class UserRegistration
         return hash('sha512', $newUserCode, false);
     }
 
-    public function activateUserByNewUserCode(string $newUserCode)
+    public function activateUserByNewUserCode(string $newUserCode): ?User
     {
         $hashedNewUserCode = $this->getHashedCode($newUserCode);
         $user = $this->em->getRepository(User::class)->findUserByNewUserCode($hashedNewUserCode);
@@ -74,7 +70,7 @@ class UserRegistration
             return null;
         }
 
-        if ($user->getUserName() === null) {
+        if ($user->getUserIdentifier() === null) {
             // Set default username to email
             $user->setUserName($user->getEmail());
         }

@@ -1,5 +1,5 @@
 {
-  "name": "vektorprogrammet",
+  "name": "vektor-backend",
   "version": "1.0.0",
   "description": "Vektorprogrammets homepage",
   "main": " ",
@@ -53,7 +53,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vektorprogrammet/webpage/issues"
+    "url": "https://github.com/vektorprogrammet/vektor-backend/issues"
   },
-  "homepage": "https://github.com/vektorprogrammet/webpage#readme"
+  "homepage": "https://github.com/vektorprogrammet/vektor-backend#readme"
 }

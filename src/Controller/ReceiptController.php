@@ -13,28 +13,25 @@ use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
 use DateTime;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReceiptController extends BaseController
 {
-    private $sorter;
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var RoleManager
-     */
-    private $roleManager;
+    private Sorter $sorter;
+    private FileUploader $fileUploader;
+    private EventDispatcherInterface $eventDispatcher;
+    private RoleManager $roleManager;
 
-    public function __construct(Sorter $sorter, FileUploader $fileUploader,
-                                EventDispatcherInterface $eventDispatcher, RoleManager $roleManager)
+    public function __construct(
+        Sorter $sorter,
+        FileUploader $fileUploader,
+        EventDispatcherInterface $eventDispatcher,
+        RoleManager $roleManager
+    )
     {
         $this->sorter=$sorter;
         $this->fileUploader=$fileUploader;
@@ -42,7 +39,7 @@ class ReceiptController extends BaseController
         $this->roleManager = $roleManager;
     }
 
-    public function show()
+    public function show(): Response
     {
         $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
         $refundedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
@@ -72,7 +69,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function showIndividual(User $user)
+    public function showIndividual(User $user): Response
     {
         $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($user);
 
@@ -123,7 +120,6 @@ class ReceiptController extends BaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()&& $receipt->getPicturePath() == "") {
-
             $this->addFlash('warning', "Bildefilen er for stor. Maks størrelse er 2 MiB.");
         }
 
@@ -180,7 +176,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function editStatus(Request $request, Receipt $receipt)
+    public function editStatus(Request $request, Receipt $receipt): RedirectResponse
     {
         $status = $request->get('status');
         if ($status !== Receipt::STATUS_PENDING &&
@@ -202,7 +198,7 @@ class ReceiptController extends BaseController
         $em->flush();
 
         if ($status === Receipt::STATUS_REFUNDED) {
-            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt),ReceiptEvent::REFUNDED);
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::REFUNDED);
         } elseif ($status === Receipt::STATUS_REJECTED) {
             $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::REJECTED);
         } elseif ($status === Receipt::STATUS_PENDING) {
@@ -250,7 +246,7 @@ class ReceiptController extends BaseController
         ));
     }
 
-    public function delete(Request $request, Receipt $receipt)
+    public function delete(Request $request, Receipt $receipt): RedirectResponse
     {
         $user = $this->getUser();
         $isTeamLeader = $this->roleManager->userIsGranted($user, Roles::TEAM_LEADER);

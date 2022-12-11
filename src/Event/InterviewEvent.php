@@ -7,8 +7,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class InterviewEvent extends Event
 {
-    const SCHEDULE = 'interview.schedule';
-    const COASSIGN = 'interview.coassign';
+    public const SCHEDULE = 'interview.schedule';
+    public const COASSIGN = 'interview.coassign';
 
     private $interview;
     private $data;

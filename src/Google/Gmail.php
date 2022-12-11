@@ -20,7 +20,7 @@ class Gmail extends GoogleService implements MailerInterface
             }
             return;
         }
-        
+
         $message->setFrom([$this->defaultEmail => "Vektorprogrammet"]);
 
         $client = $this->getClient();
@@ -78,7 +78,7 @@ class Gmail extends GoogleService implements MailerInterface
         $mime = rtrim(strtr(base64_encode($strRawMessage), '+/', '-_'), '=');
         $msg = new Google_Service_Gmail_Message();
         $msg->setRaw($mime);
-        
+
         return $msg;
     }
 

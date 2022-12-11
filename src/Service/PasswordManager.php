@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\PasswordReset;
@@ -13,16 +12,12 @@ use Twig\Environment;
 
 class PasswordManager
 {
-    private $em;
-    private $mailer;
-    private $twig;
+    private EntityManagerInterface $em;
+    private MailerInterface $mailer;
+    private Environment $twig;
 
     /**
-     * PasswordManager constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param MailerInterface $mailer
-     * @param Environment $twig
+     * PasswordManager constructor
      */
     public function __construct(EntityManagerInterface $em, MailerInterface $mailer, Environment $twig)
     {

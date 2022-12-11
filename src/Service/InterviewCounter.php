@@ -8,9 +8,9 @@ use App\Entity\InterviewDistribution;
 
 class InterviewCounter
 {
-    const YES = 'Ja';
-    const MAYBE = 'Kanskje';
-    const NO = 'Nei';
+    public const YES = 'Ja';
+    public const MAYBE = 'Kanskje';
+    public const NO = 'Nei';
 
     /**
      * @param Application[] $applications
@@ -18,7 +18,7 @@ class InterviewCounter
      *
      * @return int
      */
-    public function count(array $applications, string $suitable)
+    public function count(array $applications, string $suitable): int
     {
         $count = 0;
 
@@ -43,7 +43,7 @@ class InterviewCounter
      *
      * @return array
      */
-    public function createInterviewDistributions(array $applications, AdmissionPeriod $admissionPeriod)
+    public function createInterviewDistributions(array $applications, AdmissionPeriod $admissionPeriod): array
     {
         $interviewDistributions = array();
 

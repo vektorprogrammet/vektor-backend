@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationStatisticsController extends BaseController
 {
-    private $AssistantHistoryData;
-    private $ApplicationData;
+    private AssistantHistoryData $AssistantHistoryData;
+    private ApplicationData $ApplicationData;
 
     public function __construct(AssistantHistoryData $assistantHistoryData, ApplicationData $applicationData)
     {
@@ -24,7 +24,7 @@ class ApplicationStatisticsController extends BaseController
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function show(Request $request)
+    public function show(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

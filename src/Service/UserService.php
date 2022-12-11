@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\User;
@@ -8,11 +7,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserService
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
+    /**
+     * UserService constructor
+     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
@@ -21,7 +20,7 @@ class UserService
     /**
      * @return null|User
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): ?User
     {
         $token = $this->tokenStorage->getToken();
         if (!$token) {
@@ -35,7 +34,7 @@ class UserService
         return $user;
     }
 
-    public function getCurrentUserName() : string
+    public function getCurrentUserName(): string
     {
         $user = $this->getCurrentUser();
         if (!$user) {
@@ -45,7 +44,7 @@ class UserService
         return $user->__toString();
     }
 
-    public function getCurrentUserNameAndDepartment() : string
+    public function getCurrentUserNameAndDepartment(): string
     {
         $user = $this->getCurrentUser();
         if (!$user) {
@@ -56,7 +55,7 @@ class UserService
         return $user->__toString() . " ($department)";
     }
 
-    public function getCurrentProfilePicture() : string
+    public function getCurrentProfilePicture(): string
     {
         $user = $this->getCurrentUser();
 

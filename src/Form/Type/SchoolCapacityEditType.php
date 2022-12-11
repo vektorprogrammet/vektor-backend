@@ -17,7 +17,7 @@ class SchoolCapacityEditType extends AbstractType
             ->add('wednesday', IntegerType::class)
             ->add('thursday', IntegerType::class)
             ->add('friday', IntegerType::class)
-            ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -27,7 +27,7 @@ class SchoolCapacityEditType extends AbstractType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'schoolCapacity';
     }

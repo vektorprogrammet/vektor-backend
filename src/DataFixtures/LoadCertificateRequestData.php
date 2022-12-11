@@ -19,7 +19,7 @@ class LoadCertificateRequestData extends AbstractFixture implements OrderedFixtu
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }

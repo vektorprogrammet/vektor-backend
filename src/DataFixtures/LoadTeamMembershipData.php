@@ -110,7 +110,7 @@ class LoadTeamMembershipData extends AbstractFixture implements OrderedFixtureIn
         $this->addReference('tm-3', $tm3);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }

@@ -5,28 +5,20 @@ namespace App\Controller;
 use App\Entity\Sponsor;
 use App\Form\Type\SponsorType;
 use App\Service\FileUploader;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SponsorsController extends BaseController
 {
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
+    private FileUploader $fileUploader;
 
-    public function __construct(FileUploader $fileUploader){
+    public function __construct(FileUploader $fileUploader)
+    {
         $this->fileUploader = $fileUploader;
     }
 
-    /**
-     * @Route("/kontrollpanel/sponsorer", name="sponsors_show")
-     *
-     * @return Response
-     */
-    public function sponsorsShow()
+    public function sponsorsShow(): Response
     {
         $sponsors = $this->getDoctrine()
             ->getRepository(Sponsor::class)
@@ -37,14 +29,6 @@ class SponsorsController extends BaseController
         ));
     }
 
-    /**
-     * @Route("/kontrollpanel/sponsor/create", name="sponsor_create")
-     * @Route("/kontrollpanel/sponsor/edit/{id}", name="sponsor_edit")
-     * @param Sponsor|null $sponsor
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     public function sponsorEdit(Sponsor $sponsor = null, Request $request)
     {
         $isCreate = $sponsor === null;
@@ -86,13 +70,7 @@ class SponsorsController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/kontrollpanel/sponsor/delete/{id}", name="sponsor_delete")
-     * @param Sponsor $sponsor
-     *
-     * @return RedirectResponse
-     */
-    public function deleteSponsor(Sponsor $sponsor)
+    public function deleteSponsor(Sponsor $sponsor): RedirectResponse
     {
         if ($sponsor->getLogoImagePath()) {
             $this->fileUploader->deleteSponsor($sponsor->getLogoImagePath());

@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ApplicationCreatedEvent extends Event
 {
-    const NAME = 'application.admission';
+    public const NAME = 'application.admission';
 
     private $application;
 

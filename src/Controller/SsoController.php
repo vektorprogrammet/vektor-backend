@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SsoController extends BaseController
 {
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $response = new JsonResponse();
 
@@ -46,7 +46,7 @@ class SsoController extends BaseController
 
         return new JsonResponse([
             'name' => $user->getFullName(),
-            'username' => $user->getUsername(),
+            'username' => $user->getUserIdentifier(),
             'email' => $user->getEmail(),
             'companyEmail' => $user->getCompanyEmail(),
         ]);

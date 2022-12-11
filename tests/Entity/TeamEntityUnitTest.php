@@ -12,7 +12,6 @@ class TeamEntityUnitTest extends TestCase
     // Check whether the setName function is working correctly
     public function testSetName()
     {
-
         // new entity
         $team = new Team();
 
@@ -26,7 +25,6 @@ class TeamEntityUnitTest extends TestCase
     // Check whether the setDepartment function is working correctly
     public function testSetDepartment()
     {
-
         // new entity
         $team = new Team();
 

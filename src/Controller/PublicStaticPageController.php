@@ -2,27 +2,25 @@
 
 namespace App\Controller;
 
-class PublicStaticPageController extends BaseController {
+use Symfony\Component\HttpFoundation\Response;
 
+class PublicStaticPageController extends BaseController
+{
     // AboutVektorController
-    public function showAboutPage()
+    public function showAboutPage(): Response
     {
         return $this->render('about/about_vektor.html.twig');
     }
 
     // TeacherController
-    public function showTeacherPage()
+    public function showTeacherPage(): Response
     {
         return $this->render('teacher/index.html.twig');
     }
 
     // ParentsController
-    public function showParentsPage()
+    public function showParentsPage(): Response
     {
         return $this->render('/parents/parents.html.twig');
     }
-
 }
-
-
-

@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use App\Tests\BaseWebTestCase;
-use Symfony\Bundle\FrameworkBundle\Client;
 
 class PasswordResetControllerTest extends BaseWebTestCase
 {
@@ -19,13 +18,14 @@ class PasswordResetControllerTest extends BaseWebTestCase
      */
     private function loginSuccessful($password)
     {
-        $crawler = $this->anonymousGoTo('/login');
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/login');
 
         $form = $crawler->selectButton('Logg inn')->form();
         $form['_username'] = self::username;
         $form['_password'] = $password;
         $form['_remember_me'] = false;
-        $client = $this->createAnonymousClient();
         $client->submit($form);
 
         $crawler = $client->request('GET', '/');
@@ -42,13 +42,16 @@ class PasswordResetControllerTest extends BaseWebTestCase
     private function getResetLink(string $email)
     {
         // Test that we're getting the right page
-        $crawler = $this->anonymousGoTo('/resetpassord');
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/resetpassord');
         $this->assertEquals(1, $crawler->filter('h1:contains("Tilbakestill passord")')->count());
 
         // Fill in form and
         $form = $crawler->selectButton('Tilbakestill passord')->form();
         $form['passwordReset[email]'] = $email;
-        $client = $this->createAnonymousClient();
+
+        //$client = $this->createAnonymousClient();
         $client->enableProfiler();
         $client->submit($form);
 
@@ -66,10 +69,7 @@ class PasswordResetControllerTest extends BaseWebTestCase
         return substr($body, $start, $end);
     }
 
-    /**
-     * @param $client Client with profiler enabled
-     */
-    private function assertNoEmailSent(Client $client)
+    private function assertNoEmailSent($client)
     {
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
         $this->assertEquals(0, $mailCollector->getMessageCount());
@@ -80,12 +80,15 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $resetLink = $this->getResetLink(self::email);
 
         // Reset password
-        $crawler = $this->anonymousGoTo($resetLink);
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+        $crawler = $client->request('GET', $resetLink);
+
         $this->assertEquals(1, $crawler->filter('h1:contains("Lag nytt passord")')->count());
         $form = $crawler->selectButton('Lagre nytt passord')->first()->form();
         $form['newPassword[password][first]'] = self::newPass;
         $form['newPassword[password][second]'] = self::newPass;
-        $client = $this->createAnonymousClient();
+
         $client->submit($form);
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
@@ -96,16 +99,18 @@ class PasswordResetControllerTest extends BaseWebTestCase
 
     public function testInvalidEmail()
     {
-        $crawler = $this->anonymousGoTo('/resetpassord');
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/resetpassord');
+
         $form = $crawler->selectButton('Tilbakestill passord')->form();
         $form['passwordReset[email]'] = 'invalid@email.com';
-
-        $client = $this->createAnonymousClient();
         $client->enableProfiler();
         $crawler = $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('html:contains("Det finnes ingen brukere med denne e-postadressen")')->count());
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $content = $client->getResponse()->getContent();
+
+        $this->assertStringContainsString('Det finnes ingen brukere med denne e-postadressen', $content);
         $this->assertNoEmailSent($client);
     }
 
@@ -114,15 +119,19 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $resetLink = $this->getResetLink(self::email);
 
         // Reset password
-        $crawler = $this->anonymousGoTo($resetLink);
+        self::ensureKernelShutdown();
+        $client = self::createClient();
+
+        $crawler = $client->request('GET', $resetLink);
         $form = $crawler->selectButton('Lagre nytt passord')->first()->form();
         $form['newPassword[password][first]'] = self::newPass;
         $form['newPassword[password][second]'] = self::newPass;
-        $client = $this->createAnonymousClient();
+
         $client->submit($form);
 
         // Try to reset password again
-        $crawler = $this->anonymousGoTo($resetLink);
+        $crawler = $client->request('GET', $resetLink);
+
         $this->assertEquals(1, $crawler->filter('html:contains("Ugyldig kode")')->count());
     }
 

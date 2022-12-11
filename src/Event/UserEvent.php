@@ -7,10 +7,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
 {
-    const CREATED = 'user.created';
-    const EDITED = 'user.edited';
-    const DELETED = 'user.deleted';
-    const COMPANY_EMAIL_EDITED = 'user.company_email_edited';
+    public const CREATED = 'user.created';
+    public const EDITED = 'user.edited';
+    public const DELETED = 'user.deleted';
+    public const COMPANY_EMAIL_EDITED = 'user.company_email_edited';
 
     private $user;
     private $oldEmail;

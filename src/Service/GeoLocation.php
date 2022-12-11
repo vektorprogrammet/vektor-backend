@@ -11,27 +11,24 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GeoLocation
 {
-    private $ipinfoToken;
+    private string $ipinfoToken;
     private $departmentRepo;
-    private $session;
-    private $requestStack;
-    private $logger;
-    /**
-     * @var array
-     */
+    private SessionInterface $session;
+    private RequestStack $requestStack;
+    private LogService $logger;
     private $ignoredAsns;
 
     /**
-     * GeoLocation constructor.
-     *
-     * @param string $ipinfoToken
-     * @param array $ignoredAsns
-     * @param EntityManagerInterface $em
-     * @param SessionInterface $session
-     * @param RequestStack $requestStack
-     * @param LogService $logger
+     * GeoLocation constructor
      */
-    public function __construct(string $ipinfoToken, $ignoredAsns, EntityManagerInterface $em, SessionInterface $session, RequestStack $requestStack, LogService $logger)
+    public function __construct(
+        string $ipinfoToken,
+        $ignoredAsns,
+        EntityManagerInterface $em,
+        SessionInterface $session,
+        RequestStack $requestStack,
+        LogService $logger
+    )
     {
         $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);
@@ -46,7 +43,7 @@ class GeoLocation
      * @return Department
      * @throws InvalidArgumentException
      */
-    public function findNearestDepartment($departments)
+    public function findNearestDepartment(array $departments): Department
     {
         if (empty($departments)) {
             throw new InvalidArgumentException('$departments cannot be empty');
@@ -90,7 +87,7 @@ class GeoLocation
      * @param Department[] $departments
      * @return Department[] $departments
      */
-    public function sortDepartmentsByDistanceFromClient($departments)
+    public function sortDepartmentsByDistanceFromClient(array $departments): array
     {
 //        $ip = '158.39.3.40'; // Oslo
 //        $ip = '146.185.181.87'; // Server location (Amsterdam)
@@ -123,8 +120,13 @@ class GeoLocation
 
     public function findCoordinates($ip)
     {
-        $ignoreGeo = $this->requestStack->getMasterRequest()->headers->get('ignore-geo');
+        $ignoreGeo = $this->requestStack->getMainRequest()->headers->get('ignore-geo');
         if (!$this->ipinfoToken || $ignoreGeo) {
+            return null;
+        }
+
+        // Ensure that ip address is valid
+        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
             return null;
         }
 
@@ -134,7 +136,7 @@ class GeoLocation
         }
 
         try {
-            $rawResponse = file_get_contents("http://ipinfo.io/$ip?token={$this->ipinfoToken}");
+            $rawResponse = file_get_contents("https://ipinfo.io/$ip?token={$this->ipinfoToken}");
             $response = json_decode($rawResponse, true);
         } catch (ErrorException $e) {
             $this->logger->warning("Could not get location from 
@@ -174,7 +176,7 @@ class GeoLocation
         return $coords;
     }
 
-    public function distance(float $fromLat, float $fromLon, float $toLat, float $toLon)
+    public function distance(float $fromLat, float $fromLon, float $toLat, float $toLon): float
     {
         $theta = $fromLon - $toLon;
         $dist = sin(deg2rad($fromLat)) * sin(deg2rad($toLat)) +  cos(deg2rad($fromLat)) * cos(deg2rad($toLat)) * cos(deg2rad($theta));
@@ -198,12 +200,11 @@ class GeoLocation
             return $request->server->get('HTTP_FORWARDED');
         } elseif ($request->server->get('REMOTE_ADDR') !== null) {
             return $request->server->get('REMOTE_ADDR');
-        } else {
-            return null;
         }
+        return null;
     }
 
-    private function ipIsFromAnIgnoredAsn($response) : bool
+    private function ipIsFromAnIgnoredAsn($response): bool
     {
         if (!isset($response['org'])) {
             return false;

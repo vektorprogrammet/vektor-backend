@@ -19,7 +19,6 @@ use App\Utils\SemesterUtil;
  */
 class TeamMembershipRepository extends EntityRepository
 {
-
     /**
      * @param Team $team
      *
@@ -106,7 +105,7 @@ class TeamMembershipRepository extends EntityRepository
      * @param Semester $semester
      * @return TeamMembership[]
      */
-    public function filterNotInSemester(array $teamMemberships, Semester $semester) : array
+    public function filterNotInSemester(array $teamMemberships, Semester $semester): array
     {
         return array_filter($teamMemberships, function (TeamMembership $teamMembership) use ($semester) {
             return $semester->isBetween($teamMembership->getStartSemester(), $teamMembership->getEndSemester());

@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
 use App\Service\RoleManager;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CreateExecutiveBoardType;
 use App\Form\Type\CreateExecutiveBoardMembershipType;
@@ -14,17 +14,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExecutiveBoardController extends BaseController
 {
-    /**
-     * @var RoleManager
-     */
-    private $roleManager;
+    private RoleManager $roleManager;
 
     public function __construct(RoleManager $roleManager)
     {
         $this->roleManager = $roleManager;
     }
 
-    public function show()
+    public function show(): Response
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
@@ -33,7 +30,7 @@ class ExecutiveBoardController extends BaseController
         ));
     }
 
-    public function showAdmin()
+    public function showAdmin(): Response
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
         $members = $this->getDoctrine()->getRepository(ExecutiveBoardMembership::class)->findAll();
@@ -90,7 +87,7 @@ class ExecutiveBoardController extends BaseController
         ));
     }
 
-    public function removeUserFromBoardById(ExecutiveBoardMembership $member)
+    public function removeUserFromBoardById(ExecutiveBoardMembership $member): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($member);
@@ -134,18 +131,12 @@ class ExecutiveBoardController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/hovedstyret/rediger_medlem/{id}",
-     *     name="edit_executive_board_membership",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     * )
-     *
      * @param Request $request
      * @param ExecutiveBoardMembership $member
      *
      * @return Response
      */
-    public function editMemberHistory(Request $request, ExecutiveBoardMembership $member)
+    public function editMemberHistory(Request $request, ExecutiveBoardMembership $member): Response
     {
         $user = $member->getUser(); // Store the $user object before the form touches our $member object with spooky user data
         $form = $this->createForm(CreateExecutiveBoardMembershipType::class, $member, [

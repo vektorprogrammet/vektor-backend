@@ -20,7 +20,7 @@ class GatewayAPI implements SmsSenderInterface
         $this->apiToken = $smsOptions['api_token'];
         $this->countryCode = $smsOptions['country_code'];
     }
-    
+
     public function send(Sms $sms)
     {
         if (strlen($sms->getMessage()) > $this->maxLength) {

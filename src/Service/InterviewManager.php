@@ -23,37 +23,30 @@ use Twig\Environment;
 
 class InterviewManager
 {
-    private $tokenStorage;
-    private $authorizationChecker;
-    private $mailer;
-    private $twig;
-    private $logger;
-    private $em;
-    private $router;
-    private $smsSender;
+    private TokenStorageInterface $tokenStorage;
+    private AuthorizationCheckerInterface $authorizationChecker;
+    private Mailer $mailer;
+    private Environment $twig;
+    private LoggerInterface $logger;
+    private EntityManagerInterface $em;
+    private RouterInterface $router;
+    private SmsSenderInterface $smsSender;
 
     private const MAX_NUM_ACCEPT_INTERVIEW_REMINDERS_SENT = 3;
 
     /**
-     * InterviewManager constructor.
-     *
-     * @param TokenStorageInterface $tokenStorage
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param Mailer $mailer
-     * @param Environment $twig
-     * @param LoggerInterface $logger
-     * @param EntityManagerInterface $em
-     * @param RouterInterface $router
-     * @param SmsSenderInterface $smsSender
+     * InterviewManager constructor
      */
-    public function __construct(TokenStorageInterface $tokenStorage,
-                                AuthorizationCheckerInterface $authorizationChecker,
-                                Mailer $mailer,
-                                Environment $twig,
-                                LoggerInterface $logger,
-                                EntityManagerInterface $em,
-                                RouterInterface $router,
-                                SmsSenderInterface $smsSender)
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        AuthorizationCheckerInterface $authorizationChecker,
+        Mailer $mailer,
+        Environment $twig,
+        LoggerInterface $logger,
+        EntityManagerInterface $em,
+        RouterInterface $router,
+        SmsSenderInterface $smsSender
+    )
     {
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
@@ -86,7 +79,7 @@ class InterviewManager
      *
      * @return Interview
      */
-    public function initializeInterviewAnswers(Interview $interview)
+    public function initializeInterviewAnswers(Interview $interview): Interview
     {
         $existingAnswers = $interview->getInterviewAnswers();
         if (!is_array($existingAnswers)) {
@@ -184,7 +177,7 @@ class InterviewManager
                     ),
                     'text/html'
                 );
-          
+
             $this->mailer->send($message);
         }
     }

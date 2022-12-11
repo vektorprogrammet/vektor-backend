@@ -8,8 +8,11 @@ use Swift_Message;
 
 class SlackMailer implements MailerInterface
 {
-    private $messenger;
+    private SlackMessenger $messenger;
 
+    /**
+     * SlackMailer constructor
+     */
     public function __construct(SlackMessenger $messenger)
     {
         $this->messenger = $messenger;
@@ -25,7 +28,7 @@ class SlackMailer implements MailerInterface
 
         $from = $message->getFrom();
         $attachment->setFooter("From: " . (!is_array($from) ? $from : current($from) . " - " . key($from)));
-        
+
         $slackMessage->setText("Email sent");
         $slackMessage->setAttachments([$attachment]);
 

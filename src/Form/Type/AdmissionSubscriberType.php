@@ -43,7 +43,7 @@ class AdmissionSubscriberType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'app_bundle_admission_subscriber_type';
     }

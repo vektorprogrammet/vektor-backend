@@ -44,7 +44,7 @@ class LoadExecutiveBoardMembershipData extends AbstractFixture implements Ordere
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }

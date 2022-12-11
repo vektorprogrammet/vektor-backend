@@ -1,17 +1,16 @@
 <?php
 
-
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ContentModeManager
 {
-    /**
-     * @var SessionInterface
-     */
-    private $session;
+    private SessionInterface $session;
 
+    /**
+     * ContentModeManager constructor
+     */
     public function __construct(SessionInterface $session)
     {
         $this->session = $session;

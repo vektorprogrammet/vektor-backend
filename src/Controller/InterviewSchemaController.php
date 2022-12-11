@@ -65,7 +65,7 @@ class InterviewSchemaController extends BaseController
      *
      * @return Response
      */
-    public function showSchemas()
+    public function showSchemas(): Response
     {
         $schemas = $this->getDoctrine()->getRepository(InterviewSchema::class)->findAll();
 
@@ -80,7 +80,7 @@ class InterviewSchemaController extends BaseController
      *
      * @return JsonResponse
      */
-    public function deleteSchema(InterviewSchema $schema)
+    public function deleteSchema(InterviewSchema $schema): JsonResponse
     {
         try {
             if ($this->isGranted(Roles::TEAM_LEADER)) {

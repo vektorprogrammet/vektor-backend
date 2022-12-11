@@ -22,15 +22,15 @@ security:
                 providers: [db_username, db_email, db_company_email]
         db_username:
             entity:
-                class: App:User
+                class: App\Entity\User
                 property: user_name
         db_email:
             entity:
-                class: App:User
+                class: App\Entity\User
                 property: email
         db_company_email:
             entity:
-                class: app:User
+                class: App\Entity\User
                 property: companyEmail
     firewalls:
         dev:

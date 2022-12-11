@@ -56,7 +56,7 @@ class CreateSchoolType extends AbstractType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'createSchool';
     }

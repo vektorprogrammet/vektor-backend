@@ -25,7 +25,7 @@ class UserCompanyEmailType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'app_bundle_user_company_email_type';
     }

@@ -11,7 +11,6 @@ class SchoolEntityUnitTest extends TestCase
     // Check whether the setName function is working correctly
     public function testSetName()
     {
-
         // new entity
         $school = new School();
 
@@ -25,7 +24,6 @@ class SchoolEntityUnitTest extends TestCase
     // Check whether the setContactPerson unction is working correctly
     public function testSetContactPerson()
     {
-
         // new entity
         $school = new School();
 
@@ -39,7 +37,6 @@ class SchoolEntityUnitTest extends TestCase
     // Check whether the addDepartment function is working correctly
     public function testAddDepartment()
     {
-
         // new entity
         $school = new School();
 
@@ -65,7 +62,6 @@ class SchoolEntityUnitTest extends TestCase
     // Check whether the removeDepartment function is working correctly
     public function testRemoveDepartment()
     {
-
         // new entity
         $school = new School();
 
@@ -97,7 +93,6 @@ class SchoolEntityUnitTest extends TestCase
     // Check whether the setEmail unction is working correctly
     public function testSetEmail()
     {
-
         // new entity
         $school = new School();
 
@@ -111,7 +106,6 @@ class SchoolEntityUnitTest extends TestCase
     // Check whether the setPhone unction is working correctly
     public function testSetPhone()
     {
-
         // new entity
         $school = new School();
 

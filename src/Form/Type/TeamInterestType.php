@@ -42,7 +42,7 @@ class TeamInterestType extends AbstractType
                 'multiple' => true,
             ));
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -57,7 +57,7 @@ class TeamInterestType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'App_teaminterest';
     }

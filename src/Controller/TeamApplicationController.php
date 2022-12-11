@@ -9,22 +9,22 @@ use App\Event\TeamApplicationCreatedEvent;
 use App\Form\Type\TeamApplicationType;
 use App\Role\Roles;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class TeamApplicationController extends BaseController
 {
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function showApplication(TeamApplication $application)
+    public function showApplication(TeamApplication $application): Response
     {
         $user = $this->getUser();
         $activeUserHistoriesInTeam = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeamAndUser($application->getTeam(), $user);
@@ -37,7 +37,7 @@ class TeamApplicationController extends BaseController
         ));
     }
 
-    public function showAllApplications(Team $team)
+    public function showAllApplications(Team $team): Response
     {
         $applications = $this->getDoctrine()->getRepository(TeamApplication::class)->findByTeam($team);
         $user = $this->getUser();
@@ -52,7 +52,7 @@ class TeamApplicationController extends BaseController
         ));
     }
 
-    public function deleteTeamApplicationById(TeamApplication $teamApplication)
+    public function deleteTeamApplicationById(TeamApplication $teamApplication): RedirectResponse
     {
         $manager = $this->getDoctrine()->getManager();
 
@@ -92,10 +92,10 @@ class TeamApplicationController extends BaseController
     }
 
     /**
-     * @Route("/team/application/bekreftelse/{team_name}", name="team_application_confirmation")
+     * @param $team_name
      * @return Response
      */
-    public function confirmation($team_name)
+    public function confirmation($team_name): Response
     {
         return $this->render('team/confirmation.html.twig', array(
             'team_name' => $team_name,

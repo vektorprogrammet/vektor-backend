@@ -7,20 +7,18 @@ use App\Role\Roles;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfilePhotoController extends BaseController
 {
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
+    private FileUploader $fileUploader;
 
     public function __construct(FileUploader $fileUploader)
     {
         $this->fileUploader = $fileUploader;
     }
 
-    public function showEditProfilePhoto(User $user)
+    public function showEditProfilePhoto(User $user): Response
     {
         $loggedInUser = $this->getUser();
         if ($user !== $loggedInUser && !$this->isGranted(Roles::TEAM_LEADER)) {
@@ -32,7 +30,7 @@ class ProfilePhotoController extends BaseController
         ));
     }
 
-    public function editProfilePhotoUpload(User $user, Request $request)
+    public function editProfilePhotoUpload(User $user, Request $request): JsonResponse
     {
         $loggedInUser = $this->getUser();
         if ($user !== $loggedInUser && !$this->isGranted(Roles::TEAM_LEADER)) {

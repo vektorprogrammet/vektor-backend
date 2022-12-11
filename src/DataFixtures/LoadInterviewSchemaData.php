@@ -35,7 +35,7 @@ class LoadInterviewSchemaData extends AbstractFixture implements OrderedFixtureI
         $this->setReference('ischema-2', $schema2);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

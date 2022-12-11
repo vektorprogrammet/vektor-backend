@@ -33,7 +33,7 @@ class FieldOfStudyType extends AbstractType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'app_bundle_field_of_study_type';
     }

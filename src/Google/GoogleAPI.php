@@ -2,8 +2,6 @@
 
 namespace App\Google;
 
-
-
 class GoogleAPI
 {
     private $userService;

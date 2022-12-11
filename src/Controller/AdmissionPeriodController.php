@@ -5,20 +5,22 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\AdmissionPeriod;
 use App\Form\Type\EditAdmissionPeriodType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CreateAdmissionPeriodType;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionPeriodController extends BaseController
 {
-    public function show()
+    public function show(): Response
     {
-        // Finds the departmentId for the current logged in user
+        // Finds the departmentId for the current logged-in user
         $department = $this->getUser()->getDepartment();
 
         return $this->showByDepartment($department);
     }
 
-    public function showByDepartment(Department $department)
+    public function showByDepartment(Department $department): Response
     {
         $admissionPeriods = $this->getDoctrine()
             ->getRepository(AdmissionPeriod::class)
@@ -89,7 +91,7 @@ class AdmissionPeriodController extends BaseController
         ));
     }
 
-    public function delete(AdmissionPeriod $admissionPeriod)
+    public function delete(AdmissionPeriod $admissionPeriod): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $infoMeeting = $admissionPeriod->getInfoMeeting();

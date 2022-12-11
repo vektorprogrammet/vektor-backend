@@ -2,7 +2,6 @@
 
 namespace App\Tests\Availability;
 
-
 use App\Tests\BaseWebTestCase;
 
 class AvailabilityFunctionalTest extends BaseWebTestCase
@@ -128,7 +127,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
-    public function publicUrlProvider()
+    public function publicUrlProvider(): array
     {
         return array(
             array('/'),
@@ -137,10 +136,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
             array('/laerere'),
             array('/omvektor'),
             array('/kontakt'),
-
-            array('/nyheter'),
-            array('/nyheter/ntnu'),
-            array('/nyhet/1'),
 
             array('/profile/1'),
 
@@ -156,7 +151,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function assistantUrlProvider()
+    public function assistantUrlProvider(): array
     {
         return array(
             array('/profile'),
@@ -166,7 +161,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function teamMemberUrlProvider()
+    public function teamMemberUrlProvider(): array
     {
         return array(
             array('/kontrollpanel'),
@@ -202,7 +197,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
             array('/kontrollpanel/opprettsoker'),
             array('/kontrollpanel/brukeradmin/opprett'),
 
-            array('/kontrollpanel/artikkeladmin'),
 
             array('/kontrollpanel/vikar'),
             array('/kontrollpanel/vikar?department=1&semester=1'),
@@ -217,14 +211,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
             array('/kontrollpanel/utlegg'),
             array('/kontrollpanel/utlegg/2'),
 
-            array('/kontrollpanel/undersokelse/admin'),
-            array('/kontrollpanel/undersokelse/admin?department=1&semester=1'),
-            array('/kontrollpanel/undersokelse/opprett'),
-
-            array('/kontrollpanel/artikkeladmin'),
-            array('/kontrollpanel/artikkeladmin/opprett'),
-            array('/kontrollpanel/artikkeladmin/rediger/1'),
-
             array('/kontrollpanel/avdelingadmin'),
 
             array('/kontrollpanel/skoleadmin'),
@@ -233,7 +219,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function teamLeaderUrlProvider()
+    public function teamLeaderUrlProvider(): array
     {
         return array(
 
@@ -274,7 +260,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
         );
     }
 
-    public function adminUrlProvider()
+    public function adminUrlProvider(): array
     {
         return array(
             array('/kontrollpanel/avdelingadmin/opprett'),

@@ -11,7 +11,6 @@ use Doctrine\ORM\NoResultException;
 
 class SchoolCapacityRepository extends EntityRepository
 {
-
     /**
      * @param Department $school
      * @param Semester $semester

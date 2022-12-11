@@ -9,28 +9,25 @@ use App\Form\Type\RoutingAccessRuleType;
 use App\Role\ReversedRoleHierarchy;
 use App\Role\Roles;
 use App\Service\AccessControlService;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AccessRuleController extends AbstractController
 {
-
     private AccessControlService $accessControlService;
-    private ReversedRoleHierarchy $reversedRoleHierarcy;
+    private ReversedRoleHierarchy $reversedRoleHierarchy;
 
     public function __construct(AccessControlService $accessControlService, ReversedRoleHierarchy $reversedRoleHierarchy)
     {
         $this->accessControlService = $accessControlService;
-        $this->reversedRoleHierarcy = $reversedRoleHierarchy;
+        $this->reversedRoleHierarchy = $reversedRoleHierarchy;
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules", name="access_rules_show")
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         $customRules = $this->getDoctrine()->getRepository(AccessRule::class)->findCustomRules();
         $routingRules = $this->getDoctrine()->getRepository(AccessRule::class)->findRoutingRules();
@@ -43,31 +40,21 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/edit/{id}",
-     *     name="access_rules_edit",
-     *     requirements={"id"="\d+"}
-     * )
-     *
-     * @Route("/kontrollpanel/admin/accessrules/create",
-     *     name="access_rules_create",
-     *     defaults={"id": null},
-     *     requirements={"id"="\d+"}
-     * )
      * @param Request $request
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRule(Request $request, AccessRule $accessRule = null)
+    public function createRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarcy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
         $form = $this->createForm(AccessRuleType::class, $accessRule, [
             'roles' => $roles
         ]);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->accessControlService->createRule($accessRule);
 
@@ -76,7 +63,7 @@ class AccessRuleController extends AbstractController
             } else {
                 $this->addFlash("success", "Access rule edited");
             }
-            
+
             return $this->redirectToRoute("access_rules_show");
         }
         return $this->render('admin/access_rule/create.html.twig', array(
@@ -87,26 +74,16 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/routing/edit/{id}",
-     *     name="access_rules_edit_routing",
-     *     requirements={"id"="\d+"}
-     * )
-     *
-     * @Route("/kontrollpanel/admin/accessrules/routing/create",
-     *     name="access_rules_create_routing",
-     *     defaults={"id": null},
-     *     requirements={"id"="\d+"}
-     * )
      * @param Request $request
      * @param AccessRule|null $accessRule
      * @return Response
      */
-    public function createRoutingRule(Request $request, AccessRule $accessRule = null)
+    public function createRoutingRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarcy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
         $routes = $this->accessControlService->getRoutes();
         $form = $this->createForm(RoutingAccessRuleType::class, $accessRule, [
             'routes' => $routes,
@@ -134,35 +111,25 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/copy/{id}",
-     *     name="access_rules_copy",
-     *     requirements={"id"="\d+"}
-     * )
-     *
      * @param Request $request
      * @param AccessRule $rule
      * @return Response
      */
-    public function copyAccessRule(Request $request, AccessRule $rule)
+    public function copyAccessRule(Request $request, AccessRule $rule): Response
     {
         $clone = clone $rule;
         if ($rule->isRoutingRule()) {
             return $this->createRoutingRule($request, $clone);
         }
-        
+
         return $this->createRule($request, $clone);
     }
 
     /**
-     * @Route("/kontrollpanel/admin/accessrules/delete/{id}",
-     *     name="access_rules_delete",
-     *     requirements={"id"="\d+"},
-     *     methods={"POST"}
-     * )
      * @param AccessRule $accessRule
      * @return Response
      */
-    public function delete(AccessRule $accessRule)
+    public function delete(AccessRule $accessRule): Response
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($accessRule);

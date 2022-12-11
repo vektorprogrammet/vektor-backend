@@ -26,7 +26,7 @@ class LoadAdmissionSubscriberData extends AbstractFixture implements OrderedFixt
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }

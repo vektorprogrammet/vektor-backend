@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Validator\Constraints;
 
 use App\Entity\InterviewAnswer;
@@ -9,7 +8,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class InterviewAnswerValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *

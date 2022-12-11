@@ -12,15 +12,10 @@ use App\Twig\RoleExtension;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class UserController extends BaseController
 {
-
-    /**
-     * @var ApplicationManager
-     */
     private ApplicationManager $applicationManager;
 
     public function __construct(ApplicationManager $applicationManager)
@@ -28,13 +23,7 @@ class UserController extends BaseController
         $this->applicationManager = $applicationManager;
     }
 
-
-    /**
-     * @Route("/min-side", name="my_page")
-     *
-     * @return Response
-     */
-    public function myPage()
+    public function myPage(): Response
     {
         $user = $this->getUser();
 
@@ -64,12 +53,7 @@ class UserController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/profil/partnere", name="my_partners")
-     *
-     * @return Response
-     */
-    public function myPartner()
+    public function myPartner(): Response
     {
         if (!$this->getUser()->isActive()) {
             throw $this->createAccessDeniedException();
@@ -112,39 +96,5 @@ class UserController extends BaseController
             'partnerCount' => $partnerCount,
             'semester' => $semester,
         ]);
-    }
-
-    /**
-     * @Route("profil/mode/{mode}",
-     *     name="content_mode",
-     *     methods={"POST"}
-     *     )
-     *
-     * @param Request $request
-     * @param string $mode
-     *
-     * @return RedirectResponse
-     */
-    public function changeContentMode(Request $request, string $mode)
-    {
-        if (!$this->get(RoleExtension::class)->userCanEditPage()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        if ($mode !== 'read-mode' && $mode !== 'edit-mode') {
-            throw new BadRequestHttpException('Invalid mode');
-        }
-
-        $isEditMode = $mode === 'edit-mode';
-
-        if ($isEditMode) {
-            $this->get(ContentModeManager::class)->changeToEditMode();
-        } else {
-            $this->get(ContentModeManager::class)->changeToReadMode();
-        }
-
-        $this->addFlash($isEditMode ? 'warning' : 'info', $isEditMode ? 'Du er nå i redigeringsmodus' : 'Du er nå i lesemodus');
-
-        return $this->redirect($request->headers->get('referer'));
     }
 }

@@ -8,7 +8,6 @@ use App\Entity\TeamMembershipInterface;
 
 class FilterService
 {
-
     /**
      * Returns only memberships in $team
      *
@@ -17,7 +16,7 @@ class FilterService
      *
      * @return TeamMembershipInterface[]
      */
-    public function filterTeamMembershipsByTeam($teamMemberships, $team)
+    public function filterTeamMembershipsByTeam($teamMemberships, $team): array
     {
         $filtered = [];
         foreach ($teamMemberships as $teamMembership) {
@@ -36,7 +35,7 @@ class FilterService
      *
      * @return Department[]
      */
-    public function filterDepartmentsByActiveAdmission($departments, $hasActiveAdmission)
+    public function filterDepartmentsByActiveAdmission(array $departments, bool $hasActiveAdmission): array
     {
         $filtered = [];
         foreach ($departments as $department) {

@@ -10,7 +10,6 @@ use Google_Service_Exception;
 
 class GoogleUsers extends GoogleService
 {
-
     /**
      * @param null $maxResults
      * @return Google_Service_Directory_User[]

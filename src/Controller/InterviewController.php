@@ -23,7 +23,6 @@ use DateTime;
 use InvalidArgumentException;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,10 +40,12 @@ class InterviewController extends BaseController
     private ReversedRoleHierarchy $reversedRoleHierarchy;
     private ApplicationManager $applicationManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher,
-                                InterviewManager $interviewManager,
-                                ReversedRoleHierarchy $reversedRoleHierarchy,
-                                ApplicationManager $applicationManager)
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        InterviewManager $interviewManager,
+        ReversedRoleHierarchy $reversedRoleHierarchy,
+        ApplicationManager $applicationManager
+    )
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->interviewManager = $interviewManager;
@@ -53,12 +54,6 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @Route("/kontrollpanel/intervju/conduct/{id}",
-     *     name="interview_conduct",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     *     )
-     *
      * @param Request $request
      * @param Application $application
      *
@@ -126,7 +121,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function cancel(Interview $interview)
+    public function cancel(Interview $interview): RedirectResponse
     {
         $interview->setCancelled(true);
         $manager = $this->getDoctrine()->getManager();
@@ -143,7 +138,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function show(Application $application)
+    public function show(Application $application): Response
     {
         if (null === $interview = $application->getInterview()) {
             throw $this->createNotFoundException('Interview not found.');
@@ -170,7 +165,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function deleteInterview(Interview $interview, Request $request)
+    public function deleteInterview(Interview $interview, Request $request): RedirectResponse
     {
         $interview->getApplication()->setInterview(null);
 
@@ -191,7 +186,7 @@ class InterviewController extends BaseController
      *
      * @return JsonResponse
      */
-    public function bulkDeleteInterview(Request $request)
+    public function bulkDeleteInterview(Request $request): JsonResponse
     {
         // Get the ids from the form
         $applicationIds = $request->request->get('application')['id'];
@@ -225,7 +220,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function schedule(Request $request, Application $application)
+    public function schedule(Request $request, Application $application): Response
     {
         if (null === $interview = $application->getInterview()) {
             throw $this->createNotFoundException('Interview not found.');
@@ -246,7 +241,7 @@ class InterviewController extends BaseController
         $mapLink = $data['mapLink'];
         if ($form->isSubmitted()) {
             if ($mapLink && !(strpos($mapLink, 'http') === 0)) {
-                $mapLink = 'http://' . $mapLink;
+                $mapLink = 'https://' . $mapLink;
             }
         }
         $invalidMapLink = $form->isSubmitted() && !empty($mapLink) && !$this->validateLink($mapLink);
@@ -291,7 +286,7 @@ class InterviewController extends BaseController
         ));
     }
 
-    private function validateLink($link)
+    private function validateLink($link): bool
     {
         if (empty($link)) {
             return false;
@@ -318,7 +313,7 @@ class InterviewController extends BaseController
      *
      * @return JsonResponse
      */
-    public function assign(Request $request, $id = null)
+    public function assign(Request $request, $id = null): JsonResponse
     {
         if ($id === null) {
             throw $this->createNotFoundException();
@@ -364,9 +359,9 @@ class InterviewController extends BaseController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse
      */
-    public function bulkAssign(Request $request)
+    public function bulkAssign(Request $request): JsonResponse
     {
         //$roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
 
@@ -412,7 +407,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function acceptByResponseCode(Interview $interview)
+    public function acceptByResponseCode(Interview $interview): Response
     {
         $interview->acceptInterview();
         $manager = $this->getDoctrine()->getManager();
@@ -439,7 +434,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function requestNewTime(Request $request, Interview $interview)
+    public function requestNewTime(Request $request, Interview $interview): Response
     {
         if (!$interview->isPending()) {
             throw $this->createNotFoundException();
@@ -477,7 +472,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function respond(Interview $interview)
+    public function respond(Interview $interview): Response
     {
         $applicationStatus = $this->applicationManager->getApplicationStatus($interview->getApplication());
 
@@ -493,7 +488,7 @@ class InterviewController extends BaseController
      *
      * @return Response
      */
-    public function cancelByResponseCode(Request $request, Interview $interview)
+    public function cancelByResponseCode(Request $request, Interview $interview): Response
     {
         if (!$interview->isPending()) {
             throw $this->createNotFoundException();
@@ -532,7 +527,7 @@ class InterviewController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function editStatus(Request $request, Interview $interview)
+    public function editStatus(Request $request, Interview $interview): RedirectResponse
     {
         $status = intval($request->get('status'));
         try {
@@ -614,7 +609,7 @@ class InterviewController extends BaseController
         ));
     }
 
-    public function clearCoInterviewer(Interview $interview)
+    public function clearCoInterviewer(Interview $interview): RedirectResponse
     {
         $interview->setCoInterviewer(null);
         $em = $this->getDoctrine()->getManager();
