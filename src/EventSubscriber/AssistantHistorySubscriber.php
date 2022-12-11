@@ -10,25 +10,25 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class AssistantHistorySubscriber implements EventSubscriberInterface
 {
-    private SessionInterface $session;
     private EntityManagerInterface $em;
     private UserRegistration $userRegistrationService;
+    private RequestStack $requestStack;
 
     /**
      * ApplicationAdmissionSubscriber constructor.
      */
     public function __construct(
-        SessionInterface $session,
         EntityManagerInterface $em,
-        UserRegistration $userRegistrationService
+        UserRegistration $userRegistrationService,
+        RequestStack $requestStack
     ) {
-        $this->session = $session;
         $this->em = $em;
         $this->userRegistrationService = $userRegistrationService;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -79,6 +79,6 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
         $assistantHistory = $event->getAssistantHistory();
         $message = "{$assistantHistory->getUser()} har blitt fordelt til {$assistantHistory->getSchool()}.";
 
-        $this->session->getFlashBag()->add('success', $message);
+        $this->requestStack->getSession()->getFlashBag()->add('success', $message);
     }
 }

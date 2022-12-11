@@ -13,7 +13,7 @@ use App\Sms\SmsSenderInterface;
 use Psr\Log\LoggerInterface;
 use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -21,34 +21,34 @@ class InterviewSubscriber implements EventSubscriberInterface
 {
     private MailerInterface $mailer;
     private Environment $twig;
-    private SessionInterface $session;
     private LoggerInterface $logger;
     private SbsData $sbsData;
     private InterviewNotificationManager $notificationManager;
     private InterviewManager $interviewManager;
     private SmsSenderInterface $smsSender;
     private RouterInterface $router;
+    private RequestStack $requestStack;
 
     public function __construct(
         MailerInterface $mailer,
         Environment $twig,
-        SessionInterface $session,
         LoggerInterface $logger,
         SbsData $sbsData,
         InterviewNotificationManager $notificationManager,
         InterviewManager $interviewManager,
         SmsSenderInterface $smsSender,
-        RouterInterface $router
+        RouterInterface $router,
+        RequestStack $requestStack
     ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
-        $this->session = $session;
         $this->logger = $logger;
         $this->sbsData = $sbsData;
         $this->notificationManager = $notificationManager;
         $this->interviewManager = $interviewManager;
         $this->smsSender = $smsSender;
         $this->router = $router;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -100,7 +100,7 @@ class InterviewSubscriber implements EventSubscriberInterface
         $message = "Intervjuet med $user ble lagret. En kvittering med et sammendrag av
                     praktisk informasjon fra intervjuet blir sendt til {$user->getEmail()}.";
 
-        $this->session->getFlashBag()->add('success', $message);
+        $this->requestStack->getSession()->getFlashBag()->add('success', $message);
     }
 
     public function logEvent(InterviewConductedEvent $event)

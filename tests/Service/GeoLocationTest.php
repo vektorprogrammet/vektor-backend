@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GeoLocationTest extends WebTestCase
 {
@@ -38,22 +37,13 @@ class GeoLocationTest extends WebTestCase
                       ->method('getRepository')
                       ->willReturn($departmentRepo);
 
-        $sessionStorage = $this->getMockBuilder(SessionInterface::class)->getMock();
-        $sessionStorage->expects($this->any())
-                       ->method('get')
-                       ->willReturn(null);
-        $sessionStorage->expects($this->any())
-                       ->method('set')
-                       ->willReturn(null);
-
-
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
 
         $logger = $this->getMockBuilder(LogService::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->geoLocation = new GeoLocation('xxxxx', [], $entityManager, $sessionStorage, $requestStack, $logger);
+        $this->geoLocation = new GeoLocation('xxxxx', [], $entityManager, $requestStack, $logger);
     }
 
     public function testDistance()

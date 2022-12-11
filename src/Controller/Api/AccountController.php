@@ -7,8 +7,8 @@ use App\DataTransferObject\UserDto;
 use App\Entity\User;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -19,12 +19,12 @@ use Exception;
 class AccountController extends BaseController
 {
     private TokenStorageInterface $tokenStorage;
-    private SessionInterface $session;
+    private RequestStack $requestStack;
 
-    public function __construct(TokenStorageInterface $tokenStorage, SessionInterface $session)
+    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack)
     {
         $this->tokenStorage = $tokenStorage;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     public function login(Request $request)
@@ -57,7 +57,7 @@ class AccountController extends BaseController
 
         $token = new UsernamePasswordToken($user, null, 'secured_area', $user->getRoles());
         $this->tokenStorage->setToken($token);
-        $this->session->set('_security_secured_area', serialize($token));
+        $this->requestStack->getSession()->set('_security_secured_area', serialize($token));
 
         $mapper = $this->get('bcc_auto_mapper.mapper');
         $mapper->createMap(User::class, UserDto::class);

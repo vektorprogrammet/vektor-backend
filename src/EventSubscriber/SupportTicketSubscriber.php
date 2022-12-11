@@ -7,25 +7,25 @@ use App\Service\EmailSender;
 use App\Service\SlackMessenger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class SupportTicketSubscriber implements EventSubscriberInterface
 {
     private EmailSender $emailSender;
-    private SessionInterface $session;
     private LoggerInterface $logger;
     private SlackMessenger $slackMessenger;
+    private RequestStack $requestStack;
 
     public function __construct(
         EmailSender $emailSender,
         SlackMessenger $slackMessenger,
-        SessionInterface $session,
+        RequestStack $requestStack,
         LoggerInterface $logger
     ) {
         $this->emailSender    = $emailSender;
-        $this->session        = $session;
         $this->logger         = $logger;
         $this->slackMessenger = $slackMessenger;
+        $this->requestStack   = $requestStack;
     }
 
     /**
@@ -84,7 +84,7 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         $message = 'Kontaktforespørsel sendt til ' .
             $supportTicket->getDepartment()->getEmail().', takk for henvendelsen!';
 
-        $this->session->getFlashBag()->add('success', $message);
+        $this->requestStack->getSession()->getFlashBag()->add('success', $message);
     }
 
     public function logEvent(SupportTicketCreatedEvent $event)

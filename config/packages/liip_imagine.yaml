@@ -16,6 +16,8 @@ liip_imagine:
     cache:                default
     data_loader:          default
     default_image:        null
+    twig:
+        mode:             lazy
     default_filter_set_settings:
         quality:              100
         jpeg_quality:         ~

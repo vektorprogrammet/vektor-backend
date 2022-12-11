@@ -7,13 +7,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GeoLocation
 {
     private string $ipinfoToken;
     private $departmentRepo;
-    private SessionInterface $session;
     private RequestStack $requestStack;
     private LogService $logger;
     private $ignoredAsns;
@@ -25,14 +23,12 @@ class GeoLocation
         string $ipinfoToken,
         $ignoredAsns,
         EntityManagerInterface $em,
-        SessionInterface $session,
         RequestStack $requestStack,
         LogService $logger
     )
     {
         $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);
-        $this->session = $session;
         $this->requestStack = $requestStack;
         $this->logger = $logger;
         $this->ignoredAsns = $ignoredAsns;
@@ -130,7 +126,7 @@ class GeoLocation
             return null;
         }
 
-        $coords = $this->session->get('coords');
+        $coords = $this->requestStack->getSession()->get('coords');
         if ($coords) {
             return $coords;
         }
@@ -171,7 +167,7 @@ class GeoLocation
             'lon' => $coords[1]
         ];
 
-        $this->session->set('coords', $coords);
+        $this->requestStack->getSession()->set('coords', $coords);
 
         return $coords;
     }
