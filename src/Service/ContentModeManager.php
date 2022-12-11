@@ -2,32 +2,32 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ContentModeManager
 {
-    private SessionInterface $session;
+    private RequestStack $requestStack;
 
     /**
      * ContentModeManager constructor
      */
-    public function __construct(SessionInterface $session)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     public function isEditMode()
     {
-        return $this->session->get('edit-mode', false);
+        return $this->requestStack->getSession('edit-mode', false);
     }
 
     public function changeToEditMode()
     {
-        $this->session->set('edit-mode', true);
+        return $this->requestStack->getSession()->set('edit-mode', true);
     }
 
     public function changeToReadMode()
     {
-        $this->session->set('edit-mode', false);
+        return $this->requestStack->getSession()->set('edit-mode', false);
     }
 }
