@@ -244,6 +244,9 @@
             "config/routes/liip_imagine.yaml"
         ]
     },
+    "masterminds/html5": {
+        "version": "2.7.6"
+    },
     "monolog/monolog": {
         "version": "2.2.0"
     },
