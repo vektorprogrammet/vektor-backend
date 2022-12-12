@@ -1,7 +1,7 @@
 {
   "name": "vektor-backend",
   "version": "1.0.0",
-  "description": "Vektorprogrammets homepage",
+  "description": "Vektor Backend",
   "main": " ",
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
@@ -40,7 +40,6 @@
     "setup": "php ./composer.phar install --no-scripts && npm install && npm run build:dev && mkdir -p ./var/data && touch ./var/data/dev.db  && php bin/console doctrine:schema:drop --force --env=dev && php bin/console doctrine:schema:create --env=dev && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:fixtures:load --env=dev -n && php bin/console doctrine:migrations:sync-metadata-storage --env=dev -n",
     "watch": "gulp",
     "build:dev": "gulp build:dev",
-    "db:reload": "yarn run db:update",
     "db:update": "mkdir -p ./var/data && rm -rf ./var/data/dev.db && touch ./var/data/dev.db && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:migrations:sync-metadata-storage && php bin/console doctrine:fixtures:load -n --env=dev && php bin/console doctrine:migrations:version -n --delete --all --env=dev && php bin/console doctrine:migrations:version -n --add --all --env=dev",
     "docker:build": "docker build -t vektor-backend .",
     "docker:setup": "yarn docker:run yarn install && yarn docker:run php composer.phar install && yarn docker:run yarn build:dev",
@@ -48,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vektorprogrammet/webpage.git"
+    "url": "git+https://github.com/vektorprogrammet/vektor-backend.git"
   },
   "author": "",
   "license": "ISC",

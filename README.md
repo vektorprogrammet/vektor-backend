@@ -62,7 +62,7 @@ done when doing `yarn start`)
 ## Database
 
 ### Add new entities to the database and reload fixtures
-`yarn db:update` or `yarn db:reload`
+`yarn db:update`
 
 
 ### Dev:
