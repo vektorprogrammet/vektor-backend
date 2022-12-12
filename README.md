@@ -36,7 +36,7 @@ Run commands in docker image:
 `yarn start`
 
 ##### Alternatively
-`symfony server:start` (requires Symfony CLI)
+`symfony serve` (requires Symfony CLI)
 
 ##### Start server on Docker
 `yarn docker:run`
@@ -72,7 +72,6 @@ Load db-schema:
 Load fixtures:
 `php bin/console doctrine:fixtures:load`
 
-Code style:
 ### Code Style: [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)
 Install:
 ```
