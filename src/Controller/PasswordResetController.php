@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\NewPasswordType;
 use App\Form\Type\PasswordResetType;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -18,11 +19,13 @@ class PasswordResetController extends BaseController
 {
     private LogService $logService;
     private PasswordManager $passwordManager;
+    private RequestStack $requestStack;
 
-    public function __construct(LogService $logService, PasswordManager $passwordManager)
+    public function __construct(LogService $logService, PasswordManager $passwordManager, RequestStack $requestStack)
     {
         $this->logService = $logService;
         $this->passwordManager = $passwordManager;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -51,10 +54,10 @@ class PasswordResetController extends BaseController
                     $errorMsg = 'Kan ikke resette passord med "@vektorprogrammet.no"-adresse. Prøv din private e-post';
                     $this->logService->info("Password reset rejected: Someone tried to reset password with a company email: $email");
                 }
-                $this->get('session')->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
+                $this->requestStack->getSession()->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
             } elseif (!$passwordReset->getUser()->isActive()) {
                 $errorMsg = "Brukeren med denne e-postadressen er deaktivert. Ta kontakt med it@vektorprogrammet.no for å aktivere brukeren din.";
-                $this->get('session')->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
+                $this->requestStack->getSession()->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
                 $this->logService->notice("Password reset rejected: Someone tried to reset the password for an inactive account: $email");
             } else {
                 $this->logService->info("{$passwordReset->getUser()} requested a password reset");

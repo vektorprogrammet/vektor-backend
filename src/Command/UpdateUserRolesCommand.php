@@ -22,16 +22,8 @@ class UpdateUserRolesCommand extends Command
      * @var ObjectManager
      */
     private $entityManager;
-
-    /**
-     * @var RoleManager
-     */
-    private $roleManager;
-
-    /**
-     * @var int
-     */
-    private $rolesUpdatedCount;
+    private RoleManager $roleManager;
+    private int $rolesUpdatedCount;
 
     /**
      * {@inheritdoc}
@@ -65,7 +57,7 @@ HELP
      * This method is executed after initialize(). It usually contains the logic
      * to execute to complete this command task.
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $startTime = microtime(true);
 
@@ -84,5 +76,6 @@ HELP
         $elapsedTime = ($finishTime - $startTime) * 1000;
 
         $output->writeln(sprintf('%d roles updated in %d ms', $this->rolesUpdatedCount, $elapsedTime));
+        return Command::SUCCESS;
     }
 }
