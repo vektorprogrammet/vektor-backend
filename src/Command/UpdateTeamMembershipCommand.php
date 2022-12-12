@@ -9,20 +9,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateTeamMembershipCommand extends Command
 {
-    /**
-     * @var TeamMembershipService
-     */
-    private $teamMembershipService;
+
+    private TeamMembershipService $teamMembershipService;
     public function __construct(TeamMembershipService $teamMembershipService)
     {
         $this->teamMembershipService = $teamMembershipService;
         parent::__construct();
     }
 
-    /**
-     * @var TeamMembershipService
-     */
-    private $notifier;
+    private TeamMembershipService $notifier;
 
     /**
      * {@inheritdoc}
@@ -39,8 +34,9 @@ class UpdateTeamMembershipCommand extends Command
         $this->notifier = $this->teamMembershipService;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->notifier->updateTeamMemberships();
+        return Command::SUCCESS;
     }
 }

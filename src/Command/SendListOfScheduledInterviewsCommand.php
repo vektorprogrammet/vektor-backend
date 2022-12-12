@@ -13,15 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SendListOfScheduledInterviewsCommand extends Command
 {
     #TODO: Use dependency-injection for dependencies
-    /**
-     * @var InterviewManager
-     */
-    private $interviewManager;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private InterviewManager $interviewManager;
+    private EntityManagerInterface $em;
 
     /**
      * {@inheritdoc}
@@ -39,7 +32,7 @@ class SendListOfScheduledInterviewsCommand extends Command
         $this->em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $departments = $this->em->getRepository(Department::class)->findActive();
         foreach ($departments as $department) {
@@ -54,5 +47,6 @@ class SendListOfScheduledInterviewsCommand extends Command
                 $this->interviewManager->sendInterviewScheduleToInterviewer($interviewer);
             }
         }
+        return Command::SUCCESS;
     }
 }
