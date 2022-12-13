@@ -28,7 +28,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->getQuery()
             ->getResult();
 
-        $teamMembers = array();
+        $teamMembers = [];
         /** @var User $user */
         foreach ($users as $user) {
             foreach ($user->getTeamMemberships() as $teamMembership) {
@@ -59,10 +59,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->join('user.assistantHistories', 'ah')
             ->where('ah.department = :department')
             ->andWhere('ah.semester = :semester')
-            ->setParameters(array(
+            ->setParameters([
                 'department' => $department,
                 'semester' => $semester,
-            ))
+            ])
             ->getQuery()
             ->getResult();
     }

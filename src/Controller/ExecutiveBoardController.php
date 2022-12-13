@@ -25,9 +25,9 @@ class ExecutiveBoardController extends BaseController
     {
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
-        return $this->render('team/team_page.html.twig', array(
+        return $this->render('team/team_page.html.twig', [
             'team'  => $board,
-        ));
+        ]);
     }
 
     public function showAdmin(): Response
@@ -44,11 +44,11 @@ class ExecutiveBoardController extends BaseController
             }
         }
 
-        return $this->render('executive_board/index.html.twig', array(
+        return $this->render('executive_board/index.html.twig', [
             'board_name' => $board->getName(),
             'active_members' => $activeMembers,
             'inactive_members' => $inactiveMembers,
-        ));
+        ]);
     }
 
     public function addUserToBoard(Request $request, Department $department)
@@ -81,10 +81,10 @@ class ExecutiveBoardController extends BaseController
         }
 
         $city = $department->getCity();
-        return $this->render('executive_board/member.html.twig', array(
+        return $this->render('executive_board/member.html.twig', [
             'heading' => "Legg til hovedstyremedlem fra avdeling $city",
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function removeUserFromBoardById(ExecutiveBoardMembership $member): RedirectResponse
@@ -119,15 +119,15 @@ class ExecutiveBoardController extends BaseController
             }
 
             // Render the boardpage as a preview
-            return $this->render('team/team_page.html.twig', array(
+            return $this->render('team/team_page.html.twig', [
                 'team' => $board,
                 'teamMemberships' => $board->getBoardMemberships(),
-            ));
+            ]);
         }
 
-        return $this->render('executive_board/update_executive_board.html.twig', array(
+        return $this->render('executive_board/update_executive_board.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -153,9 +153,9 @@ class ExecutiveBoardController extends BaseController
         }
 
         $memberName = $user->getFullName();
-        return $this->render("executive_board/member.html.twig", array(
+        return $this->render("executive_board/member.html.twig", [
             'heading' => "Rediger medlemshistorikken til $memberName",
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

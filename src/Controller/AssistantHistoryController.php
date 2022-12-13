@@ -51,8 +51,8 @@ class AssistantHistoryController extends BaseController
             $em->flush();
             return $this->redirectToRoute('participanthistory_show');
         }
-        return $this->render("participant_history/participant_history_edit.html.twig", array(
+        return $this->render("participant_history/participant_history_edit.html.twig", [
             "form"=>$form->createView()
-        ));
+        ]);
     }
 }

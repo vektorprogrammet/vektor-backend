@@ -98,12 +98,12 @@ class PasswordManager
         //Sends a email with the url for resetting the password
         $emailMessage = (new Swift_Message())
             ->setSubject('Tilbakestill passord for vektorprogrammet.no')
-            ->setFrom(array('ikkesvar@vektorprogrammet.no' => 'Vektorprogrammet'))
+            ->setFrom(['ikkesvar@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setTo($passwordReset->getUser()->getEmail())
-            ->setBody($this->twig->render('reset_password/new_password_email.txt.twig', array(
+            ->setBody($this->twig->render('reset_password/new_password_email.txt.twig', [
                 'resetCode' => $passwordReset->getResetCode(),
                 'user' => $passwordReset->getUser(),
-            )));
+            ]));
         $this->mailer->send($emailMessage);
     }
 }

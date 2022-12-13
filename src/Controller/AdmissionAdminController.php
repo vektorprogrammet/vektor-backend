@@ -70,12 +70,12 @@ class AdmissionAdminController extends BaseController
                 ->findNewApplicationsByAdmissionPeriod($admissionPeriod);
         }
 
-        return $this->render('admission_admin/new_applications_table.html.twig', array(
+        return $this->render('admission_admin/new_applications_table.html.twig', [
             'applications' => $applications,
             'semester' => $semester,
             'department' => $department,
             'status' => 'new',
-        ));
+        ]);
     }
 
     /**
@@ -107,7 +107,7 @@ class AdmissionAdminController extends BaseController
             $applicationsAssignedToUser = $applicationRepo->findAssignedByUserAndAdmissionPeriod($this->getUser(), $admissionPeriod);
         }
 
-        return $this->render('admission_admin/assigned_applications_table.html.twig', array(
+        return $this->render('admission_admin/assigned_applications_table.html.twig', [
             'status' => 'assigned',
             'applications' => $applications,
             'department' => $department,
@@ -115,7 +115,7 @@ class AdmissionAdminController extends BaseController
             'interviewDistributions' => $interviewDistributions,
             'cancelledApplications' => $cancelledApplications,
             'yourApplications' => $applicationsAssignedToUser,
-        ));
+        ]);
     }
 
     /**
@@ -141,7 +141,7 @@ class AdmissionAdminController extends BaseController
 
         $counter = $this->InterviewCounter;
 
-        return $this->render('admission_admin/interviewed_applications_table.html.twig', array(
+        return $this->render('admission_admin/interviewed_applications_table.html.twig', [
             'status' => 'interviewed',
             'applications' => $applications,
             'department' => $department,
@@ -149,7 +149,7 @@ class AdmissionAdminController extends BaseController
             'yes' => $counter->count($applications, InterviewCounter::YES),
             'no' => $counter->count($applications, InterviewCounter::NO),
             'maybe' => $counter->count($applications, InterviewCounter::MAYBE),
-        ));
+        ]);
     }
 
     /**
@@ -173,12 +173,12 @@ class AdmissionAdminController extends BaseController
                 ->findExistingApplicants($admissionPeriod);
         }
 
-        return $this->render('admission_admin/existing_assistants_applications_table.html.twig', array(
+        return $this->render('admission_admin/existing_assistants_applications_table.html.twig', [
             'status' => 'existing',
             'applications' => $applications,
             'department' => $department,
             'semester' => $semester,
-        ));
+        ]);
     }
 
     /**
@@ -209,10 +209,10 @@ class AdmissionAdminController extends BaseController
 
         $this->addFlash('success', 'Søknaden ble slettet.');
 
-        return $this->redirectToRoute('applications_show_existing', array(
+        return $this->redirectToRoute('applications_show_existing', [
             'department' => $application->getDepartment(),
             'semester' => $application->getSemester()->getId()
-        ));
+        ]);
     }
 
     /**
@@ -262,14 +262,14 @@ class AdmissionAdminController extends BaseController
         }
 
         $application = new Application();
-        $form = $this->createForm(ApplicationType::class, $application, array(
+        $form = $this->createForm(ApplicationType::class, $application, [
             'departmentId' => $department->getId(),
-        ));
+        ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $em->getRepository(User::class)->findOneBy(array('email' => $application->getUser()->getEmail()));
+            $user = $em->getRepository(User::class)->findOneBy(['email' => $application->getUser()->getEmail()]);
             if ($user !== null) {
                 $application->setUser($user);
             }
@@ -281,14 +281,14 @@ class AdmissionAdminController extends BaseController
 
             $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
 
-            return $this->redirectToRoute('register_applicant', array('id' => $department->getId()));
+            return $this->redirectToRoute('register_applicant', ['id' => $department->getId()]);
         }
 
-        return $this->render('admission_admin/create_application.html.twig', array(
+        return $this->render('admission_admin/create_application.html.twig', [
             'department' => $department,
             'semester' => $currentSemester,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function showApplication(Application $application)
@@ -297,9 +297,9 @@ class AdmissionAdminController extends BaseController
             throw $this->createNotFoundException('Søknaden finnes ikke');
         }
 
-        return $this->render('admission_admin/application.html.twig', array(
+        return $this->render('admission_admin/application.html.twig', [
             'application' => $application,
-        ));
+        ]);
     }
 
     /**
@@ -329,14 +329,14 @@ class AdmissionAdminController extends BaseController
 
         $possibleApplicants = $this->getDoctrine()
             ->getRepository(TeamInterest::class)
-            ->findBy(array('semester' => $semester, 'department' => $department));
+            ->findBy(['semester' => $semester, 'department' => $department]);
 
-        return $this->render('admission_admin/teamInterest.html.twig', array(
+        return $this->render('admission_admin/teamInterest.html.twig', [
             'applicationsWithTeamInterest' => $applicationsWithTeamInterest,
             'possibleApplicants' => $possibleApplicants,
             'department' => $department,
             'semester' => $semester,
             'teams' => $teams,
-        ));
+        ]);
     }
 }

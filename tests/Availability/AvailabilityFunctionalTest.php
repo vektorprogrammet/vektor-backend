@@ -129,147 +129,147 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     public function publicUrlProvider(): array
     {
-        return array(
-            array('/'),
-            array('/assistenter'),
-            array('/team'),
-            array('/laerere'),
-            array('/omvektor'),
-            array('/kontakt'),
+        return [
+            ['/'],
+            ['/assistenter'],
+            ['/team'],
+            ['/laerere'],
+            ['/omvektor'],
+            ['/kontakt'],
 
-            array('/profile/1'),
+            ['/profile/1'],
 
-            array('/opptak'),
-            array('/opptak/NTNU'),
-            array('/opptak/avdeling/1'),
-            array('/opptak/Bergen'),
-            array('/opptak/ås'),
+            ['/opptak'],
+            ['/opptak/NTNU'],
+            ['/opptak/avdeling/1'],
+            ['/opptak/Bergen'],
+            ['/opptak/ås'],
 
-            array('/avdeling/Trondheim'),
-            array('/avdeling/NTNU'),
-            array('/avdeling/ås'),
-        );
+            ['/avdeling/Trondheim'],
+            ['/avdeling/NTNU'],
+            ['/avdeling/ås'],
+        ];
     }
 
     public function assistantUrlProvider(): array
     {
-        return array(
-            array('/profile'),
-            array('/profil/rediger/passord/'),
-            array('/min-side'),
-            array('/utlegg'),
-        );
+        return [
+            ['/profile'],
+            ['/profil/rediger/passord/'],
+            ['/min-side'],
+            ['/utlegg'],
+        ];
     }
 
     public function teamMemberUrlProvider(): array
     {
-        return array(
-            array('/kontrollpanel'),
-            array('/kontrollpanel/opptaksperiode'),
+        return [
+            ['/kontrollpanel'],
+            ['/kontrollpanel/opptaksperiode'],
 
-            array('/kontrollpanel/opptak/nye'),
-            array('/kontrollpanel/opptak/nye?department=1&semester=1'),
-            array('/kontrollpanel/opptak/gamle'),
-            array('/kontrollpanel/opptak/gamle?department=1&semester=1'),
-            array('/kontrollpanel/opptak/fordelt'),
-            array('/kontrollpanel/opptak/fordelt?department=1&semester=1'),
-            array('/kontrollpanel/opptak/intervjuet'),
-            array('/kontrollpanel/opptak/intervjuet?department=1&semester=1'),
+            ['/kontrollpanel/opptak/nye'],
+            ['/kontrollpanel/opptak/nye?department=1&semester=1'],
+            ['/kontrollpanel/opptak/gamle'],
+            ['/kontrollpanel/opptak/gamle?department=1&semester=1'],
+            ['/kontrollpanel/opptak/fordelt'],
+            ['/kontrollpanel/opptak/fordelt?department=1&semester=1'],
+            ['/kontrollpanel/opptak/intervjuet'],
+            ['/kontrollpanel/opptak/intervjuet?department=1&semester=1'],
 
-            array('/kontrollpanel/intervju/skjema'),
-            array('/kontrollpanel/intervju/skjema/1'),
+            ['/kontrollpanel/intervju/skjema'],
+            ['/kontrollpanel/intervju/skjema/1'],
 
-            array('/kontrollpanel/stand'),
-            array('/kontrollpanel/stand?department=1&semester=1'),
+            ['/kontrollpanel/stand'],
+            ['/kontrollpanel/stand?department=1&semester=1'],
 
-            array('/kontrollpanel/statistikk/opptak'),
-            array('/kontrollpanel/statistikk/opptak?department=1&semester=1'),
+            ['/kontrollpanel/statistikk/opptak'],
+            ['/kontrollpanel/statistikk/opptak?department=1&semester=1'],
 
-            array('/kontrollpanel/deltakerhistorikk'),
-            array('/kontrollpanel/deltakerhistorikk?department=1&semester=1'),
+            ['/kontrollpanel/deltakerhistorikk'],
+            ['/kontrollpanel/deltakerhistorikk?department=1&semester=1'],
 
-            array('/kontrollpanel/vikar'),
-            array('/kontrollpanel/vikar?department=1&semester=1'),
+            ['/kontrollpanel/vikar'],
+            ['/kontrollpanel/vikar?department=1&semester=1'],
 
-            array('/kontrollpanel/team/avdeling'),
-            array('/kontrollpanel/teamadmin/team/1'),
+            ['/kontrollpanel/team/avdeling'],
+            ['/kontrollpanel/teamadmin/team/1'],
 
-            array('/kontrollpanel/opprettsoker'),
-            array('/kontrollpanel/brukeradmin/opprett'),
+            ['/kontrollpanel/opprettsoker'],
+            ['/kontrollpanel/brukeradmin/opprett'],
 
 
-            array('/kontrollpanel/vikar'),
-            array('/kontrollpanel/vikar?department=1&semester=1'),
+            ['/kontrollpanel/vikar'],
+            ['/kontrollpanel/vikar?department=1&semester=1'],
 
-            array('/kontrollpanel/team/avdeling'),
-            array('/kontrollpanel/teamadmin/team/1'),
+            ['/kontrollpanel/team/avdeling'],
+            ['/kontrollpanel/teamadmin/team/1'],
 
-            array('/kontrollpanel/brukeradmin'),
-            array('/kontrollpanel/epostlister'),
-            array('/kontrollpanel/sponsorer'),
+            ['/kontrollpanel/brukeradmin'],
+            ['/kontrollpanel/epostlister'],
+            ['/kontrollpanel/sponsorer'],
 
-            array('/kontrollpanel/utlegg'),
-            array('/kontrollpanel/utlegg/2'),
+            ['/kontrollpanel/utlegg'],
+            ['/kontrollpanel/utlegg/2'],
 
-            array('/kontrollpanel/avdelingadmin'),
+            ['/kontrollpanel/avdelingadmin'],
 
-            array('/kontrollpanel/skoleadmin'),
-            array('/kontrollpanel/skoleadmin/brukere'),
-            array('/kontrollpanel/skoleadmin/tildel/skole/1'),
-        );
+            ['/kontrollpanel/skoleadmin'],
+            ['/kontrollpanel/skoleadmin/brukere'],
+            ['/kontrollpanel/skoleadmin/tildel/skole/1'],
+        ];
     }
 
     public function teamLeaderUrlProvider(): array
     {
-        return array(
+        return [
 
-            array('/kontrollpanel/intervju/settopp/6'),
-            array('/kontrollpanel/intervju/conduct/6'),
-            array('/kontrollpanel/intervju/vis/4'),
-            array('/kontrollpanel/skole/timeplan/'),
+            ['/kontrollpanel/intervju/settopp/6'],
+            ['/kontrollpanel/intervju/conduct/6'],
+            ['/kontrollpanel/intervju/vis/4'],
+            ['/kontrollpanel/skole/timeplan/'],
 
-            array('/kontrollpanel/teamadmin/stillinger'),
-            array('/kontrollpanel/teamadmin/opprett/stilling'),
-            array('/kontrollpanel/teamadmin/rediger/stilling/1'),
-            array('/kontrollpanel/teamadmin/avdeling/opprett/1'),
-            array('/kontrollpanel/teamadmin/update/1'),
-            array('/kontrollpanel/teamadmin/team/nytt_medlem/1'),
-            array('/kontrollpanel/teamadmin/oppdater/teamhistorie/1'),
-            array('/kontrollpanel/team/avdeling/2'),
+            ['/kontrollpanel/teamadmin/stillinger'],
+            ['/kontrollpanel/teamadmin/opprett/stilling'],
+            ['/kontrollpanel/teamadmin/rediger/stilling/1'],
+            ['/kontrollpanel/teamadmin/avdeling/opprett/1'],
+            ['/kontrollpanel/teamadmin/update/1'],
+            ['/kontrollpanel/teamadmin/team/nytt_medlem/1'],
+            ['/kontrollpanel/teamadmin/oppdater/teamhistorie/1'],
+            ['/kontrollpanel/team/avdeling/2'],
 
-            array('/kontrollpanel/hovedstyret'),
-            array('/kontrollpanel/hovedstyret/nytt_medlem/1'),
-            array('/kontrollpanel/hovedstyret/rediger_medlem/1'),
-            array('/kontrollpanel/hovedstyret/oppdater'),
+            ['/kontrollpanel/hovedstyret'],
+            ['/kontrollpanel/hovedstyret/nytt_medlem/1'],
+            ['/kontrollpanel/hovedstyret/rediger_medlem/1'],
+            ['/kontrollpanel/hovedstyret/oppdater'],
 
-            array('/kontrollpanel/opptakadmin/teaminteresse'),
-            array('/kontrollpanel/opptakadmin/teaminteresse?department=1&semester=1'),
+            ['/kontrollpanel/opptakadmin/teaminteresse'],
+            ['/kontrollpanel/opptakadmin/teaminteresse?department=1&semester=1'],
 
-            array('/kontrollpanel/brukeradmin/avdeling/2'),
-            array('/kontrollpanel/brukeradmin/opprett/2'),
+            ['/kontrollpanel/brukeradmin/avdeling/2'],
+            ['/kontrollpanel/brukeradmin/opprett/2'],
 
-            array('/kontrollpanel/avdelingadmin/update/1'),
+            ['/kontrollpanel/avdelingadmin/update/1'],
 
-            array('/kontrollpanel/skoleadmin/opprett/1'),
-            array('/kontrollpanel/skoleadmin/oppdater/1'),
-            array('/kontrollpanel/skoleadmin/avdeling/2'),
+            ['/kontrollpanel/skoleadmin/opprett/1'],
+            ['/kontrollpanel/skoleadmin/oppdater/1'],
+            ['/kontrollpanel/skoleadmin/avdeling/2'],
 
-            array('/kontrollpanel/linjer'),
-            array('/kontrollpanel/linje/1'),
-            array('/kontrollpanel/linje'),
-        );
+            ['/kontrollpanel/linjer'],
+            ['/kontrollpanel/linje/1'],
+            ['/kontrollpanel/linje'],
+        ];
     }
 
     public function adminUrlProvider(): array
     {
-        return array(
-            array('/kontrollpanel/avdelingadmin/opprett'),
-            array('/kontrollpanel/bruker/vekorepost/endre/1'),
-            array('/kontrollpanel/semesteradmin'),
-            array('/kontrollpanel/semesteradmin/opprett'),
-            array('/kontrollpanel/admin/accessrules'),
-            array('/kontrollpanel/admin/accessrules/create'),
-            array('/kontrollpanel/admin/accessrules/routing/create'),
-        );
+        return [
+            ['/kontrollpanel/avdelingadmin/opprett'],
+            ['/kontrollpanel/bruker/vekorepost/endre/1'],
+            ['/kontrollpanel/semesteradmin'],
+            ['/kontrollpanel/semesteradmin/opprett'],
+            ['/kontrollpanel/admin/accessrules'],
+            ['/kontrollpanel/admin/accessrules/create'],
+            ['/kontrollpanel/admin/accessrules/routing/create'],
+        ];
     }
 }

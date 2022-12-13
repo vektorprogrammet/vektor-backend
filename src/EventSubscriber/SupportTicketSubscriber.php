@@ -35,16 +35,16 @@ class SupportTicketSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            SupportTicketCreatedEvent::NAME => array(
-                array('logEvent', 1),
-                array('sendTicketToDepartment', 0),
-                array('sendTicketReceipt', 0),
-                array('sendTicketToDepartmentSlackChannel', 0),
-                array('addFlashMessage', - 1),
-                array('sendSlackNotification', - 2),
-            ),
-        );
+        return [
+            SupportTicketCreatedEvent::NAME => [
+                ['logEvent', 1],
+                ['sendTicketToDepartment', 0],
+                ['sendTicketReceipt', 0],
+                ['sendTicketToDepartmentSlackChannel', 0],
+                ['addFlashMessage', - 1],
+                ['sendSlackNotification', - 2],
+            ],
+        ];
     }
 
     public function sendTicketToDepartment(SupportTicketCreatedEvent $event)

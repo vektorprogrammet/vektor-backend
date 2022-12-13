@@ -38,12 +38,12 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            AssistantHistoryCreatedEvent::NAME => array(
-                array('sendActivationMail', 0),
-                array('addFlashMessage', -1),
-            ),
-        );
+        return [
+            AssistantHistoryCreatedEvent::NAME => [
+                ['sendActivationMail', 0],
+                ['addFlashMessage', -1],
+            ],
+        ];
     }
 
     /**

@@ -30,11 +30,11 @@ class ControlPanelController extends BaseController
             ->findOneByDepartmentAndSemester($department, $semester);
 
         // Return the view to be rendered
-        return $this->render('control_panel/index.html.twig', array(
+        return $this->render('control_panel/index.html.twig', [
             'admissionPeriod' => $admissionPeriod,
             'department' => $department,
             'semester' => $semester,
-        ));
+        ]);
     }
 
     public function showSBS(): Response
@@ -47,8 +47,8 @@ class ControlPanelController extends BaseController
         }
 
         // Return the view to be rendered
-        return $this->render('control_panel/sbs.html.twig', array(
+        return $this->render('control_panel/sbs.html.twig', [
             'data' => $sbsData,
-        ));
+        ]);
     }
 }

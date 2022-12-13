@@ -16,28 +16,28 @@ class SchoolCapacityType extends AbstractType
     {
         $department = $builder->getData()->getDepartment();
         $builder
-            ->add('school', EntityType::class, array(
+            ->add('school', EntityType::class, [
                 'label' => 'Skole',
                 'class' => 'App:School',
                 'query_builder' => function (SchoolRepository $er) use ($department) {
                     return $er->findActiveSchoolsWithoutCapacity($department);
                 },
-            ))
+            ])
             ->add('monday', IntegerType::class)
             ->add('tuesday', IntegerType::class)
             ->add('wednesday', IntegerType::class)
             ->add('thursday', IntegerType::class)
             ->add('friday', IntegerType::class)
-            ->add('save', SubmitType::class, array(
+            ->add('save', SubmitType::class, [
                 'label' => 'Lagre',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\SchoolCapacity',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

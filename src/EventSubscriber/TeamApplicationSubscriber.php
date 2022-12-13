@@ -32,13 +32,13 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            TeamApplicationCreatedEvent::NAME => array(
-                array('sendConfirmationMail', 0),
-                array('sendApplicationToTeamMail', 0),
-                array('addFlashMessage', -1),
-            ),
-        );
+        return [
+            TeamApplicationCreatedEvent::NAME => [
+                ['sendConfirmationMail', 0],
+                ['sendApplicationToTeamMail', 0],
+                ['addFlashMessage', -1],
+            ],
+        ];
     }
 
     public function sendConfirmationMail(TeamApplicationCreatedEvent $event)
@@ -52,12 +52,12 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
 
         $receipt = (new Swift_Message())
             ->setSubject('Søknad til '.$team->getName().' mottatt')
-            ->setFrom(array($email => $team->getName()))
+            ->setFrom([$email => $team->getName()])
             ->setReplyTo($email)
             ->setTo($application->getEmail())
-            ->setBody($this->twig->render('team/receipt.html.twig', array(
+            ->setBody($this->twig->render('team/receipt.html.twig', [
                 'team' => $team,
-            )));
+            ]));
         $this->mailer->send($receipt);
     }
 
@@ -72,12 +72,12 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
 
         $receipt = (new Swift_Message())
             ->setSubject('Ny søker til '.$team->getName())
-            ->setFrom(array('vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'))
+            ->setFrom(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setReplyTo($application->getEmail())
             ->setTo($email)
-            ->setBody($this->twig->render('team/application_email.html.twig', array(
+            ->setBody($this->twig->render('team/application_email.html.twig', [
                 'application' => $application,
-            )));
+            ]));
         $this->mailer->send($receipt);
     }
 

@@ -40,12 +40,12 @@ class ApplicationSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            ApplicationCreatedEvent::NAME => array(
-                array('sendConfirmationMail', 0),
-                array('createAdmissionSubscriber', - 2),
-            ),
-        );
+        return [
+            ApplicationCreatedEvent::NAME => [
+                ['sendConfirmationMail', 0],
+                ['createAdmissionSubscriber', - 2],
+            ],
+        ];
     }
 
     public function createAdmissionSubscriber(ApplicationCreatedEvent $event)
@@ -82,10 +82,10 @@ class ApplicationSubscriber implements EventSubscriberInterface
             ->setBody(
                 $this->twig->render(
                     $template,
-                    array(
+                    [
                         'application' => $application,
                         'newUserCode' => $newUserCode,
-                    )
+                    ]
                 ),
                 'text/html'
             );

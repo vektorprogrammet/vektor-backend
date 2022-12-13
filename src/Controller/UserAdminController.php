@@ -28,10 +28,10 @@ class UserAdminController extends BaseController
         // Create the user object
         $user = new User();
 
-        $form = $this->createForm(CreateUserType::class, $user, array(
-            'validation_groups' => array('create_user'),
+        $form = $this->createForm(CreateUserType::class, $user, [
+            'validation_groups' => ['create_user'],
             'department' => $department
-        ));
+        ]);
 
         // Handle the form
         $form->handleRequest($request);
@@ -51,10 +51,10 @@ class UserAdminController extends BaseController
         }
 
         // Render the view
-        return $this->render('user_admin/create_user.html.twig', array(
+        return $this->render('user_admin/create_user.html.twig', [
             'form' => $form->createView(),
             'department' => $department,
-        ));
+        ]);
     }
 
     public function show(): Response
@@ -68,12 +68,12 @@ class UserAdminController extends BaseController
         $activeUsers = $this->getDoctrine()->getRepository(User::class)->findAllActiveUsersByDepartment($department);
         $inActiveUsers = $this->getDoctrine()->getRepository(User::class)->findAllInActiveUsersByDepartment($department);
 
-        return $this->render('user_admin/index.html.twig', array(
+        return $this->render('user_admin/index.html.twig', [
             'activeUsers' => $activeUsers,
             'inActiveUsers' => $inActiveUsers,
             'departments' => $activeDepartments,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function showUsersByDepartment(Department $department): Response
@@ -85,12 +85,12 @@ class UserAdminController extends BaseController
         $inActiveUsers = $this->getDoctrine()->getRepository(User::class)->findAllInActiveUsersByDepartment($department);
 
         // Renders the view with the variables
-        return $this->render('user_admin/index.html.twig', array(
+        return $this->render('user_admin/index.html.twig', [
             'activeUsers' => $activeUsers,
             'inActiveUsers' => $inActiveUsers,
             'departments' => $activeDepartments,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function deleteUserById(User $user)
@@ -106,7 +106,7 @@ class UserAdminController extends BaseController
             throw $this->createAccessDeniedException();
         }
         // Redirect to useradmin page, set department to that of the deleted user
-        return $this->redirectToRoute('useradmin_filter_users_by_department', array('id' => $user->getDepartment()->getId()));
+        return $this->redirectToRoute('useradmin_filter_users_by_department', ['id' => $user->getDepartment()->getId()]);
     }
 
     public function sendActivationMail(User $user)

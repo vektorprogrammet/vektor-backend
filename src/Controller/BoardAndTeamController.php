@@ -29,21 +29,21 @@ class BoardAndTeamController extends BaseController
             $numberOfTeams += $department->getTeams()->count();
         }
 
-        $departmentStats = array();
+        $departmentStats = [];
         foreach ($departments as $department) {
             $currentSemester = $this->getCurrentSemester();
             $userRepository = $this->getDoctrine()->getRepository(User::class);
-            $departmentStats[$department->getCity()] = array(
+            $departmentStats[$department->getCity()] = [
                 'numTeamMembers' => sizeof($userRepository->findUsersInDepartmentWithTeamMembershipInSemester($department, $currentSemester)),
                 'numAssistants' => sizeof($userRepository->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $currentSemester)),
-            );
+            ];
         }
 
-        return $this->render('team/board_and_team.html.twig', array(
+        return $this->render('team/board_and_team.html.twig', [
             'departments' => $departments,
             'board' => $board,
             'numberOfTeams' => $numberOfTeams,
             'departmentStats' => $departmentStats,
-        ));
+        ]);
     }
 }

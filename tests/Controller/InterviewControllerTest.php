@@ -115,10 +115,10 @@ class InterviewControllerTest extends BaseWebTestCase
         self::ensureKernelShutdown();
 
         // Team user who is assigned the interview
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/conduct/5');
 
@@ -251,10 +251,10 @@ class InterviewControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
 
         // Team user who is assigned the interview
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/settopp/6');
 

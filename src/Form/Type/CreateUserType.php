@@ -19,26 +19,26 @@ class CreateUserType extends AbstractType
         $this->department = $options['department'];
 
         $builder
-            ->add('firstName', TextType::class, array(
+            ->add('firstName', TextType::class, [
                 'label' => 'Fornavn',
-            ))
-            ->add('lastName', TextType::class, array(
+            ])
+            ->add('lastName', TextType::class, [
                 'label' => 'Etternavn',
-            ))
-            ->add('gender', ChoiceType::class, array(
+            ])
+            ->add('gender', ChoiceType::class, [
                 'label' => 'Kjønn',
-                'choices' => array(
+                'choices' => [
                     'Mann' => 0,
                     'Dame' => 1,
-                ),
-            ))
-            ->add('phone', TextType::class, array(
+                ],
+            ])
+            ->add('phone', TextType::class, [
                 'label' => 'Telefon',
-            ))
-            ->add('email', TextType::class, array(
+            ])
+            ->add('email', TextType::class, [
                 'label' => 'E-post',
-            ))
-            ->add('fieldOfStudy', EntityType::class, array(
+            ])
+            ->add('fieldOfStudy', EntityType::class, [
                 'label' => 'Linje',
                 'class' => 'App:FieldOfStudy',
                 'query_builder' => function (EntityRepository $er) {
@@ -48,15 +48,15 @@ class CreateUserType extends AbstractType
                         // Set the parameter to the department ID that the current user belongs to.
                         ->setParameter(1, $this->department);
                 },
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\User',
             'department' => 'App\Entity\Department'
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

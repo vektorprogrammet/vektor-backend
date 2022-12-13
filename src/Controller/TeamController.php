@@ -15,9 +15,9 @@ class TeamController extends BaseController
             throw new NotFoundHttpException('Team not found');
         }
 
-        return $this->render('team/team_page.html.twig', array(
+        return $this->render('team/team_page.html.twig', [
             'team'  => $team,
-        ));
+        ]);
     }
 
     public function showByDepartmentAndTeam($departmentCity, $teamName): Response

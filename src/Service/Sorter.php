@@ -59,7 +59,7 @@ class Sorter
      */
     public function sortUsersByReceiptSubmitTime(&$users): bool
     {
-        return usort($users, array($this, 'userWithNewestReceipt'));
+        return usort($users, [$this, 'userWithNewestReceipt']);
     }
 
     /**
@@ -87,7 +87,7 @@ class Sorter
      */
     public function sortReceiptsBySubmitTime(&$receipts)
     {
-        return usort($receipts, array($this,'newestReceipt'));
+        return usort($receipts, [$this,'newestReceipt']);
     }
 
     /**
@@ -158,7 +158,7 @@ class Sorter
      */
     public function sortTeamMembershipsByPosition(&$teamMemberships)
     {
-        usort($teamMemberships, array($this, 'compareTeamMemberships'));
+        usort($teamMemberships, [$this, 'compareTeamMemberships']);
     }
 
     /**

@@ -78,7 +78,7 @@ class ApplicationAdmission
     public function setCorrectUser(Application $application)
     {
         //Check if email belongs to an existing account and use that account
-        $user = $this->em->getRepository(User::class)->findOneBy(array('email' => $application->getUser()->getEmail()));
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $application->getUser()->getEmail()]);
         if ($user !== null) {
             $application->setUser($user);
         }
@@ -122,7 +122,7 @@ class ApplicationAdmission
 
             $content = $this->loginManager->renderLogin($message, 'admission_existing_user');
         } elseif (!$user->hasBeenAssistant()) {
-            $content = $this->twig->render('error/no_assistanthistory.html.twig', array('user' => $user));
+            $content = $this->twig->render('error/no_assistanthistory.html.twig', ['user' => $user]);
         } else {
             $department = $user->getDepartment();
             $admissionPeriod = $this->em->getRepository(AdmissionPeriod::class)->findOneWithActiveAdmissionByDepartment($department);

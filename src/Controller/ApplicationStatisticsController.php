@@ -40,11 +40,11 @@ class ApplicationStatisticsController extends BaseController
             $applicationData->setAdmissionPeriod($admissionPeriod);
         }
 
-        return $this->render('statistics/statistics.html.twig', array(
+        return $this->render('statistics/statistics.html.twig', [
             'applicationData' => $applicationData,
             'assistantHistoryData' => $assistantHistoryData,
             'semester' => $semester,
             'department' => $department,
-        ));
+        ]);
     }
 }

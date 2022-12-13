@@ -30,32 +30,32 @@ class ReceiptSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return array(
-            ReceiptEvent::CREATED => array(
-                array('sendCreatedEmail', 1),
-                array('addCreatedFlashMessage', 1)
-            ),
-            ReceiptEvent::PENDING => array(
-                array('logPendingEvent', 1),
-                array('addPendingFlashMessage', 1)
-            ),
-            ReceiptEvent::REFUNDED => array(
-                array('logRefundedEvent', 1),
-                array('sendRefundedEmail', 1),
-                array('addRefundedFlashMessage', 1)
-            ),
-            ReceiptEvent::REJECTED => array(
-                array('logRejectedEvent', 1),
-                array('sendRejectedEmail', 1),
-                array('addRejectedFlashMessage', 1)
-            ),
-            ReceiptEvent::EDITED => array(
-                array('addEditedFlashMessage', 1)
-            ),
-            ReceiptEvent::DELETED => array(
-                array('addDeletedFlashMessage', 1)
-            )
-        );
+        return [
+            ReceiptEvent::CREATED => [
+                ['sendCreatedEmail', 1],
+                ['addCreatedFlashMessage', 1]
+            ],
+            ReceiptEvent::PENDING => [
+                ['logPendingEvent', 1],
+                ['addPendingFlashMessage', 1]
+            ],
+            ReceiptEvent::REFUNDED => [
+                ['logRefundedEvent', 1],
+                ['sendRefundedEmail', 1],
+                ['addRefundedFlashMessage', 1]
+            ],
+            ReceiptEvent::REJECTED => [
+                ['logRejectedEvent', 1],
+                ['sendRejectedEmail', 1],
+                ['addRejectedFlashMessage', 1]
+            ],
+            ReceiptEvent::EDITED => [
+                ['addEditedFlashMessage', 1]
+            ],
+            ReceiptEvent::DELETED => [
+                ['addDeletedFlashMessage', 1]
+            ]
+        ];
     }
 
     public function addCreatedFlashMessage()

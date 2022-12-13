@@ -12,25 +12,25 @@ class FieldOfStudyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Fullt navn',
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'Eks: Datateknikk',
-                ),
-            ))
-            ->add('shortName', TextType::class, array(
+                ],
+            ])
+            ->add('shortName', TextType::class, [
                 'label' => 'Forkortelse',
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'Eks: MTDT',
-                ),
-            ));
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\FieldOfStudy',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

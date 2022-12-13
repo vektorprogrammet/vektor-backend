@@ -46,10 +46,10 @@ class SchoolCapacityRepository extends EntityRepository
             ->select('sc')
             ->where('sc.department = :department')
             ->andWhere('sc.semester = :semester')
-            ->setParameters(array(
+            ->setParameters([
                 'department' => $department,
                 'semester' => $semester,
-            ))
+            ])
             ->getQuery()
             ->getResult();
     }

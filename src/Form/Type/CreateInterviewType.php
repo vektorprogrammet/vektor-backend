@@ -12,7 +12,7 @@ class CreateInterviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('interviewer', EntityType::class, array(
+        $builder->add('interviewer', EntityType::class, [
             'class' => 'App:User',
             'query_builder' => function (EntityRepository $er) use ($options) {
                 return $er->createQueryBuilder('u')
@@ -27,24 +27,24 @@ class CreateInterviewType extends AbstractType
             //->setParameter('roles', $options['roles']);
             },
             'group_by' => 'fieldOfStudy.department.city',
-        ));
+        ]);
 
-        $builder->add('interviewSchema', EntityType::class, array(
+        $builder->add('interviewSchema', EntityType::class, [
             'class' => 'App:InterviewSchema',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('i')
                     ->select('i')
                     ->orderBy('i.id', 'DESC');
             },
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Interview',
             'roles' => [],
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

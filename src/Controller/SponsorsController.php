@@ -24,9 +24,9 @@ class SponsorsController extends BaseController
             ->getRepository(Sponsor::class)
             ->findAll();
 
-        return $this->render('sponsors/sponsors_show.html.twig', array(
+        return $this->render('sponsors/sponsors_show.html.twig', [
             'sponsors' => $sponsors,
-        ));
+        ]);
     }
 
     public function sponsorEdit(Sponsor $sponsor = null, Request $request)

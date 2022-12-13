@@ -25,11 +25,11 @@ class UserSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            UserEvent::COMPANY_EMAIL_EDITED  => array(
-                array('logCompanyEmailEdited', 1),
-            ),
-        );
+        return [
+            UserEvent::COMPANY_EMAIL_EDITED  => [
+                ['logCompanyEmailEdited', 1],
+            ],
+        ];
     }
 
     public function logCompanyEmailEdited(UserEvent $event)

@@ -58,7 +58,7 @@ class ReceiptController extends BaseController
         $sorter->sortUsersByReceiptSubmitTime($usersWithReceipts);
         $sorter->sortUsersByReceiptStatus($usersWithReceipts);
 
-        return $this->render('receipt_admin/show_receipts.html.twig', array(
+        return $this->render('receipt_admin/show_receipts.html.twig', [
             'users_with_receipts' => $usersWithReceipts,
             'current_user' => $this->getUser(),
             'total_payout' => $totalPayoutThisYear,
@@ -66,7 +66,7 @@ class ReceiptController extends BaseController
             'pending_statistics' => $pendingReceiptStatistics,
             'rejected_statistics' => $rejectedReceiptStatistics,
             'refunded_statistics' => $refundedReceiptStatistics
-        ));
+        ]);
     }
 
     public function showIndividual(User $user): Response
@@ -77,10 +77,10 @@ class ReceiptController extends BaseController
         $sorter->sortReceiptsBySubmitTime($receipts);
         $sorter->sortReceiptsByStatus($receipts);
 
-        return $this->render('receipt_admin/show_individual_receipts.html.twig', array(
+        return $this->render('receipt_admin/show_individual_receipts.html.twig', [
             'user' => $user,
             'receipts' => $receipts,
-        ));
+        ]);
     }
 
     public function create(Request $request)
@@ -123,11 +123,11 @@ class ReceiptController extends BaseController
             $this->addFlash('warning', "Bildefilen er for stor. Maks størrelse er 2 MiB.");
         }
 
-        return $this->render('receipt/my_receipts.html.twig', array(
+        return $this->render('receipt/my_receipts.html.twig', [
             'form' => $form->createView(),
             'receipt' => $receipt,
             'receipts' => $receipts,
-        ));
+        ]);
     }
 
     public function edit(Request $request, Receipt $receipt)
@@ -140,9 +140,9 @@ class ReceiptController extends BaseController
             throw new AccessDeniedException();
         }
 
-        $form = $this->createForm(ReceiptType::class, $receipt, array(
+        $form = $this->createForm(ReceiptType::class, $receipt, [
             'picture_required' => false,
-        ));
+        ]);
         $oldPicturePath = $receipt->getPicturePath();
 
         $form->handleRequest($request);
@@ -169,11 +169,11 @@ class ReceiptController extends BaseController
         }
 
 
-        return $this->render('receipt/edit_receipt.html.twig', array(
+        return $this->render('receipt/edit_receipt.html.twig', [
             'form' => $form->createView(),
             'receipt' => $receipt,
             'parent_template' => 'base.html.twig',
-        ));
+        ]);
     }
 
     public function editStatus(Request $request, Receipt $receipt): RedirectResponse
@@ -210,9 +210,9 @@ class ReceiptController extends BaseController
 
     public function adminEdit(Request $request, Receipt $receipt)
     {
-        $form = $this->createForm(ReceiptType::class, $receipt, array(
+        $form = $this->createForm(ReceiptType::class, $receipt, [
             'picture_required' => false,
-        ));
+        ]);
         $oldPicturePath = $receipt->getPicturePath();
 
         $form->handleRequest($request);
@@ -235,15 +235,15 @@ class ReceiptController extends BaseController
 
             $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::EDITED);
 
-            return $this->redirectToRoute('receipts_show_individual', array('user' => $receipt->getUser()->getId()));
+            return $this->redirectToRoute('receipts_show_individual', ['user' => $receipt->getUser()->getId()]);
         }
 
 
-        return $this->render('receipt/edit_receipt.html.twig', array(
+        return $this->render('receipt/edit_receipt.html.twig', [
             'form' => $form->createView(),
             'receipt' => $receipt,
             'parent_template' => 'adminBase.html.twig',
-        ));
+        ]);
     }
 
     public function delete(Request $request, Receipt $receipt): RedirectResponse

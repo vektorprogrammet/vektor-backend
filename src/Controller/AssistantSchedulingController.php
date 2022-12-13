@@ -46,7 +46,7 @@ class AssistantSchedulingController extends BaseController
      */
     private function getAssistantAvailableDays($applications)
     {
-        $assistants = array();
+        $assistants = [];
         foreach ($applications as $application) {
             $doublePosition = $application->getDoublePosition();
             $preferredGroup = null;
@@ -60,7 +60,7 @@ class AssistantSchedulingController extends BaseController
                 $preferredGroup = null;
             }
 
-            $availability = array();
+            $availability = [];
             $availability['Monday'] = $application->isMonday();
             $availability['Tuesday'] = $application->isTuesday();
             $availability['Wednesday'] = $application->isWednesday();
@@ -113,16 +113,16 @@ class AssistantSchedulingController extends BaseController
     private function generateSchoolsFromSchoolCapacities(array $schoolCapacities): array
     {
         //Use schoolCapacities to create School objects for the SA-Algorithm
-        $schools = array();
+        $schools = [];
         foreach ($schoolCapacities as $sc) {
-            $capacityDays = array();
+            $capacityDays = [];
             $capacityDays['Monday'] = $sc->getMonday();
             $capacityDays['Tuesday'] = $sc->getTuesday();
             $capacityDays['Wednesday'] = $sc->getWednesday();
             $capacityDays['Thursday'] = $sc->getThursday();
             $capacityDays['Friday'] = $sc->getFriday();
 
-            $capacity = array();
+            $capacity = [];
             $capacity[1] = $capacityDays;
             $capacity[2] = $capacityDays;
 

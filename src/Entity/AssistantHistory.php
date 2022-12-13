@@ -234,7 +234,7 @@ class AssistantHistory
     }
 
     // Used for unit testing
-    public function fromArray($data = array())
+    public function fromArray($data = [])
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";

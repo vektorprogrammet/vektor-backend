@@ -47,12 +47,12 @@ class DbSubscriber implements EventSubscriber
      */
     public function getSubscribedEvents(): array
     {
-        return array(
+        return [
             'prePersist',
             'postPersist',
             'postUpdate',
             'postRemove'
-        );
+        ];
     }
 
     public function prePersist(LifecycleEventArgs $args)

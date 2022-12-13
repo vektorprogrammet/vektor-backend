@@ -77,7 +77,7 @@ class PasswordResetController extends BaseController
             }
         }
         //Render reset_password twig with the form.
-        return $this->render('reset_password/reset_password.html.twig', array('form' => $form->createView()));
+        return $this->render('reset_password/reset_password.html.twig', ['form' => $form->createView()]);
     }
 
     public function showConfirmation(): Response
@@ -98,10 +98,10 @@ class PasswordResetController extends BaseController
         $passwordManager = $this->passwordManager;
 
         if (!$passwordManager->resetCodeIsValid($resetCode) || $passwordManager->resetCodeHasExpired($resetCode)) {
-            return $this->render('error/error_message.html.twig', array(
+            return $this->render('error/error_message.html.twig', [
                 'title' => 'Ugyldig kode',
                 'message' => "Koden er ugyldig eller utløpt. Gå til <a href='{$this->generateUrl('reset_password')}'>Glemt passord?</a> for å få tilsendt ny link.",
-            ));
+            ]);
         }
 
         $passwordReset = $passwordManager->getPasswordResetByResetCode($resetCode);
@@ -122,8 +122,8 @@ class PasswordResetController extends BaseController
             return $this->redirectToRoute('login_route');
         }
 
-        return $this->render('reset_password/new_password.html.twig', array(
+        return $this->render('reset_password/new_password.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

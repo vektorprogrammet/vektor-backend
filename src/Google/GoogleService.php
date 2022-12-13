@@ -37,12 +37,12 @@ abstract class GoogleService
         $client = new Google_Client();
         $client->setClientId($this->clientId);
         $client->setClientSecret($this->clientSecret);
-        $client->setScopes(array(
+        $client->setScopes([
             Google_Service_Directory::ADMIN_DIRECTORY_USER,
             Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
             Google_Service_Drive::DRIVE,
             Google_Service_Gmail::GMAIL_SEND
-        ));
+        ]);
 
         if (file_exists($this->credentialsPath)) {
             $accessToken = json_decode(file_get_contents($this->credentialsPath), true);

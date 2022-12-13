@@ -25,11 +25,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return array(
-            KernelEvents::EXCEPTION => array(
-                array('logException', 0),
-            ),
-        );
+        return [
+            KernelEvents::EXCEPTION => [
+                ['logException', 0],
+            ],
+        ];
     }
 
     public function logException(ExceptionEvent $event)

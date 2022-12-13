@@ -24,9 +24,9 @@ class GoogleGroups extends GoogleService
         $client  = $this->getClient();
         $service = new Google_Service_Directory($client);
 
-        $optParams = array(
+        $optParams = [
             'customer' => 'my_customer',
-        );
+        ];
 
         if ($maxResults) {
             $optParams['maxResults'] = $maxResults;

@@ -21,11 +21,11 @@ class SecurityController extends BaseController
 
         return $this->render(
             'login/login.html.twig',
-            array(
+            [
                 // last username entered by the user
                 'last_username' => $lastUsername,
                 'error' => $error,
-            )
+            ]
         );
     }
 

@@ -28,11 +28,11 @@ class LoginManager
 
     public function renderLogin(string $message, string $redirectPath)
     {
-        return $this->twig->render('login/login.html.twig', array(
+        return $this->twig->render('login/login.html.twig', [
             'last_username' => null,
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
             'message' => $message,
             'redirect_path' => $this->router->generate($redirectPath),
-        ));
+        ]);
     }
 }

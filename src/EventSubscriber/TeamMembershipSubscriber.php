@@ -36,22 +36,22 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            TeamMembershipEvent::CREATED => array(
-                array('updateUserRole', 5),
-                array('activateTeamMembership', 2),
-                array('addCreatedFlashMessage', -1),
-            ),
-            TeamMembershipEvent::EDITED  => array(
-                array('updateUserRole', 5),
-                array('activateTeamMembership', 2),
-                array('addUpdatedFlashMessage', -1),
-            ),
-            TeamMembershipEvent::DELETED => array(
-                array('logDeletedEvent', 10),
-                array('updateUserRole', 5),
-            ),
-        );
+        return [
+            TeamMembershipEvent::CREATED => [
+                ['updateUserRole', 5],
+                ['activateTeamMembership', 2],
+                ['addCreatedFlashMessage', -1],
+            ],
+            TeamMembershipEvent::EDITED  => [
+                ['updateUserRole', 5],
+                ['activateTeamMembership', 2],
+                ['addUpdatedFlashMessage', -1],
+            ],
+            TeamMembershipEvent::DELETED => [
+                ['logDeletedEvent', 10],
+                ['updateUserRole', 5],
+            ],
+        ];
     }
 
     public function addCreatedFlashMessage(TeamMembershipEvent $event)

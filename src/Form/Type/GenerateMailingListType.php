@@ -15,33 +15,33 @@ class GenerateMailingListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('semester', EntityType::class, array(
+            ->add('semester', EntityType::class, [
                 'class' => 'App:Semester',
                 'label' => 'Velg semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
                 'required' => true,
-            ))
-            ->add('department', EntityType::class, array(
+            ])
+            ->add('department', EntityType::class, [
                 'class' => 'App:Department',
                 'label' => 'Velg region',
                 'query_builder' => function (DepartmentRepository $dr) {
                     return $dr->queryForActive();
                 },
                 'required' => true,
-            ))
-            ->add('type', ChoiceType::class, array(
+            ])
+            ->add('type', ChoiceType::class, [
                 'label' => 'Velg type',
-                'choices' => array(
+                'choices' => [
                     'Assistent' => 'Assistent',
                     'Team' => 'Team',
                     'Alle' => 'Alle',
-                ),
+                ],
                 'required' => true,
-            ))
-            ->add('save', SubmitType::class, array(
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Generer',
-            ));
+            ]);
     }
 }

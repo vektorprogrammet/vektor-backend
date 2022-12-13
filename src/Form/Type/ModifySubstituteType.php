@@ -14,41 +14,41 @@ class ModifySubstituteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $options['label'] = false;
-        $builder->add('days', DaysType::class, array(
+        $builder->add('days', DaysType::class, [
             'label' => 'Dager som passer',
             'data_class' => 'App\Entity\Application',
-        ));
-        $builder->add('user', UserDataForSubstituteType::class, array(
+        ]);
+        $builder->add('user', UserDataForSubstituteType::class, [
             'department' => $options['department'],
             'label' => false,
-        ));
+        ]);
 
-        $builder->add('yearOfStudy', TextType::class, array(
+        $builder->add('yearOfStudy', TextType::class, [
             'label' => 'År',
-        ));
+        ]);
 
-        $builder->add('language', ChoiceType::class, array(
+        $builder->add('language', ChoiceType::class, [
             'label' => 'Ønsket undervisningsspråk',
-            'choices' => array(
+            'choices' => [
                 'Norsk' => 'Norsk',
                 'Engelsk' => 'Engelsk',
                 'Norsk og engelsk' => 'Norsk og engelsk',
-            ),
+            ],
             'expanded' => true,
             'multiple' => false,
-        ));
+        ]);
 
-        $builder->add('save', SubmitType::class, array(
+        $builder->add('save', SubmitType::class, [
             'label' => 'Oppdater',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Application',
             'department' => null,
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

@@ -42,7 +42,7 @@ class TeamPositionSortExtensionUnitTest extends TestCase
 
     public function testExecutiveMembers()
     {
-        $users = array();
+        $users = [];
         $positions = ['Sekretær', 'Leder', '', 'Økonomi', 'Assistent', 'Medlem', 'Nestleder'];
         $board = new ExecutiveBoard();
 
@@ -52,7 +52,7 @@ class TeamPositionSortExtensionUnitTest extends TestCase
             $membership->setPositionName($positions[$x])
                        ->setBoard($board)
                        ->setStartSemester($this->activeSemester);
-            $user->setMemberships(array($membership));
+            $user->setMemberships([$membership]);
             $users[] = $user;
         }
 
@@ -65,7 +65,7 @@ class TeamPositionSortExtensionUnitTest extends TestCase
 
     public function testTeamMemberships()
     {
-        $users = array();
+        $users = [];
         $positions = ['Sekretær', 'Leder', '', 'Økonomi', 'Assistent', 'Medlem', 'Nestleder'];
         $department = new Department();
         $department->addAdmissionPeriod($this->latestAdmissionPeriod);
@@ -80,7 +80,7 @@ class TeamPositionSortExtensionUnitTest extends TestCase
             $membership->setPosition($position)
                 ->setTeam($team)
                 ->setStartSemester($this->activeSemester);
-            $user->setMemberships(array($membership));
+            $user->setMemberships([$membership]);
             $users[] = $user;
         }
 

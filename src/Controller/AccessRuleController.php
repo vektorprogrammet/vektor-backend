@@ -32,11 +32,11 @@ class AccessRuleController extends AbstractController
         $customRules = $this->getDoctrine()->getRepository(AccessRule::class)->findCustomRules();
         $routingRules = $this->getDoctrine()->getRepository(AccessRule::class)->findRoutingRules();
         $unhandledRules = $this->getDoctrine()->getRepository(UnhandledAccessRule::class)->findAll();
-        return $this->render('admin/access_rule/index.html.twig', array(
+        return $this->render('admin/access_rule/index.html.twig', [
             'customRules' => $customRules,
             'routingRules' => $routingRules,
             'unhandledRules' => $unhandledRules
-        ));
+        ]);
     }
 
     /**
@@ -66,11 +66,11 @@ class AccessRuleController extends AbstractController
 
             return $this->redirectToRoute("access_rules_show");
         }
-        return $this->render('admin/access_rule/create.html.twig', array(
+        return $this->render('admin/access_rule/create.html.twig', [
             'form' => $form->createView(),
             'accessRule' => $accessRule,
             'isCreate' => $isCreate
-        ));
+        ]);
     }
 
     /**
@@ -103,11 +103,11 @@ class AccessRuleController extends AbstractController
 
             return $this->redirectToRoute("access_rules_show");
         }
-        return $this->render('admin/access_rule/create.html.twig', array(
+        return $this->render('admin/access_rule/create.html.twig', [
             'form' => $form->createView(),
             'accessRule' => $accessRule,
             'isCreate' => $isCreate
-        ));
+        ]);
     }
 
     /**

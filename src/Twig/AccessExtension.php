@@ -23,9 +23,9 @@ class AccessExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('has_access_to', array($this, 'hasAccessTo')),
-        );
+        return [
+            new TwigFunction('has_access_to', [$this, 'hasAccessTo']),
+        ];
     }
 
     /**

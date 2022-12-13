@@ -21,7 +21,7 @@ class CreateAdmissionPeriodType extends AbstractType
         }, $options['admissionPeriods']);
 
         $builder
-            ->add('Semester', EntityType::class, array(
+            ->add('Semester', EntityType::class, [
                 'label' => 'Semester',
                 'class' => Semester::class,
                 'query_builder' => function (SemesterRepository $sr) use ($semesters) {
@@ -29,30 +29,30 @@ class CreateAdmissionPeriodType extends AbstractType
                         ->where('Semester.id NOT IN (:Semesters)')
                         ->setParameter('Semesters', $semesters);
                 },
-            ))
-            ->add('startDate', DateTimeType::class, array(
+            ])
+            ->add('startDate', DateTimeType::class, [
                 'label' => 'Opptak starttidspunkt',
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'html5' => false,
-            ))
-            ->add('endDate', DateTimeType::class, array(
+            ])
+            ->add('endDate', DateTimeType::class, [
                 'label' => 'Opptak sluttidspunkt',
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'html5' => false,
-            ))
-            ->add('save', SubmitType::class, array(
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Opprett',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\AdmissionPeriod',
             'admissionPeriods' => []
-        ));
+        ]);
     }
 
     public function getName()

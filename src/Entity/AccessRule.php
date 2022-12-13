@@ -241,9 +241,9 @@ class AccessRule
         $roles = $this->getRoles();
 
         return
-            count(is_countable($users) ? $users : array()) == 0 &&
-            count(is_countable($teams) ? $teams : array()) == 0 &&
-            count(is_countable($roles) ? $roles : array()) == 0 &&
+            count(is_countable($users) ? $users : []) == 0 &&
+            count(is_countable($teams) ? $teams : []) == 0 &&
+            count(is_countable($roles) ? $roles : []) == 0 &&
             !$this->isForExecutiveBoard();
     }
 

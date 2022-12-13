@@ -23,10 +23,10 @@ class SponsorsExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return array(
+        return [
             new TwigFunction('get_sponsors', [$this, 'getSponsors']),
             new TwigFunction('get_sponsors_by_size', [$this, 'getSponsorsBySize']),
-        );
+        ];
     }
 
     public function getSponsors()
@@ -45,7 +45,7 @@ class SponsorsExtension extends AbstractExtension
     {
         $sponsors = $this->doctrine
             ->getRepository(Sponsor::class)
-            ->findBy(array('size' => $size));
+            ->findBy(['size' => $size]);
         if (!$sponsors) {
             return [];
         }

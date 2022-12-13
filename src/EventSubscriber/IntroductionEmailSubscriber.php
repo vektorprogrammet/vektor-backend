@@ -26,12 +26,12 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            TeamMembershipEvent::CREATED => array(
-                array('sendWelcomeToTeamEmail', -1),
-                array('sendGoogleEmail', -2),
-            ),
-        );
+        return [
+            TeamMembershipEvent::CREATED => [
+                ['sendWelcomeToTeamEmail', -1],
+                ['sendGoogleEmail', -2],
+            ],
+        ];
     }
 
     public function sendWelcomeToTeamEmail(TeamMembershipEvent $event)
@@ -51,12 +51,12 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
             ->setSubject('Velkommen til '.$team->getName())
             ->setFrom('vektorbot@vektorprogrammet.no')
             ->setTo($user->getEmail())
-            ->setBody($this->twig->render('team_admin/welcome_team_membership_mail.html.twig', array(
+            ->setBody($this->twig->render('team_admin/welcome_team_membership_mail.html.twig', [
                 'name' => $user->getFirstName(),
                 'team' => $team->getName(),
                 'position' => $position,
                 'companyEmail' => $user->getCompanyEmail()
-            )))
+            ]))
             ->setContentType('text/html');
         $this->mailer->send($message);
     }
@@ -74,9 +74,9 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
             ->setSubject('Fullfør oppsettet med din Vektor-epost')
             ->setFrom('vektorbot@vektorprogrammet.no')
             ->setTo($user->getCompanyEmail())
-            ->setBody($this->twig->render('team_admin/welcome_google_mail.html.twig', array(
+            ->setBody($this->twig->render('team_admin/welcome_google_mail.html.twig', [
                 'name' => $user->getFirstName(),
-            )))
+            ]))
             ->setContentType('text/html');
         $this->mailer->send($message);
     }

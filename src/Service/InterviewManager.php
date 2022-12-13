@@ -135,7 +135,7 @@ class InterviewManager
             ->setBody(
                 $this->twig->render(
                     'interview/email.html.twig',
-                    array('message' => $data['message'],
+                    ['message' => $data['message'],
                         'datetime' => $data['datetime'],
                         'room' => $data['room'],
                         'campus' => $data['campus'],
@@ -144,7 +144,7 @@ class InterviewManager
                         'fromMail' => $data['from'],
                         'fromPhone' => $interview->getInterviewer()->getPhone(),
                         'responseCode' => $interview->getResponseCode(),
-                    )
+                    ]
                 ),
                 'text/html'
             );
@@ -156,9 +156,9 @@ class InterviewManager
      */
     public function sendRescheduleEmail(Interview $interview)
     {
-        $application = $this->em->getRepository(Application::class)->findOneBy(array('interview' => $interview));
+        $application = $this->em->getRepository(Application::class)->findOneBy(['interview' => $interview]);
         $user = $interview->getUser();
-        $interviewers = array();
+        $interviewers = [];
         $interviewers[] = $interview->getInterviewer();
         if (!is_null($interview->getCoInterviewer())) {
             $interviewers[] = $interview->getCoInterviewer();
@@ -171,9 +171,9 @@ class InterviewManager
                 ->setBody(
                     $this->twig->render(
                         'interview/reschedule_email.html.twig',
-                        array('interview' => $interview,
+                        ['interview' => $interview,
                             'application' => $application,
-                        )
+                        ]
                     ),
                     'text/html'
                 );
@@ -189,7 +189,7 @@ class InterviewManager
     {
         $user = $interview->getUser();
 
-        $interviewers = array();
+        $interviewers = [];
         $interviewers[] = $interview->getInterviewer();
         if (!is_null($interview->getCoInterviewer())) {
             $interviewers[] = $interview->getCoInterviewer();
@@ -203,8 +203,8 @@ class InterviewManager
                 ->setBody(
                     $this->twig->render(
                         'interview/cancel_email.html.twig',
-                        array('interview' => $interview,
-                        )
+                        ['interview' => $interview,
+                        ]
                     ),
                     'text/html'
                 );
@@ -241,10 +241,10 @@ class InterviewManager
              ->setBody(
                  $this->twig->render(
                      'interview/schedule_of_interviews_email.html.twig',
-                     array(
+                     [
                          'interviews'  => $interviews,
                          'interviewer' => $interviewer
-                     )
+                     ]
                  ),
                  'text/html'
              );
@@ -274,9 +274,9 @@ class InterviewManager
             ->setBody(
                 $this->twig->render(
                     'interview/accept_interview_reminder_email.html.twig',
-                    array(
+                    [
                         'interview' => $interview,
-                    )
+                    ]
                 ),
                 'text/html'
             );
@@ -335,7 +335,7 @@ class InterviewManager
 Vi har satt opp et intervju for deg angående opptak til vektorprogrammet. 
 Vennligst gi beskjed til meg hvis tidspunktet ikke passer.";
 
-        return array(
+        return [
             'datetime' => $interview->getScheduled(),
             'room' => $interview->getRoom() ?: $room,
             'campus' => $interview->getCampus() ?: $campus,
@@ -344,6 +344,6 @@ Vennligst gi beskjed til meg hvis tidspunktet ikke passer.";
             'from' => $interview->getInterviewer()->getEmail(),
             'to' => $interview->getUser()->getEmail(),
 
-        );
+        ];
     }
 }

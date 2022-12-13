@@ -16,9 +16,9 @@ class PositionController extends BaseController
         $positions = $this->getDoctrine()->getRepository(Position::class)->findAll();
 
         // Return the view with suitable variables
-        return $this->render('team_admin/show_positions.html.twig', array(
+        return $this->render('team_admin/show_positions.html.twig', [
             'positions' => $positions,
-        ));
+        ]);
     }
 
     public function editPosition(Request $request, Position $position = null)
@@ -46,11 +46,11 @@ class PositionController extends BaseController
             return $this->redirectToRoute('teamadmin_show_position');
         }
 
-        return $this->render('team_admin/create_position.html.twig', array(
+        return $this->render('team_admin/create_position.html.twig', [
             'form' => $form->createView(),
             'isCreate' => $isCreate,
             'position' => $position
-        ));
+        ]);
     }
 
     public function removePosition(Position $position): RedirectResponse

@@ -17,9 +17,9 @@ class SemesterController extends AbstractController
     {
         $semesters = $this->getDoctrine()->getRepository(Semester::class)->findAllOrderedByAge();
 
-        return $this->render('semester_admin/index.html.twig', array(
+        return $this->render('semester_admin/index.html.twig', [
             'semesters' => $semesters,
-        ));
+        ]);
     }
 
 
@@ -53,9 +53,9 @@ class SemesterController extends AbstractController
         }
 
         // Render the view
-        return $this->render('semester_admin/create_semester.html.twig', array(
+        return $this->render('semester_admin/create_semester.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function delete(Semester $semester): JsonResponse
@@ -64,6 +64,6 @@ class SemesterController extends AbstractController
         $em->remove($semester);
         $em->flush();
 
-        return new JsonResponse(array('success' => true));
+        return new JsonResponse(['success' => true]);
     }
 }

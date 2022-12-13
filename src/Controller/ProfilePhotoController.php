@@ -25,9 +25,9 @@ class ProfilePhotoController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('profile/edit_profile_photo.html.twig', array(
+        return $this->render('profile/edit_profile_photo.html.twig', [
             'user' => $user,
-        ));
+        ]);
     }
 
     public function editProfilePhotoUpload(User $user, Request $request): JsonResponse

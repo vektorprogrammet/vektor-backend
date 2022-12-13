@@ -68,7 +68,7 @@ class InterviewController extends BaseController
         $teams = $this->getDoctrine()->getRepository(Team::class)->findActiveByDepartment($department);
 
         if ($this->getUser() === $application->getUser()) {
-            return $this->render('error/control_panel_error.html.twig', array('error' => 'Du kan ikke intervjue deg selv'));
+            return $this->render('error/control_panel_error.html.twig', ['error' => 'Du kan ikke intervjue deg selv']);
         }
 
         // If the interview has not yet been conducted, create up to date answer objects for all questions in schema
@@ -79,10 +79,10 @@ class InterviewController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(ApplicationInterviewType::class, $application, array(
-            'validation_groups' => array('interview'),
+        $form = $this->createForm(ApplicationInterviewType::class, $application, [
+            'validation_groups' => ['interview'],
             'teams' => $teams,
-        ));
+        ]);
 
         $form->handleRequest($request);
 
@@ -102,18 +102,18 @@ class InterviewController extends BaseController
                 $this->eventDispatcher->dispatch(new InterviewConductedEvent($application), InterviewConductedEvent::NAME);
             }
 
-            return $this->redirectToRoute('applications_show_interviewed', array(
+            return $this->redirectToRoute('applications_show_interviewed', [
                 'semester' => $application->getSemester()->getId(),
                 'department' => $application->getAdmissionPeriod()->getDepartment()->getId(),
-            ));
+            ]);
         }
 
-        return $this->render('interview/conduct.html.twig', array(
+        return $this->render('interview/conduct.html.twig', [
             'application' => $application,
             'department' => $department,
             'teams' => $teams,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -151,9 +151,9 @@ class InterviewController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('interview/show.html.twig', array('interview' => $interview,
+        return $this->render('interview/show.html.twig', ['interview' => $interview,
             'application' => $application
-        ));
+        ]);
     }
 
     /**
@@ -193,7 +193,7 @@ class InterviewController extends BaseController
 
         // Get the application objects
         $em = $this->getDoctrine()->getManager();
-        $applications = $em->getRepository(Application::class)->findBy(array('id' => $applicationIds));
+        $applications = $em->getRepository(Application::class)->findBy(['id' => $applicationIds]);
 
         // Delete the interviews
         foreach ($applications as $application) {
@@ -206,9 +206,9 @@ class InterviewController extends BaseController
         $em->flush();
 
         // AJAX response
-        return new JsonResponse(array(
+        return new JsonResponse([
             'success' => true,
-        ));
+        ]);
     }
 
     /**
@@ -261,10 +261,10 @@ class InterviewController extends BaseController
             $interview->resetStatus();
 
             if ($form->get('preview')->isClicked()) {
-                return $this->render('interview/preview.html.twig', array(
+                return $this->render('interview/preview.html.twig', [
                     'interview' => $interview,
                     'data' => $data,
-                ));
+                ]);
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -276,14 +276,14 @@ class InterviewController extends BaseController
                 $this->eventDispatcher->dispatch(new InterviewEvent($interview, $data), InterviewEvent::SCHEDULE);
             }
 
-            return $this->redirectToRoute('applications_show_assigned', array('department' => $application->getDepartment()->getId(), 'semester' => $application->getSemester()->getId()));
+            return $this->redirectToRoute('applications_show_assigned', ['department' => $application->getDepartment()->getId(), 'semester' => $application->getSemester()->getId()]);
         }
 
-        return $this->render('interview/schedule.html.twig', array(
+        return $this->render('interview/schedule.html.twig', [
             'form' => $form->createView(),
             'interview' => $interview,
             'application' => $application,
-        ));
+        ]);
     }
 
     private function validateLink($link): bool
@@ -336,16 +336,16 @@ class InterviewController extends BaseController
             $em->flush();
 
             return new JsonResponse(
-                array('success' => true)
+                ['success' => true]
             );
         }
 
         return new JsonResponse(
-            array(
-                'form' => $this->renderView('interview/assign_interview_form.html.twig', array(
+            [
+                'form' => $this->renderView('interview/assign_interview_form.html.twig', [
                     'form' => $form->createView(),
-                )),
-            )
+                ]),
+            ]
         );
     }
 
@@ -373,9 +373,9 @@ class InterviewController extends BaseController
             // Get the info from the form
             $data = $request->request->all();
             // Get objects from database
-            $interviewer = $em->getRepository(User::class)->findOneBy(array('id' => $data['interview']['interviewer']));
-            $schema = $em->getRepository(InterviewSchema::class)->findOneBy(array('id' => $data['interview']['interviewSchema']));
-            $applications = $em->getRepository(Application::class)->findBy(array('id' => $data['application']['id']));
+            $interviewer = $em->getRepository(User::class)->findOneBy(['id' => $data['interview']['interviewer']]);
+            $schema = $em->getRepository(InterviewSchema::class)->findOneBy(['id' => $data['interview']['interviewSchema']]);
+            $applications = $em->getRepository(Application::class)->findBy(['id' => $data['application']['id']]);
 
             // Update or create new interviews for all the given applications
             foreach ($applications as $application) {
@@ -389,17 +389,17 @@ class InterviewController extends BaseController
 
             $this->addFlash('success', 'Søknadene ble fordelt til ' . $interviewer);
 
-            return new JsonResponse(array(
+            return new JsonResponse([
                 'success' => true,
                 'request' => $request->request->all(),
-            ));
+            ]);
         }
 
-        return new JsonResponse(array(
-            'form' => $this->renderView('interview/assign_interview_form.html.twig', array(
+        return new JsonResponse([
+            'form' => $this->renderView('interview/assign_interview_form.html.twig', [
                 'form' => $form->createView(),
-            )),
-        ));
+            ]),
+        ]);
     }
 
     /**
@@ -440,9 +440,9 @@ class InterviewController extends BaseController
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(InterviewNewTimeType::class, $interview, array(
-            "validation_groups" => array("newTimeRequest")
-        ));
+        $form = $this->createForm(InterviewNewTimeType::class, $interview, [
+            "validation_groups" => ["newTimeRequest"]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -461,10 +461,10 @@ class InterviewController extends BaseController
             return $this->redirectToRoute('interview_response', ['responseCode' => $interview->getResponseCode()]);
         }
 
-        return $this->render('interview/request_new_time.html.twig', array(
+        return $this->render('interview/request_new_time.html.twig', [
             'interview' => $interview,
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
@@ -476,10 +476,10 @@ class InterviewController extends BaseController
     {
         $applicationStatus = $this->applicationManager->getApplicationStatus($interview->getApplication());
 
-        return $this->render('interview/response.html.twig', array(
+        return $this->render('interview/response.html.twig', [
             'interview' => $interview,
             'application_status' => $applicationStatus
-        ));
+        ]);
     }
 
     /**
@@ -515,10 +515,10 @@ class InterviewController extends BaseController
             return $this->redirectToRoute('interview_response', ['responseCode' => $interview->getResponseCode()]);
         }
 
-        return $this->render('interview/response_confirm_cancel.html.twig', array(
+        return $this->render('interview/response_confirm_cancel.html.twig', [
             'interview' => $interview,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -547,21 +547,21 @@ class InterviewController extends BaseController
     public function assignCoInterviewer(Interview $interview)
     {
         if ($interview->getUser() === $this->getUser()) {
-            return $this->render('error/control_panel_error.html.twig', array(
+            return $this->render('error/control_panel_error.html.twig', [
                 'error' => 'Kan ikke legge til deg selv som medintervjuer på ditt eget intervju'
-            ));
+            ]);
         }
 
         if ($interview->getInterviewed()) {
-            return $this->render('error/control_panel_error.html.twig', array(
+            return $this->render('error/control_panel_error.html.twig', [
                 'error' => 'Kan ikke legge til deg selv som medintervjuer etter intervjuet er gjennomført'
-            ));
+            ]);
         }
 
         if ($this->getUser() === $interview->getInterviewer()) {
-            return $this->render('error/control_panel_error.html.twig', array(
+            return $this->render('error/control_panel_error.html.twig', [
                 'error' => 'Kan ikke legge til deg selv som medintervjuer når du allerede er intervjuer'
-            ));
+            ]);
         }
 
         $interview->setCoInterviewer($this->getUser());
@@ -579,7 +579,7 @@ class InterviewController extends BaseController
         $department = $interview->getApplication()->getDepartment();
         $teamUsers = $this->getDoctrine()->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
-        $coInterviewers = array_merge(array_diff($teamUsers, array($interview->getInterviewer(), $interview->getCoInterviewer())));
+        $coInterviewers = array_merge(array_diff($teamUsers, [$interview->getInterviewer(), $interview->getCoInterviewer()]));
         $form = $this->createForm(AddCoInterviewerType::class, null, [
             'teamUsers' => $coInterviewers
         ]);
@@ -594,19 +594,19 @@ class InterviewController extends BaseController
             $em->flush();
 
             if ($request->get('from') === 'schedule') {
-                return $this->redirectToRoute('interview_schedule', array('id' => $interview->getApplication()->getId()));
+                return $this->redirectToRoute('interview_schedule', ['id' => $interview->getApplication()->getId()]);
             }
 
-            return $this->redirectToRoute('applications_show_assigned', array(
+            return $this->redirectToRoute('applications_show_assigned', [
                 'department' => $department->getId(),
                 'semester' => $semester->getId(),
-            ));
+            ]);
         }
 
-        return $this->render('interview/assign_co_interview_form.html.twig', array(
+        return $this->render('interview/assign_co_interview_form.html.twig', [
             'form' => $form->createView(),
             'interview' => $interview
-        ));
+        ]);
     }
 
     public function clearCoInterviewer(Interview $interview): RedirectResponse

@@ -15,25 +15,25 @@ class NewPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('password', RepeatedType::class, array(
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'Passord'),
-                'second_options' => array('label' => 'Gjenta passord'),
-                'constraints' => array(
-                    new Assert\Length(array(
+                'first_options' => ['label' => 'Passord'],
+                'second_options' => ['label' => 'Gjenta passord'],
+                'constraints' => [
+                    new Assert\Length([
                         'min' => 8,
                         'minMessage' => 'Passordet må ha minst {{ limit }} tegn.',
-                    )),
+                    ]),
                     new NotBlank(),
-                ),
-            ));
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\User',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

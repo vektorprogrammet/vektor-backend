@@ -41,10 +41,10 @@ class SemesterRepository extends EntityRepository
             ->select('Semester')
             ->where('Semester.year = :year')
             ->andWhere('Semester.semesterTime = :semesterTime')
-            ->setParameters(array(
+            ->setParameters([
                 'year' => SemesterUtil::timeToYear($now),
                 'semesterTime' => SemesterUtil::timeToSemesterTime($now)
-            ))
+            ])
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -79,10 +79,10 @@ class SemesterRepository extends EntityRepository
             ->select('Semester')
             ->where('Semester.semesterTime = :semesterTime')
             ->andWhere('Semester.year = :year')
-            ->setParameters(array(
+            ->setParameters([
                 'semesterTime' => $semesterTime,
                 'year' => $year,
-            ))
+            ])
             ->getQuery()
             ->getOneOrNullResult();
     }

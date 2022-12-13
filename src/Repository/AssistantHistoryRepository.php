@@ -63,10 +63,10 @@ class AssistantHistoryRepository extends EntityRepository
             ->select('assistantHistory')
             ->where('assistantHistory.department = :department')
             ->andWhere('assistantHistory.semester = :semester')
-            ->setParameters(array(
+            ->setParameters([
                 'department' => $department,
                 'semester' => $semester,
-            ))
+            ])
             ->getQuery()
             ->getResult();
     }
@@ -90,11 +90,11 @@ class AssistantHistoryRepository extends EntityRepository
 		AND semester.year = :year
 	    AND semester.semesterTime = :semesterTime	
 		')
-            ->setParameters(array(
+            ->setParameters([
                 'user' => $user,
                 'year' => SemesterUtil::timeToYear($today),
                 'semesterTime' => SemesterUtil::timeToSemesterTime($today)
-            ))
+            ])
             ->getResult();
 
         return $assistantHistories;
@@ -119,11 +119,11 @@ class AssistantHistoryRepository extends EntityRepository
 		AND semester.year = :year
 	    AND semester.semesterTime = :semesterTime	
 		')
-            ->setParameters(array(
+            ->setParameters([
                 'school' => $school,
                 'year' => SemesterUtil::timeToYear($today),
                 'semesterTime' => SemesterUtil::timeToSemesterTime($today)
-            ))
+            ])
             ->getResult();
 
         return $assistantHistories;
@@ -145,10 +145,10 @@ class AssistantHistoryRepository extends EntityRepository
 		WHERE semester.year = :year
 	    AND semester.semesterTime = :semesterTime	
 		')
-            ->setParameters(array(
+            ->setParameters([
                 'year' => SemesterUtil::timeToYear($today),
                 'semesterTime' => SemesterUtil::timeToSemesterTime($today)
-            ))
+            ])
             ->getResult();
 
         return $assistantHistories;
@@ -175,11 +175,11 @@ class AssistantHistoryRepository extends EntityRepository
             AND semester.semesterTime = :semesterTime
         )
 		')
-            ->setParameters(array(
+            ->setParameters([
                 'school' => $school,
                 'year' => SemesterUtil::timeToYear($today),
                 'semesterTime' => SemesterUtil::timeToSemesterTime($today)
-            ))
+            ])
             ->getResult();
 
         return $assistantHistories;
@@ -261,7 +261,7 @@ class AssistantHistoryRepository extends EntityRepository
             ->getQuery()
             ->getResult();
 
-        $names = array();
+        $names = [];
         foreach ($bolkNames as $name) {
             $names[] = array_pop($name);
         }

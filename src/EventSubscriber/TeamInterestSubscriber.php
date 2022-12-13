@@ -27,10 +27,10 @@ class TeamInterestSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return array(TeamInterestCreatedEvent::NAME => array(
-            array('sendConfirmationMail', 0),
-            array('addFlashMessage', -1),
-        ));
+        return [TeamInterestCreatedEvent::NAME => [
+            ['sendConfirmationMail', 0],
+            ['addFlashMessage', -1],
+        ]];
     }
 
     public function sendConfirmationMail(TeamInterestCreatedEvent $event)
@@ -41,12 +41,12 @@ class TeamInterestSubscriber implements EventSubscriberInterface
 
         $receipt = (new Swift_Message())
             ->setSubject("Teaminteresse i Vektorprogrammet")
-            ->setFrom(array($fromEmail => "Vektorprogrammet $department"))
+            ->setFrom([$fromEmail => "Vektorprogrammet $department"])
             ->setReplyTo($fromEmail)
             ->setTo($teamInterest->getEmail())
-            ->setBody($this->twig->render("team_interest/team_interest_receipt.html.twig", array(
+            ->setBody($this->twig->render("team_interest/team_interest_receipt.html.twig", [
                 'teamInterest' => $teamInterest,
-            )))
+            ]))
             ->setContentType('text/html');
         $this->mailer->send($receipt);
     }

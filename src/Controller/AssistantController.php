@@ -72,7 +72,7 @@ class AssistantController extends BaseController
      */
     public function admissionCaseInsensitive(Request $request, $city): Response
     {
-        $city = str_replace(array('æ', 'ø','å'), array('Æ','Ø','Å'), $city); // Make sqlite happy
+        $city = str_replace(['æ', 'ø','å'], ['Æ','Ø','Å'], $city); // Make sqlite happy
         $department = $this->getDoctrine()
                 ->getRepository(Department::class)
                 ->findOneByCityCaseInsensitive($city);
@@ -123,14 +123,14 @@ class AssistantController extends BaseController
 
         $application = new Application();
 
-        $formViews = array();
+        $formViews = [];
 
         foreach ($departments as $department) {
-            $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
-                'validation_groups' => array('admission'),
+            $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, [
+                'validation_groups' => ['admission'],
                 'departmentId' => $department->getId(),
                 'environment' => $this->kernel->getEnvironment(),
-            ))->getForm();
+            ])->getForm();
 
             $form->handleRequest($request);
 
@@ -165,7 +165,7 @@ class AssistantController extends BaseController
             $formViews[$department->getCity()] = $form->createView();
         }
 
-        return $this->render('assistant/assistants.html.twig', array(
+        return $this->render('assistant/assistants.html.twig', [
             'specific_department' => $specificDepartment,
             'department_in_url' => $departmentInUrl,
             'departments' => $departments,
@@ -173,7 +173,7 @@ class AssistantController extends BaseController
             'teams' => $teams,
             'forms' => $formViews,
             'scroll_to_admission_form' => $scrollToAdmissionForm,
-        ));
+        ]);
     }
 
     /**
@@ -201,11 +201,11 @@ class AssistantController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $application = new Application();
 
-        $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
-            'validation_groups' => array('admission'),
+        $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, [
+            'validation_groups' => ['admission'],
             'departmentId' => $department->getId(),
             'environment' => $this->kernel->getEnvironment(),
-        ))->getForm();
+        ])->getForm();
 
         $form->handleRequest($request);
 

@@ -134,8 +134,8 @@ class ApplicationData
 
     public function getFieldsOfStudyCounts(): array
     {
-        $fieldOfStudyCount = array();
-        $applicants = $this->applicationRepository->findBy(array('admissionPeriod' => $this->admissionPeriod));
+        $fieldOfStudyCount = [];
+        $applicants = $this->applicationRepository->findBy(['admissionPeriod' => $this->admissionPeriod]);
         foreach ($applicants as $applicant) {
             $fieldOfStudyShortName = $applicant->getUser()->getFieldOfStudy()->getShortName();
             if (array_key_exists($fieldOfStudyShortName, $fieldOfStudyCount)) {
@@ -151,8 +151,8 @@ class ApplicationData
 
     public function getStudyYearCounts(): array
     {
-        $studyYearCounts = array();
-        $applicants = $this->applicationRepository->findBy(array('admissionPeriod' => $this->admissionPeriod));
+        $studyYearCounts = [];
+        $applicants = $this->applicationRepository->findBy(['admissionPeriod' => $this->admissionPeriod]);
         foreach ($applicants as $applicant) {
             $studyYear = $applicant->getYearOfStudy();
             if (array_key_exists($studyYear, $studyYearCounts)) {
@@ -196,14 +196,14 @@ class ApplicationData
 
     public function getHeardAboutFrom(): array
     {
-        $heardAbout = array();
-        $applicants = $this->applicationRepository->findBy(array('admissionPeriod' => $this->admissionPeriod));
+        $heardAbout = [];
+        $applicants = $this->applicationRepository->findBy(['admissionPeriod' => $this->admissionPeriod]);
 
         foreach ($applicants as $applicant) {
             $allHeardAboutFrom = $applicant->getHeardAboutFrom();
 
             if ($allHeardAboutFrom === null) {
-                $allHeardAboutFrom = array(0=>"Ingen");
+                $allHeardAboutFrom = [0=>"Ingen"];
             }
 
             for ($i = 0; $i < count($allHeardAboutFrom); $i++) {

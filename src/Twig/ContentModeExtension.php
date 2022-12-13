@@ -17,9 +17,9 @@ class ContentModeExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return array(
+        return [
             new TwigFunction('is_edit_mode', [$this, 'isEditMode']),
-        );
+        ];
     }
 
     public function isEditMode()

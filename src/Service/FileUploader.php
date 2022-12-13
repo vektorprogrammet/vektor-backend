@@ -38,7 +38,7 @@ class FileUploader
      */
     public function uploadSponsor(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*'));
+        $file = $this->getAndVerifyFile($request, ['image/*']);
         return $this->uploadFile($file, $this->logoFolder);
     }
 
@@ -49,7 +49,7 @@ class FileUploader
      */
     public function uploadSignature(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*'));
+        $file = $this->getAndVerifyFile($request, ['image/*']);
         return $this->uploadFile($file, $this->signatureFolder);
     }
 
@@ -61,7 +61,7 @@ class FileUploader
      */
     public function uploadReceipt(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*', 'application/pdf'));
+        $file = $this->getAndVerifyFile($request, ['image/*', 'application/pdf']);
         return $this->uploadFile($file, $this->receiptFolder);
     }
 
@@ -71,7 +71,7 @@ class FileUploader
  */
     public function uploadProfileImage(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*'));
+        $file = $this->getAndVerifyFile($request, ['image/*']);
 
         $mimeType = $file->getMimeType();
         $fileType = explode('/', $mimeType)[0];
