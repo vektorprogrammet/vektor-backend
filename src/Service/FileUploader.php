@@ -81,7 +81,7 @@ class FileUploader
      * @param null $id
      * @return false|mixed
      */
-    public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id=null)
+    public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id = null)
     {
         // e.g: array('image/*') for valid_mime_types to accept all subtypes of file image
 

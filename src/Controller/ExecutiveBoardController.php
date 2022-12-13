@@ -26,7 +26,7 @@ class ExecutiveBoardController extends BaseController
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
 
         return $this->render('team/team_page.html.twig', [
-            'team'  => $board,
+            'team' => $board,
         ]);
     }
 

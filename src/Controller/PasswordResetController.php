@@ -48,7 +48,7 @@ class PasswordResetController extends BaseController
 
             if ($passwordReset === null) {
                 $errorMsg = "Det finnes ingen brukere med denne e-postadressen";
-                $ending   = '@vektorprogrammet.no';
+                $ending = '@vektorprogrammet.no';
                 if (strlen($email) > strlen($ending) && substr($email, strlen($email) - strlen($ending)) === $ending) {
                     $errorMsg = 'Kan ikke resette passord med "@vektorprogrammet.no"-adresse. Prøv din private e-post';
                     $this->logService->info("Password reset rejected: Someone tried to reset password with a company email: $email");

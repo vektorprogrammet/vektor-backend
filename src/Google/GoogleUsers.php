@@ -20,7 +20,7 @@ class GoogleUsers extends GoogleService
             return [];
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         $optParams = [
@@ -49,7 +49,7 @@ class GoogleUsers extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         try {
@@ -71,7 +71,7 @@ class GoogleUsers extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         $googleUser = $this->mapApplicationUserToGoogleUser($user);
@@ -104,7 +104,7 @@ class GoogleUsers extends GoogleService
             $googleUser->setSuspended($suspended);
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         try {
@@ -124,7 +124,7 @@ class GoogleUsers extends GoogleService
             return;
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
         try {
             $service->users->delete($userKey);

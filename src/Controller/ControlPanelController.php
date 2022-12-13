@@ -13,7 +13,7 @@ class ControlPanelController extends BaseController
 
     public function __construct(SbsData $sbsData)
     {
-        $this->sbsData=$sbsData;
+        $this->sbsData = $sbsData;
     }
 
     /**

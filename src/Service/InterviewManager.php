@@ -232,7 +232,7 @@ class InterviewManager
                  $this->twig->render(
                      'interview/schedule_of_interviews_email.html.twig',
                      [
-                         'interviews'  => $interviews,
+                         'interviews' => $interviews,
                          'interviewer' => $interviewer
                      ]
                  ),

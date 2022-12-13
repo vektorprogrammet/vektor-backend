@@ -26,7 +26,7 @@ class UserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            UserEvent::COMPANY_EMAIL_EDITED  => [
+            UserEvent::COMPANY_EMAIL_EDITED => [
                 ['logCompanyEmailEdited', 1],
             ],
         ];

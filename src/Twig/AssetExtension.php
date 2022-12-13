@@ -24,7 +24,7 @@ class AssetExtension extends AbstractExtension
     public function __construct(Packages $packages, KernelInterface $appKernel)
     {
         $this->packages = $packages;
-        $this->rootDir=$appKernel->getProjectDir();
+        $this->rootDir = $appKernel->getProjectDir();
     }
 
     /**

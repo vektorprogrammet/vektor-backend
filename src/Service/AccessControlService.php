@@ -31,9 +31,9 @@ class AccessControlService
     )
     {
         $this->entityManager = $entityManager;
-        $this->router        = $router;
-        $this->roleManager   = $roleManager;
-        $this->userService   = $userService;
+        $this->router = $router;
+        $this->roleManager = $roleManager;
+        $this->userService = $userService;
         $this->accessRulesCache = [];
         $this->unhandledRulesCache = [];
         $this->preloadCache();
@@ -62,7 +62,7 @@ class AccessControlService
 
     public function createRule(AccessRule $accessRule)
     {
-        $em             = $this->entityManager;
+        $em = $this->entityManager;
         $unhandledRules = $em->getRepository(UnhandledAccessRule::class)->findByResourceAndMethod($accessRule->getResource(), $accessRule->getMethod());
         foreach ($unhandledRules as $unhandledRule) {
             $em->remove($unhandledRule);
@@ -93,7 +93,7 @@ class AccessControlService
         foreach ($resources as $resource => $method) {
             $onlyRouteSpecified = is_numeric($resource);
             if ($onlyRouteSpecified) {
-                $resource  = $method;
+                $resource = $method;
                 $hasAccess = $this->checkAccessToResourceAndMethod($user, $resource);
             } else {
                 $hasAccess = $this->checkAccessToResourceAndMethod($user, $resource, $method);

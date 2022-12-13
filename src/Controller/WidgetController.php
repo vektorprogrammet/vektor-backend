@@ -21,8 +21,8 @@ class WidgetController extends BaseController
 
     public function __construct(Sorter $sorter, AdmissionStatistics $admissionStatistics)
     {
-        $this->sorter=$sorter;
-        $this->admissionStatistics=$admissionStatistics;
+        $this->sorter = $sorter;
+        $this->admissionStatistics = $admissionStatistics;
     }
     /**
      */

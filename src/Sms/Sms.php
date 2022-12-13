@@ -43,7 +43,7 @@ class Sms
         $recipientsString = "";
         for ($i = 0; $i < count($this->recipients); $i++) {
             $recipientsString .= $this->recipients[$i];
-            if ($i !== count($this->recipients)-1) {
+            if ($i !== count($this->recipients) - 1) {
                 $recipientsString .= ", ";
             }
         }

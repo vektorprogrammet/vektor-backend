@@ -16,7 +16,7 @@ class StandController extends BaseController
 
     public function __construct(AdmissionStatistics $admissionStatistics)
     {
-        $this->AdmissionStatistics=$admissionStatistics;
+        $this->AdmissionStatistics = $admissionStatistics;
     }
     /**
      * @throws NonUniqueResultException

@@ -14,7 +14,7 @@ class BoardAndTeamController extends BaseController
 
     public function __construct(GeoLocation $geoLocation)
     {
-        $this->geoLocation=$geoLocation;
+        $this->geoLocation = $geoLocation;
     }
     public function show(): Response
     {

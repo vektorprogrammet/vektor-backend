@@ -59,13 +59,13 @@ class GSuiteSubscriber implements EventSubscriberInterface
             TeamMembershipEvent::DELETED => [
                 ['removeGSuiteUserFromTeam', 0],
             ],
-            TeamMembershipEvent::EXPIRED  => [
+            TeamMembershipEvent::EXPIRED => [
                 ['removeGSuiteUserFromTeam', 0]
             ],
             UserEvent::EDITED => [
                 ['updateGSuiteUser', 0],
             ],
-            UserEvent::COMPANY_EMAIL_EDITED  => [
+            UserEvent::COMPANY_EMAIL_EDITED => [
                 ['updateGSuiteUser', 0],
             ],
             TeamEvent::CREATED => [

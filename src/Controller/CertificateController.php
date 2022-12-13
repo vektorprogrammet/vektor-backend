@@ -17,7 +17,7 @@ class CertificateController extends BaseController
 
     public function __construct(FileUploader $fileUploader)
     {
-        $this->fileUploader=$fileUploader;
+        $this->fileUploader = $fileUploader;
     }
     /**
      *

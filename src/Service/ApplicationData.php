@@ -200,7 +200,7 @@ class ApplicationData
             $allHeardAboutFrom = $applicant->getHeardAboutFrom();
 
             if ($allHeardAboutFrom === null) {
-                $allHeardAboutFrom = [0=>"Ingen"];
+                $allHeardAboutFrom = [0 => "Ingen"];
             }
 
             for ($i = 0; $i < count($allHeardAboutFrom); $i++) {

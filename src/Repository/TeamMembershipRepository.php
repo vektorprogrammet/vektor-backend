@@ -168,7 +168,7 @@ class TeamMembershipRepository extends EntityRepository
      */
     public function findTeamMembershipsByUserAndSemester($user, Semester $semester)
     {
-        $teamMemberships =  $this->createQueryBuilder('whistory')
+        $teamMemberships = $this->createQueryBuilder('whistory')
             ->select('whistory')
             ->join('whistory.startSemester', 'startSemester')
             ->leftJoin('whistory.endSemester', 'endSemester')

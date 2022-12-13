@@ -16,8 +16,8 @@ class ApplicationStatisticsController extends BaseController
 
     public function __construct(AssistantHistoryData $assistantHistoryData, ApplicationData $applicationData)
     {
-        $this->AssistantHistoryData=$assistantHistoryData;
-        $this->ApplicationData=$applicationData;
+        $this->AssistantHistoryData = $assistantHistoryData;
+        $this->ApplicationData = $applicationData;
     }
     /**
      * @throws NonUniqueResultException
