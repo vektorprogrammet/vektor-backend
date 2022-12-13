@@ -16,7 +16,7 @@
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
-        "dompdf/dompdf": "^1.0",
+        "dompdf/dompdf": "^2.0",
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^3.0",
