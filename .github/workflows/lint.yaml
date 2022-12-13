@@ -69,9 +69,9 @@ jobs:
         if: always() && steps.install.outcome == 'success'
         run: ./bin/console lint:yaml config --parse-tags
 
-      - name: Lint Twig templates
-        if: always() && steps.install.outcome == 'success'
-        run: ./bin/console lint:twig templates --env=prod
+#      - name: Lint Twig templates
+#        if: always() && steps.install.outcome == 'success'
+#        run: ./bin/console lint:twig templates --env=prod
 
       - name: Lint XLIFF translations
         if: always() && steps.install.outcome == 'success'
@@ -89,9 +89,9 @@ jobs:
         if: always() && steps.install.outcome == 'success'
         run: composer validate --strict
 
-      - name: Check if any dependencies are compromised
-        if: always() && steps.install.outcome == 'success'
-        run: composer audit
+#      - name: Check if any dependencies are compromised
+#        if: always() && steps.install.outcome == 'success'
+#        run: composer audit
 
 #      - name: Run PHPStan
 #        if: always() && steps.install.outcome == 'success'
