@@ -64,7 +64,7 @@ class TeamAdminController extends BaseController
 
             $this->eventDispatcher->dispatch(new TeamMembershipEvent($teamMembership), TeamMembershipEvent::EDITED);
 
-            return $this->redirect($this->generateUrl('teamadmin_show_specific_team', [ 'id' => $teamMembership->getTeam()->getId() ]));
+            return $this->redirect($this->generateUrl('teamadmin_show_specific_team', ['id' => $teamMembership->getTeam()->getId()]));
         }
 
         return $this->render('team_admin/create_team_membership.html.twig', [
@@ -82,7 +82,7 @@ class TeamAdminController extends BaseController
         // Create a new TeamMembership entity
         $teamMembership = new TeamMembership();
         $teamMembership->setUser($this->getUser());
-        $teamMembership->setPosition($this->getDoctrine()->getRepository(Position::class)->findOneBy([ 'name' => 'Medlem' ]));
+        $teamMembership->setPosition($this->getDoctrine()->getRepository(Position::class)->findOneBy(['name' => 'Medlem']));
 
         // Create a new formType with the needed variables
         $form = $this->createForm(CreateTeamMembershipType::class, $teamMembership, [
@@ -103,7 +103,7 @@ class TeamAdminController extends BaseController
 
             $this->eventDispatcher->dispatch(new TeamMembershipEvent($teamMembership), TeamMembershipEvent::CREATED);
 
-            return $this->redirect($this->generateUrl('teamadmin_show_specific_team', [ 'id' => $team->getId() ]));
+            return $this->redirect($this->generateUrl('teamadmin_show_specific_team', ['id' => $team->getId()]));
         }
 
         return $this->render('team_admin/create_team_membership.html.twig', [
@@ -117,8 +117,8 @@ class TeamAdminController extends BaseController
         // Find all TeamMembership entities based on team
         $activeTeamMemberships   = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
         $inActiveTeamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findInactiveTeamMembershipsByTeam($team);
-        usort($activeTeamMemberships, [ $this, 'sortTeamMembershipsByEndDate' ]);
-        usort($inActiveTeamMemberships, [ $this, 'sortTeamMembershipsByEndDate' ]);
+        usort($activeTeamMemberships, [$this, 'sortTeamMembershipsByEndDate']);
+        usort($inActiveTeamMemberships, [$this, 'sortTeamMembershipsByEndDate']);
 
         $user                      = $this->getUser();
         $currentUserTeamMembership = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByUser($user);
@@ -253,7 +253,7 @@ class TeamAdminController extends BaseController
 
         $this->eventDispatcher->dispatch(new TeamMembershipEvent($teamMembership), TeamMembershipEvent::DELETED);
 
-        return $this->redirectToRoute('teamadmin_show_specific_team', [ 'id' => $teamMembership->getTeam()->getId() ]);
+        return $this->redirectToRoute('teamadmin_show_specific_team', ['id' => $teamMembership->getTeam()->getId()]);
     }
 
     public function deleteTeamById(Team $team): RedirectResponse
@@ -268,6 +268,6 @@ class TeamAdminController extends BaseController
         $em->remove($team);
         $em->flush();
 
-        return $this->redirectToRoute("teamadmin_show", [ "id" => $team->getDepartment()->getId() ]);
+        return $this->redirectToRoute("teamadmin_show", ["id" => $team->getDepartment()->getId()]);
     }
 }

@@ -97,7 +97,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application3->setWednesday(false);
         $application3->setThursday(true);
         $application3->setFriday(false);
-        $application3->setHeardAboutFrom([ 'Stand' ]);
+        $application3->setHeardAboutFrom(['Stand']);
         $application3->setLanguage('Norsk og engelsk');
         $application3->setPreferredGroup('Bolk 1');
         $application3->setDoublePosition(true);
@@ -149,7 +149,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application4->setWednesday(false);
         $application4->setThursday(true);
         $application4->setFriday(false);
-        $application4->setHeardAboutFrom([ 'Stand' ]);
+        $application4->setHeardAboutFrom(['Stand']);
         $application4->setLanguage('Norsk');
         $application4->setPreferredGroup('Bolk 1');
         $application4->setDoublePosition(false);
@@ -210,7 +210,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application20->setWednesday(false);
         $application20->setThursday(false);
         $application20->setFriday(true);
-        $application20->setHeardAboutFrom([ 'Stand' ]);
+        $application20->setHeardAboutFrom(['Stand']);
         $application20->setLanguage('Norsk');
         $application20->setPreferredGroup('Bolk 1');
         $application20->setDoublePosition(true);
@@ -301,14 +301,14 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application->setYearOfStudy(1);
         $application->setAdmissionPeriod($this->getReference('admission-period-current'));
         $application->setCreated((new DateTime('-'.mt_rand(0, 10).'days')));
-        $randomArr = [ true, false, false, false, false ];
+        $randomArr = [true, false, false, false, false];
         shuffle($randomArr);
         $application->setMonday($randomArr[0] || mt_rand(0, 100) < 20);
         $application->setTuesday($randomArr[1] || mt_rand(0, 100) < 20);
         $application->setWednesday($randomArr[2] || mt_rand(0, 100) < 20);
         $application->setThursday($randomArr[3] || mt_rand(0, 100) < 20);
         $application->setFriday($randomArr[4] || mt_rand(0, 100) < 20);
-        $application->setHeardAboutFrom([ 'Stand' ]);
+        $application->setHeardAboutFrom(['Stand']);
         $application->setLanguage($randomArr[0] || mt_rand(0, 100) < 20 ? 'Norsk' : 'Engelsk');
         $application->setPreferredGroup(mt_rand(0, 100) < 50 ? 'Bolk 1' : 'Bolk 2');
         $application->setDoublePosition(mt_rand(0, 100) < 10 ? true : false);

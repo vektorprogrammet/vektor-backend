@@ -49,7 +49,7 @@ class AccessRuleController extends AbstractController
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
         $form = $this->createForm(AccessRuleType::class, $accessRule, [
             'roles' => $roles
         ]);
@@ -83,7 +83,7 @@ class AccessRuleController extends AbstractController
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
         $routes = $this->accessControlService->getRoutes();
         $form = $this->createForm(RoutingAccessRuleType::class, $accessRule, [
             'routes' => $routes,

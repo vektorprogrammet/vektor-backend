@@ -27,7 +27,7 @@ class GoogleDrive extends GoogleService
 
         try {
             $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, [
-                'fields' => 'id' ]);
+                'fields' => 'id']);
         } catch (Google_Service_Exception $e) {
             $this->logServiceException($e, "createTeamDrive() for *$folderName*");
             return null;
