@@ -1,5 +1,10 @@
 FROM debian:buster-slim
 
+ENV NODE_VERSION 14
+
+
+# Note: Python 2 is installed due to dependency requirement for some node modules
+# Remove when no longer needed
 RUN apt-get update && \
     #Set up symfony-cli-repo for apt
     apt-get -y install lsb-release wget curl apt-transport-https ca-certificates && \
@@ -9,13 +14,17 @@ RUN apt-get update && \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list && \
     apt-get update && \
     # Install dependencies
-    apt-get -y install nodejs npm symfony-cli\
-                php7.4 php7.4-gd php7.4-dom php7.4-xml \
+    apt-get -y install symfony-cli\
+                php7.4 php7.4-gd php7.4-dom php7.4-xml php7.4-curl \
                 php7.4-pdo php7.4-zip php7.4-mysql php7.4-sqlite && \
+#    apt-get install python2 \
+    # Install node and yarn
+    curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
+    apt-get install -y nodejs && \
     npm install --global yarn
 
 WORKDIR /app
 
 EXPOSE 8000
 
-CMD ["symfony", "server:start"]
+CMD ["symfony", "serve"]
