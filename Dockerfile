@@ -8,6 +8,10 @@ ENV NODE_VERSION 14
 RUN apt-get update && \
     #Set up symfony-cli-repo for apt
     apt-get -y install lsb-release wget curl apt-transport-https ca-certificates && \
+    # Install node and yarn
+    curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install --global yarn \
     curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash && \
     #Set up php-repo for apt
     wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
@@ -16,12 +20,9 @@ RUN apt-get update && \
     # Install dependencies
     apt-get -y install symfony-cli\
                 php7.4 php7.4-gd php7.4-dom php7.4-xml php7.4-curl \
-                php7.4-pdo php7.4-zip php7.4-mysql php7.4-sqlite && \
+                php7.4-pdo php7.4-zip php7.4-mysql php7.4-sqlite
 #    apt-get install python2 \
-    # Install node and yarn
-    curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install --global yarn
+
 
 WORKDIR /app
 
