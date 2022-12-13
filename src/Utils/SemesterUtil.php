@@ -16,7 +16,7 @@ class SemesterUtil
         return $time->format('m') <= 7 ? 'Vår' : 'Høst';
     }
 
-    public static function timeToSemester(\Datetime $time): Semester
+    public static function timeToSemester(\DateTime $time): Semester
     {
         $semester = new Semester();
         $semester->setYear(self::timeToYear($time));
