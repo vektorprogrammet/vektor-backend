@@ -1,4 +1,5 @@
 name: Symfony 5 Tests
+
 on:
   push:
     branches:
