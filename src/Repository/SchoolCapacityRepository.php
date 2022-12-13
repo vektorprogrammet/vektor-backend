@@ -13,10 +13,11 @@ class SchoolCapacityRepository extends EntityRepository
 {
     /**
      * @param Department $school
-     * @param Semester $semester
+     * @param Semester   $semester
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
+     *
      * @return SchoolCapacity
      */
     public function findBySchoolAndSemester($school, $semester)
@@ -35,7 +36,6 @@ class SchoolCapacityRepository extends EntityRepository
     }
 
     /**
-     *
      * @return SchoolCapacity[]
      */
     public function findByDepartmentAndSemester(Department $department, Semester $semester)

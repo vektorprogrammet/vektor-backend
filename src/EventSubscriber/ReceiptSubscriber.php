@@ -33,28 +33,28 @@ class ReceiptSubscriber implements EventSubscriberInterface
         return [
             ReceiptEvent::CREATED => [
                 ['sendCreatedEmail', 1],
-                ['addCreatedFlashMessage', 1]
+                ['addCreatedFlashMessage', 1],
             ],
             ReceiptEvent::PENDING => [
                 ['logPendingEvent', 1],
-                ['addPendingFlashMessage', 1]
+                ['addPendingFlashMessage', 1],
             ],
             ReceiptEvent::REFUNDED => [
                 ['logRefundedEvent', 1],
                 ['sendRefundedEmail', 1],
-                ['addRefundedFlashMessage', 1]
+                ['addRefundedFlashMessage', 1],
             ],
             ReceiptEvent::REJECTED => [
                 ['logRejectedEvent', 1],
                 ['sendRejectedEmail', 1],
-                ['addRejectedFlashMessage', 1]
+                ['addRejectedFlashMessage', 1],
             ],
             ReceiptEvent::EDITED => [
-                ['addEditedFlashMessage', 1]
+                ['addEditedFlashMessage', 1],
             ],
             ReceiptEvent::DELETED => [
-                ['addDeletedFlashMessage', 1]
-            ]
+                ['addDeletedFlashMessage', 1],
+            ],
         ];
     }
 

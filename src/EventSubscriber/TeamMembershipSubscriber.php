@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use App\Event\TeamMembershipEvent;
 use App\Service\RoleManager;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -94,7 +93,7 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
         $startSemester = $teamMembership->getStartSemester()->getName();
         $endSemester = $teamMembership->getEndSemester();
 
-        $endStr = $endSemester !== null ? 'to '.$endSemester->getName() : '';
+        $endStr = $endSemester !== null ? 'to ' . $endSemester->getName() : '';
 
         $this->logger->info(
             "TeamMembership deleted: $user (position: $position), " .
@@ -105,7 +104,7 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
     public function activateTeamMembership(TeamMembershipEvent $event)
     {
         $teamMembership = $event->getTeamMembership();
-        $now = new DateTime();
+        $now = new \DateTime();
         if ($teamMembership->getEndSemester() === null || $teamMembership->getEndSemester()->getEndDate() > $now) {
             $teamMembership->setIsSuspended(false);
         }

@@ -7,7 +7,6 @@ use App\Entity\Interview;
 use App\Entity\InterviewAnswer;
 use App\Entity\InterviewScore;
 use App\Entity\User;
-use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -167,7 +166,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $interview5->setInterviewSchema($this->getReference('ischema-1'));
         $interview5->setUser($this->getReference('user-assistant'));
         $interview5->setResponseCode('code');
-        $interview5->setScheduled(new DateTime('+2 days'));
+        $interview5->setScheduled(new \DateTime('+2 days'));
         $application5->setInterview($interview5);
 
         $manager->persist($application5);
@@ -253,7 +252,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application21->setThursday('Ikke');
         $application21->setFriday('Bra');
         $application21->setSubstitute(true);
-        $application21->setPreferredGroup("Bolk 1");
+        $application21->setPreferredGroup('Bolk 1');
         $interview21 = new Interview();
         $interview21->setInterviewed(true);
         $interview21->setInterviewer($this->getReference('user-2'));
@@ -273,7 +272,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($application21);
         $manager->persist($interview21);
 
-        for ($i = 0; $i < 100; ++ $i) {
+        for ($i = 0; $i < 100; ++$i) {
             $user = $this->getReference('scheduling-user-' . $i);
             $this->createSchedulingApplication($user, $manager);
         }
@@ -300,7 +299,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application->setPreviousParticipation(mt_rand(0, 100) < 10 ? true : false);
         $application->setYearOfStudy(1);
         $application->setAdmissionPeriod($this->getReference('admission-period-current'));
-        $application->setCreated((new DateTime('-'.mt_rand(0, 10).'days')));
+        $application->setCreated(new \DateTime('-' . mt_rand(0, 10) . 'days'));
         $randomArr = [true, false, false, false, false];
         shuffle($randomArr);
         $application->setMonday($randomArr[0] || mt_rand(0, 100) < 20);

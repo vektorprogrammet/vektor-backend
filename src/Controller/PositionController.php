@@ -38,10 +38,10 @@ class PositionController extends BaseController
             $em->persist($position);
             $em->flush();
 
-            $flash = "Stillingen ble ";
-            $flash .= $isCreate ? "opprettet." : "endret.";
+            $flash = 'Stillingen ble ';
+            $flash .= $isCreate ? 'opprettet.' : 'endret.';
 
-            $this->addFlash("success", $flash);
+            $this->addFlash('success', $flash);
 
             return $this->redirectToRoute('teamadmin_show_position');
         }
@@ -49,7 +49,7 @@ class PositionController extends BaseController
         return $this->render('team_admin/create_position.html.twig', [
             'form' => $form->createView(),
             'isCreate' => $isCreate,
-            'position' => $position
+            'position' => $position,
         ]);
     }
 
@@ -59,8 +59,8 @@ class PositionController extends BaseController
         $em->remove($position);
         $em->flush();
 
-        $this->addFlash("success", "Stillingen ble slettet.");
+        $this->addFlash('success', 'Stillingen ble slettet.');
 
-        return $this->redirectToRoute("teamadmin_show_position");
+        return $this->redirectToRoute('teamadmin_show_position');
     }
 }

@@ -31,6 +31,7 @@ class AdmissionAdminController extends BaseController
         $this->InterviewCounter = $interviewCounter;
         $this->eventDispatcher = $eventDispatcher;
     }
+
     /**
      * Shows the admission admin page. Shows only applications for the department of the logged in user.
      * This works as the restricted admission management method, only allowing users to manage applications within their department.
@@ -42,9 +43,6 @@ class AdmissionAdminController extends BaseController
         return $this->showNewApplications($request);
     }
 
-
-    /**
-     */
     public function showNewApplications(Request $request): Response
     {
         $semester = $this->getSemesterOrThrow404($request);
@@ -177,7 +175,6 @@ class AdmissionAdminController extends BaseController
      * Deletes the given application.
      * This method is intended to be called by an Ajax request.
      *
-     *
      * @return JsonResponse
      */
     public function deleteApplicationById(Application $application)
@@ -202,7 +199,7 @@ class AdmissionAdminController extends BaseController
 
         return $this->redirectToRoute('applications_show_existing', [
             'department' => $application->getDepartment(),
-            'semester' => $application->getSemester()->getId()
+            'semester' => $application->getSemester()->getId(),
         ]);
     }
 
@@ -210,14 +207,12 @@ class AdmissionAdminController extends BaseController
      * Deletes the applications submitted as a list of ids through a form POST request.
      * This method is intended to be called by an Ajax request.
      *
-     *
      * @return JsonResponse
      */
     public function bulkDeleteApplication(Request $request)
     {
         // Get the ids from the form
         $applicationIds = array_map('intval', $request->request->get('application')['id']);
-
 
         $em = $this->getDoctrine()->getManager();
 

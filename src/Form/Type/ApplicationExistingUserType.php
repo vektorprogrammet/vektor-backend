@@ -18,7 +18,7 @@ class ApplicationExistingUserType extends AbstractType
 
         $builder->add('preferredSchool', TextType::class, [
             'label' => 'Er det en spesiell skole som du ønsker å besøke igjen?',
-            'required' => false
+            'required' => false,
         ]);
     }
 

@@ -11,7 +11,6 @@ use Doctrine\ORM\QueryBuilder;
 class AdmissionSubscriberRepository extends EntityRepository
 {
     /**
-     *
      * @return QueryBuilder
      */
     private function findByDepartmentQueryBuilder(Department $department)
@@ -22,8 +21,8 @@ class AdmissionSubscriberRepository extends EntityRepository
             ->where('subscriber.department = :department')
             ->setParameter('department', $department);
     }
+
     /**
-     *
      * @return AdmissionSubscriber[]
      */
     public function findByDepartment(Department $department)
@@ -35,7 +34,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AdmissionSubscriber[]
      */
     public function findFromWebByDepartment(Department $department)
@@ -48,7 +46,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     *
      * @return QueryBuilder
      */
     private function findByDepartmentAndSemesterQueryBuilder(Department $department, Semester $semester)
@@ -65,7 +62,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AdmissionSubscriber[]
      */
     public function findFromWebByDepartmentAndSemester(Department $department, Semester $semester)
@@ -80,7 +76,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AdmissionSubscriber
      */
     public function findByEmailAndDepartment(string $email, Department $department)
@@ -97,7 +92,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AdmissionSubscriber
      */
     public function findByUnsubscribeCode(string $code)

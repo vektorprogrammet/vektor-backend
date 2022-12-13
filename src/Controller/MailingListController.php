@@ -10,9 +10,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class MailingListController extends BaseController
 {
-    /**
-     *
-     */
     public function show(Request $request): Response
     {
         $form = $this->createForm(GenerateMailingListType::class);
@@ -41,7 +38,7 @@ class MailingListController extends BaseController
                         'semester' => $semesterID,
                     ]);
                 default:
-                    throw new BadRequestHttpException('type can only be "Assistent", "Team" or "Alle". Was: '.$type);
+                    throw new BadRequestHttpException('type can only be "Assistent", "Team" or "Alle". Was: ' . $type);
             }
         }
 
@@ -50,8 +47,6 @@ class MailingListController extends BaseController
         ]);
     }
 
-    /**
-     */
     public function showAssistants(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
@@ -64,8 +59,6 @@ class MailingListController extends BaseController
         ]);
     }
 
-    /**
-     */
     public function showTeam(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
@@ -78,8 +71,6 @@ class MailingListController extends BaseController
         ]);
     }
 
-    /**
-     */
     public function showAll(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);

@@ -32,7 +32,7 @@ class PasswordResetType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Valid(),
-                ]
+                ],
             ]);
     }
 }

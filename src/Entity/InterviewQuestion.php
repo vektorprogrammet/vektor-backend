@@ -137,7 +137,6 @@ class InterviewQuestion
     /**
      * Add alternatives.
      *
-     *
      * @return InterviewQuestion
      */
     public function addAlternative(InterviewQuestionAlternative $alternatives)
@@ -151,7 +150,6 @@ class InterviewQuestion
 
     /**
      * Remove alternatives.
-     *
      */
     public function removeAlternative(InterviewQuestionAlternative $alternatives)
     {

@@ -28,7 +28,7 @@ class CreateSignatureType extends AbstractType
                 'attr' => [
                     'maxlength' => 500,
                     'rows' => 5,
-                    'placeholder' => "La stå tom om ingen kommentar ønskes. \nNB: trykk lagre for at endringer skal tre i kraft."
+                    'placeholder' => "La stå tom om ingen kommentar ønskes. \nNB: trykk lagre for at endringer skal tre i kraft.",
                 ],
             ]);
     }

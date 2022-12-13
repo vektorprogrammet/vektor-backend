@@ -61,7 +61,7 @@ class ExecutiveBoardController extends BaseController
 
         // Create a new formType with the needed variables
         $form = $this->createForm(CreateExecutiveBoardMembershipType::class, $member, [
-            'departmentId' => $department
+            'departmentId' => $department,
         ]);
 
         // Handle the form
@@ -81,6 +81,7 @@ class ExecutiveBoardController extends BaseController
         }
 
         $city = $department->getCity();
+
         return $this->render('executive_board/member.html.twig', [
             'heading' => "Legg til hovedstyremedlem fra avdeling $city",
             'form' => $form->createView(),
@@ -108,7 +109,7 @@ class ExecutiveBoardController extends BaseController
         // Handle the form
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //Don't persist if the preview button was clicked
+            // Don't persist if the preview button was clicked
             if (!$form->get('preview')->isClicked()) {
                 // Persist the board to the database
                 $em = $this->getDoctrine()->getManager();
@@ -130,14 +131,11 @@ class ExecutiveBoardController extends BaseController
         ]);
     }
 
-    /**
-     *
-     */
     public function editMemberHistory(Request $request, ExecutiveBoardMembership $member): Response
     {
         $user = $member->getUser(); // Store the $user object before the form touches our $member object with spooky user data
         $form = $this->createForm(CreateExecutiveBoardMembershipType::class, $member, [
-            'departmentId' => $user->getDepartment()
+            'departmentId' => $user->getDepartment(),
         ]);
 
         $form->handleRequest($request);
@@ -146,11 +144,13 @@ class ExecutiveBoardController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($member);
             $em->flush();
+
             return $this->redirectToRoute('executive_board_show');
         }
 
         $memberName = $user->getFullName();
-        return $this->render("executive_board/member.html.twig", [
+
+        return $this->render('executive_board/member.html.twig', [
             'heading' => "Rediger medlemshistorikken til $memberName",
             'form' => $form->createView(),
         ]);

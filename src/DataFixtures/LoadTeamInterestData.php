@@ -17,7 +17,7 @@ class LoadTeamInterestData extends AbstractFixture implements OrderedFixtureInte
             ->setSemester($this->getReference('semester-current'))
             ->setPotentialTeams([
                 $this->getReference('team-1'),
-                $this->getReference('team-2'),])
+                $this->getReference('team-2'), ])
             ->setName('Magnus Carlsen')
             ->setEmail('magnus@gmail.com');
         $manager->persist($teamInterest1);

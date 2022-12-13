@@ -16,9 +16,6 @@ class ControlPanelController extends BaseController
         $this->sbsData = $sbsData;
     }
 
-    /**
-     *
-     */
     public function show(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);

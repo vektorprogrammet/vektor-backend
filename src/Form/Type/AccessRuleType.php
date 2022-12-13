@@ -24,35 +24,34 @@ class AccessRuleType extends AbstractType
         $this->roles = $options['roles'];
 
         $builder
-            ->add("name", TextType::class)
-            ->add("resource", TextType::class)
-            ->add("roles", ChoiceType::class, [
-                "choices" => [
-                    (Roles::TEAM_MEMBER) => Roles::TEAM_MEMBER,
-                    (Roles::TEAM_LEADER) => Roles::TEAM_LEADER,
-                    (Roles::ASSISTANT) => Roles::ASSISTANT,
-                    (Roles::ADMIN) => Roles::ADMIN,
+            ->add('name', TextType::class)
+            ->add('resource', TextType::class)
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    Roles::TEAM_MEMBER => Roles::TEAM_MEMBER,
+                    Roles::TEAM_LEADER => Roles::TEAM_LEADER,
+                    Roles::ASSISTANT => Roles::ASSISTANT,
+                    Roles::ADMIN => Roles::ADMIN,
                 ],
-                "expanded" => true,
-                "multiple" => true,
+                'expanded' => true,
+                'multiple' => true,
             ])
-            ->add("teams", EntityType::class, [
+            ->add('teams', EntityType::class, [
                 'label' => false,
-                "expanded" => true,
-                "multiple" => true,
-                "class" => Team::class,
-                "group_by" => "department.city"
-
+                'expanded' => true,
+                'multiple' => true,
+                'class' => Team::class,
+                'group_by' => 'department.city',
             ])
             ->add('forExecutiveBoard', CheckboxType::class, [
                 'label' => 'Hovedstyret',
-                'required' => false
+                'required' => false,
             ])
-            ->add("users", EntityType::class, [
+            ->add('users', EntityType::class, [
                 'label' => false,
-                "expanded" => true,
-                "multiple" => true,
-                "class" => User::class,
+                'expanded' => true,
+                'multiple' => true,
+                'class' => User::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->select('u')
@@ -60,15 +59,15 @@ class AccessRuleType extends AbstractType
                         ->orderBy('u.firstName')
                         ->setParameter('roles', $this->roles);
                 },
-                "group_by" => "fieldOfStudy.department.city"
+                'group_by' => 'fieldOfStudy.department.city',
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            "data_class" => AccessRule::class,
-            'roles' => []
+            'data_class' => AccessRule::class,
+            'roles' => [],
         ]);
     }
 

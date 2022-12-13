@@ -24,9 +24,6 @@ class TeamAdminController extends BaseController
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     *
-     */
     public function show(Department $department = null): Response
     {
         if ($department === null) {
@@ -50,7 +47,7 @@ class TeamAdminController extends BaseController
         $department = $teamMembership->getTeam()->getDepartment();
 
         $form = $this->createForm(CreateTeamMembershipType::class, $teamMembership, [
-            'department' => $department
+            'department' => $department,
         ]);
 
         $form->handleRequest($request);
@@ -68,7 +65,7 @@ class TeamAdminController extends BaseController
         return $this->render('team_admin/create_team_membership.html.twig', [
             'form' => $form->createView(),
             'team' => $teamMembership->getTeam(),
-            'teamMembership' => $teamMembership
+            'teamMembership' => $teamMembership,
         ]);
     }
 
@@ -84,14 +81,14 @@ class TeamAdminController extends BaseController
 
         // Create a new formType with the needed variables
         $form = $this->createForm(CreateTeamMembershipType::class, $teamMembership, [
-            'department' => $department
+            'department' => $department,
         ]);
 
         // Handle the form
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //set the team of the department
+            // set the team of the department
             $teamMembership->setTeam($team);
 
             // Persist the team to the database
@@ -106,7 +103,7 @@ class TeamAdminController extends BaseController
 
         return $this->render('team_admin/create_team_membership.html.twig', [
             'form' => $form->createView(),
-            'team' => $team
+            'team' => $team,
         ]);
     }
 
@@ -122,7 +119,7 @@ class TeamAdminController extends BaseController
         $currentUserTeamMembership = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByUser($user);
         $isUserInTeam = false;
         foreach ($currentUserTeamMembership as $wh) {
-            if (in_array($wh, $activeTeamMemberships)) {
+            if (in_array($wh, $activeTeamMemberships, true)) {
                 $isUserInTeam = true;
             }
         }
@@ -136,9 +133,6 @@ class TeamAdminController extends BaseController
         ]);
     }
 
-    /**
-     *
-     */
     private function sortTeamMembershipsByEndDate(TeamMembership $a, TeamMembership $b): bool
     {
         return $a->getStartSemester()->getStartDate() < $b->getStartSemester()->getStartDate();
@@ -157,8 +151,8 @@ class TeamAdminController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //Don't persist if the preview button was clicked
-            if (! $form->get('preview')->isClicked()) {
+            // Don't persist if the preview button was clicked
+            if (!$form->get('preview')->isClicked()) {
                 // Persist the team to the database
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($team);
@@ -213,8 +207,8 @@ class TeamAdminController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //Don't persist if the preview button was clicked
-            if (! $form->get('preview')->isClicked()) {
+            // Don't persist if the preview button was clicked
+            if (!$form->get('preview')->isClicked()) {
                 // Persist the team to the database
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($team);
@@ -236,7 +230,7 @@ class TeamAdminController extends BaseController
             'form' => $form->createView(),
             'department' => $department,
             'team' => $team,
-            'isUpdate' => false
+            'isUpdate' => false,
         ]);
     }
 
@@ -263,6 +257,6 @@ class TeamAdminController extends BaseController
         $em->remove($team);
         $em->flush();
 
-        return $this->redirectToRoute("teamadmin_show", ["id" => $team->getDepartment()->getId()]);
+        return $this->redirectToRoute('teamadmin_show', ['id' => $team->getDepartment()->getId()]);
     }
 }

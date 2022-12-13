@@ -32,7 +32,7 @@ class SponsorsController extends BaseController
     public function sponsorEdit(Sponsor $sponsor = null, Request $request)
     {
         $isCreate = $sponsor === null;
-        $oldImgPath = "";
+        $oldImgPath = '';
         if ($isCreate) {
             $sponsor = new Sponsor();
         } else {
@@ -56,17 +56,17 @@ class SponsorsController extends BaseController
             $em->flush();
 
             $this->addFlash(
-                "success",
-                "Sponsor {$sponsor->getName()} ble " . ($isCreate ? "opprettet" : "endret")
+                'success',
+                "Sponsor {$sponsor->getName()} ble " . ($isCreate ? 'opprettet' : 'endret')
             );
 
-            return $this->redirectToRoute("sponsors_show");
+            return $this->redirectToRoute('sponsors_show');
         }
 
-        return $this->render("sponsors/sponsor_edit.html.twig", [
-            "form" => $form->createView(),
-            "sponsor" => $sponsor,
-            "is_create" => $isCreate
+        return $this->render('sponsors/sponsor_edit.html.twig', [
+            'form' => $form->createView(),
+            'sponsor' => $sponsor,
+            'is_create' => $isCreate,
         ]);
     }
 
@@ -80,7 +80,8 @@ class SponsorsController extends BaseController
         $em->remove($sponsor);
         $em->flush();
 
-        $this->addFlash("success", "Sponsor {$sponsor->getName()} ble slettet.");
-        return $this->redirectToRoute("sponsors_show");
+        $this->addFlash('success', "Sponsor {$sponsor->getName()} ble slettet.");
+
+        return $this->redirectToRoute('sponsors_show');
     }
 }

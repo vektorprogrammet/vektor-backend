@@ -11,11 +11,8 @@ use App\Mailer\Mailer;
 use App\Role\Roles;
 use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;
-use DateInterval;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Swift_Message;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -35,7 +32,7 @@ class InterviewManager
     private const MAX_NUM_ACCEPT_INTERVIEW_REMINDERS_SENT = 3;
 
     /**
-     * InterviewManager constructor
+     * InterviewManager constructor.
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -46,8 +43,7 @@ class InterviewManager
         EntityManagerInterface $em,
         RouterInterface $router,
         SmsSenderInterface $smsSender
-    )
-    {
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
         $this->mailer = $mailer;
@@ -60,8 +56,6 @@ class InterviewManager
 
     /**
      * Only team leader and above, or the assigned interviewer should be able to see the interview.
-     *
-     *
      */
     public function loggedInUserCanSeeInterview(Interview $interview): bool
     {
@@ -72,9 +66,6 @@ class InterviewManager
                $interview->isCoInterviewer($user);
     }
 
-    /**
-     *
-     */
     public function initializeInterviewAnswers(Interview $interview): Interview
     {
         $existingAnswers = $interview->getInterviewAnswers();
@@ -87,7 +78,7 @@ class InterviewManager
         }, $existingAnswers);
 
         foreach ($interview->getInterviewSchema()->getInterviewQuestions() as $interviewQuestion) {
-            $interviewAlreadyHasQuestion = array_search($interviewQuestion, $existingQuestions) !== false;
+            $interviewAlreadyHasQuestion = array_search($interviewQuestion, $existingQuestions, true) !== false;
             if ($interviewAlreadyHasQuestion) {
                 continue;
             }
@@ -102,8 +93,6 @@ class InterviewManager
         return $interview;
     }
 
-    /**
-     */
     public function assignInterviewerToApplication(User $interviewer, Application $application)
     {
         $interview = $application->getInterview();
@@ -116,11 +105,9 @@ class InterviewManager
         $interview->setInterviewer($interviewer);
     }
 
-    /**
-     */
     public function sendScheduleEmail(Interview $interview, array $data)
     {
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
             ->setSubject('Intervju for vektorprogrammet')
             ->setTo($data['to'])
             ->setReplyTo($data['from'])
@@ -132,7 +119,7 @@ class InterviewManager
                         'room' => $data['room'],
                         'campus' => $data['campus'],
                         'mapLink' => $data['mapLink'],
-                        'fromName' => $interview->getInterviewer()->getFirstName().' '.$interview->getInterviewer()->getLastName(),
+                        'fromName' => $interview->getInterviewer()->getFirstName() . ' ' . $interview->getInterviewer()->getLastName(),
                         'fromMail' => $data['from'],
                         'fromPhone' => $interview->getInterviewer()->getPhone(),
                         'responseCode' => $interview->getResponseCode(),
@@ -143,8 +130,6 @@ class InterviewManager
         $this->mailer->send($message);
     }
 
-    /**
-     */
     public function sendRescheduleEmail(Interview $interview)
     {
         $application = $this->em->getRepository(Application::class)->findOneBy(['interview' => $interview]);
@@ -156,7 +141,7 @@ class InterviewManager
         }
 
         foreach ($interviewers as $interviewer) {
-            $message = (new Swift_Message())
+            $message = (new \Swift_Message())
                 ->setSubject("[$user] Intervju: Ønske om ny tid")
                 ->setTo($interviewer->getEmail())
                 ->setBody(
@@ -173,8 +158,6 @@ class InterviewManager
         }
     }
 
-    /**
-     */
     public function sendCancelEmail(Interview $interview)
     {
         $user = $interview->getUser();
@@ -187,7 +170,7 @@ class InterviewManager
 
         // Send mail to interviewer and co-interviewer
         foreach ($interviewers as $interviewer) {
-            $message = (new Swift_Message())
+            $message = (new \Swift_Message())
                 ->setSubject("[$user] Intervju: Kansellert")
                 ->setTo($interviewer->getEmail())
                 ->setBody(
@@ -225,7 +208,7 @@ class InterviewManager
             return;
         }
 
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
              ->setSubject('Dine intervjuer dette semesteret')
              ->setTo($interviewer->getEmail())
              ->setBody(
@@ -233,7 +216,7 @@ class InterviewManager
                      'interview/schedule_of_interviews_email.html.twig',
                      [
                          'interviews' => $interviews,
-                         'interviewer' => $interviewer
+                         'interviewer' => $interviewer,
                      ]
                  ),
                  'text/html'
@@ -244,11 +227,11 @@ class InterviewManager
 
     public function sendAcceptInterviewReminders()
     {
-        $interviews = $this->em->getRepository(Interview::class)->findAcceptInterviewNotificationRecipients(new DateTime());
+        $interviews = $this->em->getRepository(Interview::class)->findAcceptInterviewNotificationRecipients(new \DateTime());
         /** @var Interview $interview */
         foreach ($interviews as $interview) {
-            $oneDay = new DateInterval('P1D');
-            $now = new DateTime();
+            $oneDay = new \DateInterval('P1D');
+            $now = new \DateTime();
             $moreThan24HoursSinceScheduled = $now->sub($oneDay) > $interview->getLastScheduleChanged();
             if ($interview->getNumAcceptInterviewRemindersSent() < self::MAX_NUM_ACCEPT_INTERVIEW_REMINDERS_SENT && $moreThan24HoursSinceScheduled) {
                 $this->sendAcceptInterviewReminderToInterviewee($interview);
@@ -258,7 +241,7 @@ class InterviewManager
 
     private function sendAcceptInterviewReminderToInterviewee(Interview $interview)
     {
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
             ->setSubject('Påminnelse om intervju med Vektorprogrammet')
             ->setTo($interview->getUser()->getEmail())
             ->setBody(
@@ -282,28 +265,24 @@ class InterviewManager
             Accept interview reminder sent to {$interview->getUser()}.
             ({$interview->getNumAcceptInterviewRemindersSent()}/$maxNum reminders sent)");
 
-
-        $oneDay = new DateInterval('P1D');
-        $now = new DateTime();
+        $oneDay = new \DateInterval('P1D');
+        $now = new \DateTime();
         $lessThan24HoursUntilInterview = $now->add($oneDay) > $interview->getScheduled();
         if ($lessThan24HoursUntilInterview) {
             $smsMessage =
-                "Hei {$interview->getUser()->getFirstName()}\n".
-                "Vi har satt opp intervjutid for deg og trenger å vite om den passer.\n\n".
-                "Gå til https://vektorprogrammet.no{$this->router->generate('interview_response', ['responseCode' => $interview->getResponseCode()])} for å se intervjutiden og svare.\n".
-                "Mvh Vektorprogrammet.";
+                "Hei {$interview->getUser()->getFirstName()}\n" .
+                "Vi har satt opp intervjutid for deg og trenger å vite om den passer.\n\n" .
+                "Gå til https://vektorprogrammet.no{$this->router->generate('interview_response', ['responseCode' => $interview->getResponseCode()])} for å se intervjutiden og svare.\n" .
+                'Mvh Vektorprogrammet.';
             $sms = new Sms();
             $sms->setMessage($smsMessage);
-            $sms->setSender("Vektor");
+            $sms->setSender('Vektor');
             $sms->setRecipients([$interview->getUser()->getPhone()]);
 
             $this->smsSender->send($sms);
         }
     }
 
-    /**
-     *
-     */
     public function getDefaultScheduleFormData(Interview $interview): array
     {
         $previousScheduledInterview = $this->em->getRepository(Interview::class)
@@ -316,7 +295,6 @@ class InterviewManager
             $campus = $previousScheduledInterview->getCampus();
             $mapLink = $previousScheduledInterview->getMapLink();
         }
-
 
         $message = "Hei, {$interview->getUser()->getFirstName()}!
          
@@ -331,7 +309,6 @@ Vennligst gi beskjed til meg hvis tidspunktet ikke passer.";
             'message' => $message,
             'from' => $interview->getInterviewer()->getEmail(),
             'to' => $interview->getUser()->getEmail(),
-
         ];
     }
 }

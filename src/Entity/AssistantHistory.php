@@ -61,6 +61,7 @@ class AssistantHistory
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      */
@@ -68,7 +69,7 @@ class AssistantHistory
 
     public function activeInGroup($group): bool
     {
-        return strpos($this->bolk, "Bolk $group") !== false;
+        return mb_strpos($this->bolk, "Bolk $group") !== false;
     }
 
     /**
@@ -128,12 +129,12 @@ class AssistantHistory
     }
 
     /**
-     *
      * @return AssistantHistory
      */
     public function setDepartment(Department $department)
     {
         $this->department = $department;
+
         return $this;
     }
 

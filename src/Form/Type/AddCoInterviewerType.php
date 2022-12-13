@@ -21,14 +21,14 @@ class AddCoInterviewerType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Legg til'
+                'label' => 'Legg til',
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'teamUsers' => []
+            'teamUsers' => [],
         ]);
     }
 }

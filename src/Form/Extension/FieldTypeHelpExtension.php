@@ -11,15 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FieldTypeHelpExtension extends AbstractTypeExtension
 {
-    /**
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->setAttribute('help', $options['help']);
     }
 
-    /**
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['help'] = $options['help'];
@@ -41,7 +37,7 @@ class FieldTypeHelpExtension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getExtendedTypes(): iterable
     {

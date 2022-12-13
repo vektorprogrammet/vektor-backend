@@ -28,7 +28,7 @@ class DepartmentController extends BaseController
             $em->persist($department);
             $em->flush();
 
-            $this->addFlash("success", "$department ble opprettet");
+            $this->addFlash('success', "$department ble opprettet");
 
             return $this->redirectToRoute('departmentadmin_show');
         }
@@ -44,9 +44,9 @@ class DepartmentController extends BaseController
         $em->remove($department);
         $em->flush();
 
-        $this->addFlash("success", "Avdelingen ble slettet");
+        $this->addFlash('success', 'Avdelingen ble slettet');
 
-        return $this->redirectToRoute("departmentadmin_show");
+        return $this->redirectToRoute('departmentadmin_show');
     }
 
     public function updateDepartment(Request $request, Department $department)
@@ -60,7 +60,7 @@ class DepartmentController extends BaseController
             $em->persist($department);
             $em->flush();
 
-            $this->addFlash("success", "$department ble oppdatert");
+            $this->addFlash('success', "$department ble oppdatert");
 
             return $this->redirectToRoute('departmentadmin_show');
         }

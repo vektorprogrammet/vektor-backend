@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * TeamInterest
+ * TeamInterest.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="TeamInterestRepository")
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class TeamInterest implements DepartmentSemesterInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -43,7 +43,7 @@ class TeamInterest implements DepartmentSemesterInterface
     private $email;
 
     /**
-     * @var DateTime
+     * @var \DateTime
      *
      * @ORM\Column(name="timestamp", type="datetime")
      */
@@ -77,14 +77,13 @@ class TeamInterest implements DepartmentSemesterInterface
      */
     public function __construct()
     {
-        $this->timestamp = new DateTime();
+        $this->timestamp = new \DateTime();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -92,7 +91,7 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @return string
      */
@@ -102,7 +101,7 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @param string $name
      *
@@ -116,9 +115,10 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
+     *
      * @return TeamInterest
      */
     public function setEmail($email)
@@ -129,7 +129,7 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -139,9 +139,9 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Get timestamp
+     * Get timestamp.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getTimestamp()
     {
@@ -149,7 +149,7 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Get potentialTeams
+     * Get potentialTeams.
      *
      * @return Team[]
      */
@@ -159,9 +159,10 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Set potentialTeams
+     * Set potentialTeams.
      *
      * @param Team[] $potentialTeams
+     *
      * @return TeamInterest
      */
     public function setPotentialTeams($potentialTeams)
@@ -172,7 +173,7 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Get semester
+     * Get semester.
      *
      * @return Semester
      */
@@ -182,7 +183,7 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Set semester
+     * Set semester.
      *
      * @return TeamInterest
      */
@@ -193,19 +194,15 @@ class TeamInterest implements DepartmentSemesterInterface
         return $this;
     }
 
-    /**
-     */
     public function getDepartment(): Department
     {
         return $this->department;
     }
 
-    /**
-     *
-     */
     public function setDepartment(Department $department): TeamInterest
     {
         $this->department = $department;
+
         return $this;
     }
 }

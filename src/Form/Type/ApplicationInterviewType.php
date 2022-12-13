@@ -35,7 +35,7 @@ class ApplicationInterviewType extends AbstractType
 
         $builder->add('specialNeeds', TextType::class, [
             'label' => 'Spesielle behov',
-            'required' => false
+            'required' => false,
         ]);
 
         $builder->add('interview', InterviewType::class);

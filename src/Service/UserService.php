@@ -10,15 +10,13 @@ class UserService
     private TokenStorageInterface $tokenStorage;
 
     /**
-     * UserService constructor
+     * UserService constructor.
      */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     */
     public function getCurrentUser(): ?User
     {
         $token = $this->tokenStorage->getToken();
@@ -37,7 +35,7 @@ class UserService
     {
         $user = $this->getCurrentUser();
         if (!$user) {
-            return "Anonymous";
+            return 'Anonymous';
         }
 
         return $user->__toString();
@@ -47,7 +45,7 @@ class UserService
     {
         $user = $this->getCurrentUser();
         if (!$user) {
-            return "Anonymous";
+            return 'Anonymous';
         }
         $department = $user->getDepartment();
 
@@ -58,6 +56,6 @@ class UserService
     {
         $user = $this->getCurrentUser();
 
-        return "https://vektorprogrammet.no/" . ($user ? $user->getPicturePath() : "images/defaultProfile.png");
+        return 'https://vektorprogrammet.no/' . ($user ? $user->getPicturePath() : 'images/defaultProfile.png');
     }
 }

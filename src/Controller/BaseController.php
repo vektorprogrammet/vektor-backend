@@ -25,6 +25,7 @@ class BaseController extends AbstractController
         } else {
             $department = $this->getDoctrine()->getRepository(Department::class)->find($departmentId);
         }
+
         return $department;
     }
 
@@ -40,6 +41,7 @@ class BaseController extends AbstractController
         } else {
             $semester = $this->getDoctrine()->getRepository(Semester::class)->find($semesterId);
         }
+
         return $semester;
     }
 
@@ -52,17 +54,17 @@ class BaseController extends AbstractController
         if ($department === null) {
             throw new NotFoundHttpException();
         }
+
         return $department;
     }
 
-    /**
-     */
     public function getSemesterOrThrow404(Request $request): Semester
     {
         $semester = $this->getSemester($request);
         if ($semester === null) {
             throw new NotFoundHttpException();
         }
+
         return $semester;
     }
 

@@ -20,7 +20,6 @@ class SemesterController extends AbstractController
         ]);
     }
 
-
     public function createSemester(Request $request)
     {
         $semester = new Semester();
@@ -33,13 +32,14 @@ class SemesterController extends AbstractController
 
         // The fields of the form is checked if they contain the correct information
         if ($form->isSubmitted() && $form->isValid()) {
-            //Check if semester already exists
+            // Check if semester already exists
             $existingSemester = $this->getDoctrine()->getManager()->getRepository(Semester::class)
                 ->findByTimeAndYear($semester->getSemesterTime(), $semester->getYear());
 
-            //Return to semester page if semester already exists
+            // Return to semester page if semester already exists
             if ($existingSemester !== null) {
                 $this->addFlash('warning', "Semesteret $existingSemester finnes allerede");
+
                 return $this->redirectToRoute('semester_create');
             }
 

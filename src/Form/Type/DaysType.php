@@ -48,7 +48,6 @@ class DaysType extends AbstractType
                 }
             ));
 
-
         $builder->get('tuesday')
             ->addModelTransformer(new CallbackTransformer(
                 function ($in) {
@@ -59,7 +58,6 @@ class DaysType extends AbstractType
                 }
             ));
 
-
         $builder->get('wednesday')
             ->addModelTransformer(new CallbackTransformer(
                 function ($in) {
@@ -69,7 +67,6 @@ class DaysType extends AbstractType
                     return !$in;
                 }
             ));
-
 
         $builder->get('thursday')
             ->addModelTransformer(new CallbackTransformer(

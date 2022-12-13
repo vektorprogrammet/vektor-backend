@@ -58,7 +58,7 @@ class CreateExecutiveBoardMembershipType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'App\Entity\ExecutiveBoardMembership',
-            'departmentId' => null
+            'departmentId' => null,
         ]);
     }
 

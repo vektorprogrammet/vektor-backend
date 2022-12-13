@@ -35,12 +35,14 @@ class DepartmentExtension extends AbstractExtension
     public function getDepartments()
     {
         $departments = $this->em->getRepository(Department::class)->findAll();
+
         return $this->geoLocationService->sortDepartmentsByDistanceFromClient($departments);
     }
 
     public function getActiveDepartments()
     {
         $departments = $this->em->getRepository(Department::class)->findActive();
+
         return $this->geoLocationService->sortDepartmentsByDistanceFromClient($departments);
     }
 }

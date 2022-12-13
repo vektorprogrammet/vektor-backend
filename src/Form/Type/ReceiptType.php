@@ -2,7 +2,6 @@
 
 namespace App\Form\Type;
 
-use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -15,7 +14,7 @@ class ReceiptType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $currentYear = intval((new DateTime())->format('Y'));
+        $currentYear = intval((new \DateTime())->format('Y'));
         $builder
             ->add('description', TextareaType::class, [
                 'label' => 'Beskrivelse',
@@ -32,7 +31,7 @@ class ReceiptType extends AbstractType
                 'label' => 'Utleggsdato',
                 'required' => true,
                 'years' => [$currentYear, $currentYear - 1],
-                'format' => 'ddMMMyyyy'
+                'format' => 'ddMMMyyyy',
             ])
             ->add('user', AccountNumberType::class, [
                 'label' => false,

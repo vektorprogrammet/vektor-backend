@@ -21,7 +21,7 @@ class ApplicationAdmission
     private LoginManager $loginManager;
 
     /**
-     * ApplicationAdmission constructor
+     * ApplicationAdmission constructor.
      */
     public function __construct(EntityManagerInterface $em, Environment $twig, LoginManager $loginManager)
     {
@@ -64,6 +64,7 @@ class ApplicationAdmission
         if ($admissionPeriod === null) {
             return false;
         }
+
         return $this->userHasAlreadyAppliedInAdmissionPeriod($user, $admissionPeriod);
     }
 
@@ -74,10 +75,9 @@ class ApplicationAdmission
         return count($existingApplications) > 0;
     }
 
-
     public function setCorrectUser(Application $application)
     {
-        //Check if email belongs to an existing account and use that account
+        // Check if email belongs to an existing account and use that account
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $application->getUser()->getEmail()]);
         if ($user !== null) {
             $application->setUser($user);
@@ -107,7 +107,7 @@ class ApplicationAdmission
         }
 
         if ($department === null) {
-            throw  new NotFoundHttpException('Department not found');
+            throw new NotFoundHttpException('Department not found');
         }
 
         return $department;

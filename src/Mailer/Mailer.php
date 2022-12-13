@@ -4,14 +4,12 @@ namespace App\Mailer;
 
 use App\Google\Gmail;
 use App\Service\SlackMailer;
-use Swift_Mailer;
-use Swift_Message;
 
 class Mailer implements MailerInterface
 {
     private $mailer;
 
-    public function __construct(string $env, Gmail $gmail, Swift_Mailer $swiftMailer, SlackMailer $slackMailer)
+    public function __construct(string $env, Gmail $gmail, \Swift_Mailer $swiftMailer, SlackMailer $slackMailer)
     {
         if ($env === 'prod') {
             $this->mailer = $gmail;
@@ -22,7 +20,7 @@ class Mailer implements MailerInterface
         }
     }
 
-    public function send(Swift_Message $message, bool $disableLogging = false)
+    public function send(\Swift_Message $message, bool $disableLogging = false)
     {
         if ($this->mailer instanceof Gmail) {
             $this->mailer->send($message, $disableLogging);

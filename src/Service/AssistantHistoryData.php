@@ -15,14 +15,14 @@ class AssistantHistoryData
     private $department;
 
     /**
-     * AssistantHistoryData constructor
+     * AssistantHistoryData constructor.
      */
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts, GeoLocation $geoLocation)
     {
         $this->assistantHistoryRepository = $em->getRepository(AssistantHistory::class);
         $user = $ts->getToken()->getUser();
         $departments = $em->getRepository(Department::class)->findAll();
-        if ($user == "anon.") {
+        if ($user === 'anon.') {
             $this->department = $geoLocation->findNearestDepartment($departments);
         } else {
             $this->department = $ts->getToken()->getUser()->getDepartment();
@@ -31,22 +31,22 @@ class AssistantHistoryData
     }
 
     /**
-     *
      * @return $this
      */
     public function setSemester(Semester $semester): AssistantHistoryData
     {
         $this->semester = $semester;
+
         return $this;
     }
 
     /**
      * @param Department $department
-     *
      */
     public function setDepartment($department): AssistantHistoryData
     {
         $this->department = $department;
+
         return $this;
     }
 

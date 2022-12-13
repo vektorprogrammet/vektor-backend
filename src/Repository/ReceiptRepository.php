@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityRepository;
 class ReceiptRepository extends EntityRepository
 {
     /**
-     *
      * @return Receipt[]
      */
     public function findByUser(User $user)
@@ -23,7 +22,6 @@ class ReceiptRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Receipt[]
      */
     public function findByStatus(string $status)

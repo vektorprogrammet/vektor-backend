@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use App\Event\TeamMembershipEvent;
 use App\Mailer\MailerInterface;
-use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Environment;
 
@@ -47,15 +46,15 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
 
         $position = $teamMembership->getPositionName();
 
-        $message = (new Swift_Message())
-            ->setSubject('Velkommen til '.$team->getName())
+        $message = (new \Swift_Message())
+            ->setSubject('Velkommen til ' . $team->getName())
             ->setFrom('vektorbot@vektorprogrammet.no')
             ->setTo($user->getEmail())
             ->setBody($this->twig->render('team_admin/welcome_team_membership_mail.html.twig', [
                 'name' => $user->getFirstName(),
                 'team' => $team->getName(),
                 'position' => $position,
-                'companyEmail' => $user->getCompanyEmail()
+                'companyEmail' => $user->getCompanyEmail(),
             ]))
             ->setContentType('text/html');
         $this->mailer->send($message);
@@ -70,7 +69,7 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
             ->setSubject('Fullfør oppsettet med din Vektor-epost')
             ->setFrom('vektorbot@vektorprogrammet.no')
             ->setTo($user->getCompanyEmail())

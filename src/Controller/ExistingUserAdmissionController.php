@@ -25,10 +25,10 @@ class ExistingUserAdmissionController extends BaseController
     }
 
     /**
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @return null|RedirectResponse|Response
+     *
+     * @return RedirectResponse|Response|null
      */
     public function show(Request $request)
     {
@@ -55,7 +55,7 @@ class ExistingUserAdmissionController extends BaseController
             $em->flush();
 
             $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
-            $this->addFlash("success", "Søknad mottatt!");
+            $this->addFlash('success', 'Søknad mottatt!');
 
             return $this->redirectToRoute('my_page');
         }

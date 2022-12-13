@@ -12,18 +12,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TeamInterestType extends AbstractType
 {
-    /**
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $department = $builder->getData()->getDepartment();
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Navn'
+                'label' => 'Navn',
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email'
+                'label' => 'Email',
             ])
             ->add('potentialTeams', EntityType::class, [
                 'label' => 'Hvilke team er du interessert i?',
@@ -41,8 +39,6 @@ class TeamInterestType extends AbstractType
             ]);
     }
 
-    /**
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -51,8 +47,6 @@ class TeamInterestType extends AbstractType
         ]);
     }
 
-    /**
-     */
     public function getBlockPrefix(): string
     {
         return 'App_teaminterest';

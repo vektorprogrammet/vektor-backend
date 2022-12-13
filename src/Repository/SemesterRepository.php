@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Semester;
 use App\Utils\SemesterUtil;
-use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\ORMException;
@@ -30,12 +29,12 @@ class SemesterRepository extends EntityRepository
 
     /**
      * @throws NonUniqueResultException
-     * @return Semester
      *
+     * @return Semester
      */
     public function findCurrentSemester()
     {
-        $now = new DateTime();
+        $now = new \DateTime();
 
         return $this->createQueryBuilder('Semester')
             ->select('Semester')
@@ -43,7 +42,7 @@ class SemesterRepository extends EntityRepository
             ->andWhere('Semester.semesterTime = :semesterTime')
             ->setParameters([
                 'year' => SemesterUtil::timeToYear($now),
-                'semesterTime' => SemesterUtil::timeToSemesterTime($now)
+                'semesterTime' => SemesterUtil::timeToSemesterTime($now),
             ])
             ->getQuery()
             ->getOneOrNullResult();
@@ -52,18 +51,20 @@ class SemesterRepository extends EntityRepository
     /**
      * @throws NonUniqueResultException
      * @throws ORMException
+     *
      * @return Semester
      */
     public function findOrCreateCurrentSemester()
     {
         $semester = $this->findCurrentSemester();
-        if ($semester == null) {
-            //Create a new semester
-            $now = new DateTime();
+        if ($semester === null) {
+            // Create a new semester
+            $now = new \DateTime();
             $semester = SemesterUtil::timeToSemester($now);
             $this->getEntityManager()->persist($semester);
             $this->getEntityManager()->flush();
         }
+
         return $semester;
     }
 
@@ -93,9 +94,9 @@ class SemesterRepository extends EntityRepository
             return null;
         }
         if ($semester->getSemesterTime() === 'Høst') {
-            return $this->findByTimeAndYear('Vår', (string)((int)($semester->getYear()) + 1));
-        } else {
-            return $this->findByTimeAndYear('Høst', $semester->getYear());
+            return $this->findByTimeAndYear('Vår', (string) ((int) $semester->getYear() + 1));
         }
+
+        return $this->findByTimeAndYear('Høst', $semester->getYear());
     }
 }

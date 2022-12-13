@@ -18,7 +18,7 @@ class ApplicationData
     private EntityManagerInterface $em;
 
     /**
-     * ApplicationData constructor
+     * ApplicationData constructor.
      */
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts)
     {
@@ -49,7 +49,6 @@ class ApplicationData
 
         return $this->applicationRepository->numOfApplications($this->admissionPeriod);
     }
-
 
     public function getCount(): int
     {
@@ -177,15 +176,11 @@ class ApplicationData
         return $positionsCount;
     }
 
-    /**
-     */
     public function getAdmissionPeriod(): AdmissionPeriod
     {
         return $this->admissionPeriod;
     }
 
-    /**
-     */
     public function getDepartment(): Department
     {
         return $this->department;
@@ -200,10 +195,10 @@ class ApplicationData
             $allHeardAboutFrom = $applicant->getHeardAboutFrom();
 
             if ($allHeardAboutFrom === null) {
-                $allHeardAboutFrom = [0 => "Ingen"];
+                $allHeardAboutFrom = [0 => 'Ingen'];
             }
 
-            for ($i = 0; $i < count($allHeardAboutFrom); $i++) {
+            for ($i = 0; $i < count($allHeardAboutFrom); ++$i) {
                 $currentHeardAboutFrom = $allHeardAboutFrom[$i];
 
                 if (array_key_exists($currentHeardAboutFrom, $heardAbout)) {
@@ -213,6 +208,7 @@ class ApplicationData
                 }
             }
         }
+
         return $heardAbout;
     }
 }

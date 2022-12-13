@@ -13,15 +13,12 @@ class InterviewConductedEvent extends Event
 
     /**
      * InterviewConductedEvent constructor.
-     *
      */
     public function __construct(Application $application)
     {
         $this->application = $application;
     }
 
-    /**
-     */
     public function getApplication(): Application
     {
         return $this->application;

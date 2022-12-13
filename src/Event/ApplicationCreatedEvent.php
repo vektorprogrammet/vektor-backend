@@ -11,18 +11,14 @@ class ApplicationCreatedEvent extends Event
 
     private $application;
 
-
     /**
      * ApplicationAdmissionEvent constructor.
-     *
      */
     public function __construct(Application $application)
     {
         $this->application = $application;
     }
 
-    /**
-     */
     public function getApplication(): Application
     {
         return $this->application;

@@ -123,8 +123,6 @@ class TeamApplication
         return $this->team;
     }
 
-    /**
-     */
     public function setTeam(Team $team)
     {
         $this->team = $team;

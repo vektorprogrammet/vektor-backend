@@ -26,12 +26,11 @@ class AdmissionPeriodController extends BaseController
             ->getRepository(AdmissionPeriod::class)
             ->findByDepartmentOrderedByTime($department);
 
-
         // Renders the view with the variables
         return $this->render('admission_period_admin/index.html.twig', [
             'admissionPeriods' => $admissionPeriods,
             'departmentName' => $department->getShortName(),
-            'department' => $department
+            'department' => $department,
         ]);
     }
 
@@ -40,7 +39,7 @@ class AdmissionPeriodController extends BaseController
         $admissionPeriod = new AdmissionPeriod();
         $admissionPeriods = $department->getAdmissionPeriods()->toArray();
         $form = $this->createForm(CreateAdmissionPeriodType::class, $admissionPeriod, [
-            'admissionPeriods' => $admissionPeriods
+            'admissionPeriods' => $admissionPeriods,
         ]);
 
         $form->handleRequest($request);

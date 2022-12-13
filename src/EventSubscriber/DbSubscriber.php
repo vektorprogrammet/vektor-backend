@@ -42,7 +42,6 @@ class DbSubscriber implements EventSubscriber
 
     /**
      * Returns an array of events this subscriber wants to listen to.
-     *
      */
     public function getSubscribedEvents(): array
     {
@@ -50,7 +49,7 @@ class DbSubscriber implements EventSubscriber
             'prePersist',
             'postPersist',
             'postUpdate',
-            'postRemove'
+            'postRemove',
         ];
     }
 
@@ -93,13 +92,13 @@ class DbSubscriber implements EventSubscriber
         $obj = $args->getObject();
         $className = get_class($obj);
 
-        if (in_array($className, $this->ignoredClasses)) {
+        if (in_array($className, $this->ignoredClasses, true)) {
             return;
         }
 
-        $lastSlashIdx = strrpos($className, "\\");
+        $lastSlashIdx = mb_strrpos($className, '\\');
         if (false !== $lastSlashIdx) {
-            $className = substr($className, $lastSlashIdx + 1);
+            $className = mb_substr($className, $lastSlashIdx + 1);
         }
 
         $objName = $this->getObjectName($obj);
@@ -109,7 +108,7 @@ class DbSubscriber implements EventSubscriber
 
     private function getObjectName($obj)
     {
-        $name = "";
+        $name = '';
         if (method_exists($obj, '__toString')) {
             $name = "*{$obj->__toString()}*";
         }

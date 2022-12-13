@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Mailer\MailerInterface;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
-use Swift_Message;
 use Twig\Environment;
 
 class UserRegistration
@@ -16,7 +15,7 @@ class UserRegistration
     private MailerInterface $mailer;
 
     /**
-     * UserRegistration constructor
+     * UserRegistration constructor.
      */
     public function __construct(Environment $twig, EntityManagerInterface $em, MailerInterface $mailer)
     {
@@ -37,9 +36,9 @@ class UserRegistration
         return $newUserCode;
     }
 
-    public function createActivationEmail(User $user, $newUserCode): Swift_Message
+    public function createActivationEmail(User $user, $newUserCode): \Swift_Message
     {
-        return (new Swift_Message())
+        return (new \Swift_Message())
             ->setSubject('Velkommen til Vektorprogrammet!')
             ->setFrom(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setReplyTo($user->getFieldOfStudy()->getDepartment()->getEmail())

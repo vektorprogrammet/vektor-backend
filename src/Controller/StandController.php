@@ -18,6 +18,7 @@ class StandController extends BaseController
     {
         $this->AdmissionStatistics = $admissionStatistics;
     }
+
     /**
      * @throws NonUniqueResultException
      */
@@ -44,7 +45,6 @@ class StandController extends BaseController
                 ->findByAdmissionPeriod($admissionPeriod);
             $appData = $admissionStatistics->generateGraphDataFromApplicationsInAdmissionPeriod($applicationsInSemester, $admissionPeriod);
         }
-
 
         return $this->render('stand_admin/stand.html.twig', [
             'department' => $department,

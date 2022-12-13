@@ -23,15 +23,16 @@ class GatewayAPI implements SmsSenderInterface
 
     public function send(Sms $sms)
     {
-        if (strlen($sms->getMessage()) > $this->maxLength) {
+        if (mb_strlen($sms->getMessage()) > $this->maxLength) {
             $this->logMessageTooLong($sms);
+
             return;
         }
 
         $data = [
             'token' => $this->apiToken,
             'sender' => $sms->getSender(),
-            'message' => $sms->getMessage()
+            'message' => $sms->getMessage(),
         ];
 
         $recipients = $sms->getRecipients();
@@ -40,7 +41,7 @@ class GatewayAPI implements SmsSenderInterface
             $number = $this->formatPhoneNumber($recipient);
             if ($number !== false) {
                 $data["recipients.$i.msisdn"] = $number;
-                $i++;
+                ++$i;
             } else {
                 $this->logger->alert("Could not send sms to *$recipient*, invalid phone number");
             }
@@ -69,7 +70,7 @@ class GatewayAPI implements SmsSenderInterface
 
     private function logMessageTooLong(Sms $sms)
     {
-        $smsLength = strlen($sms->getMessage());
+        $smsLength = mb_strlen($sms->getMessage());
         $message =
             "Could not send SMS to *{$sms->getRecipientsString()}*: " .
             "Message too long ($smsLength/$this->maxLength characters)\n\n" .
@@ -86,21 +87,21 @@ class GatewayAPI implements SmsSenderInterface
         $number = preg_replace('/\s+/', '', $number);
 
         $startsWithCountryCode =
-            strlen($number) === 8 + strlen($countryCode) &&
+            mb_strlen($number) === 8 + mb_strlen($countryCode) &&
             $this->startsWith($number, $countryCode);
         $startsWithPlusCountryCode =
-            strlen($number) === 9 + strlen($countryCode) &&
+            mb_strlen($number) === 9 + mb_strlen($countryCode) &&
             $this->startsWith($number, "+$countryCode");
 
-        if (strlen($number) === 8) {
+        if (mb_strlen($number) === 8) {
             return $countryCode . $number;
         } elseif ($startsWithCountryCode) {
             return $number;
         } elseif ($startsWithPlusCountryCode) {
-            return substr($number, 1);
-        } else {
-            return false;
+            return mb_substr($number, 1);
         }
+
+        return false;
     }
 
     public function validatePhoneNumber(string $number): bool
@@ -109,20 +110,20 @@ class GatewayAPI implements SmsSenderInterface
         $number = preg_replace('/\s+/', '', $number);
 
         $startsWithCountryCode =
-            strlen($number) === 8 + strlen($countryCode) &&
+            mb_strlen($number) === 8 + mb_strlen($countryCode) &&
             $this->startsWith($number, $countryCode);
         $startsWithPlusCountryCode =
-            strlen($number) === 9 + strlen($countryCode) &&
+            mb_strlen($number) === 9 + mb_strlen($countryCode) &&
             $this->startsWith($number, "+$countryCode");
 
         return
-            strlen($number) === 8 ||
+            mb_strlen($number) === 8 ||
             $startsWithCountryCode ||
             $startsWithPlusCountryCode;
     }
 
     private function startsWith(string $string, string $search)
     {
-        return substr($string, 0, strlen($search)) === $search;
+        return mb_substr($string, 0, mb_strlen($search)) === $search;
     }
 }

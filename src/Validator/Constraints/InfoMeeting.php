@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class InfoMeeting extends Constraint
 {
-    public $message = "Infomøtet må ha en dato for å kunne vises på nettsiden";
+    public $message = 'Infomøtet må ha en dato for å kunne vises på nettsiden';
 
     public function getTargets()
     {

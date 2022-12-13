@@ -29,33 +29,32 @@ class PasswordResetController extends BaseController
     }
 
     /**
-     *
      * @return Response
      *
      * Shows the request new password page
      */
     public function show(Request $request): Response
     {
-        //Creates new PasswordResetType Form
+        // Creates new PasswordResetType Form
         $form = $this->createForm(PasswordResetType::class);
 
         $form->handleRequest($request);
 
-        //Checks if the form is valid
+        // Checks if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
             $passwordReset = $this->passwordManager->createPasswordResetEntity($email);
 
             if ($passwordReset === null) {
-                $errorMsg = "Det finnes ingen brukere med denne e-postadressen";
+                $errorMsg = 'Det finnes ingen brukere med denne e-postadressen';
                 $ending = '@vektorprogrammet.no';
-                if (strlen($email) > strlen($ending) && substr($email, strlen($email) - strlen($ending)) === $ending) {
+                if (mb_strlen($email) > mb_strlen($ending) && mb_substr($email, mb_strlen($email) - mb_strlen($ending)) === $ending) {
                     $errorMsg = 'Kan ikke resette passord med "@vektorprogrammet.no"-adresse. Prøv din private e-post';
                     $this->logService->info("Password reset rejected: Someone tried to reset password with a company email: $email");
                 }
                 $this->requestStack->getSession()->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
             } elseif (!$passwordReset->getUser()->isActive()) {
-                $errorMsg = "Brukeren med denne e-postadressen er deaktivert. Ta kontakt med it@vektorprogrammet.no for å aktivere brukeren din.";
+                $errorMsg = 'Brukeren med denne e-postadressen er deaktivert. Ta kontakt med it@vektorprogrammet.no for å aktivere brukeren din.';
                 $this->requestStack->getSession()->getFlashBag()->add('errorMessage', "<em>$errorMsg</em>");
                 $this->logService->notice("Password reset rejected: Someone tried to reset the password for an inactive account: $email");
             } else {
@@ -75,7 +74,7 @@ class PasswordResetController extends BaseController
                 return $this->redirectToRoute('reset_password_confirmation');
             }
         }
-        //Render reset_password twig with the form.
+        // Render reset_password twig with the form.
         return $this->render('reset_password/reset_password.html.twig', ['form' => $form->createView()]);
     }
 
@@ -85,7 +84,6 @@ class PasswordResetController extends BaseController
     }
 
     /**
-     *
      * @return RedirectResponse|Response
      *
      * This function resets stores the new password when the user goes to the url for resetting the password

@@ -25,6 +25,7 @@ class PasswordResetRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
     public function findUserByResetcode($hashedResetCode)
     {
         return $this->createQueryBuilder('PasswordReset')
@@ -36,11 +37,10 @@ class PasswordResetRepository extends EntityRepository
     }
 
     /**
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @return PasswordReset
      *
+     * @return PasswordReset
      */
     public function findPasswordResetByHashedResetCode($hashedResetCode)
     {

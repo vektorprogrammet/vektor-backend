@@ -10,8 +10,6 @@ class AccessExtension extends AbstractExtension
 {
     private $accessControlService;
 
-    /**
-     */
     public function __construct(AccessControlService $accessControlService)
     {
         $this->accessControlService = $accessControlService;
@@ -30,9 +28,9 @@ class AccessExtension extends AbstractExtension
     /**
      * Checks if the user has access to the resource.
      *
-     *
      * @param null $user
-     * @return boolean True if the user has access to the resource, false otherwise
+     *
+     * @return bool True if the user has access to the resource, false otherwise
      */
     public function hasAccessTo($routes, $user = null): bool
     {

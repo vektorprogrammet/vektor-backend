@@ -15,9 +15,8 @@ class SlackMessenger
     private Logger $logger;
     private bool $disableDelivery;
 
-
     /**
-     * SlackMessenger constructor
+     * SlackMessenger constructor.
      */
     public function __construct(
         NotifierInterface $notifier,
@@ -25,8 +24,7 @@ class SlackMessenger
         string $logChannel,
         bool $disableDelivery,
         Logger $logger
-    )
-    {
+    ) {
         $this->slackClient = $notifier;
         $this->notificationChannel = $notificationChannel;
         $this->logChannel = $logChannel;
@@ -91,7 +89,7 @@ class SlackMessenger
         */
     }
 
-    public function createMessage(): object # previously imported Message
+    public function createMessage(): object // previously imported Message
     {
         /*
         return $this->slackClient->createMessage();

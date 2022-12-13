@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdmissionNotificationRepository")
  * @ORM\Table(name="admission_notification")
- *
  */
 class AdmissionNotification
 {
@@ -42,13 +41,14 @@ class AdmissionNotification
 
     /**
      * @var Department
+     *
      * @ORM\ManyToOne(targetEntity="Department")
      */
     private $department;
 
     public function __construct()
     {
-        $this->timestamp = new DateTime();
+        $this->timestamp = new \DateTime();
         $this->infoMeeting = false;
     }
 
@@ -63,7 +63,7 @@ class AdmissionNotification
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getTimestamp()
     {
@@ -71,7 +71,7 @@ class AdmissionNotification
     }
 
     /**
-     * @param DateTime $timestamp
+     * @param \DateTime $timestamp
      */
     public function setTimestamp($timestamp)
     {
@@ -111,7 +111,7 @@ class AdmissionNotification
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getInfoMeeting()
     {
@@ -119,7 +119,7 @@ class AdmissionNotification
     }
 
     /**
-     * @param boolean $bool
+     * @param bool $bool
      */
     public function setInfoMeeting($bool)
     {
@@ -135,12 +135,12 @@ class AdmissionNotification
     }
 
     /**
-     *
      * @return AdmissionNotification
      */
     public function setDepartment(Department $department)
     {
         $this->department = $department;
+
         return $this;
     }
 }

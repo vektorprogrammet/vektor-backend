@@ -41,9 +41,9 @@ class UserController extends BaseController
         $activeAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($user);
 
         return $this->render('my_page/my_page.html.twig', [
-            "active_application" => $activeApplication,
-            "application_status" => $applicationStatus,
-            "active_assistant_histories" => $activeAssistantHistories
+            'active_application' => $activeApplication,
+            'application_status' => $applicationStatus,
+            'active_assistant_histories' => $activeAssistantHistories,
         ]);
     }
 
@@ -74,7 +74,7 @@ class UserController extends BaseController
                 if ($activeHistory->activeInGroup(1) && $sh->activeInGroup(1) ||
                     $activeHistory->activeInGroup(2) && $sh->activeInGroup(2)) {
                     $partners[] = $sh;
-                    $partnerCount++;
+                    ++$partnerCount;
                 }
             }
             $partnerInformations[] = [
@@ -85,6 +85,7 @@ class UserController extends BaseController
         }
 
         $semester = $this->getCurrentSemester();
+
         return $this->render('user/my_partner.html.twig', [
             'partnerInformations' => $partnerInformations,
             'partnerCount' => $partnerCount,

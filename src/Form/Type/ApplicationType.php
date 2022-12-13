@@ -15,7 +15,7 @@ class ApplicationType extends AbstractType
         $builder
             ->add('user', CreateUserOnApplicationType::class, [
                 'label' => '',
-                'departmentId' => $options['departmentId']
+                'departmentId' => $options['departmentId'],
             ])
         ->add('yearOfStudy', ChoiceType::class, [
             'label' => 'Årstrinn',

@@ -80,9 +80,6 @@ class Signature
         $this->description = $description;
     }
 
-
-    /**
-     */
     public function getAdditionalComment(): ?string
     {
         return $this->additional_comment;
@@ -95,7 +92,6 @@ class Signature
     {
         $this->additional_comment = $additional_comment;
     }
-
 
     /**
      * @return User

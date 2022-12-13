@@ -50,9 +50,9 @@ class AssistantSchedulingController extends BaseController
             $preferredGroup = null;
             switch ($application->getPreferredGroup()) {
                 case 'Bolk 1': $preferredGroup = 1;
-                break;
+                    break;
                 case 'Bolk 2': $preferredGroup = 2;
-                break;
+                    break;
             }
             if ($doublePosition) {
                 $preferredGroup = null;
@@ -104,11 +104,10 @@ class AssistantSchedulingController extends BaseController
 
     /**
      * @param SchoolCapacity[] $schoolCapacities
-     *
      */
     private function generateSchoolsFromSchoolCapacities(array $schoolCapacities): array
     {
-        //Use schoolCapacities to create School objects for the SA-Algorithm
+        // Use schoolCapacities to create School objects for the SA-Algorithm
         $schools = [];
         foreach ($schoolCapacities as $sc) {
             $capacityDays = [];

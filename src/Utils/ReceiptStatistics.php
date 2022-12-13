@@ -3,7 +3,6 @@
 namespace App\Utils;
 
 use App\Entity\Receipt;
-use DateTime;
 
 class ReceiptStatistics
 {
@@ -16,11 +15,10 @@ class ReceiptStatistics
     public function __construct($receipts)
     {
         $this->receipts = $receipts;
-        $this->refundDateImplementationDate = new DateTime('2018-02-16');
+        $this->refundDateImplementationDate = new \DateTime('2018-02-16');
     }
 
     /**
-     *
      * @return float
      */
     public function totalPayoutIn(string $year)
@@ -49,6 +47,7 @@ class ReceiptStatistics
 
         $totalHours = array_reduce($receipts, function (int $carry, Receipt $receipt) {
             $diff = $receipt->getRefundDate()->diff($receipt->getSubmitDate());
+
             return $carry + $diff->days * 24 + $diff->h + $diff->i / 60;
         }, 0);
 

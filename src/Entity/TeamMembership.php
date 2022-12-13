@@ -117,7 +117,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Get user.
-     *
      */
     public function getUser(): User
     {
@@ -147,7 +146,6 @@ class TeamMembership implements TeamMembershipInterface
     {
         return $this->team;
     }
-
 
     /**
      * Set position.
@@ -222,7 +220,6 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     *
      * @return bool
      */
     public function isActiveInSemester(Semester $semester)
@@ -233,7 +230,6 @@ class TeamMembership implements TeamMembershipInterface
         return $semesterStartLaterThanTeamMembership && $semesterEndsBeforeTeamMembership;
     }
 
-
     public function isActive()
     {
         $department = $this->team->getDepartment();
@@ -242,9 +238,6 @@ class TeamMembership implements TeamMembershipInterface
         return $this->isActiveInSemester($activeSemester);
     }
 
-
-    /**
-     */
     public function getTeamName(): string
     {
         if ($this->deletedTeamName !== null) {
@@ -254,22 +247,16 @@ class TeamMembership implements TeamMembershipInterface
         return $this->team->getName();
     }
 
-    /**
-     */
     public function setDeletedTeamName(string $deletedTeamName)
     {
         $this->deletedTeamName = $deletedTeamName;
     }
 
-    /**
-     */
     public function getPositionName(): string
     {
         return $this->position->getName();
     }
 
-    /**
-     */
     public function isTeamLeader(): bool
     {
         return $this->isTeamLeader;
@@ -283,8 +270,6 @@ class TeamMembership implements TeamMembershipInterface
         $this->isTeamLeader = $isTeamLeader;
     }
 
-    /**
-     */
     public function isSuspended(): bool
     {
         return $this->isSuspended;

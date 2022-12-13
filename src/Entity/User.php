@@ -8,7 +8,6 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -25,14 +24,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      message="Denne Eposten er allerede i bruk.",
  *      groups={"create_user", "edit_user"}
  * )
- *
  * @UniqueEntity(
  *      fields={"user_name"},
  *      message="Dette brukernavnet er allerede i bruk.",
  *      groups={"create_user", "username", "edit_user"}
  * )
  */
-class User implements EquatableInterface, UserInterface, Serializable, PasswordAuthenticatedUserInterface
+class User implements EquatableInterface, UserInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -55,6 +53,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * @var FieldOfStudy
+     *
      * @ORM\ManyToOne(targetEntity="FieldOfStudy")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\NotBlank(groups={"admission", "edit_user", "create_user"}, message="Dette feltet kan ikke være tomt.")
@@ -103,7 +102,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     private $email;
 
-
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
      * @Assert\Email
@@ -117,12 +115,10 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     private $isActive;
 
-
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $reservedFromPopUp;
-
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -141,18 +137,21 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * @var AssistantHistory[]
+     *
      * @ORM\OneToMany(targetEntity="AssistantHistory", mappedBy="user")
      */
     private $assistantHistories;
 
     /**
      * @var TeamMembership[]
+     *
      * @ORM\OneToMany(targetEntity="TeamMembership", mappedBy="user")
      */
     private $teamMemberships;
 
     /**
      * @var ExecutiveBoardMembership[]
+     *
      * @ORM\OneToMany(targetEntity="ExecutiveBoardMembership", mappedBy="user")
      */
     private $executiveBoardMemberships;
@@ -172,7 +171,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     private $receipts;
 
-
     public function __construct()
     {
         $this->roles = [];
@@ -182,7 +180,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $this->picture_path = 'images/defaultProfile.png';
         $this->receipts = new ArrayCollection();
         $this->reservedFromPopUp = false;
-        $this->lastPopUpTime = new DateTime("2000-01-01");
+        $this->lastPopUpTime = new \DateTime('2000-01-01');
     }
 
     public function getId(): int
@@ -190,8 +188,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $this->id;
     }
 
-    /**
-     */
     public function getDepartment(): Department
     {
         return $this->getFieldOfStudy()->getDepartment();
@@ -212,11 +208,9 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $this->lastName;
     }
 
-    /**
-     */
     public function getFullName(): string
     {
-        return $this->getFirstName().' '.$this->getLastName();
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 
     public function getEmail(): string
@@ -262,8 +256,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $this->roles = $roles;
     }
 
-    /**
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -273,7 +265,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set lastName.
-     *
      *
      * @return User
      */
@@ -286,7 +277,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set firstName.
-     *
      *
      * @return User
      */
@@ -314,7 +304,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set picture_path.
      *
-     *
      * @return User
      */
     public function setPicturePath(string $picturePath)
@@ -326,7 +315,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Get picture_path.
-     *
      */
     public function getPicturePath(): ?string
     {
@@ -335,7 +323,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set phone.
-     *
      *
      * @return User
      */
@@ -348,7 +335,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Get phone.
-     *
      */
     public function getPhone(): string
     {
@@ -374,7 +360,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set user_name.
      *
-     *
      * @return User
      */
     public function setUserName(string $userName)
@@ -386,7 +371,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Get user_name.
-     *
      */
     public function getUserIdentifier(): string
     {
@@ -398,7 +382,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      * Remove when upgraded to 6.0
      * Required for now because UserInterface has this method.
      * DO NOT use this method. Use "getUserIdentifier()" instead.
-     *
      */
     public function getUsername(): string
     {
@@ -432,7 +415,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Add roles.
      *
-     *
      * @return User
      */
     public function addRole(string $role)
@@ -445,7 +427,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Remove roles.
-     *
      */
     public function removeRole(string $roles)
     {
@@ -454,7 +435,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set new_user_code.
-     *
      *
      * @return User
      */
@@ -497,6 +477,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
                 return true;
             }
         }
+
         return false;
     }
 
@@ -516,7 +497,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Add certificateRequests.
      *
-     *
      * @return User
      */
     public function addCertificateRequest(CertificateRequest $certificateRequests)
@@ -528,7 +508,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Remove certificateRequests.
-     *
      */
     public function removeCertificateRequest(CertificateRequest $certificateRequests)
     {
@@ -593,7 +572,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * @see \Serializable::unserialize(
-     *
      */
     public function unserialize($serialized)
     {
@@ -668,24 +646,22 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $this->receipts->add($receipt);
     }
 
-    /**
-     */
     public function hasPendingReceipts(): bool
     {
         $numberOfPendingReceipts = $this->getNumberOfPendingReceipts();
+
         return $numberOfPendingReceipts !== 0;
     }
 
-    /**
-     */
     public function getNumberOfPendingReceipts(): int
     {
         $num = 0;
         foreach ($this->receipts as $receipt) {
             if ($receipt->getStatus() === Receipt::STATUS_PENDING) {
-                $num++;
+                ++$num;
             }
         }
+
         return $num;
     }
 
@@ -725,15 +701,11 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $totalSum;
     }
 
-    /**
-     */
     public function getCompanyEmail(): ?string
     {
         return $this->companyEmail;
     }
 
-    /**
-     */
     public function setCompanyEmail(string $companyEmail)
     {
         $this->companyEmail = $companyEmail;
@@ -760,6 +732,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
                 }
             }
         }
+
         return $activeExecutiveBoardMemberships;
     }
 
@@ -780,30 +753,23 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $activeTeamMemberships;
     }
 
-
-    /**
-     */
     public function getReservedFromPopUp(): bool
     {
         return $this->reservedFromPopUp;
     }
 
-    /**
-     */
     public function setReservedFromPopUp(bool $reservedFromPopUp): void
     {
         $this->reservedFromPopUp = $reservedFromPopUp;
     }
 
-    /**
-     */
-    public function getLastPopUpTime(): DateTime
+    public function getLastPopUpTime(): \DateTime
     {
         return $this->lastPopUpTime;
     }
 
     /**
-     * @param DateTime $lastPopUpTime
+     * @param \DateTime $lastPopUpTime
      */
     public function setLastPopUpTime($lastPopUpTime): void
     {
@@ -828,10 +794,10 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $teamMemberships = [];
         $boardMemberships = [];
         foreach ($memberships as $membership) {
-            if ($membership->getTeam()->getType() == 'team') {
+            if ($membership->getTeam()->getType() === 'team') {
                 $teamMemberships[] = $membership;
             }
-            if ($membership->getTeam()->getType() == 'executive_board') {
+            if ($membership->getTeam()->getType() === 'executive_board') {
                 $boardMemberships[] = $membership;
             }
         }

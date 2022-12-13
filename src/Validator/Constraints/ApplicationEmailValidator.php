@@ -16,12 +16,11 @@ class ApplicationEmailValidator extends ConstraintValidator
         $this->admissionManager = $admissionManager;
     }
 
-
     /**
      * Checks if the passed value is valid.
      *
      * @param Application $application The value that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param Constraint  $constraint  The constraint for the validation
      */
     public function validate($application, Constraint $constraint)
     {

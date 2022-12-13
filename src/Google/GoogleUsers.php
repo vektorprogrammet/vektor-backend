@@ -3,16 +3,13 @@
 namespace App\Google;
 
 use App\Entity\User;
-use Google_Service_Directory;
-use Google_Service_Directory_User;
-use Google_Service_Directory_UserName;
-use Google_Service_Exception;
 
 class GoogleUsers extends GoogleService
 {
     /**
      * @param null $maxResults
-     * @return Google_Service_Directory_User[]
+     *
+     * @return \Google_Service_Directory_User[]
      */
     public function getUsers($maxResults = null)
     {
@@ -21,7 +18,7 @@ class GoogleUsers extends GoogleService
         }
 
         $client = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $service = new \Google_Service_Directory($client);
 
         $optParams = [
             'customer' => 'my_customer',
@@ -32,8 +29,9 @@ class GoogleUsers extends GoogleService
         }
         try {
             $results = $service->users->listUsers($optParams);
-        } catch (Google_Service_Exception $e) {
-            $this->logServiceException($e, "getUsers()");
+        } catch (\Google_Service_Exception $e) {
+            $this->logServiceException($e, 'getUsers()');
+
             return [];
         }
 
@@ -41,7 +39,7 @@ class GoogleUsers extends GoogleService
     }
 
     /**
-     * @return Google_Service_Directory_User
+     * @return \Google_Service_Directory_User
      */
     public function getUser(string $companyEmail)
     {
@@ -50,20 +48,21 @@ class GoogleUsers extends GoogleService
         }
 
         $client = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $service = new \Google_Service_Directory($client);
 
         try {
             return $service->users->get($companyEmail);
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             if ($e->getCode() !== 404) {
                 $this->logServiceException($e, "getUser('$companyEmail')");
             }
+
             return null;
         }
     }
 
     /**
-     * @return Google_Service_Directory_User
+     * @return \Google_Service_Directory_User
      */
     public function createUser(User $user)
     {
@@ -72,7 +71,7 @@ class GoogleUsers extends GoogleService
         }
 
         $client = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $service = new \Google_Service_Directory($client);
 
         $googleUser = $this->mapApplicationUserToGoogleUser($user);
 
@@ -81,16 +80,17 @@ class GoogleUsers extends GoogleService
 
         try {
             $createdUser = $service->users->insert($googleUser);
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "createUser() for $user");
+
             return null;
         }
+
         return $createdUser;
     }
 
     /**
-     *
-     * @return Google_Service_Directory_User
+     * @return \Google_Service_Directory_User
      */
     public function updateUser(string $userKey, User $user, $suspended = null)
     {
@@ -105,12 +105,13 @@ class GoogleUsers extends GoogleService
         }
 
         $client = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $service = new \Google_Service_Directory($client);
 
         try {
             return $service->users->update($userKey, $googleUser);
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "updateUser() $userKey ($user)");
+
             return null;
         }
     }
@@ -125,24 +126,23 @@ class GoogleUsers extends GoogleService
         }
 
         $client = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $service = new \Google_Service_Directory($client);
         try {
             $service->users->delete($userKey);
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "deleteUser('$userKey')");
         }
     }
 
     /**
-     *
-     * @return Google_Service_Directory_User
+     * @return \Google_Service_Directory_User
      */
     private function mapApplicationUserToGoogleUser(User $user)
     {
-        $googleUser = new Google_Service_Directory_User();
+        $googleUser = new \Google_Service_Directory_User();
         $googleUser->setPrimaryEmail($user->getCompanyEmail());
 
-        $name = new Google_Service_Directory_UserName();
+        $name = new \Google_Service_Directory_UserName();
         $name->setGivenName($user->getFirstName());
         $name->setFamilyName($user->getLastName());
         $name->setFullName($user->getFullName());

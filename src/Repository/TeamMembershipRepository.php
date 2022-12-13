@@ -8,7 +8,6 @@ use App\Entity\Team;
 use App\Entity\TeamMembership;
 use App\Entity\User;
 use App\Utils\SemesterUtil;
-use DateTime;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -20,7 +19,6 @@ use Doctrine\ORM\EntityRepository;
 class TeamMembershipRepository extends EntityRepository
 {
     /**
-     *
      * @return TeamMembership[]
      */
     public function findByTeam(Team $team): array
@@ -31,8 +29,8 @@ class TeamMembershipRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
     /**
-     *
      * @return TeamMembership[]
      */
     public function findByUser(User $user): array
@@ -44,12 +42,13 @@ class TeamMembershipRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
     /**
      * @return TeamMembership[]
      */
     public function findActiveTeamMemberships(): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
 
         $teamMemberships = $this->createQueryBuilder('tm')
             ->select('tm')
@@ -65,7 +64,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     *
      * @return TeamMembership[]
      */
     public function findActiveTeamMembershipsByTeam(Team $team): array
@@ -89,7 +87,7 @@ class TeamMembershipRepository extends EntityRepository
      */
     private function filterOutInactive(array $teamMemberships): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
         $currentSemester = (new Semester())
             ->setYear(SemesterUtil::timeToYear($today))
             ->setSemesterTime(SemesterUtil::timeToSemesterTime($today));
@@ -99,6 +97,7 @@ class TeamMembershipRepository extends EntityRepository
 
     /**
      * @param TeamMembership[] $teamMemberships
+     *
      * @return TeamMembership[]
      */
     public function filterNotInSemester(array $teamMemberships, Semester $semester): array
@@ -108,11 +107,7 @@ class TeamMembershipRepository extends EntityRepository
         });
     }
 
-
-
-
     /**
-     *
      * @return TeamMembership[]
      */
     public function findActiveTeamMembershipsByTeamAndUser(Team $team, User $user): array
@@ -132,7 +127,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     *
      * @return TeamMembership[]
      */
     public function findInactiveTeamMembershipsByTeam(Team $team): array
@@ -144,7 +138,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     *
      * @return TeamMembership[]
      */
     public function findActiveTeamMembershipsByUser(User $user): array
@@ -161,9 +154,7 @@ class TeamMembershipRepository extends EntityRepository
         return $this->filterOutInactive($teamMemberships);
     }
 
-
     /**
-     *
      * @return TeamMembership[]
      */
     public function findTeamMembershipsByUserAndSemester($user, Semester $semester)
@@ -180,9 +171,7 @@ class TeamMembershipRepository extends EntityRepository
         return $this->filterNotInSemester($teamMemberships, $semester);
     }
 
-
     /**
-     *
      * @return TeamMembership[]
      */
     public function findTeamMembershipsByDepartment(Department $department): array

@@ -39,7 +39,7 @@ class ProfilePhotoController extends BaseController
 
         $picturePath = $this->fileUploader->uploadProfileImage($request);
         if (!$picturePath) {
-            return new JsonResponse("Kunne ikke laste inn bildet", 400);
+            return new JsonResponse('Kunne ikke laste inn bildet', 400);
         }
 
         $this->fileUploader->deleteProfileImage($user->getPicturePath());
@@ -47,6 +47,6 @@ class ProfilePhotoController extends BaseController
 
         $this->getDoctrine()->getManager()->flush();
 
-        return new JsonResponse("Upload OK");
+        return new JsonResponse('Upload OK');
     }
 }

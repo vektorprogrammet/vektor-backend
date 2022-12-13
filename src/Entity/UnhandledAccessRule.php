@@ -33,7 +33,6 @@ class UnhandledAccessRule
         $this->method = $method;
     }
 
-
     /**
      * @return int
      */
@@ -76,6 +75,6 @@ class UnhandledAccessRule
 
     public function __toString()
     {
-        return $this->getMethod() . " " . $this->getResource();
+        return $this->getMethod() . ' ' . $this->getResource();
     }
 }

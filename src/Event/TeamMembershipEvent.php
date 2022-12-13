@@ -14,15 +14,11 @@ class TeamMembershipEvent extends Event
 
     private $teamMembership;
 
-    /**
-     */
     public function __construct(TeamMembership $teamMembership)
     {
         $this->teamMembership = $teamMembership;
     }
 
-    /**
-     */
     public function getTeamMembership(): TeamMembership
     {
         return $this->teamMembership;
