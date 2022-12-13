@@ -55,7 +55,7 @@ class DepartmentEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($fieldOfStudies as $study) {
-            if ($fos == $study) {
+            if ($fos === $study) {
                 // Assert the result
                 $this->assertEquals($fos, $study);
             }
@@ -124,7 +124,7 @@ class DepartmentEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($schools as $school) {
-            if ($school1 == $school) {
+            if ($school1 === $school) {
                 // Assert the result
                 $this->assertEquals($school1, $school);
             }
@@ -183,7 +183,7 @@ class DepartmentEntityUnitTest extends TestCase
         $semesters = $department->getAdmissionPeriods();
 
         foreach ($semesters as $semester) {
-            if ($admissionPeriod1 == $semester) {
+            if ($admissionPeriod1 === $semester) {
                 $this->assertEquals($admissionPeriod1, $semester);
             }
         }
@@ -207,7 +207,7 @@ class DepartmentEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($teams as $team) {
-            if ($team1 == $team) {
+            if ($team1 === $team) {
                 // Assert the result
                 $this->assertEquals($team1, $team);
             }

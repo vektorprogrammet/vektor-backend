@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\PasswordReset;
 use App\Entity\User;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class PasswordResetEntityUnitTest extends TestCase
@@ -42,7 +41,7 @@ class PasswordResetEntityUnitTest extends TestCase
         // new entity
         $passwordReset = new PasswordReset();
 
-        $time = new DateTime();
+        $time = new \DateTime();
 
         // Use the setType method
         $passwordReset->setResetTime($time);

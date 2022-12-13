@@ -14,8 +14,6 @@ abstract class BaseWebTestCase extends WebTestCase
     private static $teamLeaderClient;
     private static $adminClient;
 
-
-
     protected static function createAnonymousClient(): KernelBrowser
     {
         if (self::$anonymousClient === null) {

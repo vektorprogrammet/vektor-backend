@@ -14,7 +14,6 @@ use App\Entity\User;
 use App\Service\FilterService;
 use App\Service\Sorter;
 use App\Twig\TeamPositionSortExtension;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class TeamPositionSortExtensionUnitTest extends TestCase
@@ -36,8 +35,8 @@ class TeamPositionSortExtensionUnitTest extends TestCase
         $this->latestAdmissionPeriod = new AdmissionPeriod();
         $this->latestAdmissionPeriod
             ->setSemester($this->activeSemester)
-            ->setStartDate(new DateTime('2013-01-01'))
-            ->setEndDate((new DateTime())->modify('+1day'));
+            ->setStartDate(new \DateTime('2013-01-01'))
+            ->setEndDate((new \DateTime())->modify('+1day'));
     }
 
     public function testExecutiveMembers()

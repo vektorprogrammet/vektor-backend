@@ -63,7 +63,7 @@ class GeoLocationTest extends WebTestCase
     {
         $coords = [
             'lat' => '63.416057',
-            'lon' => '10.408514'
+            'lon' => '10.408514',
         ];
 
         $closestDepartment = $this->geoLocation->findDepartmentClosestTo($coords);

@@ -52,7 +52,7 @@ class SchoolEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($departments as $d) {
-            if ($department1 == $d) {
+            if ($department1 === $d) {
                 // Assert the result
                 $this->assertEquals($department1, $d);
             }

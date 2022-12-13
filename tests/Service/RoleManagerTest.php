@@ -90,8 +90,6 @@ class RoleUserMock
     private $roleBeforeExecution;
     private $roleAfterExecution;
 
-    /**
-     */
     public function __construct($email, $roleBeforeExecution, $roleAfterExecution)
     {
         $this->email = $email;

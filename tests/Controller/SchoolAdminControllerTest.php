@@ -214,7 +214,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         // Assert 200 status code
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-
         $client->request('GET', '/kontrollpanel/skole/1');
 
         // Assert that the response status code is 2xx

@@ -20,8 +20,8 @@ class GatewayApiTest extends TestCase
         $this->gatewayApi = new GatewayAPI([
             'disable_delivery' => true,
             'max_length' => 2000,
-            'api_token' => "SECRET",
-            'country_code' => '47'
+            'api_token' => 'SECRET',
+            'country_code' => '47',
         ], $loggerMock);
     }
 

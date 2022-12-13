@@ -29,8 +29,8 @@ class SemesterEntityUnitTest extends TestCase
         $semesterTime = 'Vår';
         $year = 1980;
 
-        $startMonth = $semesterTime == 'Vår' ? '01' : '08';
-        $expectedDate = date_create($year.'-'.$startMonth.'-01 00:00:00');
+        $startMonth = $semesterTime === 'Vår' ? '01' : '08';
+        $expectedDate = date_create($year . '-' . $startMonth . '-01 00:00:00');
         $semester->setSemesterTime($semesterTime);
         $semester->setYear($year);
 
@@ -43,8 +43,8 @@ class SemesterEntityUnitTest extends TestCase
         $semesterTime = 'Vår';
         $year = 1980;
 
-        $endMonth = $semesterTime == 'Vår' ? '07' : '12';
-        $expectedDate = date_create($year.'-'.$endMonth.'-31 23:59:59');
+        $endMonth = $semesterTime === 'Vår' ? '07' : '12';
+        $expectedDate = date_create($year . '-' . $endMonth . '-31 23:59:59');
         $semester->setSemesterTime($semesterTime);
         $semester->setYear($year);
 
@@ -56,7 +56,6 @@ class SemesterEntityUnitTest extends TestCase
         $semester = (new Semester())
             ->setYear(1980)
             ->setSemesterTime('Vår');
-
 
         /***** ASSERTIONS FOR DIFFERENT YEARS *****/
         // Assert that null is before
@@ -79,7 +78,6 @@ class SemesterEntityUnitTest extends TestCase
                     ->setSemesterTime('Høst')
             )
         );
-
 
         /***** ASSERTIONS FOR EQUAL YEARS *****/
         $year = 1980;
@@ -257,7 +255,6 @@ class SemesterEntityUnitTest extends TestCase
                     ->setSemesterTime('Høst')
             )
         );
-
 
         /***** ASSERTIONS FOR EQUAL YEARS *****/
         $year = 1980;

@@ -29,12 +29,12 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         $crawler = $client->request('GET', '/');
-        return $crawler->filter('nav span:contains("Logg inn")')->count() == 0;
+
+        return $crawler->filter('nav span:contains("Logg inn")')->count() === 0;
     }
 
     /**
-     * Gets a valid unused reset link
-     *
+     * Gets a valid unused reset link.
      *
      * @return bool|string reset link
      */
@@ -50,7 +50,7 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $form = $crawler->selectButton('Tilbakestill passord')->form();
         $form['passwordReset[email]'] = $email;
 
-        //$client = $this->createAnonymousClient();
+        // $client = $this->createAnonymousClient();
         $client->enableProfiler();
         $client->submit($form);
 
@@ -62,10 +62,11 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $body = $message->getBody();
 
         // Get reset link from email
-        $start = strpos($body, '/resetpassord/');
-        $messageStartingWithCode = substr($body, $start);
-        $end = strpos($messageStartingWithCode, "\n");
-        return substr($body, $start, $end);
+        $start = mb_strpos($body, '/resetpassord/');
+        $messageStartingWithCode = mb_substr($body, $start);
+        $end = mb_strpos($messageStartingWithCode, "\n");
+
+        return mb_substr($body, $start, $end);
     }
 
     private function assertNoEmailSent($client)
