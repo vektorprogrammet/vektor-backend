@@ -4,8 +4,6 @@ namespace App\Service;
 
 use App\Entity\Department;
 use Doctrine\ORM\EntityManagerInterface;
-use ErrorException;
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class GeoLocation
@@ -17,7 +15,7 @@ class GeoLocation
     private $ignoredAsns;
 
     /**
-     * GeoLocation constructor
+     * GeoLocation constructor.
      */
     public function __construct(
         string $ipinfoToken,
@@ -25,8 +23,7 @@ class GeoLocation
         EntityManagerInterface $em,
         RequestStack $requestStack,
         LogService $logger
-    )
-    {
+    ) {
         $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);
         $this->requestStack = $requestStack;
@@ -36,12 +33,13 @@ class GeoLocation
 
     /**
      * @param Department[] $departments
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     public function findNearestDepartment(array $departments): Department
     {
         if (empty($departments)) {
-            throw new InvalidArgumentException('$departments cannot be empty');
+            throw new \InvalidArgumentException('$departments cannot be empty');
         }
 
         return $this->sortDepartmentsByDistanceFromClient($departments)[0];
@@ -75,11 +73,13 @@ class GeoLocation
     public function findCoordinatesOfCurrentRequest()
     {
         $ip = $this->clientIp();
+
         return $this->findCoordinates($ip);
     }
 
     /**
      * @param Department[] $departments
+     *
      * @return Department[] $departments
      */
     public function sortDepartmentsByDistanceFromClient(array $departments): array
@@ -133,16 +133,18 @@ class GeoLocation
         try {
             $rawResponse = file_get_contents("https://ipinfo.io/$ip?token={$this->ipinfoToken}");
             $response = json_decode($rawResponse, true);
-        } catch (ErrorException $e) {
+        } catch (\ErrorException $e) {
             $this->logger->warning("Could not get location from 
             ipinfo.io. The page returned an error.\nError:\n
             {$e->getMessage()}");
+
             return null;
         }
 
         if (!isset($response['org'])) {
             $this->logger->warning("Could not get org from 
             ipinfo.io.\nResponse:\n$rawResponse");
+
             return null;
         }
         if ($this->ipIsFromAnIgnoredAsn($response)) {
@@ -151,6 +153,7 @@ class GeoLocation
         if (!isset($response['loc'])) {
             $this->logger->warning("Could not get location from 
             ipinfo.io.\nResponse:\n$rawResponse");
+
             return null;
         }
 
@@ -158,12 +161,13 @@ class GeoLocation
         if (count($coords) !== 2) {
             $this->logger->warning("Could not find lat/lon in location 
                 object. \nLocation:\n$response");
+
             return null;
         }
 
         $coords = [
             'lat' => $coords[0],
-            'lon' => $coords[1]
+            'lon' => $coords[1],
         ];
 
         $this->requestStack->getSession()->set('coords', $coords);
@@ -177,6 +181,7 @@ class GeoLocation
         $dist = sin(deg2rad($fromLat)) * sin(deg2rad($toLat)) + cos(deg2rad($fromLat)) * cos(deg2rad($toLat)) * cos(deg2rad($theta));
         $dist = acos($dist);
         $dist = rad2deg($dist);
+
         return $dist * 60 * 1.1515 * 1609.344;
     }
 
@@ -196,6 +201,7 @@ class GeoLocation
         } elseif ($request->server->get('REMOTE_ADDR') !== null) {
             return $request->server->get('REMOTE_ADDR');
         }
+
         return null;
     }
 
@@ -206,7 +212,7 @@ class GeoLocation
         }
 
         foreach ($this->ignoredAsns as $asn) {
-            if (strpos($response['org'], $asn) !== false) {
+            if (mb_strpos($response['org'], $asn) !== false) {
                 return true;
             }
         }

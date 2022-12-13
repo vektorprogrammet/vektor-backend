@@ -19,6 +19,7 @@ class ApplicationStatisticsController extends BaseController
         $this->AssistantHistoryData = $assistantHistoryData;
         $this->ApplicationData = $applicationData;
     }
+
     /**
      * @throws NonUniqueResultException
      */

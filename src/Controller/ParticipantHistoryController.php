@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ParticipantHistoryController extends BaseController
 {
-    /**
-     */
     public function show(Request $request): ?Response
     {
         $department = $this->getDepartmentOrThrow404($request);

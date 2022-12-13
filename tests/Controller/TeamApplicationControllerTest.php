@@ -22,7 +22,7 @@ class TeamApplicationControllerTest extends BaseWebTestCase
     {
         $crawler = $this->adminGoTo('/kontrollpanel/team/applications/1');
 
-        //Assert that we have the correct page
+        // Assert that we have the correct page
         $this->assertEquals(1, $crawler->filter('h2:contains("Søknader Styret")')->count());
     }
 
@@ -36,7 +36,7 @@ class TeamApplicationControllerTest extends BaseWebTestCase
         $link = $crawler->selectLink('Arnt Erik')->eq(0)->link();
         $crawler = $client->click($link);
 
-        //Assert that we have the correct page
+        // Assert that we have the correct page
         $this->assertEquals(1, $crawler->filter('h3:contains("Søknad til Styret fra ")')->count());
     }
 

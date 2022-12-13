@@ -9,11 +9,10 @@ use Doctrine\ORM\NoResultException;
 class RoleRepository extends EntityRepository
 {
     /**
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @return string
      *
+     * @return string
      */
     public function findByRoleName(string $roleName): Role
     {

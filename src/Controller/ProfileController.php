@@ -43,8 +43,7 @@ class ProfileController extends BaseController
         EventDispatcherInterface $eventDispatcher,
         TokenStorageInterface $tokenStorage,
         RequestStack $requestStack
-    )
-    {
+    ) {
         $this->RoleManager = $roleManager;
         $this->logService = $logService;
         $this->eventDispatcher = $eventDispatcher;
@@ -170,7 +169,7 @@ class ProfileController extends BaseController
         $roleManager = $this->RoleManager;
         $roleName = $roleManager->mapAliasToRole($request->request->get('role'));
 
-        if (! $roleManager->loggedInUserCanChangeRoleOfUsersWithRole($user, $roleName)) {
+        if (!$roleManager->loggedInUserCanChangeRoleOfUsersWithRole($user, $roleName)) {
             throw new BadRequestHttpException();
         }
 
@@ -182,7 +181,7 @@ class ProfileController extends BaseController
             $em->flush();
 
             $response['success'] = true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $response['success'] = false;
 
             $response['cause'] = 'Kunne ikke endre rettighetsnivå'; // if you want to see the exception message.
@@ -226,12 +225,12 @@ class ProfileController extends BaseController
         ]);
         $options = new Options();
         $options->setIsRemoteEnabled(true);
-        $options->setChroot("/../");
+        $options->setChroot('/../');
 
         $dompdf = new Dompdf($options);
         $dompdf->setPaper('A4');
 
-        $html = preg_replace('/>\s+</', "><", $html);
+        $html = preg_replace('/>\s+</', '><', $html);
         $dompdf->loadHtml($html);
 
         $dompdf->render();

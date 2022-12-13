@@ -47,7 +47,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     *
      * @return User[]
      */
     public function findUsersWithAssistantHistoryInDepartmentAndSemester(Department $department, Semester $semester)
@@ -137,9 +136,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
+     *
      * @return User
      */
     public function findUserByUsername($username)
@@ -153,9 +152,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
+     *
      * @return User
      */
     public function findByUsernameOrEmail($login)
@@ -173,10 +172,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     *
      * @throws NonUniqueResultException
-     * @return User
      *
+     * @return User
      */
     public function findUserByEmail($email)
     {
@@ -199,10 +197,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     *
      * @throws NonUniqueResultException
-     * @return User
      *
+     * @return User
      */
     public function findUserByNewUserCode($id)
     {
@@ -257,12 +254,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
-            throw new UnsupportedUserException(
-                sprintf(
-                    'Instances of "%s" are not supported.',
-                    $class
-                )
-            );
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
         }
 
         return $this->find($user->getId());

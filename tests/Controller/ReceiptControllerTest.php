@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ReceiptControllerTest extends BaseWebTestCase
 {
     /**
-     * @var array $imagePaths
+     * @var array
      */
     private $imagePaths;
 
@@ -39,7 +39,7 @@ class ReceiptControllerTest extends BaseWebTestCase
 
         // Use image 'kvittering.jpg' as the new image
         $photo = new UploadedFile(
-            __DIR__.'/../Fixtures/kvittering.jpg',
+            __DIR__ . '/../Fixtures/kvittering.jpg',
             'kvittering.jpg'
         );
 
@@ -93,7 +93,7 @@ class ReceiptControllerTest extends BaseWebTestCase
 
         // Use image 'kvittering.jpg' as the new image
         $photo = new UploadedFile(
-            __DIR__.'/../Fixtures/kvittering.jpg',
+            __DIR__ . '/../Fixtures/kvittering.jpg',
             'kvittering.jpg'
         );
 
@@ -220,7 +220,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         $finder = new Finder();
         $finder->files()->in('images/receipts');
         foreach ($finder as $file) {
-            $fileIsNew = !in_array($file->getRealPath(), $this->imagePaths);
+            $fileIsNew = !in_array($file->getRealPath(), $this->imagePaths, true);
             if ($fileIsNew) {
                 unlink($file);
             }

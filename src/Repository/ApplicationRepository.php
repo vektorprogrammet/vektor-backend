@@ -19,8 +19,8 @@ use Doctrine\ORM\NonUniqueResultException;
 class ApplicationRepository extends EntityRepository
 {
     /**
-     *
      * @throws NonUniqueResultException
+     *
      * @return Application|null
      */
     public function findByUserInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod)
@@ -36,10 +36,9 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
-     * @return Application|null
      *
+     * @return Application|null
      */
     public function findActiveByUser(User $user)
     {
@@ -50,7 +49,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return array
      */
     public function findEmailsByAdmissionPeriod(AdmissionPeriod $admissionPeriod)
@@ -64,7 +62,7 @@ class ApplicationRepository extends EntityRepository
             ->getArrayResult();
 
         return array_map(function ($row) {
-            return $row["email"];
+            return $row['email'];
         }, $res);
     }
 
@@ -160,7 +158,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Application[]
      */
     public function findAssignedByUserAndAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod)
@@ -180,7 +177,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Application[]
      */
     public function findCancelledApplicants(AdmissionPeriod $admissionPeriod)
@@ -232,7 +228,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return array
      */
     public function findNewApplicationsByAdmissionPeriod(AdmissionPeriod $admissionPeriod)
@@ -250,7 +245,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Application[]
      */
     public function findExistingApplicants(AdmissionPeriod $admissionPeriod)
@@ -266,7 +260,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return array
      */
     public function findApplicationByTeamInterestAndAdmissionPeriod(AdmissionPeriod $admissionPeriod)
@@ -302,7 +295,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return int
      */
     public function numOfApplications(AdmissionPeriod $admissionPeriod)
@@ -334,7 +326,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return int
      */
     public function numOfPreviousParticipation(AdmissionPeriod $admissionPeriod)
@@ -396,7 +387,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Application[]
      */
     public function findAllAllocatableApplicationsByAdmissionPeriod(AdmissionPeriod $admissionPeriod)
@@ -412,7 +402,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Application[]
      */
     public function findSubstitutesByAdmissionPeriod(AdmissionPeriod $admissionPeriod)
@@ -427,7 +416,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Application[]
      */
     public function findByDepartment(Department $department)
@@ -442,7 +430,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Application[]
      */
     public function findByAdmissionPeriod(AdmissionPeriod $admissionPeriod)

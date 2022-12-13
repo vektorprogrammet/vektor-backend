@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,6 +28,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
 
     /**
      * @var ExecutiveBoard
+     *
      * @ORM\ManyToOne(targetEntity="ExecutiveBoard", inversedBy="boardMemberships")
      **/
     private $board;
@@ -42,6 +42,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
 
     /**
      * @var Semester
+     *
      * @ORM\ManyToOne(targetEntity="Semester")
      * @Assert\Valid
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
@@ -50,6 +51,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
 
     /**
      * @var Semester
+     *
      * @ORM\ManyToOne(targetEntity="Semester")
      * @Assert\Valid
      */
@@ -94,7 +96,6 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
 
     /**
      * Get user.
-     *
      */
     public function getUser(): User
     {
@@ -126,7 +127,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     }
 
     /**
-     * @return string | null
+     * @return string|null
      */
     public function getPositionName()
     {
@@ -141,6 +142,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     public function setPositionName($positionName)
     {
         $this->positionName = $positionName;
+
         return $this;
     }
 
@@ -152,6 +154,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     public function setStartSemester(Semester $semester = null)
     {
         $this->startSemester = $semester;
+
         return $this;
     }
 
@@ -171,11 +174,12 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     public function setEndSemester(Semester $semester = null)
     {
         $this->endSemester = $semester;
+
         return $this;
     }
 
     /**
-     * @return Semester | null
+     * @return Semester|null
      */
     public function getEndSemester()
     {
@@ -184,9 +188,10 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
 
     public function isActive()
     {
-        $now = new DateTime();
+        $now = new \DateTime();
         $termEndsInFuture = $this->endSemester === null || $this->endSemester->getEndDate() > $now;
         $termStartedInPast = $this->startSemester !== null && $this->startSemester->getStartDate() < $now;
+
         return $termEndsInFuture && $termStartedInPast;
     }
 

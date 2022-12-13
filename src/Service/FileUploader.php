@@ -16,15 +16,14 @@ class FileUploader
     private string $profilePhotoFolder;
 
     /**
-     * FileUploader constructor
+     * FileUploader constructor.
      */
     public function __construct(
         string $signatureFolder,
         string $logoFolder,
         string $receiptFolder,
         string $profilePhotoFolder
-    )
-    {
+    ) {
         $this->signatureFolder = $signatureFolder;
         $this->logoFolder = $logoFolder;
         $this->receiptFolder = $receiptFolder;
@@ -32,53 +31,47 @@ class FileUploader
     }
 
     /**
-     *
      * @return string absolute file path
      */
     public function uploadSponsor(Request $request): string
     {
         $file = $this->getAndVerifyFile($request, ['image/*']);
+
         return $this->uploadFile($file, $this->logoFolder);
     }
 
     /**
-     *
      * @return string absolute file path
      */
     public function uploadSignature(Request $request): string
     {
         $file = $this->getAndVerifyFile($request, ['image/*']);
+
         return $this->uploadFile($file, $this->signatureFolder);
     }
 
-
-    /**
-     *
-     */
     public function uploadReceipt(Request $request): string
     {
         $file = $this->getAndVerifyFile($request, ['image/*', 'application/pdf']);
+
         return $this->uploadFile($file, $this->receiptFolder);
     }
 
-    /**
- */
     public function uploadProfileImage(Request $request): string
     {
         $file = $this->getAndVerifyFile($request, ['image/*']);
 
         $mimeType = $file->getMimeType();
         $fileType = explode('/', $mimeType)[0];
-        if ($fileType === 'image' || $mimeType === "application/pdf") {
+        if ($fileType === 'image' || $mimeType === 'application/pdf') {
             return $this->uploadFile($file, $this->profilePhotoFolder);
-        } else {
-            throw new BadRequestHttpException('Filtypen må være et bilde eller PDF.');
         }
+        throw new BadRequestHttpException('Filtypen må være et bilde eller PDF.');
     }
-
 
     /**
      * @param null $id
+     *
      * @return false|mixed
      */
     public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id = null)
@@ -96,7 +89,7 @@ class FileUploader
             $validSubType = explode('/', $valid_mime_type)[1];
 
             if ($fileType === $validType &&
-                ($fileSubType === $validSubType || $validSubType === "*")) {
+                ($fileSubType === $validSubType || $validSubType === '*')) {
                 return $file;
             }
         }
@@ -105,7 +98,6 @@ class FileUploader
     }
 
     /**
-     *
      * @return string absolute file path
      */
     public function uploadFile(UploadedFile $file, string $targetFolder): string
@@ -123,7 +115,7 @@ class FileUploader
             $originalFileName = $file->getClientOriginalName();
             $relativePath = $this->getRelativePath($targetFolder, $fileName);
 
-            throw new UploadException('Could not copy the file '.$originalFileName.' to '.$relativePath);
+            throw new UploadException('Could not copy the file ' . $originalFileName . ' to ' . $relativePath);
         }
 
         return $this->getAbsolutePath($targetFolder, $fileName);
@@ -173,7 +165,7 @@ class FileUploader
     {
         if (file_exists($path)) {
             if (!unlink($path)) {
-                throw new FileException('Could not remove file '.$path);
+                throw new FileException('Could not remove file ' . $path);
             }
         }
     }
@@ -192,7 +184,7 @@ class FileUploader
 
     private function generateRandomFileNameWithExtension(string $fileExtension): string
     {
-        return uniqid().'.'.$fileExtension;
+        return uniqid() . '.' . $fileExtension;
     }
 
     private function getRelativePath(string $targetDir, string $fileName): string
@@ -206,7 +198,7 @@ class FileUploader
         $absoluteTargetDir = preg_replace('/\.+\/|\/\//i', '', $targetDir);
 
         if ($absoluteTargetDir[0] !== '/') {
-            $absoluteTargetDir = '/'.$absoluteTargetDir;
+            $absoluteTargetDir = '/' . $absoluteTargetDir;
         }
 
         return "$absoluteTargetDir/$fileName";
@@ -214,6 +206,6 @@ class FileUploader
 
     private function getFileNameFromPath(string $path)
     {
-        return substr($path, strrpos($path, '/') + 1);
+        return mb_substr($path, mb_strrpos($path, '/') + 1);
     }
 }

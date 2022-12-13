@@ -14,7 +14,7 @@ class InterviewNotificationManager
     private RouterInterface $router;
 
     /**
-     * InterviewNotificationManager constructor
+     * InterviewNotificationManager constructor.
      */
     public function __construct(SlackMessenger $slackMessenger, ApplicationData $applicationData, RouterInterface $router)
     {
@@ -49,18 +49,18 @@ class InterviewNotificationManager
         $this->slackMessenger->notify("$department har fullført alle sine *{$this->applicationData->getTotalInterviewsCount()}* intervjuer! :tada:");
 
         $this->slackMessenger->notify(
-            "```\n".
-            "Antall søkere: {$this->applicationData->getApplicationCount()}\n".
-            "Tidligere assistenter: {$this->applicationData->getPreviousParticipationCount()}\n".
-            "Intervjuer fullført: {$this->applicationData->getInterviewedAssistantsCount()}\n".
-            "Kansellerte intervjuer: {$this->applicationData->getCancelledInterviewsCount()}\n".
-            "Kjønn: {$this->applicationData->getMaleCount()} menn ({$this->applicationData->getMalePercentage()}%), ".
-            "{$this->applicationData->getFemaleCount()} damer ({$this->applicationData->getFemalePercentage()}%)\n".
+            "```\n" .
+            "Antall søkere: {$this->applicationData->getApplicationCount()}\n" .
+            "Tidligere assistenter: {$this->applicationData->getPreviousParticipationCount()}\n" .
+            "Intervjuer fullført: {$this->applicationData->getInterviewedAssistantsCount()}\n" .
+            "Kansellerte intervjuer: {$this->applicationData->getCancelledInterviewsCount()}\n" .
+            "Kjønn: {$this->applicationData->getMaleCount()} menn ({$this->applicationData->getMalePercentage()}%), " .
+            "{$this->applicationData->getFemaleCount()} damer ({$this->applicationData->getFemalePercentage()}%)\n" .
             '```'
         );
 
         $this->slackMessenger->notify(
-            'Se alle intervjuene her: '.$this->router->generate(
+            'Se alle intervjuene her: ' . $this->router->generate(
                 'applications_show_interviewed',
                 [
                     'department' => $department->getId(),

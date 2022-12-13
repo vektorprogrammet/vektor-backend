@@ -23,8 +23,6 @@ class TeamEvent extends Event
         $this->oldTeamEmail = $oldTeamEmail;
     }
 
-    /**
-     */
     public function getTeam(): Team
     {
         return $this->team;

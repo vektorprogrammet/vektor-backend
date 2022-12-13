@@ -44,13 +44,13 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 
         for ($i = 0; $i < 10; ++$i) {
             $school = new School();
-            $school->setName('Skole '.$i);
-            $school->setContactPerson('Kontaktperson '.$i);
+            $school->setName('Skole ' . $i);
+            $school->setContactPerson('Kontaktperson ' . $i);
             $school->setEmail('skole@mail.com');
             $school->setPhone('12345678');
             $school->setInternational(false);
             $manager->persist($school);
-            $this->addReference('school-0'.$i, $school);
+            $this->addReference('school-0' . $i, $school);
         }
 
         $manager->flush();

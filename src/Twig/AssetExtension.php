@@ -19,7 +19,6 @@ class AssetExtension extends AbstractExtension
 
     /**
      * AssetExtension constructor.
-     *
      */
     public function __construct(Packages $packages, KernelInterface $appKernel)
     {
@@ -50,14 +49,14 @@ class AssetExtension extends AbstractExtension
      */
     public function getAssetUrl($path, $packageName = null)
     {
-        if (strlen($path) === 0) {
+        if (mb_strlen($path) === 0) {
             return $path;
         }
 
         if ($path[0] !== '/') {
             $path = "/$path";
         }
-        $filePath = $this->rootDir."/web$path";
+        $filePath = $this->rootDir . "/web$path";
 
         $version = '';
         if (file_exists($filePath)) {
@@ -65,8 +64,8 @@ class AssetExtension extends AbstractExtension
         }
 
         $url = $this->packages->getUrl($path, $packageName);
-        if (strlen($version) > 0) {
-            $url .= '?v='.$version;
+        if (mb_strlen($version) > 0) {
+            $url .= '?v=' . $version;
         }
 
         return $url;

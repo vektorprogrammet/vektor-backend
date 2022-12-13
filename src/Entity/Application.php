@@ -23,6 +23,7 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @var AdmissionPeriod
+     *
      * @ORM\ManyToOne(targetEntity="AdmissionPeriod")
      */
     private $admissionPeriod;
@@ -35,30 +36,35 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $monday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $tuesday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $wednesday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $thursday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $friday;
@@ -131,6 +137,7 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @var Interview
+     *
      * @ORM\OneToOne(targetEntity="Interview", cascade={"persist", "remove"}, inversedBy="application")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      * @Assert\Valid
@@ -149,8 +156,8 @@ class Application implements DepartmentSemesterInterface
      */
     public function __construct()
     {
-        $this->last_edited = new DateTime();
-        $this->created = new DateTime();
+        $this->last_edited = new \DateTime();
+        $this->created = new \DateTime();
         $this->substitute = false;
         $this->doublePosition = false;
         $this->previousParticipation = false;
@@ -189,6 +196,7 @@ class Application implements DepartmentSemesterInterface
     public function setAdmissionPeriod($admissionPeriod)
     {
         $this->admissionPeriod = $admissionPeriod;
+
         return $this;
     }
 
@@ -208,76 +216,55 @@ class Application implements DepartmentSemesterInterface
         $this->yearOfStudy = $yearOfStudy;
     }
 
-    /**
-     */
     public function isMonday(): bool
     {
         return $this->monday;
     }
 
-    /**
-     */
     public function setMonday(bool $monday)
     {
         $this->monday = $monday;
     }
 
-    /**
-     */
     public function isTuesday(): bool
     {
         return $this->tuesday;
     }
 
-    /**
-     */
     public function setTuesday(bool $tuesday)
     {
         $this->tuesday = $tuesday;
     }
 
-    /**
-     */
     public function isWednesday(): bool
     {
         return $this->wednesday;
     }
 
-    /**
-     */
     public function setWednesday(bool $wednesday)
     {
         $this->wednesday = $wednesday;
     }
 
-    /**
-     */
     public function isThursday(): bool
     {
         return $this->thursday;
     }
 
-    /**
-     */
     public function setThursday(bool $thursday)
     {
         $this->thursday = $thursday;
     }
 
-    /**
-     */
     public function isFriday(): bool
     {
         return $this->friday;
     }
 
-    /**
-     */
     public function setFriday(bool $friday)
     {
         $this->friday = $friday;
     }
-
 
     /**
      * @return string
@@ -344,7 +331,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastEdited()
     {
@@ -352,7 +339,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param DateTime $last_edited
+     * @param \DateTime $last_edited
      */
     public function setLastEdited($last_edited)
     {
@@ -360,7 +347,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -368,7 +355,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param DateTime $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
@@ -475,15 +462,11 @@ class Application implements DepartmentSemesterInterface
         $this->specialNeeds = $specialNeeds;
     }
 
-    /**
-     */
     public function getPreferredSchool()
     {
         return $this->preferredSchool;
     }
 
-    /**
-     */
     public function setPreferredSchool($preferredSchool): void
     {
         $this->preferredSchool = $preferredSchool;

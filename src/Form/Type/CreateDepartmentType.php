@@ -25,27 +25,27 @@ class CreateDepartmentType extends AbstractType
             ])
             ->add('address', TextType::class, [
                 'label' => 'Adresse:',
-                'required' => false
+                'required' => false,
             ])
             ->add('city', TextType::class, [
                 'label' => 'By',
             ])
             ->add('latitude', TextType::class, [
                 'label' => 'Latitude',
-                'required' => false
+                'required' => false,
             ])
             ->add('longitude', TextType::class, [
                 'label' => 'Longitude',
-                'required' => false
+                'required' => false,
             ])
             ->add('slackChannel', TextType::class, [
                 'label' => 'Privat Slack Channel',
                 'required' => false,
-                'attr' => ['placeholder' => 'eks. #styret_REGION']
+                'attr' => ['placeholder' => 'eks. #styret_REGION'],
             ])
             ->add('active', CheckboxType::class, [
                 'label' => 'Aktiv?',
-                'required' => false
+                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Opprett',

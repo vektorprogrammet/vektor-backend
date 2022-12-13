@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 class SchoolCapacityController extends BaseController
 {
     /**
-     *
      * @return RedirectResponse|Response
      */
     public function create(Request $request)

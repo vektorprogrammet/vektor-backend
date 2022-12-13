@@ -10,8 +10,6 @@ class RouteDisplayExtension extends AbstractExtension
 {
     private $router;
 
-    /**
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -29,8 +27,6 @@ class RouteDisplayExtension extends AbstractExtension
 
     /**
      * Gets the path of the given route name.
-     *
-     *
      *
      * @return string The path of the route
      */

@@ -14,7 +14,7 @@ class TeamMembershipService
     private EventDispatcherInterface $dispatcher;
 
     /**
-     * TeamMembershipService constructor
+     * TeamMembershipService constructor.
      */
     public function __construct(EntityManagerInterface $em, EventDispatcherInterface $dispatcher)
     {
@@ -36,6 +36,7 @@ class TeamMembershipService
             }
         }
         $this->em->flush();
+
         return $teamMemberships;
     }
 }

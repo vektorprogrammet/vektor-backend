@@ -23,14 +23,14 @@ class TeamInterestEntityUnitTest extends TestCase
 
     public function testSetName()
     {
-        $this->teamInterest->setName("test");
-        $this->assertEquals("test", $this->teamInterest->getName());
+        $this->teamInterest->setName('test');
+        $this->assertEquals('test', $this->teamInterest->getName());
     }
 
     public function testSetEmail()
     {
-        $this->teamInterest->setEmail("test@test.com");
-        $this->assertEquals("test@test.com", $this->teamInterest->getEmail());
+        $this->teamInterest->setEmail('test@test.com');
+        $this->assertEquals('test@test.com', $this->teamInterest->getEmail());
     }
 
     public function testSetPotentialTeams()

@@ -27,19 +27,19 @@ class SupportTicketType extends AbstractType
         $builder->add('name', TextType::class, [
             'label' => 'Ditt navn',
             'attr' => [
-                'autocomplete' => 'name'
+                'autocomplete' => 'name',
             ],
             ]);
         $builder->add('email', EmailType::class, [
             'label' => 'Din e-post',
             'attr' => [
-                'autocomplete' => 'email'
+                'autocomplete' => 'email',
             ],
             ]);
         $builder->add('subject', TextType::class, [
-            'label' => 'Emne']);
+            'label' => 'Emne', ]);
         $builder->add('department', HiddenType::class, [
-            'label' => false]);
+            'label' => false, ]);
         $builder->add('body', TextareaType::class, [
             'label' => 'Melding',
             'attr' => [
@@ -50,14 +50,14 @@ class SupportTicketType extends AbstractType
             'label' => false,
             'mapped' => false,
             'constraints' => [
-                new RecaptchaTrue()
-            ]
+                new RecaptchaTrue(),
+            ],
         ]);
         $builder->add('submit', SubmitType::class, [
             'label' => 'Send melding',
             'attr' => [
-                'class' => 'btn-primary'
-            ]]);
+                'class' => 'btn-primary',
+            ], ]);
 
         $builder->get('department')
             ->addModelTransformer(new CallbackTransformer(
@@ -74,7 +74,7 @@ class SupportTicketType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'App\Entity\SupportTicket',
-            'department_repository' => null
+            'department_repository' => null,
         ]);
     }
 

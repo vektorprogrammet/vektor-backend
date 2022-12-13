@@ -13,14 +13,13 @@ class LoginManager
     private RouterInterface $router;
 
     /**
-     * LoginManager constructor
+     * LoginManager constructor.
      */
     public function __construct(
         Environment $twig,
         AuthenticationUtils $authenticationUtils,
         RouterInterface $router
-    )
-    {
+    ) {
         $this->twig = $twig;
         $this->authenticationUtils = $authenticationUtils;
         $this->router = $router;

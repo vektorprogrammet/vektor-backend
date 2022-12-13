@@ -70,7 +70,7 @@ class MailingListControllerTest extends BaseWebTestCase
          * (1) Generate email list for type
          *     $type can be among these strings: [Assistent, Team, Alle]
          * (2) Count number of "@"s (implicit: number of email addresses)
-         * (3) Return number
+         * (3) Return number.
          */
 
         // Generate email list
@@ -83,7 +83,7 @@ class MailingListControllerTest extends BaseWebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // Count "@"s and return number
-        return substr_count($crawler->filter('pre')->text(), '@');
+        return mb_substr_count($crawler->filter('pre')->text(), '@');
     }
 
     protected function tearDown(): void

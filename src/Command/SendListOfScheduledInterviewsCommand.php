@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendListOfScheduledInterviewsCommand extends Command
 {
-    #TODO: Use dependency-injection for dependencies
+    // TODO: Use dependency-injection for dependencies
     private InterviewManager $interviewManager;
     private EntityManagerInterface $em;
 
@@ -47,6 +47,7 @@ class SendListOfScheduledInterviewsCommand extends Command
                 $this->interviewManager->sendInterviewScheduleToInterviewer($interviewer);
             }
         }
+
         return Command::SUCCESS;
     }
 }

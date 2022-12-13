@@ -8,10 +8,7 @@ use App\Entity\AdmissionSubscriber;
 use App\Entity\Application;
 use App\Entity\Department;
 use App\Entity\Semester;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -24,7 +21,7 @@ class AdmissionNotifier
     private int $sendLimit;
 
     /**
-     * AdmissionNotifier constructor
+     * AdmissionNotifier constructor.
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -32,8 +29,7 @@ class AdmissionNotifier
         LoggerInterface $logger,
         ValidatorInterface $validator,
         int $sendLimit
-    )
-    {
+    ) {
         $this->em = $em;
         $this->emailSender = $emailSender;
         $this->logger = $logger;
@@ -43,8 +39,7 @@ class AdmissionNotifier
     }
 
     /**
-     *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function createSubscription(Department $department, string $email, bool $infoMeeting = false, bool $fromApplication = false)
     {
@@ -61,7 +56,7 @@ class AdmissionNotifier
 
         $errors = $this->validator->validate($subscriber);
         if (count($errors) > 0) {
-            throw new InvalidArgumentException((string) $errors);
+            throw new \InvalidArgumentException((string) $errors);
         }
 
         $this->em->persist($subscriber);
@@ -87,27 +82,25 @@ class AdmissionNotifier
                     if ($notificationsSent >= $this->sendLimit) {
                         break;
                     }
-                    $hasApplied = array_search($subscriber->getEmail(), $applicationEmails) !== false;
-                    $alreadyNotified = array_search($subscriber->getEmail(), $notificationEmails) !== false;
-                    $subscribedMoreThanOneYearAgo = $subscriber->getTimestamp()->diff(new DateTime())->y >= 1;
+                    $hasApplied = array_search($subscriber->getEmail(), $applicationEmails, true) !== false;
+                    $alreadyNotified = array_search($subscriber->getEmail(), $notificationEmails, true) !== false;
+                    $subscribedMoreThanOneYearAgo = $subscriber->getTimestamp()->diff(new \DateTime())->y >= 1;
                     if ($hasApplied || $alreadyNotified || $subscribedMoreThanOneYearAgo) {
                         continue;
                     }
 
                     $this->sendAdmissionNotification($subscriber, $semester, $department);
-                    $notificationsSent++;
+                    ++$notificationsSent;
                 }
                 if ($notificationsSent > 0) {
-                    $this->logger->info("*$notificationsSent* admission notification emails sent to subscribers in *" . $department->getCity() . "*");
+                    $this->logger->info("*$notificationsSent* admission notification emails sent to subscribers in *" . $department->getCity() . '*');
                 }
             }
-        } catch (Exception $e) {
-            $this->logger->critical("Failed to send admission notification:\n".$e->getMessage());
+        } catch (\Exception $e) {
+            $this->logger->critical("Failed to send admission notification:\n" . $e->getMessage());
         }
     }
 
-    /**
-     */
     private function sendAdmissionNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
     {
         $this->emailSender->sendAdmissionStartedNotification($subscriber);
@@ -141,26 +134,24 @@ class AdmissionNotifier
                     if ($notificationsSent >= $this->sendLimit) {
                         break;
                     }
-                    $hasApplied = array_search($subscriber->getEmail(), $applicationEmails) !== false;
-                    $alreadyNotified = array_search($subscriber->getEmail(), $notificationEmails) !== false;
-                    $subscribedMoreThanOneYearAgo = $subscriber->getTimestamp()->diff(new DateTime())->y >= 1;
+                    $hasApplied = array_search($subscriber->getEmail(), $applicationEmails, true) !== false;
+                    $alreadyNotified = array_search($subscriber->getEmail(), $notificationEmails, true) !== false;
+                    $subscribedMoreThanOneYearAgo = $subscriber->getTimestamp()->diff(new \DateTime())->y >= 1;
                     if ($hasApplied || $alreadyNotified || $subscribedMoreThanOneYearAgo || !$subscriber->getInfoMeeting()) {
                         continue;
                     }
                     $this->sendInfoMeetingNotification($subscriber, $semester, $department);
-                    $notificationsSent++;
+                    ++$notificationsSent;
                 }
                 if ($notificationsSent > 0) {
-                    $this->logger->info("*$notificationsSent* info meeting notification emails sent to subscribers in *" . $department->getCity() . "*");
+                    $this->logger->info("*$notificationsSent* info meeting notification emails sent to subscribers in *" . $department->getCity() . '*');
                 }
             }
-        } catch (Exception $e) {
-            $this->logger->critical("Failed to send info meeting notification:\n".$e->getMessage());
+        } catch (\Exception $e) {
+            $this->logger->critical("Failed to send info meeting notification:\n" . $e->getMessage());
         }
     }
 
-    /**
-     */
     private function sendInfoMeetingNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
     {
         $this->emailSender->sendInfoMeetingNotification($subscriber);

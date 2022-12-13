@@ -14,14 +14,14 @@ class UserCompanyEmailType extends AbstractType
     {
         $builder->add('companyEmail', EmailType::class, [
             'label' => 'Vektorepost',
-            'required' => false
+            'required' => false,
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class
+            'data_class' => User::class,
         ]);
     }
 

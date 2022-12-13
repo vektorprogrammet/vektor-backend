@@ -24,8 +24,8 @@ class InfoMeetingType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => [
-                    'placeholder' => 'Klikk for å velge tidspunkt'
-                ]
+                    'placeholder' => 'Klikk for å velge tidspunkt',
+                ],
             ])
             ->add('room', TextType::class, [
                 'label' => 'Rom',
@@ -41,7 +41,7 @@ class InfoMeetingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => InfoMeeting::class
+            'data_class' => InfoMeeting::class,
         ]);
     }
 }

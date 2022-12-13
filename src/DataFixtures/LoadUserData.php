@@ -453,16 +453,16 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         for ($i = 0; $i < 100; ++$i) {
             $user = new User();
             $user->setActive('0');
-            $user->setEmail('scheduling-user-'.$i.'@mail.com');
-            $user->setFirstName('scheduling-user-'.$i);
-            $user->setLastName('user-lastName-'.$i);
-            $user->setGender($i % 2 == 0 ? '0' : '1');
+            $user->setEmail('scheduling-user-' . $i . '@mail.com');
+            $user->setFirstName('scheduling-user-' . $i);
+            $user->setLastName('user-lastName-' . $i);
+            $user->setGender($i % 2 === 0 ? '0' : '1');
             $user->setPhone('12345678');
-            $user->setUserName('scheduling-user-'.$i);
+            $user->setUserName('scheduling-user-' . $i);
             $user->addRole(Roles::ASSISTANT);
             $user->setFieldOfStudy($this->getReference('fos-1'));
             $user->setPicturePath('images/defaultProfile.png');
-            $this->setReference('scheduling-user-'.$i, $user);
+            $this->setReference('scheduling-user-' . $i, $user);
             $manager->persist($user);
         }
 

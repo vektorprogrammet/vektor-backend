@@ -42,8 +42,7 @@ class InterviewControllerTest extends BaseWebTestCase
         // Submit the form
         $client->submit($form);
     }
-    /**
-     */
+
     private function fillAndSubmitInterviewForm($client, $crawler)
     {
         // Find the form
@@ -84,7 +83,7 @@ class InterviewControllerTest extends BaseWebTestCase
 
     private function verifyCorrectInterview($crawler, $firstName, $lastName)
     {
-        $this->assertEquals(1, $crawler->filter('td:contains("'.$firstName.' '.$lastName.'")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("' . $firstName . ' ' . $lastName . '")')->count());
     }
 
     public function testConduct()
@@ -318,7 +317,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $this->goTo('/kontrollpanel/opptak/fordelt?department=1&semester=1', $client);
         $before = $crawler->filter('td:contains("Ikke satt opp")')->count();
 
-        $crawler = $this->goTo("/kontrollpanel/intervju/settopp/6", $client);
+        $crawler = $this->goTo('/kontrollpanel/intervju/settopp/6', $client);
         $saveButton = $crawler->filter('div#statusModal button:contains("Lagre")');
         $this->assertNotNull($saveButton);
         $form = $saveButton->form();

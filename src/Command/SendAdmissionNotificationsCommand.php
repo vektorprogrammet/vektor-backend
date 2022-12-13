@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendAdmissionNotificationsCommand extends Command
 {
-    #TODO: Use dependency-injection for dependencies
+    // TODO: Use dependency-injection for dependencies
     private AdmissionNotifier $notifier;
 
     /**
@@ -30,6 +30,7 @@ class SendAdmissionNotificationsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->notifier->sendAdmissionNotifications();
+
         return Command::SUCCESS;
     }
 }

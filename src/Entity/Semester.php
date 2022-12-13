@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,6 +21,7 @@ class Semester implements PeriodInterface
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      */
@@ -29,6 +29,7 @@ class Semester implements PeriodInterface
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      */
@@ -36,6 +37,7 @@ class Semester implements PeriodInterface
 
     /**
      * @var AdmissionPeriod[]
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\AdmissionPeriod", mappedBy="semester")
      */
     private $admissionPeriods;
@@ -65,28 +67,27 @@ class Semester implements PeriodInterface
      */
     public function getName()
     {
-        return $this->semesterTime.' '.$this->year;
+        return $this->semesterTime . ' ' . $this->year;
     }
 
     /**
      * Get semester start date.
-     *
      */
-    public function getStartDate(): DateTime
+    public function getStartDate(): \DateTime
     {
-        $startMonth = $this->semesterTime == 'Vår' ? '01' : '08';
-        return date_create($this->year.'-'.$startMonth.'-01 00:00:00');
-    }
+        $startMonth = $this->semesterTime === 'Vår' ? '01' : '08';
 
+        return date_create($this->year . '-' . $startMonth . '-01 00:00:00');
+    }
 
     /**
      * Get semester end date.
-     *
      */
-    public function getEndDate(): DateTime
+    public function getEndDate(): \DateTime
     {
-        $endMonth = $this->semesterTime == 'Vår' ? '07' : '12';
-        return date_create($this->year.'-'.$endMonth.'-31 23:59:59');
+        $endMonth = $this->semesterTime === 'Vår' ? '07' : '12';
+
+        return date_create($this->year . '-' . $endMonth . '-31 23:59:59');
     }
 
     // Used for unit testing
@@ -108,11 +109,11 @@ class Semester implements PeriodInterface
 
     /**
      * @param string $year
-     *
      */
     public function setYear($year): Semester
     {
         $this->year = $year;
+
         return $this;
     }
 
@@ -132,12 +133,13 @@ class Semester implements PeriodInterface
     public function setSemesterTime($semesterTime)
     {
         $this->semesterTime = $semesterTime;
+
         return $this;
     }
 
     public function isActive(): bool
     {
-        $now = new DateTime();
+        $now = new \DateTime();
 
         return $this->getStartDate() < $now && $now <= $this->getEndDate();
     }
@@ -158,19 +160,18 @@ class Semester implements PeriodInterface
     public function setAdmissionPeriods($admissionPeriods)
     {
         $this->admissionPeriods = $admissionPeriods;
+
         return $this;
     }
 
     /**
-     * Checks if this semester is between the bounds $semesterPrevious and $semesterLater
+     * Checks if this semester is between the bounds $semesterPrevious and $semesterLater.
      *
      * **Note**: This range comparison is weak, meaning the semester can count as
      * being inBetween even though it is equal to one or both of the semester
      * bounds.
      * Furthermore, the semester bounds can be null, which implies the range
      * extends infinitely far into the past or into the future.
-     *
-     *
      */
     public function isBetween(?Semester $semesterPrevious, ?Semester $semesterLater): bool
     {
@@ -182,8 +183,6 @@ class Semester implements PeriodInterface
      *
      * **Note**: This function performs a weak comparison, meaning equal semesters count as before.
      * Furthermore, null semesters also count as before
-     *
-     *
      */
     public function isBefore(?Semester $semester): bool
     {
@@ -193,9 +192,9 @@ class Semester implements PeriodInterface
         if ($this->year === $semester->getYear()) {
             return !($this->semesterTime === 'Høst' &&
                      $semester->getSemesterTime() === 'Vår');
-        } else {
-            return $this->year < $semester->getYear();
         }
+
+        return $this->year < $semester->getYear();
     }
 
     /**
@@ -203,8 +202,6 @@ class Semester implements PeriodInterface
      *
      * **Note**: This function performs a weak comparison, meaning equal semesters count as after.
      * Furthermore, null semesters also count as after
-     *
-     *
      */
     public function isAfter(?Semester $semester): bool
     {
@@ -214,8 +211,8 @@ class Semester implements PeriodInterface
         if ($this->year === $semester->getYear()) {
             return !($this->semesterTime === 'Vår' &&
                      $semester->getSemesterTime() === 'Høst');
-        } else {
-            return $this->year > $semester->getYear();
         }
+
+        return $this->year > $semester->getYear();
     }
 }

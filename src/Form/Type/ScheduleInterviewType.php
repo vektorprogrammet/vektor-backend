@@ -49,7 +49,7 @@ class ScheduleInterviewType extends AbstractType
                 'label' => 'Send invitasjon på sms og e-post',
             ])
             ->add('preview', SubmitType::class, [
-                'label' => 'Forhåndsvis'
+                'label' => 'Forhåndsvis',
             ])
         ;
     }

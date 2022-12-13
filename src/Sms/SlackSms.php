@@ -22,11 +22,11 @@ class SlackSms implements SmsSenderInterface
         $message = $this->slackMessenger->createMessage();
 
         $attachment = new Attachment();
-        $attachment->setColor("#28a745");
-        $attachment->setAuthorName("To: " . $sms->getRecipientsString());
+        $attachment->setColor('#28a745');
+        $attachment->setAuthorName('To: ' . $sms->getRecipientsString());
         $attachment->setText("```\n" . $sms->getMessage() . "\n```");
 
-        $message->setText("Sms sent");
+        $message->setText('Sms sent');
         $message->setAttachments([$attachment]);
 
         $this->slackMessenger->send($message);

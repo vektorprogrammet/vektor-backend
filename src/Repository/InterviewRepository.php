@@ -7,7 +7,6 @@ use App\Entity\Interview;
 use App\Entity\InterviewStatusType;
 use App\Entity\Semester;
 use App\Entity\User;
-use DateTime;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -19,8 +18,6 @@ use Doctrine\ORM\EntityRepository;
 class InterviewRepository extends EntityRepository
 {
     /**
-     *
-     *
      * @return Interview
      */
     public function findLastScheduledByUserInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod)
@@ -38,6 +35,7 @@ class InterviewRepository extends EntityRepository
 
         return !empty($result) ? $result[0] : null;
     }
+
     public function findAllInterviewedInterviewsBySemester($semester)
     {
         $interviews = $this->getEntityManager()->createQuery('
@@ -57,7 +55,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     *
      * @return int
      */
     public function numberOfInterviewsByUserInSemester(User $user, Semester $semester)
@@ -92,7 +89,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Interview
      */
     public function findByResponseCode(string $responseCode)
@@ -105,7 +101,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Interview[]
      */
     public function findUncompletedInterviewsByInterviewerInCurrentSemester(User $interviewer)
@@ -129,7 +124,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     *
      * @return User[]
      */
     public function findInterviewersInSemester(Semester $semester)
@@ -160,10 +154,9 @@ class InterviewRepository extends EntityRepository
      * All interviews scheduled to a time after $time and having PENDING
      * interview status apply.
      *
-     *
      * @return array
      */
-    public function findAcceptInterviewNotificationRecipients(DateTime $time)
+    public function findAcceptInterviewNotificationRecipients(\DateTime $time)
     {
         return $this->createQueryBuilder('i')
             ->select('i')

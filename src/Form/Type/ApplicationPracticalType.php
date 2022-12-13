@@ -33,7 +33,7 @@ class ApplicationPracticalType extends AbstractType
             'label' => 'Kunne du tenke deg enkel eller dobbel stilling?',
             'choices' => [
                 '4 uker' => 0,
-                '8 uker' => 1
+                '8 uker' => 1,
             ],
             'expanded' => true,
             'multiple' => false,

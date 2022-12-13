@@ -44,7 +44,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
             "{$exception->getMessage()}\n" .
             "```\n" .
             "in {$exception->getFile()} (line {$exception->getLine()})\n" .
-            "@channel";
+            '@channel';
 
         $this->logger->critical($errorMsg);
 
@@ -61,9 +61,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $statusCode = $exception->getStatusCode();
 
         if ($statusCode === 403) {
-            $this->logger->warning("Access denied");
+            $this->logger->warning('Access denied');
         } elseif ($statusCode === 405) {
-            $this->logger->warning("Method not allowed");
+            $this->logger->warning('Method not allowed');
         } elseif ($this->httpExceptionShouldBeLogged($exception)) {
             $this->logger->critical("Code {$exception->getStatusCode()}: {$exception->getMessage()}");
         }

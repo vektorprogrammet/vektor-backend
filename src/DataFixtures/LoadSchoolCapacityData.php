@@ -15,7 +15,7 @@ class LoadSchoolCapacityData extends AbstractFixture implements OrderedFixtureIn
             $randomArr = [true, false, false, false, false];
             shuffle($randomArr);
             $schoolCapacity = new SchoolCapacity();
-            $schoolCapacity->setSchool($this->getReference('school-0'.$i));
+            $schoolCapacity->setSchool($this->getReference('school-0' . $i));
             $schoolCapacity->setSemester($this->getReference('semester-current'));
             $schoolCapacity->setDepartment($this->getReference('dep-1'));
             $schoolCapacity->setMonday($randomArr[0] || mt_rand(0, 100) < 30 ? 2 : 0);
@@ -25,7 +25,7 @@ class LoadSchoolCapacityData extends AbstractFixture implements OrderedFixtureIn
             $schoolCapacity->setFriday($randomArr[4] || mt_rand(0, 100) < 30 ? 2 : 0);
 
             $manager->persist($schoolCapacity);
-            $this->addReference('school-capacity-'.$i, $schoolCapacity);
+            $this->addReference('school-capacity-' . $i, $schoolCapacity);
         }
 
         $manager->flush();

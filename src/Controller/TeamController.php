@@ -26,6 +26,7 @@ class TeamController extends BaseController
         if (count($teams) !== 1) {
             throw new NotFoundHttpException('Team not found');
         }
+
         return $this->show($teams[0]);
     }
 }

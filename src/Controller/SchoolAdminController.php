@@ -10,7 +10,6 @@ use App\Event\AssistantHistoryCreatedEvent;
 use App\Form\Type\CreateAssistantHistoryType;
 use App\Form\Type\CreateSchoolType;
 use App\Role\Roles;
-use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,7 +55,7 @@ class SchoolAdminController extends BaseController
         $assistantHistory = new AssistantHistory();
         $assistantHistory->setDepartment($department);
         $form = $this->createForm(CreateAssistantHistoryType::class, $assistantHistory, [
-            'department' => $department
+            'department' => $department,
         ]);
 
         $form->handleRequest($request);
@@ -75,7 +74,7 @@ class SchoolAdminController extends BaseController
         // Return the form view
         return $this->render('school_admin/create_assistant_history.html.twig', [
             'form' => $form->createView(),
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -166,7 +165,7 @@ class SchoolAdminController extends BaseController
         // Return the form view
         return $this->render('school_admin/create_school.html.twig', [
             'form' => $form->createView(),
-            'school' => $school
+            'school' => $school,
         ]);
     }
 
@@ -207,7 +206,7 @@ class SchoolAdminController extends BaseController
 
             // a response back to AJAX
             $response['success'] = true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Send a response back to AJAX
             $response['success'] = false;
             $response['cause'] = 'Kunne ikke slette skolen. ';
@@ -228,7 +227,7 @@ class SchoolAdminController extends BaseController
 
             // a response back to AJAX
             $response['success'] = true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Send a response back to AJAX
             $response['success'] = false;
             $response['cause'] = 'Kunne ikke slette assistent historien. ';

@@ -22,7 +22,6 @@ class GSuiteSubscriber implements EventSubscriberInterface
     private GoogleGroups $groupService;
     private GoogleDrive $driveService;
 
-
     public function __construct(
         LoggerInterface $logger,
         GoogleAPI $googleAPI,
@@ -54,13 +53,13 @@ class GSuiteSubscriber implements EventSubscriberInterface
             TeamMembershipEvent::EDITED => [
                 ['createGSuiteUser', 1],
                 ['addGSuiteUserToTeam', 0],
-                ['removeGSuiteUserFromTeam', -1]
+                ['removeGSuiteUserFromTeam', -1],
             ],
             TeamMembershipEvent::DELETED => [
                 ['removeGSuiteUserFromTeam', 0],
             ],
             TeamMembershipEvent::EXPIRED => [
-                ['removeGSuiteUserFromTeam', 0]
+                ['removeGSuiteUserFromTeam', 0],
             ],
             UserEvent::EDITED => [
                 ['updateGSuiteUser', 0],
@@ -74,7 +73,7 @@ class GSuiteSubscriber implements EventSubscriberInterface
             ],
             TeamEvent::EDITED => [
                 ['editGSuiteTeam', 0],
-            ]
+            ],
         ];
     }
 
@@ -189,6 +188,7 @@ class GSuiteSubscriber implements EventSubscriberInterface
         if (!$email) {
             return false;
         }
+
         return $this->userService->getUser($email) !== null;
     }
 
@@ -197,6 +197,7 @@ class GSuiteSubscriber implements EventSubscriberInterface
         if (!$email) {
             return false;
         }
+
         return $this->groupService->getGroup($email) !== null;
     }
 }

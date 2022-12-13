@@ -20,8 +20,6 @@ class ExistingUserAdmissionControllerTest extends BaseWebTestCase
         $this->assertEquals($applicationsBefore + 1, $applicationsAfter);
     }
 
-    /**
-     */
     private function createAndSubmitForm_preferredSchool(string $preferredSchool)
     {
         $assistantClient = $this->createAssistantClient();
@@ -30,7 +28,7 @@ class ExistingUserAdmissionControllerTest extends BaseWebTestCase
         $submitButton = $crawler->selectButton('Søk');
         $form = $submitButton->form();
 
-        $form['application[applicationPractical][yearOfStudy]'] = "3. klasse";
+        $form['application[applicationPractical][yearOfStudy]'] = '3. klasse';
         $form['application[applicationPractical][days][monday]']->tick();
         $form['application[applicationPractical][days][tuesday]']->untick();
         $form['application[applicationPractical][days][wednesday]']->tick();

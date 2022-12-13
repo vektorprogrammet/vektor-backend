@@ -19,12 +19,12 @@ class SignatureController extends BaseController
         }
 
         $signatureImagePath = $signature->getSignaturePath();
-        $signatureFileName = substr($signatureImagePath, strrpos($signatureImagePath, '/') + 1);
+        $signatureFileName = mb_substr($signatureImagePath, mb_strrpos($signatureImagePath, '/') + 1);
         if ($imageName !== $signatureFileName) {
             // Users can only view their own signatures
             throw new AccessDeniedException();
         }
 
-        return new BinaryFileResponse($this->container->getParameter('signature_images').'/'.$signatureFileName);
+        return new BinaryFileResponse($this->container->getParameter('signature_images') . '/' . $signatureFileName);
     }
 }

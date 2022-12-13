@@ -7,7 +7,7 @@ use App\Tests\BaseWebTestCase;
 class SubstituteControllerTest extends BaseWebTestCase
 {
     /**
-     * Assert that team-leader has access to edit/delete buttons
+     * Assert that team-leader has access to edit/delete buttons.
      */
     public function testShowTeamLeader()
     {
@@ -19,7 +19,7 @@ class SubstituteControllerTest extends BaseWebTestCase
     }
 
     /**
-     * Assert that team-member does not have access to edit/delete buttons
+     * Assert that team-member does not have access to edit/delete buttons.
      */
     public function testShowTeamMember()
     {

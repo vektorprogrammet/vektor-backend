@@ -19,9 +19,6 @@ use App\Role\ReversedRoleHierarchy;
 use App\Role\Roles;
 use App\Service\ApplicationManager;
 use App\Service\InterviewManager;
-use DateTime;
-use Exception;
-use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -45,8 +42,7 @@ class InterviewController extends BaseController
         InterviewManager $interviewManager,
         ReversedRoleHierarchy $reversedRoleHierarchy,
         ApplicationManager $applicationManager
-    )
-    {
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->interviewManager = $interviewManager;
         $this->reversedRoleHierarchy = $reversedRoleHierarchy;
@@ -54,7 +50,6 @@ class InterviewController extends BaseController
     }
 
     /**
-     *
      * @return RedirectResponse|Response
      */
     public function conduct(Request $request, Application $application)
@@ -93,7 +88,7 @@ class InterviewController extends BaseController
             $em->flush();
             if ($isNewInterview && $form->get('saveAndSend')->isClicked()) {
                 $interview->setInterviewed(true);
-                $interview->setConducted(new DateTime());
+                $interview->setConducted(new \DateTime());
                 $em->persist($interview);
                 $em->flush();
 
@@ -114,9 +109,6 @@ class InterviewController extends BaseController
         ]);
     }
 
-    /**
-     *
-     */
     public function cancel(Interview $interview): RedirectResponse
     {
         $interview->setCancelled(true);
@@ -129,8 +121,6 @@ class InterviewController extends BaseController
 
     /**
      * Shows the given interview.
-     *
-     *
      */
     public function show(Application $application): Response
     {
@@ -146,15 +136,12 @@ class InterviewController extends BaseController
         }
 
         return $this->render('interview/show.html.twig', ['interview' => $interview,
-            'application' => $application
+            'application' => $application,
         ]);
     }
 
     /**
      * Deletes the given interview.
-     *
-     *
-     *
      */
     public function deleteInterview(Interview $interview, Request $request): RedirectResponse
     {
@@ -172,8 +159,6 @@ class InterviewController extends BaseController
      * Takes a list of application ids through a form POST request, and deletes the interviews associated with them.
      *
      * This method is intended to be called by an Ajax request.
-     *
-     *
      */
     public function bulkDeleteInterview(Request $request): JsonResponse
     {
@@ -203,8 +188,6 @@ class InterviewController extends BaseController
     /**
      * Shows and handles the submission of the schedule interview form.
      * This method can also send an email to the applicant with the info from the submitted form.
-     *
-     *
      */
     public function schedule(Request $request, Application $application): Response
     {
@@ -226,7 +209,7 @@ class InterviewController extends BaseController
         $data = $form->getData();
         $mapLink = $data['mapLink'];
         if ($form->isSubmitted()) {
-            if ($mapLink && !(strpos($mapLink, 'http') === 0)) {
+            if ($mapLink && !(mb_strpos($mapLink, 'http') === 0)) {
                 $mapLink = 'https://' . $mapLink;
             }
         }
@@ -280,8 +263,8 @@ class InterviewController extends BaseController
 
         try {
             $headers = get_headers($link);
-            $statusCode = intval(explode(" ", $headers[0])[1]);
-        } catch (Exception $e) {
+            $statusCode = intval(explode(' ', $headers[0])[1]);
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -293,8 +276,6 @@ class InterviewController extends BaseController
      * This method is used to create a new interview, or update it, and assign it to the given application.
      * It sets the interviewer and interview schema according to the form.
      * This method is intended to be called by an Ajax request.
-     *
-     *
      */
     public function assign(Request $request, $id = null): JsonResponse
     {
@@ -308,7 +289,7 @@ class InterviewController extends BaseController
         $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
 
         $form = $this->createForm(CreateInterviewType::class, $application, [
-            'roles' => $roles
+            'roles' => $roles,
         ]);
 
         $form->handleRequest($request);
@@ -339,12 +320,10 @@ class InterviewController extends BaseController
      * are given by the bulk form checkboxes (see admission_admin twigs).
      *
      * This method is intended to be called by an Ajax request.
-     *
-     *
      */
     public function bulkAssign(Request $request): JsonResponse
     {
-        //$roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
+        // $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
 
         $form = $this->createForm(CreateInterviewType::class, null, [
         //    'roles' => $roles
@@ -383,9 +362,6 @@ class InterviewController extends BaseController
         ]);
     }
 
-    /**
-     *
-     */
     public function acceptByResponseCode(Interview $interview): Response
     {
         $interview->acceptInterview();
@@ -401,15 +377,12 @@ class InterviewController extends BaseController
         $this->addFlash('success', $successMessage);
 
         if ($interview->getUser() === $this->getUser()) {
-            return $this->redirectToRoute("my_page");
+            return $this->redirectToRoute('my_page');
         }
 
         return $this->redirectToRoute('interview_response', ['responseCode' => $interview->getResponseCode()]);
     }
 
-    /**
-     *
-     */
     public function requestNewTime(Request $request, Interview $interview): Response
     {
         if (!$interview->isPending()) {
@@ -417,7 +390,7 @@ class InterviewController extends BaseController
         }
 
         $form = $this->createForm(InterviewNewTimeType::class, $interview, [
-            "validation_groups" => ["newTimeRequest"]
+            'validation_groups' => ['newTimeRequest'],
         ]);
         $form->handleRequest($request);
 
@@ -428,10 +401,10 @@ class InterviewController extends BaseController
             $manager->flush();
 
             $this->interviewManager->sendRescheduleEmail($interview);
-            $this->addFlash('success', "Forspørsel om ny intervjutid er sendt. Vi tar kontakt med deg når vi har funnet en ny intervjutid.");
+            $this->addFlash('success', 'Forspørsel om ny intervjutid er sendt. Vi tar kontakt med deg når vi har funnet en ny intervjutid.');
 
             if ($interview->getUser() === $this->getUser()) {
-                return $this->redirectToRoute("my_page");
+                return $this->redirectToRoute('my_page');
             }
 
             return $this->redirectToRoute('interview_response', ['responseCode' => $interview->getResponseCode()]);
@@ -439,26 +412,20 @@ class InterviewController extends BaseController
 
         return $this->render('interview/request_new_time.html.twig', [
             'interview' => $interview,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     *
-     */
     public function respond(Interview $interview): Response
     {
         $applicationStatus = $this->applicationManager->getApplicationStatus($interview->getApplication());
 
         return $this->render('interview/response.html.twig', [
             'interview' => $interview,
-            'application_status' => $applicationStatus
+            'application_status' => $applicationStatus,
         ]);
     }
 
-    /**
-     *
-     */
     public function cancelByResponseCode(Request $request, Interview $interview): Response
     {
         if (!$interview->isPending()) {
@@ -477,10 +444,10 @@ class InterviewController extends BaseController
             $manager->flush();
 
             $this->interviewManager->sendCancelEmail($interview);
-            $this->addFlash('success', "Du har kansellert intervjuet ditt.");
+            $this->addFlash('success', 'Du har kansellert intervjuet ditt.');
 
             if ($interview->getUser() === $this->getUser()) {
-                return $this->redirectToRoute("my_page");
+                return $this->redirectToRoute('my_page');
             }
 
             return $this->redirectToRoute('interview_response', ['responseCode' => $interview->getResponseCode()]);
@@ -492,15 +459,12 @@ class InterviewController extends BaseController
         ]);
     }
 
-    /**
-     *
-     */
     public function editStatus(Request $request, Interview $interview): RedirectResponse
     {
         $status = intval($request->get('status'));
         try {
             $interview->setStatus($status);
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             throw new BadRequestHttpException();
         }
         $em = $this->getDoctrine()->getManager();
@@ -516,19 +480,19 @@ class InterviewController extends BaseController
     {
         if ($interview->getUser() === $this->getUser()) {
             return $this->render('error/control_panel_error.html.twig', [
-                'error' => 'Kan ikke legge til deg selv som medintervjuer på ditt eget intervju'
+                'error' => 'Kan ikke legge til deg selv som medintervjuer på ditt eget intervju',
             ]);
         }
 
         if ($interview->getInterviewed()) {
             return $this->render('error/control_panel_error.html.twig', [
-                'error' => 'Kan ikke legge til deg selv som medintervjuer etter intervjuet er gjennomført'
+                'error' => 'Kan ikke legge til deg selv som medintervjuer etter intervjuet er gjennomført',
             ]);
         }
 
         if ($this->getUser() === $interview->getInterviewer()) {
             return $this->render('error/control_panel_error.html.twig', [
-                'error' => 'Kan ikke legge til deg selv som medintervjuer når du allerede er intervjuer'
+                'error' => 'Kan ikke legge til deg selv som medintervjuer når du allerede er intervjuer',
             ]);
         }
 
@@ -549,7 +513,7 @@ class InterviewController extends BaseController
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
         $coInterviewers = array_merge(array_diff($teamUsers, [$interview->getInterviewer(), $interview->getCoInterviewer()]));
         $form = $this->createForm(AddCoInterviewerType::class, null, [
-            'teamUsers' => $coInterviewers
+            'teamUsers' => $coInterviewers,
         ]);
         $form->handleRequest($request);
 
@@ -573,7 +537,7 @@ class InterviewController extends BaseController
 
         return $this->render('interview/assign_co_interview_form.html.twig', [
             'form' => $form->createView(),
-            'interview' => $interview
+            'interview' => $interview,
         ]);
     }
 

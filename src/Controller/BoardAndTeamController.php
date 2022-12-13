@@ -16,6 +16,7 @@ class BoardAndTeamController extends BaseController
     {
         $this->geoLocation = $geoLocation;
     }
+
     public function show(): Response
     {
         // Find all departments

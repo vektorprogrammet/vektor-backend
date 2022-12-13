@@ -6,7 +6,6 @@ use App\Entity\AdmissionSubscriber;
 use App\Entity\Receipt;
 use App\Entity\SupportTicket;
 use App\Mailer\MailerInterface;
-use Swift_Message;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -19,7 +18,7 @@ class EmailSender
     private RouterInterface $router;
 
     /**
-     * EmailSender constructor
+     * EmailSender constructor.
      */
     public function __construct(
         MailerInterface $mailer,
@@ -27,8 +26,7 @@ class EmailSender
         RouterInterface $router,
         string $defaultEmail,
         string $economyEmail
-    )
-    {
+    ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->defaultEmail = $defaultEmail;
@@ -38,7 +36,7 @@ class EmailSender
 
     public function sendSupportTicketToDepartment(SupportTicket $supportTicket)
     {
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
             ->setSubject('Nytt kontaktskjema')
             ->setFrom($this->defaultEmail)
             ->setReplyTo($supportTicket->getEmail())
@@ -49,7 +47,7 @@ class EmailSender
 
     public function sendSupportTicketReceipt(SupportTicket $supportTicket)
     {
-        $receipt = (new Swift_Message())
+        $receipt = (new \Swift_Message())
             ->setSubject('Kvittering for kontaktskjema')
             ->setFrom($this->defaultEmail)
             ->setReplyTo($supportTicket->getDepartment()->getEmail())
@@ -60,7 +58,7 @@ class EmailSender
 
     public function sendPaidReceiptConfirmation(Receipt $receipt)
     {
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
             ->setSubject('Vi har tilbakebetalt penger for utlegget ditt')
             ->setFrom($this->economyEmail)
             ->setFrom([$this->economyEmail => 'Økonomi - Vektorprogrammet'])
@@ -75,22 +73,22 @@ class EmailSender
 
     public function sendRejectedReceiptConfirmation(Receipt $receipt)
     {
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
                                  ->setSubject('Refusjon for utlegget ditt har blitt avvist')
                                  ->setFrom([$this->economyEmail => 'Økonomi - Vektorprogrammet'])
                                  ->setReplyTo($this->economyEmail)
                                  ->setTo($receipt->getUser()->getEmail())
                                  ->setBody($this->twig->render('receipt/rejected_email.txt.twig', [
                                      'name' => $receipt->getUser()->getFullName(),
-                                     'receipt' => $receipt,]));
+                                     'receipt' => $receipt, ]));
 
         $this->mailer->send($message);
     }
 
     public function sendReceiptCreatedNotification(Receipt $receipt)
     {
-        $message = (new Swift_Message())
-                                 ->setSubject('Nytt utlegg fra '.$receipt->getUser())
+        $message = (new \Swift_Message())
+                                 ->setSubject('Nytt utlegg fra ' . $receipt->getUser())
                                  ->setFrom('vektorbot@vektorprogrammet.no')
                                  ->setTo($this->economyEmail)
                                  ->setBody($this->twig->render('receipt/created_email.html.twig', [
@@ -105,7 +103,7 @@ class EmailSender
 
     public function sendAdmissionStartedNotification(AdmissionSubscriber $subscriber)
     {
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
              ->setSubject('Opptak for vektorassistenter har åpnet!')
              ->setFrom($this->defaultEmail)
              ->setTo($subscriber->getEmail())
@@ -121,7 +119,7 @@ class EmailSender
 
     public function sendInfoMeetingNotification(AdmissionSubscriber $subscriber)
     {
-        $message = (new Swift_Message())
+        $message = (new \Swift_Message())
             ->setSubject('Infomøte i dag!')
             ->setFrom($this->defaultEmail)
             ->setTo($subscriber->getEmail())

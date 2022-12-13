@@ -57,7 +57,6 @@ class InterviewSchema
     /**
      * Add questions.
      *
-     *
      * @return InterviewSchema
      */
     public function addInterviewQuestion(InterviewQuestion $questions)
@@ -69,7 +68,6 @@ class InterviewSchema
 
     /**
      * Remove questions.
-     *
      */
     public function removeInterviewQuestion(InterviewQuestion $questions)
     {

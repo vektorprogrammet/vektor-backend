@@ -14,7 +14,6 @@ class InterviewCounter
 
     /**
      * @param Application[] $applications
-     *
      */
     public function count(array $applications, string $suitable): int
     {
@@ -37,7 +36,6 @@ class InterviewCounter
 
     /**
      * @param Application[] $applications
-     *
      */
     public function createInterviewDistributions(array $applications, AdmissionPeriod $admissionPeriod): array
     {

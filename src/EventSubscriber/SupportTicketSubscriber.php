@@ -41,8 +41,8 @@ class SupportTicketSubscriber implements EventSubscriberInterface
                 ['sendTicketToDepartment', 0],
                 ['sendTicketReceipt', 0],
                 ['sendTicketToDepartmentSlackChannel', 0],
-                ['addFlashMessage', - 1],
-                ['sendSlackNotification', - 2],
+                ['addFlashMessage', -1],
+                ['sendSlackNotification', -2],
             ],
         ];
     }
@@ -82,7 +82,7 @@ class SupportTicketSubscriber implements EventSubscriberInterface
     {
         $supportTicket = $event->getSupportTicket();
         $message = 'Kontaktforespørsel sendt til ' .
-            $supportTicket->getDepartment()->getEmail().', takk for henvendelsen!';
+            $supportTicket->getDepartment()->getEmail() . ', takk for henvendelsen!';
 
         $this->requestStack->getSession()->getFlashBag()->add('success', $message);
     }

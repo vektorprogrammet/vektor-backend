@@ -11,7 +11,6 @@ use App\Service\FileUploader;
 use App\Service\RoleManager;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
-use DateTime;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +30,7 @@ class ReceiptController extends BaseController
         FileUploader $fileUploader,
         EventDispatcherInterface $eventDispatcher,
         RoleManager $roleManager
-    )
-    {
+    ) {
         $this->sorter = $sorter;
         $this->fileUploader = $fileUploader;
         $this->eventDispatcher = $eventDispatcher;
@@ -47,7 +45,7 @@ class ReceiptController extends BaseController
         $rejectedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REJECTED);
 
         $refundedReceiptStatistics = new ReceiptStatistics($refundedReceipts);
-        $totalPayoutThisYear = $refundedReceiptStatistics->totalPayoutIn((new DateTime())->format('Y'));
+        $totalPayoutThisYear = $refundedReceiptStatistics->totalPayoutIn((new \DateTime())->format('Y'));
         $avgRefundTimeInHours = $refundedReceiptStatistics->averageRefundTimeInHours();
 
         $pendingReceiptStatistics = new ReceiptStatistics($pendingReceipts);
@@ -65,7 +63,7 @@ class ReceiptController extends BaseController
             'avg_refund_time_in_hours' => $avgRefundTimeInHours,
             'pending_statistics' => $pendingReceiptStatistics,
             'rejected_statistics' => $rejectedReceiptStatistics,
-            'refunded_statistics' => $refundedReceiptStatistics
+            'refunded_statistics' => $refundedReceiptStatistics,
         ]);
     }
 
@@ -98,7 +96,6 @@ class ReceiptController extends BaseController
 
         $form->handleRequest($request);
 
-
         // User has posted a receipt
         if ($form->isSubmitted() && $form->isValid()) {
             $isImageUpload = $request->files->get('receipt', ['picture_path']) !== null;
@@ -115,12 +112,11 @@ class ReceiptController extends BaseController
             return $this->redirectToRoute('receipt_create');
         }
         // Else: User is viewing receipt page (no receipt exist: path=null)
-        else {
-            $receipt->setPicturePath("");
-        }
 
-        if ($form->isSubmitted() && !$form->isValid() && $receipt->getPicturePath() == "") {
-            $this->addFlash('warning', "Bildefilen er for stor. Maks størrelse er 2 MiB.");
+        $receipt->setPicturePath('');
+
+        if ($form->isSubmitted() && !$form->isValid() && $receipt->getPicturePath() === '') {
+            $this->addFlash('warning', 'Bildefilen er for stor. Maks størrelse er 2 MiB.');
         }
 
         return $this->render('receipt/my_receipts.html.twig', [
@@ -168,7 +164,6 @@ class ReceiptController extends BaseController
             return $this->redirectToRoute('receipt_create');
         }
 
-
         return $this->render('receipt/edit_receipt.html.twig', [
             'form' => $form->createView(),
             'receipt' => $receipt,
@@ -191,7 +186,7 @@ class ReceiptController extends BaseController
 
         $receipt->setStatus($status);
         if ($status === Receipt::STATUS_REFUNDED && !$receipt->getRefundDate()) {
-            $receipt->setRefundDate(new DateTime());
+            $receipt->setRefundDate(new \DateTime());
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -237,7 +232,6 @@ class ReceiptController extends BaseController
 
             return $this->redirectToRoute('receipts_show_individual', ['user' => $receipt->getUser()->getId()]);
         }
-
 
         return $this->render('receipt/edit_receipt.html.twig', [
             'form' => $form->createView(),

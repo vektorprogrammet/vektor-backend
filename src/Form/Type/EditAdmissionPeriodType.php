@@ -32,7 +32,7 @@ class EditAdmissionPeriodType extends AbstractType
             ])
             ->add('infoMeeting', InfoMeetingType::class, [
                 'label' => 'Infomøte',
-                'required' => false
+                'required' => false,
             ]);
     }
 

@@ -26,9 +26,6 @@ class ContactController extends BaseController
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     *
-     */
     public function index(Request $request, Department $department = null): Response
     {
         if ($department === null) {
@@ -60,7 +57,7 @@ class ContactController extends BaseController
             'form' => $form->createView(),
             'specific_department' => $department,
             'board' => $board,
-            'scrollToForm' => $scrollToForm
+            'scrollToForm' => $scrollToForm,
         ]);
     }
 }

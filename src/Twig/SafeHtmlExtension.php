@@ -21,8 +21,8 @@ class SafeHtmlExtension extends AbstractExtension
     public function htmlFilter($html)
     {
         foreach ($this->blacklistedTags as $tag) {
-            $html = preg_replace('/<'.$tag.'\b[^<]*(?:(?!<\/'.$tag.'>)<[^<]*)*<\/'.$tag.'>/i', '', $html);
-            $html = str_replace('<'.$tag, '', $html);
+            $html = preg_replace('/<' . $tag . '\b[^<]*(?:(?!<\/' . $tag . '>)<[^<]*)*<\/' . $tag . '>/i', '', $html);
+            $html = str_replace('<' . $tag, '', $html);
         }
 
         return $html;

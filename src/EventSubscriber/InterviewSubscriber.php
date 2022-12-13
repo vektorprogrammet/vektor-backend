@@ -11,7 +11,6 @@ use App\Service\SbsData;
 use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;
 use Psr\Log\LoggerInterface;
-use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
@@ -70,8 +69,8 @@ class InterviewSubscriber implements EventSubscriberInterface
                 ['sendScheduleSms', 0],
             ],
             InterviewEvent::COASSIGN => [
-                ['sendCoAssignedEmail', 0]
-            ]
+                ['sendCoAssignedEmail', 0],
+            ],
         ];
     }
 
@@ -81,7 +80,7 @@ class InterviewSubscriber implements EventSubscriberInterface
         $interviewer = $application->getInterview()->getInterviewer();
 
         // Send email to the interviewee with a summary of the interview
-        $emailMessage = (new Swift_Message())
+        $emailMessage = (new \Swift_Message())
             ->setSubject('Vektorprogrammet intervju')
             ->setReplyTo([$interviewer->getDepartment()->getEmail() => 'Vektorprogrammet'])
             ->setTo($application->getUser()->getEmail())
@@ -152,17 +151,18 @@ class InterviewSubscriber implements EventSubscriberInterface
         $validNumber = $this->smsSender->validatePhoneNumber($phoneNumber);
         if (!$validNumber) {
             $this->logger->alert("Kunne ikke sende schedule sms til *$user*\n Tlf.nr.: *$phoneNumber*");
+
             return;
         }
 
-        $campus = empty($data['campus']) ? "" : ("\nCampus: " . $data['campus']);
+        $campus = empty($data['campus']) ? '' : ("\nCampus: " . $data['campus']);
 
         $message =
             $data['message'] .
             "\n\n" .
-            "Tid: ".$data['datetime']->format('d.m.Y - H:i') .
+            'Tid: ' . $data['datetime']->format('d.m.Y - H:i') .
             "\n" .
-            "Rom: ".$data['room'] .
+            'Rom: ' . $data['room'] .
             $campus .
             "\n\n" .
             "Vennligst følg linken under for å godkjenne tidspunktet eller be om ny tid:\n" .
@@ -179,7 +179,7 @@ class InterviewSubscriber implements EventSubscriberInterface
 
         $sms = new Sms();
         $sms->setMessage($message);
-        $sms->setSender("Vektor");
+        $sms->setSender('Vektor');
         $sms->setRecipients([$phoneNumber]);
 
         $this->smsSender->send($sms);
@@ -188,13 +188,13 @@ class InterviewSubscriber implements EventSubscriberInterface
     public function sendCoAssignedEmail(InterviewEvent $event)
     {
         $interview = $event->getInterview();
-        $emailMessage = (new Swift_Message())
+        $emailMessage = (new \Swift_Message())
             ->setSubject('Vektorprogrammet intervju')
             ->setFrom(['vektorbot@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setTo($interview->getInterviewer()->getEmail())
             ->setReplyTo($interview->getCoInterviewer()->getEmail())
             ->setBody($this->twig->render('interview/co_interviewer_email.html.twig', [
-                'interview' => $interview
+                'interview' => $interview,
             ]));
         $this->mailer->send($emailMessage);
     }

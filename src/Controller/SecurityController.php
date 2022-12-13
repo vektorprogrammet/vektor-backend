@@ -38,9 +38,9 @@ class SecurityController extends BaseController
             return $this->redirectToRoute('control_panel');
         } elseif ($this->getDoctrine()->getRepository(Application::class)->findActiveByUser($this->getUser())) {
             return $this->redirectToRoute('my_page');
-        } else {
-            return $this->redirectToRoute('profile');
         }
+
+        return $this->redirectToRoute('profile');
     }
 
     public function loginCheck(): RedirectResponse

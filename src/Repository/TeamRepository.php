@@ -15,7 +15,6 @@ use Doctrine\ORM\QueryBuilder;
 class TeamRepository extends EntityRepository
 {
     /**
-     *
      * @return QueryBuilder
      */
     private function findByDepartmentQueryBuilder(Department $department)
@@ -27,7 +26,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Team[]
      */
     public function findByDepartment(Department $department): array
@@ -39,7 +37,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Team[]
      */
     public function findActiveByDepartment(Department $department): array
@@ -52,7 +49,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Team[]
      */
     public function findInActiveByDepartment(Department $department): array
@@ -65,7 +61,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     *
      * @return Team[]
      */
     public function findByOpenApplicationAndDepartment(Department $department): array

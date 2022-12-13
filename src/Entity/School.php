@@ -58,6 +58,7 @@ class School
 
     /**
      * @var bool
+     *
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      */
@@ -65,12 +66,14 @@ class School
 
     /**
      * @var SchoolCapacity[]
+     *
      * @ORM\OneToMany(targetEntity="SchoolCapacity", mappedBy="school")
      */
     private $capacities;
 
     /**
-     * @var boolean
+     * @var bool
+     *
      * @ORM\Column(type="boolean", options={"default": 1})
      */
     private $active;
@@ -143,7 +146,6 @@ class School
     /**
      * Add departments.
      *
-     *
      * @return School
      */
     public function addDepartment(Department $departments)
@@ -155,7 +157,6 @@ class School
 
     /**
      * Remove departments.
-     *
      */
     public function removeDepartment(Department $departments)
     {
@@ -250,9 +251,6 @@ class School
         $this->international = $international;
     }
 
-    /**
-     *
-     */
     public function belongsToDepartment(Department $department): bool
     {
         foreach ($this->departments as $dep) {
@@ -280,19 +278,15 @@ class School
         return $this->capacities;
     }
 
-    /**
-     */
     public function isActive(): bool
     {
         return $this->active;
     }
 
-    /**
-     *
-     */
     public function setActive(bool $active): School
     {
         $this->active = $active;
+
         return $this;
     }
 }

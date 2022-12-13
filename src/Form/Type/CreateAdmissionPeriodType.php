@@ -51,7 +51,7 @@ class CreateAdmissionPeriodType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'App\Entity\AdmissionPeriod',
-            'admissionPeriods' => []
+            'admissionPeriods' => [],
         ]);
     }
 

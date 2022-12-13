@@ -30,7 +30,7 @@ class UserAdminController extends BaseController
 
         $form = $this->createForm(CreateUserType::class, $user, [
             'validation_groups' => ['create_user'],
-            'department' => $department
+            'department' => $department,
         ]);
 
         // Handle the form
@@ -96,12 +96,12 @@ class UserAdminController extends BaseController
     public function deleteUserById(User $user)
     {
         if ($user === $this->getUser()) {
-            $this->addFlash("error", "Du kan ikke slette deg selv.");
-        } elseif ($this->isGranted(ROLES::ADMIN) || $user->getDepartment() == $this->getUser()->getDepartment()) {
+            $this->addFlash('error', 'Du kan ikke slette deg selv.');
+        } elseif ($this->isGranted(ROLES::ADMIN) || $user->getDepartment() === $this->getUser()->getDepartment()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
-            $this->addFlash("success", "$user har blitt slettet.");
+            $this->addFlash('success', "$user har blitt slettet.");
         } else {
             throw $this->createAccessDeniedException();
         }

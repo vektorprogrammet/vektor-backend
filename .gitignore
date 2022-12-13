@@ -90,3 +90,4 @@ crashlytics-build.properties
 
 # php-cs-fixer
 /tools
+.php-cs-fixer.cache

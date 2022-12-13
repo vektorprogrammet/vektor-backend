@@ -21,7 +21,7 @@ class AdmissionNotificationRepository extends EntityRepository
             ->getResult();
 
         return array_map(function ($row) {
-            return $row["email"];
+            return $row['email'];
         }, $res);
     }
 
@@ -37,7 +37,7 @@ class AdmissionNotificationRepository extends EntityRepository
             ->getResult();
 
         return array_map(function ($row) {
-            return $row["email"];
+            return $row['email'];
         }, $res);
     }
 }

@@ -23,6 +23,7 @@ class InfoMeeting
 
     /**
      * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $showOnPage;
@@ -60,7 +61,7 @@ class InfoMeeting
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -68,7 +69,7 @@ class InfoMeeting
     }
 
     /**
-     * @param DateTime $date
+     * @param \DateTime $date
      */
     public function setDate($date)
     {
@@ -93,7 +94,7 @@ class InfoMeeting
 
     public function __toString()
     {
-        return "Infomøte";
+        return 'Infomøte';
     }
 
     /**
@@ -125,7 +126,7 @@ class InfoMeeting
      */
     public function setLink($link)
     {
-        if (strlen($link) > 0 && substr($link, 0, 4) !== 'http') {
+        if (mb_strlen($link) > 0 && mb_substr($link, 0, 4) !== 'http') {
             $link = "https://$link";
         }
 

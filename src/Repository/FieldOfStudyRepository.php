@@ -37,7 +37,6 @@ class FieldOfStudyRepository extends EntityRepository
     }
 
     /**
-     *
      * @return FieldOfStudy[]
      */
     public function findByDepartment(Department $department)

@@ -55,7 +55,7 @@ class CreateUserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'App\Entity\User',
-            'department' => 'App\Entity\Department'
+            'department' => 'App\Entity\Department',
         ]);
     }
 

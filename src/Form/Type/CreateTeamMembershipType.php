@@ -75,7 +75,7 @@ class CreateTeamMembershipType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'App\Entity\TeamMembership',
-            'department' => null
+            'department' => null,
         ]);
     }
 

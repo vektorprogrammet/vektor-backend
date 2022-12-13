@@ -16,8 +16,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class SubstituteController extends BaseController
 {
-    /**
-     */
     public function show(Request $request): ?Response
     {
         // No department specified, get the user's department and call showBySemester with

@@ -8,7 +8,6 @@ use App\Entity\School;
 use App\Entity\Semester;
 use App\Entity\User;
 use App\Utils\SemesterUtil;
-use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -23,7 +22,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AssistantHistory[]
      */
     public function findByUser(User $user): array
@@ -33,9 +31,7 @@ class AssistantHistoryRepository extends EntityRepository
             ->getResult();
     }
 
-
     /**
-     *
      * @return AssistantHistory[]
      */
     public function findMostRecentByUser(User $user): array
@@ -50,7 +46,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AssistantHistory[]
      */
     public function findByDepartmentAndSemester(Department $department, Semester $semester): array
@@ -68,12 +63,11 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AssistantHistory[]
      */
     public function findActiveAssistantHistoriesByUser($user): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 		
 		SELECT ahistory
@@ -88,7 +82,7 @@ class AssistantHistoryRepository extends EntityRepository
             ->setParameters([
                 'user' => $user,
                 'year' => SemesterUtil::timeToYear($today),
-                'semesterTime' => SemesterUtil::timeToSemesterTime($today)
+                'semesterTime' => SemesterUtil::timeToSemesterTime($today),
             ])
             ->getResult();
 
@@ -96,12 +90,11 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AssistantHistory[]
      */
     public function findActiveAssistantHistoriesBySchool(School $school): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 
 		SELECT ahistory
@@ -116,7 +109,7 @@ class AssistantHistoryRepository extends EntityRepository
             ->setParameters([
                 'school' => $school,
                 'year' => SemesterUtil::timeToYear($today),
-                'semesterTime' => SemesterUtil::timeToSemesterTime($today)
+                'semesterTime' => SemesterUtil::timeToSemesterTime($today),
             ])
             ->getResult();
 
@@ -128,7 +121,7 @@ class AssistantHistoryRepository extends EntityRepository
      */
     public function findAllActiveAssistantHistories(): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 		
 		SELECT ahistory
@@ -141,7 +134,7 @@ class AssistantHistoryRepository extends EntityRepository
 		')
             ->setParameters([
                 'year' => SemesterUtil::timeToYear($today),
-                'semesterTime' => SemesterUtil::timeToSemesterTime($today)
+                'semesterTime' => SemesterUtil::timeToSemesterTime($today),
             ])
             ->getResult();
 
@@ -149,12 +142,11 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     *
      * @return AssistantHistory[]
      */
     public function findInactiveAssistantHistoriesBySchool(School $school): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 		
 		SELECT ahistory
@@ -171,7 +163,7 @@ class AssistantHistoryRepository extends EntityRepository
             ->setParameters([
                 'school' => $school,
                 'year' => SemesterUtil::timeToYear($today),
-                'semesterTime' => SemesterUtil::timeToSemesterTime($today)
+                'semesterTime' => SemesterUtil::timeToSemesterTime($today),
             ])
             ->getResult();
 
@@ -179,7 +171,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function numFemaleBySemester(Semester $semester): int
@@ -195,7 +186,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function numMaleBySemester(Semester $semester): int
@@ -238,7 +228,6 @@ class AssistantHistoryRepository extends EntityRepository
 
     /**
      * @return string[]
-     *
      */
     public function findAllBolkNames(): array
     {

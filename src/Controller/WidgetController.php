@@ -24,8 +24,7 @@ class WidgetController extends BaseController
         $this->sorter = $sorter;
         $this->admissionStatistics = $admissionStatistics;
     }
-    /**
-     */
+
     public function interviews(Request $request): ?Response
     {
         $department = $this->getDepartmentOrThrow404($request);
@@ -62,8 +61,6 @@ class WidgetController extends BaseController
         ]);
     }
 
-    /**
-     */
     public function applicationGraph(Request $request, Department $department, Semester $semester): ?Response
     {
         if (is_null($department)) {

@@ -18,26 +18,26 @@ class CreateUserOnApplicationType extends AbstractType
         $builder
             ->add('firstName', TextType::class, [
                 'label' => 'Fornavn',
-                'attr' => ['autocomplete' => 'given-name']
+                'attr' => ['autocomplete' => 'given-name'],
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Etternavn',
-                'attr' => ['autocomplete' => 'family-name']
+                'attr' => ['autocomplete' => 'family-name'],
             ])
             ->add('phone', TelType::class, [
                 'label' => 'Telefon',
-                'attr' => ['autocomplete' => 'tel']
+                'attr' => ['autocomplete' => 'tel'],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'E-post',
-                'attr' => ['autocomplete' => 'email']
+                'attr' => ['autocomplete' => 'email'],
             ])
             ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'Mann' => 0,
-                    'Dame' => 1
+                    'Dame' => 1,
                 ],
-                'label' => 'Kjønn'
+                'label' => 'Kjønn',
             ])
             ->add('fieldOfStudy', EntityType::class, [
                 'label' => 'Linje',
@@ -56,7 +56,7 @@ class CreateUserOnApplicationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'App\Entity\User',
-            'departmentId' => null
+            'departmentId' => null,
         ]);
     }
 

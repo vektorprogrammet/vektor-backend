@@ -13,6 +13,7 @@ class TeamPositionSortExtension extends AbstractExtension
 {
     private $sorter;
     private $filterService;
+
     public function __construct(Sorter $sorter, FilterService $filterService)
     {
         $this->sorter = $sorter;

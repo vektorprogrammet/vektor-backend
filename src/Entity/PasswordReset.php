@@ -44,7 +44,7 @@ class PasswordReset
      */
     public function __construct()
     {
-        $this->setResetTime(new DateTime());
+        $this->setResetTime(new \DateTime());
     }
 
     /**
@@ -84,7 +84,7 @@ class PasswordReset
     /**
      * Set resetTime.
      *
-     * @param DateTime $resetTime
+     * @param \DateTime $resetTime
      *
      * @return PasswordReset
      */
@@ -98,7 +98,7 @@ class PasswordReset
     /**
      * Get resetTime.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getResetTime()
     {

@@ -10,7 +10,6 @@ use Doctrine\ORM\QueryBuilder;
 class SchoolRepository extends EntityRepository
 {
     /**
-     *
      * @return School[]
      */
     public function findActiveSchoolsByDepartment(Department $department)
@@ -22,7 +21,6 @@ class SchoolRepository extends EntityRepository
     }
 
     /**
-     *
      * @return School[]
      */
     public function findInactiveSchoolsByDepartment(Department $department)
@@ -34,7 +32,6 @@ class SchoolRepository extends EntityRepository
     }
 
     /**
-     *
      * @return QueryBuilder
      */
     public function findActiveSchoolsWithoutCapacity(Department $department)
@@ -52,7 +49,6 @@ class SchoolRepository extends EntityRepository
     }
 
     /**
-     *
      * @return QueryBuilder
      */
     private function getSchoolsByDepartmentQueryBuilder(Department $department)

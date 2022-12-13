@@ -47,7 +47,6 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      * @throws ORMException
      * @throws OptimisticLockException

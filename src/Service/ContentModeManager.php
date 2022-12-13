@@ -9,7 +9,7 @@ class ContentModeManager
     private RequestStack $requestStack;
 
     /**
-     * ContentModeManager constructor
+     * ContentModeManager constructor.
      */
     public function __construct(RequestStack $requestStack)
     {

@@ -68,7 +68,8 @@ class Team implements TeamInterface
     private $deadline;
 
     /**
-     * Applications with team interest
+     * Applications with team interest.
+     *
      * @var Application[]
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Application", mappedBy="potentialTeams")
@@ -76,7 +77,8 @@ class Team implements TeamInterface
     private $potentialMembers;
 
     /**
-     * TeamInterest entities not corresponding to any Application
+     * TeamInterest entities not corresponding to any Application.
+     *
      * @var TeamInterest[]
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\TeamInterest", mappedBy="potentialTeams")
@@ -98,16 +100,14 @@ class Team implements TeamInterface
         return $this->active;
     }
 
-    /**
-     */
     public function setActive(bool $active)
     {
         $this->active = $active;
     }
 
-
     /**
      * @var TeamMembership[]
+     *
      * @ORM\OneToMany(targetEntity="TeamMembership", mappedBy="team")
      */
     private $teamMemberships;
@@ -123,13 +123,12 @@ class Team implements TeamInterface
     /**
      * @return Team
      */
-
     public function setAcceptApplication(bool $acceptApplication)
     {
         $this->acceptApplication = $acceptApplication;
+
         return $this;
     }
-
 
     public function __construct()
     {
@@ -235,7 +234,7 @@ class Team implements TeamInterface
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDeadline()
     {
@@ -243,18 +242,19 @@ class Team implements TeamInterface
     }
 
     /**
-     * @param DateTime $deadline
+     * @param \DateTime $deadline
      *
      * @return Team
      */
     public function setDeadline($deadline)
     {
-        $now = new DateTime();
+        $now = new \DateTime();
         if ($this->acceptApplication && $now <= $deadline) {
             $this->deadline = $deadline;
         } else {
             $this->deadline = null;
         }
+
         return $this;
     }
 
@@ -331,7 +331,7 @@ class Team implements TeamInterface
         $activeUsers = [];
 
         foreach ($this->getActiveTeamMemberships() as $activeTeamMembership) {
-            if (!in_array($activeTeamMembership->getUser(), $activeUsers)) {
+            if (!in_array($activeTeamMembership->getUser(), $activeUsers, true)) {
                 $activeUsers[] = $activeTeamMembership->getUser();
             }
         }
@@ -381,6 +381,7 @@ class Team implements TeamInterface
         $array = array_filter($array, function (DepartmentSemesterInterface $a) use ($semester) {
             return $a->getSemester() === $semester;
         });
+
         return count($array);
     }
 
@@ -392,8 +393,6 @@ class Team implements TeamInterface
         return $this->applications;
     }
 
-    /**
-     */
     public function setApplications(TeamApplication $applications): void
     {
         $this->applications = $applications;
@@ -404,7 +403,8 @@ class Team implements TeamInterface
      */
     public function getAcceptApplicationAndDeadline()
     {
-        $now = new DateTime();
-        return (($this->acceptApplication && $now < $this->deadline) || ($this->acceptApplication && $this->deadline === null));
+        $now = new \DateTime();
+
+        return ($this->acceptApplication && $now < $this->deadline) || ($this->acceptApplication && $this->deadline === null);
     }
 }

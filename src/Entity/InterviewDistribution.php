@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 class InterviewDistribution
 {
     private $user;
@@ -11,7 +10,6 @@ class InterviewDistribution
 
     /**
      * InterviewDistribution constructor.
-     *
      */
     public function __construct(User $user, AdmissionPeriod $admissionPeriod)
     {
@@ -22,7 +20,7 @@ class InterviewDistribution
     }
 
     /**
-     * @param Interview[] $interviews
+     * @param Interview[]     $interviews
      * @param AdmissionPeriod $admissionPeriod
      *
      * @return Interview[]
@@ -35,7 +33,6 @@ class InterviewDistribution
     }
 
     /**
-     *
      * @return Interview[]
      */
     private function filterNotInterviewed($interviews)

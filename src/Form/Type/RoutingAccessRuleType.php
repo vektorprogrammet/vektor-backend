@@ -23,29 +23,29 @@ class RoutingAccessRuleType extends AccessRuleType
         }
 
         $builder
-            ->add("resource", ChoiceType::class, [
-                "expanded" => false,
-                "multiple" => false,
-                "choices" => $choices
+            ->add('resource', ChoiceType::class, [
+                'expanded' => false,
+                'multiple' => false,
+                'choices' => $choices,
             ])
-            ->add("method", ChoiceType::class, [
-                "expanded" => true,
-                "multiple" => false,
-                "choices" => [
-                    "GET" => "GET",
-                    "POST" => "POST",
-                    "PUT" => "PUT",
-                    "DELETE" => "DELETE"
-                ]
+            ->add('method', ChoiceType::class, [
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => [
+                    'GET' => 'GET',
+                    'POST' => 'POST',
+                    'PUT' => 'PUT',
+                    'DELETE' => 'DELETE',
+                ],
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            "data_class" => AccessRule::class,
-            "routes" => [],
-            'roles' => []
+            'data_class' => AccessRule::class,
+            'routes' => [],
+            'roles' => [],
         ]);
     }
 

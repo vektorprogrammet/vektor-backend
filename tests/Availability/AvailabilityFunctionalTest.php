@@ -8,7 +8,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 {
     /**
      * @dataProvider publicUrlProvider
-     *
      */
     public function testPublicPageIsSuccessful($url)
     {
@@ -20,7 +19,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider assistantUrlProvider
-     *
      */
     public function testAssistantPageIsSuccessful($url)
     {
@@ -32,11 +30,10 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider assistantUrlProvider
-     *
      */
     public function testAssistantPageIsDenied($url)
     {
-        //Check if anonymous users gets denied
+        // Check if anonymous users gets denied
         $client = self::createClient();
         $client->request('GET', $url);
 
@@ -45,7 +42,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider teamMemberUrlProvider
-     *
      */
     public function testTeamMemberPageIsSuccessful($url)
     {
@@ -57,11 +53,10 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider teamMemberUrlProvider
-     *
      */
     public function testTeamMemberPageIsDenied($url)
     {
-        //Check if assistants gets denied
+        // Check if assistants gets denied
         $client = $this->createAssistantClient();
         $client->request('GET', $url);
 
@@ -70,7 +65,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider teamLeaderUrlProvider
-     *
      */
     public function testTeamLeaderPageIsSuccessful($url)
     {
@@ -82,11 +76,10 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider teamLeaderUrlProvider
-     *
      */
     public function testTeamLeaderPageIsDenied($url)
     {
-        //Check if team member gets denied
+        // Check if team member gets denied
         $client = $this->createTeamMemberClient();
         $client->request('GET', $url);
 
@@ -95,7 +88,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider adminUrlProvider
-     *
      */
     public function testAdminPageIsSuccessful($url)
     {
@@ -107,11 +99,10 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
 
     /**
      * @dataProvider adminUrlProvider
-     *
      */
     public function testAdminPageIsDenied($url)
     {
-        //Check if team leader gets denied
+        // Check if team leader gets denied
         $client = $this->createTeamLeaderClient();
         $client->request('GET', $url);
 
@@ -188,7 +179,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
             ['/kontrollpanel/opprettsoker'],
             ['/kontrollpanel/brukeradmin/opprett'],
 
-
             ['/kontrollpanel/vikar'],
             ['/kontrollpanel/vikar?department=1&semester=1'],
 
@@ -213,7 +203,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     public function teamLeaderUrlProvider(): array
     {
         return [
-
             ['/kontrollpanel/intervju/settopp/6'],
             ['/kontrollpanel/intervju/conduct/6'],
             ['/kontrollpanel/intervju/vis/4'],

@@ -91,8 +91,6 @@ class TeamApplicationController extends BaseController
         ]);
     }
 
-    /**
-     */
     public function confirmation($team_name): Response
     {
         return $this->render('team/confirmation.html.twig', [

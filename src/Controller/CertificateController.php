@@ -19,8 +19,8 @@ class CertificateController extends BaseController
     {
         $this->fileUploader = $fileUploader;
     }
+
     /**
-     *
      * @return RedirectResponse|Response
      */
     public function show(Request $request)
@@ -60,6 +60,7 @@ class CertificateController extends BaseController
             $manager->flush();
 
             $this->addFlash('success', 'Signatur og evt. kommentar ble lagret');
+
             return $this->redirect($request->headers->get('referer'));
         }
 

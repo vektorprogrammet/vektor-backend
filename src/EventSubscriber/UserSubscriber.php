@@ -11,7 +11,7 @@ class UserSubscriber implements EventSubscriberInterface
     private LoggerInterface $logger;
 
     /**
-     * UserSubscriber Constructor
+     * UserSubscriber Constructor.
      */
     public function __construct(LoggerInterface $logger)
     {

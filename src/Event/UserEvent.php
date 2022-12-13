@@ -24,8 +24,6 @@ class UserEvent extends Event
         $this->oldEmail = $oldEmail;
     }
 
-    /**
-     */
     public function getUser(): User
     {
         return $this->user;

@@ -27,7 +27,7 @@ class EditUserPasswordType extends AbstractType
                         'maxMessage' => 'Passordet må være mindre enn {{ limit }} tegn langt',
                     ]),
                     new Assert\NotBlank([
-                        'message' => 'Dette feltet kan ikke være tomt'
+                        'message' => 'Dette feltet kan ikke være tomt',
                     ]),
                 ],
             ]);

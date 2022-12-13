@@ -14,7 +14,7 @@ class LogService implements LoggerInterface
     private string $env;
 
     /**
-     * LogService constructor
+     * LogService constructor.
      */
     public function __construct(
         LoggerInterface $monoLogger,
@@ -22,8 +22,7 @@ class LogService implements LoggerInterface
         UserService $userService,
         RequestStack $requestStack,
         string $env
-    )
-    {
+    ) {
         $this->monoLogger = $monoLogger;
         $this->slackMessenger = $slackMessenger;
         $this->userService = $userService;
@@ -138,7 +137,7 @@ class LogService implements LoggerInterface
     public function log($level, $message, array $context = []): void
     {
         $this->monoLogger->log(200, $message, $context);
-        $this->slackMessenger->log("", $this->createAttachmentData($level, $message, $context));
+        $this->slackMessenger->log('', $this->createAttachmentData($level, $message, $context));
     }
 
     private function createAttachmentData($level, $message, array $data): array
@@ -155,7 +154,7 @@ class LogService implements LoggerInterface
             'author_name' => $this->userService->getCurrentUserNameAndDepartment(),
             'author_icon' => $this->userService->getCurrentProfilePicture(),
             'text' => "$message",
-            'footer' => "$level - $method $path"
+            'footer' => "$level - $method $path",
         ];
 
         return array_merge($default, $data);
