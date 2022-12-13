@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
-use App\Entity\Semester;
 use App\Entity\Team;
 use App\Entity\TeamInterest;
 use App\Entity\User;
@@ -14,7 +13,6 @@ use App\Role\Roles;
 use App\Service\InterviewCounter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

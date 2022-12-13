@@ -7,7 +7,6 @@ use App\Entity\Application;
 use App\AssistantScheduling\Assistant;
 use App\AssistantScheduling\School;
 use App\Entity\SchoolCapacity;
-use App\Entity\Semester;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\JsonResponse;

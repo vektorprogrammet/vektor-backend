@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\AssistantHistory;
 use App\Entity\Department;
 use App\Entity\User;
 use App\Service\GeoLocation;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends BaseController

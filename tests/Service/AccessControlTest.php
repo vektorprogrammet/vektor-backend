@@ -3,7 +3,6 @@
 namespace App\Tests\Service;
 
 use App\Entity\AccessRule;
-use App\Role;
 use App\Repository\UnhandledAccessRuleRepository;
 use App\Entity\Team;
 use App\Entity\UnhandledAccessRule;

@@ -2,13 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Semester;
 use App\Event\TeamInterestCreatedEvent;
 use App\Entity\Department;
 use App\Entity\TeamInterest;
 use App\Form\Type\TeamInterestType;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

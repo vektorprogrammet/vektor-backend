@@ -10,8 +10,6 @@ use App\Entity\Department;
 use App\Entity\Semester;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Exception;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;

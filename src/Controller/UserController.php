@@ -5,14 +5,8 @@ namespace App\Controller;
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\AssistantHistory;
-use App\Entity\Semester;
 use App\Service\ApplicationManager;
-use App\Service\ContentModeManager;
-use App\Twig\RoleExtension;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class UserController extends BaseController
 {
