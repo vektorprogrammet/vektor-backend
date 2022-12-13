@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\AccessRule;
-use App\Role\Roles;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;

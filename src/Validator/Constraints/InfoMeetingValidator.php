@@ -2,9 +2,9 @@
 
 namespace App\Validator\Constraints;
 
+use App\Entity\InfoMeeting;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use App\Entity\InfoMeeting;
 
 class InfoMeetingValidator extends ConstraintValidator
 {

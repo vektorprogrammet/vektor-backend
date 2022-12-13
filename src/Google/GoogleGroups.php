@@ -21,7 +21,7 @@ class GoogleGroups extends GoogleService
             return [];
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         $optParams = [
@@ -70,7 +70,7 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         $googleGroup = new Google_Service_Directory_Group();
@@ -95,14 +95,14 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         $googleGroup = new Google_Service_Directory_Group();
         $this->setGroupNameEmailDescription($googleGroup, $team);
 
         try {
-            $updatedTeam =  $service->groups->update($groupEmail, $googleGroup);
+            $updatedTeam = $service->groups->update($groupEmail, $googleGroup);
         } catch (Google_Service_Exception $e) {
             $this->logServiceException($e, "updateTeam('$groupEmail') for *{$team->getDepartment()} - $team*");
             return null;
@@ -117,7 +117,7 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         $member = new Google_Service_Directory_Member();
@@ -138,7 +138,7 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         $usersInGroup = $this->getUsersInGroup($team);
@@ -165,7 +165,7 @@ class GoogleGroups extends GoogleService
             return [];
         }
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $service = new Google_Service_Directory($client);
 
         try {

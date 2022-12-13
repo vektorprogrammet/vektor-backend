@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\SchoolCapacity;
 use App\Form\Type\SchoolCapacityEditType;
 use App\Form\Type\SchoolCapacityType;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

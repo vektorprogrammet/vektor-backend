@@ -33,9 +33,9 @@ class ReceiptController extends BaseController
         RoleManager $roleManager
     )
     {
-        $this->sorter=$sorter;
-        $this->fileUploader=$fileUploader;
-        $this->eventDispatcher=$eventDispatcher;
+        $this->sorter = $sorter;
+        $this->fileUploader = $fileUploader;
+        $this->eventDispatcher = $eventDispatcher;
         $this->roleManager = $roleManager;
     }
 
@@ -119,7 +119,7 @@ class ReceiptController extends BaseController
             $receipt->setPicturePath("");
         }
 
-        if ($form->isSubmitted() && !$form->isValid()&& $receipt->getPicturePath() == "") {
+        if ($form->isSubmitted() && !$form->isValid() && $receipt->getPicturePath() == "") {
             $this->addFlash('warning', "Bildefilen er for stor. Maks størrelse er 2 MiB.");
         }
 

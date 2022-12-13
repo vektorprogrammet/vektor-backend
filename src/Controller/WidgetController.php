@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
-use App\Entity\Receipt;
-use App\Entity\User;
 use App\Entity\Department;
+use App\Entity\Receipt;
 use App\Entity\Semester;
+use App\Entity\User;
 use App\Service\AdmissionStatistics;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
@@ -21,8 +21,8 @@ class WidgetController extends BaseController
 
     public function __construct(Sorter $sorter, AdmissionStatistics $admissionStatistics)
     {
-        $this->sorter=$sorter;
-        $this->admissionStatistics=$admissionStatistics;
+        $this->sorter = $sorter;
+        $this->admissionStatistics = $admissionStatistics;
     }
     /**
      */

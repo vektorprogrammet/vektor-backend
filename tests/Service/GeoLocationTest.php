@@ -50,11 +50,11 @@ class GeoLocationTest extends WebTestCase
     {
         $fromLat = '63.416057';
         $fromLon = '10.408514';
-        $toLat   = '59.666108';
-        $toLon   = '10.768452';
+        $toLat = '59.666108';
+        $toLon = '10.768452';
 
         $expected = 417389.42572;
-        $actual   = round($this->geoLocation->distance($fromLat, $fromLon, $toLat, $toLon), 5);
+        $actual = round($this->geoLocation->distance($fromLat, $fromLon, $toLat, $toLon), 5);
 
         $this->assertEquals($expected, $actual);
     }

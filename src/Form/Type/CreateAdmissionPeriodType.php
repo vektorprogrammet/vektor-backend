@@ -3,8 +3,8 @@
 namespace App\Form\Type;
 
 use App\Entity\AdmissionPeriod;
-use App\Repository\SemesterRepository;
 use App\Entity\Semester;
+use App\Repository\SemesterRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;

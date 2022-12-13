@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\School;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\School;
 
 class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 {

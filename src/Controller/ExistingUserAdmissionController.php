@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Semester;
 use App\Entity\Team;
 use App\Event\ApplicationCreatedEvent;
 use App\Form\Type\ApplicationExistingUserType;

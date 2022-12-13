@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Semester;
 use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Semester;
 
 class LoadSemesterData extends AbstractFixture implements OrderedFixtureInterface
 {

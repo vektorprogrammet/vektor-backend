@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\Receipt;
+use App\Tests\BaseWebTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

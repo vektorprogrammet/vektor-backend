@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\AssistantHistory;
-use App\Role\Roles;
 use App\Form\Type\CreateAssistantHistoryType;
+use App\Role\Roles;
 use App\Service\LogService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +52,7 @@ class AssistantHistoryController extends BaseController
             return $this->redirectToRoute('participanthistory_show');
         }
         return $this->render("participant_history/participant_history_edit.html.twig", [
-            "form"=>$form->createView()
+            "form" => $form->createView()
         ]);
     }
 }

@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\AdmissionPeriod;
+use App\Entity\Application;
+use App\Form\Type\ModifySubstituteType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Application;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use App\Form\Type\ModifySubstituteType;
 
 /**
  * SubstituteController is the controller responsible for substitute assistants,

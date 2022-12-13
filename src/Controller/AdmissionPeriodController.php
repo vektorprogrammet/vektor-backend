@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Department;
 use App\Entity\AdmissionPeriod;
+use App\Entity\Department;
+use App\Form\Type\CreateAdmissionPeriodType;
 use App\Form\Type\EditAdmissionPeriodType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Type\CreateAdmissionPeriodType;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionPeriodController extends BaseController

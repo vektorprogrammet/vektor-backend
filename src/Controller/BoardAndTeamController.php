@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
-use App\Entity\Semester;
 use App\Entity\User;
 use App\Service\GeoLocation;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +14,7 @@ class BoardAndTeamController extends BaseController
 
     public function __construct(GeoLocation $geoLocation)
     {
-        $this->geoLocation=$geoLocation;
+        $this->geoLocation = $geoLocation;
     }
     public function show(): Response
     {

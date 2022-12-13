@@ -20,9 +20,9 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -66,10 +66,10 @@ class ProfileController extends BaseController
 
         // Render the view
         return $this->render('profile/profile.html.twig', [
-            'user'                      => $user,
-            'assistantHistory'          => $assistantHistory,
-            'teamMemberships'            => $teamMemberships,
-            'executiveBoardMemberships'  => $executiveBoardMemberships,
+            'user' => $user,
+            'assistantHistory' => $assistantHistory,
+            'teamMemberships' => $teamMemberships,
+            'executiveBoardMemberships' => $executiveBoardMemberships,
         ]);
     }
 
@@ -99,10 +99,10 @@ class ProfileController extends BaseController
 
         // Render the view
         return $this->render('profile/profile.html.twig', [
-            'user'                      => $user,
-            'assistantHistory'          => $assistantHistory,
-            'teamMemberships'            => $teamMemberships,
-            'executiveBoardMemberships'  => $executiveBoardMemberships,
+            'user' => $user,
+            'assistantHistory' => $assistantHistory,
+            'teamMemberships' => $teamMemberships,
+            'executiveBoardMemberships' => $executiveBoardMemberships,
         ]);
     }
 
@@ -132,7 +132,7 @@ class ProfileController extends BaseController
 
         if ($user === null) {
             return $this->render('error/error_message.html.twig', [
-                'title'   => 'Koden er ugyldig',
+                'title' => 'Koden er ugyldig',
                 'message' => 'Ugyldig kode eller brukeren er allerede opprettet',
             ]);
         }
@@ -168,7 +168,7 @@ class ProfileController extends BaseController
         $response = [];
 
         $roleManager = $this->RoleManager;
-        $roleName    = $roleManager->mapAliasToRole($request->request->get('role'));
+        $roleName = $roleManager->mapAliasToRole($request->request->get('role'));
 
         if (! $roleManager->loggedInUserCanChangeRoleOfUsersWithRole($user, $roleName)) {
             throw new BadRequestHttpException();
@@ -216,13 +216,13 @@ class ProfileController extends BaseController
         }
 
         $html = $this->renderView('certificate/certificate.html.twig', [
-            'user'                  => $user,
-            'assistantHistory'      => $assistantHistory,
-            'teamMembership'        => $teamMembership,
-            'signature'             => $signature,
-            'additional_comment'    => $additional_comment,
-            'department'            => $department,
-            'base_dir'              => $this->getParameter('kernel.project_dir') . '/public',
+            'user' => $user,
+            'assistantHistory' => $assistantHistory,
+            'teamMembership' => $teamMembership,
+            'signature' => $signature,
+            'additional_comment' => $additional_comment,
+            'department' => $department,
+            'base_dir' => $this->getParameter('kernel.project_dir') . '/public',
         ]);
         $options = new Options();
         $options->setIsRemoteEnabled(true);
@@ -236,18 +236,18 @@ class ProfileController extends BaseController
 
         $dompdf->render();
 
-        $dompdf->stream($filename='attest.pdf');
+        $dompdf->stream($filename = 'attest.pdf');
 
         return null;
     }
 
     public function editProfileInformation(Request $request)
     {
-        $user            = $this->getUser();
+        $user = $this->getUser();
         $oldCompanyEmail = $user->getCompanyEmail();
 
         $form = $this->createForm(EditUserType::class, $user, [
-            'department'        => $user->getDepartment(),
+            'department' => $user->getDepartment(),
             'validation_groups' => ['edit_user'],
         ]);
 
@@ -293,7 +293,7 @@ class ProfileController extends BaseController
 
     public function editProfileInformationAdmin(Request $request, User $user)
     {
-        $form            = $this->createForm(EditUserType::class, $user, [
+        $form = $this->createForm(EditUserType::class, $user, [
             'department' => $user->getDepartment(),
         ]);
         $oldCompanyEmail = $user->getCompanyEmail();
@@ -320,7 +320,7 @@ class ProfileController extends BaseController
     public function editCompanyEmail(Request $request, User $user)
     {
         $oldCompanyEmail = $user->getCompanyEmail();
-        $form            = $this->createForm(UserCompanyEmailType::class, $user);
+        $form = $this->createForm(UserCompanyEmailType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

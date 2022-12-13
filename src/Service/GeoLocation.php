@@ -174,7 +174,7 @@ class GeoLocation
     public function distance(float $fromLat, float $fromLon, float $toLat, float $toLon): float
     {
         $theta = $fromLon - $toLon;
-        $dist = sin(deg2rad($fromLat)) * sin(deg2rad($toLat)) +  cos(deg2rad($fromLat)) * cos(deg2rad($toLat)) * cos(deg2rad($theta));
+        $dist = sin(deg2rad($fromLat)) * sin(deg2rad($toLat)) + cos(deg2rad($fromLat)) * cos(deg2rad($toLat)) * cos(deg2rad($theta));
         $dist = acos($dist);
         $dist = rad2deg($dist);
         return $dist * 60 * 1.1515 * 1609.344;

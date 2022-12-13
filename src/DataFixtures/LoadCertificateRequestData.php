@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\CertificateRequest;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\CertificateRequest;
 
 class LoadCertificateRequestData extends AbstractFixture implements OrderedFixtureInterface
 {

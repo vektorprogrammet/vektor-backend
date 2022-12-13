@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Department;
+use App\Entity\Position;
 use App\Entity\Team;
 use App\Entity\TeamMembership;
-use App\Entity\Position;
 use App\Event\TeamEvent;
 use App\Event\TeamMembershipEvent;
 use App\Form\Type\CreateTeamMembershipType;
@@ -34,14 +34,14 @@ class TeamAdminController extends BaseController
         }
 
         // Find teams that are connected to the department of the user
-        $activeTeams   = $this->getDoctrine()->getRepository(Team::class)->findActiveByDepartment($department);
+        $activeTeams = $this->getDoctrine()->getRepository(Team::class)->findActiveByDepartment($department);
         $inactiveTeams = $this->getDoctrine()->getRepository(Team::class)->findInactiveByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('team_admin/index.html.twig', [
-            'active_teams'   => $activeTeams,
+            'active_teams' => $activeTeams,
             'inactive_teams' => $inactiveTeams,
-            'department'     => $department,
+            'department' => $department,
         ]);
     }
 
@@ -113,14 +113,14 @@ class TeamAdminController extends BaseController
     public function showSpecificTeam(Team $team): Response
     {
         // Find all TeamMembership entities based on team
-        $activeTeamMemberships   = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
+        $activeTeamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
         $inActiveTeamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findInactiveTeamMembershipsByTeam($team);
         usort($activeTeamMemberships, [$this, 'sortTeamMembershipsByEndDate']);
         usort($inActiveTeamMemberships, [$this, 'sortTeamMembershipsByEndDate']);
 
-        $user                      = $this->getUser();
+        $user = $this->getUser();
         $currentUserTeamMembership = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByUser($user);
-        $isUserInTeam              = false;
+        $isUserInTeam = false;
         foreach ($currentUserTeamMembership as $wh) {
             if (in_array($wh, $activeTeamMemberships)) {
                 $isUserInTeam = true;
@@ -129,10 +129,10 @@ class TeamAdminController extends BaseController
 
         // Return the view with suitable variables
         return $this->render('team_admin/specific_team.html.twig', [
-            'team'                    => $team,
-            'activeTeamMemberships'   => $activeTeamMemberships,
+            'team' => $team,
+            'activeTeamMemberships' => $activeTeamMemberships,
             'inActiveTeamMemberships' => $inActiveTeamMemberships,
-            'isUserInTeam'            => $isUserInTeam,
+            'isUserInTeam' => $isUserInTeam,
         ]);
     }
 
@@ -147,7 +147,7 @@ class TeamAdminController extends BaseController
     public function updateTeam(Request $request, Team $team)
     {
         // Find the department of the team
-        $department   = $team->getDepartment();
+        $department = $team->getDepartment();
         $oldTeamEmail = $team->getEmail();
 
         // Create the form
@@ -172,16 +172,16 @@ class TeamAdminController extends BaseController
 
             // Render the teampage as a preview
             return $this->render('team/team_page.html.twig', [
-                'team'            => $team,
+                'team' => $team,
                 'teamMemberships' => $teamMemberships,
             ]);
         }
 
         return $this->render('team_admin/create_team.html.twig', [
-            'team'       => $team,
+            'team' => $team,
             'department' => $department,
-            'form'       => $form->createView(),
-            'isUpdate'   => true,
+            'form' => $form->createView(),
+            'isUpdate' => true,
         ]);
     }
 
@@ -193,7 +193,7 @@ class TeamAdminController extends BaseController
         // Return the view with suitable variables
         return $this->render('team_admin/index.html.twig', [
             'department' => $department,
-            'teams'      => $teams,
+            'teams' => $teams,
         ]);
     }
 
@@ -227,13 +227,13 @@ class TeamAdminController extends BaseController
 
             // Render the teampage as a preview
             return $this->render('team/team_page.html.twig', [
-                'team'            => $team,
+                'team' => $team,
                 'teamMemberships' => [],
             ]);
         }
 
         return $this->render('team_admin/create_team.html.twig', [
-            'form'       => $form->createView(),
+            'form' => $form->createView(),
             'department' => $department,
             'team' => $team,
             'isUpdate' => false

@@ -16,7 +16,7 @@ class TeamController extends BaseController
         }
 
         return $this->render('team/team_page.html.twig', [
-            'team'  => $team,
+            'team' => $team,
         ]);
     }
 

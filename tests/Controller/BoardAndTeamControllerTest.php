@@ -31,6 +31,6 @@ class BoardAndTeamControllerTest extends BaseWebTestCase
         $crawler = $this->goTo('/team#Trondheim');
         $numberOfTeamsAfter = $crawler->filter('.team-card')->count();
 
-        $this->assertEquals($numberOfTeamsBefore-1, $numberOfTeamsAfter);
+        $this->assertEquals($numberOfTeamsBefore - 1, $numberOfTeamsAfter);
     }
 }

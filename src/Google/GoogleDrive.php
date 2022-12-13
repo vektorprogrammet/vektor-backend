@@ -18,7 +18,7 @@ class GoogleDrive extends GoogleService
         }
         $folderName = $team->getDepartment()->getShortName() . ' - ' . $team->getName();
 
-        $client  = $this->getClient();
+        $client = $this->getClient();
         $driveService = new Google_Service_Drive($client);
 
         $requestId = Uuid::uuid4()->toString();

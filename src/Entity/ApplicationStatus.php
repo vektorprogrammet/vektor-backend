@@ -26,9 +26,9 @@ class ApplicationStatus
 
     public function __construct(int $step, string $text, string $nextAction)
     {
-        $this->text       = $text;
+        $this->text = $text;
         $this->nextAction = $nextAction;
-        $this->step       = $step;
+        $this->step = $step;
     }
 
     public function getText(): string

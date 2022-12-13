@@ -5,12 +5,12 @@ namespace App\Service;
 use App\Entity\Application;
 use App\Entity\Interview;
 use App\Entity\InterviewAnswer;
+use App\Entity\InterviewStatusType;
 use App\Entity\User;
 use App\Mailer\Mailer;
 use App\Role\Roles;
 use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;
-use App\Entity\InterviewStatusType;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -232,7 +232,7 @@ class InterviewManager
                  $this->twig->render(
                      'interview/schedule_of_interviews_email.html.twig',
                      [
-                         'interviews'  => $interviews,
+                         'interviews' => $interviews,
                          'interviewer' => $interviewer
                      ]
                  ),

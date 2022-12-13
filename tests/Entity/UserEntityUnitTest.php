@@ -3,7 +3,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\FieldOfStudy;
-use App\Entity\Role;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 

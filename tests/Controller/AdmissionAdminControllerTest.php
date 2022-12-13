@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\Interview;
+use App\Tests\BaseWebTestCase;
 
 class AdmissionAdminControllerTest extends BaseWebTestCase
 {

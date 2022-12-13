@@ -22,10 +22,10 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         RequestStack $requestStack,
         LoggerInterface $logger
     ) {
-        $this->emailSender    = $emailSender;
-        $this->logger         = $logger;
+        $this->emailSender = $emailSender;
+        $this->logger = $logger;
         $this->slackMessenger = $slackMessenger;
-        $this->requestStack   = $requestStack;
+        $this->requestStack = $requestStack;
     }
 
     /**

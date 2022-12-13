@@ -3,8 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Event\TeamEvent;
-use App\Event\UserEvent;
 use App\Event\TeamMembershipEvent;
+use App\Event\UserEvent;
 use App\Google\GoogleAPI;
 use App\Google\GoogleDrive;
 use App\Google\GoogleGroups;
@@ -59,13 +59,13 @@ class GSuiteSubscriber implements EventSubscriberInterface
             TeamMembershipEvent::DELETED => [
                 ['removeGSuiteUserFromTeam', 0],
             ],
-            TeamMembershipEvent::EXPIRED  => [
+            TeamMembershipEvent::EXPIRED => [
                 ['removeGSuiteUserFromTeam', 0]
             ],
             UserEvent::EDITED => [
                 ['updateGSuiteUser', 0],
             ],
-            UserEvent::COMPANY_EMAIL_EDITED  => [
+            UserEvent::COMPANY_EMAIL_EDITED => [
                 ['updateGSuiteUser', 0],
             ],
             TeamEvent::CREATED => [

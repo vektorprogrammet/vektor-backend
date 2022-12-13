@@ -3,11 +3,10 @@
 namespace App\Tests\Service;
 
 use App\Entity\AccessRule;
-use App\Role;
-use App\Repository\UnhandledAccessRuleRepository;
 use App\Entity\Team;
 use App\Entity\UnhandledAccessRule;
 use App\Entity\User;
+use App\Repository\UnhandledAccessRuleRepository;
 use App\Role\Roles;
 use App\Service\AccessControlService;
 use App\Tests\BaseKernelTestCase;

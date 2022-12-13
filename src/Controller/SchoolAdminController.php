@@ -2,18 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\AssistantHistory;
 use App\Entity\Department;
+use App\Entity\School;
 use App\Entity\User;
 use App\Event\AssistantHistoryCreatedEvent;
+use App\Form\Type\CreateAssistantHistoryType;
+use App\Form\Type\CreateSchoolType;
 use App\Role\Roles;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\School;
-use App\Form\Type\CreateSchoolType;
-use App\Entity\AssistantHistory;
-use App\Form\Type\CreateAssistantHistoryType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SchoolAdminController extends BaseController

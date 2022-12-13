@@ -6,15 +6,12 @@ use App\Controller\BaseController;
 use App\DataTransferObject\UserDto;
 use App\Entity\User;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\NonUniqueResultException;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use BCC\AutoMapperBundle\Mapper\Exception\InvalidClassConstructorException;
-use Exception;
 
 class AccountController extends BaseController
 {

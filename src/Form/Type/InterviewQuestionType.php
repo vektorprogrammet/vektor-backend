@@ -26,10 +26,10 @@ class InterviewQuestionType extends AbstractType
 
         $builder->add('type', ChoiceType::class, [
             'choices' => [
-                'Text'            => 'text',
+                'Text' => 'text',
                 'Multiple choice' => 'radio',
-                'Checkboxes'      => 'check',
-                'Velg fra liste'  => 'list',
+                'Checkboxes' => 'check',
+                'Velg fra liste' => 'list',
             ],
             'label' => 'Type',
         ]);

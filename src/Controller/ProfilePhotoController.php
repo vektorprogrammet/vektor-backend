@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Role\Roles;
 use App\Service\FileUploader;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfilePhotoController extends BaseController

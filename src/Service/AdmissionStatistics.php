@@ -47,7 +47,7 @@ class AdmissionStatistics
         AdmissionPeriod $admissionPeriod
     ): array
     {
-        $endDate =  $admissionPeriod->getEndDate();
+        $endDate = $admissionPeriod->getEndDate();
         $extraDays = $this->calculatePaddingDays($endDate);
 
         $appData = $this->initializeDataArray($admissionPeriod, $extraDays);
@@ -106,7 +106,7 @@ class AdmissionStatistics
             if ($index === false || $index === 0) {
                 continue;
             }
-            $cumulative = $populatedAppData[$dates[$index-1]];
+            $cumulative = $populatedAppData[$dates[$index - 1]];
             $populatedAppData[$date] = $populatedAppData[$date] + $cumulative;
         }
 

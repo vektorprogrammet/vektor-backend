@@ -42,7 +42,7 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
                 ['activateTeamMembership', 2],
                 ['addCreatedFlashMessage', -1],
             ],
-            TeamMembershipEvent::EDITED  => [
+            TeamMembershipEvent::EDITED => [
                 ['updateUserRole', 5],
                 ['activateTeamMembership', 2],
                 ['addUpdatedFlashMessage', -1],

@@ -5,8 +5,8 @@ namespace App\Repository;
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\Department;
-use App\Entity\User;
 use App\Entity\InterviewStatusType;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 

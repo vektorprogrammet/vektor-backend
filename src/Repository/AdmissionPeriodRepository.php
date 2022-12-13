@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Department;
 use App\Entity\AdmissionPeriod;
+use App\Entity\Department;
 use App\Entity\Semester;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
