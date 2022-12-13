@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
+use App\Entity\Receipt;
 use App\Entity\TeamMembershipInterface;
 use App\Entity\User;
-use App\Entity\Receipt;
 
 class Sorter
 {

@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use App\Entity\User;
 use App\Entity\Receipt;
+use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 
 class ReceiptRepository extends EntityRepository
 {

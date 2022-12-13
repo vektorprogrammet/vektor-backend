@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Application;
 use App\Entity\Interview;
 use App\Entity\InterviewAnswer;
 use App\Entity\InterviewScore;
@@ -10,7 +11,6 @@ use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Application;
 
 class LoadApplicationData extends AbstractFixture implements OrderedFixtureInterface
 {

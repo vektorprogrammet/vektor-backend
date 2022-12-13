@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Department;
+use App\Entity\Position;
 use App\Entity\Team;
 use App\Entity\TeamMembership;
-use App\Entity\Position;
 use App\Event\TeamEvent;
 use App\Event\TeamMembershipEvent;
 use App\Form\Type\CreateTeamMembershipType;

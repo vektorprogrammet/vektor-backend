@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\AdmissionPeriod;
-use App\Entity\Application;
 use App\AssistantScheduling\Assistant;
 use App\AssistantScheduling\School;
+use App\Entity\AdmissionPeriod;
+use App\Entity\Application;
 use App\Entity\SchoolCapacity;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;

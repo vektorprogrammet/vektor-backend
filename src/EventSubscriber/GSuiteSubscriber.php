@@ -3,8 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Event\TeamEvent;
-use App\Event\UserEvent;
 use App\Event\TeamMembershipEvent;
+use App\Event\UserEvent;
 use App\Google\GoogleAPI;
 use App\Google\GoogleDrive;
 use App\Google\GoogleGroups;

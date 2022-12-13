@@ -4,9 +4,9 @@ namespace App\EventSubscriber;
 
 use App\Event\InterviewConductedEvent;
 use App\Event\InterviewEvent;
+use App\Mailer\MailerInterface;
 use App\Service\InterviewManager;
 use App\Service\InterviewNotificationManager;
-use App\Mailer\MailerInterface;
 use App\Service\SbsData;
 use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;

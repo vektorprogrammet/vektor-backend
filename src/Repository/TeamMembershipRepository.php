@@ -2,14 +2,14 @@
 
 namespace App\Repository;
 
-use App\Entity\Semester;
 use App\Entity\Department;
+use App\Entity\Semester;
 use App\Entity\Team;
-use App\Entity\User;
 use App\Entity\TeamMembership;
+use App\Entity\User;
+use App\Utils\SemesterUtil;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
-use App\Utils\SemesterUtil;
 
 /**
  * TeamMembershipRepository.

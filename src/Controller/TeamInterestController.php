@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Event\TeamInterestCreatedEvent;
 use App\Entity\Department;
 use App\Entity\TeamInterest;
+use App\Event\TeamInterestCreatedEvent;
 use App\Form\Type\TeamInterestType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

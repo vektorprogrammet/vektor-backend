@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\AssistantHistory;
-use App\Role\Roles;
 use App\Form\Type\CreateAssistantHistoryType;
+use App\Role\Roles;
 use App\Service\LogService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

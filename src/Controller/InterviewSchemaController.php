@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\InterviewSchema;
+use App\Form\Type\InterviewSchemaType;
 use App\Role\Roles;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\InterviewSchema;
-use App\Form\Type\InterviewSchemaType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

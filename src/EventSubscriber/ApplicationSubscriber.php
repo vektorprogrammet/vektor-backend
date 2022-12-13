@@ -3,8 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Event\ApplicationCreatedEvent;
-use App\Service\AdmissionNotifier;
 use App\Mailer\MailerInterface;
+use App\Service\AdmissionNotifier;
 use App\Service\UserRegistration;
 use Exception;
 use Swift_Message;

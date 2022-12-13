@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\User;
+use App\Tests\BaseWebTestCase;
 
 class MailingListControllerTest extends BaseWebTestCase
 {

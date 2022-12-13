@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
+use App\Entity\ExecutiveBoardMembership;
+use App\Form\Type\CreateExecutiveBoardMembershipType;
+use App\Form\Type\CreateExecutiveBoardType;
 use App\Service\RoleManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Type\CreateExecutiveBoardType;
-use App\Form\Type\CreateExecutiveBoardMembershipType;
-use App\Entity\ExecutiveBoardMembership;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExecutiveBoardController extends BaseController

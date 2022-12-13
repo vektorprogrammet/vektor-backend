@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Receipt;
 use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Receipt;
 
 class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 {

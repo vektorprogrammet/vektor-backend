@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\PasswordReset;
+use App\Form\Type\NewPasswordType;
+use App\Form\Type\PasswordResetType;
 use App\Service\LogService;
 use App\Service\PasswordManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Type\NewPasswordType;
-use App\Form\Type\PasswordResetType;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 

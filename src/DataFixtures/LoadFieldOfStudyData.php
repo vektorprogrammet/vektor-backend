@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\FieldOfStudy;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\FieldOfStudy;
 
 class LoadFieldOfStudyData extends AbstractFixture implements OrderedFixtureInterface
 {

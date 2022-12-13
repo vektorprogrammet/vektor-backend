@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\InterviewQuestion;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\InterviewQuestion;
 
 class LoadInterviewQuestionData extends AbstractFixture implements OrderedFixtureInterface
 {

@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Validator\Constraints as CustomAssert;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
