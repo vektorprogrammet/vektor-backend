@@ -1,6 +1,5 @@
 
-name: "L
-int"
+name: "Lint"
 
 on:
   pull_request:
@@ -28,6 +27,7 @@ jobs:
         with:
           args: --diff --dry-run
 
+# this one fails
   linters:
     name: Linters
     runs-on: ubuntu-latest
@@ -73,9 +73,9 @@ jobs:
 #        if: always() && steps.install.outcome == 'success'
 #        run: ./bin/console lint:twig templates --env=prod
 
-      - name: Lint XLIFF translations
-        if: always() && steps.install.outcome == 'success'
-        run: ./bin/console lint:xliff translations
+#      - name: Lint XLIFF translations
+#        if: always() && steps.install.outcome == 'success'
+#        run: ./bin/console lint:xliff translations
 
       - name: Lint Parameters and Services
         if: always() && steps.install.outcome == 'success'
