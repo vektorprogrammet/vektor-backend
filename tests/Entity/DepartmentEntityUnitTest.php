@@ -21,7 +21,7 @@ class DepartmentEntityUnitTest extends TestCase
         $department->setName('NTNUx2');
 
         // Assert the result
-        $this->assertEquals('NTNUx2', $department->getName());
+        $this->assertSame('NTNUx2', $department->getName());
     }
 
     // Check whether the setShortName function is working correctly
@@ -34,7 +34,7 @@ class DepartmentEntityUnitTest extends TestCase
         $department->setShortName('NTNU');
 
         // Assert the result
-        $this->assertEquals('NTNU', $department->getShortName());
+        $this->assertSame('NTNU', $department->getShortName());
     }
 
     // Check whether the addFieldOfStudy function is working correctly
@@ -55,9 +55,9 @@ class DepartmentEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($fieldOfStudies as $study) {
-            if ($fos == $study) {
+            if ($fos === $study) {
                 // Assert the result
-                $this->assertEquals($fos, $study);
+                $this->assertSame($fos, $study);
             }
         }
     }
@@ -89,7 +89,7 @@ class DepartmentEntityUnitTest extends TestCase
         // Loop through the array
         foreach ($fieldOfStudies as $study) {
             // Assert the result
-            $this->assertNotEquals($fos1, $study);
+            $this->assertNotSame($fos1, $study);
         }
     }
 
@@ -103,7 +103,7 @@ class DepartmentEntityUnitTest extends TestCase
         $department->setEmail('NTNU@mail.com');
 
         // Assert the result
-        $this->assertEquals('NTNU@mail.com', $department->getEmail());
+        $this->assertSame('NTNU@mail.com', $department->getEmail());
     }
 
     // Check whether the addSchool function is working correctly
@@ -124,9 +124,9 @@ class DepartmentEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($schools as $school) {
-            if ($school1 == $school) {
+            if ($school1 === $school) {
                 // Assert the result
-                $this->assertEquals($school1, $school);
+                $this->assertSame($school1, $school);
             }
         }
     }
@@ -158,7 +158,7 @@ class DepartmentEntityUnitTest extends TestCase
         // Loop through the array
         foreach ($schools as $school) {
             // Assert the result
-            $this->assertNotEquals($school1, $school);
+            $this->assertNotSame($school1, $school);
         }
     }
 
@@ -172,7 +172,7 @@ class DepartmentEntityUnitTest extends TestCase
         $department->setAddress('Storgata 12');
 
         // Assert the result
-        $this->assertEquals('Storgata 12', $department->getAddress());
+        $this->assertSame('Storgata 12', $department->getAddress());
     }
 
     public function testAddAdmissionPeriod()
@@ -183,8 +183,8 @@ class DepartmentEntityUnitTest extends TestCase
         $semesters = $department->getAdmissionPeriods();
 
         foreach ($semesters as $semester) {
-            if ($admissionPeriod1 == $semester) {
-                $this->assertEquals($admissionPeriod1, $semester);
+            if ($admissionPeriod1 === $semester) {
+                $this->assertSame($admissionPeriod1, $semester);
             }
         }
     }
@@ -207,9 +207,9 @@ class DepartmentEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($teams as $team) {
-            if ($team1 == $team) {
+            if ($team1 === $team) {
                 // Assert the result
-                $this->assertEquals($team1, $team);
+                $this->assertSame($team1, $team);
             }
         }
     }
@@ -241,7 +241,7 @@ class DepartmentEntityUnitTest extends TestCase
         // Loop through the array
         foreach ($teams as $team) {
             // Assert the result
-            $this->assertNotEquals($team1, $team);
+            $this->assertNotSame($team1, $team);
         }
     }
 
@@ -251,6 +251,6 @@ class DepartmentEntityUnitTest extends TestCase
         $fakePath = 'fake path';
         $department->setLogoPath($fakePath);
 
-        $this->assertEquals($fakePath, $department->getLogoPath());
+        $this->assertSame($fakePath, $department->getLogoPath());
     }
 }

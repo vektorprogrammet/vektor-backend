@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\User;
+use App\Tests\BaseWebTestCase;
 
 class MailingListControllerTest extends BaseWebTestCase
 {
@@ -12,7 +12,7 @@ class MailingListControllerTest extends BaseWebTestCase
      */
     private $em;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         self::bootKernel();
         $this->em = static::$kernel->getContainer()
@@ -45,7 +45,7 @@ class MailingListControllerTest extends BaseWebTestCase
         $countTeamNew = $this->countEmailAddresses($client, 'Team');
 
         // verify that the user is added to the team (count increased by 1)
-        $this->assertEquals($countTeamOld + 1, $countTeamNew);
+        $this->assertSame($countTeamOld + 1, $countTeamNew);
     }
 
     public function testTeamAddAssistantIsAll()
@@ -70,7 +70,7 @@ class MailingListControllerTest extends BaseWebTestCase
          * (1) Generate email list for type
          *     $type can be among these strings: [Assistent, Team, Alle]
          * (2) Count number of "@"s (implicit: number of email addresses)
-         * (3) Return number
+         * (3) Return number.
          */
 
         // Generate email list
@@ -83,7 +83,7 @@ class MailingListControllerTest extends BaseWebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // Count "@"s and return number
-        return substr_count($crawler->filter('pre')->text(), '@');
+        return mb_substr_count($crawler->filter('pre')->text(), '@');
     }
 
     protected function tearDown(): void

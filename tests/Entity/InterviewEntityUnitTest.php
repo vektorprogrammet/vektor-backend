@@ -7,7 +7,6 @@ use App\Entity\InterviewAnswer;
 use App\Entity\InterviewSchema;
 use App\Entity\InterviewScore;
 use App\Entity\User;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class InterviewEntityUnitTest extends TestCase
@@ -19,7 +18,7 @@ class InterviewEntityUnitTest extends TestCase
 
         $interview->setInterviewSchema($intSchema);
 
-        $this->assertEquals($intSchema, $interview->getInterviewSchema());
+        $this->assertSame($intSchema, $interview->getInterviewSchema());
     }
 
     public function testSetInterviewer()
@@ -29,7 +28,7 @@ class InterviewEntityUnitTest extends TestCase
 
         $interview->setInterviewer($interviewer);
 
-        $this->assertEquals($interviewer, $interview->getInterviewer());
+        $this->assertSame($interviewer, $interview->getInterviewer());
     }
 
     public function testAddInterviewAnswer()
@@ -63,7 +62,7 @@ class InterviewEntityUnitTest extends TestCase
 
         $interview->setInterviewScore($intScore);
 
-        $this->assertEquals($intScore, $interview->getInterviewScore());
+        $this->assertSame($intScore, $interview->getInterviewScore());
     }
 
     public function testSetInterviewed()
@@ -78,20 +77,20 @@ class InterviewEntityUnitTest extends TestCase
     public function testSetScheduled()
     {
         $interview = new Interview();
-        $date = new DateTime();
+        $date = new \DateTime();
 
         $interview->setScheduled($date);
 
-        $this->assertEquals($date, $interview->getScheduled());
+        $this->assertSame($date, $interview->getScheduled());
     }
 
     public function testSetConducted()
     {
         $interview = new Interview();
-        $date = new DateTime();
+        $date = new \DateTime();
 
         $interview->setConducted($date);
 
-        $this->assertEquals($date, $interview->getConducted());
+        $this->assertSame($date, $interview->getConducted());
     }
 }

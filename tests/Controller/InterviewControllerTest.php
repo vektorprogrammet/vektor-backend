@@ -8,8 +8,6 @@ class InterviewControllerTest extends BaseWebTestCase
 {
     /**
      * @param bool $teamInterest
-     * @param $client
-     * @param $crawler
      */
     private function fillAndSubmitInterviewFormWithTeamInterest($client, $crawler, $teamInterest)
     {
@@ -44,10 +42,7 @@ class InterviewControllerTest extends BaseWebTestCase
         // Submit the form
         $client->submit($form);
     }
-    /**
-     * @param $client
-     * @param $crawler
-     */
+
     private function fillAndSubmitInterviewForm($client, $crawler)
     {
         // Find the form
@@ -78,9 +73,9 @@ class InterviewControllerTest extends BaseWebTestCase
 
     private function verifyInterview($crawler)
     {
-        $this->assertEquals(2, $crawler->filter('p:contains("Test answer")')->count());
-        $this->assertEquals(2, $crawler->filter('td:contains("Bra")')->count());
-        $this->assertEquals(3, $crawler->filter('td:contains("Ikke")')->count());
+        $this->assertSame(2, $crawler->filter('p:contains("Test answer")')->count());
+        $this->assertSame(2, $crawler->filter('td:contains("Bra")')->count());
+        $this->assertSame(3, $crawler->filter('td:contains("Ikke")')->count());
         $this->assertGreaterThan(0, $crawler->filter('td:contains("5")')->count());
         $this->assertGreaterThan(0, $crawler->filter('td:contains("4")')->count());
         $this->assertGreaterThan(0, $crawler->filter('td:contains("6")')->count());
@@ -88,7 +83,7 @@ class InterviewControllerTest extends BaseWebTestCase
 
     private function verifyCorrectInterview($crawler, $firstName, $lastName)
     {
-        $this->assertEquals(1, $crawler->filter('td:contains("'.$firstName.' '.$lastName.'")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("'.$firstName.' '.$lastName.'")')->count());
     }
 
     public function testConduct()
@@ -106,7 +101,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Assert that we have the correct page with the correct info (from the submitted form)
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("Assistent Johansen")')->count());
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/vis/6');
@@ -115,15 +110,15 @@ class InterviewControllerTest extends BaseWebTestCase
         self::ensureKernelShutdown();
 
         // Team user who is assigned the interview
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/conduct/5');
 
         // Assert that the page response status code is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct page
         $this->verifyCorrectInterview($crawler, 'Erik', 'Trondsen');
@@ -134,8 +129,8 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Assert that we have the correct page with the correct info (from the submitted form)
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Erik Trondsen")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Erik Trondsen")')->count());
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/vis/5');
         $this->verifyInterview($crawler);
@@ -148,11 +143,11 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/intervju/vis/4');
 
         // Assert that the page response status code is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct page
         $this->verifyCorrectInterview($crawler, 'Markus', 'Gundersen');
-        $this->assertEquals(2, $crawler->filter('p:contains("Test answer")')->count());
+        $this->assertSame(2, $crawler->filter('p:contains("Test answer")')->count());
     }
 
     public function testCreateSchema()
@@ -163,7 +158,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/intervju/skjema/opprett');
 
         // Assert that the page response status code is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Find the form
         $form = $crawler->selectButton('Lagre')->form();
@@ -189,7 +184,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/intervju/skjema/1');
 
         // Assert that the page response status code is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Find the form
         $form = $crawler->selectButton('Lagre')->form();
@@ -215,7 +210,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/intervju/skjema');
 
         // Assert that the page response status code is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct page
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("Intervjuskjema NTNU, 2015")')->count());
@@ -229,11 +224,11 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/intervju/settopp/6');
 
         // Assert that the page response status code is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Intervjuoppsett")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Assistent Johansen")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Intervjuoppsett")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Assistent Johansen")')->count());
 
         // Find the form
         $form = $crawler->selectButton('Send invitasjon på sms og e-post')->form();
@@ -248,22 +243,22 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
 
         // Team user who is assigned the interview
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/settopp/6');
 
         // Assert that the page response status code is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Intervjuoppsett")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Assistent Johansen")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Intervjuoppsett")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Assistent Johansen")')->count());
 
         // Find the form
         $form = $crawler->selectButton('Send invitasjon på sms og e-post')->form();
@@ -278,7 +273,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
     }
 
     public function testWantTeamInterest()
@@ -295,7 +290,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $this->fillAndSubmitInterviewFormWithTeamInterest(self::createAdminClient(), $crawler, true);
 
         $rowsAfter = $this->countTableRows('/kontrollpanel/opptakadmin/teaminteresse?department=1&semester=1');
-        $this->assertEquals($rowsBefore + 2, $rowsAfter); // One new row in each table
+        $this->assertSame($rowsBefore + 2, $rowsAfter); // One new row in each table
     }
 
     public function testNotWantTeamInterest()
@@ -313,7 +308,7 @@ class InterviewControllerTest extends BaseWebTestCase
 
         $rowsAfter = $this->countTableRows('/kontrollpanel/opptakadmin/teaminteresse?department=1&semester=1');
 
-        $this->assertEquals($rowsBefore, $rowsAfter);
+        $this->assertSame($rowsBefore, $rowsAfter);
     }
 
     public function testUpdateStatus()
@@ -322,7 +317,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $this->goTo('/kontrollpanel/opptak/fordelt?department=1&semester=1', $client);
         $before = $crawler->filter('td:contains("Ikke satt opp")')->count();
 
-        $crawler = $this->goTo("/kontrollpanel/intervju/settopp/6", $client);
+        $crawler = $this->goTo('/kontrollpanel/intervju/settopp/6', $client);
         $saveButton = $crawler->filter('div#statusModal button:contains("Lagre")');
         $this->assertNotNull($saveButton);
         $form = $saveButton->form();
@@ -333,7 +328,7 @@ class InterviewControllerTest extends BaseWebTestCase
 
         $crawler = $this->goTo('/kontrollpanel/opptak/fordelt?department=1&semester=1', $client);
         $after = $crawler->filter('td:contains("Ikke satt opp")')->count();
-        $this->assertEquals($before - 1, $after);
+        $this->assertSame($before - 1, $after);
     }
 
     /*

@@ -18,7 +18,7 @@ class SchoolEntityUnitTest extends TestCase
         $school->setName('Heggen');
 
         // Assert the result
-        $this->assertEquals('Heggen', $school->getName());
+        $this->assertSame('Heggen', $school->getName());
     }
 
     // Check whether the setContactPerson unction is working correctly
@@ -31,7 +31,7 @@ class SchoolEntityUnitTest extends TestCase
         $school->setContactPerson('Vibeke');
 
         // Assert the result
-        $this->assertEquals('Vibeke', $school->getContactPerson());
+        $this->assertSame('Vibeke', $school->getContactPerson());
     }
 
     // Check whether the addDepartment function is working correctly
@@ -52,9 +52,9 @@ class SchoolEntityUnitTest extends TestCase
 
         // Loop through the array and check for matches
         foreach ($departments as $d) {
-            if ($department1 == $d) {
+            if ($department1 === $d) {
                 // Assert the result
-                $this->assertEquals($department1, $d);
+                $this->assertSame($department1, $d);
             }
         }
     }
@@ -86,7 +86,7 @@ class SchoolEntityUnitTest extends TestCase
         // Loop through the array
         foreach ($departments as $d) {
             // Assert the result
-            $this->assertNotEquals($department1, $d);
+            $this->assertNotSame($department1, $d);
         }
     }
 
@@ -100,7 +100,7 @@ class SchoolEntityUnitTest extends TestCase
         $school->setEmail('Heggen@vgs.com');
 
         // Assert the result
-        $this->assertEquals('Heggen@vgs.com', $school->getEmail());
+        $this->assertSame('Heggen@vgs.com', $school->getEmail());
     }
 
     // Check whether the setPhone unction is working correctly
@@ -113,6 +113,6 @@ class SchoolEntityUnitTest extends TestCase
         $school->setPhone('12312312');
 
         // Assert the result
-        $this->assertEquals('12312312', $school->getPhone());
+        $this->assertSame('12312312', $school->getPhone());
     }
 }

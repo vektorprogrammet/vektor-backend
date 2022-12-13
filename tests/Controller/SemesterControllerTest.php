@@ -23,7 +23,7 @@ class SemesterControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Assert that the response is the correct redirect
         $this->assertTrue($client->getResponse()->isRedirect('/kontrollpanel/semesteradmin'));
@@ -34,7 +34,7 @@ class SemesterControllerTest extends BaseWebTestCase
         $crawler = $this->adminGoTo('/kontrollpanel/semesteradmin');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('td:contains("Vår 2013")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Høst 2015")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Vår 2013")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Høst 2015")')->count());
     }
 }

@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Receipt;
 use App\Entity\User;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class ReceiptEntityUnitTest extends TestCase
@@ -20,17 +19,17 @@ class ReceiptEntityUnitTest extends TestCase
         $receipt->setUser($user);
 
         // Assert the result
-        $this->assertEquals($user, $receipt->getUser());
+        $this->assertSame($user, $receipt->getUser());
     }
 
     public function testSetSubmitDate()
     {
-        $dateTime = new DateTime();
+        $dateTime = new \DateTime();
         $receipt = new Receipt();
 
         $receipt->setSubmitDate($dateTime);
 
-        $this->assertEquals($dateTime, $receipt->getSubmitDate());
+        $this->assertSame($dateTime, $receipt->getSubmitDate());
     }
 
     public function testSetPicturePath()
@@ -40,7 +39,7 @@ class ReceiptEntityUnitTest extends TestCase
 
         $receipt->setPicturePath($picturePath);
 
-        $this->assertEquals($picturePath, $receipt->getPicturePath());
+        $this->assertSame($picturePath, $receipt->getPicturePath());
     }
 
     public function testSetDescription()
@@ -50,7 +49,7 @@ class ReceiptEntityUnitTest extends TestCase
 
         $receipt->setSum($sum);
 
-        $this->assertEquals($sum, $receipt->getSum());
+        $this->assertSame($sum, $receipt->getSum());
     }
 
     public function testSetStatus()
@@ -59,6 +58,6 @@ class ReceiptEntityUnitTest extends TestCase
 
         $receipt->setStatus(Receipt::STATUS_PENDING);
 
-        $this->assertEquals(Receipt::STATUS_PENDING, $receipt->getStatus());
+        $this->assertSame(Receipt::STATUS_PENDING, $receipt->getStatus());
     }
 }

@@ -17,6 +17,6 @@ class PositionEntityUnitTest extends TestCase
         $position->setName('Leder');
 
         // Assert the result
-        $this->assertEquals('Leder', $position->getName());
+        $this->assertSame('Leder', $position->getName());
     }
 }

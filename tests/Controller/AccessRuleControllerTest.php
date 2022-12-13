@@ -9,21 +9,21 @@ class AccessRuleControllerTest extends BaseWebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->adminGoTo("/kontrollpanel/admin/accessrules"); // Initialize unhandled rules
+        $this->adminGoTo('/kontrollpanel/admin/accessrules'); // Initialize unhandled rules
     }
 
     public function testCreateCustomAccessRule()
     {
-        $countBefore = $this->countTableRows("/kontrollpanel/admin/accessrules");
+        $countBefore = $this->countTableRows('/kontrollpanel/admin/accessrules');
         $client = $this->createAdminClient();
-        $crawler = $this->goTo("/kontrollpanel/admin/accessrules/create", $client);
-        $form = $crawler->selectButton("Save")->form();
+        $crawler = $this->goTo('/kontrollpanel/admin/accessrules/create', $client);
+        $form = $crawler->selectButton('Save')->form();
 
-        $form["access_rule[name]"] = "Test Rule";
-        $form["access_rule[resource]"] = "resource";
+        $form['access_rule[name]'] = 'Test Rule';
+        $form['access_rule[resource]'] = 'resource';
         $client->submit($form);
 
-        $countAfter = $this->countTableRows("/kontrollpanel/admin/accessrules");
+        $countAfter = $this->countTableRows('/kontrollpanel/admin/accessrules');
 
         $this->assertGreaterThan($countBefore, $countAfter);
     }
@@ -33,29 +33,29 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $anonClient = $this->createAnonymousClient();
 
         $anonClient->request('GET', '/assistenter');
-        $this->assertEquals(200, $anonClient->getResponse()->getStatusCode());
+        $this->assertSame(200, $anonClient->getResponse()->getStatusCode());
 
-        $crawler = $this->anonymousGoTo("/");
+        $crawler = $this->anonymousGoTo('/');
         $forbiddenLinksBefore = $crawler->filter('a[href="/assistenter"]');
 
         $this->assertGreaterThan(0, $forbiddenLinksBefore->count());
 
-        $countBefore = $this->countTableRows("/kontrollpanel/admin/accessrules");
+        $countBefore = $this->countTableRows('/kontrollpanel/admin/accessrules');
         $client = $this->createAdminClient();
-        $crawler = $this->goTo("/kontrollpanel/admin/accessrules/routing/create", $client);
-        $form = $crawler->selectButton("Save")->form();
+        $crawler = $this->goTo('/kontrollpanel/admin/accessrules/routing/create', $client);
+        $form = $crawler->selectButton('Save')->form();
 
-        $form["routing_access_rule[name]"] = "Test Rule";
-        $form["routing_access_rule[resource]"] = "assistants";
-        $form["routing_access_rule[roles][0]"]->tick();
+        $form['routing_access_rule[name]'] = 'Test Rule';
+        $form['routing_access_rule[resource]'] = 'assistants';
+        $form['routing_access_rule[roles][0]']->tick();
         $client->submit($form);
 
-        $countAfter = $this->countTableRows("/kontrollpanel/admin/accessrules");
+        $countAfter = $this->countTableRows('/kontrollpanel/admin/accessrules');
 
         $this->assertGreaterThan($countBefore, $countAfter);
 
         $anonClient->request('GET', '/assistenter');
-        $this->assertEquals(403, $anonClient->getResponse()->getStatusCode());
+        $this->assertSame(403, $anonClient->getResponse()->getStatusCode());
 
         // code below checks if links are removed from the page
         // does not work currently.
@@ -83,13 +83,13 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $crawler = $this->adminGoTo('/kontrollpanel/admin/accessrules');
         $unhandledBefore = $crawler->filter('#unhandledModal tr td:contains("GET /kontrollpanel/sponsorer")')->count();
 
-        $this->assertEquals(1, $unhandledBefore);
+        $this->assertSame(1, $unhandledBefore);
 
-        $crawler = $this->adminGoTo("/kontrollpanel/admin/accessrules/routing/create");
-        $form = $crawler->selectButton("Save")->form();
-        $form["routing_access_rule[name]"] = "Test Rule 2";
-        $form["routing_access_rule[resource]"] = "sponsors_show";
-        $form["routing_access_rule[roles][0]"]->tick();
+        $crawler = $this->adminGoTo('/kontrollpanel/admin/accessrules/routing/create');
+        $form = $crawler->selectButton('Save')->form();
+        $form['routing_access_rule[name]'] = 'Test Rule 2';
+        $form['routing_access_rule[resource]'] = 'sponsors_show';
+        $form['routing_access_rule[roles][0]']->tick();
 
         $client = $this->createAdminClient();
         $client->submit($form);
@@ -97,6 +97,6 @@ class AccessRuleControllerTest extends BaseWebTestCase
         $crawler = $this->adminGoTo('/kontrollpanel/admin/accessrules');
         $unhandledAfter = $crawler->filter('#unhandledModal tr td:contains("GET /kontrollpanel/sponsorer")')->count();
 
-        $this->assertEquals(0, $unhandledAfter);
+        $this->assertSame(0, $unhandledAfter);
     }
 }

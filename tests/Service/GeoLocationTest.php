@@ -30,7 +30,7 @@ class GeoLocationTest extends WebTestCase
         $departmentRepo = $this->getMockBuilder(ObjectRepository::class)->getMock();
         $departmentRepo->expects($this->any())
                        ->method('findAll')
-                       ->willReturn([ $this->dep1, $this->dep2 ]);
+                       ->willReturn([$this->dep1, $this->dep2]);
 
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $entityManager->expects($this->any())
@@ -50,23 +50,23 @@ class GeoLocationTest extends WebTestCase
     {
         $fromLat = '63.416057';
         $fromLon = '10.408514';
-        $toLat   = '59.666108';
-        $toLon   = '10.768452';
+        $toLat = '59.666108';
+        $toLon = '10.768452';
 
         $expected = 417389.42572;
-        $actual   = round($this->geoLocation->distance($fromLat, $fromLon, $toLat, $toLon), 5);
+        $actual = round($this->geoLocation->distance($fromLat, $fromLon, $toLat, $toLon), 5);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testFindDepartmentClosestTo()
     {
         $coords = [
             'lat' => '63.416057',
-            'lon' => '10.408514'
+            'lon' => '10.408514',
         ];
 
         $closestDepartment = $this->geoLocation->findDepartmentClosestTo($coords);
-        $this->assertEquals($this->dep2, $closestDepartment);
+        $this->assertSame($this->dep2, $closestDepartment);
     }
 }

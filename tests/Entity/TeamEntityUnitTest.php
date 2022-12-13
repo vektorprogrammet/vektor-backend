@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Department;
 use App\Entity\Team;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class TeamEntityUnitTest extends TestCase
@@ -19,7 +18,7 @@ class TeamEntityUnitTest extends TestCase
         $team->setName('Hovedstyret');
 
         // Assert the result
-        $this->assertEquals('Hovedstyret', $team->getName());
+        $this->assertSame('Hovedstyret', $team->getName());
     }
 
     // Check whether the setDepartment function is working correctly
@@ -36,7 +35,7 @@ class TeamEntityUnitTest extends TestCase
         $team->setDepartment($department);
 
         // Assert the result
-        $this->assertEquals($department, $team->getDepartment());
+        $this->assertSame($department, $team->getDepartment());
     }
 
     // Check whether the setDeadline function is working correctly
@@ -47,19 +46,19 @@ class TeamEntityUnitTest extends TestCase
         $team = new Team();
 
         // dummy entity
-        $deadline = new DateTime("now +3 days");
+        $deadline = new \DateTime('now +3 days');
 
         // Use the setDeadline method
         $team->setDeadline($deadline);
 
         // Assert the result
-        $this->assertNotEquals($deadline, $team->getDeadline());
+        $this->assertNotSame($deadline, $team->getDeadline());
 
         // Try again with accept application true
         $team->setAcceptApplication(true);
         $team->setDeadline($deadline);
 
         // Assert the result
-        $this->assertEquals($deadline, $team->getDeadline());
+        $this->assertSame($deadline, $team->getDeadline());
     }
 }

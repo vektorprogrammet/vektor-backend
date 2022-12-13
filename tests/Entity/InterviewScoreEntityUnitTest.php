@@ -13,7 +13,7 @@ class InterviewScoreEntityUnitTest extends TestCase
 
         $intScore->setExplanatoryPower(3);
 
-        $this->assertEquals(3, $intScore->getExplanatoryPower());
+        $this->assertSame(3, $intScore->getExplanatoryPower());
     }
 
     public function testSetRoleModel()
@@ -22,7 +22,7 @@ class InterviewScoreEntityUnitTest extends TestCase
 
         $intScore->setRoleModel(3);
 
-        $this->assertEquals(3, $intScore->getRoleModel());
+        $this->assertSame(3, $intScore->getRoleModel());
     }
 
     public function testGetSum()
@@ -32,6 +32,6 @@ class InterviewScoreEntityUnitTest extends TestCase
         $intScore->setExplanatoryPower(3);
         $intScore->setRoleModel(3);
 
-        $this->assertEquals(6, $intScore->getSum());
+        $this->assertSame(6, $intScore->getSum());
     }
 }

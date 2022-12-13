@@ -15,7 +15,7 @@ class TeamInterestEntityUnitTest extends TestCase
      */
     private $teamInterest;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->teamInterest = new TeamInterest();
@@ -23,34 +23,34 @@ class TeamInterestEntityUnitTest extends TestCase
 
     public function testSetName()
     {
-        $this->teamInterest->setName("test");
-        $this->assertEquals("test", $this->teamInterest->getName());
+        $this->teamInterest->setName('test');
+        $this->assertSame('test', $this->teamInterest->getName());
     }
 
     public function testSetEmail()
     {
-        $this->teamInterest->setEmail("test@test.com");
-        $this->assertEquals("test@test.com", $this->teamInterest->getEmail());
+        $this->teamInterest->setEmail('test@test.com');
+        $this->assertSame('test@test.com', $this->teamInterest->getEmail());
     }
 
     public function testSetPotentialTeams()
     {
-        $teams = array(new Team(), new Team());
+        $teams = [new Team(), new Team()];
         $this->teamInterest->setPotentialTeams($teams);
-        $this->assertEquals($teams, $this->teamInterest->getPotentialTeams());
+        $this->assertSame($teams, $this->teamInterest->getPotentialTeams());
     }
 
     public function testSetSemester()
     {
         $semester = new Semester();
         $this->teamInterest->setSemester($semester);
-        $this->assertEquals($semester, $this->teamInterest->getSemester());
+        $this->assertSame($semester, $this->teamInterest->getSemester());
     }
 
     public function testSetDepartment()
     {
         $department = new Department();
         $this->teamInterest->setDepartment($department);
-        $this->assertEquals($department, $this->teamInterest->getDepartment());
+        $this->assertSame($department, $this->teamInterest->getDepartment());
     }
 }

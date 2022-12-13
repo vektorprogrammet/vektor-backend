@@ -14,7 +14,7 @@ class InterviewQuestionAlternativeEntityUnitTest extends TestCase
 
         $alternative->setAlternative('Test');
 
-        $this->assertEquals('Test', $alternative->getAlternative());
+        $this->assertSame('Test', $alternative->getAlternative());
     }
 
     public function testSetInterviewQuestion()
@@ -24,6 +24,6 @@ class InterviewQuestionAlternativeEntityUnitTest extends TestCase
 
         $alternative->setInterviewQuestion($intQuestion);
 
-        $this->assertEquals($intQuestion, $alternative->getInterviewQuestion());
+        $this->assertSame($intQuestion, $alternative->getInterviewQuestion());
     }
 }

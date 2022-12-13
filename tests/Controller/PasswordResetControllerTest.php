@@ -29,13 +29,12 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         $crawler = $client->request('GET', '/');
-        return $crawler->filter('nav span:contains("Logg inn")')->count() == 0;
+
+        return 0 === $crawler->filter('nav span:contains("Logg inn")')->count();
     }
 
     /**
-     * Gets a valid unused reset link
-     *
-     * @param string $email
+     * Gets a valid unused reset link.
      *
      * @return bool|string reset link
      */
@@ -45,34 +44,35 @@ class PasswordResetControllerTest extends BaseWebTestCase
         self::ensureKernelShutdown();
         $client = self::createClient();
         $crawler = $client->request('GET', '/resetpassord');
-        $this->assertEquals(1, $crawler->filter('h1:contains("Tilbakestill passord")')->count());
+        $this->assertSame(1, $crawler->filter('h1:contains("Tilbakestill passord")')->count());
 
         // Fill in form and
         $form = $crawler->selectButton('Tilbakestill passord')->form();
         $form['passwordReset[email]'] = $email;
 
-        //$client = $this->createAnonymousClient();
+        // $client = $this->createAnonymousClient();
         $client->enableProfiler();
         $client->submit($form);
 
         // Assert email sent
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
-        $this->assertEquals(1, $mailCollector->getMessageCount());
+        $this->assertSame(1, $mailCollector->getMessageCount());
         $message = $mailCollector->getMessages()[0];
         $body = $message->getBody();
 
         // Get reset link from email
-        $start = strpos($body, '/resetpassord/');
-        $messageStartingWithCode = substr($body, $start);
-        $end = strpos($messageStartingWithCode, "\n");
-        return substr($body, $start, $end);
+        $start = mb_strpos($body, '/resetpassord/');
+        $messageStartingWithCode = mb_substr($body, $start);
+        $end = mb_strpos($messageStartingWithCode, "\n");
+
+        return mb_substr($body, $start, $end);
     }
 
     private function assertNoEmailSent($client)
     {
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
-        $this->assertEquals(0, $mailCollector->getMessageCount());
+        $this->assertSame(0, $mailCollector->getMessageCount());
     }
 
     public function testResetPasswordAction()
@@ -84,13 +84,13 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $client = self::createClient();
         $crawler = $client->request('GET', $resetLink);
 
-        $this->assertEquals(1, $crawler->filter('h1:contains("Lag nytt passord")')->count());
+        $this->assertSame(1, $crawler->filter('h1:contains("Lag nytt passord")')->count());
         $form = $crawler->selectButton('Lagre nytt passord')->first()->form();
         $form['newPassword[password][first]'] = self::newPass;
         $form['newPassword[password][second]'] = self::newPass;
 
         $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Assert new password is set
         $this->assertTrue($this->loginSuccessful(self::newPass));
@@ -107,7 +107,7 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $client->enableProfiler();
         $crawler = $client->submit($form);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
 
         $this->assertStringContainsString('Det finnes ingen brukere med denne e-postadressen', $content);
@@ -132,14 +132,14 @@ class PasswordResetControllerTest extends BaseWebTestCase
         // Try to reset password again
         $crawler = $client->request('GET', $resetLink);
 
-        $this->assertEquals(1, $crawler->filter('html:contains("Ugyldig kode")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Ugyldig kode")')->count());
     }
 
     public function testInvalidLink()
     {
-        $resetLink = '/resetpassord/' . bin2hex(openssl_random_pseudo_bytes(12));
+        $resetLink = '/resetpassord/'.bin2hex(openssl_random_pseudo_bytes(12));
         $crawler = $this->anonymousGoTo($resetLink);
-        $this->assertEquals(1, $crawler->filter('html:contains("Ugyldig kode")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Ugyldig kode")')->count());
     }
 
     public function testResetWithCompanyEmail()
@@ -150,8 +150,8 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $client = $this->createAnonymousClient();
         $client->enableProfiler();
         $crawler = $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('html:contains("Prøv din private e-post")')->count());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(1, $crawler->filter('html:contains("Prøv din private e-post")')->count());
 
         $this->assertNoEmailSent($client);
     }
@@ -164,8 +164,8 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $client = $this->createAnonymousClient();
         $client->enableProfiler();
         $crawler = $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('html:contains("Brukeren med denne e-postadressen er deaktivert")')->count());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(1, $crawler->filter('html:contains("Brukeren med denne e-postadressen er deaktivert")')->count());
 
         $this->assertNoEmailSent($client);
     }

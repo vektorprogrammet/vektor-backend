@@ -24,7 +24,7 @@ class CreateDepartmentTest extends TypeTestCase
         $form->submit($data);
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($object, $form->getData());
+        $this->assertSame($object, $form->getData());
 
         $view = $form->createView();
         $children = $view->children;
@@ -36,28 +36,28 @@ class CreateDepartmentTest extends TypeTestCase
 
     public function getValidTestData()
     {
-        return array(
-            array(
-                'data' => array(
+        return [
+            [
+                'data' => [
                     'name' => 'Universitetet i Østfold',
                     'shortName' => 'UiØ',
                     'email' => 'uiø@mail.com',
                     'address' => 'Ormvegen 12',
                     'active' => false,
-                ),
-            ),
-            array(
-                'data' => array('active' => true),
-            ),
-            array(
-                'data' => array(
+                ],
+            ],
+            [
+                'data' => ['active' => true],
+            ],
+            [
+                'data' => [
                     'name' => null,
                     'shortName' => null,
                     'email' => null,
                     'address' => null,
                     'active' => true,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 }

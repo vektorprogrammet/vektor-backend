@@ -22,6 +22,6 @@ class CertificateRequestEntityUnitTest extends TestCase
         $cr->setUser($user);
 
         // Assert the result
-        $this->assertEquals($user, $cr->getUser());
+        $this->assertSame($user, $cr->getUser());
     }
 }

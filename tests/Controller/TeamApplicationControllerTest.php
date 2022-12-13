@@ -15,15 +15,15 @@ class TeamApplicationControllerTest extends BaseWebTestCase
         $link = $crawler->selectLink('Søk Styret!')->eq(0)->link();
         $crawler = $client->click($link);
 
-        $this->assertEquals(1, $crawler->filter('h1:contains("Søk Styret")')->count());
+        $this->assertSame(1, $crawler->filter('h1:contains("Søk Styret")')->count());
     }
 
     public function testShowAllApplications()
     {
         $crawler = $this->adminGoTo('/kontrollpanel/team/applications/1');
 
-        //Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Søknader Styret")')->count());
+        // Assert that we have the correct page
+        $this->assertSame(1, $crawler->filter('h2:contains("Søknader Styret")')->count());
     }
 
     public function testShow()
@@ -36,8 +36,8 @@ class TeamApplicationControllerTest extends BaseWebTestCase
         $link = $crawler->selectLink('Arnt Erik')->eq(0)->link();
         $crawler = $client->click($link);
 
-        //Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h3:contains("Søknad til Styret fra ")')->count());
+        // Assert that we have the correct page
+        $this->assertSame(1, $crawler->filter('h3:contains("Søknad til Styret fra ")')->count());
     }
 
     public function testAcceptApplication()
@@ -66,7 +66,7 @@ class TeamApplicationControllerTest extends BaseWebTestCase
         $this->assertTrue($clientAnonymous->getResponse()->isSuccessful());
 
         // Assert that the link is gone
-        $this->assertEquals(0, $crawler->selectLink('Søk Styret')->count());
+        $this->assertSame(0, $crawler->selectLink('Søk Styret')->count());
     }
 
     public function testCreateApplication()
@@ -102,7 +102,7 @@ class TeamApplicationControllerTest extends BaseWebTestCase
 
         $applicationsAfter = $crawler->filter('tr')->count();
 
-        $this->assertEquals($applicationsBefore + 1, $applicationsAfter);
+        $this->assertSame($applicationsBefore + 1, $applicationsAfter);
     }
 
     public function testDeleteApplication()
@@ -126,6 +126,6 @@ class TeamApplicationControllerTest extends BaseWebTestCase
         $crawler = $clientAdmin->request('GET', '/kontrollpanel/team/applications/1');
         $this->assertTrue($clientAdmin->getResponse()->isSuccessful());
 
-        $this->assertEquals(1, $crawler->filter('td:contains("Ingen søkere")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Ingen søkere")')->count());
     }
 }

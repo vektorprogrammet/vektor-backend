@@ -80,7 +80,7 @@ class RoleManagerTest extends KernelTestCase
     private function assertThatUserWithEmailHasRole(string $email, string $role)
     {
         $user = $this->em->getRepository(User::class)->findUserByEmail($email);
-        $this->assertEquals($role, current($user->getRoles()));
+        $this->assertSame($role, current($user->getRoles()));
     }
 }
 
@@ -90,11 +90,6 @@ class RoleUserMock
     private $roleBeforeExecution;
     private $roleAfterExecution;
 
-    /**
-     * @param $email
-     * @param $roleBeforeExecution
-     * @param $roleAfterExecution
-     */
     public function __construct($email, $roleBeforeExecution, $roleAfterExecution)
     {
         $this->email = $email;

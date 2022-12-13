@@ -17,7 +17,7 @@ class ContactEntityUnitTest extends TestCase
         $contact->setName('Grete');
 
         // Assert the result
-        $this->assertEquals('Grete', $contact->getName());
+        $this->assertSame('Grete', $contact->getName());
     }
 
     // Check whether the setEmail function is working correctly
@@ -30,7 +30,7 @@ class ContactEntityUnitTest extends TestCase
         $contact->setEmail('Grete@mail.com');
 
         // Assert the result
-        $this->assertEquals('Grete@mail.com', $contact->getEmail());
+        $this->assertSame('Grete@mail.com', $contact->getEmail());
     }
 
     // Check whether the setSubject function is working correctly
@@ -43,7 +43,7 @@ class ContactEntityUnitTest extends TestCase
         $contact->setSubject('asdf');
 
         // Assert the result
-        $this->assertEquals('asdf', $contact->getSubject());
+        $this->assertSame('asdf', $contact->getSubject());
     }
 
     // Check whether the setBody function is working correctly
@@ -56,6 +56,6 @@ class ContactEntityUnitTest extends TestCase
         $contact->setBody('This is a long dummy text that is suppose to be somewhat long and somewhat short');
 
         // Assert the result
-        $this->assertEquals('This is a long dummy text that is suppose to be somewhat long and somewhat short', $contact->getBody());
+        $this->assertSame('This is a long dummy text that is suppose to be somewhat long and somewhat short', $contact->getBody());
     }
 }

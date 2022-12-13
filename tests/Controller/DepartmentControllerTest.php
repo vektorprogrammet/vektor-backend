@@ -11,17 +11,17 @@ class DepartmentControllerTest extends BaseWebTestCase
         $crawler = $this->adminGoTo('/kontrollpanel/avdelingadmin');
 
         // Assert that we have the correct department data
-        $this->assertEquals(1, $crawler->filter('a:contains("Trondheim")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Bergen")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Ås")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Oslo")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Trondheim")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Bergen")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Ås")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Oslo")')->count());
     }
 
     public function testCreateDepartment()
     {
         $client = $this->createAdminClient();
         $crawler = $this->goTo('/kontrollpanel/avdelingadmin', $client);
-        $this->assertEquals(0, $crawler->filter('a:contains("Ålesund")')->count());
+        $this->assertSame(0, $crawler->filter('a:contains("Ålesund")')->count());
 
         // Find a link and click it
         $link = $crawler->selectLink('Opprett avdeling')->link();
@@ -40,7 +40,7 @@ class DepartmentControllerTest extends BaseWebTestCase
         $crawler = $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Assert that the response is the correct redirect
         $this->assertTrue($client->getResponse()->isRedirect('/kontrollpanel/avdelingadmin'));
@@ -49,7 +49,7 @@ class DepartmentControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Check the count for the different variables
-        $this->assertEquals(1, $crawler->filter('a:contains("Ålesund")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Ålesund")')->count());
     }
 
     public function testCreateDepartmentWithNonUniqueName()
@@ -74,9 +74,9 @@ class DepartmentControllerTest extends BaseWebTestCase
         $crawler = $client->submit($form);
 
         // Assert not redirected
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
         // Assert body contains validation error
-        $this->assertEquals(1, $crawler->filter('div.invalid-feedback:contains("This value is already used")')->count());
+        $this->assertSame(1, $crawler->filter('div.invalid-feedback:contains("This value is already used")')->count());
     }
 
     public function testUpdateDepartment()
@@ -84,7 +84,7 @@ class DepartmentControllerTest extends BaseWebTestCase
         $client = $this->createAdminClient();
         $crawler = $client->request('GET', '/kontrollpanel/avdelingadmin');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Find a link and click it
         $link = $crawler->selectLink('Rediger')->first()->link();
@@ -103,7 +103,7 @@ class DepartmentControllerTest extends BaseWebTestCase
         $crawler = $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Assert that the response is the correct redirect
         $this->assertTrue($client->getResponse()->isRedirect('/kontrollpanel/avdelingadmin'));
@@ -117,12 +117,12 @@ class DepartmentControllerTest extends BaseWebTestCase
         $this->assertStringContainsString('NTNU@mail.com2', $client->getResponse()->getContent());
 
         // Check the count for the different variables
-        $this->assertEquals(1, $crawler->filter('a:contains("Trondheim2")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("NTNU2")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("NTNU@mail.com2")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Trondheim2")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("NTNU2")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("NTNU@mail.com2")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     /*

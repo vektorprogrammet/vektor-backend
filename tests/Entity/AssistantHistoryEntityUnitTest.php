@@ -28,7 +28,7 @@ class AssistantHistoryEntityUnitTest extends TestCase
         $assistantHistory->setUser($user);
 
         // Assert the result
-        $this->assertEquals('petjo', $assistantHistory->getUser()->getUserIdentifier());
+        $this->assertSame('petjo', $assistantHistory->getUser()->getUserIdentifier());
     }
 
     // Check whether the setSemester function is working correctly
@@ -47,7 +47,7 @@ class AssistantHistoryEntityUnitTest extends TestCase
         $assistantHistory->setSemester($semester);
 
         // Assert the result
-        $this->assertEquals($semester->getSemesterTime(), $assistantHistory->getSemester()->getSemesterTime());
+        $this->assertSame($semester->getSemesterTime(), $assistantHistory->getSemester()->getSemesterTime());
     }
 
     // Check whether the setSchool function is working correctly
@@ -66,7 +66,7 @@ class AssistantHistoryEntityUnitTest extends TestCase
         $assistantHistory->setSchool($school);
 
         // Assert the result
-        $this->assertEquals($school->getName(), $assistantHistory->getSchool()->getName());
+        $this->assertSame($school->getName(), $assistantHistory->getSchool()->getName());
     }
 
     // Check whether the setWorkdays function is working correctly
@@ -79,6 +79,6 @@ class AssistantHistoryEntityUnitTest extends TestCase
         $assistantHistory->setWorkdays('5');
 
         // Assert the result
-        $this->assertEquals('5', $assistantHistory->getWorkdays());
+        $this->assertSame('5', $assistantHistory->getWorkdays());
     }
 }

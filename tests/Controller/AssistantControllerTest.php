@@ -17,7 +17,7 @@ class AssistantControllerTest extends BaseWebTestCase
 
         $applicationsAfter = $this->countTableRows($path);
 
-        $this->assertEquals($applicationsBefore + 1, $applicationsAfter);
+        $this->assertSame($applicationsBefore + 1, $applicationsAfter);
     }
 
     public function testSameEmailCanOnlyBeUsedOnceInASemester()
@@ -31,7 +31,7 @@ class AssistantControllerTest extends BaseWebTestCase
 
         $applicationsAfter = $this->countTableRows($path);
 
-        $this->assertEquals($applicationsBefore + 1, $applicationsAfter);
+        $this->assertSame($applicationsBefore + 1, $applicationsAfter);
     }
 
     public function testSameEmailCanBeUsedInMultipleDepartments()
@@ -51,8 +51,8 @@ class AssistantControllerTest extends BaseWebTestCase
         $applicationsAfterFirstDepartment = $this->countTableRows($firstDepartmentPath);
         $applicationsAfterSecondDepartment = $this->countTableRows($secondDepartmentPath);
 
-        $this->assertEquals($applicationsBeforeFirstDepartment + 1, $applicationsAfterFirstDepartment);
-        $this->assertEquals($applicationsBeforeSecondDepartment + 1, $applicationsAfterSecondDepartment);
+        $this->assertSame($applicationsBeforeFirstDepartment + 1, $applicationsAfterFirstDepartment);
+        $this->assertSame($applicationsBeforeSecondDepartment + 1, $applicationsAfterSecondDepartment);
     }
 
     private function createAndSubmitForm(int $departmentId = 1, int $fieldOfStudyId = 2)
@@ -61,13 +61,13 @@ class AssistantControllerTest extends BaseWebTestCase
 
         $form = $crawler->filter("form[name='application_$departmentId'] button:contains('Søk')")->form();
 
-        $form["application_${departmentId}[user][firstName]"] = 'test';
-        $form["application_${departmentId}[user][lastName]"] = 'mctest';
-        $form["application_${departmentId}[user][email]"] = 'test@vektorprogrammet.no';
-        $form["application_${departmentId}[user][phone]"] = '99887766';
-        $form["application_${departmentId}[user][gender]"] = 0;
-        $form["application_${departmentId}[user][fieldOfStudy]"] = $fieldOfStudyId;
-        $form["application_${departmentId}[yearOfStudy]"] = '1. klasse';
+        $form["application_{$departmentId}[user][firstName]"] = 'test';
+        $form["application_{$departmentId}[user][lastName]"] = 'mctest';
+        $form["application_{$departmentId}[user][email]"] = 'test@vektorprogrammet.no';
+        $form["application_{$departmentId}[user][phone]"] = '99887766';
+        $form["application_{$departmentId}[user][gender]"] = 0;
+        $form["application_{$departmentId}[user][fieldOfStudy]"] = $fieldOfStudyId;
+        $form["application_{$departmentId}[yearOfStudy]"] = '1. klasse';
 
         $this->createAnonymousClient()->submit($form);
     }

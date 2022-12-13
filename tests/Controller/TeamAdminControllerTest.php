@@ -50,7 +50,7 @@ class TeamAdminControllerTest extends BaseWebTestCase
         // Assert that we have the correct page
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("Leder")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("test123")')->count());
-        $this->assertEquals(0, $crawler->filter('td:contains("Medlem")')->count());
+        $this->assertSame(0, $crawler->filter('td:contains("Medlem")')->count());
     }
 
     public function testShowPositions()
@@ -82,7 +82,7 @@ class TeamAdminControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         // Assert not redirected
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testCreateTeamForDepartment()
@@ -103,7 +103,7 @@ class TeamAdminControllerTest extends BaseWebTestCase
 
         $crawler = $client->followRedirect();
 
-        $this->assertEquals(1, $crawler->filter('td:contains("testteam1@vektorprogrammet.no")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("testteam1@vektorprogrammet.no")')->count());
     }
 
     public function testUpdateTeam()
@@ -124,8 +124,8 @@ class TeamAdminControllerTest extends BaseWebTestCase
 
         $crawler = $client->followRedirect();
 
-        $this->assertEquals(1, $crawler->filter('td:contains("testteam2@vektorprogrammet.no")')->count());
-        $this->assertEquals(0, $crawler->filter('td:contains("Styret")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("testteam2@vektorprogrammet.no")')->count());
+        $this->assertSame(0, $crawler->filter('td:contains("Styret")')->count());
     }
 
     public function testAddUserToTeam()
@@ -157,8 +157,8 @@ class TeamAdminControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/team/avdeling/1');
 
         // Check the count for the different variables
-        $this->assertEquals(1, $crawler->filter('a:contains("Styret")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("IT")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Styret")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("IT")')->count());
     }
 
     public function testShowSpecificTeam()
@@ -169,8 +169,8 @@ class TeamAdminControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/teamadmin/team/1');
 
         // Check the count for the different variables
-        $this->assertEquals(1, $crawler->filter('td:contains("Petter Johansen")')->count());
-        $this->assertEquals(2, $crawler->filter('td:contains("Thomas Alm")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Petter Johansen")')->count());
+        $this->assertSame(2, $crawler->filter('td:contains("Thomas Alm")')->count());
     }
 
     public function testShow()
@@ -180,7 +180,7 @@ class TeamAdminControllerTest extends BaseWebTestCase
 
         $crawler = $client->request('GET', '/kontrollpanel/team/avdeling');
 
-        $this->assertEquals(1, $crawler->filter('a:contains("Styret")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("IT")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Styret")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("IT")')->count());
     }
 }

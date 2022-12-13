@@ -18,7 +18,7 @@ class FieldOfStudyEntityUnitTest extends TestCase
         $fos->setName('BITx2');
 
         // Assert the result
-        $this->assertEquals('BITx2', $fos->getName());
+        $this->assertSame('BITx2', $fos->getName());
     }
 
     // Check whether the setShortName function is working correctly
@@ -31,7 +31,7 @@ class FieldOfStudyEntityUnitTest extends TestCase
         $fos->setShortName('BIT');
 
         // Assert the result
-        $this->assertEquals('BIT', $fos->getShortName());
+        $this->assertSame('BIT', $fos->getShortName());
     }
 
     // Check whether the setDepartment function is working correctly
@@ -48,6 +48,6 @@ class FieldOfStudyEntityUnitTest extends TestCase
         $fos->setDepartment($department);
 
         // Assert the result
-        $this->assertEquals($department, $fos->getDepartment());
+        $this->assertSame($department, $fos->getDepartment());
     }
 }

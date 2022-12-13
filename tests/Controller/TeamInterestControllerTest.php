@@ -19,11 +19,11 @@ class TeamInterestControllerTest extends BaseWebTestCase
         $form['App_teaminterest[email]'] = 'test@testmail.com';
         $form['App_teaminterest[potentialTeams]'][3]->tick();
         $this->createAnonymousClient()->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode()); // Assert request was redirected
+        $this->assertSame(302, $client->getResponse()->getStatusCode()); // Assert request was redirected
         self::ensureKernelShutdown();
 
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/opptakadmin/teaminteresse?department=1&semester=1');
         $rowsAfter = $crawler->filter('tr')->count();
-        $this->assertEquals($rowsBefore + 2, $rowsAfter);
+        $this->assertSame($rowsBefore + 2, $rowsAfter);
     }
 }

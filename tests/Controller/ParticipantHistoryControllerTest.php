@@ -13,7 +13,7 @@ class ParticipantHistoryControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/deltakerhistorikk');
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Assistenter")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Assistenter")')->count());
 
         // Assert that we have the correct data
         $this->assertStringContainsString('Petter Johansen', $client->getResponse()->getContent());
@@ -25,13 +25,13 @@ class ParticipantHistoryControllerTest extends BaseWebTestCase
         $this->assertStringContainsString('Gimse', $client->getResponse()->getContent());
 
         // Check the count for the different variables
-        $this->assertEquals(1, $crawler->filter('td a:contains("Petter Johansen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("petter@stud.ntnu.no")')->count());
-        $this->assertEquals(2, $crawler->filter('td:contains("Bolk 2")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Onsdag")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Gimse")')->count());
+        $this->assertSame(1, $crawler->filter('td a:contains("Petter Johansen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("petter@stud.ntnu.no")')->count());
+        $this->assertSame(2, $crawler->filter('td:contains("Bolk 2")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Onsdag")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Gimse")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

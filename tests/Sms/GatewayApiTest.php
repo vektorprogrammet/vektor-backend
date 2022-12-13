@@ -20,8 +20,8 @@ class GatewayApiTest extends TestCase
         $this->gatewayApi = new GatewayAPI([
             'disable_delivery' => true,
             'max_length' => 2000,
-            'api_token' => "SECRET",
-            'country_code' => '47'
+            'api_token' => 'SECRET',
+            'country_code' => '47',
         ], $loggerMock);
     }
 
@@ -30,7 +30,7 @@ class GatewayApiTest extends TestCase
         $expected = true;
         $actual = $this->gatewayApi->validatePhoneNumber('12345678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberWithSpaces()
@@ -38,7 +38,7 @@ class GatewayApiTest extends TestCase
         $expected = true;
         $actual = $this->gatewayApi->validatePhoneNumber('123 45 678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberWithCountryCode()
@@ -46,7 +46,7 @@ class GatewayApiTest extends TestCase
         $expected = true;
         $actual = $this->gatewayApi->validatePhoneNumber('4712345678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberWithPlusAndCountryCode()
@@ -54,7 +54,7 @@ class GatewayApiTest extends TestCase
         $expected = true;
         $actual = $this->gatewayApi->validatePhoneNumber('+4712345678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateEmptyString()
@@ -62,7 +62,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberTooShort()
@@ -70,7 +70,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('1234567');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberTooShortAndStartsWithCountryCode()
@@ -78,7 +78,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('471234567');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberTooShortAndStartsWithPlusCountryCode()
@@ -86,7 +86,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('+471234567');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberTooLong()
@@ -94,7 +94,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('123456789');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberTooLongAndStartsWithCountryCode()
@@ -102,7 +102,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('47123456789');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testValidateNumberTooLongAndStartWithPlus()
@@ -110,7 +110,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('+47123456789');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberEightDigits()
@@ -118,7 +118,7 @@ class GatewayApiTest extends TestCase
         $expected = '4712345678';
         $actual = $this->gatewayApi->formatPhoneNumber('12345678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberWithSpaces()
@@ -126,7 +126,7 @@ class GatewayApiTest extends TestCase
         $expected = '4712345678';
         $actual = $this->gatewayApi->formatPhoneNumber('123 45 678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberAlreadyFormatted()
@@ -134,7 +134,7 @@ class GatewayApiTest extends TestCase
         $expected = '4712345678';
         $actual = $this->gatewayApi->formatPhoneNumber('4712345678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberStartWithPlus()
@@ -142,7 +142,7 @@ class GatewayApiTest extends TestCase
         $expected = '4712345678';
         $actual = $this->gatewayApi->formatPhoneNumber('+4712345678');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberEmptyString()
@@ -150,7 +150,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->formatPhoneNumber('');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberTooShort()
@@ -158,7 +158,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->formatPhoneNumber('1234567');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberTooShortAndStartsWithCountryCode()
@@ -166,7 +166,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->formatPhoneNumber('471234567');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberTooShortAndStartsWithPlusCountryCode()
@@ -174,7 +174,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->formatPhoneNumber('+471234567');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberTooLong()
@@ -182,7 +182,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->formatPhoneNumber('123456789');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberTooLongStartWithCountryCode()
@@ -190,7 +190,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->formatPhoneNumber('47123456789');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testFormatNumberTooLongStartWithPlus()
@@ -198,7 +198,7 @@ class GatewayApiTest extends TestCase
         $expected = false;
         $actual = $this->gatewayApi->formatPhoneNumber('+47123456789');
 
-        self::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testSendWithoutCrashing()

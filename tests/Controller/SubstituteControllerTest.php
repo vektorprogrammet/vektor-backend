@@ -7,7 +7,7 @@ use App\Tests\BaseWebTestCase;
 class SubstituteControllerTest extends BaseWebTestCase
 {
     /**
-     * Assert that team-leader has access to edit/delete buttons
+     * Assert that team-leader has access to edit/delete buttons.
      */
     public function testShowTeamLeader()
     {
@@ -19,15 +19,15 @@ class SubstituteControllerTest extends BaseWebTestCase
     }
 
     /**
-     * Assert that team-member does not have access to edit/delete buttons
+     * Assert that team-member does not have access to edit/delete buttons.
      */
     public function testShowTeamMember()
     {
         $crawler = $this->teamMemberGoTo('/kontrollpanel/vikar');
 
         // Verify that edit/delete buttons don't show on page
-        $this->assertEquals(0, $crawler->filter('a:contains("Slett")')->count());
-        $this->assertEquals(0, $crawler->filter('a:contains("Rediger")')->count());
+        $this->assertSame(0, $crawler->filter('a:contains("Slett")')->count());
+        $this->assertSame(0, $crawler->filter('a:contains("Rediger")')->count());
     }
 
     public function testShowSubstitutesByDepartment()
@@ -36,9 +36,9 @@ class SubstituteControllerTest extends BaseWebTestCase
         $crawler = $this->adminGoTo('/kontrollpanel/vikar?department=1&semester=1');
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Vikarer")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Team")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Johansen")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Vikarer")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Team")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Johansen")')->count());
 
         // Assert that edit/delete buttons show on page
         // Note: Requires that at least 1 substitute is present in the database
@@ -52,7 +52,7 @@ class SubstituteControllerTest extends BaseWebTestCase
 
         $client->request('GET', '/kontrollpanel/vikar/opprett/4');
 
-        $this->assertEquals(405, $client->getResponse()->getStatusCode());
+        $this->assertSame(405, $client->getResponse()->getStatusCode());
     }
 
     public function testCreate()
@@ -64,7 +64,7 @@ class SubstituteControllerTest extends BaseWebTestCase
 
         $subCountAfter = $this->countTableRows('/kontrollpanel/vikar');
 
-        $this->assertEquals(1, $subCountAfter - $subCountBefore);
+        $this->assertSame(1, $subCountAfter - $subCountBefore);
 
         // Delete the created substitute after test
         $client->request('POST', '/kontrollpanel/vikar/slett/4');
@@ -90,6 +90,6 @@ class SubstituteControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Assert that we have the correct page with the correct info (from the submitted form)
-        $this->assertEquals(1, $crawler->filter('td:contains("95999999")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("95999999")')->count());
     }
 }

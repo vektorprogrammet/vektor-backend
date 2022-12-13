@@ -40,6 +40,6 @@ class InterviewSchemaEntityUnitTest extends TestCase
 
         $intSchema->setName('Test');
 
-        $this->assertEquals('Test', $intSchema->getName());
+        $this->assertSame('Test', $intSchema->getName());
     }
 }

@@ -24,7 +24,7 @@ class CreatePositionTest extends TypeTestCase
         $form->submit($data);
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($object, $form->getData());
+        $this->assertSame($object, $form->getData());
 
         $view = $form->createView();
         $children = $view->children;
@@ -36,20 +36,20 @@ class CreatePositionTest extends TypeTestCase
 
     public function getValidTestData()
     {
-        return array(
-            array(
-                'data' => array(
+        return [
+            [
+                'data' => [
                     'name' => 'Leder',
-                ),
-            ),
-            array(
-                'data' => array(),
-            ),
-            array(
-                'data' => array(
+                ],
+            ],
+            [
+                'data' => [],
+            ],
+            [
+                'data' => [
                     'name' => null,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 }

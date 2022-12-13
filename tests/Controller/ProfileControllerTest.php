@@ -8,10 +8,10 @@ class ProfileControllerTest extends BaseWebTestCase
 {
     public function testShow()
     {
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'petjo',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
         $crawler = $client->request('GET', '/profile');
 
         // Assert that we have the correct profile user
@@ -21,11 +21,11 @@ class ProfileControllerTest extends BaseWebTestCase
         $this->assertStringContainsString('Leder', $client->getResponse()->getContent());
 
         // Check the count for Styret, Leder and Petter Johansen
-        $this->assertEquals(1, $crawler->filter('html:contains("Styret")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("Leder")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Styret")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Leder")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testShowSpecific()
@@ -42,13 +42,13 @@ class ProfileControllerTest extends BaseWebTestCase
         $this->assertStringContainsString('NTNU', $client->getResponse()->getContent());
 
         // Check the count for the different parameters
-        $this->assertEquals(1, $crawler->filter('html:contains("NTNU")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("Teammedlem")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("alm@mail.com")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("Brukeren er aktiv")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("NTNU")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Teammedlem")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("alm@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Brukeren er aktiv")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testEditProfileInformationAdmin()
@@ -57,10 +57,10 @@ class ProfileControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/profil/rediger/4');
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h1:contains(" Rediger profil ")')->count());
+        $this->assertSame(1, $crawler->filter('h1:contains(" Rediger profil ")')->count());
 
         // Assert that we have the correct user
-        $this->assertEquals(1, $crawler->filter('p:contains("Thomas Alm")')->count());
+        $this->assertSame(1, $crawler->filter('p:contains("Thomas Alm")')->count());
 
         $form = $crawler->selectButton('Lagre')->form();
 
@@ -75,7 +75,7 @@ class ProfileControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Follow the redirect
         $crawler = $client->followRedirect();
@@ -92,13 +92,13 @@ class ProfileControllerTest extends BaseWebTestCase
         $this->assertStringContainsString('MIDT', $client->getResponse()->getContent());
 
         // Check the count for the different parameters
-        $this->assertEquals(1, $crawler->filter('html:contains("NTNU")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("999 12 399")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("alm@mail.com")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("Brukeren er aktiv")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("NTNU")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("999 12 399")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("alm@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Brukeren er aktiv")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testEditProfileInformation()
@@ -107,7 +107,7 @@ class ProfileControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/profil/rediger');
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h1:contains(" Rediger din profil ")')->count());
+        $this->assertSame(1, $crawler->filter('h1:contains(" Rediger din profil ")')->count());
 
         $form = $crawler->selectButton('Lagre')->form();
 
@@ -122,7 +122,7 @@ class ProfileControllerTest extends BaseWebTestCase
         $crawler = $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Follow the redirect
         $crawler = $client->followRedirect();
@@ -135,10 +135,10 @@ class ProfileControllerTest extends BaseWebTestCase
         $this->assertStringContainsString('MIDT', $client->getResponse()->getContent());
 
         // Check the count for the different parameters
-        $this->assertEquals(1, $crawler->filter('html:contains("MIDT")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("petjo@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("MIDT")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("petjo@mail.com")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

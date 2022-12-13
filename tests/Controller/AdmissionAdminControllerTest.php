@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\Interview;
+use App\Tests\BaseWebTestCase;
 
 class AdmissionAdminControllerTest extends BaseWebTestCase
 {
@@ -11,49 +11,49 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
     {
         $crawler = $this->teamMemberGoTo('/kontrollpanel/opptak');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
-        $this->assertEquals(0, $crawler->filter('a.btn:contains("Ny søker")')->count());
-        $this->assertEquals(0, $crawler->filter('option:contains("Fordel intervju")')->count());
-        $this->assertEquals(0, $crawler->filter('option:contains("Slett søknad")')->count());
-        $this->assertEquals(0, $crawler->filter('a.btn:contains("Utfør")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(0, $crawler->filter('a.btn:contains("Ny søker")')->count());
+        $this->assertSame(0, $crawler->filter('option:contains("Fordel intervju")')->count());
+        $this->assertSame(0, $crawler->filter('option:contains("Slett søknad")')->count());
+        $this->assertSame(0, $crawler->filter('a.btn:contains("Utfør")')->count());
     }
 
     public function testShowAsTeamLeader()
     {
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/opptak');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
-        $this->assertEquals(1, $crawler->filter('a.btn:contains("Ny søker")')->count());
-        $this->assertEquals(1, $crawler->filter('option:contains("Fordel intervju")')->count());
-        $this->assertEquals(0, $crawler->filter('option:contains("Slett søknad")')->count());
-        $this->assertEquals(1, $crawler->filter('a.btn:contains("Utfør")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('a.btn:contains("Ny søker")')->count());
+        $this->assertSame(1, $crawler->filter('option:contains("Fordel intervju")')->count());
+        $this->assertSame(0, $crawler->filter('option:contains("Slett søknad")')->count());
+        $this->assertSame(1, $crawler->filter('a.btn:contains("Utfør")')->count());
     }
 
     public function testShowAsAdmin()
     {
         $crawler = $this->adminGoTo('/kontrollpanel/opptak');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
-        $this->assertEquals(1, $crawler->filter('a.btn:contains("Ny søker")')->count());
-        $this->assertEquals(1, $crawler->filter('option:contains("Fordel intervju")')->count());
-        $this->assertEquals(1, $crawler->filter('option:contains("Slett søknad")')->count());
-        $this->assertEquals(1, $crawler->filter('a.btn:contains("Utfør")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('a.btn:contains("Ny søker")')->count());
+        $this->assertSame(1, $crawler->filter('option:contains("Fordel intervju")')->count());
+        $this->assertSame(1, $crawler->filter('option:contains("Slett søknad")')->count());
+        $this->assertSame(1, $crawler->filter('a.btn:contains("Utfør")')->count());
     }
 
     public function testAssignedAsTeamMember()
     {
         $crawler = $this->teamMemberGoTo('/kontrollpanel/opptak/fordelt');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
-        $this->assertEquals(0, $crawler->filter('td a:contains("Sett opp")')->count());
-        $this->assertEquals(0, $crawler->filter('td a:contains("Start intervju")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(0, $crawler->filter('td a:contains("Sett opp")')->count());
+        $this->assertSame(0, $crawler->filter('td a:contains("Start intervju")')->count());
     }
 
     public function testAssignedAsTeamLeader()
     {
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/opptak/fordelt');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td a:contains("Sett opp")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td a:contains("Start intervju")')->count());
     }
@@ -62,7 +62,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
     {
         $crawler = $this->adminGoTo('/kontrollpanel/opptak/fordelt');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td a:contains("Sett opp")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td a:contains("Start intervju")')->count());
     }
@@ -71,15 +71,15 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
     {
         $crawler = $this->teamMemberGoTo('/kontrollpanel/opptak/intervjuet');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
-        $this->assertEquals(0, $crawler->filter('td button:contains("Slett")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(0, $crawler->filter('td button:contains("Slett")')->count());
     }
 
     public function testInterviewedAsTeamLeader()
     {
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/opptak/intervjuet');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
         $this->assertGreaterThanOrEqual(0, $crawler->filter('td button:contains("Slett")')->count());
     }
 
@@ -87,7 +87,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
     {
         $crawler = $this->adminGoTo('/kontrollpanel/opptak/intervjuet');
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Opptak")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td button:contains("Slett")')->count());
     }
 
@@ -99,7 +99,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("Ruben Ravnå")')->count());
 
         $crawler = $client->request('GET', '/kontrollpanel/opptak/nye');
-        $this->assertEquals(0, $crawler->filter('td:contains("Ruben Ravnå")')->count());
+        $this->assertSame(0, $crawler->filter('td:contains("Ruben Ravnå")')->count());
     }
 
     /**
@@ -133,10 +133,6 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
      * Afterwards, verify that we get the correct flash message after the redirect. Finally,
      * go back to assigned page and check that the number of elements containing $status has
      * increased and that the number of elements containing "Ingen svar" har decreased.
-     *
-     * @param string $status
-     * @param string $button_text
-     * @param string $flash_text
      */
     private function helperTestStatus(string $status, string $button_text, string $flash_text)
     {
@@ -159,12 +155,11 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
         $client->enableProfiler();
         $client->submit($form);
 
-
         $response_code = $this->getResponseCodeFromEmail($client);
 
         $crawler = $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertEquals($count_no_answer + 1, $crawler->filter('td:contains("Ingen svar")')->count());
+        $this->assertSame($count_no_answer + 1, $crawler->filter('td:contains("Ingen svar")')->count());
 
         $client = self::createAnonymousClient();
         $crawler = $this->goTo('/intervju/'.$response_code, $client);
@@ -174,15 +169,15 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
         $this->assertNotNull($statusButton);
         $form = $statusButton->form();
         $this->assertNotNull($form);
-        $wantEmail = ($status === 'Ny tid ønskes' || $status === 'Kansellert');
+        $wantEmail = ('Ny tid ønskes' === $status || 'Kansellert' === $status);
         if ($wantEmail) {
             $client->enableProfiler();
         }
         $client->submit($form);
 
-        if ($status === 'Kansellert') {
+        if ('Kansellert' === $status) {
             $client = $this->helperTestCancelConfirm($client, $response_code);
-        } elseif ($status === 'Ny tid ønskes') {
+        } elseif ('Ny tid ønskes' === $status) {
             $crawler = $this->goTo('/intervju/nytid/'.$response_code, $client);
             $form = $crawler->selectButton('Be om nytt tidspunkt')->form();
             $form['InterviewNewTime[newTimeMessage]'] = 'Test answer';
@@ -192,7 +187,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
 
         if ($wantEmail) {
             $mailCollector = $client->getProfile()->getCollector('swiftmailer');
-            $this->assertEquals(1, $mailCollector->getMessageCount());
+            $this->assertSame(1, $mailCollector->getMessageCount());
         }
 
         $client->followRedirect();
@@ -201,33 +196,26 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
         $crawler = $this->teamMemberGoTo('/kontrollpanel/opptak/fordelt');
 
         // Verify that a change has taken place.
-        $this->assertEquals($count_no_setup - 1, $crawler->filter('td:contains("Ikke satt opp")')->count());
-        $this->assertEquals($count_status + 1, $crawler->filter('td:contains('.$status.')')->count());
+        $this->assertSame($count_no_setup - 1, $crawler->filter('td:contains("Ikke satt opp")')->count());
+        $this->assertSame($count_status + 1, $crawler->filter('td:contains('.$status.')')->count());
     }
 
     /**
-     * @param $client
-     *
      * @return string
      */
     private function getResponseCodeFromEmail($client)
     {
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
-        $this->assertEquals(1, $mailCollector->getMessageCount());
+        $this->assertSame(1, $mailCollector->getMessageCount());
         $message = $mailCollector->getMessages()[0];
         $body = $message->getBody();
-        $start = strpos($body, 'intervju/') + 9;
-        $messageStartingWithCode = substr($body, $start);
-        $end = strpos($messageStartingWithCode, '"');
+        $start = mb_strpos($body, 'intervju/') + 9;
+        $messageStartingWithCode = mb_substr($body, $start);
+        $end = mb_strpos($messageStartingWithCode, '"');
 
-        return substr($body, $start, $end);
+        return mb_substr($body, $start, $end);
     }
 
-    /**
-     * @param $client
-     * @param string $response_code
-     *
-     */
     private function helperTestCancelConfirm($client, string $response_code)
     {
         $crawler = $this->goTo('/intervju/kanseller/tilbakemelding/'.$response_code, $client);
@@ -241,7 +229,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         $interview = $em->getRepository(Interview::class)->findByResponseCode($response_code);
-        $this->assertEquals('Test answer', $interview->getCancelMessage());
+        $this->assertSame('Test answer', $interview->getCancelMessage());
 
         return $client;
     }

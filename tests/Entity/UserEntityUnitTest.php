@@ -3,7 +3,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\FieldOfStudy;
-use App\Entity\Role;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +18,7 @@ class UserEntityUnitTest extends TestCase
         $user->setEmail('per@mail.com');
 
         // Assert the result
-        $this->assertEquals('per@mail.com', $user->getEmail());
+        $this->assertSame('per@mail.com', $user->getEmail());
     }
 
     // Check whether the setActive function is working correctly
@@ -32,7 +31,7 @@ class UserEntityUnitTest extends TestCase
         $user->setActive(1);
 
         // Assert the result
-        $this->assertEquals(1, $user->isActive());
+        $this->assertSame(1, $user->isActive());
     }
 
     // Check whether the setLastName function is working correctly
@@ -45,7 +44,7 @@ class UserEntityUnitTest extends TestCase
         $user->setLastName('olsen');
 
         // Assert the result
-        $this->assertEquals('olsen', $user->getLastName());
+        $this->assertSame('olsen', $user->getLastName());
     }
 
     // Check whether the setFirstname function is working correctly
@@ -58,7 +57,7 @@ class UserEntityUnitTest extends TestCase
         $user->setFirstname('olsen');
 
         // Assert the result
-        $this->assertEquals('olsen', $user->getFirstname());
+        $this->assertSame('olsen', $user->getFirstname());
     }
 
     // Check whether the setGender function is working correctly
@@ -71,7 +70,7 @@ class UserEntityUnitTest extends TestCase
         $user->setGender('0');
 
         // Assert the result
-        $this->assertEquals('0', $user->getGender());
+        $this->assertSame('0', $user->getGender());
     }
 
     // Check whether the setPicturePath function is working correctly
@@ -84,7 +83,7 @@ class UserEntityUnitTest extends TestCase
         $user->setPicturePath('olsen.jpg');
 
         // Assert the result
-        $this->assertEquals('olsen.jpg', $user->getPicturePath());
+        $this->assertSame('olsen.jpg', $user->getPicturePath());
     }
 
     // Check whether the setPhone function is working correctly
@@ -97,7 +96,7 @@ class UserEntityUnitTest extends TestCase
         $user->setPhone('12312312');
 
         // Assert the result
-        $this->assertEquals('12312312', $user->getPhone());
+        $this->assertSame('12312312', $user->getPhone());
     }
 
     // Check whether the setUserName function is working correctly
@@ -110,7 +109,7 @@ class UserEntityUnitTest extends TestCase
         $user->setUserName('petjo123');
 
         // Assert the result
-        $this->assertEquals('petjo123', $user->getUserIdentifier());
+        $this->assertSame('petjo123', $user->getUserIdentifier());
     }
 
     // Check whether the setFieldOfStudy function is working correctly
@@ -127,7 +126,7 @@ class UserEntityUnitTest extends TestCase
         $user->setFieldOfStudy($fos);
 
         // Assert the result
-        $this->assertEquals($fos, $user->getFieldOfStudy());
+        $this->assertSame($fos, $user->getFieldOfStudy());
     }
 
     // Check whether the addRole function is working correctly
@@ -158,6 +157,6 @@ class UserEntityUnitTest extends TestCase
         $user->setNewUserCode('secret');
 
         // Assert the result
-        $this->assertEquals('secret', $user->getNewUserCode());
+        $this->assertSame('secret', $user->getNewUserCode());
     }
 }

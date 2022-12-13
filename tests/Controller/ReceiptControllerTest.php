@@ -2,22 +2,22 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\Receipt;
+use App\Tests\BaseWebTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ReceiptControllerTest extends BaseWebTestCase
 {
     /**
-     * @var array $imagePaths
+     * @var array
      */
     private $imagePaths;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         // Keep track of all the initial files in the image folder
-        $this->imagePaths = array();
+        $this->imagePaths = [];
         $finder = new Finder();
 
         if (!file_exists('images/receipts')) {
@@ -26,7 +26,7 @@ class ReceiptControllerTest extends BaseWebTestCase
 
         $finder->files()->in('images/receipts');
         foreach ($finder as $file) {
-            array_push($this->imagePaths, $file->getRealPath());
+            $this->imagePaths[] = $file->getRealPath();
         }
     }
 
@@ -54,36 +54,36 @@ class ReceiptControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         $receiptsAfter = $this->countTableRows('/utlegg', $client);
-        $this->assertEquals(1, $receiptsAfter - $receiptsBefore);
+        $this->assertSame(1, $receiptsAfter - $receiptsBefore);
 
         // Teamleader can see it in the receipt table
         self::ensureKernelShutdown();
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/utlegg');
-        $this->assertEquals(1, $crawler->filter('td:contains("assistant@gmail.com")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("assistant@gmail.com")')->count());
     }
 
     public function testRefunded()
     {
         $client = $this->createTeamLeaderClient();
         $client->request('POST', '/kontrollpanel/utlegg/status/2', ['status' => Receipt::STATUS_REFUNDED]);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode()); // Successful if redirect
-        $this->assertEquals(2, $client->followRedirect()->filter('span.clickable:contains("Refundert")')->count());
+        $this->assertSame(302, $client->getResponse()->getStatusCode()); // Successful if redirect
+        $this->assertSame(2, $client->followRedirect()->filter('span.clickable:contains("Refundert")')->count());
     }
 
     public function testRejected()
     {
         $client = $this->createTeamLeaderClient();
         $client->request('POST', '/kontrollpanel/utlegg/status/2', ['status' => Receipt::STATUS_REJECTED]);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode()); // Successful if redirect
-        $this->assertEquals(1, $client->followRedirect()->filter('span.clickable:contains("Refusjon avvist")')->count());
+        $this->assertSame(302, $client->getResponse()->getStatusCode()); // Successful if redirect
+        $this->assertSame(1, $client->followRedirect()->filter('span.clickable:contains("Refusjon avvist")')->count());
     }
 
     public function testPending()
     {
         $client = $this->createTeamLeaderClient();
         $client->request('POST', '/kontrollpanel/utlegg/status/2', ['status' => Receipt::STATUS_PENDING]);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode()); // Successful if redirect
-        $this->assertEquals(2, $client->followRedirect()->filter('span.clickable:contains("Venter behandling...")')->count());
+        $this->assertSame(302, $client->getResponse()->getStatusCode()); // Successful if redirect
+        $this->assertSame(2, $client->followRedirect()->filter('span.clickable:contains("Venter behandling...")')->count());
     }
 
     public function testEdit()
@@ -107,8 +107,8 @@ class ReceiptControllerTest extends BaseWebTestCase
         $client->submit($form);
         $crawler = $client->followRedirect();
 
-        $this->assertEquals(1, $crawler->filter('td:contains("foo bar")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("999,00 kr")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("foo bar")')->count());
+        $this->assertSame(1, $crawler->filter("td:contains(\"999,00\u{a0}kr\")")->count());
     }
 
     public function testDelete()
@@ -116,9 +116,9 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Teamleader deletes
         $client = $this->createTeamLeaderClient();
         $client->request('POST', '/utlegg/slett/2');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode()); // Successful if redirected
+        $this->assertSame(302, $client->getResponse()->getStatusCode()); // Successful if redirected
         $client->request('POST', '/utlegg/slett/2'); // Try to delete same receipt again
-        $this->assertEquals(404, $client->getResponse()->getStatusCode()); // Doesn't exist
+        $this->assertSame(404, $client->getResponse()->getStatusCode()); // Doesn't exist
     }
 
     public function testAnonymousPermission()
@@ -138,7 +138,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Not allowed to edit other people's receipts
         $client = $this->createAssistantClient();
         $client->request('GET', '/utlegg/rediger/1');
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
 
         // Make team leader refund the receipt
         $client = $this->createTeamLeaderClient();
@@ -147,12 +147,12 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Not allowed to edit refunded receipt
         $client = $this->createAssistantClient();
         $client->request('GET', '/utlegg/rediger/5');
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
 
         // Not allowed to delete refunded receipt
         $client = $this->createAssistantClient();
         $client->request('POST', '/utlegg/slett/5');
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
     }
 
     public function testTeamMemberPermissions()
@@ -163,12 +163,12 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Not allowed to edit other people's receipts
         $client = $this->createTeamMemberClient();
         $client->request('GET', '/utlegg/rediger/1');
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
 
         // Not allowed to refund
         $client = $this->createTeamMemberClient();
         $client->request('POST', '/kontrollpanel/utlegg/status/6', ['status' => 'refunded']);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Make team leader refund the receipt
         $client = $this->createTeamLeaderClient();
@@ -177,12 +177,12 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Not allowed to edit refunded receipt
         $client = $this->createTeamMemberClient();
         $client->request('GET', '/utlegg/rediger/6');
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
 
         // Not allowed to delete refunded receipt
         $client = $this->createTeamMemberClient();
         $client->request('POST', '/utlegg/slett/6');
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
     }
 
     public function testTeamLeaderPermissions()
@@ -196,7 +196,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Allowed to refund
         $client = $this->createTeamLeaderClient();
         $client->request('POST', '/kontrollpanel/utlegg/status/7', ['status' => 'refunded']);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Allowed to edit refunded receipt
         $this->teamLeaderGoTo('/kontrollpanel/utlegg/rediger/7');
@@ -204,7 +204,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Allowed to delete refunded receipt
         $client = $this->createTeamLeaderClient();
         $client->request('POST', '/utlegg/slett/6');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
     }
 
     protected function tearDown(): void
@@ -220,17 +220,17 @@ class ReceiptControllerTest extends BaseWebTestCase
         $finder = new Finder();
         $finder->files()->in('images/receipts');
         foreach ($finder as $file) {
-            $fileIsNew = !in_array($file->getRealPath(), $this->imagePaths);
+            $fileIsNew = !\in_array($file->getRealPath(), $this->imagePaths, true);
             if ($fileIsNew) {
                 unlink($file);
             }
         }
 
-        $receiptDirectoryIsEmpty = count(glob('images/receipts/*')) === 0;
+        $receiptDirectoryIsEmpty = 0 === \count(glob('images/receipts/*'));
         if ($receiptDirectoryIsEmpty) {
             rmdir('images/receipts');
         }
-        $imageDirectoryIsEmpty = count(glob('images/*')) === 0;
+        $imageDirectoryIsEmpty = 0 === \count(glob('images/*'));
         if ($imageDirectoryIsEmpty) {
             rmdir('images');
         }

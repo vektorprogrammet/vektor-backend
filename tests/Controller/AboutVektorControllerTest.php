@@ -12,6 +12,6 @@ class AboutVektorControllerTest extends BaseWebTestCase
         $this->assertResponseIsSuccessful();
 
         $this->assertSelectorTextContains('h1', 'Om Vektorprogrammet');
-        $this->assertEquals(1, $crawler->filter('h2:contains("Ofte stilte spørsmål og svar")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Ofte stilte spørsmål og svar")')->count());
     }
 }

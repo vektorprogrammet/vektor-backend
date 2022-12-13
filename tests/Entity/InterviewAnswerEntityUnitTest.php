@@ -15,7 +15,7 @@ class InterviewAnswerEntityUnitTest extends TestCase
 
         $intAnswer->setAnswer('Test');
 
-        $this->assertEquals('Test', $intAnswer->getAnswer());
+        $this->assertSame('Test', $intAnswer->getAnswer());
     }
 
     public function testSetInterview()
@@ -25,7 +25,7 @@ class InterviewAnswerEntityUnitTest extends TestCase
 
         $intAnswer->setInterview($interview);
 
-        $this->assertEquals($interview, $intAnswer->getInterview());
+        $this->assertSame($interview, $intAnswer->getInterview());
     }
 
     public function testSetInterviewQuestion()
@@ -35,6 +35,6 @@ class InterviewAnswerEntityUnitTest extends TestCase
 
         $intAnswer->setInterviewQuestion($intQuestion);
 
-        $this->assertEquals($intQuestion, $intAnswer->getInterviewQuestion());
+        $this->assertSame($intQuestion, $intAnswer->getInterviewQuestion());
     }
 }

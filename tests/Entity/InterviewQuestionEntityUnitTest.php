@@ -14,7 +14,7 @@ class InterviewQuestionEntityUnitTest extends TestCase
 
         $intQuestion->setQuestion('Test?');
 
-        $this->assertEquals('Test?', $intQuestion->getQuestion());
+        $this->assertSame('Test?', $intQuestion->getQuestion());
     }
 
     public function testSetHelp()
@@ -23,7 +23,7 @@ class InterviewQuestionEntityUnitTest extends TestCase
 
         $intQuestion->setHelp('Test');
 
-        $this->assertEquals('Test', $intQuestion->getHelp());
+        $this->assertSame('Test', $intQuestion->getHelp());
     }
 
     public function testSetType()
@@ -32,7 +32,7 @@ class InterviewQuestionEntityUnitTest extends TestCase
 
         $intQuestion->setType('Text');
 
-        $this->assertEquals('Text', $intQuestion->getType());
+        $this->assertSame('Text', $intQuestion->getType());
     }
 
     public function testAddAlternative()
@@ -40,11 +40,11 @@ class InterviewQuestionEntityUnitTest extends TestCase
         $intQuestion = new InterviewQuestion();
         $alternative = new InterviewQuestionAlternative();
 
-        $this->assertEquals(0, count($intQuestion->getAlternatives()));
+        $this->assertSame(0, \count($intQuestion->getAlternatives()));
 
         $intQuestion->addAlternative($alternative);
 
-        $this->assertEquals(1, count($intQuestion->getAlternatives()));
+        $this->assertSame(1, \count($intQuestion->getAlternatives()));
     }
 
     public function testRemoveAlternative()

@@ -24,7 +24,7 @@ class TeamMembershipEntityUnitTest extends TestCase
         $wh->setUser($user);
 
         // Assert the result
-        $this->assertEquals($user, $wh->getUser());
+        $this->assertSame($user, $wh->getUser());
     }
 
     // Check whether the setTeam function is working correctly
@@ -41,7 +41,7 @@ class TeamMembershipEntityUnitTest extends TestCase
         $wh->setTeam($team);
 
         // Assert the result
-        $this->assertEquals($team, $wh->getTeam());
+        $this->assertSame($team, $wh->getTeam());
     }
 
     // Check whether the setPosition function is working correctly
@@ -58,6 +58,6 @@ class TeamMembershipEntityUnitTest extends TestCase
         $wh->setPosition($position);
 
         // Assert the result
-        $this->assertEquals($position, $wh->getPosition());
+        $this->assertSame($position, $wh->getPosition());
     }
 }

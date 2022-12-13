@@ -14,6 +14,6 @@ class StudentsControllerTest extends BaseWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Assistenter');
-        $this->assertEquals(1, $crawler->filter('p:contains("Vektorprogrammet er en studentorganisasjon som")')->count());
+        $this->assertSame(1, $crawler->filter('p:contains("Vektorprogrammet er en studentorganisasjon som")')->count());
     }
 }

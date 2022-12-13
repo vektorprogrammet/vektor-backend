@@ -25,7 +25,7 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Assert that the response is the correct redirect
         $this->assertTrue($client->getResponse()->isRedirect('/kontrollpanel/skoleadmin'));
@@ -54,7 +54,7 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Assert that the response is the correct redirect
         $this->assertTrue($client->getResponse()->isRedirect('/kontrollpanel/skoleadmin'));
@@ -68,22 +68,22 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin/avdeling/1');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Skoler i Trondheim")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Gimse")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per Olsen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Skoler i Trondheim")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Gimse")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per Olsen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per@mail.com")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin/avdeling/2');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Skoler i Bergen")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Blussuvoll")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Kari Johansen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("kari@mail.com")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Internasjonal")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Skoler i Bergen")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Blussuvoll")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Kari Johansen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("kari@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Internasjonal")')->count());
     }
 
     public function testShowUsersByDepartment()
@@ -94,12 +94,12 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin/brukere');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Tildel skole")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Persdatter Ødegaard")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Brenna Eskeland")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Ravnå")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Myrvoll-Nilsen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Rasdal Håland")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Tildel skole")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Persdatter Ødegaard")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Brenna Eskeland")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Ravnå")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Myrvoll-Nilsen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Rasdal Håland")')->count());
     }
 
     public function testShowUsersByDepartmentSuperadmin()
@@ -109,22 +109,22 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin/avdeling/2');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Skoler i Bergen")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Blussuvoll")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Kari Johansen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("kari@mail.com")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Internasjonal")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Skoler i Bergen")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Blussuvoll")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Kari Johansen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("kari@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Internasjonal")')->count());
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin/avdeling/1');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Skoler i Trondheim")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Gimse")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per Olsen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Skoler i Trondheim")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Gimse")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per Olsen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per@mail.com")')->count());
     }
 
     public function testDelegateSchoolToUser()
@@ -134,9 +134,9 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin/brukere/avdeling/1');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Tildel skole")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Reidun")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Persdatter Ødegaard")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Tildel skole")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Reidun")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Persdatter Ødegaard")')->count());
 
         // Find a link and click it
         $link = $crawler->selectLink('Tildel skole')->eq(1)->link();
@@ -155,22 +155,22 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Follow the redirect
         $client->followRedirect();
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         $client = $this->createTeamLeaderClient();
 
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin/brukere/avdeling/1');
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Tildel skole")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Reidun")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Persdatter Ødegaard")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Tildel skole")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Reidun")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Persdatter Ødegaard")')->count());
 
         // Find a link and click it
         $link = $crawler->selectLink('Tildel skole')->eq(1)->link();
@@ -189,13 +189,13 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $client->submit($form);
 
         // Assert a specific 302 status code
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Follow the redirect
         $client->followRedirect();
 
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testShowSpecificSchool()
@@ -209,11 +209,10 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $crawler = $client->click($link);
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Gimse")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Gimse")')->count());
 
         // Assert 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         $client->request('GET', '/kontrollpanel/skole/1');
 
@@ -230,7 +229,7 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $crawler = $client->click($link);
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Gimse")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Gimse")')->count());
     }
 
     public function testShowAsAdmin()
@@ -238,14 +237,14 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         // ADMIN
         $client = $this->createAdminClient();
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Skoler")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Gimse")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per Olsen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per@mail.com")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("99887722")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Skoler")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Gimse")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per Olsen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("99887722")')->count());
     }
 
     public function testShowAsTeamMember()
@@ -253,13 +252,13 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         // TEAM
         $client = $this->createTeamMemberClient();
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Skoler")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Gimse")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per Olsen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Per@mail.com")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("99887722")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Skoler")')->count());
+        $this->assertSame(1, $crawler->filter('a:contains("Gimse")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per Olsen")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("Per@mail.com")')->count());
+        $this->assertSame(1, $crawler->filter('td:contains("99887722")')->count());
     }
 }

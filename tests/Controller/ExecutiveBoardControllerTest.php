@@ -24,8 +24,8 @@ class ExecutiveBoardControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("nyttStyre")')->count());
-        $this->assertEquals(0, $crawler->filter('h2:contains("Hovedstyret")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("nyttStyre")')->count());
+        $this->assertSame(0, $crawler->filter('h2:contains("Hovedstyret")')->count());
     }
 
     public function testAddUserToBoard()
@@ -57,11 +57,11 @@ class ExecutiveBoardControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
 
         // Assert that we have the correct page
-        $this->assertEquals(1, $crawler->filter('h2:contains("Hovedstyret")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Hovedstyret")')->count());
         $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("Petter Johansen")')->count());
 
         // Assert that a user was added to the active table
-        $this->assertEquals($numActiveRowsBefore + 1, $crawler->filter('#activeMemberTable tr')->count());
+        $this->assertSame($numActiveRowsBefore + 1, $crawler->filter('#activeMemberTable tr')->count());
     }
 
     public function testEditBoardMembership()
@@ -74,11 +74,11 @@ class ExecutiveBoardControllerTest extends BaseWebTestCase
         // Submit form
         $client = $this->createTeamLeaderClient();
         $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Check that the membership was edited
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/hovedstyret');
-        $this->assertEquals(1, $crawler->filter('tr:contains("Testposisjon")')->count());
+        $this->assertSame(1, $crawler->filter('tr:contains("Testposisjon")')->count());
     }
 
     public function testDeleteBoardMembership()
@@ -90,11 +90,11 @@ class ExecutiveBoardControllerTest extends BaseWebTestCase
         // Delete a membership
         $client = $this->createAdminClient();
         $this->createAdminClient()->request('POST', '/kontrollpanel/hovedstyret/slett/bruker/2');
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
 
         // Assert one less row after deletion
         $crawler = $client->followRedirect();
-        $this->assertEquals($numRowsBefore - 1, $crawler->filter('tr')->count());
+        $this->assertSame($numRowsBefore - 1, $crawler->filter('tr')->count());
     }
 
     public function testShowAdmin()
@@ -102,13 +102,13 @@ class ExecutiveBoardControllerTest extends BaseWebTestCase
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/hovedstyret');
 
         // Check the count for the different variables
-        $this->assertEquals(1, $crawler->filter('h2:contains("Hovedstyret")')->count());
+        $this->assertSame(1, $crawler->filter('h2:contains("Hovedstyret")')->count());
     }
 
     public function testShow()
     {
         $crawler = $this->goTo('/hovedstyret');
 
-        $this->assertEquals(1, $crawler->filter('h1:contains("Hovedstyret")')->count());
+        $this->assertSame(1, $crawler->filter('h1:contains("Hovedstyret")')->count());
     }
 }
