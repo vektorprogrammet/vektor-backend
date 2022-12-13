@@ -1,4 +1,5 @@
 <?php
+// https://mlocati.github.io/php-cs-fixer-configurator/
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
