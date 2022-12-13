@@ -19,11 +19,9 @@ use Doctrine\ORM\NonUniqueResultException;
 class ApplicationRepository extends EntityRepository
 {
     /**
-     * @param User $user
-     * @param AdmissionPeriod $admissionPeriod
      *
-     * @return Application|null
      * @throws NonUniqueResultException
+     * @return Application|null
      */
     public function findByUserInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod)
     {
@@ -38,11 +36,10 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     *
-     * @return Application|null
      *
      * @throws NonUniqueResultException
+     * @return Application|null
+     *
      */
     public function findActiveByUser(User $user)
     {
@@ -53,7 +50,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return array
      */
@@ -74,7 +70,6 @@ class ApplicationRepository extends EntityRepository
 
     /**
      * @param string $email
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Application[]
      */
@@ -165,8 +160,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Application[]
      */
@@ -187,7 +180,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Application[]
      */
@@ -240,7 +232,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return array
      */
@@ -259,7 +250,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Application[]
      */
@@ -276,7 +266,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return array
      */
@@ -313,7 +302,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return int
      */
@@ -328,7 +316,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      * @param int $gender
      *
      * @return int
@@ -347,7 +334,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return int
      */
@@ -410,7 +396,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Application[]
      */
@@ -427,7 +412,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Application[]
      */
@@ -443,7 +427,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return Application[]
      */
@@ -459,7 +442,6 @@ class ApplicationRepository extends EntityRepository
     }
 
     /**
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Application[]
      */

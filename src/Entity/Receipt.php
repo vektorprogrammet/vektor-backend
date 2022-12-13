@@ -188,7 +188,6 @@ class Receipt
     }
 
     /**
-     * @return string
      */
     public function getVisualId(): string
     {
@@ -196,7 +195,6 @@ class Receipt
     }
 
     /**
-     * @param string $visualId
      */
     public function setVisualId(string $visualId)
     {

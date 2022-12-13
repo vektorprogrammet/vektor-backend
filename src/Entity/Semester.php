@@ -71,7 +71,6 @@ class Semester implements PeriodInterface
     /**
      * Get semester start date.
      *
-     * @return DateTime
      */
     public function getStartDate(): DateTime
     {
@@ -83,7 +82,6 @@ class Semester implements PeriodInterface
     /**
      * Get semester end date.
      *
-     * @return DateTime
      */
     public function getEndDate(): DateTime
     {
@@ -111,7 +109,6 @@ class Semester implements PeriodInterface
     /**
      * @param string $year
      *
-     * @return Semester
      */
     public function setYear($year): Semester
     {
@@ -173,10 +170,7 @@ class Semester implements PeriodInterface
      * Furthermore, the semester bounds can be null, which implies the range
      * extends infinitely far into the past or into the future.
      *
-     * @param Semester|null $semesterPrevious
-     * @param Semester|null $semesterLater
      *
-     * @return bool
      */
     public function isBetween(?Semester $semesterPrevious, ?Semester $semesterLater): bool
     {
@@ -189,9 +183,7 @@ class Semester implements PeriodInterface
      * **Note**: This function performs a weak comparison, meaning equal semesters count as before.
      * Furthermore, null semesters also count as before
      *
-     * @param Semester|null $semester
      *
-     * @return bool
      */
     public function isBefore(?Semester $semester): bool
     {
@@ -212,9 +204,7 @@ class Semester implements PeriodInterface
      * **Note**: This function performs a weak comparison, meaning equal semesters count as after.
      * Furthermore, null semesters also count as after
      *
-     * @param Semester|null $semester
      *
-     * @return bool
      */
     public function isAfter(?Semester $semester): bool
     {

@@ -23,7 +23,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
      *
      * @return AssistantHistory[]
      */
@@ -36,7 +35,6 @@ class AssistantHistoryRepository extends EntityRepository
 
 
     /**
-     * @param User $user
      *
      * @return AssistantHistory[]
      */
@@ -52,8 +50,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
      *
      * @return AssistantHistory[]
      */
@@ -72,7 +68,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @param $user
      *
      * @return AssistantHistory[]
      */
@@ -101,7 +96,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @param School $school
      *
      * @return AssistantHistory[]
      */
@@ -155,7 +149,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @param School $school
      *
      * @return AssistantHistory[]
      */
@@ -186,9 +179,7 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @param Semester $semester
      *
-     * @return int
      * @throws NonUniqueResultException
      */
     public function numFemaleBySemester(Semester $semester): int
@@ -204,9 +195,7 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @param Semester $semester
      *
-     * @return int
      * @throws NonUniqueResultException
      */
     public function numMaleBySemester(Semester $semester): int
@@ -222,7 +211,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @return int
      * @throws NonUniqueResultException
      */
     public function numFemale(): int
@@ -236,7 +224,6 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @return int
      * @throws NonUniqueResultException
      */
     public function numMale(): int

@@ -17,8 +17,6 @@ use App\Form\Type\ModifySubstituteType;
 class SubstituteController extends BaseController
 {
     /**
-     * @param Request $request
-     * @return Response|null
      */
     public function show(Request $request): ?Response
     {

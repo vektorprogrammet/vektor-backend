@@ -61,9 +61,7 @@ class InterviewManager
     /**
      * Only team leader and above, or the assigned interviewer should be able to see the interview.
      *
-     * @param Interview $interview
      *
-     * @return bool
      */
     public function loggedInUserCanSeeInterview(Interview $interview): bool
     {
@@ -75,9 +73,7 @@ class InterviewManager
     }
 
     /**
-     * @param Interview $interview
      *
-     * @return Interview
      */
     public function initializeInterviewAnswers(Interview $interview): Interview
     {
@@ -107,8 +103,6 @@ class InterviewManager
     }
 
     /**
-     * @param User        $interviewer
-     * @param Application $application
      */
     public function assignInterviewerToApplication(User $interviewer, Application $application)
     {
@@ -123,8 +117,6 @@ class InterviewManager
     }
 
     /**
-     * @param Interview $interview
-     * @param array     $data
      */
     public function sendScheduleEmail(Interview $interview, array $data)
     {
@@ -152,7 +144,6 @@ class InterviewManager
     }
 
     /**
-     * @param Interview $interview
      */
     public function sendRescheduleEmail(Interview $interview)
     {
@@ -183,7 +174,6 @@ class InterviewManager
     }
 
     /**
-     * @param Interview $interview
      */
     public function sendCancelEmail(Interview $interview)
     {
@@ -312,9 +302,7 @@ class InterviewManager
     }
 
     /**
-     * @param Interview $interview
      *
-     * @return array
      */
     public function getDefaultScheduleFormData(Interview $interview): array
     {

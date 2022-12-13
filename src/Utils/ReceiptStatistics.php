@@ -20,7 +20,6 @@ class ReceiptStatistics
     }
 
     /**
-     * @param string $year
      *
      * @return float
      */

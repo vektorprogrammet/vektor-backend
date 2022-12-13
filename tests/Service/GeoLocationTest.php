@@ -30,7 +30,7 @@ class GeoLocationTest extends WebTestCase
         $departmentRepo = $this->getMockBuilder(ObjectRepository::class)->getMock();
         $departmentRepo->expects($this->any())
                        ->method('findAll')
-                       ->willReturn([ $this->dep1, $this->dep2 ]);
+                       ->willReturn([$this->dep1, $this->dep2]);
 
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $entityManager->expects($this->any())

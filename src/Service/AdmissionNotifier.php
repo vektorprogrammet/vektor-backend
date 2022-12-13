@@ -45,10 +45,6 @@ class AdmissionNotifier
     }
 
     /**
-     * @param Department $department
-     * @param string $email
-     * @param bool $infoMeeting
-     * @param bool $fromApplication
      *
      * @throws InvalidArgumentException
      */
@@ -113,9 +109,6 @@ class AdmissionNotifier
     }
 
     /**
-     * @param AdmissionSubscriber $subscriber
-     * @param Semester $semester
-     * @param Department $department
      */
     private function sendAdmissionNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
     {
@@ -169,9 +162,6 @@ class AdmissionNotifier
     }
 
     /**
-     * @param AdmissionSubscriber $subscriber
-     * @param Semester $semester
-     * @param Department $department
      */
     private function sendInfoMeetingNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
     {

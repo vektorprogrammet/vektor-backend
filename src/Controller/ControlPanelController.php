@@ -18,8 +18,6 @@ class ControlPanelController extends BaseController
 
     /**
      *
-     * @param Request $request
-     * @return Response
      */
     public function show(Request $request): Response
     {

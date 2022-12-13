@@ -20,8 +20,6 @@ class AssetExtension extends AbstractExtension
     /**
      * AssetExtension constructor.
      *
-     * @param Packages $packages
-     * @param KernelInterface $appKernel
      */
     public function __construct(Packages $packages, KernelInterface $appKernel)
     {

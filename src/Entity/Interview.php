@@ -266,7 +266,6 @@ class Interview
     /**
      * Add interviewAnswers.
      *
-     * @param InterviewAnswer $interviewAnswers
      *
      * @return Interview
      */
@@ -280,7 +279,6 @@ class Interview
     /**
      * Remove interviewAnswers.
      *
-     * @param InterviewAnswer $interviewAnswers
      */
     public function removeInterviewAnswer(InterviewAnswer $interviewAnswers)
     {
@@ -517,7 +515,6 @@ class Interview
     }
 
     /**
-     * @return string
      */
     public function getInterviewStatusAsString(): string
     {
@@ -544,7 +541,6 @@ class Interview
     }
 
     /**
-     * @return string
      */
     public function getInterviewStatusAsColor(): string
     {
@@ -571,7 +567,6 @@ class Interview
     }
 
     /**
-     * @return bool
      */
     public function isPending(): bool
     {
@@ -579,7 +574,6 @@ class Interview
     }
 
     /**
-     * @param int $interviewStatus
      */
     public function setInterviewStatus(int $interviewStatus)
     {
@@ -639,7 +633,6 @@ class Interview
     }
 
     /**
-     * @return string
      */
     public function getCancelMessage(): string
     {
@@ -659,7 +652,6 @@ class Interview
     }
 
     /**
-     * @param int $newStatus
      */
     public function setStatus(int $newStatus)
     {
@@ -671,7 +663,6 @@ class Interview
     }
 
     /**
-     * @return string
      */
     public function getNewTimeMessage(): string
     {
@@ -687,7 +678,6 @@ class Interview
     }
 
     /**
-     * @return int
      */
     public function getInterviewStatus(): int
     {
@@ -711,9 +701,7 @@ class Interview
     }
 
     /**
-     * @param int $numAcceptInterviewRemindersSent
      *
-     * @return Interview
      */
     public function setNumAcceptInterviewRemindersSent(int $numAcceptInterviewRemindersSent): Interview
     {

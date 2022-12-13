@@ -118,7 +118,6 @@ class TeamMembership implements TeamMembershipInterface
     /**
      * Get user.
      *
-     * @return User
      */
     public function getUser(): User
     {
@@ -223,7 +222,6 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     * @param Semester $semester
      *
      * @return bool
      */
@@ -246,7 +244,6 @@ class TeamMembership implements TeamMembershipInterface
 
 
     /**
-     * @return string
      */
     public function getTeamName(): string
     {
@@ -258,7 +255,6 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     * @param string $deletedTeamName
      */
     public function setDeletedTeamName(string $deletedTeamName)
     {
@@ -266,7 +262,6 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     * @return string
      */
     public function getPositionName(): string
     {
@@ -274,7 +269,6 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     * @return bool
      */
     public function isTeamLeader(): bool
     {
@@ -290,7 +284,6 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     * @return bool
      */
     public function isSuspended(): bool
     {

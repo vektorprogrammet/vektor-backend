@@ -20,8 +20,6 @@ class ApplicationStatisticsController extends BaseController
         $this->ApplicationData=$applicationData;
     }
     /**
-     * @param Request $request
-     * @return Response
      * @throws NonUniqueResultException
      */
     public function show(Request $request): Response

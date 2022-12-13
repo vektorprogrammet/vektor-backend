@@ -35,7 +35,6 @@ class PasswordResetControllerTest extends BaseWebTestCase
     /**
      * Gets a valid unused reset link
      *
-     * @param string $email
      *
      * @return bool|string reset link
      */

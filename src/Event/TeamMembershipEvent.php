@@ -15,7 +15,6 @@ class TeamMembershipEvent extends Event
     private $teamMembership;
 
     /**
-     * @param TeamMembership $teamMembership
      */
     public function __construct(TeamMembership $teamMembership)
     {
@@ -23,7 +22,6 @@ class TeamMembershipEvent extends Event
     }
 
     /**
-     * @return TeamMembership
      */
     public function getTeamMembership(): TeamMembership
     {

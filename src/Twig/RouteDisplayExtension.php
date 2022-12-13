@@ -11,7 +11,6 @@ class RouteDisplayExtension extends AbstractExtension
     private $router;
 
     /**
-     * @param RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
@@ -24,7 +23,7 @@ class RouteDisplayExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_path', [ $this, 'getPath' ]),
+            new TwigFunction('get_path', [$this, 'getPath']),
         ];
     }
 
@@ -32,7 +31,6 @@ class RouteDisplayExtension extends AbstractExtension
      * Gets the path of the given route name.
      *
      *
-     * @param $name
      *
      * @return string The path of the route
      */

@@ -85,7 +85,6 @@ class AccessRule
     /**
      * @param string $resource
      *
-     * @return AccessRule
      */
     public function setResource($resource): AccessRule
     {
@@ -105,7 +104,6 @@ class AccessRule
     /**
      * @param string $method
      *
-     * @return AccessRule
      */
     public function setMethod($method): AccessRule
     {
@@ -125,7 +123,6 @@ class AccessRule
     /**
      * @param User[] $users
      *
-     * @return AccessRule
      */
     public function setUsers($users): AccessRule
     {
@@ -145,7 +142,6 @@ class AccessRule
     /**
      * @param Team[] $teams
      *
-     * @return AccessRule
      */
     public function setTeams($teams): AccessRule
     {
@@ -165,7 +161,6 @@ class AccessRule
     /**
      * @param string[] $roles
      *
-     * @return AccessRule
      */
     public function setRoles($roles): AccessRule
     {
@@ -185,7 +180,6 @@ class AccessRule
     /**
      * @param string $name
      *
-     * @return AccessRule
      */
     public function setName($name): AccessRule
     {
@@ -205,7 +199,6 @@ class AccessRule
     /**
      * @param boolean $isRoutingRule
      *
-     * @return AccessRule
      */
     public function setIsRoutingRule($isRoutingRule): AccessRule
     {
@@ -225,7 +218,6 @@ class AccessRule
     /**
      * @param boolean $forExecutiveBoard
      *
-     * @return AccessRule
      */
     public function setForExecutiveBoard($forExecutiveBoard): AccessRule
     {

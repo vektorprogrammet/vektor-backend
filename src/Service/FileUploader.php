@@ -32,7 +32,6 @@ class FileUploader
     }
 
     /**
-     * @param Request $request
      *
      * @return string absolute file path
      */
@@ -43,7 +42,6 @@ class FileUploader
     }
 
     /**
-     * @param Request $request
      *
      * @return string absolute file path
      */
@@ -55,9 +53,7 @@ class FileUploader
 
 
     /**
-     * @param Request $request
      *
-     * @return string
      */
     public function uploadReceipt(Request $request): string
     {
@@ -66,8 +62,6 @@ class FileUploader
     }
 
     /**
- * @param Request $request
- * @return string
  */
     public function uploadProfileImage(Request $request): string
     {
@@ -84,8 +78,6 @@ class FileUploader
 
 
     /**
-     * @param Request $request
-     * @param array $valid_mime_types
      * @param null $id
      * @return false|mixed
      */
@@ -113,8 +105,6 @@ class FileUploader
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string       $targetFolder
      *
      * @return string absolute file path
      */

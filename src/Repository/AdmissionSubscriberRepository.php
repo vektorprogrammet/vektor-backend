@@ -11,7 +11,6 @@ use Doctrine\ORM\QueryBuilder;
 class AdmissionSubscriberRepository extends EntityRepository
 {
     /**
-     * @param Department $department
      *
      * @return QueryBuilder
      */
@@ -24,7 +23,6 @@ class AdmissionSubscriberRepository extends EntityRepository
             ->setParameter('department', $department);
     }
     /**
-     * @param Department $department
      *
      * @return AdmissionSubscriber[]
      */
@@ -37,7 +35,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return AdmissionSubscriber[]
      */
@@ -51,8 +48,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
      *
      * @return QueryBuilder
      */
@@ -70,8 +65,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
      *
      * @return AdmissionSubscriber[]
      */
@@ -87,8 +80,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param string $email
-     * @param Department $department
      *
      * @return AdmissionSubscriber
      */
@@ -106,7 +97,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param string $code
      *
      * @return AdmissionSubscriber
      */

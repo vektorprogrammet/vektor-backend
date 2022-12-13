@@ -143,7 +143,6 @@ class School
     /**
      * Add departments.
      *
-     * @param Department $departments
      *
      * @return School
      */
@@ -157,7 +156,6 @@ class School
     /**
      * Remove departments.
      *
-     * @param Department $departments
      */
     public function removeDepartment(Department $departments)
     {
@@ -253,9 +251,7 @@ class School
     }
 
     /**
-     * @param Department $department
      *
-     * @return bool
      */
     public function belongsToDepartment(Department $department): bool
     {
@@ -285,7 +281,6 @@ class School
     }
 
     /**
-     * @return bool
      */
     public function isActive(): bool
     {
@@ -293,9 +288,7 @@ class School
     }
 
     /**
-     * @param bool $active
      *
-     * @return School
      */
     public function setActive(bool $active): School
     {

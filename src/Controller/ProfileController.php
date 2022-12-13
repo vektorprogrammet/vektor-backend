@@ -138,7 +138,7 @@ class ProfileController extends BaseController
         }
 
         $form = $this->createForm(NewUserType::class, $user, [
-            'validation_groups' => [ 'username' ],
+            'validation_groups' => ['username'],
         ]);
 
         $form->handleRequest($request);
@@ -175,7 +175,7 @@ class ProfileController extends BaseController
         }
 
         try {
-            $user->setRoles([ $roleName ]);
+            $user->setRoles([$roleName]);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -248,7 +248,7 @@ class ProfileController extends BaseController
 
         $form = $this->createForm(EditUserType::class, $user, [
             'department'        => $user->getDepartment(),
-            'validation_groups' => [ 'edit_user' ],
+            'validation_groups' => ['edit_user'],
         ]);
 
         $form->handleRequest($request);
@@ -308,7 +308,7 @@ class ProfileController extends BaseController
 
             $this->eventDispatcher->dispatch(new UserEvent($user, $oldCompanyEmail), UserEvent::EDITED);
 
-            return $this->redirect($this->generateUrl('specific_profile', [ 'id' => $user->getId() ]));
+            return $this->redirect($this->generateUrl('specific_profile', ['id' => $user->getId()]));
         }
 
         return $this->render('profile/edit_profile.html.twig', [
@@ -329,7 +329,7 @@ class ProfileController extends BaseController
 
             $this->eventDispatcher->dispatch(new UserEvent($user, $oldCompanyEmail), UserEvent::COMPANY_EMAIL_EDITED);
 
-            return $this->redirectToRoute('specific_profile', [ 'id' => $user->getId() ]);
+            return $this->redirectToRoute('specific_profile', ['id' => $user->getId()]);
         }
 
         return $this->render('profile/edit_company_email.html.twig', [

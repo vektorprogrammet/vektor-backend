@@ -25,7 +25,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @return Response
      */
     public function index(): Response
     {
@@ -40,16 +39,13 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param AccessRule|null $accessRule
-     * @return Response
      */
     public function createRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
         $form = $this->createForm(AccessRuleType::class, $accessRule, [
             'roles' => $roles
         ]);
@@ -74,16 +70,13 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param AccessRule|null $accessRule
-     * @return Response
      */
     public function createRoutingRule(Request $request, AccessRule $accessRule = null): Response
     {
         if ($isCreate = $accessRule === null) {
             $accessRule = new AccessRule();
         }
-        $roles = $this->reversedRoleHierarchy->getParentRoles([ Roles::TEAM_MEMBER ]);
+        $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
         $routes = $this->accessControlService->getRoutes();
         $form = $this->createForm(RoutingAccessRuleType::class, $accessRule, [
             'routes' => $routes,
@@ -111,9 +104,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param AccessRule $rule
-     * @return Response
      */
     public function copyAccessRule(Request $request, AccessRule $rule): Response
     {
@@ -126,8 +116,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param AccessRule $accessRule
-     * @return Response
      */
     public function delete(AccessRule $accessRule): Response
     {

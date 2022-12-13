@@ -99,7 +99,6 @@ class Team implements TeamInterface
     }
 
     /**
-     * @param bool $active
      */
     public function setActive(bool $active)
     {
@@ -122,7 +121,6 @@ class Team implements TeamInterface
     }
 
     /**
-     * @param bool $acceptApplication
      * @return Team
      */
 
@@ -395,7 +393,6 @@ class Team implements TeamInterface
     }
 
     /**
-     * @param TeamApplication $applications
      */
     public function setApplications(TeamApplication $applications): void
     {

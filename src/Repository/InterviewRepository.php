@@ -19,9 +19,7 @@ use Doctrine\ORM\EntityRepository;
 class InterviewRepository extends EntityRepository
 {
     /**
-     * @param User $user
      *
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Interview
      */
@@ -59,8 +57,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     * @param User     $user
-     * @param Semester $semester
      *
      * @return int
      */
@@ -96,7 +92,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     * @param string $responseCode
      *
      * @return Interview
      */
@@ -110,7 +105,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     * @param User $interviewer
      *
      * @return Interview[]
      */
@@ -135,7 +129,6 @@ class InterviewRepository extends EntityRepository
     }
 
     /**
-     * @param Semester $semester
      *
      * @return User[]
      */
@@ -167,7 +160,6 @@ class InterviewRepository extends EntityRepository
      * All interviews scheduled to a time after $time and having PENDING
      * interview status apply.
      *
-     * @param DateTime $time
      *
      * @return array
      */

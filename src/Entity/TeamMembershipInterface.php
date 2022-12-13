@@ -5,7 +5,6 @@ namespace App\Entity;
 interface TeamMembershipInterface
 {
     /**
-     * @return User
      */
     public function getUser(): User;
 

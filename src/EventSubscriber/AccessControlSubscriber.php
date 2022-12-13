@@ -34,7 +34,6 @@ class AccessControlSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param RequestEvent $event
      */
     public function checkAccess(RequestEvent $event)
     {

@@ -10,7 +10,6 @@ use Doctrine\ORM\QueryBuilder;
 class SchoolRepository extends EntityRepository
 {
     /**
-     * @param Department $department
      *
      * @return School[]
      */
@@ -23,7 +22,6 @@ class SchoolRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return School[]
      */
@@ -36,7 +34,6 @@ class SchoolRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return QueryBuilder
      */
@@ -55,7 +52,6 @@ class SchoolRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return QueryBuilder
      */

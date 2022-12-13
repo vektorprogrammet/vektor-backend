@@ -35,7 +35,6 @@ class LogService implements LoggerInterface
      * System is unusable.
      *
      * @param string $message
-     * @param array  $context
      */
     public function emergency($message, array $context = []): void
     {
@@ -50,7 +49,6 @@ class LogService implements LoggerInterface
      * trigger the SMS alerts and wake you up.
      *
      * @param string $message
-     * @param array  $context
      */
     public function alert($message, array $context = []): void
     {
@@ -64,7 +62,6 @@ class LogService implements LoggerInterface
      * Example: Application component unavailable, unexpected exception.
      *
      * @param string $message
-     * @param array  $context
      */
     public function critical($message, array $context = []): void
     {
@@ -77,7 +74,6 @@ class LogService implements LoggerInterface
      * be logged and monitored.
      *
      * @param string $message
-     * @param array  $context
      */
     public function error($message, array $context = []): void
     {
@@ -92,7 +88,6 @@ class LogService implements LoggerInterface
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param array  $context
      */
     public function warning($message, array $context = []): void
     {
@@ -104,7 +99,6 @@ class LogService implements LoggerInterface
      * Normal but significant events.
      *
      * @param string $message
-     * @param array  $context
      */
     public function notice($message, array $context = []): void
     {
@@ -118,7 +112,6 @@ class LogService implements LoggerInterface
      * Example: User log in, SQL log.
      *
      * @param string $message
-     * @param array  $context
      */
     public function info($message, array $context = []): void
     {
@@ -130,7 +123,6 @@ class LogService implements LoggerInterface
      * Detailed debug information.
      *
      * @param string $message
-     * @param array  $context
      */
     public function debug($message, array $context = []): void
     {
@@ -141,9 +133,7 @@ class LogService implements LoggerInterface
     /**
      * Logs with an arbitrary level.
      *
-     * @param mixed  $level
      * @param string $message
-     * @param array  $context
      */
     public function log($level, $message, array $context = []): void
     {

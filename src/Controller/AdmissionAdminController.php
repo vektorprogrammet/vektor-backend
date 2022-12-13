@@ -36,7 +36,6 @@ class AdmissionAdminController extends BaseController
     /**
      * Shows the admission admin page. Shows only applications for the department of the logged in user.
      * This works as the restricted admission management method, only allowing users to manage applications within their department.
-     * @param Request $request
      *
      * @return Response
      */
@@ -47,8 +46,6 @@ class AdmissionAdminController extends BaseController
 
 
     /**
-     * @param Request $request
-     * @return Response
      */
     public function showNewApplications(Request $request): Response
     {
@@ -79,7 +76,6 @@ class AdmissionAdminController extends BaseController
     }
 
     /**
-     * @param Request $request
      * @return Response|null
      */
     public function showAssignedApplications(Request $request)
@@ -119,7 +115,6 @@ class AdmissionAdminController extends BaseController
     }
 
     /**
-     * @param Request $request
      * @return Response|null
      */
     public function showInterviewedApplications(Request $request)
@@ -153,7 +148,6 @@ class AdmissionAdminController extends BaseController
     }
 
     /**
-     * @param Request $request
      * @return Response|null
      */
     public function showExistingApplications(Request $request)
@@ -185,7 +179,6 @@ class AdmissionAdminController extends BaseController
      * Deletes the given application.
      * This method is intended to be called by an Ajax request.
      *
-     * @param Application $application
      *
      * @return JsonResponse
      */
@@ -219,7 +212,6 @@ class AdmissionAdminController extends BaseController
      * Deletes the applications submitted as a list of ids through a form POST request.
      * This method is intended to be called by an Ajax request.
      *
-     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -303,7 +295,6 @@ class AdmissionAdminController extends BaseController
     }
 
     /**
-     * @param Request $request
      * @return Response|null
      */
     public function showTeamInterest(Request $request)

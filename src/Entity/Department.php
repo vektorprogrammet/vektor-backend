@@ -174,7 +174,6 @@ class Department
     }
 
     /**
-     * @return bool
      */
     public function activeAdmission(): bool
     {
@@ -250,7 +249,6 @@ class Department
     /**
      * Add fieldOfStudy.
      *
-     * @param FieldOfStudy $fieldOfStudy
      *
      * @return Department
      */
@@ -264,7 +262,6 @@ class Department
     /**
      * Remove fieldOfStudy.
      *
-     * @param FieldOfStudy $fieldOfStudy
      */
     public function removeFieldOfStudy(FieldOfStudy $fieldOfStudy)
     {
@@ -313,7 +310,6 @@ class Department
     /**
      * Add schools.
      *
-     * @param School $schools
      *
      * @return Department
      */
@@ -327,7 +323,6 @@ class Department
     /**
      * Remove schools.
      *
-     * @param School $schools
      */
     public function removeSchool(School $schools)
     {
@@ -371,7 +366,6 @@ class Department
     /**
      * Add admission periods.
      *
-     * @param AdmissionPeriod $admissionPeriod
      *
      * @return Department
      */
@@ -395,7 +389,6 @@ class Department
     /**
      * Add teams.
      *
-     * @param Team $teams
      *
      * @return Department
      */
@@ -409,7 +402,6 @@ class Department
     /**
      * Remove teams.
      *
-     * @param Team $teams
      */
     public function removeTeam(Team $teams)
     {

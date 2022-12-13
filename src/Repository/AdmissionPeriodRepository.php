@@ -15,7 +15,6 @@ use Doctrine\ORM\NonUniqueResultException;
 class AdmissionPeriodRepository extends EntityRepository
 {
     /**
-     * @param Department $department
      *
      * @return AdmissionPeriod[]
      */
@@ -32,9 +31,6 @@ class AdmissionPeriodRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param string     $time
-     * @param string     $year
      *
      * @return AdmissionPeriod[]
      */
@@ -53,10 +49,7 @@ class AdmissionPeriodRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
      *
-     * @return AdmissionPeriod|null
      * @throws NonUniqueResultException
      */
     public function findOneByDepartmentAndSemester(Department $department, Semester $semester): ?AdmissionPeriod
@@ -71,12 +64,10 @@ class AdmissionPeriodRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      * @param DateTime   $time
      *
-     * @return AdmissionPeriod|null
-     *
      * @throws NonUniqueResultException
+     *
      */
     public function findOneWithActiveAdmissionByDepartment(Department $department, DateTime $time = null): ?AdmissionPeriod
     {

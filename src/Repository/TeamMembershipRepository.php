@@ -20,7 +20,6 @@ use App\Utils\SemesterUtil;
 class TeamMembershipRepository extends EntityRepository
 {
     /**
-     * @param Team $team
      *
      * @return TeamMembership[]
      */
@@ -33,7 +32,6 @@ class TeamMembershipRepository extends EntityRepository
             ->getResult();
     }
     /**
-     * @param User $user
      *
      * @return TeamMembership[]
      */
@@ -67,7 +65,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     * @param Team $team
      *
      * @return TeamMembership[]
      */
@@ -102,7 +99,6 @@ class TeamMembershipRepository extends EntityRepository
 
     /**
      * @param TeamMembership[] $teamMemberships
-     * @param Semester $semester
      * @return TeamMembership[]
      */
     public function filterNotInSemester(array $teamMemberships, Semester $semester): array
@@ -116,8 +112,6 @@ class TeamMembershipRepository extends EntityRepository
 
 
     /**
-     * @param Team $team
-     * @param User $user
      *
      * @return TeamMembership[]
      */
@@ -138,7 +132,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     * @param Team $team
      *
      * @return TeamMembership[]
      */
@@ -151,7 +144,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
      *
      * @return TeamMembership[]
      */
@@ -171,8 +163,6 @@ class TeamMembershipRepository extends EntityRepository
 
 
     /**
-     * @param $user
-     * @param $semester
      *
      * @return TeamMembership[]
      */
@@ -192,7 +182,6 @@ class TeamMembershipRepository extends EntityRepository
 
 
     /**
-     * @param Department $department
      *
      * @return TeamMembership[]
      */

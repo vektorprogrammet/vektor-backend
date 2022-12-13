@@ -21,7 +21,6 @@ class AssistantSchedulingController extends BaseController
     }
 
     /**
-     * @return JsonResponse
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -89,7 +88,6 @@ class AssistantSchedulingController extends BaseController
     }
 
     /**
-     * @return JsonResponse
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -108,7 +106,6 @@ class AssistantSchedulingController extends BaseController
     /**
      * @param SchoolCapacity[] $schoolCapacities
      *
-     * @return array
      */
     private function generateSchoolsFromSchoolCapacities(array $schoolCapacities): array
     {

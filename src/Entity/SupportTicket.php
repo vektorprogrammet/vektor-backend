@@ -98,7 +98,6 @@ class SupportTicket
     }
 
     /**
-     * @param Department $department
      */
     public function setDepartment(Department $department)
     {

@@ -82,7 +82,6 @@ class Signature
 
 
     /**
-     * @return string|null
      */
     public function getAdditionalComment(): ?string
     {

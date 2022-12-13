@@ -95,7 +95,6 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     /**
      * Get user.
      *
-     * @return User
      */
     public function getUser(): User
     {

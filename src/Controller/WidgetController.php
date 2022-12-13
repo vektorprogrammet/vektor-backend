@@ -25,8 +25,6 @@ class WidgetController extends BaseController
         $this->admissionStatistics=$admissionStatistics;
     }
     /**
-     * @param Request $request
-     * @return Response|null
      */
     public function interviews(Request $request): ?Response
     {
@@ -65,8 +63,6 @@ class WidgetController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @return Response|null
      */
     public function applicationGraph(Request $request, Department $department, Semester $semester): ?Response
     {

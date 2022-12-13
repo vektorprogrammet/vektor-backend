@@ -21,7 +21,6 @@ class InterviewSchemaController extends BaseController
      * Shows and handles the submission of the create interview schema form.
      * Uses the same form as the edit .
      *
-     * @param Request $request
      *
      * @return RedirectResponse|Response
      */
@@ -36,8 +35,6 @@ class InterviewSchemaController extends BaseController
      * Shows and handles the submission of the edit interview schema form.
      * Uses the same form as the create .
      *
-     * @param Request         $request
-     * @param InterviewSchema $schema
      *
      * @return RedirectResponse|Response
      */
@@ -63,7 +60,6 @@ class InterviewSchemaController extends BaseController
     /**
      * Shows the interview schemas page.
      *
-     * @return Response
      */
     public function showSchemas(): Response
     {
@@ -76,9 +72,7 @@ class InterviewSchemaController extends BaseController
      * Deletes the given interview schema.
      * This method is intended to be called by an Ajax request.
      *
-     * @param InterviewSchema $schema
      *
-     * @return JsonResponse
      */
     public function deleteSchema(InterviewSchema $schema): JsonResponse
     {

@@ -47,8 +47,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
      *
      * @return User[]
      */
@@ -139,11 +137,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $username
      *
-     * @return User
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return User
      */
     public function findUserByUsername($username)
     {
@@ -156,11 +153,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $login
      *
-     * @return User
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return User
      */
     public function findByUsernameOrEmail($login)
     {
@@ -177,11 +173,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $email
-     *
-     * @return User
      *
      * @throws NonUniqueResultException
+     * @return User
+     *
      */
     public function findUserByEmail($email)
     {
@@ -204,11 +199,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $id
-     *
-     * @return User
      *
      * @throws NonUniqueResultException
+     * @return User
+     *
      */
     public function findUserByNewUserCode($id)
     {

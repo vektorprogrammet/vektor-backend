@@ -47,7 +47,6 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param AssistantHistoryCreatedEvent $event
      *
      * @throws NonUniqueResultException
      * @throws ORMException

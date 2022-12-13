@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 class ParticipantHistoryController extends BaseController
 {
     /**
-     * @param Request $request
-     * @return Response|null
      */
     public function show(Request $request): ?Response
     {

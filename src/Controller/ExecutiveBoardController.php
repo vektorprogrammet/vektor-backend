@@ -131,10 +131,7 @@ class ExecutiveBoardController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param ExecutiveBoardMembership $member
      *
-     * @return Response
      */
     public function editMemberHistory(Request $request, ExecutiveBoardMembership $member): Response
     {

@@ -29,9 +29,9 @@ class SemesterRepository extends EntityRepository
     }
 
     /**
+     * @throws NonUniqueResultException
      * @return Semester
      *
-     * @throws NonUniqueResultException
      */
     public function findCurrentSemester()
     {
@@ -50,9 +50,9 @@ class SemesterRepository extends EntityRepository
     }
 
     /**
-     * @return Semester
      * @throws NonUniqueResultException
      * @throws ORMException
+     * @return Semester
      */
     public function findOrCreateCurrentSemester()
     {
@@ -68,9 +68,6 @@ class SemesterRepository extends EntityRepository
     }
 
     /**
-     * @param string $semesterTime
-     * @param string $year
-     * @return Semester|null
      * @throws NonUniqueResultException
      */
     public function findByTimeAndYear(string $semesterTime, string $year): ?Semester
@@ -88,8 +85,6 @@ class SemesterRepository extends EntityRepository
     }
 
     /**
-     * @param Semester $semester
-     * @return Semester|null
      * @throws NonUniqueResultException|ORMException
      */
     public function getNextActive(Semester $semester): ?Semester

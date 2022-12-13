@@ -135,7 +135,6 @@ class AdmissionNotification
     }
 
     /**
-     * @param Department $department
      *
      * @return AdmissionNotification
      */

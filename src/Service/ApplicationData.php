@@ -179,7 +179,6 @@ class ApplicationData
     }
 
     /**
-     * @return AdmissionPeriod
      */
     public function getAdmissionPeriod(): AdmissionPeriod
     {
@@ -187,7 +186,6 @@ class ApplicationData
     }
 
     /**
-     * @return Department
      */
     public function getDepartment(): Department
     {

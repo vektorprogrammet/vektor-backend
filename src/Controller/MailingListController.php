@@ -11,9 +11,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class MailingListController extends BaseController
 {
     /**
-     * @param Request $request
      *
-     * @return Response
      */
     public function show(Request $request): Response
     {
@@ -53,8 +51,6 @@ class MailingListController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @return Response
      */
     public function showAssistants(Request $request): Response
     {
@@ -69,8 +65,6 @@ class MailingListController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @return Response
      */
     public function showTeam(Request $request): Response
     {
@@ -85,8 +79,6 @@ class MailingListController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @return Response
      */
     public function showAll(Request $request): Response
     {

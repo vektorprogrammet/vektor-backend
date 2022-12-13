@@ -128,7 +128,6 @@ class AssistantHistory
     }
 
     /**
-     * @param Department $department
      *
      * @return AssistantHistory
      */

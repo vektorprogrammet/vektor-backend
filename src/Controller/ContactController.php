@@ -27,10 +27,7 @@ class ContactController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Department|null $department
      *
-     * @return Response
      */
     public function index(Request $request, Department $department = null): Response
     {

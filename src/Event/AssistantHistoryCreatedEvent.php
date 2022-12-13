@@ -14,7 +14,6 @@ class AssistantHistoryCreatedEvent extends Event
     /**
      * ApplicationAdmissionEvent constructor.
      *
-     * @param AssistantHistory $assistantHistory
      */
     public function __construct(AssistantHistory $assistantHistory)
     {
@@ -22,7 +21,6 @@ class AssistantHistoryCreatedEvent extends Event
     }
 
     /**
-     * @return AssistantHistory
      */
     public function getAssistantHistory(): AssistantHistory
     {

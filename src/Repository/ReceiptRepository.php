@@ -9,7 +9,6 @@ use App\Entity\Receipt;
 class ReceiptRepository extends EntityRepository
 {
     /**
-     * @param User $user
      *
      * @return Receipt[]
      */
@@ -24,7 +23,6 @@ class ReceiptRepository extends EntityRepository
     }
 
     /**
-     * @param string $status
      *
      * @return Receipt[]
      */

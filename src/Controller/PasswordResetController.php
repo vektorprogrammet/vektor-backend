@@ -29,7 +29,6 @@ class PasswordResetController extends BaseController
     }
 
     /**
-     * @param Request $request
      *
      * @return Response
      *
@@ -86,8 +85,6 @@ class PasswordResetController extends BaseController
     }
 
     /**
-     * @param $resetCode
-     * @param Request $request
      *
      * @return RedirectResponse|Response
      *

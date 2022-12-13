@@ -36,12 +36,11 @@ class PasswordResetRepository extends EntityRepository
     }
 
     /**
-     * @param $hashedResetCode
-     *
-     * @return PasswordReset
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return PasswordReset
+     *
      */
     public function findPasswordResetByHashedResetCode($hashedResetCode)
     {

@@ -19,8 +19,6 @@ class StandController extends BaseController
         $this->AdmissionStatistics=$admissionStatistics;
     }
     /**
-     * @param Request $request
-     * @return Response
      * @throws NonUniqueResultException
      */
     public function index(Request $request): Response

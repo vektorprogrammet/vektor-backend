@@ -14,7 +14,6 @@ class InterviewConductedEvent extends Event
     /**
      * InterviewConductedEvent constructor.
      *
-     * @param Application $application
      */
     public function __construct(Application $application)
     {
@@ -22,7 +21,6 @@ class InterviewConductedEvent extends Event
     }
 
     /**
-     * @return Application
      */
     public function getApplication(): Application
     {

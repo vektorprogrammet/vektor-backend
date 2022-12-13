@@ -8,9 +8,7 @@ use DateTime;
 class SemesterUtil
 {
     /**
-     * @param DateTime $time
      *
-     * @return string
      */
     public static function timeToYear(DateTime $time): string
     {
@@ -18,9 +16,7 @@ class SemesterUtil
     }
 
     /**
-     * @param DateTime $time
      *
-     * @return string
      */
     public static function timeToSemesterTime(DateTime $time): string
     {
@@ -28,8 +24,6 @@ class SemesterUtil
     }
 
     /**
-     * @param DateTime $time
-     * @return Semester
      */
     public static function timeToSemester(Datetime $time): Semester
     {

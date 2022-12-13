@@ -54,8 +54,6 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Application $application
      *
      * @return RedirectResponse|Response
      */
@@ -117,9 +115,7 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @param Interview $interview
      *
-     * @return RedirectResponse
      */
     public function cancel(Interview $interview): RedirectResponse
     {
@@ -134,9 +130,7 @@ class InterviewController extends BaseController
     /**
      * Shows the given interview.
      *
-     * @param Application $application
      *
-     * @return Response
      */
     public function show(Application $application): Response
     {
@@ -159,11 +153,8 @@ class InterviewController extends BaseController
     /**
      * Deletes the given interview.
      *
-     * @param Interview $interview
      *
-     * @param Request $request
      *
-     * @return RedirectResponse
      */
     public function deleteInterview(Interview $interview, Request $request): RedirectResponse
     {
@@ -182,9 +173,7 @@ class InterviewController extends BaseController
      *
      * This method is intended to be called by an Ajax request.
      *
-     * @param Request $request
      *
-     * @return JsonResponse
      */
     public function bulkDeleteInterview(Request $request): JsonResponse
     {
@@ -215,10 +204,7 @@ class InterviewController extends BaseController
      * Shows and handles the submission of the schedule interview form.
      * This method can also send an email to the applicant with the info from the submitted form.
      *
-     * @param Request $request
-     * @param Application $application
      *
-     * @return Response
      */
     public function schedule(Request $request, Application $application): Response
     {
@@ -308,10 +294,7 @@ class InterviewController extends BaseController
      * It sets the interviewer and interview schema according to the form.
      * This method is intended to be called by an Ajax request.
      *
-     * @param Request $request
-     * @param $id
      *
-     * @return JsonResponse
      */
     public function assign(Request $request, $id = null): JsonResponse
     {
@@ -357,9 +340,7 @@ class InterviewController extends BaseController
      *
      * This method is intended to be called by an Ajax request.
      *
-     * @param Request $request
      *
-     * @return JsonResponse
      */
     public function bulkAssign(Request $request): JsonResponse
     {
@@ -403,9 +384,7 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @param Interview $interview
      *
-     * @return Response
      */
     public function acceptByResponseCode(Interview $interview): Response
     {
@@ -429,10 +408,7 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Interview $interview
      *
-     * @return Response
      */
     public function requestNewTime(Request $request, Interview $interview): Response
     {
@@ -468,9 +444,7 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @param Interview $interview
      *
-     * @return Response
      */
     public function respond(Interview $interview): Response
     {
@@ -483,10 +457,7 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Interview $interview
      *
-     * @return Response
      */
     public function cancelByResponseCode(Request $request, Interview $interview): Response
     {
@@ -522,10 +493,7 @@ class InterviewController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Interview $interview
      *
-     * @return RedirectResponse
      */
     public function editStatus(Request $request, Interview $interview): RedirectResponse
     {

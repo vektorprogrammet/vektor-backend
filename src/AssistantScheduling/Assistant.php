@@ -38,7 +38,6 @@ class Assistant implements JsonSerializable
     }
 
     /**
-     * @return bool
      */
     public function isAssignedToSchool(): bool
     {
