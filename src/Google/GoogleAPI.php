@@ -4,8 +4,8 @@ namespace App\Google;
 
 class GoogleAPI
 {
-    private $userService;
-    private $groupService;
+    private GoogleUsers $userService;
+    private GoogleGroups $groupService;
     private $disabled;
 
     public function __construct(array $apiOptions, GoogleUsers $userService, GoogleGroups $groupService)
