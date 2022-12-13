@@ -1,10 +1,11 @@
 name: Symfony 5 Tests
+
 on:
   push:
     branches:
       - main
-#  pull_request:
-#    types: [opened, synchronize, reopened]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   symfony:

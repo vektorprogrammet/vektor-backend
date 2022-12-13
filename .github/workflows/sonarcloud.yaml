@@ -1,12 +1,12 @@
+name: SonarCloud Workflow
+
 on:
-  # Trigger analysis when pushing in main or pull requests, and when creating a pull request.
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
 
-name: SonarCloud Workflow
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
