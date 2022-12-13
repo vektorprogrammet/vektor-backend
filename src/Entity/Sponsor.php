@@ -31,7 +31,7 @@ class Sponsor
     protected $url;
 
     /**
-     * Available sizes: "small", "medium" and "large"
+     * Available sizes: "small", "medium" and "large".
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="Feletet kan ikke være tomt.")

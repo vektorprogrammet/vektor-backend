@@ -16,12 +16,11 @@ class ApplicationStatisticsController extends BaseController
 
     public function __construct(AssistantHistoryData $assistantHistoryData, ApplicationData $applicationData)
     {
-        $this->AssistantHistoryData=$assistantHistoryData;
-        $this->ApplicationData=$applicationData;
+        $this->AssistantHistoryData = $assistantHistoryData;
+        $this->ApplicationData = $applicationData;
     }
+
     /**
-     * @param Request $request
-     * @return Response
      * @throws NonUniqueResultException
      */
     public function show(Request $request): Response
@@ -36,15 +35,15 @@ class ApplicationStatisticsController extends BaseController
         $assistantHistoryData->setSemester($semester)->setDepartment($department);
 
         $applicationData = $this->ApplicationData;
-        if ($admissionPeriod !== null) {
+        if (null !== $admissionPeriod) {
             $applicationData->setAdmissionPeriod($admissionPeriod);
         }
 
-        return $this->render('statistics/statistics.html.twig', array(
+        return $this->render('statistics/statistics.html.twig', [
             'applicationData' => $applicationData,
             'assistantHistoryData' => $assistantHistoryData,
             'semester' => $semester,
             'department' => $department,
-        ));
+        ]);
     }
 }

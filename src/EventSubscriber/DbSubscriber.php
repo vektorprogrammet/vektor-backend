@@ -34,7 +34,7 @@ class DbSubscriber implements EventSubscriber
             PasswordReset::class,
             AdmissionNotification::class,
         ];
-        if ($env === 'staging') {
+        if ('staging' === $env) {
             $this->ignoredClasses[] = UnhandledAccessRule::class;
         }
         $this->manager = $manager;
@@ -42,17 +42,15 @@ class DbSubscriber implements EventSubscriber
 
     /**
      * Returns an array of events this subscriber wants to listen to.
-     *
-     * @return array
      */
     public function getSubscribedEvents(): array
     {
-        return array(
+        return [
             'prePersist',
             'postPersist',
             'postUpdate',
-            'postRemove'
-        );
+            'postRemove',
+        ];
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -92,15 +90,15 @@ class DbSubscriber implements EventSubscriber
     private function log(LifecycleEventArgs $args, string $action)
     {
         $obj = $args->getObject();
-        $className = get_class($obj);
+        $className = \get_class($obj);
 
-        if (in_array($className, $this->ignoredClasses)) {
+        if (\in_array($className, $this->ignoredClasses, true)) {
             return;
         }
 
-        $lastSlashIdx = strrpos($className, "\\");
+        $lastSlashIdx = mb_strrpos($className, '\\');
         if (false !== $lastSlashIdx) {
-            $className = substr($className, $lastSlashIdx + 1);
+            $className = mb_substr($className, $lastSlashIdx + 1);
         }
 
         $objName = $this->getObjectName($obj);
@@ -110,7 +108,7 @@ class DbSubscriber implements EventSubscriber
 
     private function getObjectName($obj)
     {
-        $name = "";
+        $name = '';
         if (method_exists($obj, '__toString')) {
             $name = "*{$obj->__toString()}*";
         }

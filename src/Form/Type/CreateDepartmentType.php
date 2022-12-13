@@ -14,49 +14,49 @@ class CreateDepartmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Navn',
-            ))
-            ->add('shortName', TextType::class, array(
+            ])
+            ->add('shortName', TextType::class, [
                 'label' => 'Forkortet navn',
-            ))
-            ->add('email', TextType::class, array(
+            ])
+            ->add('email', TextType::class, [
                 'label' => 'E-post',
-            ))
-            ->add('address', TextType::class, array(
+            ])
+            ->add('address', TextType::class, [
                 'label' => 'Adresse:',
-                'required' => false
-            ))
-            ->add('city', TextType::class, array(
+                'required' => false,
+            ])
+            ->add('city', TextType::class, [
                 'label' => 'By',
-            ))
-            ->add('latitude', TextType::class, array(
+            ])
+            ->add('latitude', TextType::class, [
                 'label' => 'Latitude',
-                'required' => false
-            ))
-            ->add('longitude', TextType::class, array(
+                'required' => false,
+            ])
+            ->add('longitude', TextType::class, [
                 'label' => 'Longitude',
-                'required' => false
-            ))
-            ->add('slackChannel', TextType::class, array(
+                'required' => false,
+            ])
+            ->add('slackChannel', TextType::class, [
                 'label' => 'Privat Slack Channel',
                 'required' => false,
-                'attr' => ['placeholder' => 'eks. #styret_REGION']
-            ))
-            ->add('active', CheckboxType::class, array(
+                'attr' => ['placeholder' => 'eks. #styret_REGION'],
+            ])
+            ->add('active', CheckboxType::class, [
                 'label' => 'Aktiv?',
-                'required' => false
-            ))
-            ->add('save', SubmitType::class, array(
+                'required' => false,
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Opprett',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Department',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

@@ -14,7 +14,7 @@ class InterviewNotificationManager
     private RouterInterface $router;
 
     /**
-     * InterviewNotificationManager constructor
+     * InterviewNotificationManager constructor.
      */
     public function __construct(SlackMessenger $slackMessenger, ApplicationData $applicationData, RouterInterface $router)
     {
@@ -30,10 +30,10 @@ class InterviewNotificationManager
 
         $interviewsLink = $this->router->generate(
             'applications_show_interviewed',
-            array(
+            [
                 'department' => $department->getId(),
                 'semester' => $semester->getId(),
-            ),
+            ],
             Router::ABSOLUTE_URL
         );
 
@@ -62,10 +62,10 @@ class InterviewNotificationManager
         $this->slackMessenger->notify(
             'Se alle intervjuene her: '.$this->router->generate(
                 'applications_show_interviewed',
-                array(
+                [
                     'department' => $department->getId(),
                     'semester' => $semester->getId(),
-                ),
+                ],
                 Router::ABSOLUTE_URL
             )
         );

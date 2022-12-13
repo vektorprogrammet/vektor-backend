@@ -11,11 +11,11 @@ class CancelInterviewConfirmationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('message', TextareaType::class, array(
+            ->add('message', TextareaType::class, [
                 'label' => false,
-                'attr' => array('rows' => '5'),
+                'attr' => ['rows' => '5'],
                 'required' => false,
-            ));
+            ]);
     }
 
     public function getBlockPrefix(): string

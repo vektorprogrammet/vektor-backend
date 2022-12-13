@@ -21,7 +21,7 @@ class CreateTeamMembershipType extends AbstractType
         $this->department = $options['department'];
 
         $builder
-            ->add('user', EntityType::class, array(
+            ->add('user', EntityType::class, [
                 'label' => 'Bruker',
                 'class' => 'App:User',
                 'query_builder' => function (UserRepository $ur) {
@@ -34,49 +34,49 @@ class CreateTeamMembershipType extends AbstractType
                         ->andWhere('d = ?1')
                         ->setParameter(1, $this->department);
                 },
-            ))
-            ->add('isTeamLeader', ChoiceType::class, array(
+            ])
+            ->add('isTeamLeader', ChoiceType::class, [
                 'choices' => [
                     'Medlem' => false,
                     'Leder' => true,
                 ],
                 'expanded' => true,
                 'label' => false,
-            ))
-            ->add('position', EntityType::class, array(
+            ])
+            ->add('position', EntityType::class, [
                 'label' => 'Stillingstittel',
                 'class' => 'App:Position',
                 'query_builder' => function (PositionRepository $pr) {
                     return $pr->createQueryBuilder('p')
                         ->orderBy('p.name', 'ASC');
                 },
-            ))
-            ->add('startSemester', EntityType::class, array(
+            ])
+            ->add('startSemester', EntityType::class, [
                 'label' => 'Start semester',
                 'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
-            ))
-            ->add('endSemester', EntityType::class, array(
+            ])
+            ->add('endSemester', EntityType::class, [
                 'label' => 'Slutt semester (Valgfritt)',
                 'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
                 'required' => false,
-            ))
-            ->add('save', SubmitType::class, array(
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Legg til',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\TeamMembership',
-            'department' => null
-        ));
+            'department' => null,
+        ]);
     }
 
     public function getBlockPrefix(): string

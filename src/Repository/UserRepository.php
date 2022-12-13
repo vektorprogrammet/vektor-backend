@@ -5,13 +5,13 @@ namespace App\Repository;
 use App\Entity\Department;
 use App\Entity\Semester;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
 
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
@@ -28,7 +28,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->getQuery()
             ->getResult();
 
-        $teamMembers = array();
+        $teamMembers = [];
         /** @var User $user */
         foreach ($users as $user) {
             foreach ($user->getTeamMemberships() as $teamMembership) {
@@ -47,9 +47,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
-     *
      * @return User[]
      */
     public function findUsersWithAssistantHistoryInDepartmentAndSemester(Department $department, Semester $semester)
@@ -59,10 +56,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->join('user.assistantHistories', 'ah')
             ->where('ah.department = :department')
             ->andWhere('ah.semester = :semester')
-            ->setParameters(array(
+            ->setParameters([
                 'department' => $department,
                 'semester' => $semester,
-            ))
+            ])
             ->getQuery()
             ->getResult();
     }
@@ -70,13 +67,13 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function findAllUsersByDepartment($department)
     {
         $users = $this->getEntityManager()->createQuery('
-		
+
 		SELECT u
 		FROM App:User u
 		JOIN u.fieldOfStudy fos
 		JOIN fos.department d
 		WHERE d.id = :department
-		
+
 		')
             ->setParameter('department', $department)
             ->getResult();
@@ -87,7 +84,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function findAllActiveUsersByDepartment($department)
     {
         $users = $this->getEntityManager()->createQuery('
-		
+
 		SELECT u
 		FROM App:User u
 		JOIN u.fieldOfStudy fos
@@ -139,11 +136,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $username
-     *
-     * @return User
      * @throws NoResultException
      * @throws NonUniqueResultException
+     *
+     * @return User
      */
     public function findUserByUsername($username)
     {
@@ -156,11 +152,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $login
-     *
-     * @return User
      * @throws NoResultException
      * @throws NonUniqueResultException
+     *
+     * @return User
      */
     public function findByUsernameOrEmail($login)
     {
@@ -177,11 +172,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $email
+     * @throws NonUniqueResultException
      *
      * @return User
-     *
-     * @throws NonUniqueResultException
      */
     public function findUserByEmail($email)
     {
@@ -204,11 +197,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $id
+     * @throws NonUniqueResultException
      *
      * @return User
-     *
-     * @throws NonUniqueResultException
      */
     public function findUserByNewUserCode($id)
     {
@@ -261,14 +252,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        $class = get_class($user);
+        $class = \get_class($user);
         if (!$this->supportsClass($class)) {
-            throw new UnsupportedUserException(
-                sprintf(
-                    'Instances of "%s" are not supported.',
-                    $class
-                )
-            );
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
         }
 
         return $this->find($user->getId());

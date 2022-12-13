@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Semester;
 use App\Form\Type\CreateSemesterType;
-use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,11 +15,10 @@ class SemesterController extends AbstractController
     {
         $semesters = $this->getDoctrine()->getRepository(Semester::class)->findAllOrderedByAge();
 
-        return $this->render('semester_admin/index.html.twig', array(
+        return $this->render('semester_admin/index.html.twig', [
             'semesters' => $semesters,
-        ));
+        ]);
     }
-
 
     public function createSemester(Request $request)
     {
@@ -35,13 +32,14 @@ class SemesterController extends AbstractController
 
         // The fields of the form is checked if they contain the correct information
         if ($form->isSubmitted() && $form->isValid()) {
-            //Check if semester already exists
+            // Check if semester already exists
             $existingSemester = $this->getDoctrine()->getManager()->getRepository(Semester::class)
                 ->findByTimeAndYear($semester->getSemesterTime(), $semester->getYear());
 
-            //Return to semester page if semester already exists
-            if ($existingSemester !== null) {
+            // Return to semester page if semester already exists
+            if (null !== $existingSemester) {
                 $this->addFlash('warning', "Semesteret $existingSemester finnes allerede");
+
                 return $this->redirectToRoute('semester_create');
             }
 
@@ -53,9 +51,9 @@ class SemesterController extends AbstractController
         }
 
         // Render the view
-        return $this->render('semester_admin/create_semester.html.twig', array(
+        return $this->render('semester_admin/create_semester.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function delete(Semester $semester): JsonResponse
@@ -64,6 +62,6 @@ class SemesterController extends AbstractController
         $em->remove($semester);
         $em->flush();
 
-        return new JsonResponse(array('success' => true));
+        return new JsonResponse(['success' => true]);
     }
 }

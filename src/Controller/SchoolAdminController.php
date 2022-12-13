@@ -2,18 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\AssistantHistory;
 use App\Entity\Department;
+use App\Entity\School;
 use App\Entity\User;
 use App\Event\AssistantHistoryCreatedEvent;
-use App\Role\Roles;
-use Exception;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\School;
-use App\Form\Type\CreateSchoolType;
-use App\Entity\AssistantHistory;
 use App\Form\Type\CreateAssistantHistoryType;
+use App\Form\Type\CreateSchoolType;
+use App\Role\Roles;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SchoolAdminController extends BaseController
@@ -37,11 +36,11 @@ class SchoolAdminController extends BaseController
         $inactiveAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findInactiveAssistantHistoriesBySchool($school);
         $activeAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesBySchool($school);
 
-        return $this->render('school_admin/specific_school.html.twig', array(
+        return $this->render('school_admin/specific_school.html.twig', [
             'activeAssistantHistories' => $activeAssistantHistories,
             'inactiveAssistantHistories' => $inactiveAssistantHistories,
             'school' => $school,
-        ));
+        ]);
     }
 
     public function delegateSchoolToUser(Request $request, User $user)
@@ -56,7 +55,7 @@ class SchoolAdminController extends BaseController
         $assistantHistory = new AssistantHistory();
         $assistantHistory->setDepartment($department);
         $form = $this->createForm(CreateAssistantHistoryType::class, $assistantHistory, [
-            'department' => $department
+            'department' => $department,
         ]);
 
         $form->handleRequest($request);
@@ -73,10 +72,10 @@ class SchoolAdminController extends BaseController
         }
 
         // Return the form view
-        return $this->render('school_admin/create_assistant_history.html.twig', array(
+        return $this->render('school_admin/create_assistant_history.html.twig', [
             'form' => $form->createView(),
-            'user' => $user
-        ));
+            'user' => $user,
+        ]);
     }
 
     public function showUsersByDepartmentSuperadmin(Department $department): Response
@@ -86,11 +85,11 @@ class SchoolAdminController extends BaseController
         $users = $this->getDoctrine()->getRepository(User::class)->findAllUsersByDepartment($department);
 
         // Return the view with suitable variables
-        return $this->render('school_admin/all_users.html.twig', array(
+        return $this->render('school_admin/all_users.html.twig', [
             'departments' => $activeDepartments,
             'department' => $department,
             'users' => $users,
-        ));
+        ]);
     }
 
     public function showUsersByDepartment(): Response
@@ -107,11 +106,11 @@ class SchoolAdminController extends BaseController
         $users = $this->getDoctrine()->getRepository(User::class)->findAllUsersByDepartment($department);
 
         // Return the view with suitable variables
-        return $this->render('school_admin/all_users.html.twig', array(
+        return $this->render('school_admin/all_users.html.twig', [
             'departments' => $activeDepartments,
             'department' => $department,
             'users' => $users,
-        ));
+        ]);
     }
 
     public function show(): Response
@@ -125,11 +124,11 @@ class SchoolAdminController extends BaseController
         $inactiveSchools = $this->getDoctrine()->getRepository(School::class)->findInactiveSchoolsByDepartment($department);
 
         // Return the view with suitable variables
-        return $this->render('school_admin/index.html.twig', array(
+        return $this->render('school_admin/index.html.twig', [
             'activeSchools' => $activeSchools,
             'inactiveSchools' => $inactiveSchools,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function showSchoolsByDepartment(Department $department): Response
@@ -139,11 +138,11 @@ class SchoolAdminController extends BaseController
         $inactiveSchools = $this->getDoctrine()->getRepository(School::class)->findInactiveSchoolsByDepartment($department);
 
         // Renders the view with the variables
-        return $this->render('school_admin/index.html.twig', array(
+        return $this->render('school_admin/index.html.twig', [
             'activeSchools' => $activeSchools,
             'inactiveSchools' => $inactiveSchools,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function updateSchool(Request $request, School $school)
@@ -164,10 +163,10 @@ class SchoolAdminController extends BaseController
         }
 
         // Return the form view
-        return $this->render('school_admin/create_school.html.twig', array(
+        return $this->render('school_admin/create_school.html.twig', [
             'form' => $form->createView(),
-            'school' => $school
-        ));
+            'school' => $school,
+        ]);
     }
 
     public function createSchoolForDepartment(Request $request, Department $department)
@@ -192,9 +191,9 @@ class SchoolAdminController extends BaseController
         }
 
         // Render the view
-        return $this->render('school_admin/create_school.html.twig', array(
+        return $this->render('school_admin/create_school.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function deleteSchoolById(School $school): JsonResponse
@@ -207,7 +206,7 @@ class SchoolAdminController extends BaseController
 
             // a response back to AJAX
             $response['success'] = true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Send a response back to AJAX
             $response['success'] = false;
             $response['cause'] = 'Kunne ikke slette skolen. ';
@@ -228,7 +227,7 @@ class SchoolAdminController extends BaseController
 
             // a response back to AJAX
             $response['success'] = true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Send a response back to AJAX
             $response['success'] = false;
             $response['cause'] = 'Kunne ikke slette assistent historien. ';

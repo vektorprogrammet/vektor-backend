@@ -4,16 +4,13 @@ namespace App\Google;
 
 use App\Entity\Team;
 use App\Entity\User;
-use Google_Service_Directory;
-use Google_Service_Directory_Group;
-use Google_Service_Directory_Member;
-use Google_Service_Exception;
 
 class GoogleGroups extends GoogleService
 {
     /**
      * @param null $maxResults
-     * @return Google_Service_Directory_Group[]
+     *
+     * @return \Google_Service_Directory_Group[]
      */
     public function getGroups($maxResults = null)
     {
@@ -21,20 +18,21 @@ class GoogleGroups extends GoogleService
             return [];
         }
 
-        $client  = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $client = $this->getClient();
+        $service = new \Google_Service_Directory($client);
 
-        $optParams = array(
+        $optParams = [
             'customer' => 'my_customer',
-        );
+        ];
 
         if ($maxResults) {
             $optParams['maxResults'] = $maxResults;
         }
         try {
             $results = $service->groups->listGroups($optParams);
-        } catch (Google_Service_Exception $e) {
-            $this->logServiceException($e, "getGroups()");
+        } catch (\Google_Service_Exception $e) {
+            $this->logServiceException($e, 'getGroups()');
+
             return [];
         }
 
@@ -42,8 +40,7 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param string $teamEmail
-     * @return Google_Service_Directory_Group
+     * @return \Google_Service_Directory_Group
      */
     public function getGroup(string $teamEmail)
     {
@@ -63,8 +60,7 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param Team $team
-     * @return Google_Service_Directory_Group
+     * @return \Google_Service_Directory_Group
      */
     public function createGroup(Team $team)
     {
@@ -72,16 +68,17 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $client = $this->getClient();
+        $service = new \Google_Service_Directory($client);
 
-        $googleGroup = new Google_Service_Directory_Group();
+        $googleGroup = new \Google_Service_Directory_Group();
         $this->setGroupNameEmailDescription($googleGroup, $team);
 
         try {
             $createdGroup = $service->groups->insert($googleGroup);
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "createTeam(), *{$team->getDepartment()} - $team*");
+
             return null;
         }
 
@@ -89,9 +86,7 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param string $groupEmail
-     * @param Team $team
-     * @return Google_Service_Directory_Group
+     * @return \Google_Service_Directory_Group
      */
     public function updateGroup(string $groupEmail, Team $team)
     {
@@ -99,16 +94,17 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $client = $this->getClient();
+        $service = new \Google_Service_Directory($client);
 
-        $googleGroup = new Google_Service_Directory_Group();
+        $googleGroup = new \Google_Service_Directory_Group();
         $this->setGroupNameEmailDescription($googleGroup, $team);
 
         try {
-            $updatedTeam =  $service->groups->update($groupEmail, $googleGroup);
-        } catch (Google_Service_Exception $e) {
+            $updatedTeam = $service->groups->update($groupEmail, $googleGroup);
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "updateTeam('$groupEmail') for *{$team->getDepartment()} - $team*");
+
             return null;
         }
 
@@ -121,17 +117,17 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $client = $this->getClient();
+        $service = new \Google_Service_Directory($client);
 
-        $member = new Google_Service_Directory_Member();
+        $member = new \Google_Service_Directory_Member();
         $member->setType('GROUP');
         $member->setRole('MEMBER');
         $member->setEmail($user->getCompanyEmail());
 
         try {
             $service->members->insert($team->getEmail(), $member);
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "addUserToGroup(), user *$user* to group *{$team->getDepartment()} - $team*");
         }
     }
@@ -142,8 +138,8 @@ class GoogleGroups extends GoogleService
             return null;
         }
 
-        $client  = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $client = $this->getClient();
+        $service = new \Google_Service_Directory($client);
 
         $usersInGroup = $this->getUsersInGroup($team);
 
@@ -151,7 +147,7 @@ class GoogleGroups extends GoogleService
             if ($member->getEmail() === $user->getCompanyEmail()) {
                 try {
                     $service->members->delete($team->getEmail(), $member->getEmail());
-                } catch (Google_Service_Exception $e) {
+                } catch (\Google_Service_Exception $e) {
                     $this->logServiceException($e, "removeUserFromGroup(), user *$user* to group *{$team->getDepartment()} - $team*");
                 }
                 break;
@@ -160,9 +156,7 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param Team $team
-     *
-     * @return Google_Service_Directory_Member[]
+     * @return \Google_Service_Directory_Member[]
      */
     public function getUsersInGroup(Team $team)
     {
@@ -170,13 +164,14 @@ class GoogleGroups extends GoogleService
             return [];
         }
 
-        $client  = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $client = $this->getClient();
+        $service = new \Google_Service_Directory($client);
 
         try {
             $members = $service->members->listMembers($team->getEmail())->getMembers();
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "getUsersInGroup() from team *{$team->getDepartment()} - $team*");
+
             return [];
         }
 
@@ -199,9 +194,9 @@ class GoogleGroups extends GoogleService
         return false;
     }
 
-    private function setGroupNameEmailDescription(Google_Service_Directory_Group $googleGroup, Team $team)
+    private function setGroupNameEmailDescription(\Google_Service_Directory_Group $googleGroup, Team $team)
     {
-        $googleGroup->setName($team->getName() . " - " . $team->getDepartment());
+        $googleGroup->setName($team->getName().' - '.$team->getDepartment());
         $googleGroup->setEmail($team->getEmail());
         $googleGroup->setDescription($team->getShortDescription());
     }

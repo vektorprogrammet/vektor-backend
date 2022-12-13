@@ -9,8 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateTeamMembershipCommand extends Command
 {
-
     private TeamMembershipService $teamMembershipService;
+
     public function __construct(TeamMembershipService $teamMembershipService)
     {
         $this->teamMembershipService = $teamMembershipService;
@@ -37,6 +37,7 @@ class UpdateTeamMembershipCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->notifier->updateTeamMemberships();
+
         return Command::SUCCESS;
     }
 }

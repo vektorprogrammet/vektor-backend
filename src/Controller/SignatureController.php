@@ -14,12 +14,12 @@ class SignatureController extends BaseController
         $user = $this->getUser();
 
         $signature = $this->getDoctrine()->getRepository(Signature::class)->findByUser($user);
-        if ($signature === null) {
+        if (null === $signature) {
             throw new NotFoundHttpException('Signature not found');
         }
 
         $signatureImagePath = $signature->getSignaturePath();
-        $signatureFileName = substr($signatureImagePath, strrpos($signatureImagePath, '/') + 1);
+        $signatureFileName = mb_substr($signatureImagePath, mb_strrpos($signatureImagePath, '/') + 1);
         if ($imageName !== $signatureFileName) {
             // Users can only view their own signatures
             throw new AccessDeniedException();

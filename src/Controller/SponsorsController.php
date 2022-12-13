@@ -24,15 +24,15 @@ class SponsorsController extends BaseController
             ->getRepository(Sponsor::class)
             ->findAll();
 
-        return $this->render('sponsors/sponsors_show.html.twig', array(
+        return $this->render('sponsors/sponsors_show.html.twig', [
             'sponsors' => $sponsors,
-        ));
+        ]);
     }
 
     public function sponsorEdit(Sponsor $sponsor = null, Request $request)
     {
-        $isCreate = $sponsor === null;
-        $oldImgPath = "";
+        $isCreate = null === $sponsor;
+        $oldImgPath = '';
         if ($isCreate) {
             $sponsor = new Sponsor();
         } else {
@@ -42,7 +42,7 @@ class SponsorsController extends BaseController
         $form = $this->createForm(SponsorType::class, $sponsor);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!is_null($request->files->get('sponsor')['logoImagePath'])) {
+            if (null !== $request->files->get('sponsor')['logoImagePath']) {
                 $imgPath = $this->fileUploader->uploadSponsor($request);
                 $this->fileUploader->deleteSponsor($oldImgPath);
 
@@ -56,17 +56,17 @@ class SponsorsController extends BaseController
             $em->flush();
 
             $this->addFlash(
-                "success",
-                "Sponsor {$sponsor->getName()} ble " . ($isCreate ? "opprettet" : "endret")
+                'success',
+                "Sponsor {$sponsor->getName()} ble ".($isCreate ? 'opprettet' : 'endret')
             );
 
-            return $this->redirectToRoute("sponsors_show");
+            return $this->redirectToRoute('sponsors_show');
         }
 
-        return $this->render("sponsors/sponsor_edit.html.twig", [
-            "form" => $form->createView(),
-            "sponsor" => $sponsor,
-            "is_create" => $isCreate
+        return $this->render('sponsors/sponsor_edit.html.twig', [
+            'form' => $form->createView(),
+            'sponsor' => $sponsor,
+            'is_create' => $isCreate,
         ]);
     }
 
@@ -80,7 +80,8 @@ class SponsorsController extends BaseController
         $em->remove($sponsor);
         $em->flush();
 
-        $this->addFlash("success", "Sponsor {$sponsor->getName()} ble slettet.");
-        return $this->redirectToRoute("sponsors_show");
+        $this->addFlash('success', "Sponsor {$sponsor->getName()} ble slettet.");
+
+        return $this->redirectToRoute('sponsors_show');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Department;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Department;
 
 class LoadDepartmentData extends AbstractFixture implements OrderedFixtureInterface
 {

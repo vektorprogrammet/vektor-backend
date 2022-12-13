@@ -33,7 +33,7 @@ class GoogleAPI
         foreach ($groups as $group) {
             $emailsInUse[] = $group->getEmail();
             $aliases = $group->getAliases();
-            if ($aliases !== null) {
+            if (null !== $aliases) {
                 $emailsInUse = array_merge($emailsInUse, $aliases);
             }
         }

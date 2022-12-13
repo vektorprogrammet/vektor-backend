@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Mailer\MailerInterface;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
-use Swift_Message;
 use Twig\Environment;
 
 class UserRegistration
@@ -16,7 +15,7 @@ class UserRegistration
     private MailerInterface $mailer;
 
     /**
-     * UserRegistration constructor
+     * UserRegistration constructor.
      */
     public function __construct(Environment $twig, EntityManagerInterface $em, MailerInterface $mailer)
     {
@@ -37,17 +36,17 @@ class UserRegistration
         return $newUserCode;
     }
 
-    public function createActivationEmail(User $user, $newUserCode): Swift_Message
+    public function createActivationEmail(User $user, $newUserCode): \Swift_Message
     {
-        return (new Swift_Message())
+        return (new \Swift_Message())
             ->setSubject('Velkommen til Vektorprogrammet!')
-            ->setFrom(array('vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'))
+            ->setFrom(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setReplyTo($user->getFieldOfStudy()->getDepartment()->getEmail())
             ->setTo($user->getEmail())
-            ->setBody($this->twig->render('new_user/create_new_user_email.txt.twig', array(
+            ->setBody($this->twig->render('new_user/create_new_user_email.txt.twig', [
                 'newUserCode' => $newUserCode,
                 'name' => $user->getFullName(),
-            )));
+            ]));
     }
 
     public function sendActivationCode(User $user)
@@ -66,11 +65,11 @@ class UserRegistration
     {
         $hashedNewUserCode = $this->getHashedCode($newUserCode);
         $user = $this->em->getRepository(User::class)->findUserByNewUserCode($hashedNewUserCode);
-        if ($user === null) {
+        if (null === $user) {
             return null;
         }
 
-        if ($user->getUserIdentifier() === null) {
+        if (null === $user->getUserIdentifier()) {
             // Set default username to email
             $user->setUserName($user->getEmail());
         }
@@ -79,7 +78,7 @@ class UserRegistration
 
         $user->setActive('1');
 
-        if (count($user->getRoles()) === 0) {
+        if (0 === \count($user->getRoles())) {
             $role = Roles::ASSISTANT;
             $user->addRole($role);
         }

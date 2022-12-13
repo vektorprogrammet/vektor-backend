@@ -9,10 +9,10 @@ use App\Entity\TeamMembershipInterface;
 class FilterService
 {
     /**
-     * Returns only memberships in $team
+     * Returns only memberships in $team.
      *
      * @param TeamMembershipInterface[] $teamMemberships
-     * @param TeamInterface $team
+     * @param TeamInterface             $team
      *
      * @return TeamMembershipInterface[]
      */
@@ -24,14 +24,14 @@ class FilterService
                 $filtered[] = $teamMembership;
             }
         }
+
         return $filtered;
     }
 
     /**
-     * Returns only departments with active admission set to $hasActiveAdmission
+     * Returns only departments with active admission set to $hasActiveAdmission.
      *
      * @param Department[] $departments
-     * @param boolean $hasActiveAdmission
      *
      * @return Department[]
      */
@@ -40,11 +40,12 @@ class FilterService
         $filtered = [];
         foreach ($departments as $department) {
             $currentSemester = $department->getCurrentAdmissionPeriod();
-            $departmentHasActiveAdmission = ($currentSemester !== null && $currentSemester->hasActiveAdmission());
+            $departmentHasActiveAdmission = (null !== $currentSemester && $currentSemester->hasActiveAdmission());
             if ($departmentHasActiveAdmission === $hasActiveAdmission) {
                 $filtered[] = $department;
             }
         }
+
         return $filtered;
     }
 }

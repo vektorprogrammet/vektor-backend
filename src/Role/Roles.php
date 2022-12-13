@@ -16,19 +16,20 @@ class Roles
 
     public static function GetRoleName($role)
     {
-        $roleName = "";
-        if ($role === Roles::ASSISTANT) {
-            $roleName = "Bruker";
+        $roleName = '';
+        if (self::ASSISTANT === $role) {
+            $roleName = 'Bruker';
         }
-        if ($role === Roles::TEAM_MEMBER) {
-            $roleName = "Teammedlem";
+        if (self::TEAM_MEMBER === $role) {
+            $roleName = 'Teammedlem';
         }
-        if ($role === Roles::TEAM_LEADER) {
-            $roleName = "Teamleder";
+        if (self::TEAM_LEADER === $role) {
+            $roleName = 'Teamleder';
         }
-        if ($role === Roles::ADMIN) {
-            $roleName = "Admin";
+        if (self::ADMIN === $role) {
+            $roleName = 'Admin';
         }
+
         return $roleName;
     }
 }

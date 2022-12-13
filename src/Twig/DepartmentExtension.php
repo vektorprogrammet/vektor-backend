@@ -26,21 +26,23 @@ class DepartmentExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('get_departments', array($this, 'getDepartments')),
-            new TwigFunction('get_active_departments', array($this, 'getActiveDepartments')),
-        );
+        return [
+            new TwigFunction('get_departments', [$this, 'getDepartments']),
+            new TwigFunction('get_active_departments', [$this, 'getActiveDepartments']),
+        ];
     }
 
     public function getDepartments()
     {
         $departments = $this->em->getRepository(Department::class)->findAll();
+
         return $this->geoLocationService->sortDepartmentsByDistanceFromClient($departments);
     }
 
     public function getActiveDepartments()
     {
         $departments = $this->em->getRepository(Department::class)->findActive();
+
         return $this->geoLocationService->sortDepartmentsByDistanceFromClient($departments);
     }
 }

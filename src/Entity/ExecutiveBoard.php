@@ -43,6 +43,7 @@ class ExecutiveBoard implements TeamInterface
 
     /**
      * @var ExecutiveBoardMembership[]
+     *
      * @ORM\OneToMany(targetEntity="ExecutiveBoardMembership", mappedBy="board")
      */
     private $boardMemberships;
@@ -207,7 +208,7 @@ class ExecutiveBoard implements TeamInterface
         $activeUsers = [];
 
         foreach ($this->getActiveTeamMemberships() as $activeExecutiveBoardHistory) {
-            if (!in_array($activeExecutiveBoardHistory->getUser(), $activeUsers)) {
+            if (!\in_array($activeExecutiveBoardHistory->getUser(), $activeUsers, true)) {
                 $activeUsers[] = $activeExecutiveBoardHistory->getUser();
             }
         }

@@ -17,11 +17,10 @@ class CertificateController extends BaseController
 
     public function __construct(FileUploader $fileUploader)
     {
-        $this->fileUploader=$fileUploader;
+        $this->fileUploader = $fileUploader;
     }
+
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      */
     public function show(Request $request)
@@ -34,7 +33,7 @@ class CertificateController extends BaseController
 
         $signature = $this->getDoctrine()->getRepository(Signature::class)->findByUser($this->getUser());
         $oldPath = '';
-        if ($signature === null) {
+        if (null === $signature) {
             $signature = new Signature();
         } else {
             $oldPath = $signature->getSignaturePath();
@@ -44,7 +43,7 @@ class CertificateController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $isImageUpload = $request->files->get('create_signature')['signature_path'] !== null;
+            $isImageUpload = null !== $request->files->get('create_signature')['signature_path'];
 
             if ($isImageUpload) {
                 $signaturePath = $this->fileUploader->uploadSignature($request);
@@ -61,19 +60,20 @@ class CertificateController extends BaseController
             $manager->flush();
 
             $this->addFlash('success', 'Signatur og evt. kommentar ble lagret');
+
             return $this->redirect($request->headers->get('referer'));
         }
 
         // Finds all the certificate requests
         $certificateRequests = $this->getDoctrine()->getRepository(CertificateRequest::class)->findAll();
 
-        return $this->render('certificate/index.html.twig', array(
+        return $this->render('certificate/index.html.twig', [
             'certificateRequests' => $certificateRequests,
             'form' => $form->createView(),
             'signature' => $signature,
             'assistants' => $assistants,
             'department' => $department,
             'currentSemester' => $semester,
-        ));
+        ]);
     }
 }

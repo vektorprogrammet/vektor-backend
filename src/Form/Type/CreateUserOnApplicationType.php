@@ -16,30 +16,30 @@ class CreateUserOnApplicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class, array(
+            ->add('firstName', TextType::class, [
                 'label' => 'Fornavn',
-                'attr' => array('autocomplete' => 'given-name')
-            ))
-            ->add('lastName', TextType::class, array(
+                'attr' => ['autocomplete' => 'given-name'],
+            ])
+            ->add('lastName', TextType::class, [
                 'label' => 'Etternavn',
-                'attr' => array('autocomplete' => 'family-name')
-            ))
-            ->add('phone', TelType::class, array(
+                'attr' => ['autocomplete' => 'family-name'],
+            ])
+            ->add('phone', TelType::class, [
                 'label' => 'Telefon',
-                'attr' => array('autocomplete' => 'tel')
-            ))
-            ->add('email', EmailType::class, array(
+                'attr' => ['autocomplete' => 'tel'],
+            ])
+            ->add('email', EmailType::class, [
                 'label' => 'E-post',
-                'attr' => array('autocomplete' => 'email')
-            ))
-            ->add('gender', ChoiceType::class, array(
+                'attr' => ['autocomplete' => 'email'],
+            ])
+            ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'Mann' => 0,
-                    'Dame' => 1
+                    'Dame' => 1,
                 ],
-                'label' => 'Kjønn'
-            ))
-            ->add('fieldOfStudy', EntityType::class, array(
+                'label' => 'Kjønn',
+            ])
+            ->add('fieldOfStudy', EntityType::class, [
                 'label' => 'Linje',
                 'class' => 'App:FieldOfStudy',
                 'query_builder' => function (EntityRepository $er) use ($options) {
@@ -49,15 +49,15 @@ class CreateUserOnApplicationType extends AbstractType
                         // Set the parameter to the department ID that the current user belongs to.
                         ->setParameter(1, $options['departmentId']);
                 },
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\User',
-            'departmentId' => null
-        ));
+            'departmentId' => null,
+        ]);
     }
 
     public function getBlockPrefix(): string

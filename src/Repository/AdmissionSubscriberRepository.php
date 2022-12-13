@@ -11,8 +11,6 @@ use Doctrine\ORM\QueryBuilder;
 class AdmissionSubscriberRepository extends EntityRepository
 {
     /**
-     * @param Department $department
-     *
      * @return QueryBuilder
      */
     private function findByDepartmentQueryBuilder(Department $department)
@@ -23,9 +21,8 @@ class AdmissionSubscriberRepository extends EntityRepository
             ->where('subscriber.department = :department')
             ->setParameter('department', $department);
     }
+
     /**
-     * @param Department $department
-     *
      * @return AdmissionSubscriber[]
      */
     public function findByDepartment(Department $department)
@@ -37,8 +34,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     *
      * @return AdmissionSubscriber[]
      */
     public function findFromWebByDepartment(Department $department)
@@ -51,9 +46,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
-     *
      * @return QueryBuilder
      */
     private function findByDepartmentAndSemesterQueryBuilder(Department $department, Semester $semester)
@@ -70,9 +62,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
-     *
      * @return AdmissionSubscriber[]
      */
     public function findFromWebByDepartmentAndSemester(Department $department, Semester $semester)
@@ -87,9 +76,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param string $email
-     * @param Department $department
-     *
      * @return AdmissionSubscriber
      */
     public function findByEmailAndDepartment(string $email, Department $department)
@@ -106,8 +92,6 @@ class AdmissionSubscriberRepository extends EntityRepository
     }
 
     /**
-     * @param string $code
-     *
      * @return AdmissionSubscriber
      */
     public function findByUnsubscribeCode(string $code)

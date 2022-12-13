@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\InterviewStatusType;
-
 class InterviewDistribution
 {
     private $user;
@@ -12,20 +10,17 @@ class InterviewDistribution
 
     /**
      * InterviewDistribution constructor.
-     *
-     * @param User $user
-     * @param AdmissionPeriod $admissionPeriod
      */
     public function __construct(User $user, AdmissionPeriod $admissionPeriod)
     {
         $this->user = $user;
         $allInterviews = $this->filterInterviewsInSemester($this->user->getInterviews(), $admissionPeriod);
-        $this->totalCount = count($allInterviews);
+        $this->totalCount = \count($allInterviews);
         $this->interviews = $this->filterNotInterviewed($allInterviews);
     }
 
     /**
-     * @param Interview[] $interviews
+     * @param Interview[]     $interviews
      * @param AdmissionPeriod $admissionPeriod
      *
      * @return Interview[]
@@ -38,8 +33,6 @@ class InterviewDistribution
     }
 
     /**
-     * @param $interviews
-     *
      * @return Interview[]
      */
     private function filterNotInterviewed($interviews)
@@ -78,46 +71,46 @@ class InterviewDistribution
     public function countAccepted()
     {
         $interviews = array_filter($this->interviews, function (Interview $interview) {
-            return $interview->getInterviewStatus() === InterviewStatusType::ACCEPTED;
+            return InterviewStatusType::ACCEPTED === $interview->getInterviewStatus();
         });
 
-        return count($interviews);
+        return \count($interviews);
     }
 
     public function countCancelled()
     {
         $interviews = array_filter($this->interviews, function (Interview $interview) {
-            return $interview->getInterviewStatus() === InterviewStatusType::CANCELLED;
+            return InterviewStatusType::CANCELLED === $interview->getInterviewStatus();
         });
 
-        return count($interviews);
+        return \count($interviews);
     }
 
     public function countPending()
     {
         $interviews = array_filter($this->interviews, function (Interview $interview) {
-            return $interview->getInterviewStatus() === InterviewStatusType::PENDING;
+            return InterviewStatusType::PENDING === $interview->getInterviewStatus();
         });
 
-        return count($interviews);
+        return \count($interviews);
     }
 
     public function countNoContact()
     {
         $interviews = array_filter($this->interviews, function (Interview $interview) {
-            return $interview->getInterviewStatus() === InterviewStatusType::NO_CONTACT;
+            return InterviewStatusType::NO_CONTACT === $interview->getInterviewStatus();
         });
 
-        return count($interviews);
+        return \count($interviews);
     }
 
     public function countRequestNewTime()
     {
         $interviews = array_filter($this->interviews, function (Interview $interview) {
-            return $interview->getInterviewStatus() === InterviewStatusType::REQUEST_NEW_TIME;
+            return InterviewStatusType::REQUEST_NEW_TIME === $interview->getInterviewStatus();
         });
 
-        return count($interviews);
+        return \count($interviews);
     }
 
     public function __toString()

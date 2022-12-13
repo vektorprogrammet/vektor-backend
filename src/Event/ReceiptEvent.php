@@ -18,17 +18,12 @@ class ReceiptEvent extends Event
 
     /**
      * ReceiptEvent constructor.
-     *
-     * @param Receipt $receipt
      */
     public function __construct(Receipt $receipt)
     {
         $this->receipt = $receipt;
     }
 
-    /**
-     * @return Receipt
-     */
     public function getReceipt(): Receipt
     {
         return $this->receipt;

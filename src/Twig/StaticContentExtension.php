@@ -23,9 +23,9 @@ class StaticContentExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return array(
+        return [
             new TwigFunction('get_content', [$this, 'getContent']),
-        );
+        ];
     }
 
     public function getContent($htmlId)
@@ -40,7 +40,7 @@ class StaticContentExtension extends AbstractExtension
         if (!$content) {
             $content = new StaticContent();
             $content->setHtmlId($htmlId);
-            $content->setHtml('Dette er en ny statisk tekst for: ' . $htmlId);
+            $content->setHtml('Dette er en ny statisk tekst for: '.$htmlId);
 
             $this->em->persist($content);
             $this->em->flush();

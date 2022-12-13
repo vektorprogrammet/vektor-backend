@@ -14,7 +14,7 @@ class LogService implements LoggerInterface
     private string $env;
 
     /**
-     * LogService constructor
+     * LogService constructor.
      */
     public function __construct(
         LoggerInterface $monoLogger,
@@ -22,8 +22,7 @@ class LogService implements LoggerInterface
         UserService $userService,
         RequestStack $requestStack,
         string $env
-    )
-    {
+    ) {
         $this->monoLogger = $monoLogger;
         $this->slackMessenger = $slackMessenger;
         $this->userService = $userService;
@@ -35,9 +34,8 @@ class LogService implements LoggerInterface
      * System is unusable.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function emergency($message, array $context = array()): void
+    public function emergency($message, array $context = []): void
     {
         $this->monoLogger->emergency($message, $context);
         $this->log('EMERGENCY', $message, $context);
@@ -50,9 +48,8 @@ class LogService implements LoggerInterface
      * trigger the SMS alerts and wake you up.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function alert($message, array $context = array()): void
+    public function alert($message, array $context = []): void
     {
         $this->monoLogger->alert($message, $context);
         $this->log('ALERT', $message, $context);
@@ -64,9 +61,8 @@ class LogService implements LoggerInterface
      * Example: Application component unavailable, unexpected exception.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function critical($message, array $context = array()): void
+    public function critical($message, array $context = []): void
     {
         $this->monoLogger->critical($message, $context);
         $this->log('CRITICAL', $message, $context);
@@ -77,9 +73,8 @@ class LogService implements LoggerInterface
      * be logged and monitored.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function error($message, array $context = array()): void
+    public function error($message, array $context = []): void
     {
         $this->monoLogger->error($message, $context);
         $this->log('ERROR', $message, $context);
@@ -92,9 +87,8 @@ class LogService implements LoggerInterface
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function warning($message, array $context = array()): void
+    public function warning($message, array $context = []): void
     {
         $this->monoLogger->warning($message, $context);
         $this->log('WARNING', $message, $context);
@@ -104,9 +98,8 @@ class LogService implements LoggerInterface
      * Normal but significant events.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function notice($message, array $context = array()): void
+    public function notice($message, array $context = []): void
     {
         $this->monoLogger->notice($message, $context);
         $this->log('NOTICE', $message, $context);
@@ -118,9 +111,8 @@ class LogService implements LoggerInterface
      * Example: User log in, SQL log.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function info($message, array $context = array()): void
+    public function info($message, array $context = []): void
     {
         $this->monoLogger->info($message, $context);
         $this->log('INFO', $message, $context);
@@ -130,9 +122,8 @@ class LogService implements LoggerInterface
      * Detailed debug information.
      *
      * @param string $message
-     * @param array  $context
      */
-    public function debug($message, array $context = array()): void
+    public function debug($message, array $context = []): void
     {
         $this->monoLogger->debug($message, $context);
         $this->log('DEBUG', $message, $context);
@@ -143,12 +134,11 @@ class LogService implements LoggerInterface
      *
      * @param mixed  $level
      * @param string $message
-     * @param array  $context
      */
-    public function log($level, $message, array $context = array()): void
+    public function log($level, $message, array $context = []): void
     {
         $this->monoLogger->log(200, $message, $context);
-        $this->slackMessenger->log("", $this->createAttachmentData($level, $message, $context));
+        $this->slackMessenger->log('', $this->createAttachmentData($level, $message, $context));
     }
 
     private function createAttachmentData($level, $message, array $data): array
@@ -165,7 +155,7 @@ class LogService implements LoggerInterface
             'author_name' => $this->userService->getCurrentUserNameAndDepartment(),
             'author_icon' => $this->userService->getCurrentProfilePicture(),
             'text' => "$message",
-            'footer' => "$level - $method $path"
+            'footer' => "$level - $method $path",
         ];
 
         return array_merge($default, $data);

@@ -6,11 +6,9 @@ use App\Entity\AdmissionSubscriber;
 use App\Entity\Department;
 use App\Form\Type\AdmissionSubscriberType;
 use App\Service\AdmissionNotifier;
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionSubscriberController extends BaseController
 {
@@ -26,7 +24,7 @@ class AdmissionSubscriberController extends BaseController
             try {
                 $this->get(AdmissionNotifier::class)->createSubscription($department, $subscriber->getEmail(), $subscriber->getInfoMeeting());
                 $this->addFlash('success', $subscriber->getEmail().' har blitt meldt på interesselisten. Du vil få en e-post når opptaket starter');
-            } catch (InvalidArgumentException $e) {
+            } catch (\InvalidArgumentException $e) {
                 $this->addFlash('danger', 'Kunne ikke melde '.$subscriber->getEmail().' på interesselisten. Vennligst prøv igjen.');
             }
 
@@ -35,7 +33,7 @@ class AdmissionSubscriberController extends BaseController
 
         return $this->render('admission_subscriber/subscribe_page.html.twig', [
             'department' => $department,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -43,18 +41,18 @@ class AdmissionSubscriberController extends BaseController
     {
         $email = $request->request->get('email');
         $departmentId = $request->request->get('department');
-        $infoMeeting = filter_var($request->request->get('infoMeeting'), FILTER_VALIDATE_BOOLEAN);
+        $infoMeeting = filter_var($request->request->get('infoMeeting'), \FILTER_VALIDATE_BOOLEAN);
         if (!$email || !$departmentId) {
-            return new JsonResponse("Email or department missing", 400);
+            return new JsonResponse('Email or department missing', 400);
         }
         $department = $this->getDoctrine()->getRepository(Department::class)->find($departmentId);
         if (!$department) {
-            return new JsonResponse("Invalid department", 400);
+            return new JsonResponse('Invalid department', 400);
         }
 
         try {
             $this->get(AdmissionNotifier::class)->createSubscription($department, $email, $infoMeeting);
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             return new JsonResponse($e->getMessage(), 400);
         }
 
@@ -66,7 +64,7 @@ class AdmissionSubscriberController extends BaseController
         $subscriber = $this->getDoctrine()->getRepository(AdmissionSubscriber::class)->findByUnsubscribeCode($code);
         $this->addFlash('title', 'Opptaksvarsel - Avmelding');
         if (!$subscriber) {
-            $this->addFlash('message', "Du vil ikke lengre motta varsler om opptak");
+            $this->addFlash('message', 'Du vil ikke lengre motta varsler om opptak');
         } else {
             $email = $subscriber->getEmail();
             $this->addFlash('message', "Du vil ikke lengre motta varsler om opptak på $email");

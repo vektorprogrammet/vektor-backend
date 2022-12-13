@@ -15,33 +15,33 @@ class InfoMeetingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('showOnPage', CheckboxType::class, array(
+            ->add('showOnPage', CheckboxType::class, [
                 'label' => 'Vis infomøte på opptakssiden',
-            ))
-            ->add('date', DateTimeType::class, array(
+            ])
+            ->add('date', DateTimeType::class, [
                 'label' => 'Dato og klokkeslett',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => [
-                    'placeholder' => 'Klikk for å velge tidspunkt'
-                ]
-            ))
-            ->add('room', TextType::class, array(
+                    'placeholder' => 'Klikk for å velge tidspunkt',
+                ],
+            ])
+            ->add('room', TextType::class, [
                 'label' => 'Rom',
-            ))
-            ->add('description', TextType::class, array(
+            ])
+            ->add('description', TextType::class, [
                 'label' => 'Kort beskrivelse',
-            ))
-            ->add('link', TextType::class, array(
+            ])
+            ->add('link', TextType::class, [
                 'label' => 'Link til event (f.eks. Facebook)',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => InfoMeeting::class
-        ));
+        $resolver->setDefaults([
+            'data_class' => InfoMeeting::class,
+        ]);
     }
 }

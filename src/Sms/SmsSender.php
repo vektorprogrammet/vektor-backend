@@ -8,7 +8,7 @@ class SmsSender implements SmsSenderInterface
 
     public function __construct(string $env, GatewayAPI $gatewayAPI, SlackSms $slackSms)
     {
-        if ($env === 'prod') {
+        if ('prod' === $env) {
             $this->smsSender = $gatewayAPI;
         } else {
             $this->smsSender = $slackSms;

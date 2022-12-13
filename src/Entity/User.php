@@ -5,15 +5,14 @@ namespace App\Entity;
 use App\Role\Roles;
 use App\Validator\Constraints as CustomAssert;
 use DateTime;
-use Doctrine\Common\Collections\Collection;
-use Serializable;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * App\Entity\User.
@@ -25,14 +24,13 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *      message="Denne Eposten er allerede i bruk.",
  *      groups={"create_user", "edit_user"}
  * )
- *
  * @UniqueEntity(
  *      fields={"user_name"},
  *      message="Dette brukernavnet er allerede i bruk.",
  *      groups={"create_user", "username", "edit_user"}
  * )
  */
-class User implements EquatableInterface, UserInterface, Serializable, PasswordAuthenticatedUserInterface
+class User implements EquatableInterface, UserInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -55,6 +53,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * @var FieldOfStudy
+     *
      * @ORM\ManyToOne(targetEntity="FieldOfStudy")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\NotBlank(groups={"admission", "edit_user", "create_user"}, message="Dette feltet kan ikke være tomt.")
@@ -103,7 +102,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     private $email;
 
-
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
      * @Assert\Email
@@ -117,12 +115,10 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     private $isActive;
 
-
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $reservedFromPopUp;
-
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -141,18 +137,21 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * @var AssistantHistory[]
+     *
      * @ORM\OneToMany(targetEntity="AssistantHistory", mappedBy="user")
      */
     private $assistantHistories;
 
     /**
      * @var TeamMembership[]
+     *
      * @ORM\OneToMany(targetEntity="TeamMembership", mappedBy="user")
      */
     private $teamMemberships;
 
     /**
      * @var ExecutiveBoardMembership[]
+     *
      * @ORM\OneToMany(targetEntity="ExecutiveBoardMembership", mappedBy="user")
      */
     private $executiveBoardMemberships;
@@ -172,7 +171,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     private $receipts;
 
-
     public function __construct()
     {
         $this->roles = [];
@@ -182,7 +180,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $this->picture_path = 'images/defaultProfile.png';
         $this->receipts = new ArrayCollection();
         $this->reservedFromPopUp = false;
-        $this->lastPopUpTime = new DateTime("2000-01-01");
+        $this->lastPopUpTime = new \DateTime('2000-01-01');
     }
 
     public function getId(): int
@@ -190,9 +188,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $this->id;
     }
 
-    /**
-     * @return Department
-     */
     public function getDepartment(): Department
     {
         return $this->getFieldOfStudy()->getDepartment();
@@ -213,9 +208,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
     public function getFullName(): string
     {
         return $this->getFirstName().' '.$this->getLastName();
@@ -238,7 +230,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     public function setPassword($password)
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+        $this->password = password_hash($password, \PASSWORD_BCRYPT, ['cost' => 12]);
     }
 
     /**
@@ -264,9 +256,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $this->roles = $roles;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -276,8 +265,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set lastName.
-     *
-     * @param string $lastName
      *
      * @return User
      */
@@ -290,8 +277,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set firstName.
-     *
-     * @param string $firstName
      *
      * @return User
      */
@@ -319,8 +304,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set picture_path.
      *
-     * @param string $picturePath
-     *
      * @return User
      */
     public function setPicturePath(string $picturePath)
@@ -332,8 +315,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Get picture_path.
-     *
-     * @return string|null
      */
     public function getPicturePath(): ?string
     {
@@ -342,8 +323,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set phone.
-     *
-     * @param string $phone
      *
      * @return User
      */
@@ -356,8 +335,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Get phone.
-     *
-     * @return string
      */
     public function getPhone(): string
     {
@@ -383,8 +360,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set user_name.
      *
-     * @param string $userName
-     *
      * @return User
      */
     public function setUserName(string $userName)
@@ -396,8 +371,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Get user_name.
-     *
-     * @return string
      */
     public function getUserIdentifier(): string
     {
@@ -409,8 +382,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      * Remove when upgraded to 6.0
      * Required for now because UserInterface has this method.
      * DO NOT use this method. Use "getUserIdentifier()" instead.
-     *
-     * @return string
      */
     public function getUsername(): string
     {
@@ -444,8 +415,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Add roles.
      *
-     * @param string $role
-     *
      * @return User
      */
     public function addRole(string $role)
@@ -458,8 +427,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Remove roles.
-     *
-     * @param string $roles
      */
     public function removeRole(string $roles)
     {
@@ -468,8 +435,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Set new_user_code.
-     *
-     * @param string $newUserCode
      *
      * @return User
      */
@@ -498,7 +463,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     public function hasBeenAssistant(): bool
     {
-        if ($this->assistantHistories === null) {
+        if (null === $this->assistantHistories) {
             return false;
         }
 
@@ -512,6 +477,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
                 return true;
             }
         }
+
         return false;
     }
 
@@ -531,8 +497,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Add certificateRequests.
      *
-     * @param CertificateRequest $certificateRequests
-     *
      * @return User
      */
     public function addCertificateRequest(CertificateRequest $certificateRequests)
@@ -544,8 +508,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     /**
      * Remove certificateRequests.
-     *
-     * @param CertificateRequest $certificateRequests
      */
     public function removeCertificateRequest(CertificateRequest $certificateRequests)
     {
@@ -563,7 +525,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     // Used for unit testing
-    public function fromArray($data = array())
+    public function fromArray($data = [])
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";
@@ -599,19 +561,17 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->user_name,
             $this->password,
             // see section on salt below
             // $this->salt,
-        ));
+        ]);
     }
 
     /**
      * @see \Serializable::unserialize(
-     *
-     * @param $serialized
      */
     public function unserialize($serialized)
     {
@@ -686,26 +646,22 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $this->receipts->add($receipt);
     }
 
-    /**
-     * @return bool
-     */
     public function hasPendingReceipts(): bool
     {
         $numberOfPendingReceipts = $this->getNumberOfPendingReceipts();
-        return $numberOfPendingReceipts !== 0;
+
+        return 0 !== $numberOfPendingReceipts;
     }
 
-    /**
-     * @return int
-     */
     public function getNumberOfPendingReceipts(): int
     {
         $num = 0;
         foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_PENDING) {
-                $num++;
+            if (Receipt::STATUS_PENDING === $receipt->getStatus()) {
+                ++$num;
             }
         }
+
         return $num;
     }
 
@@ -713,7 +669,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     {
         $totalSum = 0.0;
         foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_PENDING) {
+            if (Receipt::STATUS_PENDING === $receipt->getStatus()) {
                 $totalSum += $receipt->getSum();
             }
         }
@@ -725,7 +681,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     {
         $totalSum = 0.0;
         foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_REFUNDED) {
+            if (Receipt::STATUS_REFUNDED === $receipt->getStatus()) {
                 $totalSum += $receipt->getSum();
             }
         }
@@ -737,7 +693,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     {
         $totalSum = 0.0;
         foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_REJECTED) {
+            if (Receipt::STATUS_REJECTED === $receipt->getStatus()) {
                 $totalSum += $receipt->getSum();
             }
         }
@@ -745,17 +701,11 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $totalSum;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCompanyEmail(): ?string
     {
         return $this->companyEmail;
     }
 
-    /**
-     * @param string $companyEmail
-     */
     public function setCompanyEmail(string $companyEmail)
     {
         $this->companyEmail = $companyEmail;
@@ -775,13 +725,14 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     public function getActiveExecutiveBoardMemberships()
     {
         $activeExecutiveBoardMemberships = [];
-        if ($this->executiveBoardMemberships !== null) {
+        if (null !== $this->executiveBoardMemberships) {
             foreach ($this->executiveBoardMemberships as $executiveBoardMembership) {
                 if ($executiveBoardMembership->isActive()) {
                     $activeExecutiveBoardMemberships[] = $executiveBoardMembership;
                 }
             }
         }
+
         return $activeExecutiveBoardMemberships;
     }
 
@@ -791,7 +742,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     public function getActiveTeamMemberships()
     {
         $activeTeamMemberships = [];
-        if ($this->teamMemberships !== null) {
+        if (null !== $this->teamMemberships) {
             foreach ($this->teamMemberships as $teamMembership) {
                 if ($teamMembership->isActive()) {
                     $activeTeamMemberships[] = $teamMembership;
@@ -802,33 +753,23 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         return $activeTeamMemberships;
     }
 
-
-    /**
-     * @return bool
-     */
     public function getReservedFromPopUp(): bool
     {
         return $this->reservedFromPopUp;
     }
 
-    /**
-     * @param bool $reservedFromPopUp
-     */
     public function setReservedFromPopUp(bool $reservedFromPopUp): void
     {
         $this->reservedFromPopUp = $reservedFromPopUp;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getLastPopUpTime(): DateTime
+    public function getLastPopUpTime(): \DateTime
     {
         return $this->lastPopUpTime;
     }
 
     /**
-     * @param DateTime $lastPopUpTime
+     * @param \DateTime $lastPopUpTime
      */
     public function setLastPopUpTime($lastPopUpTime): void
     {
@@ -853,10 +794,10 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
         $teamMemberships = [];
         $boardMemberships = [];
         foreach ($memberships as $membership) {
-            if ($membership->getTeam()->getType() == 'team') {
+            if ('team' === $membership->getTeam()->getType()) {
                 $teamMemberships[] = $membership;
             }
-            if ($membership->getTeam()->getType() == 'executive_board') {
+            if ('executive_board' === $membership->getTeam()->getType()) {
                 $boardMemberships[] = $membership;
             }
         }
@@ -870,7 +811,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     public function isAdmin(): bool
     {
         foreach ($this->roles as $role) {
-            if ($role->getRole() === Roles::ADMIN) {
+            if (Roles::ADMIN === $role->getRole()) {
                 return true;
             }
         }

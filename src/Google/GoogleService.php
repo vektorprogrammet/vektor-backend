@@ -2,11 +2,6 @@
 
 namespace App\Google;
 
-use Google_Client;
-use Google_Service_Directory;
-use Google_Service_Drive;
-use Google_Service_Exception;
-use Google_Service_Gmail;
 use Psr\Log\LoggerInterface;
 
 abstract class GoogleService
@@ -24,25 +19,24 @@ abstract class GoogleService
         $this->clientId = $apiOptions['client_id'];
         $this->clientSecret = $apiOptions['client_secret'];
         $this->disabled = $apiOptions['disabled'];
-        $this->credentialsPath = __DIR__ . '/credentials.json';
+        $this->credentialsPath = __DIR__.'/credentials.json';
         $this->logger = $logger;
     }
 
-
     /**
-     * @return Google_Client
+     * @return \Google_Client
      */
     protected function getClient()
     {
-        $client = new Google_Client();
+        $client = new \Google_Client();
         $client->setClientId($this->clientId);
         $client->setClientSecret($this->clientSecret);
-        $client->setScopes(array(
-            Google_Service_Directory::ADMIN_DIRECTORY_USER,
-            Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
-            Google_Service_Drive::DRIVE,
-            Google_Service_Gmail::GMAIL_SEND
-        ));
+        $client->setScopes([
+            \Google_Service_Directory::ADMIN_DIRECTORY_USER,
+            \Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
+            \Google_Service_Drive::DRIVE,
+            \Google_Service_Gmail::GMAIL_SEND,
+        ]);
 
         if (file_exists($this->credentialsPath)) {
             $accessToken = json_decode(file_get_contents($this->credentialsPath), true);
@@ -60,14 +54,14 @@ abstract class GoogleService
         return $client;
     }
 
-    protected function logServiceException(Google_Service_Exception $exception, string $message)
+    protected function logServiceException(\Google_Service_Exception $exception, string $message)
     {
         $this->logger->critical(
             "Google_Service_Exception caught: $message\n".
-            "`Code: " . $exception->getCode() . "`\n".
-            "```".
-            $exception->getMessage(). "\n".
-            "```"
+            '`Code: '.$exception->getCode()."`\n".
+            '```'.
+            $exception->getMessage()."\n".
+            '```'
         );
     }
 }

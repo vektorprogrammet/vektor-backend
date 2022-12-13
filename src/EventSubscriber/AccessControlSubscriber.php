@@ -12,12 +12,10 @@ class AccessControlSubscriber implements EventSubscriberInterface
 {
     private AccessControlService $accessControlService;
 
-
     public function __construct(AccessControlService $accessControlService)
     {
         $this->accessControlService = $accessControlService;
     }
-
 
     /**
      * Returns an array of event names this subscriber wants to listen to.
@@ -28,14 +26,11 @@ class AccessControlSubscriber implements EventSubscriberInterface
     {
         return [
             KernelEvents::REQUEST => [
-                ["checkAccess"]
-            ]
+                ['checkAccess'],
+            ],
         ];
     }
 
-    /**
-     * @param RequestEvent $event
-     */
     public function checkAccess(RequestEvent $event)
     {
         if (!$event->isMainRequest()) {

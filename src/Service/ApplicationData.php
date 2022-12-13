@@ -6,7 +6,6 @@ use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\AssistantHistory;
 use App\Entity\Department;
-use App\Repository\ApplicationRepository;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -19,14 +18,14 @@ class ApplicationData
     private EntityManagerInterface $em;
 
     /**
-     * ApplicationData constructor
+     * ApplicationData constructor.
      */
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts)
     {
         $this->em = $em;
         $this->applicationRepository = $this->em->getRepository(Application::class);
 
-        if ($ts->getToken() !== null && $ts->getToken()->getUser() instanceof User) {
+        if (null !== $ts->getToken() && $ts->getToken()->getUser() instanceof User) {
             $this->setDepartment($ts->getToken()->getUser()->getDepartment());
         }
     }
@@ -51,7 +50,6 @@ class ApplicationData
         return $this->applicationRepository->numOfApplications($this->admissionPeriod);
     }
 
-
     public function getCount(): int
     {
         return $this->getApplicationCount();
@@ -64,11 +62,11 @@ class ApplicationData
 
     public function getMalePercentage(): float
     {
-        if ($this->getApplicationCount() === 0) {
-            return floatval(0);
+        if (0 === $this->getApplicationCount()) {
+            return (float) 0;
         }
 
-        return round(100 * floatval($this->getMaleCount() / $this->getApplicationCount()), 2);
+        return round(100 * (float) ($this->getMaleCount() / $this->getApplicationCount()), 2);
     }
 
     public function getFemaleCount(): int
@@ -78,11 +76,11 @@ class ApplicationData
 
     public function getFemalePercentage(): float
     {
-        if ($this->getApplicationCount() === 0) {
-            return floatval(0);
+        if (0 === $this->getApplicationCount()) {
+            return (float) 0;
         }
 
-        return round(100 * floatval($this->getFemaleCount() / $this->getApplicationCount()), 2);
+        return round(100 * (float) ($this->getFemaleCount() / $this->getApplicationCount()), 2);
     }
 
     public function getPreviousParticipationCount(): int
@@ -92,22 +90,22 @@ class ApplicationData
 
     public function getCancelledInterviewsCount(): int
     {
-        return count($this->applicationRepository->findCancelledApplicants($this->admissionPeriod));
+        return \count($this->applicationRepository->findCancelledApplicants($this->admissionPeriod));
     }
 
     public function getInterviewedAssistantsCount(): int
     {
-        return count($this->em->getRepository(Application::class)->findInterviewedApplicants($this->admissionPeriod));
+        return \count($this->em->getRepository(Application::class)->findInterviewedApplicants($this->admissionPeriod));
     }
 
     public function getAssignedInterviewsCount(): int
     {
-        return count($this->em->getRepository(Application::class)->findAssignedApplicants($this->admissionPeriod));
+        return \count($this->em->getRepository(Application::class)->findAssignedApplicants($this->admissionPeriod));
     }
 
     public function getTotalAssistantsCount(): int
     {
-        return count($this->em->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($this->department, $this->admissionPeriod->getSemester()));
+        return \count($this->em->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($this->department, $this->admissionPeriod->getSemester()));
     }
 
     public function getPositionsCount(): int
@@ -134,11 +132,11 @@ class ApplicationData
 
     public function getFieldsOfStudyCounts(): array
     {
-        $fieldOfStudyCount = array();
-        $applicants = $this->applicationRepository->findBy(array('admissionPeriod' => $this->admissionPeriod));
+        $fieldOfStudyCount = [];
+        $applicants = $this->applicationRepository->findBy(['admissionPeriod' => $this->admissionPeriod]);
         foreach ($applicants as $applicant) {
             $fieldOfStudyShortName = $applicant->getUser()->getFieldOfStudy()->getShortName();
-            if (array_key_exists($fieldOfStudyShortName, $fieldOfStudyCount)) {
+            if (\array_key_exists($fieldOfStudyShortName, $fieldOfStudyCount)) {
                 ++$fieldOfStudyCount[$fieldOfStudyShortName];
             } else {
                 $fieldOfStudyCount[$fieldOfStudyShortName] = 1;
@@ -151,11 +149,11 @@ class ApplicationData
 
     public function getStudyYearCounts(): array
     {
-        $studyYearCounts = array();
-        $applicants = $this->applicationRepository->findBy(array('admissionPeriod' => $this->admissionPeriod));
+        $studyYearCounts = [];
+        $applicants = $this->applicationRepository->findBy(['admissionPeriod' => $this->admissionPeriod]);
         foreach ($applicants as $applicant) {
             $studyYear = $applicant->getYearOfStudy();
-            if (array_key_exists($studyYear, $studyYearCounts)) {
+            if (\array_key_exists($studyYear, $studyYearCounts)) {
                 ++$studyYearCounts[$studyYear];
             } else {
                 $studyYearCounts[$studyYear] = 1;
@@ -170,7 +168,7 @@ class ApplicationData
     {
         $positionsCount = $totalAssistantsCount;
         foreach ($assistantHistories as $assistant) {
-            if ($assistant->getBolk() === 'Bolk 1, Bolk 2') {
+            if ('Bolk 1, Bolk 2' === $assistant->getBolk()) {
                 ++$positionsCount;
             }
         }
@@ -178,17 +176,11 @@ class ApplicationData
         return $positionsCount;
     }
 
-    /**
-     * @return AdmissionPeriod
-     */
     public function getAdmissionPeriod(): AdmissionPeriod
     {
         return $this->admissionPeriod;
     }
 
-    /**
-     * @return Department
-     */
     public function getDepartment(): Department
     {
         return $this->department;
@@ -196,26 +188,27 @@ class ApplicationData
 
     public function getHeardAboutFrom(): array
     {
-        $heardAbout = array();
-        $applicants = $this->applicationRepository->findBy(array('admissionPeriod' => $this->admissionPeriod));
+        $heardAbout = [];
+        $applicants = $this->applicationRepository->findBy(['admissionPeriod' => $this->admissionPeriod]);
 
         foreach ($applicants as $applicant) {
             $allHeardAboutFrom = $applicant->getHeardAboutFrom();
 
-            if ($allHeardAboutFrom === null) {
-                $allHeardAboutFrom = array(0=>"Ingen");
+            if (null === $allHeardAboutFrom) {
+                $allHeardAboutFrom = [0 => 'Ingen'];
             }
 
-            for ($i = 0; $i < count($allHeardAboutFrom); $i++) {
+            for ($i = 0; $i < \count($allHeardAboutFrom); ++$i) {
                 $currentHeardAboutFrom = $allHeardAboutFrom[$i];
 
-                if (array_key_exists($currentHeardAboutFrom, $heardAbout)) {
+                if (\array_key_exists($currentHeardAboutFrom, $heardAbout)) {
                     ++$heardAbout[$currentHeardAboutFrom];
                 } else {
                     $heardAbout[$currentHeardAboutFrom] = 1;
                 }
             }
         }
+
         return $heardAbout;
     }
 }

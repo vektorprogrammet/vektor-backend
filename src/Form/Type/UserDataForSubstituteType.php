@@ -18,19 +18,19 @@ class UserDataForSubstituteType extends AbstractType
         $this->department = $options['department'];
 
         $builder
-            ->add('firstName', TextType::class, array(
+            ->add('firstName', TextType::class, [
                 'label' => 'Fornavn',
-            ))
-            ->add('lastName', TextType::class, array(
+            ])
+            ->add('lastName', TextType::class, [
                 'label' => 'Etternavn',
-            ))
-            ->add('phone', TextType::class, array(
+            ])
+            ->add('phone', TextType::class, [
                 'label' => 'Tlf',
-            ))
-            ->add('email', TextType::class, array(
+            ])
+            ->add('email', TextType::class, [
                 'label' => 'E-post',
-            ))
-            ->add('fieldOfStudy', EntityType::class, array(
+            ])
+            ->add('fieldOfStudy', EntityType::class, [
                 'label' => 'Linje',
                 'class' => 'App:FieldOfStudy',
 
@@ -41,15 +41,15 @@ class UserDataForSubstituteType extends AbstractType
                         // Set the parameter to the department ID that the current user belongs to.
                         ->setParameter(1, $this->department);
                 },
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\User',
             'department' => null,
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

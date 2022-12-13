@@ -14,7 +14,7 @@ class TeamMembershipService
     private EventDispatcherInterface $dispatcher;
 
     /**
-     * TeamMembershipService constructor
+     * TeamMembershipService constructor.
      */
     public function __construct(EntityManagerInterface $em, EventDispatcherInterface $dispatcher)
     {
@@ -24,7 +24,7 @@ class TeamMembershipService
 
     public function updateTeamMemberships(): array
     {
-        $teamMemberships = $this->em->getRepository(TeamMembership::class)->findBy(array('isSuspended' => false));
+        $teamMemberships = $this->em->getRepository(TeamMembership::class)->findBy(['isSuspended' => false]);
         $currentSemesterStartDate = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester()->getStartDate();
         foreach ($teamMemberships as $teamMembership) {
             $endSemester = $teamMembership->getEndSemester();
@@ -36,6 +36,7 @@ class TeamMembershipService
             }
         }
         $this->em->flush();
+
         return $teamMemberships;
     }
 }

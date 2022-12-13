@@ -12,22 +12,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TeamInterestType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $department = $builder->getData()->getDepartment();
 
         $builder
-            ->add('name', TextType::class, array(
-                'label' => 'Navn'
-            ))
-            ->add('email', EmailType::class, array(
-                'label' => 'Email'
-            ))
-            ->add('potentialTeams', EntityType::class, array(
+            ->add('name', TextType::class, [
+                'label' => 'Navn',
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email',
+            ])
+            ->add('potentialTeams', EntityType::class, [
                 'label' => 'Hvilke team er du interessert i?',
                 'class' => 'App:Team',
                 'query_builder' => function (EntityRepository $entityRepository) use ($department) {
@@ -40,23 +36,17 @@ class TeamInterestType extends AbstractType
                 'expanded' => true,
                 'error_bubbling' => true,
                 'multiple' => true,
-            ));
+            ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\TeamInterest',
             'department' => null,
-        ));
+        ]);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'App_teaminterest';

@@ -76,8 +76,8 @@ class Receipt
     public function __construct()
     {
         $this->status = self::STATUS_PENDING;
-        $this->submitDate = new DateTime();
-        $this->receiptDate = new DateTime();
+        $this->submitDate = new \DateTime();
+        $this->receiptDate = new \DateTime();
         $currentTimeInMilliseconds = round(microtime(true) * 1000);
         $this->visualId = dechex($currentTimeInMilliseconds);
     }
@@ -99,7 +99,7 @@ class Receipt
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getSubmitDate()
     {
@@ -107,16 +107,15 @@ class Receipt
     }
 
     /**
-     * @param DateTime $submitDate
+     * @param \DateTime $submitDate
      */
     public function setSubmitDate($submitDate)
     {
         $this->submitDate = $submitDate;
     }
 
-
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getReceiptDate()
     {
@@ -124,7 +123,7 @@ class Receipt
     }
 
     /**
-     * @param DateTime $receiptDate
+     * @param \DateTime $receiptDate
      */
     public function setReceiptDate($receiptDate)
     {
@@ -187,17 +186,11 @@ class Receipt
         $this->sum = $sum;
     }
 
-    /**
-     * @return string
-     */
     public function getVisualId(): string
     {
         return $this->visualId;
     }
 
-    /**
-     * @param string $visualId
-     */
     public function setVisualId(string $visualId)
     {
         $this->visualId = $visualId;
@@ -225,7 +218,7 @@ class Receipt
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getRefundDate()
     {
@@ -233,7 +226,7 @@ class Receipt
     }
 
     /**
-     * @param DateTime $refundDate
+     * @param \DateTime $refundDate
      */
     public function setRefundDate($refundDate)
     {

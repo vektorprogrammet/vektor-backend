@@ -11,9 +11,9 @@ use App\Role\Roles;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\Response;
 
 class TeamApplicationController extends BaseController
 {
@@ -32,9 +32,9 @@ class TeamApplicationController extends BaseController
             throw new AccessDeniedException();
         }
 
-        return $this->render('team_admin/show_application.html.twig', array(
+        return $this->render('team_admin/show_application.html.twig', [
             'application' => $application,
-        ));
+        ]);
     }
 
     public function showAllApplications(Team $team): Response
@@ -46,10 +46,10 @@ class TeamApplicationController extends BaseController
             throw new AccessDeniedException();
         }
 
-        return $this->render('team_admin/show_applications.html.twig', array(
+        return $this->render('team_admin/show_applications.html.twig', [
             'applications' => $applications,
             'team' => $team,
-        ));
+        ]);
     }
 
     public function deleteTeamApplicationById(TeamApplication $teamApplication): RedirectResponse
@@ -59,7 +59,7 @@ class TeamApplicationController extends BaseController
         $manager->remove($teamApplication);
         $manager->flush();
 
-        return $this->redirectToRoute('team_application_show_all', array('id' => $teamApplication->getTeam()->getId()));
+        return $this->redirectToRoute('team_application_show_all', ['id' => $teamApplication->getTeam()->getId()]);
     }
 
     public function show(Team $team, Request $request)
@@ -80,25 +80,21 @@ class TeamApplicationController extends BaseController
 
             $this->eventDispatcher->dispatch(new TeamApplicationCreatedEvent($teamApplication), TeamApplicationCreatedEvent::NAME);
 
-            return $this->redirectToRoute('team_application_confirmation', array(
+            return $this->redirectToRoute('team_application_confirmation', [
                 'team_name' => $team->getName(),
-            ));
+            ]);
         }
 
-        return $this->render('team/team_application.html.twig', array(
+        return $this->render('team/team_application.html.twig', [
             'team' => $team,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
-    /**
-     * @param $team_name
-     * @return Response
-     */
     public function confirmation($team_name): Response
     {
-        return $this->render('team/confirmation.html.twig', array(
+        return $this->render('team/confirmation.html.twig', [
             'team_name' => $team_name,
-        ));
+        ]);
     }
 }

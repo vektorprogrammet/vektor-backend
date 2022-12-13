@@ -10,9 +10,6 @@ class RouteDisplayExtension extends AbstractExtension
 {
     private $router;
 
-    /**
-     * @param RouterInterface $router
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -23,16 +20,13 @@ class RouteDisplayExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('get_path', array( $this, 'getPath' )),
-        );
+        return [
+            new TwigFunction('get_path', [$this, 'getPath']),
+        ];
     }
 
     /**
      * Gets the path of the given route name.
-     *
-     *
-     * @param $name
      *
      * @return string The path of the route
      */
@@ -47,6 +41,6 @@ class RouteDisplayExtension extends AbstractExtension
 
     private function isRoute(string $name)
     {
-        return $this->router->getRouteCollection()->get($name) !== null;
+        return null !== $this->router->getRouteCollection()->get($name);
     }
 }

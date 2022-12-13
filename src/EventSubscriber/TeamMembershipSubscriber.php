@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use App\Event\TeamMembershipEvent;
 use App\Service\RoleManager;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -36,22 +35,22 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            TeamMembershipEvent::CREATED => array(
-                array('updateUserRole', 5),
-                array('activateTeamMembership', 2),
-                array('addCreatedFlashMessage', -1),
-            ),
-            TeamMembershipEvent::EDITED  => array(
-                array('updateUserRole', 5),
-                array('activateTeamMembership', 2),
-                array('addUpdatedFlashMessage', -1),
-            ),
-            TeamMembershipEvent::DELETED => array(
-                array('logDeletedEvent', 10),
-                array('updateUserRole', 5),
-            ),
-        );
+        return [
+            TeamMembershipEvent::CREATED => [
+                ['updateUserRole', 5],
+                ['activateTeamMembership', 2],
+                ['addCreatedFlashMessage', -1],
+            ],
+            TeamMembershipEvent::EDITED => [
+                ['updateUserRole', 5],
+                ['activateTeamMembership', 2],
+                ['addUpdatedFlashMessage', -1],
+            ],
+            TeamMembershipEvent::DELETED => [
+                ['logDeletedEvent', 10],
+                ['updateUserRole', 5],
+            ],
+        ];
     }
 
     public function addCreatedFlashMessage(TeamMembershipEvent $event)
@@ -94,10 +93,10 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
         $startSemester = $teamMembership->getStartSemester()->getName();
         $endSemester = $teamMembership->getEndSemester();
 
-        $endStr = $endSemester !== null ? 'to '.$endSemester->getName() : '';
+        $endStr = null !== $endSemester ? 'to '.$endSemester->getName() : '';
 
         $this->logger->info(
-            "TeamMembership deleted: $user (position: $position), " .
+            "TeamMembership deleted: $user (position: $position), ".
             "active from $startSemester $endStr, was deleted from $team ($department)"
         );
     }
@@ -105,8 +104,8 @@ class TeamMembershipSubscriber implements EventSubscriberInterface
     public function activateTeamMembership(TeamMembershipEvent $event)
     {
         $teamMembership = $event->getTeamMembership();
-        $now = new DateTime();
-        if ($teamMembership->getEndSemester() === null || $teamMembership->getEndSemester()->getEndDate() > $now) {
+        $now = new \DateTime();
+        if (null === $teamMembership->getEndSemester() || $teamMembership->getEndSemester()->getEndDate() > $now) {
             $teamMembership->setIsSuspended(false);
         }
         $this->em->persist($teamMembership);

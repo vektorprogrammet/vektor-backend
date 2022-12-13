@@ -21,16 +21,15 @@ class SecurityController extends BaseController
 
         return $this->render(
             'login/login.html.twig',
-            array(
+            [
                 // last username entered by the user
                 'last_username' => $lastUsername,
                 'error' => $error,
-            )
+            ]
         );
     }
 
     /**
-     * @return RedirectResponse
      * @throws NonUniqueResultException
      */
     public function loginRedirect(): RedirectResponse
@@ -39,9 +38,9 @@ class SecurityController extends BaseController
             return $this->redirectToRoute('control_panel');
         } elseif ($this->getDoctrine()->getRepository(Application::class)->findActiveByUser($this->getUser())) {
             return $this->redirectToRoute('my_page');
-        } else {
-            return $this->redirectToRoute('profile');
         }
+
+        return $this->redirectToRoute('profile');
     }
 
     public function loginCheck(): RedirectResponse

@@ -14,21 +14,21 @@ class AddCoInterviewerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user', EntityType::class, array(
+            ->add('user', EntityType::class, [
                 'class' => User::class,
                 'label' => 'Medintervjuer',
                 'choices' => $options['teamUsers'],
                 'by_reference' => false,
-            ))
-            ->add('save', SubmitType::class, array(
-                'label' => 'Legg til'
-            ));
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Legg til',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'teamUsers' => []
+            'teamUsers' => [],
         ]);
     }
 }

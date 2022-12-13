@@ -2,15 +2,13 @@
 
 namespace App\AssistantScheduling;
 
-use JsonSerializable;
-
-class School implements JsonSerializable
+class School implements \JsonSerializable
 {
     private int $id;
     private string $name;
 
     /**
-     * Array: [Group, Day, Capacity]
+     * Array: [Group, Day, Capacity].
      */
     private array $capacity;
 
@@ -69,10 +67,10 @@ class School implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return array(
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'capacity' => $this->capacity,
-        );
+        ];
     }
 }

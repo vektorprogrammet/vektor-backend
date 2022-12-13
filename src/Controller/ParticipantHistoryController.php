@@ -10,10 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ParticipantHistoryController extends BaseController
 {
-    /**
-     * @param Request $request
-     * @return Response|null
-     */
     public function show(Request $request): ?Response
     {
         $department = $this->getDepartmentOrThrow404($request);
@@ -29,11 +25,11 @@ class ParticipantHistoryController extends BaseController
         // Find all assistantHistories by department
         $assistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($department, $semester);
 
-        return $this->render('participant_history/index.html.twig', array(
+        return $this->render('participant_history/index.html.twig', [
             'teamMemberships' => $teamMemberships,
             'assistantHistories' => $assistantHistories,
             'semester' => $semester,
             'department' => $department,
-        ));
+        ]);
     }
 }

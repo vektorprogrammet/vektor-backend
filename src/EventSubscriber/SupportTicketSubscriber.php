@@ -22,10 +22,10 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         RequestStack $requestStack,
         LoggerInterface $logger
     ) {
-        $this->emailSender    = $emailSender;
-        $this->logger         = $logger;
+        $this->emailSender = $emailSender;
+        $this->logger = $logger;
         $this->slackMessenger = $slackMessenger;
-        $this->requestStack   = $requestStack;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -35,16 +35,16 @@ class SupportTicketSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            SupportTicketCreatedEvent::NAME => array(
-                array('logEvent', 1),
-                array('sendTicketToDepartment', 0),
-                array('sendTicketReceipt', 0),
-                array('sendTicketToDepartmentSlackChannel', 0),
-                array('addFlashMessage', - 1),
-                array('sendSlackNotification', - 2),
-            ),
-        );
+        return [
+            SupportTicketCreatedEvent::NAME => [
+                ['logEvent', 1],
+                ['sendTicketToDepartment', 0],
+                ['sendTicketReceipt', 0],
+                ['sendTicketToDepartmentSlackChannel', 0],
+                ['addFlashMessage', -1],
+                ['sendSlackNotification', -2],
+            ],
+        ];
     }
 
     public function sendTicketToDepartment(SupportTicketCreatedEvent $event)
@@ -69,10 +69,10 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         }
 
         $message =
-            "Ny henvendelse fra {$supportTicket->getName()} ({$supportTicket->getEmail()}).\n" .
-            "Emne: `{$supportTicket->getSubject()}`\n" .
-            "```\n" .
-            $supportTicket->getBody() .
+            "Ny henvendelse fra {$supportTicket->getName()} ({$supportTicket->getEmail()}).\n".
+            "Emne: `{$supportTicket->getSubject()}`\n".
+            "```\n".
+            $supportTicket->getBody().
             '```';
 
         $this->slackMessenger->messageDepartment($message, $supportTicket->getDepartment());
@@ -81,7 +81,7 @@ class SupportTicketSubscriber implements EventSubscriberInterface
     public function addFlashMessage(SupportTicketCreatedEvent $event)
     {
         $supportTicket = $event->getSupportTicket();
-        $message = 'Kontaktforespørsel sendt til ' .
+        $message = 'Kontaktforespørsel sendt til '.
             $supportTicket->getDepartment()->getEmail().', takk for henvendelsen!';
 
         $this->requestStack->getSession()->getFlashBag()->add('success', $message);
@@ -92,10 +92,10 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         $supportTicket = $event->getSupportTicket();
 
         $this->logger->info(
-            "New support ticket from {$supportTicket->getName()}.\n" .
-            "Subject: `{$supportTicket->getSubject()}`\n" .
-            "```\n" .
-            $supportTicket->getBody() .
+            "New support ticket from {$supportTicket->getName()}.\n".
+            "Subject: `{$supportTicket->getSubject()}`\n".
+            "```\n".
+            $supportTicket->getBody().
             '```'
         );
     }
@@ -105,9 +105,9 @@ class SupportTicketSubscriber implements EventSubscriberInterface
         $supportTicket = $event->getSupportTicket();
 
         $notification =
-            "{$supportTicket->getDepartment()}: Ny melding mottatt fra *{$supportTicket->getName()}*. " .
-            "Meldingen ble sendt fra et kontaktskjema på vektorprogrammet.no. \n" .
-            "Emne: `{$supportTicket->getSubject()}`\n" .
+            "{$supportTicket->getDepartment()}: Ny melding mottatt fra *{$supportTicket->getName()}*. ".
+            "Meldingen ble sendt fra et kontaktskjema på vektorprogrammet.no. \n".
+            "Emne: `{$supportTicket->getSubject()}`\n".
             "Meldingen har blitt videresendt til {$supportTicket->getDepartment()->getEmail()}";
 
         $this->slackMessenger->notify($notification);

@@ -16,9 +16,6 @@ class SupportTicketCreatedEvent extends Event
         $this->supportTicket = $supportTicket;
     }
 
-    /**
-     * @return SupportTicket
-     */
     public function getSupportTicket(): SupportTicket
     {
         return $this->supportTicket;

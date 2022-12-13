@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Validator\Constraints as CustomAssert;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
@@ -120,17 +120,17 @@ class InterviewAnswer
 
     public function __toString()
     {
-        if (is_string($this->answer)) {
+        if (\is_string($this->answer)) {
             return $this->answer;
         }
-        if (!is_array($this->answer)) {
-            return "";
+        if (!\is_array($this->answer)) {
+            return '';
         }
 
-        $answerString = "";
+        $answerString = '';
         foreach ($this->answer as $a) {
             if (!empty($answerString)) {
-                $answerString .= ", ";
+                $answerString .= ', ';
             }
             $answerString .= $a;
         }

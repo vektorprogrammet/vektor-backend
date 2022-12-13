@@ -8,41 +8,39 @@ use App\Entity\User;
 use App\Google\GoogleUsers;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
-use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RoleManager
 {
-    private array $roles = array();
-    private array $aliases = array();
+    private array $roles = [];
+    private array $aliases = [];
     private AuthorizationCheckerInterface $authorizationChecker;
     private EntityManagerInterface $em;
     private LoggerInterface $logger;
     private GoogleUsers $googleUserService;
 
     /**
-     * RoleManager constructor
+     * RoleManager constructor.
      */
     public function __construct(
         AuthorizationCheckerInterface $authorizationChecker,
         EntityManagerInterface $em,
         LoggerInterface $logger,
         GoogleUsers $googleUserService
-    )
-    {
-        $this->roles = array(
+    ) {
+        $this->roles = [
             Roles::ASSISTANT,
             Roles::TEAM_MEMBER,
             Roles::TEAM_LEADER,
             Roles::ADMIN,
-        );
-        $this->aliases = array(
+        ];
+        $this->aliases = [
             Roles::ALIAS_ASSISTANT,
             Roles::ALIAS_TEAM_MEMBER,
             Roles::ALIAS_TEAM_LEADER,
             Roles::ALIAS_ADMIN,
-        );
+        ];
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
         $this->logger = $logger;
@@ -51,29 +49,28 @@ class RoleManager
 
     public function isValidRole(string $role): bool
     {
-        return in_array($role, $this->roles) || in_array($role, $this->aliases);
+        return \in_array($role, $this->roles, true) || \in_array($role, $this->aliases, true);
     }
 
     public function canChangeToRole(string $role): bool
     {
         return
-            $role !== Roles::ADMIN &&
-            $role !== Roles::ALIAS_ADMIN &&
+            Roles::ADMIN !== $role &&
+            Roles::ALIAS_ADMIN !== $role &&
             $this->isValidRole($role)
         ;
     }
 
     public function mapAliasToRole(string $alias): string
     {
-        if (in_array($alias, $this->roles)) {
+        if (\in_array($alias, $this->roles, true)) {
             return $alias;
         }
 
-        if (in_array($alias, $this->aliases)) {
-            return $this->roles[array_search($alias, $this->aliases)];
-        } else {
-            throw new InvalidArgumentException('Invalid alias: '.$alias);
+        if (\in_array($alias, $this->aliases, true)) {
+            return $this->roles[array_search($alias, $this->aliases, true)];
         }
+        throw new \InvalidArgumentException('Invalid alias: '.$alias);
     }
 
     public function loggedInUserCanCreateUserWithRole(string $role): bool
@@ -87,9 +84,9 @@ class RoleManager
         // Can't create admins
         // Only team leaders and admins can create users with higher permissions than ASSISTANT
         return
-            $role !== Roles::ADMIN &&
+            Roles::ADMIN !== $role &&
             !(!$this->authorizationChecker->isGranted(Roles::TEAM_LEADER) &&
-                $role !== Roles::ASSISTANT)
+                Roles::ASSISTANT !== $role)
         ;
     }
 
@@ -106,12 +103,12 @@ class RoleManager
 
     public function userIsGranted(User $user, string $role): bool
     {
-        $roles = array(
+        $roles = [
             Roles::ASSISTANT,
             Roles::TEAM_MEMBER,
             Roles::TEAM_LEADER,
             Roles::ADMIN,
-        );
+        ];
 
         if (empty($user->getRoles())) {
             return false;
@@ -119,15 +116,13 @@ class RoleManager
 
         $userRole = $user->getRoles()[0];
 
-        $userAccessLevel = array_search($userRole, $roles);
-        $roleAccessLevel = array_search($role, $roles);
+        $userAccessLevel = array_search($userRole, $roles, true);
+        $roleAccessLevel = array_search($role, $roles, true);
 
         return $userAccessLevel >= $roleAccessLevel;
     }
 
     /**
-     * @param User $user
-     *
      * @return bool True if role was updated, false if no role changed
      */
     public function updateUserRole(User $user): bool
@@ -170,7 +165,7 @@ class RoleManager
         $semester = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester();
         $teamMemberships = $user->getTeamMemberships();
 
-        if ($semester === null) {
+        if (null === $semester) {
             return false;
         }
 
@@ -187,19 +182,20 @@ class RoleManager
     {
         $isValidRole = $this->isValidRole($role);
         if (!$isValidRole) {
-            throw new InvalidArgumentException("Invalid role $role");
+            throw new \InvalidArgumentException("Invalid role $role");
         }
         if ($this->userIsGranted($user, Roles::ADMIN)) {
             return false;
         }
 
-        $roleNeedsToUpdate = array_search($role, $user->getRoles()) === false;
+        $roleNeedsToUpdate = false === array_search($role, $user->getRoles(), true);
 
         if ($roleNeedsToUpdate) {
             $user->setRoles([$role]);
             $this->em->flush();
 
             $this->logger->info("Automatic role update ({$user->getDepartment()}): $user has been updated to $role");
+
             return true;
         }
 

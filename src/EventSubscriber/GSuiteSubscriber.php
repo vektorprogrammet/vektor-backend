@@ -3,8 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Event\TeamEvent;
-use App\Event\UserEvent;
 use App\Event\TeamMembershipEvent;
+use App\Event\UserEvent;
 use App\Google\GoogleAPI;
 use App\Google\GoogleDrive;
 use App\Google\GoogleGroups;
@@ -21,7 +21,6 @@ class GSuiteSubscriber implements EventSubscriberInterface
     private GoogleUsers $userService;
     private GoogleGroups $groupService;
     private GoogleDrive $driveService;
-
 
     public function __construct(
         LoggerInterface $logger,
@@ -46,36 +45,36 @@ class GSuiteSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            TeamMembershipEvent::CREATED => array(
-                array('createGSuiteUser', 1),
-                array('addGSuiteUserToTeam', -1),
-            ),
-            TeamMembershipEvent::EDITED => array(
-                array('createGSuiteUser', 1),
-                array('addGSuiteUserToTeam', 0),
-                array('removeGSuiteUserFromTeam', -1)
-            ),
-            TeamMembershipEvent::DELETED => array(
-                array('removeGSuiteUserFromTeam', 0),
-            ),
-            TeamMembershipEvent::EXPIRED  => array(
-                array('removeGSuiteUserFromTeam', 0)
-            ),
-            UserEvent::EDITED => array(
-                array('updateGSuiteUser', 0),
-            ),
-            UserEvent::COMPANY_EMAIL_EDITED  => array(
-                array('updateGSuiteUser', 0),
-            ),
-            TeamEvent::CREATED => array(
-                array('createGSuiteTeam', 1),
-                array('createGSuiteTeamDrive', -1),
-            ),
-            TeamEvent::EDITED => array(
-                array('editGSuiteTeam', 0),
-            )
-        );
+        return [
+            TeamMembershipEvent::CREATED => [
+                ['createGSuiteUser', 1],
+                ['addGSuiteUserToTeam', -1],
+            ],
+            TeamMembershipEvent::EDITED => [
+                ['createGSuiteUser', 1],
+                ['addGSuiteUserToTeam', 0],
+                ['removeGSuiteUserFromTeam', -1],
+            ],
+            TeamMembershipEvent::DELETED => [
+                ['removeGSuiteUserFromTeam', 0],
+            ],
+            TeamMembershipEvent::EXPIRED => [
+                ['removeGSuiteUserFromTeam', 0],
+            ],
+            UserEvent::EDITED => [
+                ['updateGSuiteUser', 0],
+            ],
+            UserEvent::COMPANY_EMAIL_EDITED => [
+                ['updateGSuiteUser', 0],
+            ],
+            TeamEvent::CREATED => [
+                ['createGSuiteTeam', 1],
+                ['createGSuiteTeamDrive', -1],
+            ],
+            TeamEvent::EDITED => [
+                ['editGSuiteTeam', 0],
+            ],
+        ];
     }
 
     public function createGSuiteUser(TeamMembershipEvent $event)
@@ -92,7 +91,7 @@ class GSuiteSubscriber implements EventSubscriberInterface
             $this->emailMaker->setCompanyEmailFor($user, $emailsInUse);
         }
 
-        if ($user->getCompanyEmail() !== null) {
+        if (null !== $user->getCompanyEmail()) {
             $this->userService->createUser($user);
             $this->logger->info("New G Suite account created for *{$user}* with email *{$user->getCompanyEmail()}*");
         }
@@ -189,7 +188,8 @@ class GSuiteSubscriber implements EventSubscriberInterface
         if (!$email) {
             return false;
         }
-        return $this->userService->getUser($email) !== null;
+
+        return null !== $this->userService->getUser($email);
     }
 
     private function teamExists($email)
@@ -197,6 +197,7 @@ class GSuiteSubscriber implements EventSubscriberInterface
         if (!$email) {
             return false;
         }
-        return $this->groupService->getGroup($email) !== null;
+
+        return null !== $this->groupService->getGroup($email);
     }
 }

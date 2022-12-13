@@ -15,14 +15,14 @@ class AssistantHistoryData
     private $department;
 
     /**
-     * AssistantHistoryData constructor
+     * AssistantHistoryData constructor.
      */
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts, GeoLocation $geoLocation)
     {
         $this->assistantHistoryRepository = $em->getRepository(AssistantHistory::class);
         $user = $ts->getToken()->getUser();
         $departments = $em->getRepository(Department::class)->findAll();
-        if ($user == "anon.") {
+        if ('anon.' === $user) {
             $this->department = $geoLocation->findNearestDepartment($departments);
         } else {
             $this->department = $ts->getToken()->getUser()->getDepartment();
@@ -31,30 +31,28 @@ class AssistantHistoryData
     }
 
     /**
-     * @param Semester $semester
-     *
      * @return $this
      */
-    public function setSemester(Semester $semester): AssistantHistoryData
+    public function setSemester(Semester $semester): self
     {
         $this->semester = $semester;
+
         return $this;
     }
 
     /**
      * @param Department $department
-     *
-     * @return AssistantHistoryData
      */
-    public function setDepartment($department): AssistantHistoryData
+    public function setDepartment($department): self
     {
         $this->department = $department;
+
         return $this;
     }
 
     public function getAssistantHistoryCount(): int
     {
-        return count($this->assistantHistoryRepository->findByDepartmentAndSemester($this->department, $this->semester));
+        return \count($this->assistantHistoryRepository->findByDepartmentAndSemester($this->department, $this->semester));
     }
 
     public function getCount(): int
@@ -75,9 +73,9 @@ class AssistantHistoryData
     public function getPositionsCount(): int
     {
         $assistantHistories = $this->assistantHistoryRepository->findByDepartmentAndSemester($this->department, $this->semester);
-        $positionsCount = count($assistantHistories);
+        $positionsCount = \count($assistantHistories);
         foreach ($assistantHistories as $assistant) {
-            if ($assistant->getBolk() === 'Bolk 1, Bolk 2') {
+            if ('Bolk 1, Bolk 2' === $assistant->getBolk()) {
                 ++$positionsCount;
             }
         }

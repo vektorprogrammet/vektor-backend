@@ -61,10 +61,9 @@ class AccessRule
     {
         $this->isRoutingRule = false;
         $this->forExecutiveBoard = false;
-        $this->method = "GET";
+        $this->method = 'GET';
         $this->roles = [];
     }
-
 
     /**
      * @return int
@@ -84,10 +83,8 @@ class AccessRule
 
     /**
      * @param string $resource
-     *
-     * @return AccessRule
      */
-    public function setResource($resource): AccessRule
+    public function setResource($resource): self
     {
         $this->resource = $resource;
 
@@ -104,10 +101,8 @@ class AccessRule
 
     /**
      * @param string $method
-     *
-     * @return AccessRule
      */
-    public function setMethod($method): AccessRule
+    public function setMethod($method): self
     {
         $this->method = $method;
 
@@ -124,10 +119,8 @@ class AccessRule
 
     /**
      * @param User[] $users
-     *
-     * @return AccessRule
      */
-    public function setUsers($users): AccessRule
+    public function setUsers($users): self
     {
         $this->users = $users;
 
@@ -144,10 +137,8 @@ class AccessRule
 
     /**
      * @param Team[] $teams
-     *
-     * @return AccessRule
      */
-    public function setTeams($teams): AccessRule
+    public function setTeams($teams): self
     {
         $this->teams = $teams;
 
@@ -164,10 +155,8 @@ class AccessRule
 
     /**
      * @param string[] $roles
-     *
-     * @return AccessRule
      */
-    public function setRoles($roles): AccessRule
+    public function setRoles($roles): self
     {
         $this->roles = $roles;
 
@@ -184,10 +173,8 @@ class AccessRule
 
     /**
      * @param string $name
-     *
-     * @return AccessRule
      */
-    public function setName($name): AccessRule
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -195,7 +182,7 @@ class AccessRule
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isRoutingRule()
     {
@@ -203,11 +190,9 @@ class AccessRule
     }
 
     /**
-     * @param boolean $isRoutingRule
-     *
-     * @return AccessRule
+     * @param bool $isRoutingRule
      */
-    public function setIsRoutingRule($isRoutingRule): AccessRule
+    public function setIsRoutingRule($isRoutingRule): self
     {
         $this->isRoutingRule = $isRoutingRule;
 
@@ -215,7 +200,7 @@ class AccessRule
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isForExecutiveBoard()
     {
@@ -223,11 +208,9 @@ class AccessRule
     }
 
     /**
-     * @param boolean $forExecutiveBoard
-     *
-     * @return AccessRule
+     * @param bool $forExecutiveBoard
      */
-    public function setForExecutiveBoard($forExecutiveBoard): AccessRule
+    public function setForExecutiveBoard($forExecutiveBoard): self
     {
         $this->forExecutiveBoard = $forExecutiveBoard;
 
@@ -241,9 +224,9 @@ class AccessRule
         $roles = $this->getRoles();
 
         return
-            count(is_countable($users) ? $users : array()) == 0 &&
-            count(is_countable($teams) ? $teams : array()) == 0 &&
-            count(is_countable($roles) ? $roles : array()) == 0 &&
+            0 === \count(is_countable($users) ? $users : []) &&
+            0 === \count(is_countable($teams) ? $teams : []) &&
+            0 === \count(is_countable($roles) ? $roles : []) &&
             !$this->isForExecutiveBoard();
     }
 

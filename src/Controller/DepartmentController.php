@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Department;
 use App\Form\Type\CreateDepartmentType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DepartmentController extends BaseController
 {
     public function show(): Response
     {
-        return $this->render('department_admin/index.html.twig', array());
+        return $this->render('department_admin/index.html.twig', []);
     }
 
     public function createDepartment(Request $request)
@@ -28,14 +28,14 @@ class DepartmentController extends BaseController
             $em->persist($department);
             $em->flush();
 
-            $this->addFlash("success", "$department ble opprettet");
+            $this->addFlash('success', "$department ble opprettet");
 
             return $this->redirectToRoute('departmentadmin_show');
         }
 
-        return $this->render('department_admin/create_department.html.twig', array(
+        return $this->render('department_admin/create_department.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function deleteDepartmentById(Department $department): RedirectResponse
@@ -44,9 +44,9 @@ class DepartmentController extends BaseController
         $em->remove($department);
         $em->flush();
 
-        $this->addFlash("success", "Avdelingen ble slettet");
+        $this->addFlash('success', 'Avdelingen ble slettet');
 
-        return $this->redirectToRoute("departmentadmin_show");
+        return $this->redirectToRoute('departmentadmin_show');
     }
 
     public function updateDepartment(Request $request, Department $department)
@@ -60,14 +60,14 @@ class DepartmentController extends BaseController
             $em->persist($department);
             $em->flush();
 
-            $this->addFlash("success", "$department ble oppdatert");
+            $this->addFlash('success', "$department ble oppdatert");
 
             return $this->redirectToRoute('departmentadmin_show');
         }
 
-        return $this->render('department_admin/create_department.html.twig', array(
+        return $this->render('department_admin/create_department.html.twig', [
             'department' => $department,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

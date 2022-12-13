@@ -19,6 +19,7 @@ class SsoController extends BaseController
         if (!$username || !$password) {
             $response->setStatusCode(401);
             $response->setContent('Username or password not provided');
+
             return $response;
         }
 
@@ -27,6 +28,7 @@ class SsoController extends BaseController
         } catch (NoResultException $e) {
             $response->setStatusCode(401);
             $response->setContent('Username does not exist');
+
             return $response;
         }
 
@@ -34,13 +36,15 @@ class SsoController extends BaseController
         if (!$validPassword) {
             $response->setStatusCode(401);
             $response->setContent('Wrong password');
+
             return $response;
         }
 
-        $activeInTeam = count($user->getActiveMemberships()) > 0;
+        $activeInTeam = \count($user->getActiveMemberships()) > 0;
         if (!$activeInTeam) {
             $response->setStatusCode(401);
             $response->setContent('User does not have any active team memberships');
+
             return $response;
         }
 

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Semester;
 use App\Entity\Team;
 use App\Event\ApplicationCreatedEvent;
 use App\Form\Type\ApplicationExistingUserType;
@@ -26,11 +25,10 @@ class ExistingUserAdmissionController extends BaseController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return null|RedirectResponse|Response
      * @throws NoResultException
      * @throws NonUniqueResultException
+     *
+     * @return RedirectResponse|Response|null
      */
     public function show(Request $request)
     {
@@ -46,10 +44,10 @@ class ExistingUserAdmissionController extends BaseController
 
         $application = $admissionManager->createApplicationForExistingAssistant($user);
 
-        $form = $this->createForm(ApplicationExistingUserType::class, $application, array(
-            'validation_groups' => array('admission_existing'),
+        $form = $this->createForm(ApplicationExistingUserType::class, $application, [
+            'validation_groups' => ['admission_existing'],
             'teams' => $teams,
-        ));
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,18 +55,18 @@ class ExistingUserAdmissionController extends BaseController
             $em->flush();
 
             $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
-            $this->addFlash("success", "Søknad mottatt!");
+            $this->addFlash('success', 'Søknad mottatt!');
 
             return $this->redirectToRoute('my_page');
         }
 
         $semester = $this->getCurrentSemester();
 
-        return $this->render('admission/existingUser.html.twig', array(
+        return $this->render('admission/existingUser.html.twig', [
             'form' => $form->createView(),
             'department' => $user->getDepartment(),
             'semester' => $semester,
             'user' => $user,
-        ));
+        ]);
     }
 }

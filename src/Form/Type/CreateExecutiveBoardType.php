@@ -15,36 +15,36 @@ class CreateExecutiveBoardType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Navn',
-            ))
-            ->add('email', EmailType::class, array(
+            ])
+            ->add('email', EmailType::class, [
                 'label' => 'E-post (valgfritt)',
                 'required' => false,
-            ))
-            ->add('shortDescription', TextType::class, array(
+            ])
+            ->add('shortDescription', TextType::class, [
                 'label' => 'Kort beskrivelse',
                 'required' => false,
-            ))
-            ->add('preview', SubmitType::class, array(
+            ])
+            ->add('preview', SubmitType::class, [
                 'label' => 'Forhåndsvis',
-            ))
-            ->add('description', CKEditorType::class, array(
+            ])
+            ->add('description', CKEditorType::class, [
                 'required' => false,
-                'config' => array(
+                'config' => [
                     'height' => 500,
                     'filebrowserBrowseRoute' => 'elfinder',
-                    'filebrowserBrowseRouteParameters' => array('instance' => 'team_editor'), ),
+                    'filebrowserBrowseRouteParameters' => ['instance' => 'team_editor'], ],
                 'label' => 'Lang beskrivelse (valgfritt)',
-                'attr' => array('class' => 'hide'), // Graceful loading, hides the textarea that is replaced by ckeditor
-            ));
+                'attr' => ['class' => 'hide'], // Graceful loading, hides the textarea that is replaced by ckeditor
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\ExecutiveBoard',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

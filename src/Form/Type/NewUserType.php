@@ -16,31 +16,31 @@ class NewUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user_name', TextType::class, array(
+            ->add('user_name', TextType::class, [
                 'label' => 'Brukernavn',
-            ))
-            ->add('password', RepeatedType::class, array(
+            ])
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'Passord'),
-                'second_options' => array('label' => 'Gjenta passord'),
+                'first_options' => ['label' => 'Passord'],
+                'second_options' => ['label' => 'Gjenta passord'],
                 'invalid_message' => 'Passordene må være like',
-                'constraints' => array(new Assert\Length(array(
+                'constraints' => [new Assert\Length([
                     'min' => 8,
                     'max' => 64,
                     'minMessage' => 'Passordet må være på minst {{ limit }} tegn',
                     'maxMessage' => 'Passordet må være på maks {{ limit }} tegn',
-                    'groups' => array('username'),
-                ))),
-            ))
-            ->add('save', SubmitType::class, array(
-                'label' => 'Opprett bruker', ));
+                    'groups' => ['username'],
+                ])],
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Opprett bruker', ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\User',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

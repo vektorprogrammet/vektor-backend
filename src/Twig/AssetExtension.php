@@ -19,14 +19,11 @@ class AssetExtension extends AbstractExtension
 
     /**
      * AssetExtension constructor.
-     *
-     * @param Packages $packages
-     * @param KernelInterface $appKernel
      */
     public function __construct(Packages $packages, KernelInterface $appKernel)
     {
         $this->packages = $packages;
-        $this->rootDir=$appKernel->getProjectDir();
+        $this->rootDir = $appKernel->getProjectDir();
     }
 
     /**
@@ -34,9 +31,9 @@ class AssetExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('asset_with_version', array($this, 'getAssetUrl')),
-        );
+        return [
+            new TwigFunction('asset_with_version', [$this, 'getAssetUrl']),
+        ];
     }
 
     /**
@@ -52,11 +49,11 @@ class AssetExtension extends AbstractExtension
      */
     public function getAssetUrl($path, $packageName = null)
     {
-        if (strlen($path) === 0) {
+        if ('' === $path) {
             return $path;
         }
 
-        if ($path[0] !== '/') {
+        if ('/' !== $path[0]) {
             $path = "/$path";
         }
         $filePath = $this->rootDir."/web$path";
@@ -67,7 +64,7 @@ class AssetExtension extends AbstractExtension
         }
 
         $url = $this->packages->getUrl($path, $packageName);
-        if (strlen($version) > 0) {
+        if ('' !== $version) {
             $url .= '?v='.$version;
         }
 

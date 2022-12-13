@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdmissionSubscriberRepository")
  * @ORM\Table(name="admission_subscriber")
- *
  * @UniqueEntity(
  *      fields={"unsubscribeCode"}
  * )
@@ -38,6 +37,7 @@ class AdmissionSubscriber
 
     /**
      * @var Department
+     *
      * @ORM\ManyToOne(targetEntity="Department")
      */
     private $department;
@@ -61,7 +61,7 @@ class AdmissionSubscriber
     {
         $this->fromApplication = false;
         $this->infoMeeting = false;
-        $this->timestamp = new DateTime();
+        $this->timestamp = new \DateTime();
         $this->unsubscribeCode = bin2hex(openssl_random_pseudo_bytes(12));
     }
 
@@ -92,7 +92,7 @@ class AdmissionSubscriber
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getTimestamp()
     {
@@ -100,7 +100,7 @@ class AdmissionSubscriber
     }
 
     /**
-     * @param DateTime $timestamp
+     * @param \DateTime $timestamp
      */
     public function setTimestamp($timestamp)
     {

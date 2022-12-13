@@ -3,10 +3,6 @@
 namespace App\Google;
 
 use App\Entity\Team;
-use Google_Service_Drive;
-use Google_Service_Drive_Permission;
-use Google_Service_Drive_TeamDrive;
-use Google_Service_Exception;
 use Ramsey\Uuid\Uuid;
 
 class GoogleDrive extends GoogleService
@@ -16,35 +12,37 @@ class GoogleDrive extends GoogleService
         if ($this->disabled) {
             return null;
         }
-        $folderName = $team->getDepartment()->getShortName() . ' - ' . $team->getName();
+        $folderName = $team->getDepartment()->getShortName().' - '.$team->getName();
 
-        $client  = $this->getClient();
-        $driveService = new Google_Service_Drive($client);
+        $client = $this->getClient();
+        $driveService = new \Google_Service_Drive($client);
 
         $requestId = Uuid::uuid4()->toString();
-        $teamDriveMetadata = new Google_Service_Drive_TeamDrive(array(
-            'name' => $folderName));
+        $teamDriveMetadata = new \Google_Service_Drive_TeamDrive([
+            'name' => $folderName, ]);
 
         try {
-            $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, array(
-                'fields' => 'id' ));
-        } catch (Google_Service_Exception $e) {
+            $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, [
+                'fields' => 'id', ]);
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "createTeamDrive() for *$folderName*");
+
             return null;
         }
 
-        $permission = new Google_Service_Drive_Permission();
+        $permission = new \Google_Service_Drive_Permission();
         $permission->setType('group');
         $permission->setRole('fileOrganizer');
         $permission->setEmailAddress($team->getEmail());
 
         try {
-            $driveService->permissions->create($teamDrive->id, $permission, array(
+            $driveService->permissions->create($teamDrive->id, $permission, [
                 'sendNotificationEmail' => false,
                 'supportsTeamDrives' => true,
-            ));
-        } catch (Google_Service_Exception $e) {
+            ]);
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "granting drive persmissions for team *$folderName*");
+
             return null;
         }
 

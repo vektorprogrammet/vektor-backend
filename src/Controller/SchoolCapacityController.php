@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\SchoolCapacity;
 use App\Form\Type\SchoolCapacityEditType;
 use App\Form\Type\SchoolCapacityType;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 class SchoolCapacityController extends BaseController
 {
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      */
     public function create(Request $request)
@@ -37,10 +33,10 @@ class SchoolCapacityController extends BaseController
             return $this->redirect($this->generateUrl('school_allocation'));
         }
 
-        return $this->render('school_admin/school_allocate_create.html.twig', array(
+        return $this->render('school_admin/school_allocate_create.html.twig', [
             'message' => '',
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function edit(Request $request, SchoolCapacity $capacity)
@@ -56,9 +52,9 @@ class SchoolCapacityController extends BaseController
             return $this->redirect($this->generateUrl('school_allocation'));
         }
 
-        return $this->render('school_admin/school_allocate_edit.html.twig', array(
+        return $this->render('school_admin/school_allocate_edit.html.twig', [
             'capacity' => $capacity,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

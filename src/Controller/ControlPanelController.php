@@ -13,14 +13,9 @@ class ControlPanelController extends BaseController
 
     public function __construct(SbsData $sbsData)
     {
-        $this->sbsData=$sbsData;
+        $this->sbsData = $sbsData;
     }
 
-    /**
-     *
-     * @param Request $request
-     * @return Response
-     */
     public function show(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
@@ -30,11 +25,11 @@ class ControlPanelController extends BaseController
             ->findOneByDepartmentAndSemester($department, $semester);
 
         // Return the view to be rendered
-        return $this->render('control_panel/index.html.twig', array(
+        return $this->render('control_panel/index.html.twig', [
             'admissionPeriod' => $admissionPeriod,
             'department' => $department,
             'semester' => $semester,
-        ));
+        ]);
     }
 
     public function showSBS(): Response
@@ -47,8 +42,8 @@ class ControlPanelController extends BaseController
         }
 
         // Return the view to be rendered
-        return $this->render('control_panel/sbs.html.twig', array(
+        return $this->render('control_panel/sbs.html.twig', [
             'data' => $sbsData,
-        ));
+        ]);
     }
 }

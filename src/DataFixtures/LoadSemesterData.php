@@ -2,17 +2,16 @@
 
 namespace App\DataFixtures;
 
-use DateTime;
+use App\Entity\Semester;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Semester;
 
 class LoadSemesterData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $now = new DateTime();
+        $now = new \DateTime();
         $jul = 7;
         $isSpring = $now->format('n') <= $jul;
 

@@ -15,8 +15,6 @@ use Doctrine\ORM\QueryBuilder;
 class TeamRepository extends EntityRepository
 {
     /**
-     * @param Department $department
-     *
      * @return QueryBuilder
      */
     private function findByDepartmentQueryBuilder(Department $department)
@@ -28,8 +26,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     *
      * @return Team[]
      */
     public function findByDepartment(Department $department): array
@@ -41,8 +37,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     *
      * @return Team[]
      */
     public function findActiveByDepartment(Department $department): array
@@ -55,8 +49,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     *
      * @return Team[]
      */
     public function findInActiveByDepartment(Department $department): array
@@ -69,8 +61,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     *
      * @return Team[]
      */
     public function findByOpenApplicationAndDepartment(Department $department): array
@@ -102,11 +92,11 @@ class TeamRepository extends EntityRepository
             ->leftJoin('team.potentialApplicants', 'potentialApplicant', Expr\Join::WITH, 'potentialApplicant.semester = :semester')
             ->where('application IS NOT NULL AND application.admissionPeriod = :admissionPeriod')
             ->orWhere('potentialApplicant IS NOT NULL AND potentialApplicant.department = :department')
-            ->setParameters(array(
+            ->setParameters([
                 'admissionPeriod' => $admissionPeriod,
                 'semester' => $admissionPeriod->getSemester(),
                 'department' => $admissionPeriod->getDepartment(),
-            ))
+            ])
             ->getQuery()
             ->getResult();
     }

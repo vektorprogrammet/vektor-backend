@@ -5,14 +5,8 @@ namespace App\Controller;
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\AssistantHistory;
-use App\Entity\Semester;
 use App\Service\ApplicationManager;
-use App\Service\ContentModeManager;
-use App\Twig\RoleExtension;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class UserController extends BaseController
 {
@@ -47,9 +41,9 @@ class UserController extends BaseController
         $activeAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($user);
 
         return $this->render('my_page/my_page.html.twig', [
-            "active_application" => $activeApplication,
-            "application_status" => $applicationStatus,
-            "active_assistant_histories" => $activeAssistantHistories
+            'active_application' => $activeApplication,
+            'application_status' => $applicationStatus,
+            'active_assistant_histories' => $activeAssistantHistories,
         ]);
     }
 
@@ -80,7 +74,7 @@ class UserController extends BaseController
                 if ($activeHistory->activeInGroup(1) && $sh->activeInGroup(1) ||
                     $activeHistory->activeInGroup(2) && $sh->activeInGroup(2)) {
                     $partners[] = $sh;
-                    $partnerCount++;
+                    ++$partnerCount;
                 }
             }
             $partnerInformations[] = [
@@ -91,6 +85,7 @@ class UserController extends BaseController
         }
 
         $semester = $this->getCurrentSemester();
+
         return $this->render('user/my_partner.html.twig', [
             'partnerInformations' => $partnerInformations,
             'partnerCount' => $partnerCount,

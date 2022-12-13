@@ -20,11 +20,10 @@ class UniqueCompanyEmailValidator extends ConstraintValidator
         $this->googleAPI = $googleAPI;
     }
 
-
     /**
      * Checks if the passed value is valid.
      *
-     * @param mixed $value The value that should be validated
+     * @param mixed      $value      The value that should be validated
      * @param Constraint $constraint The constraint for the validation
      */
     public function validate($value, Constraint $constraint)
@@ -38,7 +37,7 @@ class UniqueCompanyEmailValidator extends ConstraintValidator
         $userCompanyEmails = $this->em->getRepository(User::class)->findAllCompanyEmails();
         $allEmails = array_merge($googleEmails, $teamEmails, $userCompanyEmails);
 
-        if (array_search($value, $allEmails) !== false) {
+        if (false !== array_search($value, $allEmails, true)) {
             $this->context->buildViolation($constraint->message)
                           ->setParameter('{{ email }}', $value)
                           ->addViolation();
@@ -52,9 +51,9 @@ class UniqueCompanyEmailValidator extends ConstraintValidator
             ->getUnitOfWork()
             ->getOriginalEntityData($object);
 
-        if ($object instanceof User && key_exists('companyEmail', $oldObject) && $oldObject['companyEmail'] === $value) {
+        if ($object instanceof User && \array_key_exists('companyEmail', $oldObject) && $oldObject['companyEmail'] === $value) {
             return false;
-        } elseif ($object instanceof Team && key_exists('email', $oldObject) && $oldObject['email'] === $value) {
+        } elseif ($object instanceof Team && \array_key_exists('email', $oldObject) && $oldObject['email'] === $value) {
             return false;
         }
 

@@ -2,9 +2,9 @@
 
 namespace App\Validator\Constraints;
 
+use App\Entity\InfoMeeting;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use App\Entity\InfoMeeting;
 
 class InfoMeetingValidator extends ConstraintValidator
 {
@@ -12,7 +12,7 @@ class InfoMeetingValidator extends ConstraintValidator
      * Checks if the info meeting is valid.
      *
      * @param InfoMeeting $infoMeeting The info meeting that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param Constraint  $constraint  The constraint for the validation
      */
     public function validate($infoMeeting, Constraint $constraint)
     {
@@ -20,7 +20,7 @@ class InfoMeetingValidator extends ConstraintValidator
             return;
         }
 
-        if ($infoMeeting->isShowOnPage() && $infoMeeting->getDate() === null) {
+        if ($infoMeeting->isShowOnPage() && null === $infoMeeting->getDate()) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }

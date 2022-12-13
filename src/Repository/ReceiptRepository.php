@@ -2,15 +2,13 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use App\Entity\User;
 use App\Entity\Receipt;
+use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 
 class ReceiptRepository extends EntityRepository
 {
     /**
-     * @param User $user
-     *
      * @return Receipt[]
      */
     public function findByUser(User $user)
@@ -24,8 +22,6 @@ class ReceiptRepository extends EntityRepository
     }
 
     /**
-     * @param string $status
-     *
      * @return Receipt[]
      */
     public function findByStatus(string $status)

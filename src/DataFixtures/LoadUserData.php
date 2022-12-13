@@ -2,13 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Role\Roles;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use App\Entity\User;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -456,7 +456,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             $user->setEmail('scheduling-user-'.$i.'@mail.com');
             $user->setFirstName('scheduling-user-'.$i);
             $user->setLastName('user-lastName-'.$i);
-            $user->setGender($i % 2 == 0 ? '0' : '1');
+            $user->setGender(0 === $i % 2 ? '0' : '1');
             $user->setPhone('12345678');
             $user->setUserName('scheduling-user-'.$i);
             $user->addRole(Roles::ASSISTANT);

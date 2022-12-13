@@ -16,11 +16,10 @@ class StandController extends BaseController
 
     public function __construct(AdmissionStatistics $admissionStatistics)
     {
-        $this->AdmissionStatistics=$admissionStatistics;
+        $this->AdmissionStatistics = $admissionStatistics;
     }
+
     /**
-     * @param Request $request
-     * @return Response
      * @throws NonUniqueResultException
      */
     public function index(Request $request): Response
@@ -40,13 +39,12 @@ class StandController extends BaseController
             ->findOneByDepartmentAndSemester($department, $semester);
         $applicationsInSemester = [];
         $appData = null;
-        if ($admissionPeriod !== null) {
+        if (null !== $admissionPeriod) {
             $applicationsInSemester = $this->getDoctrine()
                 ->getRepository(Application::class)
                 ->findByAdmissionPeriod($admissionPeriod);
             $appData = $admissionStatistics->generateGraphDataFromApplicationsInAdmissionPeriod($applicationsInSemester, $admissionPeriod);
         }
-
 
         return $this->render('stand_admin/stand.html.twig', [
             'department' => $department,

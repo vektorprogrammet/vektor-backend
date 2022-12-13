@@ -16,15 +16,14 @@ class FileUploader
     private string $profilePhotoFolder;
 
     /**
-     * FileUploader constructor
+     * FileUploader constructor.
      */
     public function __construct(
         string $signatureFolder,
         string $logoFolder,
         string $receiptFolder,
         string $profilePhotoFolder
-    )
-    {
+    ) {
         $this->signatureFolder = $signatureFolder;
         $this->logoFolder = $logoFolder;
         $this->receiptFolder = $receiptFolder;
@@ -32,68 +31,54 @@ class FileUploader
     }
 
     /**
-     * @param Request $request
-     *
      * @return string absolute file path
      */
     public function uploadSponsor(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*'));
+        $file = $this->getAndVerifyFile($request, ['image/*']);
+
         return $this->uploadFile($file, $this->logoFolder);
     }
 
     /**
-     * @param Request $request
-     *
      * @return string absolute file path
      */
     public function uploadSignature(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*'));
+        $file = $this->getAndVerifyFile($request, ['image/*']);
+
         return $this->uploadFile($file, $this->signatureFolder);
     }
 
-
-    /**
-     * @param Request $request
-     *
-     * @return string
-     */
     public function uploadReceipt(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*', 'application/pdf'));
+        $file = $this->getAndVerifyFile($request, ['image/*', 'application/pdf']);
+
         return $this->uploadFile($file, $this->receiptFolder);
     }
 
-    /**
- * @param Request $request
- * @return string
- */
     public function uploadProfileImage(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, array('image/*'));
+        $file = $this->getAndVerifyFile($request, ['image/*']);
 
         $mimeType = $file->getMimeType();
         $fileType = explode('/', $mimeType)[0];
-        if ($fileType === 'image' || $mimeType === "application/pdf") {
+        if ('image' === $fileType || 'application/pdf' === $mimeType) {
             return $this->uploadFile($file, $this->profilePhotoFolder);
-        } else {
-            throw new BadRequestHttpException('Filtypen må være et bilde eller PDF.');
         }
+        throw new BadRequestHttpException('Filtypen må være et bilde eller PDF.');
     }
 
-
     /**
-     * @param Request $request
-     * @param array $valid_mime_types
      * @param null $id
+     *
      * @return false|mixed
      */
-    public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id=null)
+    public static function getAndVerifyFile(Request $request, array $valid_mime_types, $id = null)
     {
         // e.g: array('image/*') for valid_mime_types to accept all subtypes of file image
 
-        $file = FileUploader::getFileFromRequest($request, $id);
+        $file = self::getFileFromRequest($request, $id);
         $mimeType = $file->getMimeType();
 
         $fileType = explode('/', $mimeType)[0];
@@ -104,7 +89,7 @@ class FileUploader
             $validSubType = explode('/', $valid_mime_type)[1];
 
             if ($fileType === $validType &&
-                ($fileSubType === $validSubType || $validSubType === "*")) {
+                ($fileSubType === $validSubType || '*' === $validSubType)) {
                 return $file;
             }
         }
@@ -113,9 +98,6 @@ class FileUploader
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string       $targetFolder
-     *
      * @return string absolute file path
      */
     public function uploadFile(UploadedFile $file, string $targetFolder): string
@@ -190,10 +172,10 @@ class FileUploader
 
     private static function getFileFromRequest(Request $request, $id = null)
     {
-        $fileKey = $id !== null ? $id : current($request->files->keys());
+        $fileKey = null !== $id ? $id : current($request->files->keys());
         $file = $request->files->get($fileKey);
 
-        if (is_array($file)) {
+        if (\is_array($file)) {
             return current($file);
         }
 
@@ -215,7 +197,7 @@ class FileUploader
         // Removes ../, ./, //
         $absoluteTargetDir = preg_replace('/\.+\/|\/\//i', '', $targetDir);
 
-        if ($absoluteTargetDir[0] !== '/') {
+        if ('/' !== $absoluteTargetDir[0]) {
             $absoluteTargetDir = '/'.$absoluteTargetDir;
         }
 
@@ -224,6 +206,6 @@ class FileUploader
 
     private function getFileNameFromPath(string $path)
     {
-        return substr($path, strrpos($path, '/') + 1);
+        return mb_substr($path, mb_strrpos($path, '/') + 1);
     }
 }

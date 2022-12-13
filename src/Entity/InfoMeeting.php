@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints as CustomAssert;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Table(name="infomeeting")
@@ -23,6 +23,7 @@ class InfoMeeting
 
     /**
      * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $showOnPage;
@@ -60,7 +61,7 @@ class InfoMeeting
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -68,7 +69,7 @@ class InfoMeeting
     }
 
     /**
-     * @param DateTime $date
+     * @param \DateTime $date
      */
     public function setDate($date)
     {
@@ -93,7 +94,7 @@ class InfoMeeting
 
     public function __toString()
     {
-        return "Infomøte";
+        return 'Infomøte';
     }
 
     /**
@@ -125,7 +126,7 @@ class InfoMeeting
      */
     public function setLink($link)
     {
-        if (strlen($link) > 0 && substr($link, 0, 4) !== 'http') {
+        if ('' !== $link && 'http' !== mb_substr($link, 0, 4)) {
             $link = "https://$link";
         }
 

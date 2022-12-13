@@ -33,8 +33,7 @@ class AssistantController extends BaseController
         FilterService $filterService,
         KernelInterface $kernel,
         EventDispatcherInterface $eventDispatcher
-    )
-    {
+    ) {
         $this->applicationAdmission = $applicationAdmission;
         $this->geoLocation = $geoLocation;
         $this->filterService = $filterService;
@@ -53,60 +52,34 @@ class AssistantController extends BaseController
      *     requirements={"id"="\d+"},
      *     methods={"GET", "POST"}
      *     )
-     *
-     * @param Request $request
-     * @param Department $department
-     *
-     * @return Response
      */
     public function admissionByShortName(Request $request, Department $department): Response
     {
         return $this->index($request, $department);
     }
 
-    /**
-     * @param Request $request
-     * @param $city
-     *
-     * @return Response
-     */
     public function admissionCaseInsensitive(Request $request, $city): Response
     {
-        $city = str_replace(array('æ', 'ø','å'), array('Æ','Ø','Å'), $city); // Make sqlite happy
+        $city = str_replace(['æ', 'ø', 'å'], ['Æ', 'Ø', 'Å'], $city); // Make sqlite happy
         $department = $this->getDoctrine()
                 ->getRepository(Department::class)
                 ->findOneByCityCaseInsensitive($city);
-        if ($department !== null) {
+        if (null !== $department) {
             return $this->index($request, $department);
-        } else {
-            throw $this->createNotFoundException("Fant ingen avdeling $city.");
         }
+        throw $this->createNotFoundException("Fant ingen avdeling $city.");
     }
 
-    /**
-     * @param Request $request
-     * @param Department|null $department
-     *
-     * @return Response
-     */
     public function admission(Request $request, Department $department = null): Response
     {
         return $this->index($request, $department);
     }
 
-    /**
-     * @param Request $request
-     * @param Department|null $specificDepartment
-     * @param bool $scrollToAdmissionForm
-     *
-     * @return Response
-     */
     public function index(
         Request $request,
         Department $specificDepartment = null,
         bool $scrollToAdmissionForm = false
-    ): Response
-    {
+    ): Response {
         $admissionManager = $this->applicationAdmission;
         $em = $this->getDoctrine()->getManager();
 
@@ -114,7 +87,7 @@ class AssistantController extends BaseController
         $departments = $this->geoLocation->sortDepartmentsByDistanceFromClient($departments);
         $departmentsWithActiveAdmission = $this->filterService->filterDepartmentsByActiveAdmission($departments, true);
 
-        $departmentInUrl = $specificDepartment !== null;
+        $departmentInUrl = null !== $specificDepartment;
         if (!$departmentInUrl) {
             $specificDepartment = $departments[0];
         }
@@ -123,14 +96,14 @@ class AssistantController extends BaseController
 
         $application = new Application();
 
-        $formViews = array();
+        $formViews = [];
 
         foreach ($departments as $department) {
-            $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
-                'validation_groups' => array('admission'),
+            $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, [
+                'validation_groups' => ['admission'],
                 'departmentId' => $department->getId(),
                 'environment' => $this->kernel->getEnvironment(),
-            ))->getForm();
+            ])->getForm();
 
             $form->handleRequest($request);
 
@@ -148,9 +121,10 @@ class AssistantController extends BaseController
 
                 $admissionPeriod = $em->getRepository(AdmissionPeriod::class)->findOneWithActiveAdmissionByDepartment($department);
 
-                //If no active admission period is found
+                // If no active admission period is found
                 if (!$admissionPeriod) {
-                    $this->addFlash('danger', $department . ' sitt opptak er dessverre stengt.');
+                    $this->addFlash('danger', $department.' sitt opptak er dessverre stengt.');
+
                     return $this->redirectToRoute('assistants');
                 }
                 $application->setAdmissionPeriod($admissionPeriod);
@@ -165,7 +139,7 @@ class AssistantController extends BaseController
             $formViews[$department->getCity()] = $form->createView();
         }
 
-        return $this->render('assistant/assistants.html.twig', array(
+        return $this->render('assistant/assistants.html.twig', [
             'specific_department' => $specificDepartment,
             'department_in_url' => $departmentInUrl,
             'departments' => $departments,
@@ -173,22 +147,15 @@ class AssistantController extends BaseController
             'teams' => $teams,
             'forms' => $formViews,
             'scroll_to_admission_form' => $scrollToAdmissionForm,
-        ));
+        ]);
     }
 
-    /**
-     * @return Response
-     */
     public function confirmation(): Response
     {
         return $this->render('admission/application_confirmation.html.twig');
     }
 
     /**
-     * @param Request $request
-     * @param Department $department
-     *
-     * @return Response
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -201,11 +168,11 @@ class AssistantController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $application = new Application();
 
-        $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, array(
-            'validation_groups' => array('admission'),
+        $form = $this->get('form.factory')->createNamedBuilder('application_'.$department->getId(), ApplicationType::class, $application, [
+            'validation_groups' => ['admission'],
             'departmentId' => $department->getId(),
             'environment' => $this->kernel->getEnvironment(),
-        ))->getForm();
+        ])->getForm();
 
         $form->handleRequest($request);
 
@@ -214,6 +181,7 @@ class AssistantController extends BaseController
 
             if ($application->getUser()->hasBeenAssistant()) {
                 $this->addFlash('warning', $application->getUser()->getEmail().' har vært assistent før. Logg inn med brukeren din for å søke igjen.');
+
                 return $this->redirectToRoute('application_stand_form', ['shortName' => $department->getShortName()]);
             }
 
@@ -225,12 +193,13 @@ class AssistantController extends BaseController
             $this->eventDispatcher->dispatch(new ApplicationCreatedEvent($application), ApplicationCreatedEvent::NAME);
 
             $this->addFlash('success', $application->getUser()->getEmail().' har blitt registrert. Du vil få en e-post med kvittering på søknaden.');
+
             return $this->redirectToRoute('application_stand_form', ['shortName' => $department->getShortName()]);
         }
 
         return $this->render('admission/application_page.html.twig', [
             'department' => $department,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

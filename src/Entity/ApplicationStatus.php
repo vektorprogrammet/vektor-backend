@@ -17,18 +17,18 @@ class ApplicationStatus
     public const ASSIGNED_TO_SCHOOL = 5;
 
     public const APPLICATION_PROCESS = [
-        "Send inn søknad",
-        "Bli invitert til intervju",
-        "Godta intervjutidspunkt",
-        "Still til intervju",
-        "Bli tatt opp som vektorassistent"
+        'Send inn søknad',
+        'Bli invitert til intervju',
+        'Godta intervjutidspunkt',
+        'Still til intervju',
+        'Bli tatt opp som vektorassistent',
     ];
 
     public function __construct(int $step, string $text, string $nextAction)
     {
-        $this->text       = $text;
+        $this->text = $text;
         $this->nextAction = $nextAction;
-        $this->step       = $step;
+        $this->step = $step;
     }
 
     public function getText(): string
@@ -48,6 +48,6 @@ class ApplicationStatus
 
     public function getApplicationProcess(): array
     {
-        return ApplicationStatus::APPLICATION_PROCESS;
+        return self::APPLICATION_PROCESS;
     }
 }

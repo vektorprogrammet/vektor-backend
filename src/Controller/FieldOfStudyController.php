@@ -15,16 +15,16 @@ class FieldOfStudyController extends BaseController
         $department = $this->getUser()->getFieldOfStudy()->getDepartment();
         $fieldOfStudies = $this->getDoctrine()->getRepository(FieldOfStudy::class)->findByDepartment($department);
 
-        return $this->render('field_of_study/show_all.html.twig', array(
+        return $this->render('field_of_study/show_all.html.twig', [
             'fieldOfStudies' => $fieldOfStudies,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function edit(Request $request, FieldOfStudy $fieldOfStudy = null)
     {
         $isEdit = true;
-        if ($fieldOfStudy === null) {
+        if (null === $fieldOfStudy) {
             $fieldOfStudy = new FieldOfStudy();
             $isEdit = false;
         } else {
@@ -45,10 +45,10 @@ class FieldOfStudyController extends BaseController
             return $this->redirectToRoute('show_field_of_studies');
         }
 
-        return $this->render('field_of_study/form.html.twig', array(
+        return $this->render('field_of_study/form.html.twig', [
             'form' => $form->createView(),
             'isEdit' => $isEdit,
             'fieldOfStudy' => $fieldOfStudy,
-        ));
+        ]);
     }
 }

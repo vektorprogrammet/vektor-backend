@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\AssistantHistory;
-use App\Role\Roles;
 use App\Form\Type\CreateAssistantHistoryType;
+use App\Role\Roles;
 use App\Service\LogService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,17 +42,19 @@ class AssistantHistoryController extends BaseController
 
         $department = $assistantHistory->getUser()->getDepartment();
         $form = $this->createForm(CreateAssistantHistoryType::class, $assistantHistory, [
-            'department' => $department
+            'department' => $department,
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form -> isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($assistantHistory);
             $em->flush();
+
             return $this->redirectToRoute('participanthistory_show');
         }
-        return $this->render("participant_history/participant_history_edit.html.twig", array(
-            "form"=>$form->createView()
-        ));
+
+        return $this->render('participant_history/participant_history_edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

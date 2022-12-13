@@ -13,17 +13,12 @@ class AssistantHistoryCreatedEvent extends Event
 
     /**
      * ApplicationAdmissionEvent constructor.
-     *
-     * @param AssistantHistory $assistantHistory
      */
     public function __construct(AssistantHistory $assistantHistory)
     {
         $this->assistantHistory = $assistantHistory;
     }
 
-    /**
-     * @return AssistantHistory
-     */
     public function getAssistantHistory(): AssistantHistory
     {
         return $this->assistantHistory;

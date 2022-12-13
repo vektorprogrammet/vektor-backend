@@ -21,7 +21,7 @@ class ApplicationAdmission
     private LoginManager $loginManager;
 
     /**
-     * ApplicationAdmission constructor
+     * ApplicationAdmission constructor.
      */
     public function __construct(EntityManagerInterface $em, Environment $twig, LoginManager $loginManager)
     {
@@ -35,7 +35,7 @@ class ApplicationAdmission
         $admissionPeriod = $this->em->getRepository(AdmissionPeriod::class)->findOneWithActiveAdmissionByDepartment($user->getDepartment());
 
         $application = $this->em->getRepository(Application::class)->findByUserInAdmissionPeriod($user, $admissionPeriod);
-        if ($application === null) {
+        if (null === $application) {
             $application = new Application();
         }
 
@@ -52,7 +52,7 @@ class ApplicationAdmission
     public function userHasAlreadyApplied(User $user): bool
     {
         $fos = $user->getFieldOfStudy();
-        if ($fos === null) {
+        if (null === $fos) {
             /* User has no field of study, and hence no department, so we
             cannot know if he/she has already applied in the current semester,
             as this depends on the department. */
@@ -61,9 +61,10 @@ class ApplicationAdmission
         $department = $fos->getDepartment();
         $admissionPeriod = $this->em->getRepository(AdmissionPeriod::class)
             ->findOneWithActiveAdmissionByDepartment($department);
-        if ($admissionPeriod === null) {
+        if (null === $admissionPeriod) {
             return false;
         }
+
         return $this->userHasAlreadyAppliedInAdmissionPeriod($user, $admissionPeriod);
     }
 
@@ -71,19 +72,18 @@ class ApplicationAdmission
     {
         $existingApplications = $this->em->getRepository(Application::class)->findByEmailInAdmissionPeriod($user->getEmail(), $admissionPeriod);
 
-        return count($existingApplications) > 0;
+        return \count($existingApplications) > 0;
     }
-
 
     public function setCorrectUser(Application $application)
     {
-        //Check if email belongs to an existing account and use that account
-        $user = $this->em->getRepository(User::class)->findOneBy(array('email' => $application->getUser()->getEmail()));
-        if ($user !== null) {
+        // Check if email belongs to an existing account and use that account
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $application->getUser()->getEmail()]);
+        if (null !== $user) {
             $application->setUser($user);
         }
 
-        if (count($application->getUser()->getRoles()) === 0) {
+        if (0 === \count($application->getUser()->getRoles())) {
             $role = Roles::ASSISTANT;
             $application->getUser()->addRole($role);
         }
@@ -100,14 +100,14 @@ class ApplicationAdmission
         $departmentShortNameQuery = $request->get('shortName');
         $department = null;
 
-        if ($departmentIdQuery !== null) {
+        if (null !== $departmentIdQuery) {
             $department = $this->em->getRepository(Department::class)->find($departmentIdQuery);
-        } elseif ($departmentShortNameQuery !== null) {
+        } elseif (null !== $departmentShortNameQuery) {
             $department = $this->em->getRepository(Department::class)->findDepartmentByShortName($departmentShortNameQuery);
         }
 
-        if ($department === null) {
-            throw  new NotFoundHttpException('Department not found');
+        if (null === $department) {
+            throw new NotFoundHttpException('Department not found');
         }
 
         return $department;
@@ -117,22 +117,22 @@ class ApplicationAdmission
     {
         $content = null;
 
-        if ($user === null) {
+        if (null === $user) {
             $message = $this->getExistingAssistantLoginMessage();
 
             $content = $this->loginManager->renderLogin($message, 'admission_existing_user');
         } elseif (!$user->hasBeenAssistant()) {
-            $content = $this->twig->render('error/no_assistanthistory.html.twig', array('user' => $user));
+            $content = $this->twig->render('error/no_assistanthistory.html.twig', ['user' => $user]);
         } else {
             $department = $user->getDepartment();
             $admissionPeriod = $this->em->getRepository(AdmissionPeriod::class)->findOneWithActiveAdmissionByDepartment($department);
 
-            if ($admissionPeriod === null) {
+            if (null === $admissionPeriod) {
                 $content = $this->twig->render('error/no_active_admission.html.twig');
             }
         }
 
-        if ($content !== null) {
+        if (null !== $content) {
             $response = new Response();
             $response->setContent($content);
 

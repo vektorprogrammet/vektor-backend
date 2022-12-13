@@ -3,11 +3,9 @@
 namespace App\EventSubscriber;
 
 use App\Event\ApplicationCreatedEvent;
-use App\Service\AdmissionNotifier;
 use App\Mailer\MailerInterface;
+use App\Service\AdmissionNotifier;
 use App\Service\UserRegistration;
-use Exception;
-use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Environment;
 
@@ -40,12 +38,12 @@ class ApplicationSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            ApplicationCreatedEvent::NAME => array(
-                array('sendConfirmationMail', 0),
-                array('createAdmissionSubscriber', - 2),
-            ),
-        );
+        return [
+            ApplicationCreatedEvent::NAME => [
+                ['sendConfirmationMail', 0],
+                ['createAdmissionSubscriber', -2],
+            ],
+        ];
     }
 
     public function createAdmissionSubscriber(ApplicationCreatedEvent $event)
@@ -55,7 +53,7 @@ class ApplicationSubscriber implements EventSubscriberInterface
         $email = $application->getUser()->getEmail();
         try {
             $this->admissionNotifier->createSubscription($department, $email, true);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Ignore
         }
     }
@@ -75,17 +73,17 @@ class ApplicationSubscriber implements EventSubscriberInterface
         }
 
         // Send a confirmation email with a copy of the application
-        $emailMessage = (new Swift_Message())
+        $emailMessage = (new \Swift_Message())
             ->setSubject('Søknad - Vektorassistent')
             ->setReplyTo($application->getDepartment()->getEmail())
             ->setTo($application->getUser()->getEmail())
             ->setBody(
                 $this->twig->render(
                     $template,
-                    array(
+                    [
                         'application' => $application,
                         'newUserCode' => $newUserCode,
-                    )
+                    ]
                 ),
                 'text/html'
             );

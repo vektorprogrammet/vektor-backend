@@ -14,8 +14,6 @@ use Doctrine\ORM\EntityRepository;
 class StaticContentRepository extends EntityRepository
 {
     /**
-     * @param string $htmlId
-     *
      * @return StaticContent
      */
     public function findOneByHtmlId(string $htmlId)

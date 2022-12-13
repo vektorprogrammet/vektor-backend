@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
-use App\Entity\Semester;
 use App\Entity\User;
 use App\Service\GeoLocation;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +14,9 @@ class BoardAndTeamController extends BaseController
 
     public function __construct(GeoLocation $geoLocation)
     {
-        $this->geoLocation=$geoLocation;
+        $this->geoLocation = $geoLocation;
     }
+
     public function show(): Response
     {
         // Find all departments
@@ -29,21 +29,21 @@ class BoardAndTeamController extends BaseController
             $numberOfTeams += $department->getTeams()->count();
         }
 
-        $departmentStats = array();
+        $departmentStats = [];
         foreach ($departments as $department) {
             $currentSemester = $this->getCurrentSemester();
             $userRepository = $this->getDoctrine()->getRepository(User::class);
-            $departmentStats[$department->getCity()] = array(
-                'numTeamMembers' => sizeof($userRepository->findUsersInDepartmentWithTeamMembershipInSemester($department, $currentSemester)),
-                'numAssistants' => sizeof($userRepository->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $currentSemester)),
-            );
+            $departmentStats[$department->getCity()] = [
+                'numTeamMembers' => \count($userRepository->findUsersInDepartmentWithTeamMembershipInSemester($department, $currentSemester)),
+                'numAssistants' => \count($userRepository->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $currentSemester)),
+            ];
         }
 
-        return $this->render('team/board_and_team.html.twig', array(
+        return $this->render('team/board_and_team.html.twig', [
             'departments' => $departments,
             'board' => $board,
             'numberOfTeams' => $numberOfTeams,
             'departmentStats' => $departmentStats,
-        ));
+        ]);
     }
 }

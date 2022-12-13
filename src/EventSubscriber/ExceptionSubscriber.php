@@ -25,11 +25,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return array(
-            KernelEvents::EXCEPTION => array(
-                array('logException', 0),
-            ),
-        );
+        return [
+            KernelEvents::EXCEPTION => [
+                ['logException', 0],
+            ],
+        ];
     }
 
     public function logException(ExceptionEvent $event)
@@ -40,18 +40,18 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
             return;
         }
-        $errorMsg = "```\n" .
-            "{$exception->getMessage()}\n" .
-            "```\n" .
-            "in {$exception->getFile()} (line {$exception->getLine()})\n" .
-            "@channel";
+        $errorMsg = "```\n".
+            "{$exception->getMessage()}\n".
+            "```\n".
+            "in {$exception->getFile()} (line {$exception->getLine()})\n".
+            '@channel';
 
         $this->logger->critical($errorMsg);
 
         $this->fileLogger->critical(
-            "File: {$exception->getFile()}\n" .
-            "Line: {$exception->getLine()}\n" .
-            "Message: {$exception->getMessage()}\n" .
+            "File: {$exception->getFile()}\n".
+            "Line: {$exception->getLine()}\n".
+            "Message: {$exception->getMessage()}\n".
             $exception->getTraceAsString()
         );
     }
@@ -60,10 +60,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $statusCode = $exception->getStatusCode();
 
-        if ($statusCode === 403) {
-            $this->logger->warning("Access denied");
-        } elseif ($statusCode === 405) {
-            $this->logger->warning("Method not allowed");
+        if (403 === $statusCode) {
+            $this->logger->warning('Access denied');
+        } elseif (405 === $statusCode) {
+            $this->logger->warning('Method not allowed');
         } elseif ($this->httpExceptionShouldBeLogged($exception)) {
             $this->logger->critical("Code {$exception->getStatusCode()}: {$exception->getMessage()}");
         }
@@ -73,6 +73,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $exceptionCode = $exception->getStatusCode();
 
-        return is_int($exceptionCode) && $exceptionCode < 200 || $exceptionCode >= 500;
+        return \is_int($exceptionCode) && $exceptionCode < 200 || $exceptionCode >= 500;
     }
 }

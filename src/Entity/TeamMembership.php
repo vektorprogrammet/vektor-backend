@@ -117,8 +117,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Get user.
-     *
-     * @return User
      */
     public function getUser(): User
     {
@@ -148,7 +146,6 @@ class TeamMembership implements TeamMembershipInterface
     {
         return $this->team;
     }
-
 
     /**
      * Set position.
@@ -223,18 +220,15 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     * @param Semester $semester
-     *
      * @return bool
      */
     public function isActiveInSemester(Semester $semester)
     {
         $semesterStartLaterThanTeamMembership = $semester->getStartDate() >= $this->getStartSemester()->getStartDate();
-        $semesterEndsBeforeTeamMembership = $this->getEndSemester() === null || $semester->getEndDate() <= $this->getEndSemester()->getEndDate();
+        $semesterEndsBeforeTeamMembership = null === $this->getEndSemester() || $semester->getEndDate() <= $this->getEndSemester()->getEndDate();
 
         return $semesterStartLaterThanTeamMembership && $semesterEndsBeforeTeamMembership;
     }
-
 
     public function isActive()
     {
@@ -244,38 +238,25 @@ class TeamMembership implements TeamMembershipInterface
         return $this->isActiveInSemester($activeSemester);
     }
 
-
-    /**
-     * @return string
-     */
     public function getTeamName(): string
     {
-        if ($this->deletedTeamName !== null) {
+        if (null !== $this->deletedTeamName) {
             return $this->deletedTeamName;
         }
 
         return $this->team->getName();
     }
 
-    /**
-     * @param string $deletedTeamName
-     */
     public function setDeletedTeamName(string $deletedTeamName)
     {
         $this->deletedTeamName = $deletedTeamName;
     }
 
-    /**
-     * @return string
-     */
     public function getPositionName(): string
     {
         return $this->position->getName();
     }
 
-    /**
-     * @return bool
-     */
     public function isTeamLeader(): bool
     {
         return $this->isTeamLeader;
@@ -289,9 +270,6 @@ class TeamMembership implements TeamMembershipInterface
         $this->isTeamLeader = $isTeamLeader;
     }
 
-    /**
-     * @return bool
-     */
     public function isSuspended(): bool
     {
         return $this->isSuspended;

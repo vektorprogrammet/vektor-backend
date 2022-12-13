@@ -2,21 +2,18 @@
 
 namespace App\Repository;
 
-use App\Entity\Department;
 use App\Entity\AdmissionPeriod;
+use App\Entity\Department;
 use App\Entity\Semester;
-use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
 /**
- * AdmissionPeriodRepository
+ * AdmissionPeriodRepository.
  */
 class AdmissionPeriodRepository extends EntityRepository
 {
     /**
-     * @param Department $department
-     *
      * @return AdmissionPeriod[]
      */
     public function findByDepartmentOrderedByTime(Department $department): array
@@ -32,10 +29,6 @@ class AdmissionPeriodRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param string     $time
-     * @param string     $year
-     *
      * @return AdmissionPeriod[]
      */
     public function findByDepartmentAndTime(Department $department, string $time, string $year): array
@@ -53,10 +46,6 @@ class AdmissionPeriodRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
-     *
-     * @return AdmissionPeriod|null
      * @throws NonUniqueResultException
      */
     public function findOneByDepartmentAndSemester(Department $department, Semester $semester): ?AdmissionPeriod
@@ -71,17 +60,14 @@ class AdmissionPeriodRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param DateTime   $time
-     *
-     * @return AdmissionPeriod|null
+     * @param \DateTime $time
      *
      * @throws NonUniqueResultException
      */
-    public function findOneWithActiveAdmissionByDepartment(Department $department, DateTime $time = null): ?AdmissionPeriod
+    public function findOneWithActiveAdmissionByDepartment(Department $department, \DateTime $time = null): ?AdmissionPeriod
     {
-        if ($time === null) {
-            $time = new DateTime();
+        if (null === $time) {
+            $time = new \DateTime();
         }
 
         return $this->createQueryBuilder('admissionPeriod')

@@ -13,6 +13,7 @@ class TeamPositionSortExtension extends AbstractExtension
 {
     private $sorter;
     private $filterService;
+
     public function __construct(Sorter $sorter, FilterService $filterService)
     {
         $this->sorter = $sorter;
@@ -21,9 +22,9 @@ class TeamPositionSortExtension extends AbstractExtension
 
     public function getFilters(): array
     {
-        return array(
-            new TwigFilter('team_position_sort', array($this, 'teamPositionSortFilter')),
-        );
+        return [
+            new TwigFilter('team_position_sort', [$this, 'teamPositionSortFilter']),
+        ];
     }
 
     /**
@@ -36,7 +37,6 @@ class TeamPositionSortExtension extends AbstractExtension
      * i.e removed from the $user object!
      *
      * @param User[] $users
-     * @param TeamInterface $team
      *
      * @return User[]
      */

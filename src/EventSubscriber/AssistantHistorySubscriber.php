@@ -38,17 +38,15 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            AssistantHistoryCreatedEvent::NAME => array(
-                array('sendActivationMail', 0),
-                array('addFlashMessage', -1),
-            ),
-        );
+        return [
+            AssistantHistoryCreatedEvent::NAME => [
+                ['sendActivationMail', 0],
+                ['addFlashMessage', -1],
+            ],
+        ];
     }
 
     /**
-     * @param AssistantHistoryCreatedEvent $event
-     *
      * @throws NonUniqueResultException
      * @throws ORMException
      * @throws OptimisticLockException
@@ -59,7 +57,7 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
         $user = $assistantHistory->getUser();
 
         // Check if user already has username and password
-        if ($user->getUserName() !== null && $user->getPassword() !== null) {
+        if (null !== $user->getUserName() && null !== $user->getPassword()) {
             $user->setActive(true);
             $this->em->persist($user);
             $this->em->flush();
@@ -68,7 +66,7 @@ class AssistantHistorySubscriber implements EventSubscriberInterface
                 ->findOrCreateCurrentSemester();
 
             // Send new user code only if assistant history is added to current semester
-            if ($assistantHistory->getSemester() === $currentSemester && $user->getNewUserCode() === null) {
+            if ($assistantHistory->getSemester() === $currentSemester && null === $user->getNewUserCode()) {
                 $this->userRegistrationService->sendActivationCode($user);
             }
         }

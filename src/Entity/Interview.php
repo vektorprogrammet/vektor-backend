@@ -6,10 +6,9 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 use Symfony\Component\Validator\Constraints as Assert;
 
-# Static constants:
+// Static constants:
 abstract class InterviewStatusType
 {
     public const PENDING = 0;
@@ -18,7 +17,6 @@ abstract class InterviewStatusType
     public const CANCELLED = 3;
     public const NO_CONTACT = 4;
 }
-
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InterviewRepository")
@@ -54,12 +52,12 @@ class Interview
     private $room;
 
     /**
-    * @ORM\Column(type="string", length=255, nullable=true)
-    * @Assert\Length(
-    *     max=255,
-    *     maxMessage="Campusnavn kan ikke være mer enn 255 tegn"
-    * )
-    */
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Campusnavn kan ikke være mer enn 255 tegn"
+     * )
+     */
     private $campus;
 
     /**
@@ -137,6 +135,7 @@ class Interview
     /**
      * @ORM\Column(type="string", nullable=true, length=2000)
      * @Assert\Length(max=2000)
+     *
      * @var string
      */
     private $cancelMessage;
@@ -152,6 +151,7 @@ class Interview
 
     /**
      * @var int
+     *
      * @ORM\Column(type="integer", options={"default": 0})
      */
     private $numAcceptInterviewRemindersSent;
@@ -162,10 +162,10 @@ class Interview
     public function __construct()
     {
         $this->interviewAnswers = new ArrayCollection();
-        $this->conducted = new DateTime();
+        $this->conducted = new \DateTime();
         $this->interviewed = false;
         $this->interviewStatus = InterviewStatusType::NO_CONTACT;
-        $this->newTimeMessage = "";
+        $this->newTimeMessage = '';
         $this->numAcceptInterviewRemindersSent = 0;
     }
 
@@ -222,7 +222,7 @@ class Interview
      */
     public function isCoInterviewer(User $user = null)
     {
-        return $user && $this->getCoInterviewer() && $user->getId() == $this->getCoInterviewer()->getId();
+        return $user && $this->getCoInterviewer() && $user->getId() === $this->getCoInterviewer()->getId();
     }
 
     /**
@@ -266,8 +266,6 @@ class Interview
     /**
      * Add interviewAnswers.
      *
-     * @param InterviewAnswer $interviewAnswers
-     *
      * @return Interview
      */
     public function addInterviewAnswer(InterviewAnswer $interviewAnswers)
@@ -279,8 +277,6 @@ class Interview
 
     /**
      * Remove interviewAnswers.
-     *
-     * @param InterviewAnswer $interviewAnswers
      */
     public function removeInterviewAnswer(InterviewAnswer $interviewAnswers)
     {
@@ -323,7 +319,7 @@ class Interview
 
     public function getScore()
     {
-        if ($this->interviewScore === null) {
+        if (null === $this->interviewScore) {
             return 0;
         }
 
@@ -367,7 +363,7 @@ class Interview
      */
     public function setCancelled($cancelled)
     {
-        if ($cancelled === true) {
+        if (true === $cancelled) {
             $this->cancel();
         } else {
             $this->acceptInterview();
@@ -406,6 +402,7 @@ class Interview
     public function setCampus($campus)
     {
         $this->campus = $campus;
+
         return $this;
     }
 
@@ -425,7 +422,6 @@ class Interview
         $this->mapLink = $mapLink;
     }
 
-
     /**
      * Is the given User the interviewer of this Interview?
      *
@@ -435,20 +431,20 @@ class Interview
      */
     public function isInterviewer(User $user = null)
     {
-        return $user && $user->getId() == $this->getInterviewer()->getId();
+        return $user && $user->getId() === $this->getInterviewer()->getId();
     }
 
     /**
      * Set scheduled.
      *
-     * @param DateTime $scheduled
+     * @param \DateTime $scheduled
      *
      * @return Interview
      */
     public function setScheduled($scheduled)
     {
         $this->scheduled = $scheduled;
-        $this->lastScheduleChanged = new DateTime();
+        $this->lastScheduleChanged = new \DateTime();
 
         return $this;
     }
@@ -456,7 +452,7 @@ class Interview
     /**
      * Get scheduled.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getScheduled()
     {
@@ -466,7 +462,7 @@ class Interview
     /**
      * Set conducted.
      *
-     * @param DateTime $conducted
+     * @param \DateTime $conducted
      *
      * @return Interview
      */
@@ -480,7 +476,7 @@ class Interview
     /**
      * Get conducted.
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getConducted()
     {
@@ -505,7 +501,7 @@ class Interview
 
     public function isDraft()
     {
-        return !$this->interviewed && $this->interviewScore !== null;
+        return !$this->interviewed && null !== $this->interviewScore;
     }
 
     /**
@@ -516,9 +512,6 @@ class Interview
         return $this->application;
     }
 
-    /**
-     * @return string
-     */
     public function getInterviewStatusAsString(): string
     {
         switch ($this->interviewStatus) {
@@ -540,12 +533,10 @@ class Interview
             default:
                 $status = 'Ingen svar';
         }
+
         return $status;
     }
 
-    /**
-     * @return string
-     */
     public function getInterviewStatusAsColor(): string
     {
         switch ($this->interviewStatus) {
@@ -567,20 +558,15 @@ class Interview
             default:
                 $color = '#000000';
         }
+
         return $color;
     }
 
-    /**
-     * @return bool
-     */
     public function isPending(): bool
     {
-        return $this->interviewStatus === InterviewStatusType::PENDING;
+        return InterviewStatusType::PENDING === $this->interviewStatus;
     }
 
-    /**
-     * @param int $interviewStatus
-     */
     public function setInterviewStatus(int $interviewStatus)
     {
         $this->interviewStatus = $interviewStatus;
@@ -611,7 +597,7 @@ class Interview
      */
     public function isCancelled()
     {
-        return $this->interviewStatus === InterviewStatusType::CANCELLED;
+        return InterviewStatusType::CANCELLED === $this->interviewStatus;
     }
 
     /**
@@ -638,16 +624,13 @@ class Interview
         return $newResponseCode;
     }
 
-    /**
-     * @return string
-     */
     public function getCancelMessage(): string
     {
-        if ($this->cancelMessage !== null) {
+        if (null !== $this->cancelMessage) {
             return $this->cancelMessage;
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
@@ -658,21 +641,15 @@ class Interview
         $this->cancelMessage = $cancelMessage;
     }
 
-    /**
-     * @param int $newStatus
-     */
     public function setStatus(int $newStatus)
     {
         if ($newStatus >= 0 && $newStatus <= 4) {
             $this->interviewStatus = $newStatus;
         } else {
-            throw new InvalidArgumentException('Invalid status');
+            throw new \InvalidArgumentException('Invalid status');
         }
     }
 
-    /**
-     * @return string
-     */
     public function getNewTimeMessage(): string
     {
         return $this->newTimeMessage;
@@ -686,16 +663,13 @@ class Interview
         $this->newTimeMessage = $newTimeMessage;
     }
 
-    /**
-     * @return int
-     */
     public function getInterviewStatus(): int
     {
         return $this->interviewStatus;
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastScheduleChanged()
     {
@@ -710,22 +684,18 @@ class Interview
         return $this->numAcceptInterviewRemindersSent;
     }
 
-    /**
-     * @param int $numAcceptInterviewRemindersSent
-     *
-     * @return Interview
-     */
-    public function setNumAcceptInterviewRemindersSent(int $numAcceptInterviewRemindersSent): Interview
+    public function setNumAcceptInterviewRemindersSent(int $numAcceptInterviewRemindersSent): self
     {
         $this->numAcceptInterviewRemindersSent = $numAcceptInterviewRemindersSent;
+
         return $this;
     }
 
     /**
-     * Increments number of accept-interview reminders sent
+     * Increments number of accept-interview reminders sent.
      */
     public function incrementNumAcceptInterviewRemindersSent()
     {
-        $this->numAcceptInterviewRemindersSent++;
+        ++$this->numAcceptInterviewRemindersSent;
     }
 }

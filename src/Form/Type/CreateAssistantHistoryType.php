@@ -3,12 +3,12 @@
 namespace App\Form\Type;
 
 use App\Repository\SemesterRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateAssistantHistoryType extends AbstractType
@@ -19,16 +19,16 @@ class CreateAssistantHistoryType extends AbstractType
     {
         $this->department = $options['department'];
         $builder
-            ->add('Semester', EntityType::class, array(
+            ->add('Semester', EntityType::class, [
                 'label' => 'Semester',
                 'class' => 'App:Semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
-            ))
-            ->add('workdays', ChoiceType::class, array(
+            ])
+            ->add('workdays', ChoiceType::class, [
                 'label' => 'Antall uker (4 ganger = 4 uker, 2 ganger i uken i 4 uker = 8 uker)',
-                'choices' => array(
+                'choices' => [
                     '1' => '1',
                     '2' => '2',
                     '3' => '3',
@@ -37,9 +37,9 @@ class CreateAssistantHistoryType extends AbstractType
                     '6' => '6',
                     '7' => '7',
                     '8' => '8',
-                ),
-            ))
-            ->add('School', EntityType::class, array(
+                ],
+            ])
+            ->add('School', EntityType::class, [
                 'label' => 'Skole',
                 'class' => 'App:School',
                 'query_builder' => function (EntityRepository $er) {
@@ -51,36 +51,36 @@ class CreateAssistantHistoryType extends AbstractType
                         ->andWhere('s.active = true')
                         ->setParameter('department', $this->department);
                 },
-            ))
-            ->add('bolk', ChoiceType::class, array(
+            ])
+            ->add('bolk', ChoiceType::class, [
                 'label' => 'Bolk',
-                'choices' => array(
+                'choices' => [
                     'Bolk 1' => 'Bolk 1',
                     'Bolk 2' => 'Bolk 2',
                     'Bolk 1 og Bolk 2' => 'Bolk 1, Bolk 2',
-                ),
-            ))
-            ->add('day', ChoiceType::class, array(
+                ],
+            ])
+            ->add('day', ChoiceType::class, [
                 'label' => 'Dag',
-                'choices' => array(
+                'choices' => [
                     'Mandag' => 'Mandag',
                     'Tirsdag' => 'Tirsdag',
                     'Onsdag' => 'Onsdag',
                     'Torsdag' => 'Torsdag',
                     'Fredag' => 'Fredag',
-                ),
-            ))
-            ->add('save', SubmitType::class, array(
+                ],
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Opprett',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\AssistantHistory',
             'department' => null,
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

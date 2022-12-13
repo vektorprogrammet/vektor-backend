@@ -13,17 +13,17 @@ class InterviewNewTimeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('newTimeMessage', TextareaType::class, array(
+            ->add('newTimeMessage', TextareaType::class, [
                 'label' => false,
-                'attr' => array('rows' => '5'),
-            ));
+                'attr' => ['rows' => '5'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => Interview::class
-        ));
+        $resolver->setDefaults([
+            'data_class' => Interview::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

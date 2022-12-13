@@ -16,14 +16,14 @@ class PositionController extends BaseController
         $positions = $this->getDoctrine()->getRepository(Position::class)->findAll();
 
         // Return the view with suitable variables
-        return $this->render('team_admin/show_positions.html.twig', array(
+        return $this->render('team_admin/show_positions.html.twig', [
             'positions' => $positions,
-        ));
+        ]);
     }
 
     public function editPosition(Request $request, Position $position = null)
     {
-        $isCreate = $position === null;
+        $isCreate = null === $position;
         if ($isCreate) {
             $position = new Position();
         }
@@ -38,19 +38,19 @@ class PositionController extends BaseController
             $em->persist($position);
             $em->flush();
 
-            $flash = "Stillingen ble ";
-            $flash .= $isCreate ? "opprettet." : "endret.";
+            $flash = 'Stillingen ble ';
+            $flash .= $isCreate ? 'opprettet.' : 'endret.';
 
-            $this->addFlash("success", $flash);
+            $this->addFlash('success', $flash);
 
             return $this->redirectToRoute('teamadmin_show_position');
         }
 
-        return $this->render('team_admin/create_position.html.twig', array(
+        return $this->render('team_admin/create_position.html.twig', [
             'form' => $form->createView(),
             'isCreate' => $isCreate,
-            'position' => $position
-        ));
+            'position' => $position,
+        ]);
     }
 
     public function removePosition(Position $position): RedirectResponse
@@ -59,8 +59,8 @@ class PositionController extends BaseController
         $em->remove($position);
         $em->flush();
 
-        $this->addFlash("success", "Stillingen ble slettet.");
+        $this->addFlash('success', 'Stillingen ble slettet.');
 
-        return $this->redirectToRoute("teamadmin_show_position");
+        return $this->redirectToRoute('teamadmin_show_position');
     }
 }

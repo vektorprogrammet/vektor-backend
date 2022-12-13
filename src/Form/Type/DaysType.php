@@ -12,30 +12,30 @@ class DaysType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('monday', CheckboxType::class, array(
+        $builder->add('monday', CheckboxType::class, [
             'label' => 'Mandag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('tuesday', CheckboxType::class, array(
+        $builder->add('tuesday', CheckboxType::class, [
             'label' => 'Tirsdag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('wednesday', CheckboxType::class, array(
+        $builder->add('wednesday', CheckboxType::class, [
             'label' => 'Onsdag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('thursday', CheckboxType::class, array(
+        $builder->add('thursday', CheckboxType::class, [
             'label' => 'Torsdag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('friday', CheckboxType::class, array(
+        $builder->add('friday', CheckboxType::class, [
             'label' => 'Fredag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
         /* Invert the truth values */
         $builder->get('monday')
@@ -48,7 +48,6 @@ class DaysType extends AbstractType
                 }
             ));
 
-
         $builder->get('tuesday')
             ->addModelTransformer(new CallbackTransformer(
                 function ($in) {
@@ -59,7 +58,6 @@ class DaysType extends AbstractType
                 }
             ));
 
-
         $builder->get('wednesday')
             ->addModelTransformer(new CallbackTransformer(
                 function ($in) {
@@ -69,7 +67,6 @@ class DaysType extends AbstractType
                     return !$in;
                 }
             ));
-
 
         $builder->get('thursday')
             ->addModelTransformer(new CallbackTransformer(
@@ -94,11 +91,11 @@ class DaysType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Application',
             'inherit_data' => true,
             'label' => '',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

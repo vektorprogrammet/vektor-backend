@@ -14,9 +14,6 @@ class InterviewCounter
 
     /**
      * @param Application[] $applications
-     * @param string        $suitable
-     *
-     * @return int
      */
     public function count(array $applications, string $suitable): int
     {
@@ -24,7 +21,7 @@ class InterviewCounter
 
         foreach ($applications as $application) {
             $interview = $application->getInterview();
-            if ($interview === null) {
+            if (null === $interview) {
                 continue;
             }
 
@@ -39,18 +36,15 @@ class InterviewCounter
 
     /**
      * @param Application[] $applications
-     * @param AdmissionPeriod $admissionPeriod
-     *
-     * @return array
      */
     public function createInterviewDistributions(array $applications, AdmissionPeriod $admissionPeriod): array
     {
-        $interviewDistributions = array();
+        $interviewDistributions = [];
 
         foreach ($applications as $application) {
             $interviewer = $application->getInterview()->getInterviewer();
 
-            if (!array_key_exists($interviewer->__toString(), $interviewDistributions)) {
+            if (!\array_key_exists($interviewer->__toString(), $interviewDistributions)) {
                 $interviewDistributions[$interviewer->__toString()] = new InterviewDistribution($interviewer, $admissionPeriod);
             }
         }
