@@ -70,9 +70,9 @@ jobs:
         if: always() && steps.install.outcome == 'success'
         run: ./bin/console lint:yaml config --parse-tags
 
-#      - name: Lint Twig templates
-#        if: always() && steps.install.outcome == 'success'
-#        run: ./bin/console lint:twig templates --env=prod
+      - name: Lint Twig templates
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console lint:twig templates --env=prod
 
       - name: Lint Parameters and Services
         if: always() && steps.install.outcome == 'success'
