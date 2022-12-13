@@ -13,8 +13,6 @@ class BaseController extends AbstractController
     /**
      * Tries to get department from the Request and opts to the user's department if none is found.
      * Returns null if none can be found this way.
-     * @param Request $request
-     * @return Department|null
      */
     public function getDepartment(Request $request): ?Department
     {
@@ -33,8 +31,6 @@ class BaseController extends AbstractController
     /**
      * Tries to get semester from the Request and opts to the current if none is found.
      * Returns null if the given ID has no corresponding semester.
-     * @param Request $request
-     * @return Semester|null
      */
     public function getSemester(Request $request): ?Semester
     {
@@ -49,8 +45,6 @@ class BaseController extends AbstractController
 
     /**
      * 404's if department is null in the request and for the user, or if a wrong department ID is given.
-     * @param Request $request
-     * @return Department
      */
     public function getDepartmentOrThrow404(Request $request): Department
     {
@@ -62,8 +56,6 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @return Semester
      */
     public function getSemesterOrThrow404(Request $request): Semester
     {

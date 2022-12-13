@@ -122,7 +122,6 @@ class AdmissionPeriod implements PeriodInterface
     /**
      * Set endDate.
      *
-     * @param DateTime $admissionEndDate
      * @param DateTime $endDate
      *
      * @return AdmissionPeriod

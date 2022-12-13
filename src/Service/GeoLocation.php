@@ -37,7 +37,6 @@ class GeoLocation
     /**
      * @param Department[] $departments
      * @throws InvalidArgumentException
-     * @return Department
      */
     public function findNearestDepartment(array $departments): Department
     {

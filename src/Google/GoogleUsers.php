@@ -41,7 +41,6 @@ class GoogleUsers extends GoogleService
     }
 
     /**
-     * @param string $companyEmail
      * @return Google_Service_Directory_User
      */
     public function getUser(string $companyEmail)
@@ -64,7 +63,6 @@ class GoogleUsers extends GoogleService
     }
 
     /**
-     * @param User $user
      * @return Google_Service_Directory_User
      */
     public function createUser(User $user)
@@ -91,9 +89,6 @@ class GoogleUsers extends GoogleService
     }
 
     /**
-     * @param string $userKey
-     * @param User $user
-     * @param $suspended
      *
      * @return Google_Service_Directory_User
      */
@@ -121,7 +116,6 @@ class GoogleUsers extends GoogleService
     }
 
     /**
-     * @param string $userKey
      * @return void
      */
     public function deleteUser(string $userKey)
@@ -140,7 +134,6 @@ class GoogleUsers extends GoogleService
     }
 
     /**
-     * @param User $user
      *
      * @return Google_Service_Directory_User
      */

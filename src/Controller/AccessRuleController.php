@@ -25,7 +25,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @return Response
      */
     public function index(): Response
     {
@@ -40,9 +39,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param AccessRule|null $accessRule
-     * @return Response
      */
     public function createRule(Request $request, AccessRule $accessRule = null): Response
     {
@@ -74,9 +70,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param AccessRule|null $accessRule
-     * @return Response
      */
     public function createRoutingRule(Request $request, AccessRule $accessRule = null): Response
     {
@@ -111,9 +104,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param AccessRule $rule
-     * @return Response
      */
     public function copyAccessRule(Request $request, AccessRule $rule): Response
     {
@@ -126,8 +116,6 @@ class AccessRuleController extends AbstractController
     }
 
     /**
-     * @param AccessRule $accessRule
-     * @return Response
      */
     public function delete(AccessRule $accessRule): Response
     {

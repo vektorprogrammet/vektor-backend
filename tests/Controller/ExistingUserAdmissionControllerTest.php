@@ -21,7 +21,6 @@ class ExistingUserAdmissionControllerTest extends BaseWebTestCase
     }
 
     /**
-     * @param string $preferredSchool
      */
     private function createAndSubmitForm_preferredSchool(string $preferredSchool)
     {

@@ -35,8 +35,6 @@ class SchoolCapacityRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
      *
      * @return SchoolCapacity[]
      */

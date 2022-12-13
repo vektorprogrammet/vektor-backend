@@ -17,7 +17,6 @@ class SupportTicketCreatedEvent extends Event
     }
 
     /**
-     * @return SupportTicket
      */
     public function getSupportTicket(): SupportTicket
     {

@@ -124,7 +124,6 @@ class TeamApplication
     }
 
     /**
-     * @param Team $team
      */
     public function setTeam(Team $team)
     {

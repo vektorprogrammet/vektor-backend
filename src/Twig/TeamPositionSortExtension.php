@@ -36,7 +36,6 @@ class TeamPositionSortExtension extends AbstractExtension
      * i.e removed from the $user object!
      *
      * @param User[] $users
-     * @param TeamInterface $team
      *
      * @return User[]
      */

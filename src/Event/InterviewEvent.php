@@ -16,8 +16,6 @@ class InterviewEvent extends Event
     /**
      * ReceiptEvent constructor.
      *
-     * @param Interview $interview
-     * @param $data
      */
     public function __construct(Interview $interview, $data = [])
     {

@@ -13,7 +13,6 @@ class AdmissionStatistics
 {
     /**
      * @param AdmissionSubscriber[] $subscribers
-     * @param Semester $semester
      *
      * @return array
      */
@@ -25,9 +24,7 @@ class AdmissionStatistics
 
     /**
      * @param Application[] $applications
-     * @param AdmissionPeriod $admissionPeriod
      *
-     * @return array
      */
     public function generateGraphDataFromApplicationsInAdmissionPeriod(
         array $applications,
@@ -43,9 +40,7 @@ class AdmissionStatistics
 
     /**
      * @param Application[] $applications
-     * @param AdmissionPeriod $admissionPeriod
      *
-     * @return array
      */
     public function generateCumulativeGraphDataFromApplicationsInAdmissionPeriod(
         array $applications,
@@ -81,10 +76,8 @@ class AdmissionStatistics
     }
 
     /**
-     * @param array $appData
      * @param Application[] $applications
      *
-     * @return array
      */
     private function populateApplicationDataWithApplications(array $appData, array $applications): array
     {
@@ -101,10 +94,8 @@ class AdmissionStatistics
     }
 
     /**
-     * @param array $appData
      * @param Application[] $applications
      *
-     * @return array
      */
     private function populateCumulativeApplicationDataWithApplications(array $appData, array $applications): array
     {
@@ -123,10 +114,8 @@ class AdmissionStatistics
     }
 
     /**
-     * @param array $subData
      * @param AdmissionSubscriber[] $subscribers
      *
-     * @return array
      */
     private function populateSubscriberDataWithSubscribers(array $subData, array $subscribers): array
     {
@@ -143,8 +132,6 @@ class AdmissionStatistics
     }
 
     /**
-     * @param DateTime $endDate
-     * @return int
      */
     private function calculatePaddingDays(DateTime $endDate): int
     {

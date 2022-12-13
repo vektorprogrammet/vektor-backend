@@ -25,9 +25,7 @@ class TeamAdminController extends BaseController
     }
 
     /**
-     * @param Department|null $department
      *
-     * @return Response
      */
     public function show(Department $department = null): Response
     {
@@ -139,10 +137,7 @@ class TeamAdminController extends BaseController
     }
 
     /**
-     * @param TeamMembership $a
-     * @param TeamMembership $b
      *
-     * @return bool
      */
     private function sortTeamMembershipsByEndDate(TeamMembership $a, TeamMembership $b): bool
     {

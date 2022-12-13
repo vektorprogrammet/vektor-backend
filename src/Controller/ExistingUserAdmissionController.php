@@ -26,7 +26,6 @@ class ExistingUserAdmissionController extends BaseController
     }
 
     /**
-     * @param Request $request
      *
      * @throws NoResultException
      * @throws NonUniqueResultException

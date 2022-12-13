@@ -209,7 +209,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return bool
      */
     public function isMonday(): bool
     {
@@ -217,7 +216,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param bool $monday
      */
     public function setMonday(bool $monday)
     {
@@ -225,7 +223,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return bool
      */
     public function isTuesday(): bool
     {
@@ -233,7 +230,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param bool $tuesday
      */
     public function setTuesday(bool $tuesday)
     {
@@ -241,7 +237,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return bool
      */
     public function isWednesday(): bool
     {
@@ -249,7 +244,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param bool $wednesday
      */
     public function setWednesday(bool $wednesday)
     {
@@ -257,7 +251,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return bool
      */
     public function isThursday(): bool
     {
@@ -265,7 +258,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param bool $thursday
      */
     public function setThursday(bool $thursday)
     {
@@ -273,7 +265,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return bool
      */
     public function isFriday(): bool
     {
@@ -281,7 +272,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param bool $friday
      */
     public function setFriday(bool $friday)
     {
@@ -486,7 +476,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return mixed
      */
     public function getPreferredSchool()
     {
@@ -494,7 +483,6 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param mixed $preferredSchool
      */
     public function setPreferredSchool($preferredSchool): void
     {

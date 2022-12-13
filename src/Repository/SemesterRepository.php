@@ -68,10 +68,7 @@ class SemesterRepository extends EntityRepository
     }
 
     /**
-     * @param string $semesterTime
-     * @param string $year
      * @throws NonUniqueResultException
-     * @return Semester|null
      */
     public function findByTimeAndYear(string $semesterTime, string $year): ?Semester
     {
@@ -88,9 +85,7 @@ class SemesterRepository extends EntityRepository
     }
 
     /**
-     * @param Semester $semester
      * @throws NonUniqueResultException|ORMException
-     * @return Semester|null
      */
     public function getNextActive(Semester $semester): ?Semester
     {

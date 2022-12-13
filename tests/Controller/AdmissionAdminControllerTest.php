@@ -134,9 +134,6 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
      * go back to assigned page and check that the number of elements containing $status has
      * increased and that the number of elements containing "Ingen svar" har decreased.
      *
-     * @param string $status
-     * @param string $button_text
-     * @param string $flash_text
      */
     private function helperTestStatus(string $status, string $button_text, string $flash_text)
     {
@@ -206,7 +203,6 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
     }
 
     /**
-     * @param $client
      *
      * @return string
      */
@@ -224,8 +220,6 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
     }
 
     /**
-     * @param $client
-     * @param string $response_code
      *
      */
     private function helperTestCancelConfirm($client, string $response_code)

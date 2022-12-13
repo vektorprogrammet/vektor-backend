@@ -8,8 +8,6 @@ class InterviewControllerTest extends BaseWebTestCase
 {
     /**
      * @param bool $teamInterest
-     * @param $client
-     * @param $crawler
      */
     private function fillAndSubmitInterviewFormWithTeamInterest($client, $crawler, $teamInterest)
     {
@@ -45,8 +43,6 @@ class InterviewControllerTest extends BaseWebTestCase
         $client->submit($form);
     }
     /**
-     * @param $client
-     * @param $crawler
      */
     private function fillAndSubmitInterviewForm($client, $crawler)
     {

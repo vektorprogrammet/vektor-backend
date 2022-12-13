@@ -126,7 +126,6 @@ class RoleManager
     }
 
     /**
-     * @param User $user
      *
      * @return bool True if role was updated, false if no role changed
      */

@@ -46,7 +46,6 @@ class Sponsor
     /**
      * Sponsor constructor.
      *
-     * @param $size
      */
     public function __construct()
     {

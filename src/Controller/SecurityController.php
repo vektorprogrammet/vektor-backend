@@ -31,7 +31,6 @@ class SecurityController extends BaseController
 
     /**
      * @throws NonUniqueResultException
-     * @return RedirectResponse
      */
     public function loginRedirect(): RedirectResponse
     {

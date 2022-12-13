@@ -9,7 +9,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider publicUrlProvider
      *
-     * @param $url
      */
     public function testPublicPageIsSuccessful($url)
     {
@@ -22,7 +21,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider assistantUrlProvider
      *
-     * @param $url
      */
     public function testAssistantPageIsSuccessful($url)
     {
@@ -35,7 +33,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider assistantUrlProvider
      *
-     * @param $url
      */
     public function testAssistantPageIsDenied($url)
     {
@@ -49,7 +46,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider teamMemberUrlProvider
      *
-     * @param $url
      */
     public function testTeamMemberPageIsSuccessful($url)
     {
@@ -62,7 +58,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider teamMemberUrlProvider
      *
-     * @param $url
      */
     public function testTeamMemberPageIsDenied($url)
     {
@@ -76,7 +71,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider teamLeaderUrlProvider
      *
-     * @param $url
      */
     public function testTeamLeaderPageIsSuccessful($url)
     {
@@ -89,7 +83,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider teamLeaderUrlProvider
      *
-     * @param $url
      */
     public function testTeamLeaderPageIsDenied($url)
     {
@@ -103,7 +96,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider adminUrlProvider
      *
-     * @param $url
      */
     public function testAdminPageIsSuccessful($url)
     {
@@ -116,7 +108,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     /**
      * @dataProvider adminUrlProvider
      *
-     * @param $url
      */
     public function testAdminPageIsDenied($url)
     {

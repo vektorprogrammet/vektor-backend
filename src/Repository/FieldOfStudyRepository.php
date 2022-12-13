@@ -37,7 +37,6 @@ class FieldOfStudyRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return FieldOfStudy[]
      */

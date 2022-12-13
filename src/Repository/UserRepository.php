@@ -47,8 +47,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
      *
      * @return User[]
      */
@@ -139,7 +137,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $username
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -156,7 +153,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $login
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -177,7 +173,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $email
      *
      * @throws NonUniqueResultException
      * @return User
@@ -204,7 +199,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @param $id
      *
      * @throws NonUniqueResultException
      * @return User

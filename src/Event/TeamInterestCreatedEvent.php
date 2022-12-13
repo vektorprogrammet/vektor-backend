@@ -14,7 +14,6 @@ class TeamInterestCreatedEvent extends Event
     /**
      * TeamInterestCreatedEvent constructor.
      *
-     * @param $teamInterest
      */
     public function __construct(TeamInterest $teamInterest)
     {

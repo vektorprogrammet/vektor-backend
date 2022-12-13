@@ -197,7 +197,6 @@ class SchoolCapacity
     }
 
     /**
-     * @return Department
      */
     public function getDepartment(): Department
     {
@@ -205,9 +204,7 @@ class SchoolCapacity
     }
 
     /**
-     * @param Department $department
      *
-     * @return SchoolCapacity
      */
     public function setDepartment(Department $department): SchoolCapacity
     {

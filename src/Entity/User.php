@@ -191,7 +191,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @return Department
      */
     public function getDepartment(): Department
     {
@@ -214,7 +213,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @return string
      */
     public function getFullName(): string
     {
@@ -265,7 +263,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @return array
      */
     public function getRoles(): array
     {
@@ -277,7 +274,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set lastName.
      *
-     * @param string $lastName
      *
      * @return User
      */
@@ -291,7 +287,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set firstName.
      *
-     * @param string $firstName
      *
      * @return User
      */
@@ -319,7 +314,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set picture_path.
      *
-     * @param string $picturePath
      *
      * @return User
      */
@@ -333,7 +327,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Get picture_path.
      *
-     * @return string|null
      */
     public function getPicturePath(): ?string
     {
@@ -343,7 +336,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set phone.
      *
-     * @param string $phone
      *
      * @return User
      */
@@ -357,7 +349,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Get phone.
      *
-     * @return string
      */
     public function getPhone(): string
     {
@@ -383,7 +374,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set user_name.
      *
-     * @param string $userName
      *
      * @return User
      */
@@ -397,7 +387,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Get user_name.
      *
-     * @return string
      */
     public function getUserIdentifier(): string
     {
@@ -410,7 +399,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      * Required for now because UserInterface has this method.
      * DO NOT use this method. Use "getUserIdentifier()" instead.
      *
-     * @return string
      */
     public function getUsername(): string
     {
@@ -444,7 +432,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Add roles.
      *
-     * @param string $role
      *
      * @return User
      */
@@ -459,7 +446,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Remove roles.
      *
-     * @param string $roles
      */
     public function removeRole(string $roles)
     {
@@ -469,7 +455,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Set new_user_code.
      *
-     * @param string $newUserCode
      *
      * @return User
      */
@@ -531,7 +516,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Add certificateRequests.
      *
-     * @param CertificateRequest $certificateRequests
      *
      * @return User
      */
@@ -545,7 +529,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * Remove certificateRequests.
      *
-     * @param CertificateRequest $certificateRequests
      */
     public function removeCertificateRequest(CertificateRequest $certificateRequests)
     {
@@ -611,7 +594,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     /**
      * @see \Serializable::unserialize(
      *
-     * @param $serialized
      */
     public function unserialize($serialized)
     {
@@ -687,7 +669,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @return bool
      */
     public function hasPendingReceipts(): bool
     {
@@ -696,7 +677,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @return int
      */
     public function getNumberOfPendingReceipts(): int
     {
@@ -746,7 +726,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @return string|null
      */
     public function getCompanyEmail(): ?string
     {
@@ -754,7 +733,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @param string $companyEmail
      */
     public function setCompanyEmail(string $companyEmail)
     {
@@ -804,7 +782,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
 
     /**
-     * @return bool
      */
     public function getReservedFromPopUp(): bool
     {
@@ -812,7 +789,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @param bool $reservedFromPopUp
      */
     public function setReservedFromPopUp(bool $reservedFromPopUp): void
     {
@@ -820,7 +796,6 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     /**
-     * @return DateTime
      */
     public function getLastPopUpTime(): DateTime
     {

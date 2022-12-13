@@ -15,7 +15,6 @@ class ApplicationCreatedEvent extends Event
     /**
      * ApplicationAdmissionEvent constructor.
      *
-     * @param Application $application
      */
     public function __construct(Application $application)
     {
@@ -23,7 +22,6 @@ class ApplicationCreatedEvent extends Event
     }
 
     /**
-     * @return Application
      */
     public function getApplication(): Application
     {

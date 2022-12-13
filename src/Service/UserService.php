@@ -18,7 +18,6 @@ class UserService
     }
 
     /**
-     * @return null|User
      */
     public function getCurrentUser(): ?User
     {

@@ -31,7 +31,6 @@ class AssistantHistoryData
     }
 
     /**
-     * @param Semester $semester
      *
      * @return $this
      */
@@ -44,7 +43,6 @@ class AssistantHistoryData
     /**
      * @param Department $department
      *
-     * @return AssistantHistoryData
      */
     public function setDepartment($department): AssistantHistoryData
     {

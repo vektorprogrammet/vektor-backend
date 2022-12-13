@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityRepository;
 class SignatureRepository extends EntityRepository
 {
     /**
-     * @param User $user
      *
      * @return Signature
      */

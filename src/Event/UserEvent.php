@@ -16,7 +16,6 @@ class UserEvent extends Event
     private $oldEmail;
 
     /**
-     * @param User $user
      * @param string $oldEmail
      */
     public function __construct(User $user, $oldEmail)
@@ -26,7 +25,6 @@ class UserEvent extends Event
     }
 
     /**
-     * @return User
      */
     public function getUser(): User
     {

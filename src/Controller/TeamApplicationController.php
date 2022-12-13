@@ -92,8 +92,6 @@ class TeamApplicationController extends BaseController
     }
 
     /**
-     * @param $team_name
-     * @return Response
      */
     public function confirmation($team_name): Response
     {

@@ -13,8 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TeamInterestType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -44,7 +42,6 @@ class TeamInterestType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -55,7 +52,6 @@ class TeamInterestType extends AbstractType
     }
 
     /**
-     * @return string
      */
     public function getBlockPrefix(): string
     {

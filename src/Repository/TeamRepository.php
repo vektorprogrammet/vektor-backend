@@ -15,7 +15,6 @@ use Doctrine\ORM\QueryBuilder;
 class TeamRepository extends EntityRepository
 {
     /**
-     * @param Department $department
      *
      * @return QueryBuilder
      */
@@ -28,7 +27,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return Team[]
      */
@@ -41,7 +39,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return Team[]
      */
@@ -55,7 +52,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return Team[]
      */
@@ -69,7 +65,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
      *
      * @return Team[]
      */

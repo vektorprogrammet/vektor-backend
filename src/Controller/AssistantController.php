@@ -54,10 +54,7 @@ class AssistantController extends BaseController
      *     methods={"GET", "POST"}
      *     )
      *
-     * @param Request $request
-     * @param Department $department
      *
-     * @return Response
      */
     public function admissionByShortName(Request $request, Department $department): Response
     {
@@ -65,10 +62,7 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param $city
      *
-     * @return Response
      */
     public function admissionCaseInsensitive(Request $request, $city): Response
     {
@@ -84,10 +78,7 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Department|null $department
      *
-     * @return Response
      */
     public function admission(Request $request, Department $department = null): Response
     {
@@ -95,11 +86,7 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Department|null $specificDepartment
-     * @param bool $scrollToAdmissionForm
      *
-     * @return Response
      */
     public function index(
         Request $request,
@@ -177,7 +164,6 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @return Response
      */
     public function confirmation(): Response
     {
@@ -185,12 +171,9 @@ class AssistantController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Department $department
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @return Response
      */
     public function subscribePage(Request $request, Department $department): Response
     {

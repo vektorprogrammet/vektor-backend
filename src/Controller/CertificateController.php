@@ -20,7 +20,6 @@ class CertificateController extends BaseController
         $this->fileUploader=$fileUploader;
     }
     /**
-     * @param Request $request
      *
      * @return RedirectResponse|Response
      */

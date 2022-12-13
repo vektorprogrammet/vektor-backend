@@ -36,7 +36,6 @@ class PasswordResetRepository extends EntityRepository
     }
 
     /**
-     * @param $hashedResetCode
      *
      * @throws NoResultException
      * @throws NonUniqueResultException

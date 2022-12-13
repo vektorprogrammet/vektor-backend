@@ -19,7 +19,6 @@ class ReceiptEvent extends Event
     /**
      * ReceiptEvent constructor.
      *
-     * @param Receipt $receipt
      */
     public function __construct(Receipt $receipt)
     {
@@ -27,7 +26,6 @@ class ReceiptEvent extends Event
     }
 
     /**
-     * @return Receipt
      */
     public function getReceipt(): Receipt
     {

@@ -13,8 +13,6 @@ class InterviewDistribution
     /**
      * InterviewDistribution constructor.
      *
-     * @param User $user
-     * @param AdmissionPeriod $admissionPeriod
      */
     public function __construct(User $user, AdmissionPeriod $admissionPeriod)
     {
@@ -38,7 +36,6 @@ class InterviewDistribution
     }
 
     /**
-     * @param $interviews
      *
      * @return Interview[]
      */

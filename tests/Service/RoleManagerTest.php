@@ -91,9 +91,6 @@ class RoleUserMock
     private $roleAfterExecution;
 
     /**
-     * @param $email
-     * @param $roleBeforeExecution
-     * @param $roleAfterExecution
      */
     public function __construct($email, $roleBeforeExecution, $roleAfterExecution)
     {

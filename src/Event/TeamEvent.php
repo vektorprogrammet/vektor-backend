@@ -15,7 +15,6 @@ class TeamEvent extends Event
     private $oldTeamEmail;
 
     /**
-     * @param Team $team
      * @param string $oldTeamEmail
      */
     public function __construct(Team $team, $oldTeamEmail)
@@ -25,7 +24,6 @@ class TeamEvent extends Event
     }
 
     /**
-     * @return Team
      */
     public function getTeam(): Team
     {

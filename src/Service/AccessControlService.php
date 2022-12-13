@@ -108,11 +108,7 @@ class AccessControlService
     }
 
     /**
-     * @param User|null $user
-     * @param string $resource
-     * @param string $method
      *
-     * @return bool
      */
     private function checkAccessToResourceAndMethod(?User $user, string $resource, string $method = 'GET'): bool
     {

@@ -184,7 +184,6 @@ class TeamInterest implements DepartmentSemesterInterface
     /**
      * Set semester
      *
-     * @param Semester $semester
      * @return TeamInterest
      */
     public function setSemester(Semester $semester)
@@ -195,7 +194,6 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * @return Department
      */
     public function getDepartment(): Department
     {
@@ -203,9 +201,7 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * @param Department $department
      *
-     * @return TeamInterest
      */
     public function setDepartment(Department $department): TeamInterest
     {

@@ -9,8 +9,6 @@ use App\Entity\Receipt;
 class Sorter
 {
     /**
-     * @param User $user1
-     * @param User $user2
      *
      * @return int
      */
@@ -38,10 +36,7 @@ class Sorter
     }
 
     /**
-     * @param Receipt $receipt1
-     * @param Receipt $receipt2
      *
-     * @return int
      */
     public function newestReceipt(Receipt $receipt1, Receipt $receipt2): int
     {
@@ -162,8 +157,6 @@ class Sorter
     }
 
     /**
-     * @param TeamMembershipInterface $teamMembership1
-     * @param TeamMembershipInterface $teamMembership2
      *
      * @return int
      */
@@ -175,10 +168,7 @@ class Sorter
     /**
      * Order: "leder" < "nestleder" < "aaa" < "zzz" < ""
      *
-     * @param string $position1
-     * @param string $position2
      *
-     * @return int
      */
     private function comparePositions(string $position1, string $position2): int
     {

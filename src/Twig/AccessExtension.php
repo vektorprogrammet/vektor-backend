@@ -11,7 +11,6 @@ class AccessExtension extends AbstractExtension
     private $accessControlService;
 
     /**
-     * @param AccessControlService $accessControlService
      */
     public function __construct(AccessControlService $accessControlService)
     {
@@ -32,7 +31,6 @@ class AccessExtension extends AbstractExtension
      * Checks if the user has access to the resource.
      *
      *
-     * @param $routes
      * @param null $user
      * @return boolean True if the user has access to the resource, false otherwise
      */

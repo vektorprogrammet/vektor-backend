@@ -67,7 +67,6 @@ class InterviewAnswerType extends AbstractType
      * Creates a key value array of alternatives from a Doctrine collection of QuestionAlternatives.
      * The key and the value are the same.
      *
-     * @param InterviewAnswer $interviewAnswer
      *
      * @return array
      */

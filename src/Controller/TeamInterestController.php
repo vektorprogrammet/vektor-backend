@@ -26,7 +26,6 @@ class TeamInterestController extends BaseController
 
     /**
      * @param Department|NULL $department
-     * @param Request $request
      *
      * @return RedirectResponse|Response
      */

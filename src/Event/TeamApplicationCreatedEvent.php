@@ -16,7 +16,6 @@ class TeamApplicationCreatedEvent extends Event
     /**
      * TeamApplicationCreatedEvent constructor.
      *
-     * @param TeamApplication $teamApplication
      */
     public function __construct(TeamApplication $teamApplication)
     {

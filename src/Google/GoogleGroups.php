@@ -42,7 +42,6 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param string $teamEmail
      * @return Google_Service_Directory_Group
      */
     public function getGroup(string $teamEmail)
@@ -63,7 +62,6 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param Team $team
      * @return Google_Service_Directory_Group
      */
     public function createGroup(Team $team)
@@ -89,8 +87,6 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param string $groupEmail
-     * @param Team $team
      * @return Google_Service_Directory_Group
      */
     public function updateGroup(string $groupEmail, Team $team)
@@ -160,7 +156,6 @@ class GoogleGroups extends GoogleService
     }
 
     /**
-     * @param Team $team
      *
      * @return Google_Service_Directory_Member[]
      */

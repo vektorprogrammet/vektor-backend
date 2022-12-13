@@ -9,7 +9,6 @@ use Doctrine\ORM\NoResultException;
 class RoleRepository extends EntityRepository
 {
     /**
-     * @param string $roleName
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
