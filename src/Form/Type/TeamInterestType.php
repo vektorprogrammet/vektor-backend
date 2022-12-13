@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Team;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -25,7 +26,7 @@ class TeamInterestType extends AbstractType
             ])
             ->add('potentialTeams', EntityType::class, [
                 'label' => 'Hvilke team er du interessert i?',
-                'class' => 'App:Team',
+                'class' => Team::class,
                 'query_builder' => function (EntityRepository $entityRepository) use ($department) {
                     return $entityRepository->createQueryBuilder('team')
                         ->select('team')

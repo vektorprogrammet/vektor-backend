@@ -2,6 +2,8 @@
 
 namespace App\Form\Type;
 
+use App\Entity\School;
+use App\Entity\Semester;
 use App\Repository\SemesterRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,7 +23,7 @@ class CreateAssistantHistoryType extends AbstractType
         $builder
             ->add('Semester', EntityType::class, [
                 'label' => 'Semester',
-                'class' => 'App:Semester',
+                'class' => Semester::class,
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
@@ -41,7 +43,7 @@ class CreateAssistantHistoryType extends AbstractType
             ])
             ->add('School', EntityType::class, [
                 'label' => 'Skole',
-                'class' => 'App:School',
+                'class' => School::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                         ->orderBy('s.name', 'ASC')
