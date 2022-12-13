@@ -14,7 +14,7 @@ class Roles
     public const ALIAS_TEAM_LEADER = 'team_leader';
     public const ALIAS_ADMIN = 'admin';
 
-    public static function GetRoleName($role)
+    public static function GetRoleName($role): string
     {
         $roleName = "";
         if ($role === Roles::ASSISTANT) {
