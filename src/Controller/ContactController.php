@@ -41,9 +41,9 @@ class ContactController extends BaseController
 
         $supportTicket = new SupportTicket();
         $supportTicket->setDepartment($department);
-        $form = $this->createForm(SupportTicketType::class, $supportTicket, array(
+        $form = $this->createForm(SupportTicketType::class, $supportTicket, [
             'department_repository' => $this->getDoctrine()->getRepository(Department::class),
-        ));
+        ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $supportTicket->getDepartment() === null) {
@@ -53,17 +53,17 @@ class ContactController extends BaseController
             $this->eventDispatcher
             ->dispatch(new SupportTicketCreatedEvent($supportTicket), SupportTicketCreatedEvent::NAME);
 
-            return $this->redirectToRoute('contact_department', array('id' => $supportTicket->getDepartment()->getId()));
+            return $this->redirectToRoute('contact_department', ['id' => $supportTicket->getDepartment()->getId()]);
         }
 
         $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
         $scrollToForm = $form->isSubmitted() && !$form->isValid();
 
-        return $this->render('contact/index.html.twig', array(
+        return $this->render('contact/index.html.twig', [
             'form' => $form->createView(),
             'specific_department' => $department,
             'board' => $board,
             'scrollToForm' => $scrollToForm
-        ));
+        ]);
     }
 }

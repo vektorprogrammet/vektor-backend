@@ -35,7 +35,7 @@ class TeamInterestEntityUnitTest extends TestCase
 
     public function testSetPotentialTeams()
     {
-        $teams = array(new Team(), new Team());
+        $teams = [new Team(), new Team()];
         $this->teamInterest->setPotentialTeams($teams);
         $this->assertEquals($teams, $this->teamInterest->getPotentialTeams());
     }

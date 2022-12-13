@@ -24,40 +24,40 @@ class SupportTicketType extends AbstractType
          * @var DepartmentRepository $departmentRepository
          */
         $departmentRepository = $options['department_repository'];
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'Ditt navn',
-            'attr' => array(
+            'attr' => [
                 'autocomplete' => 'name'
-            ),
-            ));
-        $builder->add('email', EmailType::class, array(
+            ],
+            ]);
+        $builder->add('email', EmailType::class, [
             'label' => 'Din e-post',
-            'attr' => array(
+            'attr' => [
                 'autocomplete' => 'email'
-            ),
-            ));
-        $builder->add('subject', TextType::class, array(
-            'label' => 'Emne'));
-        $builder->add('department', HiddenType::class, array(
-            'label' => false));
-        $builder->add('body', TextareaType::class, array(
+            ],
+            ]);
+        $builder->add('subject', TextType::class, [
+            'label' => 'Emne']);
+        $builder->add('department', HiddenType::class, [
+            'label' => false]);
+        $builder->add('body', TextareaType::class, [
             'label' => 'Melding',
-            'attr' => array(
+            'attr' => [
                 'rows' => '9',
-            ),
-        ));
+            ],
+        ]);
         $builder->add('recaptcha', EWZRecaptchaType::class, [
             'label' => false,
             'mapped' => false,
-            'constraints' => array(
+            'constraints' => [
                 new RecaptchaTrue()
-            )
+            ]
         ]);
-        $builder->add('submit', SubmitType::class, array(
+        $builder->add('submit', SubmitType::class, [
             'label' => 'Send melding',
-            'attr' => array(
+            'attr' => [
                 'class' => 'btn-primary'
-            )));
+            ]]);
 
         $builder->get('department')
             ->addModelTransformer(new CallbackTransformer(
@@ -72,10 +72,10 @@ class SupportTicketType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\SupportTicket',
             'department_repository' => null
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

@@ -13,17 +13,17 @@ class CreatePositionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Navn',
-            ))
-            ->add('Lagre', SubmitType::class, array());
+            ])
+            ->add('Lagre', SubmitType::class, []);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Position',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

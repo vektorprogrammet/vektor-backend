@@ -34,7 +34,7 @@ class RoleExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return array(
+        return [
             new TwigFunction('is_granted_assistant', [$this, 'isGrantedAssistant']),
             new TwigFunction('is_granted_team_member', [$this, 'isGrantedTeamMember']),
             new TwigFunction('is_granted_team_leader', [$this, 'isGrantedTeamLeader']),
@@ -44,14 +44,14 @@ class RoleExtension extends AbstractExtension
             new TwigFunction('user_is_granted_team_leader', [$this, 'userIsGrantedTeamLeader']),
             new TwigFunction('user_is_granted_admin', [$this, 'userIsGrantedAdmin']),
             new TwigFunction('user_is_in_executive_board', [$this, 'userIsInExecutiveBoard']),
-        );
+        ];
     }
 
     public function getFilters(): array
     {
-        return array(
+        return [
             new TwigFilter('get_role_name', [$this, 'getRoleName']),
-        );
+        ];
     }
 
     public function getRoleName($role)

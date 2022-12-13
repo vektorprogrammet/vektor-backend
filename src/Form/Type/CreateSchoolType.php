@@ -14,46 +14,46 @@ class CreateSchoolType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Navn',
-            ))
-            ->add('contactPerson', TextType::class, array(
+            ])
+            ->add('contactPerson', TextType::class, [
                 'label' => 'Kontaktperson',
-            ))
-            ->add('phone', TextType::class, array(
+            ])
+            ->add('phone', TextType::class, [
                 'label' => 'Telefon',
-            ))
-            ->add('email', TextType::class, array(
+            ])
+            ->add('email', TextType::class, [
                 'label' => 'E-post',
-            ))
-            ->add('international', ChoiceType::class, array(
+            ])
+            ->add('international', ChoiceType::class, [
                 'label' => 'Skolen er internasjonal',
-                'choices' => array(
+                'choices' => [
                     'Ja' => 1,
                     'Nei' => 0,
-                ),
+                ],
                 'expanded' => true,
                 'multiple' => false,
-            ))
-            ->add('active', ChoiceType::class, array(
+            ])
+            ->add('active', ChoiceType::class, [
                 'label' => 'Skolen er aktiv',
-                'choices' => array(
+                'choices' => [
                     'Ja' => true,
                     'Nei' => false,
-                ),
+                ],
                 'expanded' => true,
                 'multiple' => false,
-            ))
-            ->add('save', SubmitType::class, array(
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Opprett',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\School',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

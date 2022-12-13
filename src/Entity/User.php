@@ -238,7 +238,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
 
     public function setPassword($password)
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+        $this->password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
     }
 
     /**
@@ -563,7 +563,7 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
     }
 
     // Used for unit testing
-    public function fromArray($data = array())
+    public function fromArray($data = [])
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";
@@ -599,13 +599,13 @@ class User implements EquatableInterface, UserInterface, Serializable, PasswordA
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->user_name,
             $this->password,
             // see section on salt below
             // $this->salt,
-        ));
+        ]);
     }
 
     /**

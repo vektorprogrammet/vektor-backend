@@ -22,12 +22,12 @@ class GoogleDrive extends GoogleService
         $driveService = new Google_Service_Drive($client);
 
         $requestId = Uuid::uuid4()->toString();
-        $teamDriveMetadata = new Google_Service_Drive_TeamDrive(array(
-            'name' => $folderName));
+        $teamDriveMetadata = new Google_Service_Drive_TeamDrive([
+            'name' => $folderName]);
 
         try {
-            $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, array(
-                'fields' => 'id' ));
+            $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, [
+                'fields' => 'id' ]);
         } catch (Google_Service_Exception $e) {
             $this->logServiceException($e, "createTeamDrive() for *$folderName*");
             return null;
@@ -39,10 +39,10 @@ class GoogleDrive extends GoogleService
         $permission->setEmailAddress($team->getEmail());
 
         try {
-            $driveService->permissions->create($teamDrive->id, $permission, array(
+            $driveService->permissions->create($teamDrive->id, $permission, [
                 'sendNotificationEmail' => false,
                 'supportsTeamDrives' => true,
-            ));
+            ]);
         } catch (Google_Service_Exception $e) {
             $this->logServiceException($e, "granting drive persmissions for team *$folderName*");
             return null;

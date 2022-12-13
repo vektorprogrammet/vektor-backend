@@ -81,7 +81,7 @@ class SupportTicket
 
 
     // Used for unit testing the forms
-    public function fromArray($data = array())
+    public function fromArray($data = [])
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";

@@ -21,9 +21,9 @@ class TeamPositionSortExtension extends AbstractExtension
 
     public function getFilters(): array
     {
-        return array(
-            new TwigFilter('team_position_sort', array($this, 'teamPositionSortFilter')),
-        );
+        return [
+            new TwigFilter('team_position_sort', [$this, 'teamPositionSortFilter']),
+        ];
     }
 
     /**

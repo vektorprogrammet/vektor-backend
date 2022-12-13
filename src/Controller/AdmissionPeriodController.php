@@ -28,11 +28,11 @@ class AdmissionPeriodController extends BaseController
 
 
         // Renders the view with the variables
-        return $this->render('admission_period_admin/index.html.twig', array(
+        return $this->render('admission_period_admin/index.html.twig', [
             'admissionPeriods' => $admissionPeriods,
             'departmentName' => $department->getShortName(),
             'department' => $department
-        ));
+        ]);
     }
 
     public function createAdmissionPeriod(Request $request, Department $department)
@@ -59,14 +59,14 @@ class AdmissionPeriodController extends BaseController
             $em->persist($admissionPeriod);
             $em->flush();
 
-            return $this->redirectToRoute('admission_period_admin_show_by_department', array('id' => $department->getId()));
+            return $this->redirectToRoute('admission_period_admin_show_by_department', ['id' => $department->getId()]);
         }
 
         // Render the view
-        return $this->render('admission_period_admin/create_admission_period.html.twig', array(
+        return $this->render('admission_period_admin/create_admission_period.html.twig', [
             'department' => $department,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function updateAdmissionPeriod(Request $request, AdmissionPeriod $admissionPeriod)
@@ -81,14 +81,14 @@ class AdmissionPeriodController extends BaseController
             $em->persist($admissionPeriod);
             $em->flush();
 
-            return $this->redirectToRoute('admission_period_admin_show_by_department', array('id' => $admissionPeriod->getDepartment()->getId()));
+            return $this->redirectToRoute('admission_period_admin_show_by_department', ['id' => $admissionPeriod->getDepartment()->getId()]);
         }
 
-        return $this->render('admission_period_admin/edit_admission_period.html.twig', array(
+        return $this->render('admission_period_admin/edit_admission_period.html.twig', [
             'form' => $form->createView(),
             'semesterName' => $admissionPeriod->getSemester()->getName(),
             'department' => $admissionPeriod->getDepartment(),
-        ));
+        ]);
     }
 
     public function delete(AdmissionPeriod $admissionPeriod): RedirectResponse

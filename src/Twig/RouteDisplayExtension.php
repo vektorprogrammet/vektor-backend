@@ -23,9 +23,9 @@ class RouteDisplayExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('get_path', array( $this, 'getPath' )),
-        );
+        return [
+            new TwigFunction('get_path', [ $this, 'getPath' ]),
+        ];
     }
 
     /**

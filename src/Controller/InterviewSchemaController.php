@@ -53,11 +53,11 @@ class InterviewSchemaController extends BaseController
             return $this->redirect($this->generateUrl('interview_schema'));
         }
 
-        return $this->render('interview/schema.html.twig', array(
+        return $this->render('interview/schema.html.twig', [
             'form' => $form->createView(),
             'schema' => $schema,
             'isCreate' => !$schema->getId()
-        ));
+        ]);
     }
 
     /**
@@ -69,7 +69,7 @@ class InterviewSchemaController extends BaseController
     {
         $schemas = $this->getDoctrine()->getRepository(InterviewSchema::class)->findAll();
 
-        return $this->render('interview/schemas.html.twig', array('schemas' => $schemas));
+        return $this->render('interview/schemas.html.twig', ['schemas' => $schemas]);
     }
 
     /**

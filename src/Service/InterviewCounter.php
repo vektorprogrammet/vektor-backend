@@ -45,7 +45,7 @@ class InterviewCounter
      */
     public function createInterviewDistributions(array $applications, AdmissionPeriod $admissionPeriod): array
     {
-        $interviewDistributions = array();
+        $interviewDistributions = [];
 
         foreach ($applications as $application) {
             $interviewer = $application->getInterview()->getInterviewer();

@@ -28,10 +28,10 @@ abstract class BaseWebTestCase extends WebTestCase
     protected static function createAssistantClient(): KernelBrowser
     {
         if (self::$assistantClient === null) {
-            self::$assistantClient = self::createClient(array(), array(
+            self::$assistantClient = self::createClient([], [
                 'PHP_AUTH_USER' => 'assistent',
                 'PHP_AUTH_PW' => '1234',
-            ));
+            ]);
         }
 
         return self::$assistantClient;
@@ -40,10 +40,10 @@ abstract class BaseWebTestCase extends WebTestCase
     protected static function createTeamMemberClient(): KernelBrowser
     {
         if (self::$teamMemberClient === null) {
-            self::$teamMemberClient = self::createClient(array(), array(
+            self::$teamMemberClient = self::createClient([], [
                 'PHP_AUTH_USER' => 'teammember',
                 'PHP_AUTH_PW' => '1234',
-            ));
+            ]);
         }
 
         return self::$teamMemberClient;
@@ -52,10 +52,10 @@ abstract class BaseWebTestCase extends WebTestCase
     protected static function createTeamLeaderClient(): KernelBrowser
     {
         if (self::$teamLeaderClient === null) {
-            self::$teamLeaderClient = self::createClient(array(), array(
+            self::$teamLeaderClient = self::createClient([], [
                 'PHP_AUTH_USER' => 'teamleader',
                 'PHP_AUTH_PW' => '1234',
-            ));
+            ]);
         }
 
         return self::$teamLeaderClient;
@@ -64,10 +64,10 @@ abstract class BaseWebTestCase extends WebTestCase
     protected static function createAdminClient(): KernelBrowser
     {
         if (self::$adminClient === null) {
-            self::$adminClient = self::createClient(array(), array(
+            self::$adminClient = self::createClient([], [
                 'PHP_AUTH_USER' => 'admin',
                 'PHP_AUTH_PW' => '1234',
-            ));
+            ]);
         }
 
         return self::$adminClient;

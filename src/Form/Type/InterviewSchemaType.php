@@ -13,28 +13,28 @@ class InterviewSchemaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => false,
-            'attr' => array('placeholder' => 'Fyll inn skjema tittel'),
-        ));
+            'attr' => ['placeholder' => 'Fyll inn skjema tittel'],
+        ]);
 
-        $builder->add('interviewQuestions', CollectionType::class, array(
+        $builder->add('interviewQuestions', CollectionType::class, [
             'entry_type' => InterviewQuestionType::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype_name' => '__q_prot__',
-        ));
+        ]);
 
-        $builder->add('save', SubmitType::class, array(
+        $builder->add('save', SubmitType::class, [
             'label' => 'Lagre',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\InterviewSchema',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

@@ -15,43 +15,43 @@ class TeamApplicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Navn',
-            ))
-            ->add('email', EmailType::class, array(
+            ])
+            ->add('email', EmailType::class, [
                 'label' => 'Email',
-            ))
-            ->add('phone', TelType::class, array(
+            ])
+            ->add('phone', TelType::class, [
                 'label' => 'Telefon',
-            ))
-            ->add('yearOfStudy', ChoiceType::class, array(
+            ])
+            ->add('yearOfStudy', ChoiceType::class, [
                 'label' => 'Årstrinn',
-                'choices' => array(
+                'choices' => [
                     '1. klasse' => '1. klasse',
                     '2. klasse' => '2. klasse',
                     '3. klasse' => '3. klasse',
                     '4. klasse' => '4. klasse',
                     '5. klasse' => '5. klasse',
-                ),
-            ))
-            ->add('fieldOfStudy', TextType::class, array(
+                ],
+            ])
+            ->add('fieldOfStudy', TextType::class, [
                 'label' => 'Linje',
-            ))
-            ->add('motivationText', TextareaType::class, array(
+            ])
+            ->add('motivationText', TextareaType::class, [
                 'label' => 'Skriv kort om din motivasjon for vervet',
-                'attr' => array('rows' => 4),
-            ))
-            ->add('biography', TextareaType::class, array(
+                'attr' => ['rows' => 4],
+            ])
+            ->add('biography', TextareaType::class, [
                 'label' => 'Skriv litt om deg selv',
-                'attr' => array('rows' => 10),
-            ));
+                'attr' => ['rows' => 10],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\TeamApplication',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

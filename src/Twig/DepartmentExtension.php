@@ -26,10 +26,10 @@ class DepartmentExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('get_departments', array($this, 'getDepartments')),
-            new TwigFunction('get_active_departments', array($this, 'getActiveDepartments')),
-        );
+        return [
+            new TwigFunction('get_departments', [$this, 'getDepartments']),
+            new TwigFunction('get_active_departments', [$this, 'getActiveDepartments']),
+        ];
     }
 
     public function getDepartments()

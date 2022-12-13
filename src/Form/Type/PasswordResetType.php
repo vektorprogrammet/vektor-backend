@@ -13,9 +13,9 @@ class PasswordResetType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\PasswordReset',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string
@@ -26,13 +26,13 @@ class PasswordResetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, array(
+            ->add('email', EmailType::class, [
                 'label' => 'E-post',
                 'mapped' => false,
-                'constraints' => array(
+                'constraints' => [
                     new NotBlank(),
                     new Valid(),
-                )
-            ));
+                ]
+            ]);
     }
 }

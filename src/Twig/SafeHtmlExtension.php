@@ -11,11 +11,11 @@ class SafeHtmlExtension extends AbstractExtension
 
     public function getFilters(): array
     {
-        return array(
-            new TwigFilter('safe_html', array($this, 'htmlFilter'), array(
-                'is_safe' => array('html'),
-            )),
-        );
+        return [
+            new TwigFilter('safe_html', [$this, 'htmlFilter'], [
+                'is_safe' => ['html'],
+            ]),
+        ];
     }
 
     public function htmlFilter($html)

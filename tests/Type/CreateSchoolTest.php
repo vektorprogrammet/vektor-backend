@@ -36,30 +36,30 @@ class CreateSchoolTest extends TypeTestCase
 
     public function getValidTestData()
     {
-        return array(
-            array(
-                'data' => array(
+        return [
+            [
+                'data' => [
                     'name' => 'test',
                     'contactPerson' => 'test2',
                     'phone' => 'test3',
                     'email' => 'test4',
                     'active' => true,
-                ),
-            ),
-            array(
-                'data' => array(
+                ],
+            ],
+            [
+                'data' => [
                     'active' => true,
-                ),
-            ),
-            array(
-                'data' => array(
+                ],
+            ],
+            [
+                'data' => [
                     'name' => null,
                     'contactPerson' => null,
                     'phone' => null,
                     'email' => null,
                     'active' => true,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 }

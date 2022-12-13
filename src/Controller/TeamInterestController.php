@@ -40,9 +40,9 @@ class TeamInterestController extends BaseController
         $teamInterest = new TeamInterest();
         $teamInterest->setSemester($semester);
         $teamInterest->setDepartment($department);
-        $form = $this->createForm(TeamInterestType::class, $teamInterest, array(
+        $form = $this->createForm(TeamInterestType::class, $teamInterest, [
             'department' => $department,
-        ));
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,13 +52,13 @@ class TeamInterestController extends BaseController
 
             $this->eventDispatcher->dispatch(new TeamInterestCreatedEvent($teamInterest), TeamInterestCreatedEvent::NAME);
 
-            return $this->redirectToRoute('team_interest_form', array(
+            return $this->redirectToRoute('team_interest_form', [
                 'id' => $department->getId(),
-            ));
+            ]);
         }
 
-        return $this->render('team_interest/team_interest.html.twig', array(
+        return $this->render('team_interest/team_interest.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

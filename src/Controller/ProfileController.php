@@ -65,12 +65,12 @@ class ProfileController extends BaseController
         $executiveBoardMemberships = $em->getRepository(ExecutiveBoardMembership::class)->findByUser($user);
 
         // Render the view
-        return $this->render('profile/profile.html.twig', array(
+        return $this->render('profile/profile.html.twig', [
             'user'                      => $user,
             'assistantHistory'          => $assistantHistory,
             'teamMemberships'            => $teamMemberships,
             'executiveBoardMemberships'  => $executiveBoardMemberships,
-        ));
+        ]);
     }
 
     public function showSpecificProfile(User $user)
@@ -98,12 +98,12 @@ class ProfileController extends BaseController
         $assistantHistory = $em->getRepository(AssistantHistory::class)->findByUser($user);
 
         // Render the view
-        return $this->render('profile/profile.html.twig', array(
+        return $this->render('profile/profile.html.twig', [
             'user'                      => $user,
             'assistantHistory'          => $assistantHistory,
             'teamMemberships'            => $teamMemberships,
             'executiveBoardMemberships'  => $executiveBoardMemberships,
-        ));
+        ]);
     }
 
     public function deactivateUser(User $user): RedirectResponse
@@ -131,15 +131,15 @@ class ProfileController extends BaseController
         $user = $this->get(UserRegistration::class)->activateUserByNewUserCode($newUserCode);
 
         if ($user === null) {
-            return $this->render('error/error_message.html.twig', array(
+            return $this->render('error/error_message.html.twig', [
                 'title'   => 'Koden er ugyldig',
                 'message' => 'Ugyldig kode eller brukeren er allerede opprettet',
-            ));
+            ]);
         }
 
-        $form = $this->createForm(NewUserType::class, $user, array(
-            'validation_groups' => array( 'username' ),
-        ));
+        $form = $this->createForm(NewUserType::class, $user, [
+            'validation_groups' => [ 'username' ],
+        ]);
 
         $form->handleRequest($request);
 
@@ -157,15 +157,15 @@ class ProfileController extends BaseController
             return $this->redirectToRoute('my_page');
         }
 
-        return $this->render('new_user/create_new_user.html.twig', array(
+        return $this->render('new_user/create_new_user.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
-        ));
+        ]);
     }
 
     public function changeRole(Request $request, User $user): JsonResponse
     {
-        $response = array();
+        $response = [];
 
         $roleManager = $this->RoleManager;
         $roleName    = $roleManager->mapAliasToRole($request->request->get('role'));
@@ -175,7 +175,7 @@ class ProfileController extends BaseController
         }
 
         try {
-            $user->setRoles(array( $roleName ));
+            $user->setRoles([ $roleName ]);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -215,7 +215,7 @@ class ProfileController extends BaseController
             return $this->redirectToRoute('certificate_show');
         }
 
-        $html = $this->renderView('certificate/certificate.html.twig', array(
+        $html = $this->renderView('certificate/certificate.html.twig', [
             'user'                  => $user,
             'assistantHistory'      => $assistantHistory,
             'teamMembership'        => $teamMembership,
@@ -223,7 +223,7 @@ class ProfileController extends BaseController
             'additional_comment'    => $additional_comment,
             'department'            => $department,
             'base_dir'              => $this->getParameter('kernel.project_dir') . '/public',
-        ));
+        ]);
         $options = new Options();
         $options->setIsRemoteEnabled(true);
         $options->setChroot("/../");
@@ -246,10 +246,10 @@ class ProfileController extends BaseController
         $user            = $this->getUser();
         $oldCompanyEmail = $user->getCompanyEmail();
 
-        $form = $this->createForm(EditUserType::class, $user, array(
+        $form = $this->createForm(EditUserType::class, $user, [
             'department'        => $user->getDepartment(),
-            'validation_groups' => array( 'edit_user' ),
-        ));
+            'validation_groups' => [ 'edit_user' ],
+        ]);
 
         $form->handleRequest($request);
 
@@ -263,10 +263,10 @@ class ProfileController extends BaseController
             return $this->redirect($this->generateUrl('profile'));
         }
 
-        return $this->render('profile/edit_profile.html.twig', array(
+        return $this->render('profile/edit_profile.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
-        ));
+        ]);
     }
 
     public function editProfilePassword(Request $request)
@@ -285,17 +285,17 @@ class ProfileController extends BaseController
             return $this->redirect($this->generateUrl('profile'));
         }
 
-        return $this->render('profile/edit_profile_password.html.twig', array(
+        return $this->render('profile/edit_profile_password.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
-        ));
+        ]);
     }
 
     public function editProfileInformationAdmin(Request $request, User $user)
     {
-        $form            = $this->createForm(EditUserType::class, $user, array(
+        $form            = $this->createForm(EditUserType::class, $user, [
             'department' => $user->getDepartment(),
-        ));
+        ]);
         $oldCompanyEmail = $user->getCompanyEmail();
 
         // Handle the form
@@ -308,13 +308,13 @@ class ProfileController extends BaseController
 
             $this->eventDispatcher->dispatch(new UserEvent($user, $oldCompanyEmail), UserEvent::EDITED);
 
-            return $this->redirect($this->generateUrl('specific_profile', array( 'id' => $user->getId() )));
+            return $this->redirect($this->generateUrl('specific_profile', [ 'id' => $user->getId() ]));
         }
 
-        return $this->render('profile/edit_profile.html.twig', array(
+        return $this->render('profile/edit_profile.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
-        ));
+        ]);
     }
 
     public function editCompanyEmail(Request $request, User $user)

@@ -14,8 +14,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RoleManager
 {
-    private array $roles = array();
-    private array $aliases = array();
+    private array $roles = [];
+    private array $aliases = [];
     private AuthorizationCheckerInterface $authorizationChecker;
     private EntityManagerInterface $em;
     private LoggerInterface $logger;
@@ -31,18 +31,18 @@ class RoleManager
         GoogleUsers $googleUserService
     )
     {
-        $this->roles = array(
+        $this->roles = [
             Roles::ASSISTANT,
             Roles::TEAM_MEMBER,
             Roles::TEAM_LEADER,
             Roles::ADMIN,
-        );
-        $this->aliases = array(
+        ];
+        $this->aliases = [
             Roles::ALIAS_ASSISTANT,
             Roles::ALIAS_TEAM_MEMBER,
             Roles::ALIAS_TEAM_LEADER,
             Roles::ALIAS_ADMIN,
-        );
+        ];
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
         $this->logger = $logger;
@@ -106,12 +106,12 @@ class RoleManager
 
     public function userIsGranted(User $user, string $role): bool
     {
-        $roles = array(
+        $roles = [
             Roles::ASSISTANT,
             Roles::TEAM_MEMBER,
             Roles::TEAM_LEADER,
             Roles::ADMIN,
-        );
+        ];
 
         if (empty($user->getRoles())) {
             return false;

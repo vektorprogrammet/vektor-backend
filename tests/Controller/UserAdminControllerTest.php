@@ -54,10 +54,10 @@ class UserAdminControllerTest extends BaseWebTestCase
     public function testShow()
     {
         // TEAM
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
 
         $crawler = $client->request('GET', '/kontrollpanel/brukeradmin');
 

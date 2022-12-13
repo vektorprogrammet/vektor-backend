@@ -15,42 +15,42 @@ class ScheduleInterviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('from', EmailType::class, array(
+            ->add('from', EmailType::class, [
                 'label' => 'Avsender',
-            ))
-            ->add('to', EmailType::class, array(
+            ])
+            ->add('to', EmailType::class, [
                 'label' => 'Mottaker',
-            ))
+            ])
 
-            ->add('datetime', DateTimeType::class, array(
+            ->add('datetime', DateTimeType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'label' => 'Tidspunkt',
                 'html5' => false,
-                'attr' => array('placeholder' => 'Klikk for å velge tidspunkt'),
-            ))
+                'attr' => ['placeholder' => 'Klikk for å velge tidspunkt'],
+            ])
 
-            ->add('room', TextType::class, array(
+            ->add('room', TextType::class, [
                 'label' => 'Rom',
-            ))
-            ->add('mapLink', TextType::class, array(
+            ])
+            ->add('mapLink', TextType::class, [
                 'label' => false,
                 'required' => false,
-            ))
-            ->add('campus', TextType::class, array(
+            ])
+            ->add('campus', TextType::class, [
                 'label' => 'Campus',
                 'required' => false,
-            ))
-            ->add('message', TextareaType::class, array(
+            ])
+            ->add('message', TextareaType::class, [
                 'label' => 'Melding',
-                'attr' => array('rows' => '5'),
-            ))
-            ->add('saveAndSend', SubmitType::class, array(
+                'attr' => ['rows' => '5'],
+            ])
+            ->add('saveAndSend', SubmitType::class, [
                 'label' => 'Send invitasjon på sms og e-post',
-            ))
-            ->add('preview', SubmitType::class, array(
+            ])
+            ->add('preview', SubmitType::class, [
                 'label' => 'Forhåndsvis'
-            ))
+            ])
         ;
     }
 

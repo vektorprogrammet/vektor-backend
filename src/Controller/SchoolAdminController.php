@@ -37,11 +37,11 @@ class SchoolAdminController extends BaseController
         $inactiveAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findInactiveAssistantHistoriesBySchool($school);
         $activeAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesBySchool($school);
 
-        return $this->render('school_admin/specific_school.html.twig', array(
+        return $this->render('school_admin/specific_school.html.twig', [
             'activeAssistantHistories' => $activeAssistantHistories,
             'inactiveAssistantHistories' => $inactiveAssistantHistories,
             'school' => $school,
-        ));
+        ]);
     }
 
     public function delegateSchoolToUser(Request $request, User $user)
@@ -73,10 +73,10 @@ class SchoolAdminController extends BaseController
         }
 
         // Return the form view
-        return $this->render('school_admin/create_assistant_history.html.twig', array(
+        return $this->render('school_admin/create_assistant_history.html.twig', [
             'form' => $form->createView(),
             'user' => $user
-        ));
+        ]);
     }
 
     public function showUsersByDepartmentSuperadmin(Department $department): Response
@@ -86,11 +86,11 @@ class SchoolAdminController extends BaseController
         $users = $this->getDoctrine()->getRepository(User::class)->findAllUsersByDepartment($department);
 
         // Return the view with suitable variables
-        return $this->render('school_admin/all_users.html.twig', array(
+        return $this->render('school_admin/all_users.html.twig', [
             'departments' => $activeDepartments,
             'department' => $department,
             'users' => $users,
-        ));
+        ]);
     }
 
     public function showUsersByDepartment(): Response
@@ -107,11 +107,11 @@ class SchoolAdminController extends BaseController
         $users = $this->getDoctrine()->getRepository(User::class)->findAllUsersByDepartment($department);
 
         // Return the view with suitable variables
-        return $this->render('school_admin/all_users.html.twig', array(
+        return $this->render('school_admin/all_users.html.twig', [
             'departments' => $activeDepartments,
             'department' => $department,
             'users' => $users,
-        ));
+        ]);
     }
 
     public function show(): Response
@@ -125,11 +125,11 @@ class SchoolAdminController extends BaseController
         $inactiveSchools = $this->getDoctrine()->getRepository(School::class)->findInactiveSchoolsByDepartment($department);
 
         // Return the view with suitable variables
-        return $this->render('school_admin/index.html.twig', array(
+        return $this->render('school_admin/index.html.twig', [
             'activeSchools' => $activeSchools,
             'inactiveSchools' => $inactiveSchools,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function showSchoolsByDepartment(Department $department): Response
@@ -139,11 +139,11 @@ class SchoolAdminController extends BaseController
         $inactiveSchools = $this->getDoctrine()->getRepository(School::class)->findInactiveSchoolsByDepartment($department);
 
         // Renders the view with the variables
-        return $this->render('school_admin/index.html.twig', array(
+        return $this->render('school_admin/index.html.twig', [
             'activeSchools' => $activeSchools,
             'inactiveSchools' => $inactiveSchools,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function updateSchool(Request $request, School $school)
@@ -164,10 +164,10 @@ class SchoolAdminController extends BaseController
         }
 
         // Return the form view
-        return $this->render('school_admin/create_school.html.twig', array(
+        return $this->render('school_admin/create_school.html.twig', [
             'form' => $form->createView(),
             'school' => $school
-        ));
+        ]);
     }
 
     public function createSchoolForDepartment(Request $request, Department $department)
@@ -192,9 +192,9 @@ class SchoolAdminController extends BaseController
         }
 
         // Render the view
-        return $this->render('school_admin/create_school.html.twig', array(
+        return $this->render('school_admin/create_school.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function deleteSchoolById(School $school): JsonResponse

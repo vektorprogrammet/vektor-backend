@@ -11,17 +11,17 @@ class InterviewQuestionAlternativeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('alternative', TextType::class, array(
+        $builder->add('alternative', TextType::class, [
             'label' => false,
-            'attr' => array('placeholder' => 'Fyll inn nytt alternativ'),
-        ));
+            'attr' => ['placeholder' => 'Fyll inn nytt alternativ'],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\InterviewQuestionAlternative',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

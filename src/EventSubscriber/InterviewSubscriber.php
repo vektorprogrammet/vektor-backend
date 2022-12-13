@@ -58,21 +58,21 @@ class InterviewSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            InterviewConductedEvent::NAME => array(
-                array('logEvent', 2),
-                array('sendSlackNotifications', 1),
-                array('sendInterviewReceipt', 0),
-                array('addFlashMessage', -1),
-            ),
-            InterviewEvent::SCHEDULE => array(
-                array('sendScheduleEmail', 0),
-                array('sendScheduleSms', 0),
-            ),
-            InterviewEvent::COASSIGN => array(
-                array('sendCoAssignedEmail', 0)
-            )
-        );
+        return [
+            InterviewConductedEvent::NAME => [
+                ['logEvent', 2],
+                ['sendSlackNotifications', 1],
+                ['sendInterviewReceipt', 0],
+                ['addFlashMessage', -1],
+            ],
+            InterviewEvent::SCHEDULE => [
+                ['sendScheduleEmail', 0],
+                ['sendScheduleSms', 0],
+            ],
+            InterviewEvent::COASSIGN => [
+                ['sendCoAssignedEmail', 0]
+            ]
+        ];
     }
 
     public function sendInterviewReceipt(InterviewConductedEvent $event)
@@ -83,13 +83,13 @@ class InterviewSubscriber implements EventSubscriberInterface
         // Send email to the interviewee with a summary of the interview
         $emailMessage = (new Swift_Message())
             ->setSubject('Vektorprogrammet intervju')
-            ->setReplyTo(array($interviewer->getDepartment()->getEmail() => 'Vektorprogrammet'))
+            ->setReplyTo([$interviewer->getDepartment()->getEmail() => 'Vektorprogrammet'])
             ->setTo($application->getUser()->getEmail())
             ->setReplyTo($interviewer->getEmail())
-            ->setBody($this->twig->render('interview/interview_summary_email.html.twig', array(
+            ->setBody($this->twig->render('interview/interview_summary_email.html.twig', [
                 'application' => $application,
                 'interviewer' => $interviewer,
-            )))
+            ]))
             ->setContentType('text/html');
         $this->mailer->send($emailMessage);
     }
@@ -190,12 +190,12 @@ class InterviewSubscriber implements EventSubscriberInterface
         $interview = $event->getInterview();
         $emailMessage = (new Swift_Message())
             ->setSubject('Vektorprogrammet intervju')
-            ->setFrom(array('vektorbot@vektorprogrammet.no' => 'Vektorprogrammet'))
+            ->setFrom(['vektorbot@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setTo($interview->getInterviewer()->getEmail())
             ->setReplyTo($interview->getCoInterviewer()->getEmail())
-            ->setBody($this->twig->render('interview/co_interviewer_email.html.twig', array(
+            ->setBody($this->twig->render('interview/co_interviewer_email.html.twig', [
                 'interview' => $interview
-            )));
+            ]));
         $this->mailer->send($emailMessage);
     }
 }

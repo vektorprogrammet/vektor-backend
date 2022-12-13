@@ -17,7 +17,7 @@ class ReceiptControllerTest extends BaseWebTestCase
     public function setUp(): void
     {
         // Keep track of all the initial files in the image folder
-        $this->imagePaths = array();
+        $this->imagePaths = [];
         $finder = new Finder();
 
         if (!file_exists('images/receipts')) {

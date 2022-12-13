@@ -11,16 +11,16 @@ class InterviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('interviewAnswers', CollectionType::class, array('entry_type' => InterviewAnswerType::class));
+        $builder->add('interviewAnswers', CollectionType::class, ['entry_type' => InterviewAnswerType::class]);
 
         $builder->add('interviewScore', InterviewScoreType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Interview',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

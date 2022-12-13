@@ -69,10 +69,10 @@ class School implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return array(
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'capacity' => $this->capacity,
-        );
+        ];
     }
 }

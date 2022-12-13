@@ -28,28 +28,28 @@ class MailingListController extends BaseController
 
             switch ($type) {
                 case 'Assistent':
-                    return $this->redirectToRoute('generate_assistant_mail_list', array(
+                    return $this->redirectToRoute('generate_assistant_mail_list', [
                         'department' => $departmentID,
                         'semester' => $semesterID,
-                    ));
+                    ]);
                 case 'Team':
-                    return $this->redirectToRoute('generate_team_mail_list', array(
+                    return $this->redirectToRoute('generate_team_mail_list', [
                         'department' => $departmentID,
                         'semester' => $semesterID,
-                    ));
+                    ]);
                 case 'Alle':
-                    return $this->redirectToRoute('generate_all_mail_list', array(
+                    return $this->redirectToRoute('generate_all_mail_list', [
                         'department' => $departmentID,
                         'semester' => $semesterID,
-                    ));
+                    ]);
                 default:
                     throw new BadRequestHttpException('type can only be "Assistent", "Team" or "Alle". Was: '.$type);
             }
         }
 
-        return $this->render('mailing_list/generate_mail_list.html.twig', array(
+        return $this->render('mailing_list/generate_mail_list.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -63,9 +63,9 @@ class MailingListController extends BaseController
         $users = $this->getDoctrine()->getRepository(User::class)
             ->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $semester);
 
-        return $this->render('mailing_list/mailinglist_show.html.twig', array(
+        return $this->render('mailing_list/mailinglist_show.html.twig', [
             'users' => $users,
-        ));
+        ]);
     }
 
     /**
@@ -79,9 +79,9 @@ class MailingListController extends BaseController
         $users = $this->getDoctrine()->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
 
-        return $this->render('mailing_list/mailinglist_show.html.twig', array(
+        return $this->render('mailing_list/mailinglist_show.html.twig', [
             'users' => $users,
-        ));
+        ]);
     }
 
     /**
@@ -98,8 +98,8 @@ class MailingListController extends BaseController
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
         $users = array_unique(array_merge($assistantUsers, $teamUsers));
 
-        return $this->render('mailing_list/mailinglist_show.html.twig', array(
+        return $this->render('mailing_list/mailinglist_show.html.twig', [
             'users' => $users,
-        ));
+        ]);
     }
 }

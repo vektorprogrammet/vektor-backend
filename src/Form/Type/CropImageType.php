@@ -13,16 +13,16 @@ class CropImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image', TextType::class, array(
+            ->add('image', TextType::class, [
                 'label' => false,
-                'attr' => array('placeholder' => 'Klikk for å velge bilde'),
-            ))
+                'attr' => ['placeholder' => 'Klikk for å velge bilde'],
+            ])
             ->add('largeCropData', HiddenType::class)
             ->add('mediumCropData', HiddenType::class)
             ->add('smallCropData', HiddenType::class)
-            ->add('crop', SubmitType::class, array(
+            ->add('crop', SubmitType::class, [
                 'label' => 'Crop & bruk',
-            ));
+            ]);
     }
 
     public function getBlockPrefix(): string

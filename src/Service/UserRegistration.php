@@ -41,13 +41,13 @@ class UserRegistration
     {
         return (new Swift_Message())
             ->setSubject('Velkommen til Vektorprogrammet!')
-            ->setFrom(array('vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'))
+            ->setFrom(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setReplyTo($user->getFieldOfStudy()->getDepartment()->getEmail())
             ->setTo($user->getEmail())
-            ->setBody($this->twig->render('new_user/create_new_user_email.txt.twig', array(
+            ->setBody($this->twig->render('new_user/create_new_user_email.txt.twig', [
                 'newUserCode' => $newUserCode,
                 'name' => $user->getFullName(),
-            )));
+            ]));
     }
 
     public function sendActivationCode(User $user)

@@ -29,11 +29,11 @@ class ParticipantHistoryController extends BaseController
         // Find all assistantHistories by department
         $assistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($department, $semester);
 
-        return $this->render('participant_history/index.html.twig', array(
+        return $this->render('participant_history/index.html.twig', [
             'teamMemberships' => $teamMemberships,
             'assistantHistories' => $assistantHistories,
             'semester' => $semester,
             'department' => $department,
-        ));
+        ]);
     }
 }

@@ -22,9 +22,9 @@ class SchoolCapacityEditType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\SchoolCapacity',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

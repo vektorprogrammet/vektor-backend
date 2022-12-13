@@ -11,10 +11,10 @@ class ApplicationExistingUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('applicationPractical', ApplicationPracticalType::class, array(
+        $builder->add('applicationPractical', ApplicationPracticalType::class, [
             'data_class' => 'App\Entity\Application',
             'teams' => $options['teams'],
-        ));
+        ]);
 
         $builder->add('preferredSchool', TextType::class, [
             'label' => 'Er det en spesiell skole som du ønsker å besøke igjen?',
@@ -24,10 +24,10 @@ class ApplicationExistingUserType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\Application',
             'teams' => null,
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

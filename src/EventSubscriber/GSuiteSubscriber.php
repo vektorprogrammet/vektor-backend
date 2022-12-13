@@ -46,36 +46,36 @@ class GSuiteSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            TeamMembershipEvent::CREATED => array(
-                array('createGSuiteUser', 1),
-                array('addGSuiteUserToTeam', -1),
-            ),
-            TeamMembershipEvent::EDITED => array(
-                array('createGSuiteUser', 1),
-                array('addGSuiteUserToTeam', 0),
-                array('removeGSuiteUserFromTeam', -1)
-            ),
-            TeamMembershipEvent::DELETED => array(
-                array('removeGSuiteUserFromTeam', 0),
-            ),
-            TeamMembershipEvent::EXPIRED  => array(
-                array('removeGSuiteUserFromTeam', 0)
-            ),
-            UserEvent::EDITED => array(
-                array('updateGSuiteUser', 0),
-            ),
-            UserEvent::COMPANY_EMAIL_EDITED  => array(
-                array('updateGSuiteUser', 0),
-            ),
-            TeamEvent::CREATED => array(
-                array('createGSuiteTeam', 1),
-                array('createGSuiteTeamDrive', -1),
-            ),
-            TeamEvent::EDITED => array(
-                array('editGSuiteTeam', 0),
-            )
-        );
+        return [
+            TeamMembershipEvent::CREATED => [
+                ['createGSuiteUser', 1],
+                ['addGSuiteUserToTeam', -1],
+            ],
+            TeamMembershipEvent::EDITED => [
+                ['createGSuiteUser', 1],
+                ['addGSuiteUserToTeam', 0],
+                ['removeGSuiteUserFromTeam', -1]
+            ],
+            TeamMembershipEvent::DELETED => [
+                ['removeGSuiteUserFromTeam', 0],
+            ],
+            TeamMembershipEvent::EXPIRED  => [
+                ['removeGSuiteUserFromTeam', 0]
+            ],
+            UserEvent::EDITED => [
+                ['updateGSuiteUser', 0],
+            ],
+            UserEvent::COMPANY_EMAIL_EDITED  => [
+                ['updateGSuiteUser', 0],
+            ],
+            TeamEvent::CREATED => [
+                ['createGSuiteTeam', 1],
+                ['createGSuiteTeamDrive', -1],
+            ],
+            TeamEvent::EDITED => [
+                ['editGSuiteTeam', 0],
+            ]
+        ];
     }
 
     public function createGSuiteUser(TeamMembershipEvent $event)

@@ -12,7 +12,7 @@ class DepartmentController extends BaseController
 {
     public function show(): Response
     {
-        return $this->render('department_admin/index.html.twig', array());
+        return $this->render('department_admin/index.html.twig', []);
     }
 
     public function createDepartment(Request $request)
@@ -33,9 +33,9 @@ class DepartmentController extends BaseController
             return $this->redirectToRoute('departmentadmin_show');
         }
 
-        return $this->render('department_admin/create_department.html.twig', array(
+        return $this->render('department_admin/create_department.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function deleteDepartmentById(Department $department): RedirectResponse
@@ -65,9 +65,9 @@ class DepartmentController extends BaseController
             return $this->redirectToRoute('departmentadmin_show');
         }
 
-        return $this->render('department_admin/create_department.html.twig', array(
+        return $this->render('department_admin/create_department.html.twig', [
             'department' => $department,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

@@ -37,10 +37,10 @@ class SchoolCapacityController extends BaseController
             return $this->redirect($this->generateUrl('school_allocation'));
         }
 
-        return $this->render('school_admin/school_allocate_create.html.twig', array(
+        return $this->render('school_admin/school_allocate_create.html.twig', [
             'message' => '',
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function edit(Request $request, SchoolCapacity $capacity)
@@ -56,9 +56,9 @@ class SchoolCapacityController extends BaseController
             return $this->redirect($this->generateUrl('school_allocation'));
         }
 
-        return $this->render('school_admin/school_allocate_edit.html.twig', array(
+        return $this->render('school_admin/school_allocate_edit.html.twig', [
             'capacity' => $capacity,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

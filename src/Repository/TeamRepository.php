@@ -102,11 +102,11 @@ class TeamRepository extends EntityRepository
             ->leftJoin('team.potentialApplicants', 'potentialApplicant', Expr\Join::WITH, 'potentialApplicant.semester = :semester')
             ->where('application IS NOT NULL AND application.admissionPeriod = :admissionPeriod')
             ->orWhere('potentialApplicant IS NOT NULL AND potentialApplicant.department = :department')
-            ->setParameters(array(
+            ->setParameters([
                 'admissionPeriod' => $admissionPeriod,
                 'semester' => $admissionPeriod->getSemester(),
                 'department' => $admissionPeriod->getDepartment(),
-            ))
+            ])
             ->getQuery()
             ->getResult();
     }

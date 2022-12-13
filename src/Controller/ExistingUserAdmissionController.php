@@ -46,10 +46,10 @@ class ExistingUserAdmissionController extends BaseController
 
         $application = $admissionManager->createApplicationForExistingAssistant($user);
 
-        $form = $this->createForm(ApplicationExistingUserType::class, $application, array(
-            'validation_groups' => array('admission_existing'),
+        $form = $this->createForm(ApplicationExistingUserType::class, $application, [
+            'validation_groups' => ['admission_existing'],
             'teams' => $teams,
-        ));
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -64,11 +64,11 @@ class ExistingUserAdmissionController extends BaseController
 
         $semester = $this->getCurrentSemester();
 
-        return $this->render('admission/existingUser.html.twig', array(
+        return $this->render('admission/existingUser.html.twig', [
             'form' => $form->createView(),
             'department' => $user->getDepartment(),
             'semester' => $semester,
             'user' => $user,
-        ));
+        ]);
     }
 }

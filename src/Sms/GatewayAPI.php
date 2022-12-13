@@ -28,11 +28,11 @@ class GatewayAPI implements SmsSenderInterface
             return;
         }
 
-        $data = array(
+        $data = [
             'token' => $this->apiToken,
             'sender' => $sms->getSender(),
             'message' => $sms->getMessage()
-        );
+        ];
 
         $recipients = $sms->getRecipients();
         $i = 0;

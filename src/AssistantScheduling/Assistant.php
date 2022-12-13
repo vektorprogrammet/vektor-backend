@@ -34,7 +34,7 @@ class Assistant implements JsonSerializable
         $this->group = null;
         $this->preferredGroup = null;
         $this->doublePosition = false;
-        $this->availability = array();
+        $this->availability = [];
     }
 
     /**
@@ -184,7 +184,7 @@ class Assistant implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return array(
+        return [
             'id' => $this->getId(),
             'group' => 'Bolk 1',
             'name' => $this->name,
@@ -198,7 +198,7 @@ class Assistant implements JsonSerializable
             'suitable' => $this->suitability,
             'previousParticipation' => $this->previousParticipation,
             'language' => $this->application->getLanguage(),
-        );
+        ];
     }
 
     public function getApplication(): Application
