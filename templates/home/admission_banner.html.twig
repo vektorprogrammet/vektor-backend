@@ -15,7 +15,7 @@
             {% set infoMeeting = closestDepartment.currentAdmissionPeriod.infoMeeting %}
             <div class="infomeeting-banner">
                 Husk infomøte {{ infoMeeting.date|date('d. M')|lower }} kl. {{ infoMeeting.date|date('H:i') }} {% if infoMeeting.room %}i rom  {{ infoMeeting.room }} {% endif %}.
-                {% if infoMeeting.link %}<a target="_blank" href="{{ infoMeeting.link }}"
+                {% if infoMeeting.link %}<a target="_blank" href="{{ infoMeeting.link }}" rel="noopener"
                                             onclick="ga('send', 'event', 'Infomøte', 'Les mer - forside', '{{ closestDepartment.currentAdmissionPeriod }}')">
                         Les mer
                     </a>{% endif %}
