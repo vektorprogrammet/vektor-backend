@@ -21,8 +21,8 @@ class ApplicationStatisticsController extends BaseController
     }
     /**
      * @param Request $request
-     * @return Response
      * @throws NonUniqueResultException
+     * @return Response
      */
     public function show(Request $request): Response
     {

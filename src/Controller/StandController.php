@@ -20,8 +20,8 @@ class StandController extends BaseController
     }
     /**
      * @param Request $request
-     * @return Response
      * @throws NonUniqueResultException
+     * @return Response
      */
     public function index(Request $request): Response
     {

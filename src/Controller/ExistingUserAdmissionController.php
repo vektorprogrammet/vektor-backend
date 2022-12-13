@@ -28,9 +28,9 @@ class ExistingUserAdmissionController extends BaseController
     /**
      * @param Request $request
      *
-     * @return null|RedirectResponse|Response
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return null|RedirectResponse|Response
      */
     public function show(Request $request)
     {

@@ -11,10 +11,10 @@ class RoleRepository extends EntityRepository
     /**
      * @param string $roleName
      *
-     * @return string
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return string
+     *
      */
     public function findByRoleName(string $roleName): Role
     {

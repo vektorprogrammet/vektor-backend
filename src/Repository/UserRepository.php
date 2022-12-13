@@ -141,9 +141,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * @param $username
      *
-     * @return User
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return User
      */
     public function findUserByUsername($username)
     {
@@ -158,9 +158,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * @param $login
      *
-     * @return User
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return User
      */
     public function findByUsernameOrEmail($login)
     {
@@ -179,9 +179,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * @param $email
      *
+     * @throws NonUniqueResultException
      * @return User
      *
-     * @throws NonUniqueResultException
      */
     public function findUserByEmail($email)
     {
@@ -206,9 +206,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * @param $id
      *
+     * @throws NonUniqueResultException
      * @return User
      *
-     * @throws NonUniqueResultException
      */
     public function findUserByNewUserCode($id)
     {

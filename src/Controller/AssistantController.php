@@ -188,9 +188,9 @@ class AssistantController extends BaseController
      * @param Request $request
      * @param Department $department
      *
-     * @return Response
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return Response
      */
     public function subscribePage(Request $request, Department $department): Response
     {

@@ -56,8 +56,8 @@ class AdmissionPeriodRepository extends EntityRepository
      * @param Department $department
      * @param Semester $semester
      *
-     * @return AdmissionPeriod|null
      * @throws NonUniqueResultException
+     * @return AdmissionPeriod|null
      */
     public function findOneByDepartmentAndSemester(Department $department, Semester $semester): ?AdmissionPeriod
     {
@@ -74,9 +74,9 @@ class AdmissionPeriodRepository extends EntityRepository
      * @param Department $department
      * @param DateTime   $time
      *
+     * @throws NonUniqueResultException
      * @return AdmissionPeriod|null
      *
-     * @throws NonUniqueResultException
      */
     public function findOneWithActiveAdmissionByDepartment(Department $department, DateTime $time = null): ?AdmissionPeriod
     {

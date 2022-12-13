@@ -22,8 +22,8 @@ class ApplicationRepository extends EntityRepository
      * @param User $user
      * @param AdmissionPeriod $admissionPeriod
      *
-     * @return Application|null
      * @throws NonUniqueResultException
+     * @return Application|null
      */
     public function findByUserInAdmissionPeriod(User $user, AdmissionPeriod $admissionPeriod)
     {
@@ -40,9 +40,9 @@ class ApplicationRepository extends EntityRepository
     /**
      * @param User $user
      *
+     * @throws NonUniqueResultException
      * @return Application|null
      *
-     * @throws NonUniqueResultException
      */
     public function findActiveByUser(User $user)
     {

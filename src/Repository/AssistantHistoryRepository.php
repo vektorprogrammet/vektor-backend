@@ -188,8 +188,8 @@ class AssistantHistoryRepository extends EntityRepository
     /**
      * @param Semester $semester
      *
-     * @return int
      * @throws NonUniqueResultException
+     * @return int
      */
     public function numFemaleBySemester(Semester $semester): int
     {
@@ -206,8 +206,8 @@ class AssistantHistoryRepository extends EntityRepository
     /**
      * @param Semester $semester
      *
-     * @return int
      * @throws NonUniqueResultException
+     * @return int
      */
     public function numMaleBySemester(Semester $semester): int
     {
@@ -222,8 +222,8 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @return int
      * @throws NonUniqueResultException
+     * @return int
      */
     public function numFemale(): int
     {
@@ -236,8 +236,8 @@ class AssistantHistoryRepository extends EntityRepository
     }
 
     /**
-     * @return int
      * @throws NonUniqueResultException
+     * @return int
      */
     public function numMale(): int
     {

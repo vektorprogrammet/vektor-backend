@@ -21,9 +21,9 @@ class AssistantSchedulingController extends BaseController
     }
 
     /**
-     * @return JsonResponse
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return JsonResponse
      */
     public function getAssistants(): JsonResponse
     {
@@ -89,9 +89,9 @@ class AssistantSchedulingController extends BaseController
     }
 
     /**
-     * @return JsonResponse
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @return JsonResponse
      */
     public function getSchools(): JsonResponse
     {
