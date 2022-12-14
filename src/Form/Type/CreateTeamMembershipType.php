@@ -2,6 +2,9 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Position;
+use App\Entity\Semester;
+use App\Entity\User;
 use App\Repository\PositionRepository;
 use App\Repository\SemesterRepository;
 use App\Repository\UserRepository;
@@ -23,7 +26,7 @@ class CreateTeamMembershipType extends AbstractType
         $builder
             ->add('user', EntityType::class, [
                 'label' => 'Bruker',
-                'class' => 'App:User',
+                'class' => User::class,
                 'query_builder' => function (UserRepository $ur) {
                     return $ur->createQueryBuilder('u')
                         ->orderBy('u.firstName', 'ASC')
@@ -45,7 +48,7 @@ class CreateTeamMembershipType extends AbstractType
             ])
             ->add('position', EntityType::class, [
                 'label' => 'Stillingstittel',
-                'class' => 'App:Position',
+                'class' => Position::class,
                 'query_builder' => function (PositionRepository $pr) {
                     return $pr->createQueryBuilder('p')
                         ->orderBy('p.name', 'ASC');
@@ -53,14 +56,14 @@ class CreateTeamMembershipType extends AbstractType
             ])
             ->add('startSemester', EntityType::class, [
                 'label' => 'Start semester',
-                'class' => 'App:Semester',
+                'class' => Semester::class,
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },
             ])
             ->add('endSemester', EntityType::class, [
                 'label' => 'Slutt semester (Valgfritt)',
-                'class' => 'App:Semester',
+                'class' => Semester::class,
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
                 },

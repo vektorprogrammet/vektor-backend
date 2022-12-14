@@ -2,6 +2,8 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Department;
+use App\Entity\Semester;
 use App\Repository\DepartmentRepository;
 use App\Repository\SemesterRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,7 +18,7 @@ class GenerateMailingListType extends AbstractType
     {
         $builder
             ->add('semester', EntityType::class, [
-                'class' => 'App:Semester',
+                'class' => Semester::class,
                 'label' => 'Velg semester',
                 'query_builder' => function (SemesterRepository $sr) {
                     return $sr->queryForAllSemestersOrderedByAge();
@@ -24,7 +26,7 @@ class GenerateMailingListType extends AbstractType
                 'required' => true,
             ])
             ->add('department', EntityType::class, [
-                'class' => 'App:Department',
+                'class' => Department::class,
                 'label' => 'Velg region',
                 'query_builder' => function (DepartmentRepository $dr) {
                     return $dr->queryForActive();
