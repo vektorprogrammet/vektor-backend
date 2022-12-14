@@ -9,14 +9,14 @@ use Twig\TwigFunction;
 
 class SemesterExtension extends AbstractExtension
 {
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'semester_extension';
     }

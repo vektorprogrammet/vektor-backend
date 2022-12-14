@@ -9,14 +9,14 @@ use Twig\TwigFunction;
 
 class SponsorsExtension extends AbstractExtension
 {
-    protected $doctrine;
+    protected EntityManagerInterface $doctrine;
 
     public function __construct(EntityManagerInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'SponsorsExtension';
     }
@@ -41,7 +41,7 @@ class SponsorsExtension extends AbstractExtension
         return $sponsors;
     }
 
-    public function getSponsorsBySize($size)
+    public function getSponsorsBySize($size): array
     {
         $sponsors = $this->doctrine
             ->getRepository(Sponsor::class)

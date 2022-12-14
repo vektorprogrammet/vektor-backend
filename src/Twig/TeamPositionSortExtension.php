@@ -11,8 +11,8 @@ use Twig\TwigFilter;
 
 class TeamPositionSortExtension extends AbstractExtension
 {
-    private $sorter;
-    private $filterService;
+    private Sorter $sorter;
+    private FilterService $filterService;
 
     public function __construct(Sorter $sorter, FilterService $filterService)
     {
@@ -34,13 +34,13 @@ class TeamPositionSortExtension extends AbstractExtension
      * is also sorted in the same fashion.
      *
      * Note: Any memberships to other teams are filtered out,
-     * i.e removed from the $user object!
+     * i.e. removed from the $user object!
      *
      * @param User[] $users
      *
      * @return User[]
      */
-    public function teamPositionSortFilter($users, TeamInterface $team)
+    public function teamPositionSortFilter(array $users, TeamInterface $team): array
     {
         // Filter out any other team memberships and sort them by importance
         foreach ($users as $user) {

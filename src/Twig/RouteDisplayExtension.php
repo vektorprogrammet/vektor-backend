@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class RouteDisplayExtension extends AbstractExtension
 {
-    private $router;
+    private RouterInterface $router;
 
     public function __construct(RouterInterface $router)
     {
@@ -30,7 +30,7 @@ class RouteDisplayExtension extends AbstractExtension
      *
      * @return string The path of the route
      */
-    public function getPath(string $name)
+    public function getPath(string $name): string
     {
         if (!$this->isRoute($name)) {
             return $name;
@@ -39,7 +39,7 @@ class RouteDisplayExtension extends AbstractExtension
         return $this->router->getRouteCollection()->get($name)->getPath();
     }
 
-    private function isRoute(string $name)
+    private function isRoute(string $name): bool
     {
         return $this->router->getRouteCollection()->get($name) !== null;
     }

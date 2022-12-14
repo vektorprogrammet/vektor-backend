@@ -13,12 +13,9 @@ use Twig\TwigFunction;
 
 class RoleExtension extends AbstractExtension
 {
-    private $authorizationChecker;
-    private $tokenStorage;
-    /**
-     * @var RoleManager
-     */
-    private $roleManager;
+    private AuthorizationCheckerInterface $authorizationChecker;
+    private TokenStorageInterface $tokenStorage;
+    private RoleManager $roleManager;
 
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, RoleManager $roleManager)
     {
@@ -27,7 +24,7 @@ class RoleExtension extends AbstractExtension
         $this->roleManager = $roleManager;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'role_extension';
     }
@@ -54,27 +51,27 @@ class RoleExtension extends AbstractExtension
         ];
     }
 
-    public function getRoleName($role)
+    public function getRoleName($role): string
     {
         return Roles::GetRoleName($role);
     }
 
-    public function isGrantedAssistant()
+    public function isGrantedAssistant(): bool
     {
         return $this->isGranted(Roles::ASSISTANT);
     }
 
-    public function isGrantedTeamMember()
+    public function isGrantedTeamMember(): bool
     {
         return $this->isGranted(Roles::TEAM_MEMBER);
     }
 
-    public function isGrantedTeamLeader()
+    public function isGrantedTeamLeader(): bool
     {
         return $this->isGranted(Roles::TEAM_LEADER);
     }
 
-    public function isGrantedAdmin()
+    public function isGrantedAdmin(): bool
     {
         return $this->isGranted(Roles::ADMIN);
     }
@@ -88,27 +85,27 @@ class RoleExtension extends AbstractExtension
         return $this->authorizationChecker->isGranted($role);
     }
 
-    public function userIsGrantedAssistant(User $user)
+    public function userIsGrantedAssistant(User $user): bool
     {
         return $this->roleManager->userIsGranted($user, Roles::ASSISTANT);
     }
 
-    public function userIsGrantedTeamMember(User $user)
+    public function userIsGrantedTeamMember(User $user): bool
     {
         return $this->roleManager->userIsGranted($user, Roles::TEAM_MEMBER);
     }
 
-    public function userIsGrantedTeamLeader(User $user)
+    public function userIsGrantedTeamLeader(User $user): bool
     {
         return $this->roleManager->userIsGranted($user, Roles::TEAM_LEADER);
     }
 
-    public function userIsGrantedAdmin(User $user)
+    public function userIsGrantedAdmin(User $user): bool
     {
         return $this->roleManager->userIsGranted($user, Roles::ADMIN);
     }
 
-    public function userIsInExecutiveBoard(User $user)
+    public function userIsInExecutiveBoard(User $user): bool
     {
         return $this->roleManager->userIsInExecutiveBoard($user);
     }
