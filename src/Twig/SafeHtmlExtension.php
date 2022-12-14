@@ -7,7 +7,7 @@ use Twig\TwigFilter;
 
 class SafeHtmlExtension extends AbstractExtension
 {
-    private $blacklistedTags = ['script', 'iframe'];
+    private array $blacklistedTags = ['script', 'iframe'];
 
     public function getFilters(): array
     {
@@ -28,7 +28,7 @@ class SafeHtmlExtension extends AbstractExtension
         return $html;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'safe_html_extension';
     }

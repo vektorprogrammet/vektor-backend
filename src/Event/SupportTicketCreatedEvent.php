@@ -9,7 +9,7 @@ class SupportTicketCreatedEvent extends Event
 {
     public const NAME = 'support_ticket.created';
 
-    private $supportTicket;
+    private SupportTicket $supportTicket;
 
     public function __construct(SupportTicket $supportTicket)
     {

@@ -9,5 +9,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class VektorEmail extends Constraint
 {
-    public $message = 'E-postadressen må slutte med "@vektorprogrammet.no"';
+    public string $message = 'E-postadressen må slutte med "@vektorprogrammet.no"';
 }

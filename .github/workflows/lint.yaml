@@ -98,10 +98,10 @@ jobs:
         if: always() && steps.install.outcome == 'success'
         run: composer validate --strict
 
-# Consider adding these later
-#      - name: Check if any dependencies are compromised
-#        if: always() && steps.install.outcome == 'success'
-#        run: composer audit
+      # Check that no vulnerable dependencies are installed
+      - name: Check if any dependencies are compromised
+        if: always() && steps.install.outcome == 'success'
+        run: composer audit
 
 #      - name: Run PHPStan
 #        if: always() && steps.install.outcome == 'success'

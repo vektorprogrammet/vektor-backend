@@ -23,7 +23,7 @@ class AccountController extends BaseController
         $this->requestStack = $requestStack;
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $response = new JsonResponse();
 
@@ -66,7 +66,7 @@ class AccountController extends BaseController
         return new JsonResponse($userDto);
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
         try {
             $this->tokenStorage->setToken(null);
@@ -81,7 +81,7 @@ class AccountController extends BaseController
         }
     }
 
-    public function getUser()
+    public function getUser(): JsonResponse
     {
         if (!$this->getUser()) {
             return new JsonResponse(null);
@@ -95,7 +95,7 @@ class AccountController extends BaseController
         return new JsonResponse($userDto);
     }
 
-    public function getDepartmentApi(Request $request)
+    public function getDepartmentApi(Request $request): JsonResponse
     {
         if (!$this->getUser()) {
             return new JsonResponse(null);

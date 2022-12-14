@@ -9,7 +9,7 @@ class ApplicationCreatedEvent extends Event
 {
     public const NAME = 'application.admission';
 
-    private $application;
+    private Application $application;
 
     /**
      * ApplicationAdmissionEvent constructor.

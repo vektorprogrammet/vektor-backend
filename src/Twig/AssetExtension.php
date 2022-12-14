@@ -11,11 +11,7 @@ class AssetExtension extends AbstractExtension
 {
     private $packages;
     private $rootDir;
-
-    /**
-     * @var KernelInterface
-     */
-    private $appKernel;
+    private KernelInterface $appKernel;
 
     /**
      * AssetExtension constructor.
@@ -47,7 +43,7 @@ class AssetExtension extends AbstractExtension
      *
      * @return string The public path of the asset
      */
-    public function getAssetUrl($path, $packageName = null)
+    public function getAssetUrl($path, $packageName = null): string
     {
         if (mb_strlen($path) === 0) {
             return $path;

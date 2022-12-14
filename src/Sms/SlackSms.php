@@ -7,7 +7,7 @@ use Nexy\Slack\Attachment;
 
 class SlackSms implements SmsSenderInterface
 {
-    private $slackMessenger;
+    private SlackMessenger $slackMessenger;
 
     public function __construct(SlackMessenger $slackMessenger)
     {

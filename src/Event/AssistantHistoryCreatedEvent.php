@@ -9,7 +9,7 @@ class AssistantHistoryCreatedEvent extends Event
 {
     public const NAME = 'assistant_history.created';
 
-    private $assistantHistory;
+    private AssistantHistory $assistantHistory;
 
     /**
      * ApplicationAdmissionEvent constructor.

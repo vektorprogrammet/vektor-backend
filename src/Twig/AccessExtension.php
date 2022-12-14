@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class AccessExtension extends AbstractExtension
 {
-    private $accessControlService;
+    private AccessControlService $accessControlService;
 
     public function __construct(AccessControlService $accessControlService)
     {

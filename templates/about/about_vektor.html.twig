@@ -141,7 +141,5 @@
 {% endblock %}
 
 {% block javascripts %}
-{% if not is_edit_mode() %}
-    <script src="{{ asset_with_version('/js/faqCollapse.js') }}"></script>
-{% endif %}
+<script src="{{ asset_with_version('/js/faqCollapse.js') }}"></script>
 {% endblock %}

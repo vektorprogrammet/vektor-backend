@@ -12,12 +12,9 @@ class UserEvent extends Event
     public const DELETED = 'user.deleted';
     public const COMPANY_EMAIL_EDITED = 'user.company_email_edited';
 
-    private $user;
+    private User $user;
     private $oldEmail;
 
-    /**
-     * @param string $oldEmail
-     */
     public function __construct(User $user, $oldEmail)
     {
         $this->user = $user;
@@ -29,9 +26,6 @@ class UserEvent extends Event
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getOldEmail()
     {
         return $this->oldEmail;

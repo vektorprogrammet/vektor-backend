@@ -10,8 +10,8 @@ use Twig\TwigFunction;
 
 class DepartmentExtension extends AbstractExtension
 {
-    private $em;
-    private $geoLocationService;
+    private EntityManagerInterface $em;
+    private GeoLocation $geoLocationService;
 
     public function __construct(GeoLocation $geoLocationService, EntityManagerInterface $em)
     {
@@ -19,7 +19,7 @@ class DepartmentExtension extends AbstractExtension
         $this->em = $em;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'department_extension';
     }
@@ -32,14 +32,14 @@ class DepartmentExtension extends AbstractExtension
         ];
     }
 
-    public function getDepartments()
+    public function getDepartments(): array
     {
         $departments = $this->em->getRepository(Department::class)->findAll();
 
         return $this->geoLocationService->sortDepartmentsByDistanceFromClient($departments);
     }
 
-    public function getActiveDepartments()
+    public function getActiveDepartments(): array
     {
         $departments = $this->em->getRepository(Department::class)->findActive();
 
