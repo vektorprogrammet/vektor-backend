@@ -10,8 +10,8 @@ class InterviewEvent extends Event
     public const SCHEDULE = 'interview.schedule';
     public const COASSIGN = 'interview.coassign';
 
-    private $interview;
-    private $data;
+    private Interview $interview;
+    private array $data;
 
     /**
      * ReceiptEvent constructor.
@@ -22,10 +22,7 @@ class InterviewEvent extends Event
         $this->data = $data;
     }
 
-    /**
-     * @return Interview
-     */
-    public function getInterview()
+    public function getInterview(): Interview
     {
         return $this->interview;
     }

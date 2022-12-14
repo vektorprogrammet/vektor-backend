@@ -7,7 +7,7 @@ use App\Service\LogService;
 class GatewayAPI implements SmsSenderInterface
 {
     private $apiToken;
-    private $logger;
+    private LogService $logger;
     private $disableDelivery;
     private $maxLength;
     private $countryCode;

@@ -18,10 +18,6 @@ class ReceiptStatistics
         $this->refundDateImplementationDate = new \DateTime('2018-02-16');
     }
 
-    /**
-     * @param string $year
-     * @return float
-     */
     public function totalPayoutIn(string $year): float
     {
         return array_reduce($this->receipts, function (int $carry, Receipt $receipt) use ($year) {
@@ -55,9 +51,6 @@ class ReceiptStatistics
         return intval(round($totalHours / count($receipts)));
     }
 
-    /**
-     * @return float
-     */
     public function totalAmount(): float
     {
         return array_reduce($this->receipts, function (float $carry, Receipt $receipt) {

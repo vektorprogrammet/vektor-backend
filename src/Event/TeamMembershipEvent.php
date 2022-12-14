@@ -12,7 +12,7 @@ class TeamMembershipEvent extends Event
     public const DELETED = 'team_membership.deleted';
     public const EXPIRED = 'team_membership.expired';
 
-    private $teamMembership;
+    private TeamMembership $teamMembership;
 
     public function __construct(TeamMembership $teamMembership)
     {

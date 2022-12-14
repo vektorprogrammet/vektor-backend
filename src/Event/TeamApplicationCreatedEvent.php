@@ -8,10 +8,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 class TeamApplicationCreatedEvent extends Event
 {
     public const NAME = 'team_application.created';
-    /**
-     * @var TeamApplication
-     */
-    private $teamApplication;
+    private TeamApplication $teamApplication;
 
     /**
      * TeamApplicationCreatedEvent constructor.
@@ -21,10 +18,7 @@ class TeamApplicationCreatedEvent extends Event
         $this->teamApplication = $teamApplication;
     }
 
-    /**
-     * @return TeamApplication
-     */
-    public function getTeamApplication()
+    public function getTeamApplication(): TeamApplication
     {
         return $this->teamApplication;
     }

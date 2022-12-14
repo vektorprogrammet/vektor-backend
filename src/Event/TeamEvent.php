@@ -11,13 +11,10 @@ class TeamEvent extends Event
     public const EDITED = 'team.edited';
     public const DELETED = 'team.deleted';
 
-    private $team;
-    private $oldTeamEmail;
+    private Team $team;
+    private string $oldTeamEmail;
 
-    /**
-     * @param string $oldTeamEmail
-     */
-    public function __construct(Team $team, $oldTeamEmail)
+    public function __construct(Team $team, string $oldTeamEmail)
     {
         $this->team = $team;
         $this->oldTeamEmail = $oldTeamEmail;
@@ -28,10 +25,7 @@ class TeamEvent extends Event
         return $this->team;
     }
 
-    /**
-     * @return string
-     */
-    public function getOldTeamEmail()
+    public function getOldTeamEmail(): string
     {
         return $this->oldTeamEmail;
     }
