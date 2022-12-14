@@ -19,9 +19,10 @@ class ReceiptStatistics
     }
 
     /**
+     * @param string $year
      * @return float
      */
-    public function totalPayoutIn(string $year)
+    public function totalPayoutIn(string $year): float
     {
         return array_reduce($this->receipts, function (int $carry, Receipt $receipt) use ($year) {
             if (!$receipt->getRefundDate() || $receipt->getRefundDate()->format('Y') !== $year) {
@@ -57,7 +58,7 @@ class ReceiptStatistics
     /**
      * @return float
      */
-    public function totalAmount()
+    public function totalAmount(): float
     {
         return array_reduce($this->receipts, function (float $carry, Receipt $receipt) {
             return $carry + $receipt->getSum();

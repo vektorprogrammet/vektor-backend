@@ -9,5 +9,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class InterviewAnswer extends Constraint
 {
-    public $message = 'Dette feltet kan ikke være tomt';
+    public string $message = 'Dette feltet kan ikke være tomt';
 }

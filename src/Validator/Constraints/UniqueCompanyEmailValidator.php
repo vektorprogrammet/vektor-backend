@@ -11,8 +11,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class UniqueCompanyEmailValidator extends ConstraintValidator
 {
-    private $em;
-    private $googleAPI;
+    private EntityManagerInterface $em;
+    private GoogleAPI $googleAPI;
 
     public function __construct(EntityManagerInterface $em, GoogleAPI $googleAPI)
     {
@@ -37,14 +37,14 @@ class UniqueCompanyEmailValidator extends ConstraintValidator
         $userCompanyEmails = $this->em->getRepository(User::class)->findAllCompanyEmails();
         $allEmails = array_merge($googleEmails, $teamEmails, $userCompanyEmails);
 
-        if (array_search($value, $allEmails, true) !== false) {
+        if (in_array($value, $allEmails, true)) {
             $this->context->buildViolation($constraint->message)
                           ->setParameter('{{ email }}', $value)
                           ->addViolation();
         }
     }
 
-    private function objectHasChanged($value)
+    private function objectHasChanged($value): bool
     {
         $object = $this->context->getObject();
         $oldObject = $this->em

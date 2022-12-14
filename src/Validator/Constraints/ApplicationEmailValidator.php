@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ApplicationEmailValidator extends ConstraintValidator
 {
-    private $admissionManager;
+    private ApplicationAdmission $admissionManager;
 
     public function __construct(ApplicationAdmission $admissionManager)
     {
