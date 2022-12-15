@@ -9,18 +9,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class InterviewNotificationManager
 {
-    private SlackMessenger $slackMessenger;
-    private ApplicationData $applicationData;
-    private RouterInterface $router;
-
     /**
      * InterviewNotificationManager constructor.
      */
-    public function __construct(SlackMessenger $slackMessenger, ApplicationData $applicationData, RouterInterface $router)
+    public function __construct(private readonly SlackMessenger $slackMessenger, private readonly ApplicationData $applicationData, private readonly RouterInterface $router)
     {
-        $this->slackMessenger = $slackMessenger;
-        $this->applicationData = $applicationData;
-        $this->router = $router;
     }
 
     public function sendApplicationCountNotification(Department $department, Semester $semester)

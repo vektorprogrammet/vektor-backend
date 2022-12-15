@@ -10,18 +10,11 @@ use Twig\Environment;
 
 class PasswordManager
 {
-    private EntityManagerInterface $em;
-    private MailerInterface $mailer;
-    private Environment $twig;
-
     /**
      * PasswordManager constructor.
      */
-    public function __construct(EntityManagerInterface $em, MailerInterface $mailer, Environment $twig)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly MailerInterface $mailer, private readonly Environment $twig)
     {
-        $this->em = $em;
-        $this->mailer = $mailer;
-        $this->twig = $twig;
     }
 
     public function generateRandomResetCode(): string

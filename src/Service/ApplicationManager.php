@@ -38,42 +38,37 @@ class ApplicationManager
             );
         }
 
-        switch ($interview->getInterviewStatus()) {
-            case InterviewStatusType::NO_CONTACT:
-                return new ApplicationStatus(
-                    ApplicationStatus::APPLICATION_RECEIVED,
-                    'Søknad mottatt',
-                    'Vent på å bli invitert til intervju'
-                );
-            case InterviewStatusType::REQUEST_NEW_TIME:
-                return new ApplicationStatus(
-                    ApplicationStatus::APPLICATION_RECEIVED,
-                    'Endring av tidspunkt til intervju',
-                    'Vent på å få et nytt tidspunkt til intervju'
-                );
-            case InterviewStatusType::PENDING:
-                return new ApplicationStatus(
-                    ApplicationStatus::INVITED_TO_INTERVIEW,
-                    'Invitert til intervju',
-                    'Godta intervjutidspunktet'
-                );
-            case InterviewStatusType::ACCEPTED:
-                return new ApplicationStatus(
-                    ApplicationStatus::INTERVIEW_ACCEPTED,
-                    'Intervjutidspunkt godtatt',
-                    'Møt opp til intervju. Sted: ' . $interview->getRoom() . '. Tid: ' . $interview->getScheduled()->format('d. M H:i')
-                );
-            case InterviewStatusType::CANCELLED:
-                return new ApplicationStatus(
-                    ApplicationStatus::CANCELLED,
-                    'Søknad kansellert',
-                    'Ingen videre handling er nødvendig. Du vil ikke bli tatt opp som vektorassistent.'
-                );
-            default: return new ApplicationStatus(
+        return match ($interview->getInterviewStatus()) {
+            InterviewStatusType::NO_CONTACT => new ApplicationStatus(
+                ApplicationStatus::APPLICATION_RECEIVED,
+                'Søknad mottatt',
+                'Vent på å bli invitert til intervju'
+            ),
+            InterviewStatusType::REQUEST_NEW_TIME => new ApplicationStatus(
+                ApplicationStatus::APPLICATION_RECEIVED,
+                'Endring av tidspunkt til intervju',
+                'Vent på å få et nytt tidspunkt til intervju'
+            ),
+            InterviewStatusType::PENDING => new ApplicationStatus(
+                ApplicationStatus::INVITED_TO_INTERVIEW,
+                'Invitert til intervju',
+                'Godta intervjutidspunktet'
+            ),
+            InterviewStatusType::ACCEPTED => new ApplicationStatus(
+                ApplicationStatus::INTERVIEW_ACCEPTED,
+                'Intervjutidspunkt godtatt',
+                'Møt opp til intervju. Sted: ' . $interview->getRoom() . '. Tid: ' . $interview->getScheduled()->format('d. M H:i')
+            ),
+            InterviewStatusType::CANCELLED => new ApplicationStatus(
+                ApplicationStatus::CANCELLED,
+                'Søknad kansellert',
+                'Ingen videre handling er nødvendig. Du vil ikke bli tatt opp som vektorassistent.'
+            ),
+            default => new ApplicationStatus(
                 ApplicationStatus::APPLICATION_NOT_RECEIVED,
                 'Ingen søknad mottatt',
                 'Send inn søknad om å bli vektorassistent'
-            );
-        }
+            ),
+        };
     }
 }

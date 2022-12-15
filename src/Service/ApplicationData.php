@@ -14,15 +14,13 @@ class ApplicationData
 {
     private Department $department;
     private AdmissionPeriod $admissionPeriod;
-    private $applicationRepository;
-    private EntityManagerInterface $em;
+    private readonly \Doctrine\ORM\EntityRepository $applicationRepository;
 
     /**
      * ApplicationData constructor.
      */
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts)
+    public function __construct(private readonly EntityManagerInterface $em, TokenStorageInterface $ts)
     {
-        $this->em = $em;
         $this->applicationRepository = $this->em->getRepository(Application::class);
 
         if ($ts->getToken() !== null && $ts->getToken()->getUser() instanceof User) {
@@ -90,22 +88,22 @@ class ApplicationData
 
     public function getCancelledInterviewsCount(): int
     {
-        return count($this->applicationRepository->findCancelledApplicants($this->admissionPeriod));
+        return is_countable($this->applicationRepository->findCancelledApplicants($this->admissionPeriod)) ? count($this->applicationRepository->findCancelledApplicants($this->admissionPeriod)) : 0;
     }
 
     public function getInterviewedAssistantsCount(): int
     {
-        return count($this->em->getRepository(Application::class)->findInterviewedApplicants($this->admissionPeriod));
+        return is_countable($this->em->getRepository(Application::class)->findInterviewedApplicants($this->admissionPeriod)) ? count($this->em->getRepository(Application::class)->findInterviewedApplicants($this->admissionPeriod)) : 0;
     }
 
     public function getAssignedInterviewsCount(): int
     {
-        return count($this->em->getRepository(Application::class)->findAssignedApplicants($this->admissionPeriod));
+        return is_countable($this->em->getRepository(Application::class)->findAssignedApplicants($this->admissionPeriod)) ? count($this->em->getRepository(Application::class)->findAssignedApplicants($this->admissionPeriod)) : 0;
     }
 
     public function getTotalAssistantsCount(): int
     {
-        return count($this->em->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($this->department, $this->admissionPeriod->getSemester()));
+        return is_countable($this->em->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($this->department, $this->admissionPeriod->getSemester())) ? count($this->em->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($this->department, $this->admissionPeriod->getSemester())) : 0;
     }
 
     public function getPositionsCount(): int
@@ -198,7 +196,7 @@ class ApplicationData
                 $allHeardAboutFrom = [0 => 'Ingen'];
             }
 
-            for ($i = 0; $i < count($allHeardAboutFrom); ++$i) {
+            for ($i = 0; $i < (is_countable($allHeardAboutFrom) ? count($allHeardAboutFrom) : 0); ++$i) {
                 $currentHeardAboutFrom = $allHeardAboutFrom[$i];
 
                 if (array_key_exists($currentHeardAboutFrom, $heardAbout)) {

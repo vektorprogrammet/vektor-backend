@@ -7,14 +7,11 @@ use Nexy\Slack\Attachment;
 
 class SlackMailer implements MailerInterface
 {
-    private SlackMessenger $messenger;
-
     /**
      * SlackMailer constructor.
      */
-    public function __construct(SlackMessenger $messenger)
+    public function __construct(private readonly SlackMessenger $messenger)
     {
-        $this->messenger = $messenger;
     }
 
     public function send(\Swift_Message $message, bool $disableLogging = false)

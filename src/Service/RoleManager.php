@@ -13,38 +13,24 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RoleManager
 {
-    private array $roles = [];
-    private array $aliases = [];
-    private AuthorizationCheckerInterface $authorizationChecker;
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-    private GoogleUsers $googleUserService;
+    private array $roles = [
+        Roles::ASSISTANT,
+        Roles::TEAM_MEMBER,
+        Roles::TEAM_LEADER,
+        Roles::ADMIN,
+    ];
+    private array $aliases = [
+        Roles::ALIAS_ASSISTANT,
+        Roles::ALIAS_TEAM_MEMBER,
+        Roles::ALIAS_TEAM_LEADER,
+        Roles::ALIAS_ADMIN,
+    ];
 
     /**
      * RoleManager constructor.
      */
-    public function __construct(
-        AuthorizationCheckerInterface $authorizationChecker,
-        EntityManagerInterface $em,
-        LoggerInterface $logger,
-        GoogleUsers $googleUserService
-    ) {
-        $this->roles = [
-            Roles::ASSISTANT,
-            Roles::TEAM_MEMBER,
-            Roles::TEAM_LEADER,
-            Roles::ADMIN,
-        ];
-        $this->aliases = [
-            Roles::ALIAS_ASSISTANT,
-            Roles::ALIAS_TEAM_MEMBER,
-            Roles::ALIAS_TEAM_LEADER,
-            Roles::ALIAS_ADMIN,
-        ];
-        $this->authorizationChecker = $authorizationChecker;
-        $this->em = $em;
-        $this->logger = $logger;
-        $this->googleUserService = $googleUserService;
+    public function __construct(private readonly AuthorizationCheckerInterface $authorizationChecker, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger, private readonly GoogleUsers $googleUserService)
+    {
     }
 
     public function isValidRole(string $role): bool

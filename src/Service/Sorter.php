@@ -36,11 +36,7 @@ class Sorter
 
     public function newestReceipt(Receipt $receipt1, Receipt $receipt2): int
     {
-        if ($receipt1->getSubmitDate() === $receipt2->getSubmitDate()) {
-            return 0;
-        }
-
-        return ($receipt1->getSubmitDate() > $receipt2->getSubmitDate()) ? -1 : 1;
+        return $receipt2->getSubmitDate() <=> $receipt1->getSubmitDate();
     }
 
     /**
@@ -50,7 +46,7 @@ class Sorter
      */
     public function sortUsersByReceiptSubmitTime(&$users): bool
     {
-        return usort($users, [$this, 'userWithNewestReceipt']);
+        return usort($users, $this->userWithNewestReceipt(...));
     }
 
     /**
@@ -68,7 +64,7 @@ class Sorter
             }
         }
 
-        $users = array_merge($usersWithPendingReceipts, $usersWithoutPendingReceipts);
+        $users = [...$usersWithPendingReceipts, ...$usersWithoutPendingReceipts];
     }
 
     /**
@@ -78,7 +74,7 @@ class Sorter
      */
     public function sortReceiptsBySubmitTime(&$receipts)
     {
-        return usort($receipts, [$this, 'newestReceipt']);
+        return usort($receipts, $this->newestReceipt(...));
     }
 
     /**
@@ -95,7 +91,7 @@ class Sorter
                 array_push($nonPendingReceipts, $receipt);
             }
         }
-        $receiptElements = array_merge($pendingReceipts, $nonPendingReceipts);
+        $receiptElements = [...$pendingReceipts, ...$nonPendingReceipts];
         $receipts = $receiptElements;
     }
 
@@ -128,15 +124,15 @@ class Sorter
             $this->sortTeamMembershipsByPosition($teamMemberships2);
 
             $cmp = 0;
-            for ($i = 0; $i < min(count($teamMemberships1), count($teamMemberships2)); ++$i) {
+            for ($i = 0; $i < min(is_countable($teamMemberships1) ? count($teamMemberships1) : 0, is_countable($teamMemberships2) ? count($teamMemberships2) : 0); ++$i) {
                 $cmp = $this->compareTeamMemberships($teamMemberships1[$i], $teamMemberships2[$i]);
                 if ($cmp !== 0) {
                     return $cmp; // Non equal positions
                 }
             }
             // If tied, prioritize those with the most positions
-            if (count($teamMemberships1) !== count($teamMemberships2)) {
-                return count($teamMemberships2) - count($teamMemberships1);
+            if ((is_countable($teamMemberships1) ? count($teamMemberships1) : 0) !== (is_countable($teamMemberships2) ? count($teamMemberships2) : 0)) {
+                return (is_countable($teamMemberships2) ? count($teamMemberships2) : 0) - (is_countable($teamMemberships1) ? count($teamMemberships1) : 0);
             }
 
             return $cmp;
@@ -150,7 +146,7 @@ class Sorter
      */
     public function sortTeamMembershipsByPosition(&$teamMemberships)
     {
-        usort($teamMemberships, [$this, 'compareTeamMemberships']);
+        usort($teamMemberships, $this->compareTeamMemberships(...));
     }
 
     /**

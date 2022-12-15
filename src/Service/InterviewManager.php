@@ -20,38 +20,13 @@ use Twig\Environment;
 
 class InterviewManager
 {
-    private TokenStorageInterface $tokenStorage;
-    private AuthorizationCheckerInterface $authorizationChecker;
-    private Mailer $mailer;
-    private Environment $twig;
-    private LoggerInterface $logger;
-    private EntityManagerInterface $em;
-    private RouterInterface $router;
-    private SmsSenderInterface $smsSender;
-
     private const MAX_NUM_ACCEPT_INTERVIEW_REMINDERS_SENT = 3;
 
     /**
      * InterviewManager constructor.
      */
-    public function __construct(
-        TokenStorageInterface $tokenStorage,
-        AuthorizationCheckerInterface $authorizationChecker,
-        Mailer $mailer,
-        Environment $twig,
-        LoggerInterface $logger,
-        EntityManagerInterface $em,
-        RouterInterface $router,
-        SmsSenderInterface $smsSender
-    ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->authorizationChecker = $authorizationChecker;
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->logger = $logger;
-        $this->em = $em;
-        $this->router = $router;
-        $this->smsSender = $smsSender;
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly AuthorizationCheckerInterface $authorizationChecker, private readonly Mailer $mailer, private readonly Environment $twig, private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly RouterInterface $router, private readonly SmsSenderInterface $smsSender)
+    {
     }
 
     /**
@@ -73,9 +48,7 @@ class InterviewManager
             $existingAnswers = $existingAnswers->toArray();
         }
 
-        $existingQuestions = array_map(function (InterviewAnswer $interviewAnswer) {
-            return $interviewAnswer->getInterviewQuestion();
-        }, $existingAnswers);
+        $existingQuestions = array_map(fn (InterviewAnswer $interviewAnswer) => $interviewAnswer->getInterviewQuestion(), $existingAnswers);
 
         foreach ($interview->getInterviewSchema()->getInterviewQuestions() as $interviewQuestion) {
             $interviewAlreadyHasQuestion = array_search($interviewQuestion, $existingQuestions, true) !== false;

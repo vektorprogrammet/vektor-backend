@@ -9,27 +9,11 @@ use Symfony\Component\Notifier\NotifierInterface;
 
 class SlackMessenger
 {
-    private NotifierInterface $slackClient;
-    private string $notificationChannel;
-    private string$logChannel;
-    private Logger $logger;
-    private bool $disableDelivery;
-
     /**
      * SlackMessenger constructor.
      */
-    public function __construct(
-        NotifierInterface $notifier,
-        string $notificationChannel,
-        string $logChannel,
-        bool $disableDelivery,
-        Logger $logger
-    ) {
-        $this->slackClient = $notifier;
-        $this->notificationChannel = $notificationChannel;
-        $this->logChannel = $logChannel;
-        $this->logger = $logger;
-        $this->disableDelivery = $disableDelivery;
+    public function __construct(private readonly NotifierInterface $slackClient, private readonly string $notificationChannel, private readonly string $logChannel, private readonly bool $disableDelivery, private readonly Logger $logger)
+    {
     }
 
     public function notify(string $messageBody)
