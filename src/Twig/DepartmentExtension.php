@@ -10,13 +10,8 @@ use Twig\TwigFunction;
 
 class DepartmentExtension extends AbstractExtension
 {
-    private EntityManagerInterface $em;
-    private GeoLocation $geoLocationService;
-
-    public function __construct(GeoLocation $geoLocationService, EntityManagerInterface $em)
+    public function __construct(private readonly GeoLocation $geoLocationService, private readonly EntityManagerInterface $em)
     {
-        $this->geoLocationService = $geoLocationService;
-        $this->em = $em;
     }
 
     public function getName(): string
@@ -27,8 +22,8 @@ class DepartmentExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_departments', [$this, 'getDepartments']),
-            new TwigFunction('get_active_departments', [$this, 'getActiveDepartments']),
+            new TwigFunction('get_departments', $this->getDepartments(...)),
+            new TwigFunction('get_active_departments', $this->getActiveDepartments(...)),
         ];
     }
 

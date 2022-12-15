@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class AccessExtension extends AbstractExtension
 {
-    private AccessControlService $accessControlService;
-
-    public function __construct(AccessControlService $accessControlService)
+    public function __construct(private readonly AccessControlService $accessControlService)
     {
-        $this->accessControlService = $accessControlService;
     }
 
     /**
@@ -21,7 +18,7 @@ class AccessExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('has_access_to', [$this, 'hasAccessTo']),
+            new TwigFunction('has_access_to', $this->hasAccessTo(...)),
         ];
     }
 
