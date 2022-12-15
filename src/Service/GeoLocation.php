@@ -8,27 +8,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class GeoLocation
 {
-    private string $ipinfoToken;
     private $departmentRepo;
-    private RequestStack $requestStack;
-    private LogService $logger;
-    private $ignoredAsns;
 
     /**
      * GeoLocation constructor.
      */
     public function __construct(
-        string $ipinfoToken,
-        $ignoredAsns,
+        private readonly string $ipinfoToken,
+        private $ignoredAsns,
         EntityManagerInterface $em,
-        RequestStack $requestStack,
-        LogService $logger
+        private readonly RequestStack $requestStack,
+        private readonly LogService $logger
     ) {
-        $this->ipinfoToken = $ipinfoToken;
         $this->departmentRepo = $em->getRepository(Department::class);
-        $this->requestStack = $requestStack;
-        $this->logger = $logger;
-        $this->ignoredAsns = $ignoredAsns;
     }
 
     /**
@@ -132,7 +124,7 @@ class GeoLocation
 
         try {
             $rawResponse = file_get_contents("https://ipinfo.io/$ip?token={$this->ipinfoToken}");
-            $response = json_decode($rawResponse, true);
+            $response = json_decode($rawResponse, true, 512, JSON_THROW_ON_ERROR);
         } catch (\ErrorException $e) {
             $this->logger->warning("Could not get location from 
             ipinfo.io. The page returned an error.\nError:\n
@@ -157,7 +149,7 @@ class GeoLocation
             return null;
         }
 
-        $coords = explode(',', $response['loc']);
+        $coords = explode(',', (string) $response['loc']);
         if (count($coords) !== 2) {
             $this->logger->warning("Could not find lat/lon in location 
                 object. \nLocation:\n$response");
@@ -212,7 +204,7 @@ class GeoLocation
         }
 
         foreach ($this->ignoredAsns as $asn) {
-            if (mb_strpos($response['org'], $asn) !== false) {
+            if (mb_strpos((string) $response['org'], (string) $asn) !== false) {
                 return true;
             }
         }

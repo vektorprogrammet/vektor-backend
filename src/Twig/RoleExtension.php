@@ -13,15 +13,8 @@ use Twig\TwigFunction;
 
 class RoleExtension extends AbstractExtension
 {
-    private AuthorizationCheckerInterface $authorizationChecker;
-    private TokenStorageInterface $tokenStorage;
-    private RoleManager $roleManager;
-
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, RoleManager $roleManager)
+    public function __construct(private readonly AuthorizationCheckerInterface $authorizationChecker, private readonly TokenStorageInterface $tokenStorage, private readonly RoleManager $roleManager)
     {
-        $this->authorizationChecker = $authorizationChecker;
-        $this->tokenStorage = $tokenStorage;
-        $this->roleManager = $roleManager;
     }
 
     public function getName(): string
@@ -32,22 +25,22 @@ class RoleExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('is_granted_assistant', [$this, 'isGrantedAssistant']),
-            new TwigFunction('is_granted_team_member', [$this, 'isGrantedTeamMember']),
-            new TwigFunction('is_granted_team_leader', [$this, 'isGrantedTeamLeader']),
-            new TwigFunction('is_granted_admin', [$this, 'isGrantedAdmin']),
-            new TwigFunction('user_is_granted_assistant', [$this, 'userIsGrantedAssistant']),
-            new TwigFunction('user_is_granted_team_member', [$this, 'userIsGrantedTeamMember']),
-            new TwigFunction('user_is_granted_team_leader', [$this, 'userIsGrantedTeamLeader']),
-            new TwigFunction('user_is_granted_admin', [$this, 'userIsGrantedAdmin']),
-            new TwigFunction('user_is_in_executive_board', [$this, 'userIsInExecutiveBoard']),
+            new TwigFunction('is_granted_assistant', $this->isGrantedAssistant(...)),
+            new TwigFunction('is_granted_team_member', $this->isGrantedTeamMember(...)),
+            new TwigFunction('is_granted_team_leader', $this->isGrantedTeamLeader(...)),
+            new TwigFunction('is_granted_admin', $this->isGrantedAdmin(...)),
+            new TwigFunction('user_is_granted_assistant', $this->userIsGrantedAssistant(...)),
+            new TwigFunction('user_is_granted_team_member', $this->userIsGrantedTeamMember(...)),
+            new TwigFunction('user_is_granted_team_leader', $this->userIsGrantedTeamLeader(...)),
+            new TwigFunction('user_is_granted_admin', $this->userIsGrantedAdmin(...)),
+            new TwigFunction('user_is_in_executive_board', $this->userIsInExecutiveBoard(...)),
         ];
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('get_role_name', [$this, 'getRoleName']),
+            new TwigFilter('get_role_name', $this->getRoleName(...)),
         ];
     }
 

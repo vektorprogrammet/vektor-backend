@@ -9,14 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class SorterTest extends KernelTestCase
 {
-    /** @var Sorter */
-    private $sorter;
+    private ?object $sorter = null;
 
     /** @var User[] */
-    private $mockUsers;
+    private array $mockUsers;
 
     /** @var Receipt[] */
-    private $mockReceipts;
+    private array $mockReceipts;
 
     protected function setUp(): void
     {

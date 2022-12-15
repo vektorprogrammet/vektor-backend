@@ -11,11 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
-    private LogService $logService;
-
-    public function __construct(LogService $logService)
+    public function __construct(private readonly LogService $logService)
     {
-        $this->logService = $logService;
     }
 
     public function delete(AssistantHistory $assistantHistory): RedirectResponse

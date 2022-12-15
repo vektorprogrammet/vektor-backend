@@ -11,27 +11,11 @@ use Twig\Environment;
 
 class EmailSender
 {
-    private MailerInterface $mailer;
-    private Environment $twig;
-    private string $defaultEmail;
-    private string $economyEmail;
-    private RouterInterface $router;
-
     /**
      * EmailSender constructor.
      */
-    public function __construct(
-        MailerInterface $mailer,
-        Environment $twig,
-        RouterInterface $router,
-        string $defaultEmail,
-        string $economyEmail
-    ) {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->defaultEmail = $defaultEmail;
-        $this->economyEmail = $economyEmail;
-        $this->router = $router;
+    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly RouterInterface $router, private readonly string $defaultEmail, private readonly string $economyEmail)
+    {
     }
 
     public function sendSupportTicketToDepartment(SupportTicket $supportTicket)

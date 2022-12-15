@@ -38,7 +38,7 @@ class PasswordResetControllerTest extends BaseWebTestCase
      *
      * @return bool|string reset link
      */
-    private function getResetLink(string $email)
+    private function getResetLink(string $email): bool|string
     {
         // Test that we're getting the right page
         self::ensureKernelShutdown();
@@ -62,11 +62,11 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $body = $message->getBody();
 
         // Get reset link from email
-        $start = mb_strpos($body, '/resetpassord/');
-        $messageStartingWithCode = mb_substr($body, $start);
+        $start = mb_strpos((string) $body, '/resetpassord/');
+        $messageStartingWithCode = mb_substr((string) $body, $start);
         $end = mb_strpos($messageStartingWithCode, "\n");
 
-        return mb_substr($body, $start, $end);
+        return mb_substr((string) $body, $start, $end);
     }
 
     private function assertNoEmailSent($client)

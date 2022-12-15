@@ -15,13 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessRuleController extends AbstractController
 {
-    private AccessControlService $accessControlService;
-    private ReversedRoleHierarchy $reversedRoleHierarchy;
-
-    public function __construct(AccessControlService $accessControlService, ReversedRoleHierarchy $reversedRoleHierarchy)
+    public function __construct(private readonly AccessControlService $accessControlService, private readonly ReversedRoleHierarchy $reversedRoleHierarchy)
     {
-        $this->accessControlService = $accessControlService;
-        $this->reversedRoleHierarchy = $reversedRoleHierarchy;
     }
 
     public function index(): Response

@@ -20,7 +20,7 @@ class VektorEmailValidator extends ConstraintValidator
         }
 
         $emailEnding = '@vektorprogrammet.no';
-        $emailHasCorrectEnding = mb_substr($value, mb_strlen($value) - mb_strlen($emailEnding)) === $emailEnding;
+        $emailHasCorrectEnding = mb_substr((string) $value, mb_strlen((string) $value) - mb_strlen($emailEnding)) === $emailEnding;
 
         if (!$emailHasCorrectEnding) {
             $this->context->buildViolation($constraint->message)

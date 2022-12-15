@@ -7,14 +7,12 @@ use App\Service\LogService;
 class GatewayAPI implements SmsSenderInterface
 {
     private $apiToken;
-    private LogService $logger;
     private $disableDelivery;
     private $maxLength;
     private $countryCode;
 
-    public function __construct(array $smsOptions, LogService $logger)
+    public function __construct(array $smsOptions, private readonly LogService $logger)
     {
-        $this->logger = $logger;
         $this->disableDelivery = $smsOptions['disable_delivery'];
         $this->maxLength = $smsOptions['max_length'];
         $this->apiToken = $smsOptions['api_token'];
@@ -87,10 +85,10 @@ class GatewayAPI implements SmsSenderInterface
         $number = preg_replace('/\s+/', '', $number);
 
         $startsWithCountryCode =
-            mb_strlen($number) === 8 + mb_strlen($countryCode) &&
+            mb_strlen($number) === 8 + mb_strlen((string) $countryCode) &&
             $this->startsWith($number, $countryCode);
         $startsWithPlusCountryCode =
-            mb_strlen($number) === 9 + mb_strlen($countryCode) &&
+            mb_strlen($number) === 9 + mb_strlen((string) $countryCode) &&
             $this->startsWith($number, "+$countryCode");
 
         if (mb_strlen($number) === 8) {
@@ -110,10 +108,10 @@ class GatewayAPI implements SmsSenderInterface
         $number = preg_replace('/\s+/', '', $number);
 
         $startsWithCountryCode =
-            mb_strlen($number) === 8 + mb_strlen($countryCode) &&
+            mb_strlen($number) === 8 + mb_strlen((string) $countryCode) &&
             $this->startsWith($number, $countryCode);
         $startsWithPlusCountryCode =
-            mb_strlen($number) === 9 + mb_strlen($countryCode) &&
+            mb_strlen($number) === 9 + mb_strlen((string) $countryCode) &&
             $this->startsWith($number, "+$countryCode");
 
         return

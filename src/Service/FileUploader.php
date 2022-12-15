@@ -10,24 +10,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class FileUploader
 {
-    private string $signatureFolder;
-    private string $logoFolder;
-    private string $receiptFolder;
-    private string $profilePhotoFolder;
-
     /**
      * FileUploader constructor.
      */
-    public function __construct(
-        string $signatureFolder,
-        string $logoFolder,
-        string $receiptFolder,
-        string $profilePhotoFolder
-    ) {
-        $this->signatureFolder = $signatureFolder;
-        $this->logoFolder = $logoFolder;
-        $this->receiptFolder = $receiptFolder;
-        $this->profilePhotoFolder = $profilePhotoFolder;
+    public function __construct(private readonly string $signatureFolder, private readonly string $logoFolder, private readonly string $receiptFolder, private readonly string $profilePhotoFolder)
+    {
     }
 
     /**
@@ -35,7 +22,7 @@ class FileUploader
      */
     public function uploadSponsor(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, ['image/*']);
+        $file = static::getAndVerifyFile($request, ['image/*']);
 
         return $this->uploadFile($file, $this->logoFolder);
     }
@@ -45,24 +32,24 @@ class FileUploader
      */
     public function uploadSignature(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, ['image/*']);
+        $file = static::getAndVerifyFile($request, ['image/*']);
 
         return $this->uploadFile($file, $this->signatureFolder);
     }
 
     public function uploadReceipt(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, ['image/*', 'application/pdf']);
+        $file = static::getAndVerifyFile($request, ['image/*', 'application/pdf']);
 
         return $this->uploadFile($file, $this->receiptFolder);
     }
 
     public function uploadProfileImage(Request $request): string
     {
-        $file = $this->getAndVerifyFile($request, ['image/*']);
+        $file = static::getAndVerifyFile($request, ['image/*']);
 
         $mimeType = $file->getMimeType();
-        $fileType = explode('/', $mimeType)[0];
+        $fileType = explode('/', (string) $mimeType)[0];
         if ($fileType === 'image' || $mimeType === 'application/pdf') {
             return $this->uploadFile($file, $this->profilePhotoFolder);
         }
@@ -81,12 +68,12 @@ class FileUploader
         $file = FileUploader::getFileFromRequest($request, $id);
         $mimeType = $file->getMimeType();
 
-        $fileType = explode('/', $mimeType)[0];
-        $fileSubType = explode('/', $mimeType)[1];
+        $fileType = explode('/', (string) $mimeType)[0];
+        $fileSubType = explode('/', (string) $mimeType)[1];
 
         foreach ($valid_mime_types as $valid_mime_type) {
-            $validType = explode('/', $valid_mime_type)[0];
-            $validSubType = explode('/', $valid_mime_type)[1];
+            $validType = explode('/', (string) $valid_mime_type)[0];
+            $validSubType = explode('/', (string) $valid_mime_type)[1];
 
             if ($fileType === $validType &&
                 ($fileSubType === $validSubType || $validSubType === '*')) {
@@ -111,7 +98,7 @@ class FileUploader
 
         try {
             $file->move($targetFolder, $fileName);
-        } catch (FileException $e) {
+        } catch (FileException) {
             $originalFileName = $file->getClientOriginalName();
             $relativePath = $this->getRelativePath($targetFolder, $fileName);
 
@@ -172,7 +159,7 @@ class FileUploader
 
     private static function getFileFromRequest(Request $request, $id = null)
     {
-        $fileKey = $id !== null ? $id : current($request->files->keys());
+        $fileKey = $id ?? current($request->files->keys());
         $file = $request->files->get($fileKey);
 
         if (is_array($file)) {

@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\ExecutiveBoardMembership;
 use App\Entity\Semester;
 use App\Entity\User;
 use App\Repository\SemesterRepository;
@@ -24,17 +25,13 @@ class CreateExecutiveBoardMembershipType extends AbstractType
             ->add('user', EntityType::class, [
                 'label' => 'Bruker',
                 'class' => User::class,
-                'query_builder' => function (UserRepository $ur) {
-                    return $ur->createQueryBuilder('u')
-                        ->Join('u.fieldOfStudy', 'fos')
-                        ->Join('fos.department', 'd')
-                        ->where('d = :department')
-                        ->setParameter('department', $this->departmentId)
-                        ->addOrderBy('u.firstName', 'ASC');
-                },
-                'choice_label' => function ($value, $key, $index) {
-                    return $value->getFullName();
-                },
+                'query_builder' => fn (UserRepository $ur) => $ur->createQueryBuilder('u')
+                    ->Join('u.fieldOfStudy', 'fos')
+                    ->Join('fos.department', 'd')
+                    ->where('d = :department')
+                    ->setParameter('department', $this->departmentId)
+                    ->addOrderBy('u.firstName', 'ASC'),
+                'choice_label' => fn ($value, $key, $index) => $value->getFullName(),
             ])
             ->add('positionName', TextType::class, [
                 'label' => 'Stilling',
@@ -42,16 +39,12 @@ class CreateExecutiveBoardMembershipType extends AbstractType
             ->add('startSemester', EntityType::class, [
                 'label' => 'Start semester',
                 'class' => Semester::class,
-                'query_builder' => function (SemesterRepository $sr) {
-                    return $sr->queryForAllSemestersOrderedByAge();
-                },
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
             ])
             ->add('endSemester', EntityType::class, [
                 'label' => 'Slutt semester (Valgfritt)',
                 'class' => Semester::class,
-                'query_builder' => function (SemesterRepository $sr) {
-                    return $sr->queryForAllSemestersOrderedByAge();
-                },
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
                 'required' => false,
             ]);
     }
@@ -59,7 +52,7 @@ class CreateExecutiveBoardMembershipType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\ExecutiveBoardMembership',
+            'data_class' => ExecutiveBoardMembership::class,
             'departmentId' => null,
         ]);
     }

@@ -12,7 +12,7 @@ class SafeHtmlExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('safe_html', [$this, 'htmlFilter'], [
+            new TwigFilter('safe_html', $this->htmlFilter(...), [
                 'is_safe' => ['html'],
             ]),
         ];
@@ -21,7 +21,7 @@ class SafeHtmlExtension extends AbstractExtension
     public function htmlFilter($html)
     {
         foreach ($this->blacklistedTags as $tag) {
-            $html = preg_replace('/<' . $tag . '\b[^<]*(?:(?!<\/' . $tag . '>)<[^<]*)*<\/' . $tag . '>/i', '', $html);
+            $html = preg_replace('/<' . $tag . '\b[^<]*(?:(?!<\/' . $tag . '>)<[^<]*)*<\/' . $tag . '>/i', '', (string) $html);
             $html = str_replace('<' . $tag, '', $html);
         }
 

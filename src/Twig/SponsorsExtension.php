@@ -9,11 +9,8 @@ use Twig\TwigFunction;
 
 class SponsorsExtension extends AbstractExtension
 {
-    protected EntityManagerInterface $doctrine;
-
-    public function __construct(EntityManagerInterface $doctrine)
+    public function __construct(protected EntityManagerInterface $doctrine)
     {
-        $this->doctrine = $doctrine;
     }
 
     public function getName(): string
@@ -24,8 +21,8 @@ class SponsorsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_sponsors', [$this, 'getSponsors']),
-            new TwigFunction('get_sponsors_by_size', [$this, 'getSponsorsBySize']),
+            new TwigFunction('get_sponsors', $this->getSponsors(...)),
+            new TwigFunction('get_sponsors_by_size', $this->getSponsorsBySize(...)),
         ];
     }
 

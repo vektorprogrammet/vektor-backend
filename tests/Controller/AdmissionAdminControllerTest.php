@@ -136,6 +136,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
      */
     private function helperTestStatus(string $status, string $button_text, string $flash_text)
     {
+        $form = [];
         $crawler = $this->teamMemberGoTo('/kontrollpanel/opptak/fordelt');
 
         // We store these values, because we expect them to change soon
@@ -209,11 +210,11 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $mailCollector->getMessageCount());
         $message = $mailCollector->getMessages()[0];
         $body = $message->getBody();
-        $start = mb_strpos($body, 'intervju/') + 9;
-        $messageStartingWithCode = mb_substr($body, $start);
+        $start = mb_strpos((string) $body, 'intervju/') + 9;
+        $messageStartingWithCode = mb_substr((string) $body, $start);
         $end = mb_strpos($messageStartingWithCode, '"');
 
-        return mb_substr($body, $start, $end);
+        return mb_substr((string) $body, $start, $end);
     }
 
     private function helperTestCancelConfirm($client, string $response_code)

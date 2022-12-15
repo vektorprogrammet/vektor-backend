@@ -8,21 +8,11 @@ use Twig\Environment;
 
 class LoginManager
 {
-    private Environment $twig;
-    private AuthenticationUtils $authenticationUtils;
-    private RouterInterface $router;
-
     /**
      * LoginManager constructor.
      */
-    public function __construct(
-        Environment $twig,
-        AuthenticationUtils $authenticationUtils,
-        RouterInterface $router
-    ) {
-        $this->twig = $twig;
-        $this->authenticationUtils = $authenticationUtils;
-        $this->router = $router;
+    public function __construct(private readonly Environment $twig, private readonly AuthenticationUtils $authenticationUtils, private readonly RouterInterface $router)
+    {
     }
 
     public function renderLogin(string $message, string $redirectPath)

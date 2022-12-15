@@ -11,11 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SponsorsController extends BaseController
 {
-    private FileUploader $fileUploader;
-
-    public function __construct(FileUploader $fileUploader)
+    public function __construct(private readonly FileUploader $fileUploader)
     {
-        $this->fileUploader = $fileUploader;
     }
 
     public function sponsorsShow(): Response
@@ -29,7 +26,7 @@ class SponsorsController extends BaseController
         ]);
     }
 
-    public function sponsorEdit(Sponsor $sponsor = null, Request $request)
+    public function sponsorEdit(Request $request, Sponsor $sponsor = null)
     {
         $isCreate = $sponsor === null;
         $oldImgPath = '';

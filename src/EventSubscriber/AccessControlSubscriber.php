@@ -10,11 +10,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AccessControlSubscriber implements EventSubscriberInterface
 {
-    private AccessControlService $accessControlService;
-
-    public function __construct(AccessControlService $accessControlService)
+    public function __construct(private readonly AccessControlService $accessControlService)
     {
-        $this->accessControlService = $accessControlService;
     }
 
     /**

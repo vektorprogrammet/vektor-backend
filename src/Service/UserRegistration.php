@@ -10,18 +10,11 @@ use Twig\Environment;
 
 class UserRegistration
 {
-    private Environment $twig;
-    private EntityManagerInterface $em;
-    private MailerInterface $mailer;
-
     /**
      * UserRegistration constructor.
      */
-    public function __construct(Environment $twig, EntityManagerInterface $em, MailerInterface $mailer)
+    public function __construct(private readonly Environment $twig, private readonly EntityManagerInterface $em, private readonly MailerInterface $mailer)
     {
-        $this->twig = $twig;
-        $this->em = $em;
-        $this->mailer = $mailer;
     }
 
     public function setNewUserCode(User $user): string
@@ -78,7 +71,7 @@ class UserRegistration
 
         $user->setActive('1');
 
-        if (count($user->getRoles()) === 0) {
+        if ((is_countable($user->getRoles()) ? count($user->getRoles()) : 0) === 0) {
             $role = Roles::ASSISTANT;
             $user->addRole($role);
         }

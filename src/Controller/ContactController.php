@@ -15,15 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends BaseController
 {
-    private GeoLocation $geoLocation;
-    private LogService $logService;
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(GeoLocation $geoLocation, LogService $logService, EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly GeoLocation $geoLocation, private readonly LogService $logService, private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->geoLocation = $geoLocation;
-        $this->logService = $logService;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function index(Request $request, Department $department = null): Response

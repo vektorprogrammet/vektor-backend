@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class RouteDisplayExtension extends AbstractExtension
 {
-    private RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     /**
@@ -21,7 +18,7 @@ class RouteDisplayExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_path', [$this, 'getPath']),
+            new TwigFunction('get_path', $this->getPath(...)),
         ];
     }
 

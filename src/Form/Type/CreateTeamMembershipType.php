@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\Position;
 use App\Entity\Semester;
+use App\Entity\TeamMembership;
 use App\Entity\User;
 use App\Repository\PositionRepository;
 use App\Repository\SemesterRepository;
@@ -27,16 +28,14 @@ class CreateTeamMembershipType extends AbstractType
             ->add('user', EntityType::class, [
                 'label' => 'Bruker',
                 'class' => User::class,
-                'query_builder' => function (UserRepository $ur) {
-                    return $ur->createQueryBuilder('u')
-                        ->orderBy('u.firstName', 'ASC')
-                        ->Join('u.fieldOfStudy', 'fos')
-                        ->Join('fos.department', 'd')
-                        ->where('u.fieldOfStudy = fos.id')
-                        ->andWhere('fos.department = d')
-                        ->andWhere('d = ?1')
-                        ->setParameter(1, $this->department);
-                },
+                'query_builder' => fn (UserRepository $ur) => $ur->createQueryBuilder('u')
+                    ->orderBy('u.firstName', 'ASC')
+                    ->Join('u.fieldOfStudy', 'fos')
+                    ->Join('fos.department', 'd')
+                    ->where('u.fieldOfStudy = fos.id')
+                    ->andWhere('fos.department = d')
+                    ->andWhere('d = ?1')
+                    ->setParameter(1, $this->department),
             ])
             ->add('isTeamLeader', ChoiceType::class, [
                 'choices' => [
@@ -49,24 +48,18 @@ class CreateTeamMembershipType extends AbstractType
             ->add('position', EntityType::class, [
                 'label' => 'Stillingstittel',
                 'class' => Position::class,
-                'query_builder' => function (PositionRepository $pr) {
-                    return $pr->createQueryBuilder('p')
-                        ->orderBy('p.name', 'ASC');
-                },
+                'query_builder' => fn (PositionRepository $pr) => $pr->createQueryBuilder('p')
+                    ->orderBy('p.name', 'ASC'),
             ])
             ->add('startSemester', EntityType::class, [
                 'label' => 'Start semester',
                 'class' => Semester::class,
-                'query_builder' => function (SemesterRepository $sr) {
-                    return $sr->queryForAllSemestersOrderedByAge();
-                },
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
             ])
             ->add('endSemester', EntityType::class, [
                 'label' => 'Slutt semester (Valgfritt)',
                 'class' => Semester::class,
-                'query_builder' => function (SemesterRepository $sr) {
-                    return $sr->queryForAllSemestersOrderedByAge();
-                },
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
@@ -77,7 +70,7 @@ class CreateTeamMembershipType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\TeamMembership',
+            'data_class' => TeamMembership::class,
             'department' => null,
         ]);
     }

@@ -7,25 +7,21 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CompanyEmailMaker
 {
-    public const EMAIL_DOMAIN = '@vektorprogrammet.no';
-    private EntityManagerInterface $em;
-    private LogService $logger;
+    final public const EMAIL_DOMAIN = '@vektorprogrammet.no';
 
     /**
      * CompanyEmailMaker constructor.
      */
-    public function __construct(EntityManagerInterface $em, LogService $logger)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly LogService $logger)
     {
-        $this->em = $em;
-        $this->logger = $logger;
     }
 
     public function setCompanyEmailFor(User $user, $blackList): ?string
     {
         $allCompanyEmails = $this->em->getRepository(User::class)->findAllCompanyEmails();
         $allEmails = array_merge($allCompanyEmails, $blackList);
-        $firstName = mb_strtolower($this->replaceNorwegianCharacters($user->getFirstName()));
-        $fullName = mb_strtolower($this->replaceNorwegianCharacters($user->getFullName()));
+        $firstName = mb_strtolower((string) $this->replaceNorwegianCharacters($user->getFirstName()));
+        $fullName = mb_strtolower((string) $this->replaceNorwegianCharacters($user->getFullName()));
 
         // self::EMAIL_DOMAIN is constant @vektorprogrammet.no
         $email = preg_replace('/\s+/', '.', $firstName) . self::EMAIL_DOMAIN;
@@ -57,7 +53,7 @@ class CompanyEmailMaker
         setlocale(LC_ALL, 'nb_NO');
 
         // Converts accents and norwegian characters
-        $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+        $string = iconv('UTF-8', 'ASCII//TRANSLIT', (string) $string);
 
         // Removes ' and `after iconv(), and other invalid characters
         $string = preg_replace('/[^A-Za-z0-9 ]/', '', $string);

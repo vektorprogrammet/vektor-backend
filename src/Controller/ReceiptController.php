@@ -20,21 +20,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReceiptController extends BaseController
 {
-    private Sorter $sorter;
-    private FileUploader $fileUploader;
-    private EventDispatcherInterface $eventDispatcher;
-    private RoleManager $roleManager;
-
-    public function __construct(
-        Sorter $sorter,
-        FileUploader $fileUploader,
-        EventDispatcherInterface $eventDispatcher,
-        RoleManager $roleManager
-    ) {
-        $this->sorter = $sorter;
-        $this->fileUploader = $fileUploader;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->roleManager = $roleManager;
+    public function __construct(private readonly Sorter $sorter, private readonly FileUploader $fileUploader, private readonly EventDispatcherInterface $eventDispatcher, private readonly RoleManager $roleManager)
+    {
     }
 
     public function show(): Response

@@ -6,19 +6,16 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class ContentModeManager
 {
-    private RequestStack $requestStack;
-
     /**
      * ContentModeManager constructor.
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(private readonly RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
     }
 
     public function isEditMode()
     {
-        return $this->requestStack->getSession('edit-mode', false);
+        return $this->requestStack->getSession();
     }
 
     public function changeToEditMode()

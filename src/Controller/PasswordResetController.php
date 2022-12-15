@@ -17,21 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PasswordResetController extends BaseController
 {
-    private LogService $logService;
-    private PasswordManager $passwordManager;
-    private RequestStack $requestStack;
-
-    public function __construct(LogService $logService, PasswordManager $passwordManager, RequestStack $requestStack)
+    public function __construct(private readonly LogService $logService, private readonly PasswordManager $passwordManager, private readonly RequestStack $requestStack)
     {
-        $this->logService = $logService;
-        $this->passwordManager = $passwordManager;
-        $this->requestStack = $requestStack;
     }
 
     /**
-     * @return Response
-     *
-     * Shows the request new password page
+     * Shows the request new password page.
      */
     public function show(Request $request): Response
     {
@@ -48,7 +39,7 @@ class PasswordResetController extends BaseController
             if ($passwordReset === null) {
                 $errorMsg = 'Det finnes ingen brukere med denne e-postadressen';
                 $ending = '@vektorprogrammet.no';
-                if (mb_strlen($email) > mb_strlen($ending) && mb_substr($email, mb_strlen($email) - mb_strlen($ending)) === $ending) {
+                if (mb_strlen((string) $email) > mb_strlen($ending) && mb_substr((string) $email, mb_strlen((string) $email) - mb_strlen($ending)) === $ending) {
                     $errorMsg = 'Kan ikke resette passord med "@vektorprogrammet.no"-adresse. Prøv din private e-post';
                     $this->logService->info("Password reset rejected: Someone tried to reset password with a company email: $email");
                 }
@@ -88,7 +79,7 @@ class PasswordResetController extends BaseController
      *
      * This function resets stores the new password when the user goes to the url for resetting the password
      */
-    public function resetPassword($resetCode, Request $request)
+    public function resetPassword($resetCode, Request $request): RedirectResponse|Response
     {
         $passwordManager = $this->passwordManager;
 

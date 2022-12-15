@@ -15,27 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GSuiteSubscriber implements EventSubscriberInterface
 {
-    private LoggerInterface $logger;
-    private GoogleAPI $googleAPI;
-    private CompanyEmailMaker $emailMaker;
-    private GoogleUsers $userService;
-    private GoogleGroups $groupService;
-    private GoogleDrive $driveService;
-
-    public function __construct(
-        LoggerInterface $logger,
-        GoogleAPI $googleAPI,
-        CompanyEmailMaker $emailMaker,
-        GoogleUsers $userService,
-        GoogleGroups $groupService,
-        GoogleDrive $driveService
-    ) {
-        $this->logger = $logger;
-        $this->googleAPI = $googleAPI;
-        $this->emailMaker = $emailMaker;
-        $this->userService = $userService;
-        $this->groupService = $groupService;
-        $this->driveService = $driveService;
+    public function __construct(private readonly LoggerInterface $logger, private readonly GoogleAPI $googleAPI, private readonly CompanyEmailMaker $emailMaker, private readonly GoogleUsers $userService, private readonly GoogleGroups $groupService, private readonly GoogleDrive $driveService)
+    {
     }
 
     /**

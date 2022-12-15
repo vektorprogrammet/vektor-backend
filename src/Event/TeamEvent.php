@@ -7,17 +7,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class TeamEvent extends Event
 {
-    public const CREATED = 'team.created';
-    public const EDITED = 'team.edited';
-    public const DELETED = 'team.deleted';
+    final public const CREATED = 'team.created';
+    final public const EDITED = 'team.edited';
+    final public const DELETED = 'team.deleted';
 
-    private Team $team;
-    private string $oldTeamEmail;
-
-    public function __construct(Team $team, string $oldTeamEmail)
+    public function __construct(private readonly Team $team, private readonly string $oldTeamEmail)
     {
-        $this->team = $team;
-        $this->oldTeamEmail = $oldTeamEmail;
     }
 
     public function getTeam(): Team

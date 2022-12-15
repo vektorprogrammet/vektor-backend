@@ -16,18 +16,11 @@ use Twig\Environment;
 
 class ApplicationAdmission
 {
-    private EntityManagerInterface $em;
-    private Environment $twig;
-    private LoginManager $loginManager;
-
     /**
      * ApplicationAdmission constructor.
      */
-    public function __construct(EntityManagerInterface $em, Environment $twig, LoginManager $loginManager)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly Environment $twig, private readonly LoginManager $loginManager)
     {
-        $this->em = $em;
-        $this->twig = $twig;
-        $this->loginManager = $loginManager;
     }
 
     public function createApplicationForExistingAssistant(User $user): Application
@@ -72,7 +65,7 @@ class ApplicationAdmission
     {
         $existingApplications = $this->em->getRepository(Application::class)->findByEmailInAdmissionPeriod($user->getEmail(), $admissionPeriod);
 
-        return count($existingApplications) > 0;
+        return (is_countable($existingApplications) ? count($existingApplications) : 0) > 0;
     }
 
     public function setCorrectUser(Application $application)

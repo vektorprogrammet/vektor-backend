@@ -11,24 +11,11 @@ use Twig\Environment;
 
 class ApplicationSubscriber implements EventSubscriberInterface
 {
-    private MailerInterface $mailer;
-    private Environment $twig;
-    private AdmissionNotifier $admissionNotifier;
-    private UserRegistration $userRegistrationService;
-
     /**
      * ApplicationAdmissionSubscriber constructor.
      */
-    public function __construct(
-        MailerInterface $mailer,
-        Environment $twig,
-        AdmissionNotifier $admissionNotifier,
-        UserRegistration $userRegistrationService
-    ) {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->admissionNotifier = $admissionNotifier;
-        $this->userRegistrationService = $userRegistrationService;
+    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly AdmissionNotifier $admissionNotifier, private readonly UserRegistration $userRegistrationService)
+    {
     }
 
     /**
@@ -53,7 +40,7 @@ class ApplicationSubscriber implements EventSubscriberInterface
         $email = $application->getUser()->getEmail();
         try {
             $this->admissionNotifier->createSubscription($department, $email, true);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // Ignore
         }
     }

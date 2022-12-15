@@ -7,7 +7,7 @@ use App\Service\SlackMailer;
 
 class Mailer implements MailerInterface
 {
-    private $mailer;
+    private Gmail|SlackMailer|\Swift_Mailer|null $mailer = null;
 
     public function __construct(string $env, Gmail $gmail, \Swift_Mailer $swiftMailer, SlackMailer $slackMailer)
     {

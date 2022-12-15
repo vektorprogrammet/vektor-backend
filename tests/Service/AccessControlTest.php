@@ -13,16 +13,13 @@ use App\Tests\BaseKernelTestCase;
 
 class AccessControlTest extends BaseKernelTestCase
 {
-    /**
-     * @var AccessControlService
-     */
-    private $service;
+    private ?object $service = null;
     private $assistant;
     private $teamMember;
     private $inactiveTeamMember;
     private $team;
-    private $teamMemberRole;
-    private $teamLeaderRole;
+    private string $teamMemberRole;
+    private string $teamLeaderRole;
     private $executiveBoardMember;
     private $inactiveExecutiveBoardMember;
     private $inactiveUser;
@@ -348,6 +345,6 @@ class AccessControlTest extends BaseKernelTestCase
 
     private function countUnhandled(string $resource, $method = 'GET'): int
     {
-        return count($this->unhandledRepo->findByResourceAndMethod($resource, $method));
+        return is_countable($this->unhandledRepo->findByResourceAndMethod($resource, $method)) ? count($this->unhandledRepo->findByResourceAndMethod($resource, $method)) : 0;
     }
 }

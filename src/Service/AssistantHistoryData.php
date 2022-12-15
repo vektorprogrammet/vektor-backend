@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AssistantHistoryData
 {
-    private $assistantHistoryRepository;
+    private readonly \Doctrine\ORM\EntityRepository $assistantHistoryRepository;
     private $semester;
     private $department;
 
@@ -30,9 +30,6 @@ class AssistantHistoryData
         $this->semester = $em->getRepository(Semester::class)->findOrCreateCurrentSemester();
     }
 
-    /**
-     * @return $this
-     */
     public function setSemester(Semester $semester): AssistantHistoryData
     {
         $this->semester = $semester;
@@ -52,7 +49,7 @@ class AssistantHistoryData
 
     public function getAssistantHistoryCount(): int
     {
-        return count($this->assistantHistoryRepository->findByDepartmentAndSemester($this->department, $this->semester));
+        return is_countable($this->assistantHistoryRepository->findByDepartmentAndSemester($this->department, $this->semester)) ? count($this->assistantHistoryRepository->findByDepartmentAndSemester($this->department, $this->semester)) : 0;
     }
 
     public function getCount(): int
@@ -73,7 +70,7 @@ class AssistantHistoryData
     public function getPositionsCount(): int
     {
         $assistantHistories = $this->assistantHistoryRepository->findByDepartmentAndSemester($this->department, $this->semester);
-        $positionsCount = count($assistantHistories);
+        $positionsCount = is_countable($assistantHistories) ? count($assistantHistories) : 0;
         foreach ($assistantHistories as $assistant) {
             if ($assistant->getBolk() === 'Bolk 1, Bolk 2') {
                 ++$positionsCount;

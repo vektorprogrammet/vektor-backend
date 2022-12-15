@@ -34,7 +34,7 @@ class AssistantSchedulingController extends BaseController
 
         $assistants = $this->getAssistantAvailableDays($applications);
 
-        return new JsonResponse(json_encode($assistants));
+        return new JsonResponse(json_encode($assistants, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -99,7 +99,7 @@ class AssistantSchedulingController extends BaseController
             ->getRepository(SchoolCapacity::class)->findByDepartmentAndSemester($department, $currentSemester);
         $schools = $this->generateSchoolsFromSchoolCapacities($allCurrentSchoolCapacities);
 
-        return new JsonResponse(json_encode($schools));
+        return new JsonResponse(json_encode($schools, JSON_THROW_ON_ERROR));
     }
 
     /**

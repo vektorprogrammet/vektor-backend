@@ -8,11 +8,11 @@ use Symfony\Component\DomCrawler\Crawler;
 
 abstract class BaseWebTestCase extends WebTestCase
 {
-    private static $anonymousClient;
-    private static $assistantClient;
-    private static $teamMemberClient;
-    private static $teamLeaderClient;
-    private static $adminClient;
+    private static ?KernelBrowser $anonymousClient = null;
+    private static ?KernelBrowser $assistantClient = null;
+    private static ?KernelBrowser $teamMemberClient = null;
+    private static ?KernelBrowser $teamLeaderClient = null;
+    private static ?KernelBrowser $adminClient = null;
 
     protected static function createAnonymousClient(): KernelBrowser
     {

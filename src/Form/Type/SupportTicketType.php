@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Department;
+use App\Entity\SupportTicket;
 use App\Repository\DepartmentRepository;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
@@ -61,19 +62,15 @@ class SupportTicketType extends AbstractType
 
         $builder->get('department')
             ->addModelTransformer(new CallbackTransformer(
-                function (Department $department) {
-                    return $department->getId();
-                },
-                function ($id) use ($departmentRepository) {
-                    return $departmentRepository->find($id);
-                }
+                fn (Department $department) => $department->getId(),
+                fn ($id) => $departmentRepository->find($id)
             ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\SupportTicket',
+            'data_class' => SupportTicket::class,
             'department_repository' => null,
         ]);
     }

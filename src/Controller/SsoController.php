@@ -25,7 +25,7 @@ class SsoController extends BaseController
 
         try {
             $user = $this->getDoctrine()->getRepository(User::class)->findByUsernameOrEmail($username);
-        } catch (NoResultException $e) {
+        } catch (NoResultException) {
             $response->setStatusCode(401);
             $response->setContent('Username does not exist');
 
@@ -40,7 +40,7 @@ class SsoController extends BaseController
             return $response;
         }
 
-        $activeInTeam = count($user->getActiveMemberships()) > 0;
+        $activeInTeam = (is_countable($user->getActiveMemberships()) ? count($user->getActiveMemberships()) : 0) > 0;
         if (!$activeInTeam) {
             $response->setStatusCode(401);
             $response->setContent('User does not have any active team memberships');

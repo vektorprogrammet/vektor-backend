@@ -17,11 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeamAdminController extends BaseController
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function show(Department $department = null): Response
@@ -112,8 +109,8 @@ class TeamAdminController extends BaseController
         // Find all TeamMembership entities based on team
         $activeTeamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
         $inActiveTeamMemberships = $this->getDoctrine()->getRepository(TeamMembership::class)->findInactiveTeamMembershipsByTeam($team);
-        usort($activeTeamMemberships, [$this, 'sortTeamMembershipsByEndDate']);
-        usort($inActiveTeamMemberships, [$this, 'sortTeamMembershipsByEndDate']);
+        usort($activeTeamMemberships, $this->sortTeamMembershipsByEndDate(...));
+        usort($inActiveTeamMemberships, $this->sortTeamMembershipsByEndDate(...));
 
         $user = $this->getUser();
         $currentUserTeamMembership = $this->getDoctrine()->getRepository(TeamMembership::class)->findActiveTeamMembershipsByUser($user);

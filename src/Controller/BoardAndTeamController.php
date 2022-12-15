@@ -10,11 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BoardAndTeamController extends BaseController
 {
-    private GeoLocation $geoLocation;
-
-    public function __construct(GeoLocation $geoLocation)
+    public function __construct(private readonly GeoLocation $geoLocation)
     {
-        $this->geoLocation = $geoLocation;
     }
 
     public function show(): Response

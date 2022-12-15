@@ -252,7 +252,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        $class = get_class($user);
+        $class = $user::class;
         if (!$this->supportsClass($class)) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
         }

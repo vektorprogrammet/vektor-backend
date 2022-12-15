@@ -61,9 +61,7 @@ class ApplicationRepository extends EntityRepository
             ->getQuery()
             ->getArrayResult();
 
-        return array_map(function ($row) {
-            return $row['email'];
-        }, $res);
+        return array_map(fn ($row) => $row['email'], $res);
     }
 
     /**

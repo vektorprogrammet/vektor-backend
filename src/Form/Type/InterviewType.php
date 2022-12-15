@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Interview;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,7 @@ class InterviewType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Interview',
+            'data_class' => Interview::class,
         ]);
     }
 

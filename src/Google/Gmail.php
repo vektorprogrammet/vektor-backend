@@ -104,7 +104,7 @@ class Gmail extends GoogleService implements MailerInterface
 
     private function encodeBody($body)
     {
-        $body = str_replace('src="', 'src=3D"', $body);
+        $body = str_replace('src="', 'src=3D"', (string) $body);
         $body = str_replace("src='", "src=3D'", $body);
         $body = str_replace('href="', 'href=3D"', $body);
         $body = str_replace("href='", "href=3D'", $body);

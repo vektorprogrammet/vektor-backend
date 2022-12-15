@@ -15,7 +15,7 @@ class RoleManagerTest extends KernelTestCase
     /**
      * @var RoleUserMock[]
      */
-    private $mockUsers;
+    private array $mockUsers;
 
     protected function setUp(): void
     {
@@ -86,15 +86,8 @@ class RoleManagerTest extends KernelTestCase
 
 class RoleUserMock
 {
-    private $email;
-    private $roleBeforeExecution;
-    private $roleAfterExecution;
-
-    public function __construct($email, $roleBeforeExecution, $roleAfterExecution)
+    public function __construct(private $email, private $roleBeforeExecution, private $roleAfterExecution)
     {
-        $this->email = $email;
-        $this->roleBeforeExecution = $roleBeforeExecution;
-        $this->roleAfterExecution = $roleAfterExecution;
     }
 
     /**

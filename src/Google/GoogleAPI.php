@@ -4,14 +4,10 @@ namespace App\Google;
 
 class GoogleAPI
 {
-    private GoogleUsers $userService;
-    private GoogleGroups $groupService;
     private $disabled;
 
-    public function __construct(array $apiOptions, GoogleUsers $userService, GoogleGroups $groupService)
+    public function __construct(array $apiOptions, private readonly GoogleUsers $userService, private readonly GoogleGroups $groupService)
     {
-        $this->userService = $userService;
-        $this->groupService = $groupService;
         $this->disabled = $apiOptions['disabled'];
     }
 

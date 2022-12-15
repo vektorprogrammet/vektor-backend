@@ -39,7 +39,7 @@ abstract class GoogleService
         ]);
 
         if (file_exists($this->credentialsPath)) {
-            $accessToken = json_decode(file_get_contents($this->credentialsPath), true);
+            $accessToken = json_decode(file_get_contents($this->credentialsPath), true, 512, JSON_THROW_ON_ERROR);
             $client->setAccessToken($accessToken);
         }
 
@@ -47,7 +47,7 @@ abstract class GoogleService
         if (!file_exists($this->credentialsPath) || $client->isAccessTokenExpired()) {
             $accessToken = $client->fetchAccessTokenWithRefreshToken($this->refreshToken);
             if ($accessToken) {
-                file_put_contents($this->credentialsPath, json_encode($client->getAccessToken()));
+                file_put_contents($this->credentialsPath, json_encode($client->getAccessToken(), JSON_THROW_ON_ERROR));
             }
         }
 

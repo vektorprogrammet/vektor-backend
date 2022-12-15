@@ -73,9 +73,7 @@ class InterviewAnswerType extends AbstractType
     {
         $alternatives = $interviewAnswer->getInterviewQuestion()->getAlternatives();
 
-        $values = array_map(function (InterviewQuestionAlternative $a) {
-            return $a->getAlternative();
-        }, $alternatives->getValues());
+        $values = array_map(fn (InterviewQuestionAlternative $a) => $a->getAlternative(), $alternatives->getValues());
 
         return array_combine($values, $values);
     }
@@ -83,7 +81,7 @@ class InterviewAnswerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\InterviewAnswer',
+            'data_class' => InterviewAnswer::class,
         ]);
     }
 

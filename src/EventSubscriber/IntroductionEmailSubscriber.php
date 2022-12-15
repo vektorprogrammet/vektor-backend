@@ -9,13 +9,8 @@ use Twig\Environment;
 
 class IntroductionEmailSubscriber implements EventSubscriberInterface
 {
-    private MailerInterface $mailer;
-    private Environment $twig;
-
-    public function __construct(MailerInterface $mailer, Environment $twig)
+    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig)
     {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
     }
 
     /**

@@ -11,13 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationStatisticsController extends BaseController
 {
-    private AssistantHistoryData $AssistantHistoryData;
-    private ApplicationData $ApplicationData;
-
-    public function __construct(AssistantHistoryData $assistantHistoryData, ApplicationData $applicationData)
+    public function __construct(private readonly AssistantHistoryData $AssistantHistoryData, private readonly ApplicationData $ApplicationData)
     {
-        $this->AssistantHistoryData = $assistantHistoryData;
-        $this->ApplicationData = $applicationData;
     }
 
     /**

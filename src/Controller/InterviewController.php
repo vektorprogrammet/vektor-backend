@@ -32,27 +32,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class InterviewController extends BaseController
 {
-    private EventDispatcherInterface $eventDispatcher;
-    private InterviewManager $interviewManager;
-    private ReversedRoleHierarchy $reversedRoleHierarchy;
-    private ApplicationManager $applicationManager;
-
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        InterviewManager $interviewManager,
-        ReversedRoleHierarchy $reversedRoleHierarchy,
-        ApplicationManager $applicationManager
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->interviewManager = $interviewManager;
-        $this->reversedRoleHierarchy = $reversedRoleHierarchy;
-        $this->applicationManager = $applicationManager;
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly InterviewManager $interviewManager, private readonly ReversedRoleHierarchy $reversedRoleHierarchy, private readonly ApplicationManager $applicationManager)
+    {
     }
 
-    /**
-     * @return RedirectResponse|Response
-     */
-    public function conduct(Request $request, Application $application)
+    public function conduct(Request $request, Application $application): RedirectResponse|Response
     {
         if ($application->getInterview() === null) {
             throw $this->createNotFoundException();
@@ -209,7 +193,7 @@ class InterviewController extends BaseController
         $data = $form->getData();
         $mapLink = $data['mapLink'];
         if ($form->isSubmitted()) {
-            if ($mapLink && !(mb_strpos($mapLink, 'http') === 0)) {
+            if ($mapLink && !(mb_strpos((string) $mapLink, 'http') === 0)) {
                 $mapLink = 'https://' . $mapLink;
             }
         }
@@ -263,8 +247,8 @@ class InterviewController extends BaseController
 
         try {
             $headers = get_headers($link);
-            $statusCode = intval(explode(' ', $headers[0])[1]);
-        } catch (\Exception $e) {
+            $statusCode = intval(explode(' ', (string) $headers[0])[1]);
+        } catch (\Exception) {
             return false;
         }
 
@@ -464,7 +448,7 @@ class InterviewController extends BaseController
         $status = intval($request->get('status'));
         try {
             $interview->setStatus($status);
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             throw new BadRequestHttpException();
         }
         $em = $this->getDoctrine()->getManager();

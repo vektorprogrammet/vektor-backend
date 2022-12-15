@@ -14,13 +14,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class AccountController extends BaseController
 {
-    private TokenStorageInterface $tokenStorage;
-    private RequestStack $requestStack;
-
-    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack)
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly RequestStack $requestStack)
     {
-        $this->tokenStorage = $tokenStorage;
-        $this->requestStack = $requestStack;
     }
 
     public function login(Request $request): JsonResponse
@@ -39,7 +34,7 @@ class AccountController extends BaseController
 
         try {
             $user = $this->getDoctrine()->getRepository(User::class)->findByUsernameOrEmail($username);
-        } catch (NoResultException $e) {
+        } catch (NoResultException) {
             $response->setStatusCode(401);
             $response->setContent('Username does not exist');
 

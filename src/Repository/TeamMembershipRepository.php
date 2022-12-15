@@ -102,9 +102,7 @@ class TeamMembershipRepository extends EntityRepository
      */
     public function filterNotInSemester(array $teamMemberships, Semester $semester): array
     {
-        return array_filter($teamMemberships, function (TeamMembership $teamMembership) use ($semester) {
-            return $semester->isBetween($teamMembership->getStartSemester(), $teamMembership->getEndSemester());
-        });
+        return array_filter($teamMemberships, fn (TeamMembership $teamMembership) => $semester->isBetween($teamMembership->getStartSemester(), $teamMembership->getEndSemester()));
     }
 
     /**

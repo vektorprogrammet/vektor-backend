@@ -12,28 +12,18 @@ use Symfony\Component\Routing\RouterInterface;
 
 class AccessControlService
 {
-    private EntityManagerInterface $entityManager;
-    private RouterInterface $router;
-    private RoleManager $roleManager;
-    private UserService $userService;
-    private array $accessRulesCache;
-    private array $unhandledRulesCache;
+    private array $accessRulesCache = [];
+    private array $unhandledRulesCache = [];
 
     /**
      * AccessControlService constructor.
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        RouterInterface $router,
-        RoleManager $roleManager,
-        UserService $userService
+        private readonly EntityManagerInterface $entityManager,
+        private readonly RouterInterface $router,
+        private readonly RoleManager $roleManager,
+        private readonly UserService $userService
     ) {
-        $this->entityManager = $entityManager;
-        $this->router = $router;
-        $this->roleManager = $roleManager;
-        $this->userService = $userService;
-        $this->accessRulesCache = [];
-        $this->unhandledRulesCache = [];
         $this->preloadCache();
     }
 
@@ -113,9 +103,7 @@ class AccessControlService
             $this->markRuleAsUnhandledIfNotExists($resource, $method);
         }
 
-        $everyoneHasAccess = !empty(array_filter($accessRules, function (AccessRule $rule) {
-            return $rule->isEmpty();
-        }));
+        $everyoneHasAccess = !empty(array_filter($accessRules, fn (AccessRule $rule) => $rule->isEmpty()));
         if (empty($accessRules) || $everyoneHasAccess) {
             return true;
         }
@@ -220,9 +208,7 @@ class AccessControlService
     public function getRoutes(): array
     {
         $resources = $this->router->getRouteCollection()->all();
-        $resources = array_filter($resources, function ($v, string $resource) {
-            return mb_strlen($resource) > 0 && !$this->isPrivateRoute($resource);
-        }, ARRAY_FILTER_USE_BOTH);
+        $resources = array_filter($resources, fn ($v, string $resource) => mb_strlen($resource) > 0 && !$this->isPrivateRoute($resource), ARRAY_FILTER_USE_BOTH);
 
         uasort($resources, function (Route $a, Route $b) {
             if ($this->isControlPanelRoute($a) && !$this->isControlPanelRoute($b)) {

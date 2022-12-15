@@ -9,16 +9,14 @@ use Twig\TwigFunction;
 
 class AssetExtension extends AbstractExtension
 {
-    private $packages;
-    private $rootDir;
-    private KernelInterface $appKernel;
+    private readonly string $rootDir;
+    private readonly KernelInterface $appKernel;
 
     /**
      * AssetExtension constructor.
      */
-    public function __construct(Packages $packages, KernelInterface $appKernel)
+    public function __construct(private readonly Packages $packages, KernelInterface $appKernel)
     {
-        $this->packages = $packages;
         $this->rootDir = $appKernel->getProjectDir();
     }
 
@@ -28,7 +26,7 @@ class AssetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('asset_with_version', [$this, 'getAssetUrl']),
+            new TwigFunction('asset_with_version', $this->getAssetUrl(...)),
         ];
     }
 
