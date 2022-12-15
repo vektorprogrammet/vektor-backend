@@ -11,21 +11,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class TeamMembershipSubscriber implements EventSubscriberInterface
 {
-    private LoggerInterface $logger;
-    private RoleManager $roleManager;
-    private EntityManagerInterface $em;
-    private RequestStack $requestStack;
-
-    public function __construct(
-        LoggerInterface $logger,
-        RoleManager $roleManager,
-        EntityManagerInterface $em,
-        RequestStack $requestStack
-    ) {
-        $this->logger = $logger;
-        $this->roleManager = $roleManager;
-        $this->em = $em;
-        $this->requestStack = $requestStack;
+    public function __construct(private readonly LoggerInterface $logger, private readonly RoleManager $roleManager, private readonly EntityManagerInterface $em, private readonly RequestStack $requestStack)
+    {
     }
 
     /**

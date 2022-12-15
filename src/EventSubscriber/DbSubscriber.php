@@ -19,25 +19,20 @@ use Psr\Log\LoggerInterface;
 
 class DbSubscriber implements EventSubscriber
 {
-    private LoggerInterface $logger;
-    private $ignoredClasses;
-    private EntityManagerInterface $manager;
+    private array $ignoredClasses = [
+        InterviewAnswer::class,
+        InterviewQuestion::class,
+        InterviewQuestionAlternative::class,
+        InterviewScore::class,
+        PasswordReset::class,
+        AdmissionNotification::class,
+    ];
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $manager, string $env)
+    public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $manager, string $env)
     {
-        $this->logger = $logger;
-        $this->ignoredClasses = [
-            InterviewAnswer::class,
-            InterviewQuestion::class,
-            InterviewQuestionAlternative::class,
-            InterviewScore::class,
-            PasswordReset::class,
-            AdmissionNotification::class,
-        ];
         if ($env === 'staging') {
             $this->ignoredClasses[] = UnhandledAccessRule::class;
         }
-        $this->manager = $manager;
     }
 
     /**
@@ -90,7 +85,7 @@ class DbSubscriber implements EventSubscriber
     private function log(LifecycleEventArgs $args, string $action)
     {
         $obj = $args->getObject();
-        $className = get_class($obj);
+        $className = $obj::class;
 
         if (in_array($className, $this->ignoredClasses, true)) {
             return;

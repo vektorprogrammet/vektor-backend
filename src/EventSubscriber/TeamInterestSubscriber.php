@@ -10,18 +10,11 @@ use Twig\Environment;
 
 class TeamInterestSubscriber implements EventSubscriberInterface
 {
-    private MailerInterface $mailer;
-    private Environment $twig;
-    private RequestStack $requestStack;
-
     /**
      * TeamInterestSubscriber constructor.
      */
-    public function __construct(MailerInterface $mailer, Environment $twig, RequestStack $requestStack)
+    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly RequestStack $requestStack)
     {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->requestStack = $requestStack;
     }
 
     public static function getSubscribedEvents(): array

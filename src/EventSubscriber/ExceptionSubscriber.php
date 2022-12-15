@@ -11,16 +11,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    private LoggerInterface $logger;
-    private LoggerInterface $fileLogger;
-
     /**
      * ExceptionListener constructor.
      */
-    public function __construct(LoggerInterface $logger, LoggerInterface $fileLogger)
+    public function __construct(private readonly LoggerInterface $logger, private readonly LoggerInterface $fileLogger)
     {
-        $this->logger = $logger;
-        $this->fileLogger = $fileLogger;
     }
 
     public static function getSubscribedEvents(): array

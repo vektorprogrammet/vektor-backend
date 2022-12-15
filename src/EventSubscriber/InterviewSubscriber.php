@@ -18,36 +18,8 @@ use Twig\Environment;
 
 class InterviewSubscriber implements EventSubscriberInterface
 {
-    private MailerInterface $mailer;
-    private Environment $twig;
-    private LoggerInterface $logger;
-    private SbsData $sbsData;
-    private InterviewNotificationManager $notificationManager;
-    private InterviewManager $interviewManager;
-    private SmsSenderInterface $smsSender;
-    private RouterInterface $router;
-    private RequestStack $requestStack;
-
-    public function __construct(
-        MailerInterface $mailer,
-        Environment $twig,
-        LoggerInterface $logger,
-        SbsData $sbsData,
-        InterviewNotificationManager $notificationManager,
-        InterviewManager $interviewManager,
-        SmsSenderInterface $smsSender,
-        RouterInterface $router,
-        RequestStack $requestStack
-    ) {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->logger = $logger;
-        $this->sbsData = $sbsData;
-        $this->notificationManager = $notificationManager;
-        $this->interviewManager = $interviewManager;
-        $this->smsSender = $smsSender;
-        $this->router = $router;
-        $this->requestStack = $requestStack;
+    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly LoggerInterface $logger, private readonly SbsData $sbsData, private readonly InterviewNotificationManager $notificationManager, private readonly InterviewManager $interviewManager, private readonly SmsSenderInterface $smsSender, private readonly RouterInterface $router, private readonly RequestStack $requestStack)
+    {
     }
 
     /**
