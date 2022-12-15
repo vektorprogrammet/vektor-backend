@@ -60,8 +60,6 @@ class AdmissionPeriodRepository extends EntityRepository
     }
 
     /**
-     * @param \DateTime $time
-     *
      * @throws NonUniqueResultException
      */
     public function findOneWithActiveAdmissionByDepartment(Department $department, \DateTime $time = null): ?AdmissionPeriod
