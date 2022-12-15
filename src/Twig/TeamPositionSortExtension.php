@@ -11,19 +11,14 @@ use Twig\TwigFilter;
 
 class TeamPositionSortExtension extends AbstractExtension
 {
-    private Sorter $sorter;
-    private FilterService $filterService;
-
-    public function __construct(Sorter $sorter, FilterService $filterService)
+    public function __construct(private readonly Sorter $sorter, private readonly FilterService $filterService)
     {
-        $this->sorter = $sorter;
-        $this->filterService = $filterService;
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('team_position_sort', [$this, 'teamPositionSortFilter']),
+            new TwigFilter('team_position_sort', $this->teamPositionSortFilter(...)),
         ];
     }
 
