@@ -13,7 +13,7 @@ class LoadAdmissionSubscriberData extends AbstractFixture implements OrderedFixt
     {
         for ($i = 0; $i < 365; ++$i) {
             $date = new \DateTime("-$i days");
-            for ($j = 0; $j < rand(1, 10); ++$j) {
+            for ($j = 0; $j < random_int(1, 10); ++$j) {
                 $subscriber = new AdmissionSubscriber();
                 $subscriber->setDepartment($this->getReference('dep-1'));
                 $subscriber->setTimestamp($date);

@@ -296,21 +296,21 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
     {
         $application = new Application();
         $application->setUser($user);
-        $application->setPreviousParticipation(mt_rand(0, 100) < 10 ? true : false);
+        $application->setPreviousParticipation(random_int(0, 100) < 10 ? true : false);
         $application->setYearOfStudy(1);
         $application->setAdmissionPeriod($this->getReference('admission-period-current'));
-        $application->setCreated(new \DateTime('-' . mt_rand(0, 10) . 'days'));
+        $application->setCreated(new \DateTime('-' . random_int(0, 10) . 'days'));
         $randomArr = [true, false, false, false, false];
         shuffle($randomArr);
-        $application->setMonday($randomArr[0] || mt_rand(0, 100) < 20);
-        $application->setTuesday($randomArr[1] || mt_rand(0, 100) < 20);
-        $application->setWednesday($randomArr[2] || mt_rand(0, 100) < 20);
-        $application->setThursday($randomArr[3] || mt_rand(0, 100) < 20);
-        $application->setFriday($randomArr[4] || mt_rand(0, 100) < 20);
+        $application->setMonday($randomArr[0] || random_int(0, 100) < 20);
+        $application->setTuesday($randomArr[1] || random_int(0, 100) < 20);
+        $application->setWednesday($randomArr[2] || random_int(0, 100) < 20);
+        $application->setThursday($randomArr[3] || random_int(0, 100) < 20);
+        $application->setFriday($randomArr[4] || random_int(0, 100) < 20);
         $application->setHeardAboutFrom(['Stand']);
-        $application->setLanguage($randomArr[0] || mt_rand(0, 100) < 20 ? 'Norsk' : 'Engelsk');
-        $application->setPreferredGroup(mt_rand(0, 100) < 50 ? 'Bolk 1' : 'Bolk 2');
-        $application->setDoublePosition(mt_rand(0, 100) < 10 ? true : false);
+        $application->setLanguage($randomArr[0] || random_int(0, 100) < 20 ? 'Norsk' : 'Engelsk');
+        $application->setPreferredGroup(random_int(0, 100) < 50 ? 'Bolk 1' : 'Bolk 2');
+        $application->setDoublePosition(random_int(0, 100) < 10 ? true : false);
 
         $interview = new Interview();
         $interview->setInterviewed(true);
@@ -330,9 +330,9 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
 
         // The interview score
         $intScore = new InterviewScore();
-        $intScore->setSuitability(mt_rand(4, 6));
-        $intScore->setExplanatoryPower(mt_rand(4, 6));
-        $intScore->setRoleModel(mt_rand(4, 6));
+        $intScore->setSuitability(random_int(4, 6));
+        $intScore->setExplanatoryPower(random_int(4, 6));
+        $intScore->setRoleModel(random_int(4, 6));
         $intScore->setSuitableAssistant('Ja');
         $interview->setInterviewScore($intScore);
         $application->setInterview($interview);
