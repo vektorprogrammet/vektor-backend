@@ -12,11 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserAdminController extends BaseController
 {
-    private UserRegistration $userRegistration;
-
-    public function __construct(UserRegistration $userRegistration)
+    public function __construct(private readonly UserRegistration $userRegistration)
     {
-        $this->userRegistration = $userRegistration;
     }
 
     public function createUser(Request $request, Department $department = null)

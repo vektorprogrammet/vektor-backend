@@ -21,24 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AssistantController extends BaseController
 {
-    private ApplicationAdmission $applicationAdmission;
-    private GeoLocation $geoLocation;
-    private FilterService $filterService;
-    private KernelInterface $kernel;
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(
-        ApplicationAdmission $applicationAdmission,
-        GeoLocation $geoLocation,
-        FilterService $filterService,
-        KernelInterface $kernel,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->applicationAdmission = $applicationAdmission;
-        $this->geoLocation = $geoLocation;
-        $this->filterService = $filterService;
-        $this->kernel = $kernel;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private readonly ApplicationAdmission $applicationAdmission, private readonly GeoLocation $geoLocation, private readonly FilterService $filterService, private readonly KernelInterface $kernel, private readonly EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     /**
@@ -60,7 +44,7 @@ class AssistantController extends BaseController
 
     public function admissionCaseInsensitive(Request $request, $city): Response
     {
-        $city = str_replace(['æ', 'ø', 'å'], ['Æ', 'Ø', 'Å'], $city); // Make sqlite happy
+        $city = str_replace(['æ', 'ø', 'å'], ['Æ', 'Ø', 'Å'], (string) $city); // Make sqlite happy
         $department = $this->getDoctrine()
                 ->getRepository(Department::class)
                 ->findOneByCityCaseInsensitive($city);

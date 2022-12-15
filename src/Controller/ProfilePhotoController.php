@@ -11,11 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProfilePhotoController extends BaseController
 {
-    private FileUploader $fileUploader;
-
-    public function __construct(FileUploader $fileUploader)
+    public function __construct(private readonly FileUploader $fileUploader)
     {
-        $this->fileUploader = $fileUploader;
     }
 
     public function showEditProfilePhoto(User $user): Response

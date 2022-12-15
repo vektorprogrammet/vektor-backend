@@ -13,17 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends BaseController
 {
-    private FileUploader $fileUploader;
-
-    public function __construct(FileUploader $fileUploader)
+    public function __construct(private readonly FileUploader $fileUploader)
     {
-        $this->fileUploader = $fileUploader;
     }
 
-    /**
-     * @return RedirectResponse|Response
-     */
-    public function show(Request $request)
+    public function show(Request $request): RedirectResponse|Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);

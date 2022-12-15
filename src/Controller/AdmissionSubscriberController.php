@@ -24,7 +24,7 @@ class AdmissionSubscriberController extends BaseController
             try {
                 $this->get(AdmissionNotifier::class)->createSubscription($department, $subscriber->getEmail(), $subscriber->getInfoMeeting());
                 $this->addFlash('success', $subscriber->getEmail() . ' har blitt meldt på interesselisten. Du vil få en e-post når opptaket starter');
-            } catch (\InvalidArgumentException $e) {
+            } catch (\InvalidArgumentException) {
                 $this->addFlash('danger', 'Kunne ikke melde ' . $subscriber->getEmail() . ' på interesselisten. Vennligst prøv igjen.');
             }
 

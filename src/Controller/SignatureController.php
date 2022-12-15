@@ -19,7 +19,7 @@ class SignatureController extends BaseController
         }
 
         $signatureImagePath = $signature->getSignaturePath();
-        $signatureFileName = mb_substr($signatureImagePath, mb_strrpos($signatureImagePath, '/') + 1);
+        $signatureFileName = mb_substr((string) $signatureImagePath, mb_strrpos((string) $signatureImagePath, '/') + 1);
         if ($imageName !== $signatureFileName) {
             // Users can only view their own signatures
             throw new AccessDeniedException();

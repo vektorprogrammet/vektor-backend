@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SchoolCapacityController extends BaseController
 {
-    /**
-     * @return RedirectResponse|Response
-     */
-    public function create(Request $request)
+    public function create(Request $request): RedirectResponse|Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $currentSemester = $this->getSemesterOrThrow404($request);

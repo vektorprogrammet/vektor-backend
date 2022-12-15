@@ -14,19 +14,14 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TeamInterestController extends BaseController
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @param Department|null $department
-     *
-     * @return RedirectResponse|Response
      */
-    public function showTeamInterestForm(Department $department, Request $request)
+    public function showTeamInterestForm(Department $department, Request $request): RedirectResponse|Response
     {
         $semester = $this->getCurrentSemester();
         if ($semester === null) {

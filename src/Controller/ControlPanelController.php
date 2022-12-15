@@ -9,11 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ControlPanelController extends BaseController
 {
-    private SbsData $sbsData;
-
-    public function __construct(SbsData $sbsData)
+    public function __construct(private readonly SbsData $sbsData)
     {
-        $this->sbsData = $sbsData;
     }
 
     public function show(Request $request): Response

@@ -31,24 +31,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class ProfileController extends BaseController
 {
-    private RoleManager $RoleManager;
-    private LogService $logService;
-    private EventDispatcherInterface $eventDispatcher;
-    private TokenStorageInterface $tokenStorage;
-    private RequestStack $requestStack;
-
-    public function __construct(
-        RoleManager $roleManager,
-        LogService $logService,
-        EventDispatcherInterface $eventDispatcher,
-        TokenStorageInterface $tokenStorage,
-        RequestStack $requestStack
-    ) {
-        $this->RoleManager = $roleManager;
-        $this->logService = $logService;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->tokenStorage = $tokenStorage;
-        $this->requestStack = $requestStack;
+    public function __construct(private readonly RoleManager $RoleManager, private readonly LogService $logService, private readonly EventDispatcherInterface $eventDispatcher, private readonly TokenStorageInterface $tokenStorage, private readonly RequestStack $requestStack)
+    {
     }
 
     public function show(): Response
@@ -181,7 +165,7 @@ class ProfileController extends BaseController
             $em->flush();
 
             $response['success'] = true;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $response['success'] = false;
 
             $response['cause'] = 'Kunne ikke endre rettighetsnivå'; // if you want to see the exception message.

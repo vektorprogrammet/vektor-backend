@@ -12,11 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StandController extends BaseController
 {
-    private AdmissionStatistics $AdmissionStatistics;
-
-    public function __construct(AdmissionStatistics $admissionStatistics)
+    public function __construct(private readonly AdmissionStatistics $AdmissionStatistics)
     {
-        $this->AdmissionStatistics = $admissionStatistics;
     }
 
     /**

@@ -44,9 +44,7 @@ class AdmissionPeriodController extends BaseController
 
         $form->handleRequest($request);
 
-        $exists = $department->getAdmissionPeriods()->exists(function ($key, $value) use ($admissionPeriod) {
-            return $value->getSemester() === $admissionPeriod->getSemester();
-        });
+        $exists = $department->getAdmissionPeriods()->exists(fn ($key, $value) => $value->getSemester() === $admissionPeriod->getSemester());
 
         if ($exists) {
             $this->addFlash('warning', 'Opptaksperioden ' . $admissionPeriod->getSemester() . ' finnes allerede.');

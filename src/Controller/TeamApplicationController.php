@@ -17,11 +17,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class TeamApplicationController extends BaseController
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function showApplication(TeamApplication $application): Response

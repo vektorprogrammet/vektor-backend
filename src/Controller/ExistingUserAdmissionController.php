@@ -15,13 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExistingUserAdmissionController extends BaseController
 {
-    private EventDispatcherInterface $eventDispatcher;
-    private ApplicationAdmission $applicationAdmission;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, ApplicationAdmission $applicationAdmission)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly ApplicationAdmission $applicationAdmission)
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->applicationAdmission = $applicationAdmission;
     }
 
     /**

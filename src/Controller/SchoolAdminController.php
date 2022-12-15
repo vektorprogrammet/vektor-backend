@@ -17,11 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SchoolAdminController extends BaseController
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function showSpecificSchool(School $school): Response
@@ -198,6 +195,7 @@ class SchoolAdminController extends BaseController
 
     public function deleteSchoolById(School $school): JsonResponse
     {
+        $response = [];
         try {
             // This deletes the given school
             $em = $this->getDoctrine()->getManager();
@@ -206,7 +204,7 @@ class SchoolAdminController extends BaseController
 
             // a response back to AJAX
             $response['success'] = true;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // Send a response back to AJAX
             $response['success'] = false;
             $response['cause'] = 'Kunne ikke slette skolen. ';
@@ -219,6 +217,7 @@ class SchoolAdminController extends BaseController
 
     public function removeUserFromSchool(AssistantHistory $assistantHistory): JsonResponse
     {
+        $response = [];
         try {
             // This deletes the assistant history
             $em = $this->getDoctrine()->getManager();
@@ -227,7 +226,7 @@ class SchoolAdminController extends BaseController
 
             // a response back to AJAX
             $response['success'] = true;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // Send a response back to AJAX
             $response['success'] = false;
             $response['cause'] = 'Kunne ikke slette assistent historien. ';

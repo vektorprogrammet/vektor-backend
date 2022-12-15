@@ -19,10 +19,8 @@ class InterviewSchemaController extends BaseController
     /**
      * Shows and handles the submission of the create interview schema form.
      * Uses the same form as the edit .
-     *
-     * @return RedirectResponse|Response
      */
-    public function createSchema(Request $request)
+    public function createSchema(Request $request): RedirectResponse|Response
     {
         $schema = new InterviewSchema();
 
@@ -32,10 +30,8 @@ class InterviewSchemaController extends BaseController
     /**
      * Shows and handles the submission of the edit interview schema form.
      * Uses the same form as the create .
-     *
-     * @return RedirectResponse|Response
      */
-    public function editSchema(Request $request, InterviewSchema $schema)
+    public function editSchema(Request $request, InterviewSchema $schema): RedirectResponse|Response
     {
         $form = $this->createForm(InterviewSchemaType::class, $schema);
         $form->handleRequest($request);
@@ -71,6 +67,7 @@ class InterviewSchemaController extends BaseController
      */
     public function deleteSchema(InterviewSchema $schema): JsonResponse
     {
+        $response = [];
         try {
             if ($this->isGranted(Roles::TEAM_LEADER)) {
                 $em = $this->getDoctrine()->getManager();

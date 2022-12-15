@@ -10,11 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends BaseController
 {
-    private ApplicationManager $applicationManager;
-
-    public function __construct(ApplicationManager $applicationManager)
+    public function __construct(private readonly ApplicationManager $applicationManager)
     {
-        $this->applicationManager = $applicationManager;
     }
 
     public function myPage(): Response

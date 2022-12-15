@@ -16,13 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WidgetController extends BaseController
 {
-    private Sorter $sorter;
-    private AdmissionStatistics $admissionStatistics;
-
-    public function __construct(Sorter $sorter, AdmissionStatistics $admissionStatistics)
+    public function __construct(private readonly Sorter $sorter, private readonly AdmissionStatistics $admissionStatistics)
     {
-        $this->sorter = $sorter;
-        $this->admissionStatistics = $admissionStatistics;
     }
 
     public function interviews(Request $request): ?Response

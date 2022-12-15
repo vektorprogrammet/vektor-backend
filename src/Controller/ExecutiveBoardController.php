@@ -14,11 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExecutiveBoardController extends BaseController
 {
-    private RoleManager $roleManager;
-
-    public function __construct(RoleManager $roleManager)
+    public function __construct(private readonly RoleManager $roleManager)
     {
-        $this->roleManager = $roleManager;
     }
 
     public function show(): Response

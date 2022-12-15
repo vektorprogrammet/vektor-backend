@@ -11,8 +11,8 @@ class HomeController extends BaseController
 {
     public function show(GeoLocation $geoLocation): Response
     {
-        $assistantsCount = count($this->getDoctrine()->getRepository(User::class)->findAssistants());
-        $teamMembersCount = count($this->getDoctrine()->getRepository(User::class)->findTeamMembers());
+        $assistantsCount = is_countable($this->getDoctrine()->getRepository(User::class)->findAssistants()) ? count($this->getDoctrine()->getRepository(User::class)->findAssistants()) : 0;
+        $teamMembersCount = is_countable($this->getDoctrine()->getRepository(User::class)->findTeamMembers()) ? count($this->getDoctrine()->getRepository(User::class)->findTeamMembers()) : 0;
 
         $departments = $this->getDoctrine()->getRepository(Department::class)->findAll();
         $departmentsWithActiveAdmission = $this->getDoctrine()->getRepository(Department::class)->findAllWithActiveAdmission();
