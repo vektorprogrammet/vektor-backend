@@ -20,7 +20,7 @@ class AdmissionNotificationRepository extends EntityRepository
             ->getQuery()
             ->getResult();
 
-        return array_map(fn($row) => $row['email'], $res);
+        return array_map(fn ($row) => $row['email'], $res);
     }
 
     public function findEmailsBySemesterAndDepartmentAndInfoMeeting(Semester $semester, Department $department)
@@ -34,6 +34,6 @@ class AdmissionNotificationRepository extends EntityRepository
             ->getQuery()
             ->getResult();
 
-        return array_map(fn($row) => $row['email'], $res);
+        return array_map(fn ($row) => $row['email'], $res);
     }
 }
