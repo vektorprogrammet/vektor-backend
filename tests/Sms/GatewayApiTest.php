@@ -9,10 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class GatewayApiTest extends TestCase
 {
-    /**
-     * @var GatewayAPI
-     */
-    private $gatewayApi;
+    private GatewayAPI $gatewayApi;
 
     protected function setUp(): void
     {

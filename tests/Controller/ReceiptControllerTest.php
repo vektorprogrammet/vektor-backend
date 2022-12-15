@@ -9,10 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ReceiptControllerTest extends BaseWebTestCase
 {
-    /**
-     * @var array
-     */
-    private $imagePaths;
+    private array $imagePaths;
 
     public function setUp(): void
     {
@@ -226,11 +223,11 @@ class ReceiptControllerTest extends BaseWebTestCase
             }
         }
 
-        $receiptDirectoryIsEmpty = count(glob('images/receipts/*')) === 0;
+        $receiptDirectoryIsEmpty = (is_countable(glob('images/receipts/*')) ? count(glob('images/receipts/*')) : 0) === 0;
         if ($receiptDirectoryIsEmpty) {
             rmdir('images/receipts');
         }
-        $imageDirectoryIsEmpty = count(glob('images/*')) === 0;
+        $imageDirectoryIsEmpty = (is_countable(glob('images/*')) ? count(glob('images/*')) : 0) === 0;
         if ($imageDirectoryIsEmpty) {
             rmdir('images');
         }

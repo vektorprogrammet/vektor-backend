@@ -18,9 +18,9 @@ use PHPUnit\Framework\TestCase;
 
 class TeamPositionSortExtensionUnitTest extends TestCase
 {
-    private $sortExtension;
-    private $activeSemester;
-    private $latestAdmissionPeriod;
+    private readonly TeamPositionSortExtension $sortExtension;
+    private readonly Semester $activeSemester;
+    private readonly AdmissionPeriod $latestAdmissionPeriod;
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {

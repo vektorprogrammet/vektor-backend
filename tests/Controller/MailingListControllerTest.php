@@ -4,11 +4,12 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Tests\BaseWebTestCase;
+use Doctrine\ORM\EntityManager;
 
 class MailingListControllerTest extends BaseWebTestCase
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
@@ -83,7 +84,7 @@ class MailingListControllerTest extends BaseWebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // Count "@"s and return number
-        return mb_substr_count($crawler->filter('pre')->text(), '@');
+        return mb_substr_count((string) $crawler->filter('pre')->text(), '@');
     }
 
     protected function tearDown(): void
