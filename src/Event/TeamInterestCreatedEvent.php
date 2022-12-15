@@ -7,15 +7,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class TeamInterestCreatedEvent extends Event
 {
-    public const NAME = 'team_interest.created';
-    private TeamInterest $teamInterest;
+    final public const NAME = 'team_interest.created';
 
     /**
      * TeamInterestCreatedEvent constructor.
      */
-    public function __construct(TeamInterest $teamInterest)
+    public function __construct(private readonly TeamInterest $teamInterest)
     {
-        $this->teamInterest = $teamInterest;
     }
 
     /**

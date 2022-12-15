@@ -7,16 +7,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class AssistantHistoryCreatedEvent extends Event
 {
-    public const NAME = 'assistant_history.created';
-
-    private AssistantHistory $assistantHistory;
+    final public const NAME = 'assistant_history.created';
 
     /**
      * ApplicationAdmissionEvent constructor.
      */
-    public function __construct(AssistantHistory $assistantHistory)
+    public function __construct(private readonly AssistantHistory $assistantHistory)
     {
-        $this->assistantHistory = $assistantHistory;
     }
 
     public function getAssistantHistory(): AssistantHistory
