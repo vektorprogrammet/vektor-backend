@@ -6,10 +6,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.4",
+        "php": "^8 | >=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "ext-json": "^7.4",
+        "ext-json": "*",
         "ext-openssl": "*",
         "api-platform/core": "^2.7",
         "doctrine/annotations": "^1.14",
