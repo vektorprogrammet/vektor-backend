@@ -2,7 +2,7 @@
 
 ## Set up development environment
 ### Requirements:
-- [PHP](https://php.net/downloads.php) version 7.4
+- [PHP](https://php.net/downloads.php) version 8.1
 - [Node](https://nodejs.org/en/) version 14
 - [Yarn](https://yarnpkg.com)
 ### Recommended:
@@ -10,11 +10,11 @@
 - [Docker](https://www.docker.com/products/docker-desktop)
 
 ### PHP dependencies
-- php7.4-zip
-- php7.4-gd
-- php7.4-sqlite3
-- php7.4-xml
-- php7.4-mbstring
+- php8.1-zip
+- php8.1-gd
+- php8.1-sqlite3
+- php8.1-xml
+- php8.1-mbstring
 
 ### Setup:
 
