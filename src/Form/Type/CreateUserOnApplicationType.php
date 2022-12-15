@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\FieldOfStudy;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -43,20 +44,18 @@ class CreateUserOnApplicationType extends AbstractType
             ->add('fieldOfStudy', EntityType::class, [
                 'label' => 'Linje',
                 'class' => FieldOfStudy::class,
-                'query_builder' => function (EntityRepository $er) use ($options) {
-                    return $er->createQueryBuilder('f')
-                        ->orderBy('f.shortName', 'ASC')
-                        ->where('f.department = ?1')
-                        // Set the parameter to the department ID that the current user belongs to.
-                        ->setParameter(1, $options['departmentId']);
-                },
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('f')
+                    ->orderBy('f.shortName', 'ASC')
+                    ->where('f.department = ?1')
+                    // Set the parameter to the department ID that the current user belongs to.
+                    ->setParameter(1, $options['departmentId']),
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\User',
+            'data_class' => User::class,
             'departmentId' => null,
         ]);
     }

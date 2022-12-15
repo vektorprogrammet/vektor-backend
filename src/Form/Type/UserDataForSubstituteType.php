@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\FieldOfStudy;
+use App\Entity\User;
 use App\Repository\FieldOfStudyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -35,20 +36,18 @@ class UserDataForSubstituteType extends AbstractType
                 'label' => 'Linje',
                 'class' => FieldOfStudy::class,
 
-                'query_builder' => function (FieldOfStudyRepository $er) {
-                    return $er->createQueryBuilder('f')
-                        ->orderBy('f.shortName', 'ASC')
-                        ->where('f.department = ?1')
-                        // Set the parameter to the department ID that the current user belongs to.
-                        ->setParameter(1, $this->department);
-                },
+                'query_builder' => fn(FieldOfStudyRepository $er) => $er->createQueryBuilder('f')
+                    ->orderBy('f.shortName', 'ASC')
+                    ->where('f.department = ?1')
+                    // Set the parameter to the department ID that the current user belongs to.
+                    ->setParameter(1, $this->department),
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\User',
+            'data_class' => User::class,
             'department' => null,
         ]);
     }

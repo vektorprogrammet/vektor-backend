@@ -16,19 +16,15 @@ class CreateAdmissionPeriodType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $semesters = array_map(function (AdmissionPeriod $admissionPeriod) {
-            return $admissionPeriod->getSemester()->getId();
-        }, $options['admissionPeriods']);
+        $semesters = array_map(fn(AdmissionPeriod $admissionPeriod) => $admissionPeriod->getSemester()->getId(), $options['admissionPeriods']);
 
         $builder
             ->add('Semester', EntityType::class, [
                 'label' => 'Semester',
                 'class' => Semester::class,
-                'query_builder' => function (SemesterRepository $sr) use ($semesters) {
-                    return $sr->queryForAllSemestersOrderedByAge()
-                        ->where('Semester.id NOT IN (:Semesters)')
-                        ->setParameter('Semesters', $semesters);
-                },
+                'query_builder' => fn(SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge()
+                    ->where('Semester.id NOT IN (:Semesters)')
+                    ->setParameter('Semesters', $semesters),
             ])
             ->add('startDate', DateTimeType::class, [
                 'label' => 'Opptak starttidspunkt',
@@ -50,7 +46,7 @@ class CreateAdmissionPeriodType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\AdmissionPeriod',
+            'data_class' => AdmissionPeriod::class,
             'admissionPeriods' => [],
         ]);
     }

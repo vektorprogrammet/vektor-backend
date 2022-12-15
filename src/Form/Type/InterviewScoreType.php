@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\InterviewScore;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,7 +47,7 @@ class InterviewScoreType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\InterviewScore',
+            'data_class' => InterviewScore::class,
         ]);
     }
 

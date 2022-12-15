@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Department;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -55,7 +56,7 @@ class CreateDepartmentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Department',
+            'data_class' => Department::class,
         ]);
     }
 

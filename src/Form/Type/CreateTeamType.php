@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Team;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -59,7 +60,7 @@ class CreateTeamType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Team',
+            'data_class' => Team::class,
         ]);
     }
 

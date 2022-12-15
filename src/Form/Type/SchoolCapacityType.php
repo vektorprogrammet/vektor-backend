@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\School;
+use App\Entity\SchoolCapacity;
 use App\Repository\SchoolRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -20,9 +21,7 @@ class SchoolCapacityType extends AbstractType
             ->add('school', EntityType::class, [
                 'label' => 'Skole',
                 'class' => School::class,
-                'query_builder' => function (SchoolRepository $er) use ($department) {
-                    return $er->findActiveSchoolsWithoutCapacity($department);
-                },
+                'query_builder' => fn(SchoolRepository $er) => $er->findActiveSchoolsWithoutCapacity($department),
             ])
             ->add('monday', IntegerType::class)
             ->add('tuesday', IntegerType::class)
@@ -37,7 +36,7 @@ class SchoolCapacityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\SchoolCapacity',
+            'data_class' => SchoolCapacity::class,
         ]);
     }
 

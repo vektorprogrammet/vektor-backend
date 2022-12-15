@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Interview;
 use App\Entity\InterviewSchema;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
@@ -33,18 +34,16 @@ class CreateInterviewType extends AbstractType
 
         $builder->add('interviewSchema', EntityType::class, [
             'class' => InterviewSchema::class,
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('i')
-                    ->select('i')
-                    ->orderBy('i.id', 'DESC');
-            },
+            'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('i')
+                ->select('i')
+                ->orderBy('i.id', 'DESC'),
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Interview',
+            'data_class' => Interview::class,
             'roles' => [],
         ]);
     }

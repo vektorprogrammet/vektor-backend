@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Position;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +23,7 @@ class CreatePositionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Position',
+            'data_class' => Position::class,
         ]);
     }
 

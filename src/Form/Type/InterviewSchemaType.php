@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\InterviewSchema;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -33,7 +34,7 @@ class InterviewSchemaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\InterviewSchema',
+            'data_class' => InterviewSchema::class,
         ]);
     }
 

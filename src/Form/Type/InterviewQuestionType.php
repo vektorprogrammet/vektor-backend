@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\InterviewQuestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -46,7 +47,7 @@ class InterviewQuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\InterviewQuestion',
+            'data_class' => InterviewQuestion::class,
         ]);
     }
 

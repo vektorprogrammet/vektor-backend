@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Team;
+use App\Entity\TeamInterest;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -27,13 +28,11 @@ class TeamInterestType extends AbstractType
             ->add('potentialTeams', EntityType::class, [
                 'label' => 'Hvilke team er du interessert i?',
                 'class' => Team::class,
-                'query_builder' => function (EntityRepository $entityRepository) use ($department) {
-                    return $entityRepository->createQueryBuilder('team')
-                        ->select('team')
-                        ->where('team.department = :department')
-                        ->andWhere('team.active = true')
-                        ->setParameter('department', $department);
-                },
+                'query_builder' => fn(EntityRepository $entityRepository) => $entityRepository->createQueryBuilder('team')
+                    ->select('team')
+                    ->where('team.department = :department')
+                    ->andWhere('team.active = true')
+                    ->setParameter('department', $department),
                 'expanded' => true,
                 'error_bubbling' => true,
                 'multiple' => true,
@@ -43,7 +42,7 @@ class TeamInterestType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\TeamInterest',
+            'data_class' => TeamInterest::class,
             'department' => null,
         ]);
     }

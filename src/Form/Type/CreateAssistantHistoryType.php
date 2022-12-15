@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\AssistantHistory;
 use App\Entity\School;
 use App\Entity\Semester;
 use App\Repository\SemesterRepository;
@@ -24,9 +25,7 @@ class CreateAssistantHistoryType extends AbstractType
             ->add('Semester', EntityType::class, [
                 'label' => 'Semester',
                 'class' => Semester::class,
-                'query_builder' => function (SemesterRepository $sr) {
-                    return $sr->queryForAllSemestersOrderedByAge();
-                },
+                'query_builder' => fn(SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
             ])
             ->add('workdays', ChoiceType::class, [
                 'label' => 'Antall uker (4 ganger = 4 uker, 2 ganger i uken i 4 uker = 8 uker)',
@@ -44,15 +43,13 @@ class CreateAssistantHistoryType extends AbstractType
             ->add('School', EntityType::class, [
                 'label' => 'Skole',
                 'class' => School::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.name', 'ASC')
-                        ->JOIN('s.departments', 'd')
-                        // Since it is a many to many bidirectional relationship we have to use the MEMBER OF function
-                        ->where(':department MEMBER OF s.departments')
-                        ->andWhere('s.active = true')
-                        ->setParameter('department', $this->department);
-                },
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC')
+                    ->JOIN('s.departments', 'd')
+                    // Since it is a many to many bidirectional relationship we have to use the MEMBER OF function
+                    ->where(':department MEMBER OF s.departments')
+                    ->andWhere('s.active = true')
+                    ->setParameter('department', $this->department),
             ])
             ->add('bolk', ChoiceType::class, [
                 'label' => 'Bolk',
@@ -80,7 +77,7 @@ class CreateAssistantHistoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\AssistantHistory',
+            'data_class' => AssistantHistory::class,
             'department' => null,
         ]);
     }

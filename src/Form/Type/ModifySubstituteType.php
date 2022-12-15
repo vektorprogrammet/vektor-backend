@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Application;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,7 +17,7 @@ class ModifySubstituteType extends AbstractType
         $options['label'] = false;
         $builder->add('days', DaysType::class, [
             'label' => 'Dager som passer',
-            'data_class' => 'App\Entity\Application',
+            'data_class' => Application::class,
         ]);
         $builder->add('user', UserDataForSubstituteType::class, [
             'department' => $options['department'],
@@ -46,7 +47,7 @@ class ModifySubstituteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Application',
+            'data_class' => Application::class,
             'department' => null,
         ]);
     }
