@@ -52,7 +52,7 @@ class AccessRuleType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'class' => User::class,
-                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('u')
+                'query_builder' => fn (EntityRepository $er) => $er->createQueryBuilder('u')
                     ->select('u')
                     ->where('u.roles IN (:roles)')
                     ->orderBy('u.firstName')

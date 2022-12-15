@@ -16,13 +16,13 @@ class CreateAdmissionPeriodType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $semesters = array_map(fn(AdmissionPeriod $admissionPeriod) => $admissionPeriod->getSemester()->getId(), $options['admissionPeriods']);
+        $semesters = array_map(fn (AdmissionPeriod $admissionPeriod) => $admissionPeriod->getSemester()->getId(), $options['admissionPeriods']);
 
         $builder
             ->add('Semester', EntityType::class, [
                 'label' => 'Semester',
                 'class' => Semester::class,
-                'query_builder' => fn(SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge()
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge()
                     ->where('Semester.id NOT IN (:Semesters)')
                     ->setParameter('Semesters', $semesters),
             ])

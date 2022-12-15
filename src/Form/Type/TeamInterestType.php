@@ -28,7 +28,7 @@ class TeamInterestType extends AbstractType
             ->add('potentialTeams', EntityType::class, [
                 'label' => 'Hvilke team er du interessert i?',
                 'class' => Team::class,
-                'query_builder' => fn(EntityRepository $entityRepository) => $entityRepository->createQueryBuilder('team')
+                'query_builder' => fn (EntityRepository $entityRepository) => $entityRepository->createQueryBuilder('team')
                     ->select('team')
                     ->where('team.department = :department')
                     ->andWhere('team.active = true')

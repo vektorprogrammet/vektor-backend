@@ -20,13 +20,13 @@ class GenerateMailingListType extends AbstractType
             ->add('semester', EntityType::class, [
                 'class' => Semester::class,
                 'label' => 'Velg semester',
-                'query_builder' => fn(SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
                 'required' => true,
             ])
             ->add('department', EntityType::class, [
                 'class' => Department::class,
                 'label' => 'Velg region',
-                'query_builder' => fn(DepartmentRepository $dr) => $dr->queryForActive(),
+                'query_builder' => fn (DepartmentRepository $dr) => $dr->queryForActive(),
                 'required' => true,
             ])
             ->add('type', ChoiceType::class, [

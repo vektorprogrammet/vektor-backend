@@ -21,7 +21,7 @@ class SchoolCapacityType extends AbstractType
             ->add('school', EntityType::class, [
                 'label' => 'Skole',
                 'class' => School::class,
-                'query_builder' => fn(SchoolRepository $er) => $er->findActiveSchoolsWithoutCapacity($department),
+                'query_builder' => fn (SchoolRepository $er) => $er->findActiveSchoolsWithoutCapacity($department),
             ])
             ->add('monday', IntegerType::class)
             ->add('tuesday', IntegerType::class)

@@ -9,11 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateTeamMembershipCommand extends Command
 {
-    private TeamMembershipService $teamMembershipService;
-
-    public function __construct(TeamMembershipService $teamMembershipService)
+    public function __construct(private readonly TeamMembershipService $teamMembershipService)
     {
-        $this->teamMembershipService = $teamMembershipService;
         parent::__construct();
     }
 

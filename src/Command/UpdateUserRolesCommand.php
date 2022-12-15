@@ -11,10 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateUserRolesCommand extends Command
 {
-    public function __construct(RoleManager $roleManager)
+    public function __construct(private readonly RoleManager $roleManager)
     {
-        $this->roleManager = $roleManager;
-
         parent::__construct();
     }
 
@@ -22,7 +20,6 @@ class UpdateUserRolesCommand extends Command
      * @var ObjectManager
      */
     private $entityManager;
-    private RoleManager $roleManager;
     private int $rolesUpdatedCount;
 
     /**

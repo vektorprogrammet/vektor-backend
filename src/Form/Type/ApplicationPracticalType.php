@@ -77,7 +77,7 @@ class ApplicationPracticalType extends AbstractType
         $builder->add('potentialTeams', EntityType::class, [
             'label' => 'Hvilke team er du eventuelt interessert i?',
             'class' => Team::class,
-            'query_builder' => fn(EntityRepository $entityRepository) => $entityRepository->createQueryBuilder('c'),
+            'query_builder' => fn (EntityRepository $entityRepository) => $entityRepository->createQueryBuilder('c'),
             'choices' => $options['teams'],
             'expanded' => true,
             'multiple' => true,

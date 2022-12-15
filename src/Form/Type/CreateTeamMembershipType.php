@@ -28,7 +28,7 @@ class CreateTeamMembershipType extends AbstractType
             ->add('user', EntityType::class, [
                 'label' => 'Bruker',
                 'class' => User::class,
-                'query_builder' => fn(UserRepository $ur) => $ur->createQueryBuilder('u')
+                'query_builder' => fn (UserRepository $ur) => $ur->createQueryBuilder('u')
                     ->orderBy('u.firstName', 'ASC')
                     ->Join('u.fieldOfStudy', 'fos')
                     ->Join('fos.department', 'd')
@@ -48,18 +48,18 @@ class CreateTeamMembershipType extends AbstractType
             ->add('position', EntityType::class, [
                 'label' => 'Stillingstittel',
                 'class' => Position::class,
-                'query_builder' => fn(PositionRepository $pr) => $pr->createQueryBuilder('p')
+                'query_builder' => fn (PositionRepository $pr) => $pr->createQueryBuilder('p')
                     ->orderBy('p.name', 'ASC'),
             ])
             ->add('startSemester', EntityType::class, [
                 'label' => 'Start semester',
                 'class' => Semester::class,
-                'query_builder' => fn(SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
             ])
             ->add('endSemester', EntityType::class, [
                 'label' => 'Slutt semester (Valgfritt)',
                 'class' => Semester::class,
-                'query_builder' => fn(SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [

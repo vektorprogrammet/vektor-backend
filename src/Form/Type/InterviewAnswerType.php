@@ -73,7 +73,7 @@ class InterviewAnswerType extends AbstractType
     {
         $alternatives = $interviewAnswer->getInterviewQuestion()->getAlternatives();
 
-        $values = array_map(fn(InterviewQuestionAlternative $a) => $a->getAlternative(), $alternatives->getValues());
+        $values = array_map(fn (InterviewQuestionAlternative $a) => $a->getAlternative(), $alternatives->getValues());
 
         return array_combine($values, $values);
     }

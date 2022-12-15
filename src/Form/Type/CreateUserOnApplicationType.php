@@ -44,7 +44,7 @@ class CreateUserOnApplicationType extends AbstractType
             ->add('fieldOfStudy', EntityType::class, [
                 'label' => 'Linje',
                 'class' => FieldOfStudy::class,
-                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('f')
+                'query_builder' => fn (EntityRepository $er) => $er->createQueryBuilder('f')
                     ->orderBy('f.shortName', 'ASC')
                     ->where('f.department = ?1')
                     // Set the parameter to the department ID that the current user belongs to.

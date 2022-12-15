@@ -25,7 +25,7 @@ class CreateAssistantHistoryType extends AbstractType
             ->add('Semester', EntityType::class, [
                 'label' => 'Semester',
                 'class' => Semester::class,
-                'query_builder' => fn(SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
             ])
             ->add('workdays', ChoiceType::class, [
                 'label' => 'Antall uker (4 ganger = 4 uker, 2 ganger i uken i 4 uker = 8 uker)',
@@ -43,7 +43,7 @@ class CreateAssistantHistoryType extends AbstractType
             ->add('School', EntityType::class, [
                 'label' => 'Skole',
                 'class' => School::class,
-                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('s')
+                'query_builder' => fn (EntityRepository $er) => $er->createQueryBuilder('s')
                     ->orderBy('s.name', 'ASC')
                     ->JOIN('s.departments', 'd')
                     // Since it is a many to many bidirectional relationship we have to use the MEMBER OF function

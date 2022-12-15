@@ -51,26 +51,26 @@ class DaysType extends AbstractType
 
         $builder->get('tuesday')
             ->addModelTransformer(new CallbackTransformer(
-                fn($in) => !$in,
-                fn($in) => !$in
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
 
         $builder->get('wednesday')
             ->addModelTransformer(new CallbackTransformer(
-                fn($in) => !$in,
-                fn($in) => !$in
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
 
         $builder->get('thursday')
             ->addModelTransformer(new CallbackTransformer(
-                fn($in) => !$in,
-                fn($in) => !$in
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
 
         $builder->get('friday')
             ->addModelTransformer(new CallbackTransformer(
-                fn($in) => !$in,
-                fn($in) => !$in
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
     }
 
