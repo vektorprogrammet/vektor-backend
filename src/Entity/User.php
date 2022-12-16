@@ -789,9 +789,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return false;
     }
-
-//    public function isEqualTo(UserInterface $user): bool
-//    {
-//        return $this->password === $user->getPassword() && $this->user_name === $user->getUserIdentifier();
-//    }
 }
