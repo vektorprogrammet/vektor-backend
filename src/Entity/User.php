@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      groups={"create_user", "username", "edit_user"}
  * )
  */
-class User implements EquatableInterface, UserInterface, \Serializable, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -556,34 +555,6 @@ class User implements EquatableInterface, UserInterface, \Serializable, Password
     {
     }
 
-    /**
-     * @see \Serializable::serialize()
-     */
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->user_name,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ]);
-    }
-
-    /**
-     * @see \Serializable::unserialize(
-     */
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->user_name,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized);
-    }
-
     public function isAccountNonExpired(): bool
     {
         return true;
@@ -817,10 +788,5 @@ class User implements EquatableInterface, UserInterface, \Serializable, Password
         }
 
         return false;
-    }
-
-    public function isEqualTo(UserInterface $user): bool
-    {
-        return $this->password === $user->getPassword() && $this->user_name === $user->getUserIdentifier();
     }
 }
