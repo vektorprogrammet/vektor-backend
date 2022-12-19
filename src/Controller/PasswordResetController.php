@@ -7,6 +7,7 @@ use App\Form\Type\NewPasswordType;
 use App\Form\Type\PasswordResetType;
 use App\Service\LogService;
 use App\Service\PasswordManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -17,8 +18,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PasswordResetController extends BaseController
 {
-    public function __construct(private readonly LogService $logService, private readonly PasswordManager $passwordManager, private readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly LogService $logService,
+        private readonly PasswordManager $passwordManager,
+        private readonly RequestStack $requestStack,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     /**
@@ -50,8 +55,8 @@ class PasswordResetController extends BaseController
                 $this->logService->notice("Password reset rejected: Someone tried to reset the password for an inactive account: $email");
             } else {
                 $this->logService->info("{$passwordReset->getUser()} requested a password reset");
-                $oldPasswordResets = $this->getDoctrine()->getRepository(PasswordReset::class)->findByUser($passwordReset->getUser());
-                $em = $this->getDoctrine()->getManager();
+                $oldPasswordResets = $this->doctrine->getRepository(PasswordReset::class)->findByUser($passwordReset->getUser());
+                $em = $this->doctrine->getManager();
 
                 foreach ($oldPasswordResets as $oldPasswordReset) {
                     $em->remove($oldPasswordReset);
@@ -98,7 +103,7 @@ class PasswordResetController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->remove($passwordReset);
             $em->persist($user);
             $em->flush();

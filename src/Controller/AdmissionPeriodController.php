@@ -6,12 +6,17 @@ use App\Entity\AdmissionPeriod;
 use App\Entity\Department;
 use App\Form\Type\CreateAdmissionPeriodType;
 use App\Form\Type\EditAdmissionPeriodType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionPeriodController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function show(): Response
     {
         // Finds the departmentId for the current logged-in user
@@ -22,7 +27,7 @@ class AdmissionPeriodController extends BaseController
 
     public function showByDepartment(Department $department): Response
     {
-        $admissionPeriods = $this->getDoctrine()
+        $admissionPeriods = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findByDepartmentOrderedByTime($department);
 
@@ -52,7 +57,7 @@ class AdmissionPeriodController extends BaseController
         if ($form->isSubmitted() && $form->isValid() && !$exists) {
             $admissionPeriod->setDepartment($department);
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($admissionPeriod);
             $em->flush();
 
@@ -74,7 +79,7 @@ class AdmissionPeriodController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($admissionPeriod);
             $em->flush();
 
@@ -90,7 +95,7 @@ class AdmissionPeriodController extends BaseController
 
     public function delete(AdmissionPeriod $admissionPeriod): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $infoMeeting = $admissionPeriod->getInfoMeeting();
         if ($infoMeeting) {
             $em->remove($infoMeeting);

@@ -11,6 +11,7 @@ use App\Event\ApplicationCreatedEvent;
 use App\Form\Type\ApplicationType;
 use App\Role\Roles;
 use App\Service\InterviewCounter;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +24,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class AdmissionAdminController extends BaseController
 {
-    public function __construct(private readonly InterviewCounter $InterviewCounter, private readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly InterviewCounter $InterviewCounter,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     /**
@@ -43,7 +47,7 @@ class AdmissionAdminController extends BaseController
         $semester = $this->getSemesterOrThrow404($request);
         $department = $this->getDepartmentOrThrow404($request);
 
-        $admissionPeriod = $this->getDoctrine()
+        $admissionPeriod = $this->doctrine
                 ->getRepository(AdmissionPeriod::class)
                 ->findOneByDepartmentAndSemester($department, $semester);
 
@@ -53,7 +57,7 @@ class AdmissionAdminController extends BaseController
 
         $applications = [];
         if ($admissionPeriod !== null) {
-            $applications = $this->getDoctrine()
+            $applications = $this->doctrine
                 ->getRepository(Application::class)
                 ->findNewApplicationsByAdmissionPeriod($admissionPeriod);
         }
@@ -73,13 +77,13 @@ class AdmissionAdminController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
         if (!$this->isGranted(Roles::TEAM_LEADER) && $this->getUser()->getDepartment() !== $department) {
             throw $this->createAccessDeniedException();
         }
 
-        $applicationRepo = $this->getDoctrine()->getRepository(Application::class);
+        $applicationRepo = $this->doctrine->getRepository(Application::class);
 
         $applications = [];
         $interviewDistributions = [];
@@ -112,7 +116,7 @@ class AdmissionAdminController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
         if (!$this->isGranted(Roles::TEAM_LEADER) && $this->getUser()->getDepartment() !== $department) {
             throw $this->createAccessDeniedException();
@@ -120,7 +124,7 @@ class AdmissionAdminController extends BaseController
 
         $applications = [];
         if ($admissionPeriod !== null) {
-            $applications = $this->getDoctrine()
+            $applications = $this->doctrine
                 ->getRepository(Application::class)
                 ->findInterviewedApplicants($admissionPeriod);
         }
@@ -145,7 +149,7 @@ class AdmissionAdminController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         if (!$this->isGranted(Roles::TEAM_LEADER) && $this->getUser()->getDepartment() !== $department) {
@@ -153,7 +157,7 @@ class AdmissionAdminController extends BaseController
         }
         $applications = [];
         if ($admissionPeriod !== null) {
-            $applications = $this->getDoctrine()
+            $applications = $this->doctrine
                 ->getRepository(Application::class)
                 ->findExistingApplicants($admissionPeriod);
         }
@@ -174,7 +178,7 @@ class AdmissionAdminController extends BaseController
      */
     public function deleteApplicationById(Application $application)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         $em->remove($application);
         $em->flush();
@@ -186,7 +190,7 @@ class AdmissionAdminController extends BaseController
 
     public function deleteApplicationExistingAssistant(Application $application)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($application);
         $em->flush();
 
@@ -209,11 +213,11 @@ class AdmissionAdminController extends BaseController
         // Get the ids from the form
         $applicationIds = array_map('intval', $request->request->get('application')['id']);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // Delete the applications
         foreach ($applicationIds as $id) {
-            $application = $this->getDoctrine()->getRepository(Application::class)->find($id);
+            $application = $this->doctrine->getRepository(Application::class)->find($id);
 
             if ($application !== null) {
                 $em->remove($application);
@@ -231,10 +235,10 @@ class AdmissionAdminController extends BaseController
 
     public function createApplication(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $department = $this->getUser()->getDepartment();
         $currentSemester = $this->getCurrentSemester();
-        $admissionPeriod = $this->getDoctrine()
+        $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $currentSemester);
         if ($admissionPeriod === null) {
@@ -290,7 +294,7 @@ class AdmissionAdminController extends BaseController
         $user = $this->getUser();
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         if (!$this->isGranted(Roles::ADMIN) && $user->getDepartment() !== $department) {
@@ -300,13 +304,13 @@ class AdmissionAdminController extends BaseController
         $applicationsWithTeamInterest = [];
         $teams = [];
         if ($admissionPeriod !== null) {
-            $applicationsWithTeamInterest = $this->getDoctrine()
+            $applicationsWithTeamInterest = $this->doctrine
                 ->getRepository(Application::class)
                 ->findApplicationByTeamInterestAndAdmissionPeriod($admissionPeriod);
-            $teams = $this->getDoctrine()->getRepository(Team::class)->findByTeamInterestAndAdmissionPeriod($admissionPeriod);
+            $teams = $this->doctrine->getRepository(Team::class)->findByTeamInterestAndAdmissionPeriod($admissionPeriod);
         }
 
-        $possibleApplicants = $this->getDoctrine()
+        $possibleApplicants = $this->doctrine
             ->getRepository(TeamInterest::class)
             ->findBy(['semester' => $semester, 'department' => $department]);
 

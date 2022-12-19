@@ -6,6 +6,7 @@ use App\Entity\Department;
 use App\Entity\TeamInterest;
 use App\Event\TeamInterestCreatedEvent;
 use App\Form\Type\TeamInterestType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +15,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TeamInterestController extends BaseController
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     /**
@@ -37,7 +40,7 @@ class TeamInterestController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $this->getDoctrine()->getManager();
+            $manager = $this->doctrine->getManager();
             $manager->persist($teamInterest);
             $manager->flush();
 

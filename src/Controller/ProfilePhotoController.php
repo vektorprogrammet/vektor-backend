@@ -5,14 +5,17 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Role\Roles;
 use App\Service\FileUploader;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfilePhotoController extends BaseController
 {
-    public function __construct(private readonly FileUploader $fileUploader)
-    {
+    public function __construct(
+        private readonly FileUploader $fileUploader,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function showEditProfilePhoto(User $user): Response
@@ -42,7 +45,7 @@ class ProfilePhotoController extends BaseController
         $this->fileUploader->deleteProfileImage($user->getPicturePath());
         $user->setPicturePath($picturePath);
 
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->flush();
 
         return new JsonResponse('Upload OK');
     }

@@ -7,25 +7,28 @@ use App\Entity\CertificateRequest;
 use App\Entity\Signature;
 use App\Form\Type\CreateSignatureType;
 use App\Service\FileUploader;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends BaseController
 {
-    public function __construct(private readonly FileUploader $fileUploader)
-    {
+    public function __construct(
+        private readonly FileUploader $fileUploader,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function show(Request $request): RedirectResponse|Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         $assistants = $em->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($department, $semester);
 
-        $signature = $this->getDoctrine()->getRepository(Signature::class)->findByUser($this->getUser());
+        $signature = $this->doctrine->getRepository(Signature::class)->findByUser($this->getUser());
         $oldPath = '';
         if ($signature === null) {
             $signature = new Signature();
@@ -49,7 +52,7 @@ class CertificateController extends BaseController
             }
 
             $signature->setUser($this->getUser());
-            $manager = $this->getDoctrine()->getManager();
+            $manager = $this->doctrine->getManager();
             $manager->persist($signature);
             $manager->flush();
 
@@ -59,7 +62,7 @@ class CertificateController extends BaseController
         }
 
         // Finds all the certificate requests
-        $certificateRequests = $this->getDoctrine()->getRepository(CertificateRequest::class)->findAll();
+        $certificateRequests = $this->doctrine->getRepository(CertificateRequest::class)->findAll();
 
         return $this->render('certificate/index.html.twig', [
             'certificateRequests' => $certificateRequests,

@@ -6,20 +6,23 @@ use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
 use App\Entity\User;
 use App\Service\GeoLocation;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class BoardAndTeamController extends BaseController
 {
-    public function __construct(private readonly GeoLocation $geoLocation)
-    {
+    public function __construct(
+        private readonly GeoLocation $geoLocation,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function show(): Response
     {
         // Find all departments
-        $departments = $this->getDoctrine()->getRepository(Department::class)->findActive();
+        $departments = $this->doctrine->getRepository(Department::class)->findActive();
         $departments = $this->geoLocation->sortDepartmentsByDistanceFromClient($departments);
-        $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
 
         $numberOfTeams = 0;
         foreach ($departments as $department) {
@@ -29,7 +32,7 @@ class BoardAndTeamController extends BaseController
         $departmentStats = [];
         foreach ($departments as $department) {
             $currentSemester = $this->getCurrentSemester();
-            $userRepository = $this->getDoctrine()->getRepository(User::class);
+            $userRepository = $this->doctrine->getRepository(User::class);
             $departmentStats[$department->getCity()] = [
                 'numTeamMembers' => sizeof($userRepository->findUsersInDepartmentWithTeamMembershipInSemester($department, $currentSemester)),
                 'numAssistants' => sizeof($userRepository->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $currentSemester)),

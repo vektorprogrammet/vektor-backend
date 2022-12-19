@@ -9,27 +9,32 @@ use App\Event\SupportTicketCreatedEvent;
 use App\Form\Type\SupportTicketType;
 use App\Service\GeoLocation;
 use App\Service\LogService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends BaseController
 {
-    public function __construct(private readonly GeoLocation $geoLocation, private readonly LogService $logService, private readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly GeoLocation $geoLocation,
+        private readonly LogService $logService,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function index(Request $request, Department $department = null): Response
     {
         if ($department === null) {
             $department = $this->geoLocation
-                ->findNearestDepartment($this->getDoctrine()->getRepository(Department::class)->findAll());
+                ->findNearestDepartment($this->doctrine->getRepository(Department::class)->findAll());
         }
 
         $supportTicket = new SupportTicket();
         $supportTicket->setDepartment($department);
         $form = $this->createForm(SupportTicketType::class, $supportTicket, [
-            'department_repository' => $this->getDoctrine()->getRepository(Department::class),
+            'department_repository' => $this->doctrine->getRepository(Department::class),
         ]);
 
         $form->handleRequest($request);
@@ -43,7 +48,7 @@ class ContactController extends BaseController
             return $this->redirectToRoute('contact_department', ['id' => $supportTicket->getDepartment()->getId()]);
         }
 
-        $board = $this->getDoctrine()->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
         $scrollToForm = $form->isSubmitted() && !$form->isValid();
 
         return $this->render('contact/index.html.twig', [

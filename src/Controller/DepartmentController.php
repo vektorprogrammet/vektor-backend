@@ -4,12 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Department;
 use App\Form\Type\CreateDepartmentType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DepartmentController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function show(): Response
     {
         return $this->render('department_admin/index.html.twig', []);
@@ -24,7 +29,7 @@ class DepartmentController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($department);
             $em->flush();
 
@@ -40,7 +45,7 @@ class DepartmentController extends BaseController
 
     public function deleteDepartmentById(Department $department): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($department);
         $em->flush();
 
@@ -56,7 +61,7 @@ class DepartmentController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($department);
             $em->flush();
 

@@ -5,19 +5,22 @@ namespace App\Controller;
 use App\Entity\Sponsor;
 use App\Form\Type\SponsorType;
 use App\Service\FileUploader;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SponsorsController extends BaseController
 {
-    public function __construct(private readonly FileUploader $fileUploader)
-    {
+    public function __construct(
+        private readonly FileUploader $fileUploader,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function sponsorsShow(): Response
     {
-        $sponsors = $this->getDoctrine()
+        $sponsors = $this->doctrine
             ->getRepository(Sponsor::class)
             ->findAll();
 
@@ -48,7 +51,7 @@ class SponsorsController extends BaseController
                 $sponsor->setLogoImagePath($oldImgPath);
             }
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($sponsor);
             $em->flush();
 
@@ -73,7 +76,7 @@ class SponsorsController extends BaseController
             $this->fileUploader->deleteSponsor($sponsor->getLogoImagePath());
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($sponsor);
         $em->flush();
 

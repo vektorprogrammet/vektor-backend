@@ -4,11 +4,16 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class SsoController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function login(Request $request): JsonResponse
     {
         $response = new JsonResponse();
@@ -24,7 +29,7 @@ class SsoController extends BaseController
         }
 
         try {
-            $user = $this->getDoctrine()->getRepository(User::class)->findByUsernameOrEmail($username);
+            $user = $this->doctrine->getRepository(User::class)->findByUsernameOrEmail($username);
         } catch (NoResultException) {
             $response->setStatusCode(401);
             $response->setContent('Username does not exist');

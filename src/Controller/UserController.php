@@ -6,12 +6,15 @@ use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\AssistantHistory;
 use App\Service\ApplicationManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends BaseController
 {
-    public function __construct(private readonly ApplicationManager $applicationManager)
-    {
+    public function __construct(
+        private readonly ApplicationManager $applicationManager,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function myPage(): Response
@@ -20,13 +23,13 @@ class UserController extends BaseController
 
         $department = $user->getDepartment();
         $semester = $this->getCurrentSemester();
-        $admissionPeriod = $this->getDoctrine()
+        $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         $activeApplication = null;
         if (null !== $admissionPeriod) {
-            $activeApplication = $this->getDoctrine()
+            $activeApplication = $this->doctrine
                 ->getRepository(Application::class)
                 ->findByUserInAdmissionPeriod($user, $admissionPeriod);
         }
@@ -35,7 +38,7 @@ class UserController extends BaseController
         if (null !== $activeApplication) {
             $applicationStatus = $this->applicationManager->getApplicationStatus($activeApplication);
         }
-        $activeAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($user);
+        $activeAssistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($user);
 
         return $this->render('my_page/my_page.html.twig', [
             'active_application' => $activeApplication,
@@ -49,7 +52,7 @@ class UserController extends BaseController
         if (!$this->getUser()->isActive()) {
             throw $this->createAccessDeniedException();
         }
-        $activeAssistantHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($this->getUser());
+        $activeAssistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($this->getUser());
         if (empty($activeAssistantHistories)) {
             throw $this->createNotFoundException();
         }
@@ -58,7 +61,7 @@ class UserController extends BaseController
         $partnerCount = 0;
 
         foreach ($activeAssistantHistories as $activeHistory) {
-            $schoolHistories = $this->getDoctrine()->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesBySchool($activeHistory->getSchool());
+            $schoolHistories = $this->doctrine->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesBySchool($activeHistory->getSchool());
             $partners = [];
 
             foreach ($schoolHistories as $sh) {

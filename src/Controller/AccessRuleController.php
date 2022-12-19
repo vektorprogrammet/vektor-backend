@@ -9,21 +9,25 @@ use App\Form\Type\RoutingAccessRuleType;
 use App\Role\ReversedRoleHierarchy;
 use App\Role\Roles;
 use App\Service\AccessControlService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AccessRuleController extends AbstractController
 {
-    public function __construct(private readonly AccessControlService $accessControlService, private readonly ReversedRoleHierarchy $reversedRoleHierarchy)
-    {
+    public function __construct(
+        private readonly AccessControlService $accessControlService,
+        private readonly ReversedRoleHierarchy $reversedRoleHierarchy,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function index(): Response
     {
-        $customRules = $this->getDoctrine()->getRepository(AccessRule::class)->findCustomRules();
-        $routingRules = $this->getDoctrine()->getRepository(AccessRule::class)->findRoutingRules();
-        $unhandledRules = $this->getDoctrine()->getRepository(UnhandledAccessRule::class)->findAll();
+        $customRules = $this->doctrine->getRepository(AccessRule::class)->findCustomRules();
+        $routingRules = $this->doctrine->getRepository(AccessRule::class)->findRoutingRules();
+        $unhandledRules = $this->doctrine->getRepository(UnhandledAccessRule::class)->findAll();
 
         return $this->render('admin/access_rule/index.html.twig', [
             'customRules' => $customRules,
@@ -107,7 +111,7 @@ class AccessRuleController extends AbstractController
 
     public function delete(AccessRule $accessRule): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($accessRule);
         $em->flush();
 
