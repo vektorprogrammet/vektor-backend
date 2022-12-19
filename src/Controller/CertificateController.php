@@ -17,8 +17,7 @@ class CertificateController extends BaseController
     public function __construct(
         private readonly FileUploader $fileUploader,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function show(Request $request): RedirectResponse|Response

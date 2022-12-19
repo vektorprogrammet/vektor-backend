@@ -20,8 +20,7 @@ class AccessRuleController extends AbstractController
         private readonly AccessControlService $accessControlService,
         private readonly ReversedRoleHierarchy $reversedRoleHierarchy,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function index(): Response

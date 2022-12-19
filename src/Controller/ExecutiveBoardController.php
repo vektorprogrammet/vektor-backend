@@ -18,8 +18,7 @@ class ExecutiveBoardController extends BaseController
     public function __construct(
         private readonly RoleManager $roleManager,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function show(): Response

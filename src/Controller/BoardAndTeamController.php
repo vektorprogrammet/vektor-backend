@@ -14,8 +14,7 @@ class BoardAndTeamController extends BaseController
     public function __construct(
         private readonly GeoLocation $geoLocation,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function show(): Response

@@ -16,8 +16,7 @@ class StandController extends BaseController
     public function __construct(
         private readonly AdmissionStatistics $AdmissionStatistics,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     /**

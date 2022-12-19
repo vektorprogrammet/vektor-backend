@@ -27,8 +27,7 @@ class ReceiptController extends BaseController
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly RoleManager $roleManager,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function show(): Response

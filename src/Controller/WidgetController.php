@@ -21,8 +21,7 @@ class WidgetController extends BaseController
         private readonly Sorter $sorter,
         private readonly AdmissionStatistics $admissionStatistics,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function interviews(Request $request): ?Response

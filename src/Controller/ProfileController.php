@@ -39,8 +39,7 @@ class ProfileController extends BaseController
         private readonly TokenStorageInterface $tokenStorage,
         private readonly RequestStack $requestStack,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function show(): Response

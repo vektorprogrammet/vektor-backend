@@ -23,8 +23,7 @@ class PasswordResetController extends BaseController
         private readonly PasswordManager $passwordManager,
         private readonly RequestStack $requestStack,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     /**

@@ -18,8 +18,7 @@ class TeamInterestController extends BaseController
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     /**

@@ -21,8 +21,7 @@ class TeamAdminController extends BaseController
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function show(Department $department = null): Response

@@ -20,8 +20,7 @@ class ExistingUserAdmissionController extends BaseController
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ApplicationAdmission $applicationAdmission,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     /**

@@ -13,8 +13,7 @@ class ControlPanelController extends BaseController
     public function __construct(
         private readonly SbsData $sbsData,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function show(Request $request): Response

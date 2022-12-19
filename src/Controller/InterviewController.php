@@ -39,8 +39,7 @@ class InterviewController extends BaseController
         private readonly ReversedRoleHierarchy $reversedRoleHierarchy,
         private readonly ApplicationManager $applicationManager,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function conduct(Request $request, Application $application): RedirectResponse|Response

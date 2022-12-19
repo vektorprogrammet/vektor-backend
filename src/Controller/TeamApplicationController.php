@@ -21,8 +21,7 @@ class TeamApplicationController extends BaseController
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function showApplication(TeamApplication $application): Response

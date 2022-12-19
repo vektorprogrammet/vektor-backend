@@ -16,8 +16,7 @@ class ApplicationStatisticsController extends BaseController
         private readonly AssistantHistoryData $AssistantHistoryData,
         private readonly ApplicationData $ApplicationData,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     /**

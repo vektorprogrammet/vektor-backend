@@ -28,8 +28,7 @@ class AdmissionAdminController extends BaseController
         private readonly InterviewCounter $InterviewCounter,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     /**

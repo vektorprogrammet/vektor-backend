@@ -29,8 +29,7 @@ class AssistantController extends BaseController
         private readonly KernelInterface $kernel,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     /**

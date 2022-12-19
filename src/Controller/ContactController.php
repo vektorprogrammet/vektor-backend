@@ -21,8 +21,7 @@ class ContactController extends BaseController
         private readonly LogService $logService,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry $doctrine
-    )
-    {
+    ) {
     }
 
     public function index(Request $request, Department $department = null): Response
