@@ -6,12 +6,13 @@ use App\Entity\AdmissionPeriod;
 use App\Service\ApplicationData;
 use App\Service\AssistantHistoryData;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationStatisticsController extends BaseController
 {
-    public function __construct(private readonly AssistantHistoryData $AssistantHistoryData, private readonly ApplicationData $ApplicationData)
+    public function __construct(private readonly AssistantHistoryData $AssistantHistoryData, private readonly ApplicationData $ApplicationData, private readonly ManagerRegistry $doctrine)
     {
     }
 
@@ -22,7 +23,7 @@ class ApplicationStatisticsController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->getDoctrine()
+        $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 

@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\AdmissionPeriod;
 use App\Service\SbsData;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ControlPanelController extends BaseController
 {
-    public function __construct(private readonly SbsData $sbsData)
+    public function __construct(private readonly SbsData $sbsData, private readonly ManagerRegistry $doctrine)
     {
     }
 
@@ -18,7 +19,7 @@ class ControlPanelController extends BaseController
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
 
-        $admissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         // Return the view to be rendered

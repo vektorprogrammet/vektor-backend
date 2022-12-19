@@ -7,12 +7,13 @@ use App\Entity\User;
 use App\Form\Type\CreateUserType;
 use App\Role\Roles;
 use App\Service\UserRegistration;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserAdminController extends BaseController
 {
-    public function __construct(private readonly UserRegistration $userRegistration)
+    public function __construct(private readonly UserRegistration $userRegistration, private readonly ManagerRegistry $doctrine)
     {
     }
 
@@ -38,7 +39,7 @@ class UserAdminController extends BaseController
             $role = Roles::ASSISTANT;
             $user->addRole($role);
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -57,13 +58,13 @@ class UserAdminController extends BaseController
     public function show(): Response
     {
         // Finds all the departments
-        $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();
+        $activeDepartments = $this->doctrine->getRepository(Department::class)->findActive();
 
         // Finds the department for the current logged in user
         $department = $this->getUser()->getDepartment();
 
-        $activeUsers = $this->getDoctrine()->getRepository(User::class)->findAllActiveUsersByDepartment($department);
-        $inActiveUsers = $this->getDoctrine()->getRepository(User::class)->findAllInActiveUsersByDepartment($department);
+        $activeUsers = $this->doctrine->getRepository(User::class)->findAllActiveUsersByDepartment($department);
+        $inActiveUsers = $this->doctrine->getRepository(User::class)->findAllInActiveUsersByDepartment($department);
 
         return $this->render('user_admin/index.html.twig', [
             'activeUsers' => $activeUsers,
@@ -76,10 +77,10 @@ class UserAdminController extends BaseController
     public function showUsersByDepartment(Department $department): Response
     {
         // Finds all the departments
-        $activeDepartments = $this->getDoctrine()->getRepository(Department::class)->findActive();
+        $activeDepartments = $this->doctrine->getRepository(Department::class)->findActive();
 
-        $activeUsers = $this->getDoctrine()->getRepository(User::class)->findAllActiveUsersByDepartment($department);
-        $inActiveUsers = $this->getDoctrine()->getRepository(User::class)->findAllInActiveUsersByDepartment($department);
+        $activeUsers = $this->doctrine->getRepository(User::class)->findAllActiveUsersByDepartment($department);
+        $inActiveUsers = $this->doctrine->getRepository(User::class)->findAllInActiveUsersByDepartment($department);
 
         // Renders the view with the variables
         return $this->render('user_admin/index.html.twig', [
@@ -95,7 +96,7 @@ class UserAdminController extends BaseController
         if ($user === $this->getUser()) {
             $this->addFlash('error', 'Du kan ikke slette deg selv.');
         } elseif ($this->isGranted(ROLES::ADMIN) || $user->getDepartment() === $this->getUser()->getDepartment()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->remove($user);
             $em->flush();
             $this->addFlash('success', "$user har blitt slettet.");

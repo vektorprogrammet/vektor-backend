@@ -6,12 +6,13 @@ use App\Entity\AssistantHistory;
 use App\Form\Type\CreateAssistantHistoryType;
 use App\Role\Roles;
 use App\Service\LogService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
-    public function __construct(private readonly LogService $logService)
+    public function __construct(private readonly LogService $logService, private readonly ManagerRegistry $doctrine)
     {
     }
 
@@ -21,7 +22,7 @@ class AssistantHistoryController extends BaseController
             $this->createAccessDeniedException();
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($assistantHistory);
         $em->flush();
 
@@ -35,7 +36,7 @@ class AssistantHistoryController extends BaseController
 
     public function edit(Request $request, AssistantHistory $assistantHistory)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         $department = $assistantHistory->getUser()->getDepartment();
         $form = $this->createForm(CreateAssistantHistoryType::class, $assistantHistory, [

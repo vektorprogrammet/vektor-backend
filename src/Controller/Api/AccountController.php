@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\DataTransferObject\UserDto;
 use App\Entity\User;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class AccountController extends BaseController
 {
-    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly RequestStack $requestStack)
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly RequestStack $requestStack, private readonly ManagerRegistry $doctrine)
     {
     }
 
@@ -33,7 +34,7 @@ class AccountController extends BaseController
         }
 
         try {
-            $user = $this->getDoctrine()->getRepository(User::class)->findByUsernameOrEmail($username);
+            $user = $this->doctrine->getRepository(User::class)->findByUsernameOrEmail($username);
         } catch (NoResultException) {
             $response->setStatusCode(401);
             $response->setContent('Username does not exist');

@@ -6,12 +6,17 @@ use App\Entity\AdmissionSubscriber;
 use App\Entity\Department;
 use App\Form\Type\AdmissionSubscriberType;
 use App\Service\AdmissionNotifier;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdmissionSubscriberController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function subscribePage(Request $request, Department $department)
     {
         $subscriber = new AdmissionSubscriber();
@@ -45,7 +50,7 @@ class AdmissionSubscriberController extends BaseController
         if (!$email || !$departmentId) {
             return new JsonResponse('Email or department missing', 400);
         }
-        $department = $this->getDoctrine()->getRepository(Department::class)->find($departmentId);
+        $department = $this->doctrine->getRepository(Department::class)->find($departmentId);
         if (!$department) {
             return new JsonResponse('Invalid department', 400);
         }
@@ -61,14 +66,14 @@ class AdmissionSubscriberController extends BaseController
 
     public function unsubscribe($code): RedirectResponse
     {
-        $subscriber = $this->getDoctrine()->getRepository(AdmissionSubscriber::class)->findByUnsubscribeCode($code);
+        $subscriber = $this->doctrine->getRepository(AdmissionSubscriber::class)->findByUnsubscribeCode($code);
         $this->addFlash('title', 'Opptaksvarsel - Avmelding');
         if (!$subscriber) {
             $this->addFlash('message', 'Du vil ikke lengre motta varsler om opptak');
         } else {
             $email = $subscriber->getEmail();
             $this->addFlash('message', "Du vil ikke lengre motta varsler om opptak på $email");
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->remove($subscriber);
             $em->flush();
         }

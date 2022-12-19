@@ -11,6 +11,7 @@ use App\Service\FileUploader;
 use App\Service\RoleManager;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,16 +21,16 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReceiptController extends BaseController
 {
-    public function __construct(private readonly Sorter $sorter, private readonly FileUploader $fileUploader, private readonly EventDispatcherInterface $eventDispatcher, private readonly RoleManager $roleManager)
+    public function __construct(private readonly Sorter $sorter, private readonly FileUploader $fileUploader, private readonly EventDispatcherInterface $eventDispatcher, private readonly RoleManager $roleManager, private readonly ManagerRegistry $doctrine)
     {
     }
 
     public function show(): Response
     {
-        $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
-        $refundedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
-        $pendingReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
-        $rejectedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REJECTED);
+        $usersWithReceipts = $this->doctrine->getRepository(User::class)->findAllUsersWithReceipts();
+        $refundedReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
+        $pendingReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
+        $rejectedReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REJECTED);
 
         $refundedReceiptStatistics = new ReceiptStatistics($refundedReceipts);
         $totalPayoutThisYear = $refundedReceiptStatistics->totalPayoutIn((new \DateTime())->format('Y'));
@@ -56,7 +57,7 @@ class ReceiptController extends BaseController
 
     public function showIndividual(User $user): Response
     {
-        $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($user);
+        $receipts = $this->doctrine->getRepository(Receipt::class)->findByUser($user);
 
         $sorter = $this->sorter;
         $sorter->sortReceiptsBySubmitTime($receipts);
@@ -73,7 +74,7 @@ class ReceiptController extends BaseController
         $receipt = new Receipt();
         $receipt->setUser($this->getUser());
 
-        $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($this->getUser());
+        $receipts = $this->doctrine->getRepository(Receipt::class)->findByUser($this->getUser());
 
         $sorter = $this->sorter;
         $sorter->sortReceiptsBySubmitTime($receipts);
@@ -90,7 +91,7 @@ class ReceiptController extends BaseController
                 $path = $this->fileUploader->uploadReceipt($request);
                 $receipt->setPicturePath($path);
             }
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($receipt);
             $em->flush();
 
@@ -142,7 +143,7 @@ class ReceiptController extends BaseController
                 $receipt->setPicturePath($oldPicturePath);
             } // If a new image hasn't been uploaded
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($receipt);
             $em->flush();
 
@@ -176,7 +177,7 @@ class ReceiptController extends BaseController
             $receipt->setRefundDate(new \DateTime());
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->flush();
 
         if ($status === Receipt::STATUS_REFUNDED) {
@@ -211,7 +212,7 @@ class ReceiptController extends BaseController
                 $receipt->setPicturePath($oldPicturePath);
             } // If a new image hasn't been uploaded
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($receipt);
             $em->flush();
 
@@ -241,7 +242,7 @@ class ReceiptController extends BaseController
         // Delete the image file
         $this->fileUploader->deleteReceipt($receipt->getPicturePath());
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($receipt);
         $em->flush();
 

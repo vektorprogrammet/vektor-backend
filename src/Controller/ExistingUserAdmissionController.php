@@ -8,6 +8,7 @@ use App\Form\Type\ApplicationExistingUserType;
 use App\Service\ApplicationAdmission;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExistingUserAdmissionController extends BaseController
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly ApplicationAdmission $applicationAdmission)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly ApplicationAdmission $applicationAdmission, private readonly ManagerRegistry $doctrine)
     {
     }
 
@@ -28,7 +29,7 @@ class ExistingUserAdmissionController extends BaseController
     public function show(Request $request)
     {
         $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $admissionManager = $this->applicationAdmission;
         if ($res = $admissionManager->renderErrorPage($user)) {
             return $res;

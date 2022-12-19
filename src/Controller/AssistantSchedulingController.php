@@ -9,11 +9,16 @@ use App\Entity\Application;
 use App\Entity\SchoolCapacity;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class AssistantSchedulingController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function index(): Response
     {
         return $this->render('assistant_scheduling/index.html.twig');
@@ -28,9 +33,9 @@ class AssistantSchedulingController extends BaseController
         $user = $this->getUser();
 
         $currentSemester = $this->getCurrentSemester();
-        $currentAdmissionPeriod = $this->getDoctrine()->getRepository(AdmissionPeriod::class)
+        $currentAdmissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($user->getDepartment(), $currentSemester);
-        $applications = $this->getDoctrine()->getRepository(Application::class)->findAllAllocatableApplicationsByAdmissionPeriod($currentAdmissionPeriod);
+        $applications = $this->doctrine->getRepository(Application::class)->findAllAllocatableApplicationsByAdmissionPeriod($currentAdmissionPeriod);
 
         $assistants = $this->getAssistantAvailableDays($applications);
 
@@ -95,7 +100,7 @@ class AssistantSchedulingController extends BaseController
         $user = $this->getUser();
         $department = $user->getFieldOfStudy()->getDepartment();
         $currentSemester = $this->getCurrentSemester();
-        $allCurrentSchoolCapacities = $this->getDoctrine()
+        $allCurrentSchoolCapacities = $this->doctrine
             ->getRepository(SchoolCapacity::class)->findByDepartmentAndSemester($department, $currentSemester);
         $schools = $this->generateSchoolsFromSchoolCapacities($allCurrentSchoolCapacities);
 

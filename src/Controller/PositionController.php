@@ -4,16 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Position;
 use App\Form\Type\CreatePositionType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PositionController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function showPositions(): Response
     {
         // Find all the positions
-        $positions = $this->getDoctrine()->getRepository(Position::class)->findAll();
+        $positions = $this->doctrine->getRepository(Position::class)->findAll();
 
         // Return the view with suitable variables
         return $this->render('team_admin/show_positions.html.twig', [
@@ -34,7 +39,7 @@ class PositionController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($position);
             $em->flush();
 
@@ -55,7 +60,7 @@ class PositionController extends BaseController
 
     public function removePosition(Position $position): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($position);
         $em->flush();
 
