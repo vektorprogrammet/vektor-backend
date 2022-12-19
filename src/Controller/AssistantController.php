@@ -22,7 +22,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AssistantController extends BaseController
 {
-    public function __construct(private readonly ApplicationAdmission $applicationAdmission, private readonly GeoLocation $geoLocation, private readonly FilterService $filterService, private readonly KernelInterface $kernel, private readonly EventDispatcherInterface $eventDispatcher, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly ApplicationAdmission $applicationAdmission,
+        private readonly GeoLocation $geoLocation,
+        private readonly FilterService $filterService,
+        private readonly KernelInterface $kernel,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

@@ -12,7 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationStatisticsController extends BaseController
 {
-    public function __construct(private readonly AssistantHistoryData $AssistantHistoryData, private readonly ApplicationData $ApplicationData, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly AssistantHistoryData $AssistantHistoryData,
+        private readonly ApplicationData $ApplicationData,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

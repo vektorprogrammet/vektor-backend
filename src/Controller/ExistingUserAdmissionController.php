@@ -16,7 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExistingUserAdmissionController extends BaseController
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly ApplicationAdmission $applicationAdmission, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ApplicationAdmission $applicationAdmission,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

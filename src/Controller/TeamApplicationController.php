@@ -18,7 +18,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class TeamApplicationController extends BaseController
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

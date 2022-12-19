@@ -13,7 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserAdminController extends BaseController
 {
-    public function __construct(private readonly UserRegistration $userRegistration, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly UserRegistration $userRegistration,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

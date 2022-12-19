@@ -33,7 +33,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class InterviewController extends BaseController
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly InterviewManager $interviewManager, private readonly ReversedRoleHierarchy $reversedRoleHierarchy, private readonly ApplicationManager $applicationManager, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly InterviewManager $interviewManager,
+        private readonly ReversedRoleHierarchy $reversedRoleHierarchy,
+        private readonly ApplicationManager $applicationManager,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

@@ -17,7 +17,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WidgetController extends BaseController
 {
-    public function __construct(private readonly Sorter $sorter, private readonly AdmissionStatistics $admissionStatistics, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly Sorter $sorter,
+        private readonly AdmissionStatistics $admissionStatistics,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

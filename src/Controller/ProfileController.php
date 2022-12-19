@@ -32,7 +32,14 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class ProfileController extends BaseController
 {
-    public function __construct(private readonly RoleManager $RoleManager, private readonly LogService $logService, private readonly EventDispatcherInterface $eventDispatcher, private readonly TokenStorageInterface $tokenStorage, private readonly RequestStack $requestStack, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly RoleManager $RoleManager,
+        private readonly LogService $logService,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly RequestStack $requestStack,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

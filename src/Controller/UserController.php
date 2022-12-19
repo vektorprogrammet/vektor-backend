@@ -11,7 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends BaseController
 {
-    public function __construct(private readonly ApplicationManager $applicationManager, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly ApplicationManager $applicationManager,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

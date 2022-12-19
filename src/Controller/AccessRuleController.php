@@ -16,7 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessRuleController extends AbstractController
 {
-    public function __construct(private readonly AccessControlService $accessControlService, private readonly ReversedRoleHierarchy $reversedRoleHierarchy, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly AccessControlService $accessControlService,
+        private readonly ReversedRoleHierarchy $reversedRoleHierarchy,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

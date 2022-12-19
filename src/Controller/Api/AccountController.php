@@ -15,7 +15,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class AccountController extends BaseController
 {
-    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly RequestStack $requestStack, private readonly ManagerRegistry $doctrine)
+    public function __construct(private readonly TokenStorageInterface $tokenStorage,
+                                private readonly RequestStack $requestStack,
+                                private readonly ManagerRegistry $doctrine)
     {
     }
 

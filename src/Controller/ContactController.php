@@ -16,7 +16,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends BaseController
 {
-    public function __construct(private readonly GeoLocation $geoLocation, private readonly LogService $logService, private readonly EventDispatcherInterface $eventDispatcher, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly GeoLocation $geoLocation,
+        private readonly LogService $logService,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

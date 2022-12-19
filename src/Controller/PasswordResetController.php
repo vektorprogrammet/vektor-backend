@@ -18,7 +18,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PasswordResetController extends BaseController
 {
-    public function __construct(private readonly LogService $logService, private readonly PasswordManager $passwordManager, private readonly RequestStack $requestStack, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly LogService $logService,
+        private readonly PasswordManager $passwordManager,
+        private readonly RequestStack $requestStack,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 

@@ -12,7 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
-    public function __construct(private readonly LogService $logService, private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly LogService $logService,
+        private readonly ManagerRegistry $doctrine
+    )
     {
     }
 
