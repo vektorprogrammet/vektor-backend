@@ -27,7 +27,7 @@ class CreateInterviewType extends AbstractType
                     ->setParameter('_teamleader', '["ROLE_TEAM_LEADER"]')
                     ->setParameter('_teammember', '["ROLE_TEAM_MEMBER"]')
                     ->orderBy('u.firstName');
-            // ->setParameter('roles', $options['roles']);
+                // ->setParameter('roles', $options['roles']);
             },
             'group_by' => 'fieldOfStudy.department.city',
         ]);
