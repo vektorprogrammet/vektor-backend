@@ -9,7 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SsoController extends BaseController
 {
-    public function error($response, $message, $statusCode){
+    public function error(Respons $response, string $message, Integer $statusCode){
+        if (!$response || !$message) {
+            return $this->error($response->setStatusCode(500), "Error");
+        }
         $response->setStatusCode(401);
         $response->setContent($message);
         return $response;
