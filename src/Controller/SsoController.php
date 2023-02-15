@@ -11,7 +11,8 @@ class SsoController extends BaseController
 {
     public function error(Respons $response, string $message, Integer $statusCode){
         if (!$response || !$message) {
-            return $this->error($response->setStatusCode(500), "Error");
+            $response->setStatusCode(500);
+            return $response;
         }
         $response->setStatusCode(401);
         $response->setContent($message);
