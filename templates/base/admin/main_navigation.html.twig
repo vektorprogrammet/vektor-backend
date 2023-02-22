@@ -266,6 +266,15 @@
                     ]
                 } %}
 
+                {% include 'base/admin/nav_link.html.twig' with {
+                    route: 'admins_show',
+                    icon: 'key',
+                    name: 'Admins',
+                    activeRoutes: [
+                        'admins_show',
+                    ]
+                } %}
+
             {% endif %}
 
             <li class="c-sidebar-nav-item mt-auto">

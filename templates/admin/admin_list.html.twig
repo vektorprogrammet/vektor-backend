@@ -1,0 +1,21 @@
+{% extends "adminBase.html.twig" %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Admins</li>
+{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Roles</th>
+        </tr>
+    {% for admin in AdminList %}
+        <tr>
+        {{ admin }}
+        </tr>
+    {% endfor %}
+
+    </table>
+{% endblock %}
