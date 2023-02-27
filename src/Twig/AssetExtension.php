@@ -36,12 +36,12 @@ class AssetExtension extends AbstractExtension
      * If the package used to generate the path is an instance of
      * UrlPackage, you will always get a URL and not a path.
      *
-     * @param string $path        A public path
-     * @param string $packageName The name of the asset package to use
+     * @param string $path A public path
+     * @param null $packageName The name of the asset package to use
      *
-     * @return string The public path of the asset
+     * @return string|null The public path of the asset
      */
-    public function getAssetUrl($path, $packageName = null): string
+    public function getAssetUrl($path, $packageName = null): ?string
     {
         if (mb_strlen($path) === 0) {
             return $path;
