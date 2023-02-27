@@ -30,6 +30,7 @@ return (new PhpCsFixer\Config())
         'native_constant_invocation' => false,
         'concat_space' => ['spacing' => 'one'],
         'native_function_invocation' => false,
+        'phpdoc_separation' => false,
 
     ])
     ->setFinder($finder)
