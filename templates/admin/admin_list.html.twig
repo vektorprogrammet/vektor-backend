@@ -12,10 +12,15 @@
             <th>Roles</th>
         </tr>
     {% for admin in AdminList %}
+        {% for fname in admin %}
         <tr>
-        {{ admin }}
+
+        {{ fname }}
+
         </tr>
+        {% endfor %}
     {% endfor %}
+
 
     </table>
 {% endblock %}

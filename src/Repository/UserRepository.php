@@ -297,4 +297,14 @@ class UserRepository extends EntityRepository implements UserProviderInterface
                     ->getQuery()
                     ->getResult();
     }
+
+    public function findAdmins()
+    {
+        return $this->createQueryBuilder('user')
+            ->select("user.firstName")
+            //->where('user.roles = :_admin')
+            ->distinct()
+            ->getQuery()
+            ->getResult();
+    }
 }
