@@ -258,21 +258,6 @@
             {% if is_granted_admin() %}
                 <li class="c-sidebar-nav-title">Admin</li>
                 {% include 'base/admin/nav_link.html.twig' with {
-                    route: 'access_rules_show',
-                    icon: 'shield-alt',
-                    name: 'Access Control',
-                    activeRoutes: [
-                        'access_rules_create',
-                        'access_rules_show',
-                        'access_rules_edit',
-                        'access_rules_create',
-                        'access_rules_edit_routing',
-                        'access_rules_create_routing',
-                        'access_rules_copy',
-                        'access_rules_delete'
-                    ]
-                } %}
-                {% include 'base/admin/nav_link.html.twig' with {
                     route: 'semester_show',
                     icon: 'calendar-day',
                     name: 'Semester ',

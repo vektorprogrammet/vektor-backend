@@ -2,15 +2,11 @@
 
 namespace App\Twig;
 
-use App\Service\AccessControlService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class AccessExtension extends AbstractExtension
 {
-    public function __construct(private readonly AccessControlService $accessControlService)
-    {
-    }
 
     /**
      * {@inheritdoc}
@@ -31,6 +27,6 @@ class AccessExtension extends AbstractExtension
      */
     public function hasAccessTo($routes, $user = null): bool
     {
-        return $this->accessControlService->checkAccess($routes, $user);
+        return true;
     }
 }
