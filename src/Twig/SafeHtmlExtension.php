@@ -7,28 +7,28 @@ use Twig\TwigFilter;
 
 class SafeHtmlExtension extends AbstractExtension
 {
-    private $blacklistedTags = ['script', 'iframe'];
+    private array $blacklistedTags = ['script', 'iframe'];
 
-    public function getFilters()
+    public function getFilters(): array
     {
-        return array(
-            new TwigFilter('safe_html', array($this, 'htmlFilter'), array(
-                'is_safe' => array('html'),
-            )),
-        );
+        return [
+            new TwigFilter('safe_html', $this->htmlFilter(...), [
+                'is_safe' => ['html'],
+            ]),
+        ];
     }
 
     public function htmlFilter($html)
     {
         foreach ($this->blacklistedTags as $tag) {
-            $html = preg_replace('/<'.$tag.'\b[^<]*(?:(?!<\/'.$tag.'>)<[^<]*)*<\/'.$tag.'>/i', '', $html);
-            $html = str_replace('<'.$tag, '', $html);
+            $html = preg_replace('/<' . $tag . '\b[^<]*(?:(?!<\/' . $tag . '>)<[^<]*)*<\/' . $tag . '>/i', '', (string) $html);
+            $html = str_replace('<' . $tag, '', $html);
         }
 
         return $html;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'safe_html_extension';
     }

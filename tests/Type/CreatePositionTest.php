@@ -36,20 +36,20 @@ class CreatePositionTest extends TypeTestCase
 
     public function getValidTestData()
     {
-        return array(
-            array(
-                'data' => array(
+        return [
+            [
+                'data' => [
                     'name' => 'Leder',
-                ),
-            ),
-            array(
-                'data' => array(),
-            ),
-            array(
-                'data' => array(
+                ],
+            ],
+            [
+                'data' => [],
+            ],
+            [
+                'data' => [
                     'name' => null,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 }

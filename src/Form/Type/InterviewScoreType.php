@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\InterviewScore;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,41 +14,41 @@ class InterviewScoreType extends AbstractType
     {
         $choices = array_combine(range(1, 6), range('1', '6'));
 
-        $builder->add('explanatoryPower', ChoiceType::class, array(
+        $builder->add('explanatoryPower', ChoiceType::class, [
             'choices' => $choices,
             'label' => 'Forklaringsevne',
             'help' => 'Går på oppgaveløsing.',
-        ));
+        ]);
 
-        $builder->add('roleModel', ChoiceType::class, array(
+        $builder->add('roleModel', ChoiceType::class, [
             'choices' => $choices,
             'label' => 'Forbilde for ungdomsskoleelever',
             'help' => 'Kan personen inspirere til realfag? Kan personen formidle matematikk på en \'interessant\' måte. Er ikke \'typisk nerdete\'? Noen eleven kan se opp til.',
-        ));
+        ]);
 
-        $builder->add('suitability', ChoiceType::class, array(
+        $builder->add('suitability', ChoiceType::class, [
             'choices' => $choices,
             'label' => 'Egnethet',
             'help' => 'Oppegående, utadvendt, kontaktsøkende, initavitagende',
-        ));
+        ]);
 
-        $builder->add('suitableAssistant', ChoiceType::class, array(
+        $builder->add('suitableAssistant', ChoiceType::class, [
             'label' => 'Passer denne studenten til å være vektorassistent?',
-            'choices' => array(
+            'choices' => [
                 'Ja' => 'Ja',
                 'Kanskje' => 'Kanskje',
                 'Nei' => 'Nei',
-            ),
+            ],
             'expanded' => true,
             'multiple' => false,
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\InterviewScore',
-        ));
+        $resolver->setDefaults([
+            'data_class' => InterviewScore::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

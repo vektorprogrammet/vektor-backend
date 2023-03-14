@@ -7,23 +7,15 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class InterviewConductedEvent extends Event
 {
-    const NAME = 'interview.conducted';
-
-    private $application;
+    final public const NAME = 'interview.conducted';
 
     /**
      * InterviewConductedEvent constructor.
-     *
-     * @param Application $application
      */
-    public function __construct(Application $application)
+    public function __construct(private readonly Application $application)
     {
-        $this->application = $application;
     }
 
-    /**
-     * @return Application
-     */
     public function getApplication(): Application
     {
         return $this->application;

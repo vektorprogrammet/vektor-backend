@@ -3,50 +3,48 @@
 namespace App\Google;
 
 use App\Mailer\MailerInterface;
-use Google_Service_Exception;
-use Google_Service_Gmail;
-use Google_Service_Gmail_Message;
-use Swift_Message;
 
 class Gmail extends GoogleService implements MailerInterface
 {
     private $defaultEmail;
 
-    public function send(Swift_Message $message, bool $disableLogging = false)
+    public function send(\Swift_Message $message, bool $disableLogging = false)
     {
         if ($this->disabled) {
             if (!$disableLogging) {
                 $this->logger->info("Google API disabled. Did not send email to {$this->recipientsToHeader($message->getTo())}: `{$message->getSubject()}`");
             }
+
             return;
         }
-        
-        $message->setFrom([$this->defaultEmail => "Vektorprogrammet"]);
+
+        $message->setFrom([$this->defaultEmail => 'Vektorprogrammet']);
 
         $client = $this->getClient();
-        $service = new Google_Service_Gmail($client);
+        $service = new \Google_Service_Gmail($client);
         $gmailMessage = $this->swiftMessageToGmailMessage($message);
 
         try {
             $res = $service->users_messages->send($this->defaultEmail, $gmailMessage);
-        } catch (Google_Service_Exception $e) {
+        } catch (\Google_Service_Exception $e) {
             $this->logServiceException($e, "Failed to send email to {$this->recipientsToHeader($message->getTo())}: `{$message->getSubject()}`");
+
             return;
         }
 
-        if (array_search('SENT', $res->getLabelIds()) !== false && !$disableLogging) {
+        if (array_search('SENT', $res->getLabelIds(), true) !== false && !$disableLogging) {
             $this->logger->info("Email sent to {$this->recipientsToHeader($message->getTo())}: `{$message->getSubject()}`");
         } else {
             $this->logger->notice(
-                "Failed to send email to {$this->recipientsToHeader($message->getTo())}: `{$message->getSubject()}`\n".
-                "```".
-                implode(", ", $res->getLabelIds()).
-                "```"
+                "Failed to send email to {$this->recipientsToHeader($message->getTo())}: `{$message->getSubject()}`\n" .
+                '```' .
+                implode(', ', $res->getLabelIds()) .
+                '```'
             );
         }
     }
 
-    private function swiftMessageToGmailMessage(Swift_Message $message)
+    private function swiftMessageToGmailMessage(\Swift_Message $message)
     {
         $subject = $message->getSubject();
         $body = $this->encodeBody($message->getBody());
@@ -76,9 +74,9 @@ class Gmail extends GoogleService implements MailerInterface
         $strRawMessage .= "$body";
 
         $mime = rtrim(strtr(base64_encode($strRawMessage), '+/', '-_'), '=');
-        $msg = new Google_Service_Gmail_Message();
+        $msg = new \Google_Service_Gmail_Message();
         $msg->setRaw($mime);
-        
+
         return $msg;
     }
 
@@ -88,10 +86,10 @@ class Gmail extends GoogleService implements MailerInterface
             return false;
         }
 
-        $header = "";
+        $header = '';
         foreach ($recipients as $email => $name) {
-            if (strlen($header) !== 0) {
-                $header .= ", ";
+            if (mb_strlen($header) !== 0) {
+                $header .= ', ';
             }
 
             if ($name) {
@@ -106,9 +104,9 @@ class Gmail extends GoogleService implements MailerInterface
 
     private function encodeBody($body)
     {
-        $body = str_replace("src=\"", "src=3D\"", $body);
+        $body = str_replace('src="', 'src=3D"', (string) $body);
         $body = str_replace("src='", "src=3D'", $body);
-        $body = str_replace("href=\"", "href=3D\"", $body);
+        $body = str_replace('href="', 'href=3D"', $body);
         $body = str_replace("href='", "href=3D'", $body);
 
         return $body;

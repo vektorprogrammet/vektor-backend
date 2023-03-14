@@ -9,19 +9,16 @@ use PHPUnit\Framework\TestCase;
 
 class GatewayApiTest extends TestCase
 {
-    /**
-     * @var GatewayAPI
-     */
-    private $gatewayApi;
+    private GatewayAPI $gatewayApi;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $loggerMock = $this->createMock(LogService::class);
         $this->gatewayApi = new GatewayAPI([
-        	'disable_delivery' => true,
-	        'max_length' => 2000,
-	        'api_token' => "SECRET",
-	        'country_code' => '47'
+            'disable_delivery' => true,
+            'max_length' => 2000,
+            'api_token' => 'SECRET',
+            'country_code' => '47',
         ], $loggerMock);
     }
 
@@ -56,12 +53,12 @@ class GatewayApiTest extends TestCase
 
         self::assertEquals($expected, $actual);
     }
-    
+
     public function testValidateEmptyString()
     {
         $expected = false;
         $actual = $this->gatewayApi->validatePhoneNumber('');
-        
+
         self::assertEquals($expected, $actual);
     }
 

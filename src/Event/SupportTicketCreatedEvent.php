@@ -7,18 +7,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class SupportTicketCreatedEvent extends Event
 {
-    const NAME = 'support_ticket.created';
+    final public const NAME = 'support_ticket.created';
 
-    private $supportTicket;
-
-    public function __construct(SupportTicket $supportTicket)
+    public function __construct(private readonly SupportTicket $supportTicket)
     {
-        $this->supportTicket = $supportTicket;
     }
 
-    /**
-     * @return SupportTicket
-     */
     public function getSupportTicket(): SupportTicket
     {
         return $this->supportTicket;

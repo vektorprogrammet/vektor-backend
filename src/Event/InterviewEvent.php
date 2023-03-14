@@ -7,28 +7,17 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class InterviewEvent extends Event
 {
-    const SCHEDULE = 'interview.schedule';
-    const COASSIGN = 'interview.coassign';
-
-    private $interview;
-    private $data;
+    final public const SCHEDULE = 'interview.schedule';
+    final public const COASSIGN = 'interview.coassign';
 
     /**
      * ReceiptEvent constructor.
-     *
-     * @param Interview $interview
-     * @param $data
      */
-    public function __construct(Interview $interview, $data = [])
+    public function __construct(private readonly Interview $interview, private $data = [])
     {
-        $this->interview = $interview;
-        $this->data = $data;
     }
 
-    /**
-     * @return Interview
-     */
-    public function getInterview()
+    public function getInterview(): Interview
     {
         return $this->interview;
     }

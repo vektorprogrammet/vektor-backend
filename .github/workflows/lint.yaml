@@ -1,0 +1,108 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  fail-fast: true
+
+permissions:
+  contents: read
+
+jobs:
+  # PHP-CS-FIXER
+  # ==> config file: .php-cs-fixer.php
+  php-cs-fixer:
+    name: PHP-CS-Fixer
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: PHP-CS-Fixer
+        uses: docker://oskarstark/php-cs-fixer-ga
+        with:
+          args: --diff --dry-run
+
+  # LINTERS
+  linters:
+    name: Linters
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        php-version: ['8.1']
+
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Install PHP with extensions"
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: "none"
+          extensions: intl
+          php-version: ${{ matrix.php-version }}
+          tools: composer:v2
+
+      - name: "Set composer cache directory"
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: "Cache composer"
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
+
+      - name: "Composer install"
+        run: composer install --no-interaction --no-progress
+
+      - name: Install PHPUnit
+        id: install
+        run: vendor/bin/simple-phpunit install
+
+      - name: Lint YAML files
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console lint:yaml config --parse-tags
+
+      # lint:twig fails without db present...
+      - name: Update database
+        run: >-
+          mkdir -p ./var/data && 
+          rm -rf ./var/data/dev.db && 
+          touch ./var/data/dev.db && 
+          php bin/console doctrine:schema:update --force --env=dev && 
+          php bin/console doctrine:migrations:sync-metadata-storage && 
+          php bin/console doctrine:fixtures:load -n --env=dev && 
+          php bin/console doctrine:migrations:version -n --delete --all --env=dev && 
+          php bin/console doctrine:migrations:version -n --add --all --env=dev
+
+      - name: Lint Twig templates
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console lint:twig templates --env=prod
+
+      - name: Lint Parameters and Services
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console lint:container --no-debug
+
+      - name: Lint Doctrine entities
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+
+      - name: Lint Composer config
+        if: always() && steps.install.outcome == 'success'
+        run: composer validate --strict
+
+      # Check that no vulnerable dependencies are installed
+      - name: Check if any dependencies are compromised
+        if: always() && steps.install.outcome == 'success'
+        run: composer audit
+
+#      - name: Run PHPStan
+#        if: always() && steps.install.outcome == 'success'
+#        run: ./vendor/bin/phpstan analyze

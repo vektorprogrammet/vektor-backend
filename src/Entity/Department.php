@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -127,7 +126,7 @@ class Department
      */
     public function getCurrentAdmissionPeriod()
     {
-        $now = new DateTime();
+        $now = new \DateTime();
 
         /** @var AdmissionPeriod $admissionPeriod */
         foreach ($this->admissionPeriods as $admissionPeriod) {
@@ -149,7 +148,7 @@ class Department
 
         $latestAdmissionPeriod = current($admissionPeriods);
 
-        $now = new DateTime();
+        $now = new \DateTime();
 
         foreach ($admissionPeriods as $admissionPeriod) {
             if ($admissionPeriod->getSemester()->getStartDate() < $now &&
@@ -173,9 +172,6 @@ class Department
         return $admissionPeriod;
     }
 
-    /**
-     * @return bool
-     */
     public function activeAdmission(): bool
     {
         $admissionPeriod = $this->getCurrentAdmissionPeriod();
@@ -185,7 +181,8 @@ class Department
 
         $start = $admissionPeriod->getStartDate();
         $end = $admissionPeriod->getEndDate();
-        $now = new DateTime();
+        $now = new \DateTime();
+
         return $start < $now && $now < $end;
     }
 
@@ -250,8 +247,6 @@ class Department
     /**
      * Add fieldOfStudy.
      *
-     * @param FieldOfStudy $fieldOfStudy
-     *
      * @return Department
      */
     public function addFieldOfStudy(FieldOfStudy $fieldOfStudy)
@@ -263,8 +258,6 @@ class Department
 
     /**
      * Remove fieldOfStudy.
-     *
-     * @param FieldOfStudy $fieldOfStudy
      */
     public function removeFieldOfStudy(FieldOfStudy $fieldOfStudy)
     {
@@ -313,8 +306,6 @@ class Department
     /**
      * Add schools.
      *
-     * @param School $schools
-     *
      * @return Department
      */
     public function addSchool(School $schools)
@@ -326,8 +317,6 @@ class Department
 
     /**
      * Remove schools.
-     *
-     * @param School $schools
      */
     public function removeSchool(School $schools)
     {
@@ -371,8 +360,6 @@ class Department
     /**
      * Add admission periods.
      *
-     * @param AdmissionPeriod $admissionPeriod
-     *
      * @return Department
      */
     public function addAdmissionPeriod(AdmissionPeriod $admissionPeriod)
@@ -395,8 +382,6 @@ class Department
     /**
      * Add teams.
      *
-     * @param Team $teams
-     *
      * @return Department
      */
     public function addTeam(Team $teams)
@@ -408,8 +393,6 @@ class Department
 
     /**
      * Remove teams.
-     *
-     * @param Team $teams
      */
     public function removeTeam(Team $teams)
     {
@@ -475,7 +458,7 @@ class Department
     }
 
     // Used for unit testing
-    public function fromArray($data = array())
+    public function fromArray($data = [])
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";
@@ -515,18 +498,16 @@ class Department
         $this->logoPath = $logoPath;
     }
 
-
     /**
-     * @return boolean $active
+     * @return bool $active
      */
     public function isActive()
     {
         return $this->active;
     }
 
-
     /**
-     * @param boolean $active
+     * @param bool $active
      */
     public function setActive($active)
     {

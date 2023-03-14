@@ -2,6 +2,8 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Department;
+use App\Entity\Semester;
 use App\Repository\DepartmentRepository;
 use App\Repository\SemesterRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,33 +17,29 @@ class GenerateMailingListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('semester', EntityType::class, array(
-                'class' => 'App:Semester',
+            ->add('semester', EntityType::class, [
+                'class' => Semester::class,
                 'label' => 'Velg semester',
-                'query_builder' => function (SemesterRepository $sr) {
-                    return $sr->queryForAllSemestersOrderedByAge();
-                },
+                'query_builder' => fn (SemesterRepository $sr) => $sr->queryForAllSemestersOrderedByAge(),
                 'required' => true,
-            ))
-            ->add('department', EntityType::class, array(
-                'class' => 'App:Department',
+            ])
+            ->add('department', EntityType::class, [
+                'class' => Department::class,
                 'label' => 'Velg region',
-                'query_builder' => function (DepartmentRepository $dr) {
-                    return $dr->queryForActive();
-                },
+                'query_builder' => fn (DepartmentRepository $dr) => $dr->queryForActive(),
                 'required' => true,
-            ))
-            ->add('type', ChoiceType::class, array(
+            ])
+            ->add('type', ChoiceType::class, [
                 'label' => 'Velg type',
-                'choices' => array(
+                'choices' => [
                     'Assistent' => 'Assistent',
                     'Team' => 'Team',
                     'Alle' => 'Alle',
-                ),
+                ],
                 'required' => true,
-            ))
-            ->add('save', SubmitType::class, array(
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Generer',
-            ));
+            ]);
     }
 }

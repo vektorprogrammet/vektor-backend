@@ -8,35 +8,26 @@ use Twig\TwigFunction;
 
 class RouteDisplayExtension extends AbstractExtension
 {
-    private $router;
-
-    /**
-     * @param RouterInterface $router
-     */
-    public function __construct(RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('get_path', array( $this, 'getPath' )),
-        );
+        return [
+            new TwigFunction('get_path', $this->getPath(...)),
+        ];
     }
 
     /**
      * Gets the path of the given route name.
      *
-     *
-     * @param $name
-     *
      * @return string The path of the route
      */
-    public function getPath(string $name)
+    public function getPath(string $name): string
     {
         if (!$this->isRoute($name)) {
             return $name;
@@ -45,7 +36,7 @@ class RouteDisplayExtension extends AbstractExtension
         return $this->router->getRouteCollection()->get($name)->getPath();
     }
 
-    private function isRoute(string $name)
+    private function isRoute(string $name): bool
     {
         return $this->router->getRouteCollection()->get($name) !== null;
     }

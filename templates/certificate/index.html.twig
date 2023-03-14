@@ -85,7 +85,7 @@
                         {{ form_row(form.signature_path) }}
                     </div>
                     <div>
-                        <img class="{{ signature.signaturePath is not null ? '' : 'hide' }}" src="{{ asset_with_version(signature.signaturePath) }}" style="max-height: 100px" id="signature_picture">
+                        <img class="{{ signature.signaturePath is not null ? '' : 'hide' }}" src="{{ asset_with_version(signature.signaturePath) }}" alt="Signatur" style="max-height: 100px" id="signature_picture">
                     </div>
                     <div class="mt-3">
                         <button type="button" class="btn btn-secondary" id="choose_picture">

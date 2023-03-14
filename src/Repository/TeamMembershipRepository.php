@@ -2,14 +2,13 @@
 
 namespace App\Repository;
 
-use App\Entity\Semester;
 use App\Entity\Department;
+use App\Entity\Semester;
 use App\Entity\Team;
-use App\Entity\User;
 use App\Entity\TeamMembership;
-use DateTime;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\User;
 use App\Utils\SemesterUtil;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * TeamMembershipRepository.
@@ -19,10 +18,7 @@ use App\Utils\SemesterUtil;
  */
 class TeamMembershipRepository extends EntityRepository
 {
-
     /**
-     * @param Team $team
-     *
      * @return TeamMembership[]
      */
     public function findByTeam(Team $team): array
@@ -33,9 +29,8 @@ class TeamMembershipRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
     /**
-     * @param User $user
-     *
      * @return TeamMembership[]
      */
     public function findByUser(User $user): array
@@ -47,12 +42,13 @@ class TeamMembershipRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
     /**
      * @return TeamMembership[]
      */
     public function findActiveTeamMemberships(): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
 
         $teamMemberships = $this->createQueryBuilder('tm')
             ->select('tm')
@@ -68,8 +64,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     * @param Team $team
-     *
      * @return TeamMembership[]
      */
     public function findActiveTeamMembershipsByTeam(Team $team): array
@@ -93,7 +87,7 @@ class TeamMembershipRepository extends EntityRepository
      */
     private function filterOutInactive(array $teamMemberships): array
     {
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
         $currentSemester = (new Semester())
             ->setYear(SemesterUtil::timeToYear($today))
             ->setSemesterTime(SemesterUtil::timeToSemesterTime($today));
@@ -103,23 +97,15 @@ class TeamMembershipRepository extends EntityRepository
 
     /**
      * @param TeamMembership[] $teamMemberships
-     * @param Semester $semester
+     *
      * @return TeamMembership[]
      */
-    public function filterNotInSemester(array $teamMemberships, Semester $semester) : array
+    public function filterNotInSemester(array $teamMemberships, Semester $semester): array
     {
-        return array_filter($teamMemberships, function (TeamMembership $teamMembership) use ($semester) {
-            return $semester->isBetween($teamMembership->getStartSemester(), $teamMembership->getEndSemester());
-        });
+        return array_filter($teamMemberships, fn (TeamMembership $teamMembership) => $semester->isBetween($teamMembership->getStartSemester(), $teamMembership->getEndSemester()));
     }
 
-
-
-
     /**
-     * @param Team $team
-     * @param User $user
-     *
      * @return TeamMembership[]
      */
     public function findActiveTeamMembershipsByTeamAndUser(Team $team, User $user): array
@@ -139,8 +125,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     * @param Team $team
-     *
      * @return TeamMembership[]
      */
     public function findInactiveTeamMembershipsByTeam(Team $team): array
@@ -152,8 +136,6 @@ class TeamMembershipRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     *
      * @return TeamMembership[]
      */
     public function findActiveTeamMembershipsByUser(User $user): array
@@ -170,16 +152,12 @@ class TeamMembershipRepository extends EntityRepository
         return $this->filterOutInactive($teamMemberships);
     }
 
-
     /**
-     * @param $user
-     * @param $semester
-     *
      * @return TeamMembership[]
      */
     public function findTeamMembershipsByUserAndSemester($user, Semester $semester)
     {
-        $teamMemberships =  $this->createQueryBuilder('whistory')
+        $teamMemberships = $this->createQueryBuilder('whistory')
             ->select('whistory')
             ->join('whistory.startSemester', 'startSemester')
             ->leftJoin('whistory.endSemester', 'endSemester')
@@ -191,10 +169,7 @@ class TeamMembershipRepository extends EntityRepository
         return $this->filterNotInSemester($teamMemberships, $semester);
     }
 
-
     /**
-     * @param Department $department
-     *
      * @return TeamMembership[]
      */
     public function findTeamMembershipsByDepartment(Department $department): array

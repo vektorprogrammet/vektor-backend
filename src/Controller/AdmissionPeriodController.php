@@ -2,16 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Department;
 use App\Entity\AdmissionPeriod;
+use App\Entity\Department;
+use App\Form\Type\CreateAdmissionPeriodType;
 use App\Form\Type\EditAdmissionPeriodType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Type\CreateAdmissionPeriodType;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionPeriodController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function show(): Response
     {
         // Finds the departmentId for the current logged-in user
@@ -22,17 +27,16 @@ class AdmissionPeriodController extends BaseController
 
     public function showByDepartment(Department $department): Response
     {
-        $admissionPeriods = $this->getDoctrine()
+        $admissionPeriods = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findByDepartmentOrderedByTime($department);
 
-
         // Renders the view with the variables
-        return $this->render('admission_period_admin/index.html.twig', array(
+        return $this->render('admission_period_admin/index.html.twig', [
             'admissionPeriods' => $admissionPeriods,
             'departmentName' => $department->getShortName(),
-            'department' => $department
-        ));
+            'department' => $department,
+        ]);
     }
 
     public function createAdmissionPeriod(Request $request, Department $department)
@@ -40,14 +44,12 @@ class AdmissionPeriodController extends BaseController
         $admissionPeriod = new AdmissionPeriod();
         $admissionPeriods = $department->getAdmissionPeriods()->toArray();
         $form = $this->createForm(CreateAdmissionPeriodType::class, $admissionPeriod, [
-            'admissionPeriods' => $admissionPeriods
+            'admissionPeriods' => $admissionPeriods,
         ]);
 
         $form->handleRequest($request);
 
-        $exists = $department->getAdmissionPeriods()->exists(function ($key, $value) use ($admissionPeriod) {
-            return $value->getSemester() === $admissionPeriod->getSemester();
-        });
+        $exists = $department->getAdmissionPeriods()->exists(fn ($key, $value) => $value->getSemester() === $admissionPeriod->getSemester());
 
         if ($exists) {
             $this->addFlash('warning', 'Opptaksperioden ' . $admissionPeriod->getSemester() . ' finnes allerede.');
@@ -55,18 +57,18 @@ class AdmissionPeriodController extends BaseController
         if ($form->isSubmitted() && $form->isValid() && !$exists) {
             $admissionPeriod->setDepartment($department);
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($admissionPeriod);
             $em->flush();
 
-            return $this->redirectToRoute('admission_period_admin_show_by_department', array('id' => $department->getId()));
+            return $this->redirectToRoute('admission_period_admin_show_by_department', ['id' => $department->getId()]);
         }
 
         // Render the view
-        return $this->render('admission_period_admin/create_admission_period.html.twig', array(
+        return $this->render('admission_period_admin/create_admission_period.html.twig', [
             'department' => $department,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     public function updateAdmissionPeriod(Request $request, AdmissionPeriod $admissionPeriod)
@@ -77,23 +79,23 @@ class AdmissionPeriodController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($admissionPeriod);
             $em->flush();
 
-            return $this->redirectToRoute('admission_period_admin_show_by_department', array('id' => $admissionPeriod->getDepartment()->getId()));
+            return $this->redirectToRoute('admission_period_admin_show_by_department', ['id' => $admissionPeriod->getDepartment()->getId()]);
         }
 
-        return $this->render('admission_period_admin/edit_admission_period.html.twig', array(
+        return $this->render('admission_period_admin/edit_admission_period.html.twig', [
             'form' => $form->createView(),
             'semesterName' => $admissionPeriod->getSemester()->getName(),
             'department' => $admissionPeriod->getDepartment(),
-        ));
+        ]);
     }
 
     public function delete(AdmissionPeriod $admissionPeriod): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $infoMeeting = $admissionPeriod->getInfoMeeting();
         if ($infoMeeting) {
             $em->remove($infoMeeting);

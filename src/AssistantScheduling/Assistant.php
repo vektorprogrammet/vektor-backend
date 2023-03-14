@@ -3,9 +3,8 @@
 namespace App\AssistantScheduling;
 
 use App\Entity\Application;
-use JsonSerializable;
 
-class Assistant implements JsonSerializable
+class Assistant implements \JsonSerializable
 {
     private string $name;
     private string $email;
@@ -34,12 +33,9 @@ class Assistant implements JsonSerializable
         $this->group = null;
         $this->preferredGroup = null;
         $this->doublePosition = false;
-        $this->availability = array();
+        $this->availability = [];
     }
 
-    /**
-     * @return bool
-     */
     public function isAssignedToSchool(): bool
     {
         return !is_null($this->assignedSchool);
@@ -174,7 +170,7 @@ class Assistant implements JsonSerializable
     public function assignToSchool(School $school, int $group, string $day)
     {
         $this->setAssignedSchool($school->getName());
-        if ($this->group == 1 && $group == 2 || $this->group == 2 && $group == 1) {
+        if ($this->group === 1 && $group === 2 || $this->group === 2 && $group === 1) {
             $this->group = 3;
         } else {
             $this->setGroup($group);
@@ -184,7 +180,7 @@ class Assistant implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return array(
+        return [
             'id' => $this->getId(),
             'group' => 'Bolk 1',
             'name' => $this->name,
@@ -198,7 +194,7 @@ class Assistant implements JsonSerializable
             'suitable' => $this->suitability,
             'previousParticipation' => $this->previousParticipation,
             'language' => $this->application->getLanguage(),
-        );
+        ];
     }
 
     public function getApplication(): Application

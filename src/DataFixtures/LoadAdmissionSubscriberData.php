@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\AdmissionSubscriber;
-use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -12,9 +11,9 @@ class LoadAdmissionSubscriberData extends AbstractFixture implements OrderedFixt
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 365; $i++) {
-            $date = new DateTime("-$i days");
-            for ($j = 0; $j < rand(1, 10); $j++) {
+        for ($i = 0; $i < 365; ++$i) {
+            $date = new \DateTime("-$i days");
+            for ($j = 0; $j < random_int(1, 10); ++$j) {
                 $subscriber = new AdmissionSubscriber();
                 $subscriber->setDepartment($this->getReference('dep-1'));
                 $subscriber->setTimestamp($date);
@@ -26,7 +25,7 @@ class LoadAdmissionSubscriberData extends AbstractFixture implements OrderedFixt
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }

@@ -7,7 +7,6 @@ use App\Entity\InterviewAnswer;
 use App\Entity\InterviewSchema;
 use App\Entity\InterviewScore;
 use App\Entity\User;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class InterviewEntityUnitTest extends TestCase
@@ -78,7 +77,7 @@ class InterviewEntityUnitTest extends TestCase
     public function testSetScheduled()
     {
         $interview = new Interview();
-        $date = new DateTime();
+        $date = new \DateTime();
 
         $interview->setScheduled($date);
 
@@ -88,7 +87,7 @@ class InterviewEntityUnitTest extends TestCase
     public function testSetConducted()
     {
         $interview = new Interview();
-        $date = new DateTime();
+        $date = new \DateTime();
 
         $interview->setConducted($date);
 

@@ -7,35 +7,20 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
 {
-    const CREATED = 'user.created';
-    const EDITED = 'user.edited';
-    const DELETED = 'user.deleted';
-    const COMPANY_EMAIL_EDITED = 'user.company_email_edited';
+    final public const CREATED = 'user.created';
+    final public const EDITED = 'user.edited';
+    final public const DELETED = 'user.deleted';
+    final public const COMPANY_EMAIL_EDITED = 'user.company_email_edited';
 
-    private $user;
-    private $oldEmail;
-
-    /**
-     * @param User $user
-     * @param string $oldEmail
-     */
-    public function __construct(User $user, $oldEmail)
+    public function __construct(private readonly User $user, private $oldEmail)
     {
-        $this->user = $user;
-        $this->oldEmail = $oldEmail;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getOldEmail()
     {
         return $this->oldEmail;

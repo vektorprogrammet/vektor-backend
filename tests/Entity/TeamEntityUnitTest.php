@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Department;
 use App\Entity\Team;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class TeamEntityUnitTest extends TestCase
@@ -12,7 +11,6 @@ class TeamEntityUnitTest extends TestCase
     // Check whether the setName function is working correctly
     public function testSetName()
     {
-
         // new entity
         $team = new Team();
 
@@ -26,7 +24,6 @@ class TeamEntityUnitTest extends TestCase
     // Check whether the setDepartment function is working correctly
     public function testSetDepartment()
     {
-
         // new entity
         $team = new Team();
 
@@ -49,7 +46,7 @@ class TeamEntityUnitTest extends TestCase
         $team = new Team();
 
         // dummy entity
-        $deadline = new DateTime("now +3 days");
+        $deadline = new \DateTime('now +3 days');
 
         // Use the setDeadline method
         $team->setDeadline($deadline);

@@ -2,18 +2,18 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Client;
+use App\Tests\BaseWebTestCase;
+use Doctrine\ORM\EntityManager;
 
 class MailingListControllerTest extends BaseWebTestCase
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         self::bootKernel();
         $this->em = static::$kernel->getContainer()
@@ -23,9 +23,10 @@ class MailingListControllerTest extends BaseWebTestCase
 
     public function testAddOneTeamMember()
     {
+        self::ensureKernelShutdown();
         $client = self::createAdminClient();
 
-        $lengthTeamOld = $this->generateListCountChars($client, 'Team');
+        $countTeamOld = $this->countEmailAddresses($client, 'Team');
 
         // Get a user email and add user to a team
         $userID = 23;
@@ -41,42 +42,39 @@ class MailingListControllerTest extends BaseWebTestCase
 
         $user = $this->em->getRepository(User::class)->find($userID);
         $this->assertNotNull($user);
-        $userEmailLength = strlen($user->getCompanyEmail());
 
-        $lengthTeamNew = $this->generateListCountChars($client, 'Team');
+        $countTeamNew = $this->countEmailAddresses($client, 'Team');
 
-        // Add 2 for comma and whitespace
-        $this->assertEquals($lengthTeamOld + $userEmailLength + 2, $lengthTeamNew);
-    }
-
-    protected function tearDown() : void
-    {
-        parent::tearDown();
-        $this->em->close();
+        // verify that the user is added to the team (count increased by 1)
+        $this->assertEquals($countTeamOld + 1, $countTeamNew);
     }
 
     public function testTeamAddAssistantIsAll()
     {
+        self::ensureKernelShutdown();
         $client = self::createAdminClient();
 
-        $lengthAssistants = $this->generateListCountChars($client, 'Assistent');
-        $lengthTeam = $this->generateListCountChars($client, 'Team');
-        $lengthAll = $this->generateListCountChars($client, 'Alle');
+        $countAssistants = $this->countEmailAddresses($client, 'Assistent');
+        $countTeam = $this->countEmailAddresses($client, 'Team');
+        $countAll = $this->countEmailAddresses($client, 'Alle');
 
-        $this->assertGreaterThan(0, $lengthAssistants);
-        $this->assertGreaterThan(0, $lengthTeam);
-        $this->assertGreaterThan($lengthAssistants, $lengthAll);
-        $this->assertGreaterThan($lengthTeam, $lengthAll);
+        $this->assertGreaterThan(0, $countAssistants);
+        $this->assertGreaterThan(0, $countTeam);
+        $this->assertGreaterThan($countAssistants, $countAll);
+        $this->assertGreaterThan($countTeam, $countAll);
     }
 
-    /**
-     * @param Client $client
-     * @param string $type
-     *
-     * @return int
-     */
-    private function generateListCountChars(Client $client, string $type)
+    private function countEmailAddresses($client, string $type): int
     {
+        /**
+         * Function does the following:
+         * (1) Generate email list for type
+         *     $type can be among these strings: [Assistent, Team, Alle]
+         * (2) Count number of "@"s (implicit: number of email addresses)
+         * (3) Return number.
+         */
+
+        // Generate email list
         $crawler = $this->goTo('/kontrollpanel/epostlister', $client);
         $form = $crawler->selectButton('Generer')->form();
         $form['generate_mailing_list[semester]'] = 1;
@@ -85,6 +83,13 @@ class MailingListControllerTest extends BaseWebTestCase
         $crawler = $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        return strlen($crawler->filter('pre')->text());
+        // Count "@"s and return number
+        return mb_substr_count((string) $crawler->filter('pre')->text(), '@');
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->em->close();
     }
 }

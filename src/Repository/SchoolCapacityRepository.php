@@ -11,14 +11,14 @@ use Doctrine\ORM\NoResultException;
 
 class SchoolCapacityRepository extends EntityRepository
 {
-
     /**
      * @param Department $school
-     * @param Semester $semester
+     * @param Semester   $semester
      *
-     * @return SchoolCapacity
      * @throws NoResultException
      * @throws NonUniqueResultException
+     *
+     * @return SchoolCapacity
      */
     public function findBySchoolAndSemester($school, $semester)
     {
@@ -36,9 +36,6 @@ class SchoolCapacityRepository extends EntityRepository
     }
 
     /**
-     * @param Department $department
-     * @param Semester $semester
-     *
      * @return SchoolCapacity[]
      */
     public function findByDepartmentAndSemester(Department $department, Semester $semester)
@@ -47,10 +44,10 @@ class SchoolCapacityRepository extends EntityRepository
             ->select('sc')
             ->where('sc.department = :department')
             ->andWhere('sc.semester = :semester')
-            ->setParameters(array(
+            ->setParameters([
                 'department' => $department,
                 'semester' => $semester,
-            ))
+            ])
             ->getQuery()
             ->getResult();
     }

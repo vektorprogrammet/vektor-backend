@@ -1,20 +1,20 @@
 # vektor-backend
 
-(Work in progress)
-
 ## Set up development environment
 ### Requirements:
-- [PHP](http://php.net/downloads.php) version 7.4
+- [PHP](https://php.net/downloads.php) version 8.1
 - [Node](https://nodejs.org/en/) version 14
 - [Yarn](https://yarnpkg.com)
 ### Recommended:
 - [Symfony CLI](https://symfony.com/download)
+- [Docker](https://www.docker.com/products/docker-desktop)
 
 ### PHP dependencies
-- php7.4-zip
-- php7.4-gd
-- php7.4-sqlite3
-
+- php8.1-zip
+- php8.1-gd
+- php8.1-sqlite3
+- php8.1-xml
+- php8.1-mbstring
 
 ### Setup:
 
@@ -31,14 +31,12 @@ Run commands in docker image:
 
 ##### UNIX:
 `yarn setup`
-##### Windows:
-`yarn setup:win`
 
 #### Start server on http://localhost:8000
 `yarn start`
 
 ##### Alternatively
-`symfony server:start` (requires Symfony CLI)
+`symfony serve` (requires Symfony CLI)
 
 ##### Start server on Docker
 `yarn docker:run`
@@ -64,7 +62,7 @@ done when doing `yarn start`)
 ## Database
 
 ### Add new entities to the database and reload fixtures
-`yarn db:update` or `yarn db:reload`
+`yarn db:update`
 
 
 ### Dev:
@@ -73,3 +71,21 @@ Load db-schema:
 
 Load fixtures:
 `php bin/console doctrine:fixtures:load`
+
+### Code Style: [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)
+Install:
+```
+mkdir -p tools/php-cs-fixer
+composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+```
+
+Then Run:
+`tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src`
+
+
+## Tests
+**Run all tests:**\
+`php bin/phpunit --configuration phpunit.xml.dist`
+
+**Run individual test:**\
+`php bin/phpunit "path/to/test/TestName.php"`

@@ -2,11 +2,6 @@
 
 namespace App\Google;
 
-use Google_Client;
-use Google_Service_Directory;
-use Google_Service_Drive;
-use Google_Service_Exception;
-use Google_Service_Gmail;
 use Psr\Log\LoggerInterface;
 
 abstract class GoogleService
@@ -28,24 +23,23 @@ abstract class GoogleService
         $this->logger = $logger;
     }
 
-
     /**
-     * @return Google_Client
+     * @return \Google_Client
      */
     protected function getClient()
     {
-        $client = new Google_Client();
+        $client = new \Google_Client();
         $client->setClientId($this->clientId);
         $client->setClientSecret($this->clientSecret);
-        $client->setScopes(array(
-            Google_Service_Directory::ADMIN_DIRECTORY_USER,
-            Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
-            Google_Service_Drive::DRIVE,
-            Google_Service_Gmail::GMAIL_SEND
-        ));
+        $client->setScopes([
+            \Google_Service_Directory::ADMIN_DIRECTORY_USER,
+            \Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
+            \Google_Service_Drive::DRIVE,
+            \Google_Service_Gmail::GMAIL_SEND,
+        ]);
 
         if (file_exists($this->credentialsPath)) {
-            $accessToken = json_decode(file_get_contents($this->credentialsPath), true);
+            $accessToken = json_decode(file_get_contents($this->credentialsPath), true, 512, JSON_THROW_ON_ERROR);
             $client->setAccessToken($accessToken);
         }
 
@@ -53,21 +47,21 @@ abstract class GoogleService
         if (!file_exists($this->credentialsPath) || $client->isAccessTokenExpired()) {
             $accessToken = $client->fetchAccessTokenWithRefreshToken($this->refreshToken);
             if ($accessToken) {
-                file_put_contents($this->credentialsPath, json_encode($client->getAccessToken()));
+                file_put_contents($this->credentialsPath, json_encode($client->getAccessToken(), JSON_THROW_ON_ERROR));
             }
         }
 
         return $client;
     }
 
-    protected function logServiceException(Google_Service_Exception $exception, string $message)
+    protected function logServiceException(\Google_Service_Exception $exception, string $message)
     {
         $this->logger->critical(
-            "Google_Service_Exception caught: $message\n".
-            "`Code: " . $exception->getCode() . "`\n".
-            "```".
-            $exception->getMessage(). "\n".
-            "```"
+            "Google_Service_Exception caught: $message\n" .
+            '`Code: ' . $exception->getCode() . "`\n" .
+            '```' .
+            $exception->getMessage() . "\n" .
+            '```'
         );
     }
 }

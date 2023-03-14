@@ -15,9 +15,9 @@ class LoadTeamInterestData extends AbstractFixture implements OrderedFixtureInte
         $teamInterest1
             ->setDepartment($this->getReference('dep-1'))
             ->setSemester($this->getReference('semester-current'))
-            ->setPotentialTeams(array(
+            ->setPotentialTeams([
                 $this->getReference('team-1'),
-                $this->getReference('team-2'),))
+                $this->getReference('team-2'), ])
             ->setName('Magnus Carlsen')
             ->setEmail('magnus@gmail.com');
         $manager->persist($teamInterest1);
@@ -27,7 +27,7 @@ class LoadTeamInterestData extends AbstractFixture implements OrderedFixtureInte
         $teamInterest2
             ->setDepartment($this->getReference('dep-1'))
             ->setSemester($this->getReference('semester-previous'))
-            ->setPotentialTeams(array($this->getReference('team-1')))
+            ->setPotentialTeams([$this->getReference('team-1')])
             ->setName('Morten Nome')
             ->setEmail('nome@ntnu.no');
         $manager->persist($teamInterest2);
@@ -36,7 +36,7 @@ class LoadTeamInterestData extends AbstractFixture implements OrderedFixtureInte
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }

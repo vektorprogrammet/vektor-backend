@@ -6,23 +6,15 @@ use App\Entity\User;
 use App\Mailer\MailerInterface;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
-use Swift_Message;
 use Twig\Environment;
 
 class UserRegistration
 {
-    private Environment $twig;
-    private EntityManagerInterface $em;
-    private MailerInterface $mailer;
-
     /**
-     * UserRegistration constructor
+     * UserRegistration constructor.
      */
-    public function __construct(Environment $twig, EntityManagerInterface $em, MailerInterface $mailer)
+    public function __construct(private readonly Environment $twig, private readonly EntityManagerInterface $em, private readonly MailerInterface $mailer)
     {
-        $this->twig = $twig;
-        $this->em = $em;
-        $this->mailer = $mailer;
     }
 
     public function setNewUserCode(User $user): string
@@ -37,17 +29,17 @@ class UserRegistration
         return $newUserCode;
     }
 
-    public function createActivationEmail(User $user, $newUserCode): Swift_Message
+    public function createActivationEmail(User $user, $newUserCode): \Swift_Message
     {
-        return (new Swift_Message())
+        return (new \Swift_Message())
             ->setSubject('Velkommen til Vektorprogrammet!')
-            ->setFrom(array('vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'))
+            ->setFrom(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
             ->setReplyTo($user->getFieldOfStudy()->getDepartment()->getEmail())
             ->setTo($user->getEmail())
-            ->setBody($this->twig->render('new_user/create_new_user_email.txt.twig', array(
+            ->setBody($this->twig->render('new_user/create_new_user_email.txt.twig', [
                 'newUserCode' => $newUserCode,
                 'name' => $user->getFullName(),
-            )));
+            ]));
     }
 
     public function sendActivationCode(User $user)
@@ -79,7 +71,7 @@ class UserRegistration
 
         $user->setActive('1');
 
-        if (count($user->getRoles()) === 0) {
+        if ((is_countable($user->getRoles()) ? count($user->getRoles()) : 0) === 0) {
             $role = Roles::ASSISTANT;
             $user->addRole($role);
         }

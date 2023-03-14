@@ -9,5 +9,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueCompanyEmail extends Constraint
 {
-    public $message = 'E-posten "{{ email }}" er allerede i bruk';
+    public string $message = 'E-posten "{{ email }}" er allerede i bruk';
 }

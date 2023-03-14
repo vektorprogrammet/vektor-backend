@@ -29,8 +29,8 @@ class SemesterEntityUnitTest extends TestCase
         $semesterTime = 'Vår';
         $year = 1980;
 
-        $startMonth = $semesterTime == 'Vår' ? '01' : '08';
-        $expectedDate = date_create($year.'-'.$startMonth.'-01 00:00:00');
+        $startMonth = $semesterTime === 'Vår' ? '01' : '08';
+        $expectedDate = date_create($year . '-' . $startMonth . '-01 00:00:00');
         $semester->setSemesterTime($semesterTime);
         $semester->setYear($year);
 
@@ -43,8 +43,8 @@ class SemesterEntityUnitTest extends TestCase
         $semesterTime = 'Vår';
         $year = 1980;
 
-        $endMonth = $semesterTime == 'Vår' ? '07' : '12';
-        $expectedDate = date_create($year.'-'.$endMonth.'-31 23:59:59');
+        $endMonth = $semesterTime === 'Vår' ? '07' : '12';
+        $expectedDate = date_create($year . '-' . $endMonth . '-31 23:59:59');
         $semester->setSemesterTime($semesterTime);
         $semester->setYear($year);
 
@@ -57,7 +57,6 @@ class SemesterEntityUnitTest extends TestCase
             ->setYear(1980)
             ->setSemesterTime('Vår');
 
-
         /***** ASSERTIONS FOR DIFFERENT YEARS *****/
         // Assert that null is before
         $this->assertTrue($semester->isBefore(null));
@@ -67,7 +66,8 @@ class SemesterEntityUnitTest extends TestCase
             $semester->isBefore(
                 (new Semester())
                     ->setYear(1990)
-                    ->setSemesterTime('Vår'))
+                    ->setSemesterTime('Vår')
+            )
         );
 
         // Assert that we are not before previous semesters
@@ -75,9 +75,9 @@ class SemesterEntityUnitTest extends TestCase
             $semester->isBefore(
                 (new Semester())
                     ->setYear(1975)
-                    ->setSemesterTime('Høst'))
+                    ->setSemesterTime('Høst')
+            )
         );
-
 
         /***** ASSERTIONS FOR EQUAL YEARS *****/
         $year = 1980;
@@ -133,7 +133,7 @@ class SemesterEntityUnitTest extends TestCase
             ->setYear(1980)
             ->setSemesterTime('Vår');
 
-         /***** ASSERTIONS FOR DIFFERENT YEARS *****/
+        /***** ASSERTIONS FOR DIFFERENT YEARS *****/
         // Assert that null is after
         $this->assertTrue($semester->isAfter(null));
 
@@ -142,7 +142,8 @@ class SemesterEntityUnitTest extends TestCase
             $semester->isAfter(
                 (new Semester())
                     ->setYear(1975)
-                    ->setSemesterTime('Høst'))
+                    ->setSemesterTime('Høst')
+            )
         );
 
         // Assert that we are not after later semesters
@@ -150,7 +151,8 @@ class SemesterEntityUnitTest extends TestCase
             $semester->isAfter(
                 (new Semester())
                     ->setYear(1990)
-                    ->setSemesterTime('Vår'))
+                    ->setSemesterTime('Vår')
+            )
         );
 
         /***** ASSERTIONS FOR EQUAL YEARS *****/
@@ -219,11 +221,13 @@ class SemesterEntityUnitTest extends TestCase
             $semester->isBetween(
                 (new Semester())
                     ->setYear(1975)
-                    ->setSemesterTime('Høst')
-            , null)
+                    ->setSemesterTime('Høst'),
+                null
+            )
         );
         $this->assertTrue(
-            $semester->isBetween(null,
+            $semester->isBetween(
+                null,
                 (new Semester())
                     ->setYear(1985)
                     ->setSemesterTime('Høst')
@@ -251,7 +255,6 @@ class SemesterEntityUnitTest extends TestCase
                     ->setSemesterTime('Høst')
             )
         );
-
 
         /***** ASSERTIONS FOR EQUAL YEARS *****/
         $year = 1980;
@@ -366,6 +369,5 @@ class SemesterEntityUnitTest extends TestCase
                         ->setSemesterTime('Høst')
                 )
         );
-
     }
 }

@@ -7,28 +7,20 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ReceiptEvent extends Event
 {
-    const CREATED = 'receipt.created';
-    const REFUNDED = 'receipt.refunded';
-    const REJECTED = 'receipt.rejected';
-    const PENDING = 'receipt.pending';
-    const EDITED = 'receipt.edited';
-    const DELETED = 'receipt.deleted';
-
-    private $receipt;
+    final public const CREATED = 'receipt.created';
+    final public const REFUNDED = 'receipt.refunded';
+    final public const REJECTED = 'receipt.rejected';
+    final public const PENDING = 'receipt.pending';
+    final public const EDITED = 'receipt.edited';
+    final public const DELETED = 'receipt.deleted';
 
     /**
      * ReceiptEvent constructor.
-     *
-     * @param Receipt $receipt
      */
-    public function __construct(Receipt $receipt)
+    public function __construct(private readonly Receipt $receipt)
     {
-        $this->receipt = $receipt;
     }
 
-    /**
-     * @return Receipt
-     */
     public function getReceipt(): Receipt
     {
         return $this->receipt;

@@ -8,7 +8,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 {
     public function testCreateSchoolForDepartment()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -34,7 +33,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
     public function testUpdateSchool()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -64,7 +62,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
     public function testShowSchoolsByDepartment()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
 
@@ -91,7 +88,6 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
     public function testShowUsersByDepartment()
     {
-
         // TEAM
         $client = $this->createTeamMemberClient();
 
@@ -204,23 +200,21 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
     public function testShowSpecificSchool()
     {
-
         // ADMIN
         $client = $this->createAdminClient();
-
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin');
 
         // Find a link and click it
-        $link = $crawler->selectLink('Selsbakk')->link();
+        $link = $crawler->selectLink('Gimse')->link();
         $crawler = $client->click($link);
 
         // Assert that we have the correct amount of data
-        $this->assertEquals(1, $crawler->filter('h2:contains("Selsbakk")')->count());
+        $this->assertEquals(1, $crawler->filter('h2:contains("Gimse")')->count());
 
-        // Assert a specific 200 status code
+        // Assert 200 status code
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $client->request('GET', '/kontrollpanel/skole/2');
+        $client->request('GET', '/kontrollpanel/skole/1');
 
         // Assert that the response status code is 2xx
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -238,26 +232,27 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $crawler->filter('h2:contains("Gimse")')->count());
     }
 
-    public function testShow()
+    public function testShowAsAdmin()
     {
+        // ADMIN
         $client = $this->createAdminClient();
-
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct amount of data
         $this->assertEquals(1, $crawler->filter('h2:contains("Skoler")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Selsbakk")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Vibeke Hansen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Vibeke@mail.com")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("22386722")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Gimse")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("Per Olsen")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("Per@mail.com")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("99887722")')->count());
+    }
 
-        // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
+    public function testShowAsTeamMember()
+    {
         // TEAM
         $client = $this->createTeamMemberClient();
-
         $crawler = $client->request('GET', '/kontrollpanel/skoleadmin');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         // Assert that we have the correct amount of data
         $this->assertEquals(1, $crawler->filter('h2:contains("Skoler")')->count());

@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\InterviewSchema;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\InterviewSchema;
 
 class LoadInterviewSchemaData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -35,7 +35,7 @@ class LoadInterviewSchemaData extends AbstractFixture implements OrderedFixtureI
         $this->setReference('ischema-2', $schema2);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

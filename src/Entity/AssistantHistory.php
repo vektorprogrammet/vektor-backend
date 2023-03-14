@@ -61,6 +61,7 @@ class AssistantHistory
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      */
@@ -68,7 +69,7 @@ class AssistantHistory
 
     public function activeInGroup($group): bool
     {
-        return strpos($this->bolk, "Bolk $group") !== false;
+        return mb_strpos($this->bolk, "Bolk $group") !== false;
     }
 
     /**
@@ -128,13 +129,12 @@ class AssistantHistory
     }
 
     /**
-     * @param Department $department
-     *
      * @return AssistantHistory
      */
     public function setDepartment(Department $department)
     {
         $this->department = $department;
+
         return $this;
     }
 
@@ -234,7 +234,7 @@ class AssistantHistory
     }
 
     // Used for unit testing
-    public function fromArray($data = array())
+    public function fromArray($data = [])
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";

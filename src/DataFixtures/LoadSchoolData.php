@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\School;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\School;
 
 class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -44,13 +44,13 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 
         for ($i = 0; $i < 10; ++$i) {
             $school = new School();
-            $school->setName('Skole '.$i);
-            $school->setContactPerson('Kontaktperson '.$i);
+            $school->setName('Skole ' . $i);
+            $school->setContactPerson('Kontaktperson ' . $i);
             $school->setEmail('skole@mail.com');
             $school->setPhone('12345678');
             $school->setInternational(false);
             $manager->persist($school);
-            $this->addReference('school-0'.$i, $school);
+            $this->addReference('school-0' . $i, $school);
         }
 
         $manager->flush();
@@ -61,7 +61,7 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('school-4', $school4);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }

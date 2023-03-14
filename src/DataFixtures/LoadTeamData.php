@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Team;
-use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -81,7 +80,7 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
         $team2->setEmail('IT@vektorprogrammet.no');
         $team2->setShortDescription('Det er vi som driver med IT');
         $team2->setAcceptApplication(true);
-        $team2->setDeadline(new DateTime('now +3 days'));
+        $team2->setDeadline(new \DateTime('now +3 days'));
         $manager->persist($team2);
 
         $team3 = new Team();
@@ -159,7 +158,7 @@ class LoadTeamData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('team-2', $team2);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

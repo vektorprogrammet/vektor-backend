@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints as CustomAssert;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
@@ -23,6 +23,7 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @var AdmissionPeriod
+     *
      * @ORM\ManyToOne(targetEntity="AdmissionPeriod")
      */
     private $admissionPeriod;
@@ -35,30 +36,35 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $monday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $tuesday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $wednesday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $thursday;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true}))
+     *
      * @var bool
      */
     private $friday;
@@ -131,6 +137,7 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @var Interview
+     *
      * @ORM\OneToOne(targetEntity="Interview", cascade={"persist", "remove"}, inversedBy="application")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      * @Assert\Valid
@@ -149,8 +156,8 @@ class Application implements DepartmentSemesterInterface
      */
     public function __construct()
     {
-        $this->last_edited = new DateTime();
-        $this->created = new DateTime();
+        $this->last_edited = new \DateTime();
+        $this->created = new \DateTime();
         $this->substitute = false;
         $this->doublePosition = false;
         $this->previousParticipation = false;
@@ -189,6 +196,7 @@ class Application implements DepartmentSemesterInterface
     public function setAdmissionPeriod($admissionPeriod)
     {
         $this->admissionPeriod = $admissionPeriod;
+
         return $this;
     }
 
@@ -208,86 +216,55 @@ class Application implements DepartmentSemesterInterface
         $this->yearOfStudy = $yearOfStudy;
     }
 
-    /**
-     * @return bool
-     */
     public function isMonday(): bool
     {
         return $this->monday;
     }
 
-    /**
-     * @param bool $monday
-     */
     public function setMonday(bool $monday)
     {
         $this->monday = $monday;
     }
 
-    /**
-     * @return bool
-     */
     public function isTuesday(): bool
     {
         return $this->tuesday;
     }
 
-    /**
-     * @param bool $tuesday
-     */
     public function setTuesday(bool $tuesday)
     {
         $this->tuesday = $tuesday;
     }
 
-    /**
-     * @return bool
-     */
     public function isWednesday(): bool
     {
         return $this->wednesday;
     }
 
-    /**
-     * @param bool $wednesday
-     */
     public function setWednesday(bool $wednesday)
     {
         $this->wednesday = $wednesday;
     }
 
-    /**
-     * @return bool
-     */
     public function isThursday(): bool
     {
         return $this->thursday;
     }
 
-    /**
-     * @param bool $thursday
-     */
     public function setThursday(bool $thursday)
     {
         $this->thursday = $thursday;
     }
 
-    /**
-     * @return bool
-     */
     public function isFriday(): bool
     {
         return $this->friday;
     }
 
-    /**
-     * @param bool $friday
-     */
     public function setFriday(bool $friday)
     {
         $this->friday = $friday;
     }
-
 
     /**
      * @return string
@@ -354,7 +331,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastEdited()
     {
@@ -362,7 +339,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param DateTime $last_edited
+     * @param \DateTime $last_edited
      */
     public function setLastEdited($last_edited)
     {
@@ -370,7 +347,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -378,7 +355,7 @@ class Application implements DepartmentSemesterInterface
     }
 
     /**
-     * @param DateTime $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
@@ -485,17 +462,11 @@ class Application implements DepartmentSemesterInterface
         $this->specialNeeds = $specialNeeds;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPreferredSchool()
     {
         return $this->preferredSchool;
     }
 
-    /**
-     * @param mixed $preferredSchool
-     */
     public function setPreferredSchool($preferredSchool): void
     {
         $this->preferredSchool = $preferredSchool;

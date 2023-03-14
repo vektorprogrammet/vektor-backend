@@ -10,11 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class TeamInterestEntityUnitTest extends TestCase
 {
-
-    /**
-     * @var TeamInterest
-     */
-    private $teamInterest;
+    private TeamInterest $teamInterest;
 
     public function setUp(): void
     {
@@ -24,19 +20,19 @@ class TeamInterestEntityUnitTest extends TestCase
 
     public function testSetName()
     {
-        $this->teamInterest->setName("test");
-        $this->assertEquals("test", $this->teamInterest->getName());
+        $this->teamInterest->setName('test');
+        $this->assertEquals('test', $this->teamInterest->getName());
     }
 
     public function testSetEmail()
     {
-        $this->teamInterest->setEmail("test@test.com");
-        $this->assertEquals("test@test.com", $this->teamInterest->getEmail());
+        $this->teamInterest->setEmail('test@test.com');
+        $this->assertEquals('test@test.com', $this->teamInterest->getEmail());
     }
 
     public function testSetPotentialTeams()
     {
-        $teams = array(new Team(), new Team());
+        $teams = [new Team(), new Team()];
         $this->teamInterest->setPotentialTeams($teams);
         $this->assertEquals($teams, $this->teamInterest->getPotentialTeams());
     }

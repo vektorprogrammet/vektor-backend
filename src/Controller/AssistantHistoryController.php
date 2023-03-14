@@ -3,19 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\AssistantHistory;
-use App\Role\Roles;
 use App\Form\Type\CreateAssistantHistoryType;
+use App\Role\Roles;
 use App\Service\LogService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AssistantHistoryController extends BaseController
 {
-    private LogService $logService;
-
-    public function __construct(LogService $logService)
-    {
-        $this->logService = $logService;
+    public function __construct(
+        private readonly LogService $logService,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function delete(AssistantHistory $assistantHistory): RedirectResponse
@@ -24,12 +24,12 @@ class AssistantHistoryController extends BaseController
             $this->createAccessDeniedException();
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($assistantHistory);
         $em->flush();
 
         $this->logService->info(
-            "{$this->getUser()} deleted {$assistantHistory->getUser()}'s assistant history on ".
+            "{$this->getUser()} deleted {$assistantHistory->getUser()}'s assistant history on " .
             "{$assistantHistory->getSchool()->getName()} {$assistantHistory->getSemester()->getName()}"
         );
 
@@ -38,21 +38,23 @@ class AssistantHistoryController extends BaseController
 
     public function edit(Request $request, AssistantHistory $assistantHistory)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         $department = $assistantHistory->getUser()->getDepartment();
         $form = $this->createForm(CreateAssistantHistoryType::class, $assistantHistory, [
-            'department' => $department
+            'department' => $department,
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form -> isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($assistantHistory);
             $em->flush();
+
             return $this->redirectToRoute('participanthistory_show');
         }
-        return $this->render("participant_history/participant_history_edit.html.twig", array(
-            "form"=>$form->createView()
-        ));
+
+        return $this->render('participant_history/participant_history_edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

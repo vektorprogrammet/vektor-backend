@@ -46,10 +46,8 @@ crashlytics-build.properties
 /app/phpunit.xml
 /bin/
 /composer.phar
-/vendor/
 /signatures/
 /public/assets/
-/public/bundles/
 /public/images/
 /public/fonts/
 /public/webfonts/
@@ -84,3 +82,12 @@ crashlytics-build.properties
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+# php-cs-fixer
+/tools
+.php-cs-fixer.cache

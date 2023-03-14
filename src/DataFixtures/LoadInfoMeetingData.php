@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\InfoMeeting;
-use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -12,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadInfoMeetingData extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
 {
-    private $container;
+    private ?ContainerInterface $container = null;
 
     public function setContainer(ContainerInterface $container = null)
     {
@@ -22,12 +21,12 @@ class LoadInfoMeetingData extends AbstractFixture implements ContainerAwareInter
     public function load(ObjectManager $manager)
     {
         $infoMeetingUiO = new InfoMeeting();
-        $date = new DateTime('now');
+        $date = new \DateTime('now');
         $date->modify('+1day');
         $infoMeetingUiO->setShowOnPage(true);
         $infoMeetingUiO->setDate($date);
-        $infoMeetingUiO->setRoom("Parken");
-        $infoMeetingUiO->setDescription("Det blir underholdning!");
+        $infoMeetingUiO->setRoom('Parken');
+        $infoMeetingUiO->setDescription('Det blir underholdning!');
 
         $semester = $this->getReference('uio-admission-period-current');
         $semester->setInfoMeeting($infoMeetingUiO);
@@ -39,11 +38,9 @@ class LoadInfoMeetingData extends AbstractFixture implements ContainerAwareInter
     }
 
     /**
-     * Get the order of this fixture
-     *
-     * @return integer
+     * Get the order of this fixture.
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 28;
     }

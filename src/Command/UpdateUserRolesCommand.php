@@ -11,10 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateUserRolesCommand extends Command
 {
-    public function __construct(RoleManager $roleManager)
+    public function __construct(private readonly RoleManager $roleManager)
     {
-        $this->roleManager = $roleManager;
-
         parent::__construct();
     }
 
@@ -22,16 +20,7 @@ class UpdateUserRolesCommand extends Command
      * @var ObjectManager
      */
     private $entityManager;
-
-    /**
-     * @var RoleManager
-     */
-    private $roleManager;
-
-    /**
-     * @var int
-     */
-    private $rolesUpdatedCount;
+    private int $rolesUpdatedCount;
 
     /**
      * {@inheritdoc}
@@ -51,6 +40,7 @@ Users NOT in team will be demoted to Assistants.
 HELP
             );
     }
+
     /**
      * This method is executed before the the execute() method. It's main purpose
      * is to initialize the variables used in the rest of the command methods.
@@ -61,11 +51,12 @@ HELP
 
         $this->rolesUpdatedCount = 0;
     }
+
     /**
      * This method is executed after initialize(). It usually contains the logic
      * to execute to complete this command task.
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $startTime = microtime(true);
 
@@ -84,5 +75,7 @@ HELP
         $elapsedTime = ($finishTime - $startTime) * 1000;
 
         $output->writeln(sprintf('%d roles updated in %d ms', $this->rolesUpdatedCount, $elapsedTime));
+
+        return Command::SUCCESS;
     }
 }

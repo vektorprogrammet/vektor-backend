@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Position;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,17 +14,17 @@ class CreatePositionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Navn',
-            ))
-            ->add('Lagre', SubmitType::class, array());
+            ])
+            ->add('Lagre', SubmitType::class, []);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Position',
-        ));
+        $resolver->setDefaults([
+            'data_class' => Position::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

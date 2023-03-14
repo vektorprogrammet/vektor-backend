@@ -10,21 +10,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TeamMembershipService
 {
-    private EntityManagerInterface $em;
-    private EventDispatcherInterface $dispatcher;
-
     /**
-     * TeamMembershipService constructor
+     * TeamMembershipService constructor.
      */
-    public function __construct(EntityManagerInterface $em, EventDispatcherInterface $dispatcher)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly EventDispatcherInterface $dispatcher)
     {
-        $this->em = $em;
-        $this->dispatcher = $dispatcher;
     }
 
     public function updateTeamMemberships(): array
     {
-        $teamMemberships = $this->em->getRepository(TeamMembership::class)->findBy(array('isSuspended' => false));
+        $teamMemberships = $this->em->getRepository(TeamMembership::class)->findBy(['isSuspended' => false]);
         $currentSemesterStartDate = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester()->getStartDate();
         foreach ($teamMemberships as $teamMembership) {
             $endSemester = $teamMembership->getEndSemester();
@@ -36,6 +31,7 @@ class TeamMembershipService
             }
         }
         $this->em->flush();
+
         return $teamMemberships;
     }
 }

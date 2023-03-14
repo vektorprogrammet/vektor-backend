@@ -16,18 +16,11 @@ use Twig\Environment;
 
 class ApplicationAdmission
 {
-    private EntityManagerInterface $em;
-    private Environment $twig;
-    private LoginManager $loginManager;
-
     /**
-     * ApplicationAdmission constructor
+     * ApplicationAdmission constructor.
      */
-    public function __construct(EntityManagerInterface $em, Environment $twig, LoginManager $loginManager)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly Environment $twig, private readonly LoginManager $loginManager)
     {
-        $this->em = $em;
-        $this->twig = $twig;
-        $this->loginManager = $loginManager;
     }
 
     public function createApplicationForExistingAssistant(User $user): Application
@@ -64,6 +57,7 @@ class ApplicationAdmission
         if ($admissionPeriod === null) {
             return false;
         }
+
         return $this->userHasAlreadyAppliedInAdmissionPeriod($user, $admissionPeriod);
     }
 
@@ -71,14 +65,13 @@ class ApplicationAdmission
     {
         $existingApplications = $this->em->getRepository(Application::class)->findByEmailInAdmissionPeriod($user->getEmail(), $admissionPeriod);
 
-        return count($existingApplications) > 0;
+        return (is_countable($existingApplications) ? count($existingApplications) : 0) > 0;
     }
-
 
     public function setCorrectUser(Application $application)
     {
-        //Check if email belongs to an existing account and use that account
-        $user = $this->em->getRepository(User::class)->findOneBy(array('email' => $application->getUser()->getEmail()));
+        // Check if email belongs to an existing account and use that account
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $application->getUser()->getEmail()]);
         if ($user !== null) {
             $application->setUser($user);
         }
@@ -107,7 +100,7 @@ class ApplicationAdmission
         }
 
         if ($department === null) {
-            throw  new NotFoundHttpException('Department not found');
+            throw new NotFoundHttpException('Department not found');
         }
 
         return $department;
@@ -122,13 +115,13 @@ class ApplicationAdmission
 
             $content = $this->loginManager->renderLogin($message, 'admission_existing_user');
         } elseif (!$user->hasBeenAssistant()) {
-            $content = $this->twig->render('error/no_assistanthistory.html.twig', array('user' => $user));
+            $content = $this->twig->render('error/no_assistanthistory.html.twig', ['user' => $user]);
         } else {
             $department = $user->getDepartment();
             $admissionPeriod = $this->em->getRepository(AdmissionPeriod::class)->findOneWithActiveAdmissionByDepartment($department);
 
             if ($admissionPeriod === null) {
-                $content = $this->twig->render(':error:no_active_admission.html.twig');
+                $content = $this->twig->render('error/no_active_admission.html.twig');
             }
         }
 

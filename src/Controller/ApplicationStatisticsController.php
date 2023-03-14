@@ -6,29 +6,27 @@ use App\Entity\AdmissionPeriod;
 use App\Service\ApplicationData;
 use App\Service\AssistantHistoryData;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationStatisticsController extends BaseController
 {
-    private AssistantHistoryData $AssistantHistoryData;
-    private ApplicationData $ApplicationData;
-
-    public function __construct(AssistantHistoryData $assistantHistoryData, ApplicationData $applicationData)
-    {
-        $this->AssistantHistoryData=$assistantHistoryData;
-        $this->ApplicationData=$applicationData;
+    public function __construct(
+        private readonly AssistantHistoryData $AssistantHistoryData,
+        private readonly ApplicationData $ApplicationData,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
+
     /**
-     * @param Request $request
-     * @return Response
      * @throws NonUniqueResultException
      */
     public function show(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->getDoctrine()
+        $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
@@ -40,11 +38,11 @@ class ApplicationStatisticsController extends BaseController
             $applicationData->setAdmissionPeriod($admissionPeriod);
         }
 
-        return $this->render('statistics/statistics.html.twig', array(
+        return $this->render('statistics/statistics.html.twig', [
             'applicationData' => $applicationData,
             'assistantHistoryData' => $assistantHistoryData,
             'semester' => $semester,
             'department' => $department,
-        ));
+        ]);
     }
 }

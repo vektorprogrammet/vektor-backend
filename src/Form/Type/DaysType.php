@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Application;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -12,30 +13,30 @@ class DaysType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('monday', CheckboxType::class, array(
+        $builder->add('monday', CheckboxType::class, [
             'label' => 'Mandag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('tuesday', CheckboxType::class, array(
+        $builder->add('tuesday', CheckboxType::class, [
             'label' => 'Tirsdag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('wednesday', CheckboxType::class, array(
+        $builder->add('wednesday', CheckboxType::class, [
             'label' => 'Onsdag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('thursday', CheckboxType::class, array(
+        $builder->add('thursday', CheckboxType::class, [
             'label' => 'Torsdag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('friday', CheckboxType::class, array(
+        $builder->add('friday', CheckboxType::class, [
             'label' => 'Fredag passer IKKE',
             'required' => false,
-        ));
+        ]);
 
         /* Invert the truth values */
         $builder->get('monday')
@@ -48,57 +49,38 @@ class DaysType extends AbstractType
                 }
             ));
 
-
         $builder->get('tuesday')
             ->addModelTransformer(new CallbackTransformer(
-                function ($in) {
-                    return !$in;
-                },
-                function ($in) {
-                    return !$in;
-                }
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
-
 
         $builder->get('wednesday')
             ->addModelTransformer(new CallbackTransformer(
-                function ($in) {
-                    return !$in;
-                },
-                function ($in) {
-                    return !$in;
-                }
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
-
 
         $builder->get('thursday')
             ->addModelTransformer(new CallbackTransformer(
-                function ($in) {
-                    return !$in;
-                },
-                function ($in) {
-                    return !$in;
-                }
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
 
         $builder->get('friday')
             ->addModelTransformer(new CallbackTransformer(
-                function ($in) {
-                    return !$in;
-                },
-                function ($in) {
-                    return !$in;
-                }
+                fn ($in) => !$in,
+                fn ($in) => !$in
             ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Application',
+        $resolver->setDefaults([
+            'data_class' => Application::class,
             'inherit_data' => true,
             'label' => '',
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

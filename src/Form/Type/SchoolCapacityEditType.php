@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\SchoolCapacity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,14 +18,14 @@ class SchoolCapacityEditType extends AbstractType
             ->add('wednesday', IntegerType::class)
             ->add('thursday', IntegerType::class)
             ->add('friday', IntegerType::class)
-            ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\SchoolCapacity',
-        ));
+        $resolver->setDefaults([
+            'data_class' => SchoolCapacity::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

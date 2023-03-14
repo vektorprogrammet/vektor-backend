@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Semester;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -12,7 +13,7 @@ class CreateSemesterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $years = array();
+        $years = [];
         for ($i = 2012; $i <= intval(date('Y')) + 1; ++$i) {
             $years[] = $i;
         }
@@ -20,27 +21,27 @@ class CreateSemesterType extends AbstractType
         $years = array_combine($years, $years);
 
         $builder
-            ->add('semesterTime', ChoiceType::class, array(
-                'choices' => array('Vår' => 'Vår', 'Høst' => 'Høst'),
+            ->add('semesterTime', ChoiceType::class, [
+                'choices' => ['Vår' => 'Vår', 'Høst' => 'Høst'],
                 'expanded' => true,
                 'label' => 'Semester type',
                 'required' => true,
-            ))
-            ->add('year', ChoiceType::class, array(
+            ])
+            ->add('year', ChoiceType::class, [
                 'choices' => $years,
                 'label' => 'År',
                 'required' => true,
-            ))
-            ->add('save', SubmitType::class, array(
+            ])
+            ->add('save', SubmitType::class, [
                 'label' => 'Opprett',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Semester',
-        ));
+        $resolver->setDefaults([
+            'data_class' => Semester::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Validator\Constraints;
 
 use App\Entity\Team;
@@ -12,20 +11,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class UniqueCompanyEmailValidator extends ConstraintValidator
 {
-    private $em;
-    private $googleAPI;
-
-    public function __construct(EntityManagerInterface $em, GoogleAPI $googleAPI)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly GoogleAPI $googleAPI)
     {
-        $this->em = $em;
-        $this->googleAPI = $googleAPI;
     }
-
 
     /**
      * Checks if the passed value is valid.
      *
-     * @param mixed $value The value that should be validated
+     * @param mixed      $value      The value that should be validated
      * @param Constraint $constraint The constraint for the validation
      */
     public function validate($value, Constraint $constraint)
@@ -39,14 +32,14 @@ class UniqueCompanyEmailValidator extends ConstraintValidator
         $userCompanyEmails = $this->em->getRepository(User::class)->findAllCompanyEmails();
         $allEmails = array_merge($googleEmails, $teamEmails, $userCompanyEmails);
 
-        if (array_search($value, $allEmails) !== false) {
+        if (in_array($value, $allEmails, true)) {
             $this->context->buildViolation($constraint->message)
                           ->setParameter('{{ email }}', $value)
                           ->addViolation();
         }
     }
 
-    private function objectHasChanged($value)
+    private function objectHasChanged($value): bool
     {
         $object = $this->context->getObject();
         $oldObject = $this->em

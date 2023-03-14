@@ -14,14 +14,13 @@ use App\Entity\User;
 use App\Service\FilterService;
 use App\Service\Sorter;
 use App\Twig\TeamPositionSortExtension;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class TeamPositionSortExtensionUnitTest extends TestCase
 {
-    private $sortExtension;
-    private $activeSemester;
-    private $latestAdmissionPeriod;
+    private readonly TeamPositionSortExtension $sortExtension;
+    private readonly Semester $activeSemester;
+    private readonly AdmissionPeriod $latestAdmissionPeriod;
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {
@@ -36,13 +35,13 @@ class TeamPositionSortExtensionUnitTest extends TestCase
         $this->latestAdmissionPeriod = new AdmissionPeriod();
         $this->latestAdmissionPeriod
             ->setSemester($this->activeSemester)
-            ->setStartDate(new DateTime('2013-01-01'))
-            ->setEndDate((new DateTime())->modify('+1day'));
+            ->setStartDate(new \DateTime('2013-01-01'))
+            ->setEndDate((new \DateTime())->modify('+1day'));
     }
 
     public function testExecutiveMembers()
     {
-        $users = array();
+        $users = [];
         $positions = ['Sekretær', 'Leder', '', 'Økonomi', 'Assistent', 'Medlem', 'Nestleder'];
         $board = new ExecutiveBoard();
 
@@ -52,7 +51,7 @@ class TeamPositionSortExtensionUnitTest extends TestCase
             $membership->setPositionName($positions[$x])
                        ->setBoard($board)
                        ->setStartSemester($this->activeSemester);
-            $user->setMemberships(array($membership));
+            $user->setMemberships([$membership]);
             $users[] = $user;
         }
 
@@ -65,7 +64,7 @@ class TeamPositionSortExtensionUnitTest extends TestCase
 
     public function testTeamMemberships()
     {
-        $users = array();
+        $users = [];
         $positions = ['Sekretær', 'Leder', '', 'Økonomi', 'Assistent', 'Medlem', 'Nestleder'];
         $department = new Department();
         $department->addAdmissionPeriod($this->latestAdmissionPeriod);
@@ -80,7 +79,7 @@ class TeamPositionSortExtensionUnitTest extends TestCase
             $membership->setPosition($position)
                 ->setTeam($team)
                 ->setStartSemester($this->activeSemester);
-            $user->setMemberships(array($membership));
+            $user->setMemberships([$membership]);
             $users[] = $user;
         }
 

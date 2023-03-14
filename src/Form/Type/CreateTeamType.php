@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Team;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -17,50 +18,50 @@ class CreateTeamType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'label' => 'Navn',
-            ))
-            ->add('email', EmailType::class, array(
+            ])
+            ->add('email', EmailType::class, [
                 'label' => 'E-post',
-            ))
-            ->add('shortDescription', TextType::class, array(
+            ])
+            ->add('shortDescription', TextType::class, [
                 'label' => 'Kort beskrivelse',
                 'required' => false,
-            ))
-            ->add('preview', SubmitType::class, array(
+            ])
+            ->add('preview', SubmitType::class, [
                 'label' => 'Forhåndsvis',
-            ))
-            ->add('acceptApplication', CheckboxType::class, array(
+            ])
+            ->add('acceptApplication', CheckboxType::class, [
                 'label' => 'Ta i mot søknader?',
                 'required' => false,
-            ))
-            ->add('deadline', DateTimeType::class, array(
+            ])
+            ->add('deadline', DateTimeType::class, [
                 'label' => 'Søknadsfrist',
                 'format' => 'dd.MM.yyyy HH:mm',
                 'widget' => 'single_text',
                 'required' => false,
                 'html5' => false,
-            ))
-            ->add('active', CheckboxType::class, array(
+            ])
+            ->add('active', CheckboxType::class, [
                 'label' => 'Aktivt team',
                 'required' => false,
-            ))
-            ->add('description', CKEditorType::class, array(
+            ])
+            ->add('description', CKEditorType::class, [
                 'required' => false,
-                'config' => array(
+                'config' => [
                     'height' => 500,
                     'filebrowserBrowseRoute' => 'elfinder',
-                    'filebrowserBrowseRouteParameters' => array('instance' => 'team_editor'), ),
+                    'filebrowserBrowseRouteParameters' => ['instance' => 'team_editor'], ],
                 'label' => 'Lang beskrivelse (valgfritt)',
-                'attr' => array('class' => 'hide'), // Graceful loading, hides the textarea that is replaced by ckeditor
-            ));
+                'attr' => ['class' => 'hide'], // Graceful loading, hides the textarea that is replaced by ckeditor
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Team',
-        ));
+        $resolver->setDefaults([
+            'data_class' => Team::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

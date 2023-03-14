@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Application;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -13,14 +14,14 @@ class ApplicationInterviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('applicationPractical', ApplicationPracticalType::class, array(
-            'data_class' => 'App\Entity\Application',
+        $builder->add('applicationPractical', ApplicationPracticalType::class, [
+            'data_class' => Application::class,
             'teams' => $options['teams'],
-        ));
+        ]);
 
-        $builder->add('heardAboutFrom', ChoiceType::class, array(
+        $builder->add('heardAboutFrom', ChoiceType::class, [
             'label' => 'Hvor hørte du om Vektorprogrammet?',
-            'choices' => array(
+            'choices' => [
                 'Blesting' => 'Blesting',
                 'Stand' => 'Stand',
                 'Infomail/nettsida/facebook etc' => 'Infomail/nettsida/facebook etc',
@@ -28,33 +29,33 @@ class ApplicationInterviewType extends AbstractType
                 'Bekjente i styret' => 'Bekjente i styret',
                 'Plakater/flyers' => 'Plakater/Flyers',
                 'Linjeforeningen (f.eks fadderukene)' => 'Linjeforeningen (f.eks fadderukene)',
-            ),
+            ],
             'expanded' => true,
             'multiple' => true,
-        ));
+        ]);
 
         $builder->add('specialNeeds', TextType::class, [
             'label' => 'Spesielle behov',
-            'required' => false
+            'required' => false,
         ]);
 
         $builder->add('interview', InterviewType::class);
 
-        $builder->add('save', SubmitType::class, array(
+        $builder->add('save', SubmitType::class, [
             'label' => 'Lagre kladd',
-        ));
+        ]);
 
-        $builder->add('saveAndSend', SubmitType::class, array(
+        $builder->add('saveAndSend', SubmitType::class, [
             'label' => 'Lagre og send kvittering',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Application',
+        $resolver->setDefaults([
+            'data_class' => Application::class,
             'teams' => null,
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

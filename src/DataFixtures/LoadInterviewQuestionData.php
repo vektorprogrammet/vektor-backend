@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\InterviewQuestion;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\InterviewQuestion;
 
 class LoadInterviewQuestionData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -63,7 +63,7 @@ class LoadInterviewQuestionData extends AbstractFixture implements OrderedFixtur
         $this->setReference('iq-8', $question8);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }

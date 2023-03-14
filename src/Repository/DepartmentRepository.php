@@ -36,6 +36,7 @@ class DepartmentRepository extends EntityRepository
     {
         return array_filter($this->findAll(), function (Department $department) {
             $semester = $department->getCurrentAdmissionPeriod();
+
             return $semester !== null && $semester->hasActiveAdmission();
         });
     }

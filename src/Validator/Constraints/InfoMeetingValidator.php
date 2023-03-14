@@ -2,18 +2,17 @@
 
 namespace App\Validator\Constraints;
 
+use App\Entity\InfoMeeting;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use App\Entity\InfoMeeting;
 
 class InfoMeetingValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the info meeting is valid.
      *
      * @param InfoMeeting $infoMeeting The info meeting that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param Constraint  $constraint  The constraint for the validation
      */
     public function validate($infoMeeting, Constraint $constraint)
     {

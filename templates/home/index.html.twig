@@ -53,7 +53,7 @@
                         <span class="text-bold count">{{ teamMemberCount }}</span><br> I team
                     </p>
                     <p>Over <span class="text-bold">{{ teamMemberCount }}</span> studenter har hatt et verv i et
-                        Vektorprogrammets mange team.</p>
+                        av Vektorprogrammets mange team.</p>
                     <p><a href="{{ path('team') }}">Les mer om verv i team <i class="fa fa-chevron-right"></i></a></p>
                 </div>
             </div>
@@ -69,7 +69,10 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"
+            integrity="sha384-0saKbDOWtYAw5aP4czPUm6ByY5JojfQ9Co6wDgkuM7Zn+anp+4Rj92oGK8cbV91S"
+            crossorigin="anonymous">
+    </script>
     <script>
       $('.carousel').carousel({
         interval: 10000,

@@ -2,11 +2,10 @@
 
 namespace App\DataFixtures;
 
-use DateTime;
+use App\Entity\Receipt;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Receipt;
 
 class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -14,8 +13,8 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
     {
         $receipt1 = new Receipt();
         $receipt1->setUser($this->getReference('user-1'));
-        $receipt1->setSubmitDate(new DateTime('2016-09-05'));
-        $receipt1->setReceiptDate(new DateTime('2016-09-01'));
+        $receipt1->setSubmitDate(new \DateTime('2016-09-05'));
+        $receipt1->setReceiptDate(new \DateTime('2016-09-01'));
         $receipt1->setDescription(
             'Kaffetraktere og grenuttak til stand'
         );
@@ -25,8 +24,8 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 
         $receipt2 = new Receipt();
         $receipt2->setUser($this->getReference('user-1'));
-        $receipt2->setSubmitDate(new DateTime('2017-04-03'));
-        $receipt2->setReceiptDate(new DateTime('2017-03-17'));
+        $receipt2->setSubmitDate(new \DateTime('2017-04-03'));
+        $receipt2->setReceiptDate(new \DateTime('2017-03-17'));
         $receipt2->setDescription(
             'Taco til Tor'
         );
@@ -36,21 +35,21 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 
         $receipt3 = new Receipt();
         $receipt3->setUser($this->getReference('user-1'));
-        $receipt3->setSubmitDate(new DateTime('2015-11-03'));
-        $receipt3->setReceiptDate(new DateTime('2015-10-12'));
+        $receipt3->setSubmitDate(new \DateTime('2015-11-03'));
+        $receipt3->setReceiptDate(new \DateTime('2015-10-12'));
         $receipt3->setDescription(
             'Teamsosialt med IT'
         );
         $receipt3->setSum(531);
         $receipt3->setStatus(Receipt::STATUS_REFUNDED);
-        $receipt3->setRefundDate(new DateTime('2015-11-08'));
+        $receipt3->setRefundDate(new \DateTime('2015-11-08'));
         $receipt3->setPicturePath('/images/receipt_images/teamsosialt.jpg');
         $manager->persist($receipt3);
 
         $receipt4 = new Receipt();
         $receipt4->setUser($this->getReference('user-2'));
-        $receipt4->setSubmitDate(new DateTime());
-        $receipt4->setReceiptDate(new DateTime());
+        $receipt4->setSubmitDate(new \DateTime());
+        $receipt4->setReceiptDate(new \DateTime());
         $receipt4->setDescription(
             'Innkjøp til hyttetur'
         );
@@ -60,8 +59,8 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 
         $receiptAssistant = new Receipt();
         $receiptAssistant->setUser($this->getReference('user-assistant'));
-        $receiptAssistant->setSubmitDate(new DateTime('2015-11-03'));
-        $receiptAssistant->setReceiptDate(new DateTime('2015-09-21'));
+        $receiptAssistant->setSubmitDate(new \DateTime('2015-11-03'));
+        $receiptAssistant->setReceiptDate(new \DateTime('2015-09-21'));
         $receiptAssistant->setDescription(
             'Teamsosialt med IT'
         );
@@ -71,8 +70,8 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 
         $receiptTeam = new Receipt();
         $receiptTeam->setUser($this->getReference('user-team-member'));
-        $receiptTeam->setSubmitDate(new DateTime('2015-11-03'));
-        $receiptTeam->setReceiptDate(new DateTime('2015-11-02'));
+        $receiptTeam->setSubmitDate(new \DateTime('2015-11-03'));
+        $receiptTeam->setReceiptDate(new \DateTime('2015-11-02'));
         $receiptTeam->setDescription(
             'Teamsosialt med IT'
         );
@@ -82,8 +81,8 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 
         $receiptAdmin = new Receipt();
         $receiptAdmin->setUser($this->getReference('user-team-leader'));
-        $receiptAdmin->setSubmitDate(new DateTime('2015-11-03'));
-        $receiptAdmin->setReceiptDate(new DateTime('2015-09-03'));
+        $receiptAdmin->setSubmitDate(new \DateTime('2015-11-03'));
+        $receiptAdmin->setReceiptDate(new \DateTime('2015-09-03'));
         $receiptAdmin->setDescription(
             'Teamsosialt med IT'
         );
@@ -93,8 +92,8 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
 
         $receiptSuperAdmin = new Receipt();
         $receiptSuperAdmin->setUser($this->getReference('user-admin'));
-        $receiptSuperAdmin->setSubmitDate(new DateTime('2015-11-03'));
-        $receiptSuperAdmin->setReceiptDate(new DateTime('2015-10-03'));
+        $receiptSuperAdmin->setSubmitDate(new \DateTime('2015-11-03'));
+        $receiptSuperAdmin->setReceiptDate(new \DateTime('2015-10-03'));
         $receiptSuperAdmin->setDescription(
             'Teamsosialt med IT'
         );
@@ -114,7 +113,7 @@ class LoadReceiptData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('rec-superadmin', $receiptSuperAdmin);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 20;
     }

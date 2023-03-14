@@ -3,13 +3,10 @@
 namespace App\Entity;
 
 /**
- * Entity having both department and semester
- *
- * @package App\Entity
+ * Entity having both department and semester.
  */
 interface DepartmentSemesterInterface
 {
-
     /**
      * @return Department
      */

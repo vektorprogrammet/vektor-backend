@@ -10,8 +10,8 @@ RUN apt-get update && \
     apt-get update && \
     # Install dependencies
     apt-get -y install nodejs npm symfony-cli\
-                php7.4 php7.4-gd php7.4-dom php7.4-xml \
-                php7.4-pdo php7.4-zip php7.4-mysql php7.4-sqlite && \
+                php8.1 php8.1-gd php8.1-dom php8.1-xml \
+                php8.1-pdo php8.1-zip php8.1-mysql php8.1-sqlite && \
     npm install --global yarn
 
 WORKDIR /app

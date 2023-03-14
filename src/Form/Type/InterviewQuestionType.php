@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\InterviewQuestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -13,41 +14,41 @@ class InterviewQuestionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('question', TextType::class, array(
+        $builder->add('question', TextType::class, [
             'label' => 'Spørsmål',
-            'attr' => array('placeholder' => 'Fyll inn nytt spørsmål'),
-        ));
+            'attr' => ['placeholder' => 'Fyll inn nytt spørsmål'],
+        ]);
 
-        $builder->add('help', TextType::class, array(
+        $builder->add('help', TextType::class, [
             'label' => 'Hjelpetekst',
             'required' => false,
-            'attr' => array('placeholder' => 'Fyll inn hjelpetekst'),
-        ));
+            'attr' => ['placeholder' => 'Fyll inn hjelpetekst'],
+        ]);
 
-        $builder->add('type', ChoiceType::class, array(
-            'choices' => array(
-                'Text'            => 'text',
+        $builder->add('type', ChoiceType::class, [
+            'choices' => [
+                'Text' => 'text',
                 'Multiple choice' => 'radio',
-                'Checkboxes'      => 'check',
-                'Velg fra liste'  => 'list',
-            ),
+                'Checkboxes' => 'check',
+                'Velg fra liste' => 'list',
+            ],
             'label' => 'Type',
-        ));
+        ]);
 
-        $builder->add('alternatives', CollectionType::class, array(
+        $builder->add('alternatives', CollectionType::class, [
             'entry_type' => InterviewQuestionAlternativeType::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype_name' => '__a_prot__',
             'by_reference' => false,
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\InterviewQuestion',
-        ));
+        $resolver->setDefaults([
+            'data_class' => InterviewQuestion::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

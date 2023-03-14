@@ -9,15 +9,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendAcceptInterviewReminderCommand extends Command
 {
-    #TODO: Use dependency-injection for dependencies
+    // TODO: Use dependency-injection for dependencies
+    private InterviewManager $interviewManager;
 
     /**
-     * @var InterviewManager
-     */
-    private $interviewManager;
-
-    /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -27,7 +23,7 @@ class SendAcceptInterviewReminderCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
@@ -35,10 +31,12 @@ class SendAcceptInterviewReminderCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->interviewManager->sendAcceptInterviewReminders();
+
+        return Command::SUCCESS;
     }
 }

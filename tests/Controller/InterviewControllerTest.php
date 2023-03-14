@@ -8,10 +8,8 @@ class InterviewControllerTest extends BaseWebTestCase
 {
     /**
      * @param bool $teamInterest
-     * @param $client
-     * @param $crawler
      */
-    private function fillAndSubmitInterviewFormWithTeamInterest($client, $crawler, bool $teamInterest)
+    private function fillAndSubmitInterviewFormWithTeamInterest($client, $crawler, $teamInterest)
     {
         // Find the form
         $form = $crawler->selectButton('Lagre og send kvittering')->form();
@@ -44,10 +42,7 @@ class InterviewControllerTest extends BaseWebTestCase
         // Submit the form
         $client->submit($form);
     }
-    /**
-     * @param $client
-     * @param $crawler
-     */
+
     private function fillAndSubmitInterviewForm($client, $crawler)
     {
         // Find the form
@@ -88,7 +83,7 @@ class InterviewControllerTest extends BaseWebTestCase
 
     private function verifyCorrectInterview($crawler, $firstName, $lastName)
     {
-        $this->assertEquals(1, $crawler->filter('td:contains("'.$firstName.' '.$lastName.'")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("' . $firstName . ' ' . $lastName . '")')->count());
     }
 
     public function testConduct()
@@ -112,12 +107,13 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $client->request('GET', '/kontrollpanel/intervju/vis/6');
         $this->verifyInterview($crawler);
 
+        self::ensureKernelShutdown();
 
         // Team user who is assigned the interview
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/conduct/5');
 
@@ -250,10 +246,10 @@ class InterviewControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $crawler->filter('h2:contains("Opptak")')->count());
 
         // Team user who is assigned the interview
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'idaan',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
 
         $crawler = $client->request('GET', '/kontrollpanel/intervju/settopp/6');
 
@@ -308,7 +304,7 @@ class InterviewControllerTest extends BaseWebTestCase
         // Assert that we have the correct page
         $this->verifyCorrectInterview($crawler, 'Assistent', 'Johansen');
 
-        $this->fillAndSubmitInterviewFormWithTeamInterest(self::createAdminClient(), $crawler, false);
+        $this->fillAndSubmitInterviewFormWithTeamInterest(self::createAdminClient(), $crawler, 0);
 
         $rowsAfter = $this->countTableRows('/kontrollpanel/opptakadmin/teaminteresse?department=1&semester=1');
 
@@ -321,7 +317,7 @@ class InterviewControllerTest extends BaseWebTestCase
         $crawler = $this->goTo('/kontrollpanel/opptak/fordelt?department=1&semester=1', $client);
         $before = $crawler->filter('td:contains("Ikke satt opp")')->count();
 
-        $crawler = $this->goTo("/kontrollpanel/intervju/settopp/6", $client);
+        $crawler = $this->goTo('/kontrollpanel/intervju/settopp/6', $client);
         $saveButton = $crawler->filter('div#statusModal button:contains("Lagre")');
         $this->assertNotNull($saveButton);
         $form = $saveButton->form();

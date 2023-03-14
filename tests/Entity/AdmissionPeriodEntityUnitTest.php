@@ -2,7 +2,6 @@
 
 namespace App\Tests\Entity;
 
-
 use App\Entity\AdmissionPeriod;
 use App\Entity\Department;
 use App\Entity\InfoMeeting;
@@ -15,7 +14,7 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     {
         $admissionPeriod = new AdmissionPeriod();
         $admissionPeriod->setInfoMeeting(new InfoMeeting());
-        $admissionPeriod->getInfoMeeting()->setDate((new DateTime())->modify('+1 hour'));
+        $admissionPeriod->getInfoMeeting()->setDate((new \DateTime())->modify('+1 hour'));
         $admissionPeriod->getInfoMeeting()->setShowOnPage(true);
         $this->assertTrue($admissionPeriod->shouldSendInfoMeetingNotifications());
     }
@@ -31,7 +30,7 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     {
         $admissionPeriod = new AdmissionPeriod();
         $admissionPeriod->setInfoMeeting(new InfoMeeting());
-        $admissionPeriod->getInfoMeeting()->setDate((new DateTime())->modify('+1 hour'));
+        $admissionPeriod->getInfoMeeting()->setDate((new \DateTime())->modify('+1 hour'));
         $admissionPeriod->getInfoMeeting()->setShowOnPage(false);
         $this->assertFalse($admissionPeriod->shouldSendInfoMeetingNotifications());
     }
@@ -40,7 +39,7 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     {
         $admissionPeriod = new AdmissionPeriod();
         $admissionPeriod->setInfoMeeting(new InfoMeeting());
-        $admissionPeriod->getInfoMeeting()->setDate((new DateTime())->modify('-1 day'));
+        $admissionPeriod->getInfoMeeting()->setDate((new \DateTime())->modify('-1 day'));
         $admissionPeriod->getInfoMeeting()->setShowOnPage(true);
         $this->assertFalse($admissionPeriod->shouldSendInfoMeetingNotifications());
     }
@@ -49,7 +48,7 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     {
         $admissionPeriod = new AdmissionPeriod();
         $admissionPeriod->setInfoMeeting(new InfoMeeting());
-        $admissionPeriod->getInfoMeeting()->setDate((new DateTime())->modify('-1 hour'));
+        $admissionPeriod->getInfoMeeting()->setDate((new \DateTime())->modify('-1 hour'));
         $admissionPeriod->getInfoMeeting()->setShowOnPage(true);
         $this->assertFalse($admissionPeriod->shouldSendInfoMeetingNotifications());
     }
@@ -57,9 +56,8 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     // Check whether the setstartDate function is working correctly
     public function testSetstartDate()
     {
-
         // New datetime variable
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
 
         // new entity
         $admissionPeriod = new AdmissionPeriod();
@@ -74,9 +72,8 @@ class AdmissionPeriodEntityUnitTest extends TestCase
     // Check whether the setendDate function is working correctly
     public function testSetendDate()
     {
-
         // New datetime variable
-        $today = new DateTime('now');
+        $today = new \DateTime('now');
 
         // new entity
         $admissionPeriod = new AdmissionPeriod();

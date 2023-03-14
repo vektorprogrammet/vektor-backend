@@ -2,17 +2,17 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Role\Roles;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use App\Entity\User;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    private $container;
+    private ?ContainerInterface $container = null;
 
     public function setContainer(ContainerInterface $container = null)
     {
@@ -293,7 +293,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user->setPicturePath('images/defaultProfile.png');
         $manager->persist($user);
         $this->setReference('user-inactive', $user);
-        
+
         $user10 = new User();
         $user10->setActive('1');
         $user10->setEmail('aaf@b.c');
@@ -453,16 +453,16 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         for ($i = 0; $i < 100; ++$i) {
             $user = new User();
             $user->setActive('0');
-            $user->setEmail('scheduling-user-'.$i.'@mail.com');
-            $user->setFirstName('scheduling-user-'.$i);
-            $user->setLastName('user-lastName-'.$i);
-            $user->setGender($i % 2 == 0 ? '0' : '1');
+            $user->setEmail('scheduling-user-' . $i . '@mail.com');
+            $user->setFirstName('scheduling-user-' . $i);
+            $user->setLastName('user-lastName-' . $i);
+            $user->setGender($i % 2 === 0 ? '0' : '1');
             $user->setPhone('12345678');
-            $user->setUserName('scheduling-user-'.$i);
+            $user->setUserName('scheduling-user-' . $i);
             $user->addRole(Roles::ASSISTANT);
             $user->setFieldOfStudy($this->getReference('fos-1'));
             $user->setPicturePath('images/defaultProfile.png');
-            $this->setReference('scheduling-user-'.$i, $user);
+            $this->setReference('scheduling-user-' . $i, $user);
             $manager->persist($user);
         }
 
@@ -489,7 +489,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $this->setReference('user-admin', $userAdmin);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 4;
     }

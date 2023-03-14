@@ -2,15 +2,14 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Application;
 use App\Entity\Interview;
 use App\Entity\InterviewAnswer;
 use App\Entity\InterviewScore;
 use App\Entity\User;
-use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Application;
 
 class LoadApplicationData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -97,15 +96,15 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application3->setWednesday(false);
         $application3->setThursday(true);
         $application3->setFriday(false);
-        $application3->setHeardAboutFrom(array( 'Stand' ));
+        $application3->setHeardAboutFrom(['Stand']);
         $application3->setLanguage('Norsk og engelsk');
         $application3->setPreferredGroup('Bolk 1');
         $application3->setDoublePosition(true);
         $application3->setTeamInterest(true);
-        $application3->setPotentialTeams(array(
+        $application3->setPotentialTeams([
             $this->getReference('team-1'),
             $this->getReference('team-2'),
-        ));
+        ]);
 
         $manager->persist($application3);
 
@@ -123,7 +122,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $interview4->setInterviewSchema($this->getReference('ischema-1'));
         $interview4->setUser($this->getReference('user-13'));
         $application4->setTeamInterest(true);
-        $application4->setPotentialTeams(array($this->getReference('team-1')));
+        $application4->setPotentialTeams([$this->getReference('team-1')]);
         $application4->setInterview($interview4);
 
         // Create answer objects for all the questions in the schema
@@ -149,7 +148,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application4->setWednesday(false);
         $application4->setThursday(true);
         $application4->setFriday(false);
-        $application4->setHeardAboutFrom(array( 'Stand' ));
+        $application4->setHeardAboutFrom(['Stand']);
         $application4->setLanguage('Norsk');
         $application4->setPreferredGroup('Bolk 1');
         $application4->setDoublePosition(false);
@@ -167,7 +166,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $interview5->setInterviewSchema($this->getReference('ischema-1'));
         $interview5->setUser($this->getReference('user-assistant'));
         $interview5->setResponseCode('code');
-        $interview5->setScheduled(new DateTime('+2 days'));
+        $interview5->setScheduled(new \DateTime('+2 days'));
         $application5->setInterview($interview5);
 
         $manager->persist($application5);
@@ -210,7 +209,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application20->setWednesday(false);
         $application20->setThursday(false);
         $application20->setFriday(true);
-        $application20->setHeardAboutFrom(array( 'Stand' ));
+        $application20->setHeardAboutFrom(['Stand']);
         $application20->setLanguage('Norsk');
         $application20->setPreferredGroup('Bolk 1');
         $application20->setDoublePosition(true);
@@ -253,7 +252,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application21->setThursday('Ikke');
         $application21->setFriday('Bra');
         $application21->setSubstitute(true);
-        $application21->setPreferredGroup("Bolk 1");
+        $application21->setPreferredGroup('Bolk 1');
         $interview21 = new Interview();
         $interview21->setInterviewed(true);
         $interview21->setInterviewer($this->getReference('user-2'));
@@ -273,7 +272,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($application21);
         $manager->persist($interview21);
 
-        for ($i = 0; $i < 100; ++ $i) {
+        for ($i = 0; $i < 100; ++$i) {
             $user = $this->getReference('scheduling-user-' . $i);
             $this->createSchedulingApplication($user, $manager);
         }
@@ -282,13 +281,13 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $this->setReference('application-1', $application1);
         $this->setReference('application-2', $application2);
 
-        $this->getReference('team-1')->setPotentialMembers(array($application3, $application4));
-        $this->getReference('team-2')->setPotentialMembers(array($application3));
+        $this->getReference('team-1')->setPotentialMembers([$application3, $application4]);
+        $this->getReference('team-2')->setPotentialMembers([$application3]);
 
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 5;
     }
@@ -297,21 +296,21 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
     {
         $application = new Application();
         $application->setUser($user);
-        $application->setPreviousParticipation(mt_rand(0, 100) < 10 ? true : false);
+        $application->setPreviousParticipation(random_int(0, 100) < 10 ? true : false);
         $application->setYearOfStudy(1);
         $application->setAdmissionPeriod($this->getReference('admission-period-current'));
-        $application->setCreated((new DateTime('-'.mt_rand(0, 10).'days')));
-        $randomArr = array( true, false, false, false, false );
+        $application->setCreated(new \DateTime('-' . random_int(0, 10) . 'days'));
+        $randomArr = [true, false, false, false, false];
         shuffle($randomArr);
-        $application->setMonday($randomArr[0] || mt_rand(0, 100) < 20);
-        $application->setTuesday($randomArr[1] || mt_rand(0, 100) < 20);
-        $application->setWednesday($randomArr[2] || mt_rand(0, 100) < 20);
-        $application->setThursday($randomArr[3] || mt_rand(0, 100) < 20);
-        $application->setFriday($randomArr[4] || mt_rand(0, 100) < 20);
-        $application->setHeardAboutFrom(array( 'Stand' ));
-        $application->setLanguage($randomArr[0] || mt_rand(0, 100) < 20 ? 'Norsk' : 'Engelsk');
-        $application->setPreferredGroup(mt_rand(0, 100) < 50 ? 'Bolk 1' : 'Bolk 2');
-        $application->setDoublePosition(mt_rand(0, 100) < 10 ? true : false);
+        $application->setMonday($randomArr[0] || random_int(0, 100) < 20);
+        $application->setTuesday($randomArr[1] || random_int(0, 100) < 20);
+        $application->setWednesday($randomArr[2] || random_int(0, 100) < 20);
+        $application->setThursday($randomArr[3] || random_int(0, 100) < 20);
+        $application->setFriday($randomArr[4] || random_int(0, 100) < 20);
+        $application->setHeardAboutFrom(['Stand']);
+        $application->setLanguage($randomArr[0] || random_int(0, 100) < 20 ? 'Norsk' : 'Engelsk');
+        $application->setPreferredGroup(random_int(0, 100) < 50 ? 'Bolk 1' : 'Bolk 2');
+        $application->setDoublePosition(random_int(0, 100) < 10 ? true : false);
 
         $interview = new Interview();
         $interview->setInterviewed(true);
@@ -331,9 +330,9 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
 
         // The interview score
         $intScore = new InterviewScore();
-        $intScore->setSuitability(mt_rand(4, 6));
-        $intScore->setExplanatoryPower(mt_rand(4, 6));
-        $intScore->setRoleModel(mt_rand(4, 6));
+        $intScore->setSuitability(random_int(4, 6));
+        $intScore->setExplanatoryPower(random_int(4, 6));
+        $intScore->setRoleModel(random_int(4, 6));
         $intScore->setSuitableAssistant('Ja');
         $interview->setInterviewScore($intScore);
         $application->setInterview($interview);

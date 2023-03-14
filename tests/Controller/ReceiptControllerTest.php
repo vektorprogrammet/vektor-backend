@@ -2,22 +2,19 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BaseWebTestCase;
 use App\Entity\Receipt;
+use App\Tests\BaseWebTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ReceiptControllerTest extends BaseWebTestCase
 {
-    /**
-     * @var array $imagePaths
-     */
-    private $imagePaths;
+    private array $imagePaths;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         // Keep track of all the initial files in the image folder
-        $this->imagePaths = array();
+        $this->imagePaths = [];
         $finder = new Finder();
 
         if (!file_exists('images/receipts')) {
@@ -37,11 +34,11 @@ class ReceiptControllerTest extends BaseWebTestCase
 
         $receiptsBefore = $this->countTableRows('/utlegg', $client);
 
-        // Create a new image file
-        $file = tempnam(sys_get_temp_dir(), 'rec');
-        imagepng(imagecreatetruecolor(1, 1), $file);
-
-        $photo = new UploadedFile($file, 'receipt.png', null, null, null, true);
+        // Use image 'kvittering.jpg' as the new image
+        $photo = new UploadedFile(
+            __DIR__ . '/../Fixtures/kvittering.jpg',
+            'kvittering.jpg'
+        );
 
         $crawler = $client->request('GET', '/utlegg');
         $form = $crawler->selectButton('Be om refusjon')->form();
@@ -57,6 +54,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $receiptsAfter - $receiptsBefore);
 
         // Teamleader can see it in the receipt table
+        self::ensureKernelShutdown();
         $crawler = $this->teamLeaderGoTo('/kontrollpanel/utlegg');
         $this->assertEquals(1, $crawler->filter('td:contains("assistant@gmail.com")')->count());
     }
@@ -90,11 +88,11 @@ class ReceiptControllerTest extends BaseWebTestCase
         // Teamleader edits
         $client = $this->createTeamLeaderClient();
 
-        // Create a new image file
-        $file = tempnam(sys_get_temp_dir(), 'rec');
-        imagepng(imagecreatetruecolor(1, 1), $file);
-
-        $photo = new UploadedFile($file, 'receipt.png', null, null, null, true);
+        // Use image 'kvittering.jpg' as the new image
+        $photo = new UploadedFile(
+            __DIR__ . '/../Fixtures/kvittering.jpg',
+            'kvittering.jpg'
+        );
 
         $crawler = $client->request('GET', '/kontrollpanel/utlegg/rediger/2');
         $form = $crawler->selectButton('Lagre')->form();
@@ -206,7 +204,7 @@ class ReceiptControllerTest extends BaseWebTestCase
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -219,17 +217,17 @@ class ReceiptControllerTest extends BaseWebTestCase
         $finder = new Finder();
         $finder->files()->in('images/receipts');
         foreach ($finder as $file) {
-            $fileIsNew = !in_array($file->getRealPath(), $this->imagePaths);
+            $fileIsNew = !in_array($file->getRealPath(), $this->imagePaths, true);
             if ($fileIsNew) {
                 unlink($file);
             }
         }
 
-        $receiptDirectoryIsEmpty = count(glob('images/receipts/*')) === 0;
+        $receiptDirectoryIsEmpty = (is_countable(glob('images/receipts/*')) ? count(glob('images/receipts/*')) : 0) === 0;
         if ($receiptDirectoryIsEmpty) {
             rmdir('images/receipts');
         }
-        $imageDirectoryIsEmpty = count(glob('images/*')) === 0;
+        $imageDirectoryIsEmpty = (is_countable(glob('images/*')) ? count(glob('images/*')) : 0) === 0;
         if ($imageDirectoryIsEmpty) {
             rmdir('images');
         }

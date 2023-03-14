@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Validator\Constraints;
 
 use App\Entity\Application;
@@ -10,19 +9,15 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ApplicationEmailValidator extends ConstraintValidator
 {
-    private $admissionManager;
-
-    public function __construct(ApplicationAdmission $admissionManager)
+    public function __construct(private readonly ApplicationAdmission $admissionManager)
     {
-        $this->admissionManager = $admissionManager;
     }
-
 
     /**
      * Checks if the passed value is valid.
      *
      * @param Application $application The value that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param Constraint  $constraint  The constraint for the validation
      */
     public function validate($application, Constraint $constraint)
     {

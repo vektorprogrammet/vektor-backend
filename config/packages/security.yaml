@@ -1,5 +1,7 @@
 security:
-    encoders:
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
         App\Entity\User:
             algorithm: bcrypt
             cost: 12
@@ -12,9 +14,6 @@ security:
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
-    password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
@@ -23,15 +22,15 @@ security:
                 providers: [db_username, db_email, db_company_email]
         db_username:
             entity:
-                class: App:User
+                class: App\Entity\User
                 property: user_name
         db_email:
             entity:
-                class: App:User
+                class: App\Entity\User
                 property: email
         db_company_email:
             entity:
-                class: app:User
+                class: App\Entity\User
                 property: companyEmail
     firewalls:
         dev:

@@ -9,18 +9,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class InterviewNotificationManager
 {
-    private SlackMessenger $slackMessenger;
-    private ApplicationData $applicationData;
-    private RouterInterface $router;
-
     /**
-     * InterviewNotificationManager constructor
+     * InterviewNotificationManager constructor.
      */
-    public function __construct(SlackMessenger $slackMessenger, ApplicationData $applicationData, RouterInterface $router)
+    public function __construct(private readonly SlackMessenger $slackMessenger, private readonly ApplicationData $applicationData, private readonly RouterInterface $router)
     {
-        $this->slackMessenger = $slackMessenger;
-        $this->applicationData = $applicationData;
-        $this->router = $router;
     }
 
     public function sendApplicationCountNotification(Department $department, Semester $semester)
@@ -30,10 +23,10 @@ class InterviewNotificationManager
 
         $interviewsLink = $this->router->generate(
             'applications_show_interviewed',
-            array(
+            [
                 'department' => $department->getId(),
                 'semester' => $semester->getId(),
-            ),
+            ],
             Router::ABSOLUTE_URL
         );
 
@@ -49,23 +42,23 @@ class InterviewNotificationManager
         $this->slackMessenger->notify("$department har fullført alle sine *{$this->applicationData->getTotalInterviewsCount()}* intervjuer! :tada:");
 
         $this->slackMessenger->notify(
-            "```\n".
-            "Antall søkere: {$this->applicationData->getApplicationCount()}\n".
-            "Tidligere assistenter: {$this->applicationData->getPreviousParticipationCount()}\n".
-            "Intervjuer fullført: {$this->applicationData->getInterviewedAssistantsCount()}\n".
-            "Kansellerte intervjuer: {$this->applicationData->getCancelledInterviewsCount()}\n".
-            "Kjønn: {$this->applicationData->getMaleCount()} menn ({$this->applicationData->getMalePercentage()}%), ".
-            "{$this->applicationData->getFemaleCount()} damer ({$this->applicationData->getFemalePercentage()}%)\n".
+            "```\n" .
+            "Antall søkere: {$this->applicationData->getApplicationCount()}\n" .
+            "Tidligere assistenter: {$this->applicationData->getPreviousParticipationCount()}\n" .
+            "Intervjuer fullført: {$this->applicationData->getInterviewedAssistantsCount()}\n" .
+            "Kansellerte intervjuer: {$this->applicationData->getCancelledInterviewsCount()}\n" .
+            "Kjønn: {$this->applicationData->getMaleCount()} menn ({$this->applicationData->getMalePercentage()}%), " .
+            "{$this->applicationData->getFemaleCount()} damer ({$this->applicationData->getFemalePercentage()}%)\n" .
             '```'
         );
 
         $this->slackMessenger->notify(
-            'Se alle intervjuene her: '.$this->router->generate(
+            'Se alle intervjuene her: ' . $this->router->generate(
                 'applications_show_interviewed',
-                array(
+                [
                     'department' => $department->getId(),
                     'semester' => $semester->getId(),
-                ),
+                ],
                 Router::ABSOLUTE_URL
             )
         );

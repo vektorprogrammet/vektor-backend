@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\AdmissionPeriod;
-use DateTime;
 
 class SbsData extends ApplicationData
 {
@@ -11,6 +10,7 @@ class SbsData extends ApplicationData
     {
         return $this->getApplicationCount();
     }
+
     public function getStep(): int
     {
         return (int) $this->getStepProgress();
@@ -23,17 +23,17 @@ class SbsData extends ApplicationData
 
     public function getAdmissionTimeLeft(): int
     {
-        return intval(ceil(($this->getAdmissionPeriod()->getEndDate()->getTimestamp() - (new DateTime())->getTimestamp()) / 3600));
+        return intval(ceil(($this->getAdmissionPeriod()->getEndDate()->getTimestamp() - (new \DateTime())->getTimestamp()) / 3600));
     }
 
     public function getTimeToAdmissionStart(): int
     {
-        return intval(ceil(($this->getAdmissionPeriod()->getStartDate()->getTimestamp() - (new DateTime())->getTimestamp()) / 3600));
+        return intval(ceil(($this->getAdmissionPeriod()->getStartDate()->getTimestamp() - (new \DateTime())->getTimestamp()) / 3600));
     }
 
     private function determineCurrentStep(AdmissionPeriod $admissionPeriod, $interviewedAssistantsCount, $assignedInterviewsCount, $totalAssistantsCount): float
     {
-        $today = new DateTime();
+        $today = new \DateTime();
         if ($today > $admissionPeriod->getSemester()->getEndDate()) {
             return 0;
         }
@@ -50,7 +50,7 @@ class SbsData extends ApplicationData
 
         // Step 3 Interviewing
         // No interviews are assigned yet
-        if ($assignedInterviewsCount == 0 && $interviewedAssistantsCount == 0) {
+        if ($assignedInterviewsCount === 0 && $interviewedAssistantsCount === 0) {
             return 3;
         } // There are interviews left to conduct
         elseif ($assignedInterviewsCount > 0) {
@@ -59,7 +59,7 @@ class SbsData extends ApplicationData
 
         // Step 4 Distribute to schools
         // All interviews are conducted, but no one has been accepted yet
-        if ($totalAssistantsCount == 0) {
+        if ($totalAssistantsCount === 0) {
             return 4;
         }
 
@@ -74,14 +74,14 @@ class SbsData extends ApplicationData
 
     private function admissionHasNotStartedYet(AdmissionPeriod $admissionPeriod): bool
     {
-        $today = new DateTime();
+        $today = new \DateTime();
 
         return $today > $admissionPeriod->getSemester()->getStartDate() && $today < $admissionPeriod->getStartDate();
     }
 
     private function admissionHasEnded(AdmissionPeriod $admissionPeriod): bool
     {
-        $today = new DateTime();
+        $today = new \DateTime();
 
         return $today < $admissionPeriod->getSemester()->getEndDate() && $today > $admissionPeriod->getEndDate();
     }

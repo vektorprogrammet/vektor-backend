@@ -6,34 +6,37 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class SupportTicket
 {
-
     /**
-     * @var string $name
+     * @var string
+     *
      * @Assert\NotBlank()
      */
     private $name;
 
     /**
-     * @var string $email
+     * @var string
+     *
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
 
     /**
-     * @var string $subject
+     * @var string
+     *
      * @Assert\NotBlank()
      */
     private $subject;
 
     /**
-     * @var string $body
+     * @var string
+     *
      * @Assert\NotBlank()
      */
     private $body;
 
     /**
-     * @var Department $department
+     * @var Department
      *
      * @Assert\NotNull(message="Klarte ikke sende melding til denne avdelingen. Send oss en mail isteden.")
      * @Assert\Valid()
@@ -80,9 +83,8 @@ class SupportTicket
         $this->body = $body;
     }
 
-
     // Used for unit testing the forms
-    public function fromArray($data = array())
+    public function fromArray($data = [])
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";
@@ -98,9 +100,6 @@ class SupportTicket
         return $this->department;
     }
 
-    /**
-     * @param Department $department
-     */
     public function setDepartment(Department $department)
     {
         $this->department = $department;

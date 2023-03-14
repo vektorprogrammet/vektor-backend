@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\FieldOfStudy;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\FieldOfStudy;
 
 class LoadFieldOfStudyData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -50,7 +50,7 @@ class LoadFieldOfStudyData extends AbstractFixture implements OrderedFixtureInte
         $this->addReference('fos-5', $fos5);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

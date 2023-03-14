@@ -4,16 +4,16 @@ namespace App\Sms;
 
 class Sms
 {
-    private $sender;
-    private $message;
-    private $recipients;
+    private string $sender;
+    private string $message;
+    private array $recipients;
 
     public function setSender(string $sender)
     {
         $this->sender = $sender;
     }
 
-    public function getSender()
+    public function getSender(): string
     {
         return $this->sender;
     }
@@ -23,7 +23,7 @@ class Sms
         $this->message = $message;
     }
 
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -33,18 +33,18 @@ class Sms
         $this->recipients = $recipients;
     }
 
-    public function getRecipients()
+    public function getRecipients(): array
     {
         return $this->recipients;
     }
 
-    public function getRecipientsString()
+    public function getRecipientsString(): string
     {
-        $recipientsString = "";
-        for ($i = 0; $i < count($this->recipients); $i++) {
+        $recipientsString = '';
+        for ($i = 0; $i < count($this->recipients); ++$i) {
             $recipientsString .= $this->recipients[$i];
-            if ($i !== count($this->recipients)-1) {
-                $recipientsString .= ", ";
+            if ($i !== count($this->recipients) - 1) {
+                $recipientsString .= ', ';
             }
         }
 

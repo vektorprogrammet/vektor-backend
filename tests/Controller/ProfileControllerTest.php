@@ -8,10 +8,10 @@ class ProfileControllerTest extends BaseWebTestCase
 {
     public function testShow()
     {
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'petjo',
             'PHP_AUTH_PW' => '1234',
-        ));
+        ]);
         $crawler = $client->request('GET', '/profile');
 
         // Assert that we have the correct profile user

@@ -9,32 +9,15 @@ use Symfony\Component\Notifier\NotifierInterface;
 
 class SlackMessenger
 {
-    private NotifierInterface $slackClient;
-    private string $notificationChannel;
-    private string$logChannel;
-    private Logger $logger;
-    private bool $disableDelivery;
-
-
     /**
-     * SlackMessenger constructor
+     * SlackMessenger constructor.
      */
-    public function __construct(NotifierInterface $notifier,
-                                string $notificationChannel,
-                                string $logChannel,
-                                bool $disableDelivery,
-                                Logger $logger)
+    public function __construct(private readonly NotifierInterface $slackClient, private readonly string $notificationChannel, private readonly string $logChannel, private readonly bool $disableDelivery, private readonly Logger $logger)
     {
-        $this->slackClient = $notifier;
-        $this->notificationChannel = $notificationChannel;
-        $this->logChannel = $logChannel;
-        $this->logger = $logger;
-        $this->disableDelivery = $disableDelivery;
     }
 
     public function notify(string $messageBody)
     {
-
     }
 
     public function log(string $messageBody, array $attachmentData = [])
@@ -70,7 +53,7 @@ class SlackMessenger
         $this->send($message);
         */
     }
-    
+
     public function send(object $message)
     {
         /*
@@ -89,13 +72,12 @@ class SlackMessenger
         $this->logger->info("Slack message sent to {$message->getChannel()}: {$message->getText()}");
         */
     }
-    
-    public function createMessage(): object # previously imported Message
+
+    public function createMessage(): object // previously imported Message
     {
         /*
         return $this->slackClient->createMessage();
         */
         return new Object_();
     }
-
 }

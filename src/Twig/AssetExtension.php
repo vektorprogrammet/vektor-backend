@@ -9,34 +9,25 @@ use Twig\TwigFunction;
 
 class AssetExtension extends AbstractExtension
 {
-    private $packages;
-    private $rootDir;
-
-    /**
-     * @var KernelInterface
-     */
-    private $appKernel;
+    private readonly string $rootDir;
+    private readonly KernelInterface $appKernel;
 
     /**
      * AssetExtension constructor.
-     *
-     * @param Packages $packages
-     * @param KernelInterface $appKernel
      */
-    public function __construct(Packages $packages, KernelInterface $appKernel)
+    public function __construct(private readonly Packages $packages, KernelInterface $appKernel)
     {
-        $this->packages = $packages;
-        $this->rootDir=$appKernel->getProjectDir();
+        $this->rootDir = $appKernel->getProjectDir();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('asset_with_version', array($this, 'getAssetUrl')),
-        );
+        return [
+            new TwigFunction('asset_with_version', $this->getAssetUrl(...)),
+        ];
     }
 
     /**
@@ -46,20 +37,20 @@ class AssetExtension extends AbstractExtension
      * UrlPackage, you will always get a URL and not a path.
      *
      * @param string $path        A public path
-     * @param string $packageName The name of the asset package to use
+     * @param null   $packageName The name of the asset package to use
      *
-     * @return string The public path of the asset
+     * @return string|null The public path of the asset
      */
-    public function getAssetUrl($path, $packageName = null)
+    public function getAssetUrl($path, $packageName = null): ?string
     {
-        if (strlen($path) === 0) {
+        if (mb_strlen($path) === 0) {
             return $path;
         }
 
         if ($path[0] !== '/') {
             $path = "/$path";
         }
-        $filePath = $this->rootDir."/web$path";
+        $filePath = $this->rootDir . "/web$path";
 
         $version = '';
         if (file_exists($filePath)) {
@@ -67,8 +58,8 @@ class AssetExtension extends AbstractExtension
         }
 
         $url = $this->packages->getUrl($path, $packageName);
-        if (strlen($version) > 0) {
-            $url .= '?v='.$version;
+        if (mb_strlen($version) > 0) {
+            $url .= '?v=' . $version;
         }
 
         return $url;

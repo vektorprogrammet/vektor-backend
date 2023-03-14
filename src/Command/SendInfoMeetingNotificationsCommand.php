@@ -9,11 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendInfoMeetingNotificationsCommand extends Command
 {
-    #TODO: Use dependency-injection for dependencies
-    /**
-     * @var AdmissionNotifier
-     */
-    private $notifier;
+    // TODO: Use dependency-injection for dependencies
+    private AdmissionNotifier $notifier;
 
     /**
      * {@inheritdoc}
@@ -30,8 +27,10 @@ class SendInfoMeetingNotificationsCommand extends Command
         $this->notifier = $this->getContainer()->get(AdmissionNotifier::class);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->notifier->sendInfoMeetingNotifications();
+
+        return Command::SUCCESS;
     }
 }

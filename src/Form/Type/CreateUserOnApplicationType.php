@@ -2,6 +2,8 @@
 
 namespace App\Form\Type;
 
+use App\Entity\FieldOfStudy;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -16,48 +18,46 @@ class CreateUserOnApplicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class, array(
+            ->add('firstName', TextType::class, [
                 'label' => 'Fornavn',
-                'attr' => array('autocomplete' => 'given-name')
-            ))
-            ->add('lastName', TextType::class, array(
+                'attr' => ['autocomplete' => 'given-name'],
+            ])
+            ->add('lastName', TextType::class, [
                 'label' => 'Etternavn',
-                'attr' => array('autocomplete' => 'family-name')
-            ))
-            ->add('phone', TelType::class, array(
+                'attr' => ['autocomplete' => 'family-name'],
+            ])
+            ->add('phone', TelType::class, [
                 'label' => 'Telefon',
-                'attr' => array('autocomplete' => 'tel')
-            ))
-            ->add('email', EmailType::class, array(
+                'attr' => ['autocomplete' => 'tel'],
+            ])
+            ->add('email', EmailType::class, [
                 'label' => 'E-post',
-                'attr' => array('autocomplete' => 'email')
-            ))
-            ->add('gender', ChoiceType::class, array(
+                'attr' => ['autocomplete' => 'email'],
+            ])
+            ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'Mann' => 0,
-                    'Dame' => 1
+                    'Dame' => 1,
                 ],
-                'label' => 'Kjønn'
-            ))
-            ->add('fieldOfStudy', EntityType::class, array(
+                'label' => 'Kjønn',
+            ])
+            ->add('fieldOfStudy', EntityType::class, [
                 'label' => 'Linje',
-                'class' => 'App:FieldOfStudy',
-                'query_builder' => function (EntityRepository $er) use ($options) {
-                    return $er->createQueryBuilder('f')
-                        ->orderBy('f.shortName', 'ASC')
-                        ->where('f.department = ?1')
-                        // Set the parameter to the department ID that the current user belongs to.
-                        ->setParameter(1, $options['departmentId']);
-                },
-            ));
+                'class' => FieldOfStudy::class,
+                'query_builder' => fn (EntityRepository $er) => $er->createQueryBuilder('f')
+                    ->orderBy('f.shortName', 'ASC')
+                    ->where('f.department = ?1')
+                    // Set the parameter to the department ID that the current user belongs to.
+                    ->setParameter(1, $options['departmentId']),
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\User',
-            'departmentId' => null
-        ));
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'departmentId' => null,
+        ]);
     }
 
     public function getBlockPrefix(): string

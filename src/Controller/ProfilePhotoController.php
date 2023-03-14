@@ -5,17 +5,17 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Role\Roles;
 use App\Service\FileUploader;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfilePhotoController extends BaseController
 {
-    private FileUploader $fileUploader;
-
-    public function __construct(FileUploader $fileUploader)
-    {
-        $this->fileUploader = $fileUploader;
+    public function __construct(
+        private readonly FileUploader $fileUploader,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function showEditProfilePhoto(User $user): Response
@@ -25,9 +25,9 @@ class ProfilePhotoController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('profile/edit_profile_photo.html.twig', array(
+        return $this->render('profile/edit_profile_photo.html.twig', [
             'user' => $user,
-        ));
+        ]);
     }
 
     public function editProfilePhotoUpload(User $user, Request $request): JsonResponse
@@ -39,14 +39,14 @@ class ProfilePhotoController extends BaseController
 
         $picturePath = $this->fileUploader->uploadProfileImage($request);
         if (!$picturePath) {
-            return new JsonResponse("Kunne ikke laste inn bildet", 400);
+            return new JsonResponse('Kunne ikke laste inn bildet', 400);
         }
 
         $this->fileUploader->deleteProfileImage($user->getPicturePath());
         $user->setPicturePath($picturePath);
 
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->flush();
 
-        return new JsonResponse("Upload OK");
+        return new JsonResponse('Upload OK');
     }
 }

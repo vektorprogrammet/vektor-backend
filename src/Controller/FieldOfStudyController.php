@@ -4,21 +4,26 @@ namespace App\Controller;
 
 use App\Entity\FieldOfStudy;
 use App\Form\Type\FieldOfStudyType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FieldOfStudyController extends BaseController
 {
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function show(): Response
     {
         $department = $this->getUser()->getFieldOfStudy()->getDepartment();
-        $fieldOfStudies = $this->getDoctrine()->getRepository(FieldOfStudy::class)->findByDepartment($department);
+        $fieldOfStudies = $this->doctrine->getRepository(FieldOfStudy::class)->findByDepartment($department);
 
-        return $this->render('field_of_study/show_all.html.twig', array(
+        return $this->render('field_of_study/show_all.html.twig', [
             'fieldOfStudies' => $fieldOfStudies,
             'department' => $department,
-        ));
+        ]);
     }
 
     public function edit(Request $request, FieldOfStudy $fieldOfStudy = null)
@@ -38,17 +43,17 @@ class FieldOfStudyController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $fieldOfStudy->setDepartment($this->getUser()->getFieldOfStudy()->getDepartment());
-            $manager = $this->getDoctrine()->getManager();
+            $manager = $this->doctrine->getManager();
             $manager->persist($fieldOfStudy);
             $manager->flush();
 
             return $this->redirectToRoute('show_field_of_studies');
         }
 
-        return $this->render('field_of_study/form.html.twig', array(
+        return $this->render('field_of_study/form.html.twig', [
             'form' => $form->createView(),
             'isEdit' => $isEdit,
             'fieldOfStudy' => $fieldOfStudy,
-        ));
+        ]);
     }
 }

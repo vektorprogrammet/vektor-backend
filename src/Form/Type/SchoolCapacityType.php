@@ -2,6 +2,8 @@
 
 namespace App\Form\Type;
 
+use App\Entity\School;
+use App\Entity\SchoolCapacity;
 use App\Repository\SchoolRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -16,28 +18,26 @@ class SchoolCapacityType extends AbstractType
     {
         $department = $builder->getData()->getDepartment();
         $builder
-            ->add('school', EntityType::class, array(
+            ->add('school', EntityType::class, [
                 'label' => 'Skole',
-                'class' => 'App:School',
-                'query_builder' => function (SchoolRepository $er) use ($department) {
-                    return $er->findActiveSchoolsWithoutCapacity($department);
-                },
-            ))
+                'class' => School::class,
+                'query_builder' => fn (SchoolRepository $er) => $er->findActiveSchoolsWithoutCapacity($department),
+            ])
             ->add('monday', IntegerType::class)
             ->add('tuesday', IntegerType::class)
             ->add('wednesday', IntegerType::class)
             ->add('thursday', IntegerType::class)
             ->add('friday', IntegerType::class)
-            ->add('save', SubmitType::class, array(
+            ->add('save', SubmitType::class, [
                 'label' => 'Lagre',
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\SchoolCapacity',
-        ));
+        $resolver->setDefaults([
+            'data_class' => SchoolCapacity::class,
+        ]);
     }
 
     public function getBlockPrefix(): string

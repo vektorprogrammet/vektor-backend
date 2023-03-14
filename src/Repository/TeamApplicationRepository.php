@@ -15,8 +15,6 @@ use Doctrine\ORM\EntityRepository;
 class TeamApplicationRepository extends EntityRepository
 {
     /**
-     * @param Team $team
-     *
      * @return TeamApplication[]
      */
     public function findByTeam(Team $team)

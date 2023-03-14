@@ -7,24 +7,15 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ApplicationCreatedEvent extends Event
 {
-    const NAME = 'application.admission';
-
-    private $application;
-
+    final public const NAME = 'application.admission';
 
     /**
      * ApplicationAdmissionEvent constructor.
-     *
-     * @param Application $application
      */
-    public function __construct(Application $application)
+    public function __construct(private readonly Application $application)
     {
-        $this->application = $application;
     }
 
-    /**
-     * @return Application
-     */
     public function getApplication(): Application
     {
         return $this->application;

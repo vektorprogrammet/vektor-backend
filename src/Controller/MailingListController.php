@@ -4,17 +4,17 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\GenerateMailingListType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class MailingListController extends BaseController
 {
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
+    public function __construct(private readonly ManagerRegistry $doctrine)
+    {
+    }
+
     public function show(Request $request): Response
     {
         $form = $this->createForm(GenerateMailingListType::class);
@@ -26,80 +26,64 @@ class MailingListController extends BaseController
             $semesterID = $data['semester']->getId();
             $departmentID = $data['department']->getId();
 
-            switch ($type) {
-                case 'Assistent':
-                    return $this->redirectToRoute('generate_assistant_mail_list', array(
-                        'department' => $departmentID,
-                        'semester' => $semesterID,
-                    ));
-                case 'Team':
-                    return $this->redirectToRoute('generate_team_mail_list', array(
-                        'department' => $departmentID,
-                        'semester' => $semesterID,
-                    ));
-                case 'Alle':
-                    return $this->redirectToRoute('generate_all_mail_list', array(
-                        'department' => $departmentID,
-                        'semester' => $semesterID,
-                    ));
-                default:
-                    throw new BadRequestHttpException('type can only be "Assistent", "Team" or "Alle". Was: '.$type);
-            }
+            return match ($type) {
+                'Assistent' => $this->redirectToRoute('generate_assistant_mail_list', [
+                    'department' => $departmentID,
+                    'semester' => $semesterID,
+                ]),
+                'Team' => $this->redirectToRoute('generate_team_mail_list', [
+                    'department' => $departmentID,
+                    'semester' => $semesterID,
+                ]),
+                'Alle' => $this->redirectToRoute('generate_all_mail_list', [
+                    'department' => $departmentID,
+                    'semester' => $semesterID,
+                ]),
+                default => throw new BadRequestHttpException('type can only be "Assistent", "Team" or "Alle". Was: ' . $type),
+            };
         }
 
-        return $this->render('mailing_list/generate_mail_list.html.twig', array(
+        return $this->render('mailing_list/generate_mail_list.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function showAssistants(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $users = $this->getDoctrine()->getRepository(User::class)
+        $users = $this->doctrine->getRepository(User::class)
             ->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $semester);
 
-        return $this->render('mailing_list/mailinglist_show.html.twig', array(
+        return $this->render('mailing_list/mailinglist_show.html.twig', [
             'users' => $users,
-        ));
+        ]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function showTeam(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $users = $this->getDoctrine()->getRepository(User::class)
+        $users = $this->doctrine->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
 
-        return $this->render('mailing_list/mailinglist_show.html.twig', array(
+        return $this->render('mailing_list/mailinglist_show.html.twig', [
             'users' => $users,
-        ));
+        ]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function showAll(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $assistantUsers = $this->getDoctrine()->getRepository(User::class)
+        $assistantUsers = $this->doctrine->getRepository(User::class)
             ->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $semester);
-        $teamUsers = $this->getDoctrine()->getRepository(User::class)
+        $teamUsers = $this->doctrine->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
         $users = array_unique(array_merge($assistantUsers, $teamUsers));
 
-        return $this->render('mailing_list/mailinglist_show.html.twig', array(
+        return $this->render('mailing_list/mailinglist_show.html.twig', [
             'users' => $users,
-        ));
+        ]);
     }
 }

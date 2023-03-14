@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Application;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -14,41 +15,41 @@ class ModifySubstituteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $options['label'] = false;
-        $builder->add('days', DaysType::class, array(
+        $builder->add('days', DaysType::class, [
             'label' => 'Dager som passer',
-            'data_class' => 'App\Entity\Application',
-        ));
-        $builder->add('user', UserDataForSubstituteType::class, array(
+            'data_class' => Application::class,
+        ]);
+        $builder->add('user', UserDataForSubstituteType::class, [
             'department' => $options['department'],
             'label' => false,
-        ));
+        ]);
 
-        $builder->add('yearOfStudy', TextType::class, array(
+        $builder->add('yearOfStudy', TextType::class, [
             'label' => 'År',
-        ));
+        ]);
 
-        $builder->add('language', ChoiceType::class, array(
+        $builder->add('language', ChoiceType::class, [
             'label' => 'Ønsket undervisningsspråk',
-            'choices' => array(
+            'choices' => [
                 'Norsk' => 'Norsk',
                 'Engelsk' => 'Engelsk',
                 'Norsk og engelsk' => 'Norsk og engelsk',
-            ),
+            ],
             'expanded' => true,
             'multiple' => false,
-        ));
+        ]);
 
-        $builder->add('save', SubmitType::class, array(
+        $builder->add('save', SubmitType::class, [
             'label' => 'Oppdater',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Application',
+        $resolver->setDefaults([
+            'data_class' => Application::class,
             'department' => null,
-        ));
+        ]);
     }
 
     public function getBlockPrefix(): string

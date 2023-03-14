@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\AccessRule;
@@ -8,33 +7,23 @@ use App\Entity\UnhandledAccessRule;
 use App\Entity\User;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
-use InvalidArgumentException;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 class AccessControlService
 {
-    private EntityManagerInterface $entityManager;
-    private RouterInterface $router;
-    private RoleManager $roleManager;
-    private UserService $userService;
-    private array $accessRulesCache;
-    private array $unhandledRulesCache;
+    private array $accessRulesCache = [];
+    private array $unhandledRulesCache = [];
 
     /**
-     * AccessControlService constructor
+     * AccessControlService constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager,
-                                RouterInterface $router,
-                                RoleManager $roleManager,
-                                UserService $userService)
-    {
-        $this->entityManager = $entityManager;
-        $this->router        = $router;
-        $this->roleManager   = $roleManager;
-        $this->userService   = $userService;
-        $this->accessRulesCache = [];
-        $this->unhandledRulesCache = [];
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly RouterInterface $router,
+        private readonly RoleManager $roleManager,
+        private readonly UserService $userService
+    ) {
         $this->preloadCache();
     }
 
@@ -61,7 +50,7 @@ class AccessControlService
 
     public function createRule(AccessRule $accessRule)
     {
-        $em             = $this->entityManager;
+        $em = $this->entityManager;
         $unhandledRules = $em->getRepository(UnhandledAccessRule::class)->findByResourceAndMethod($accessRule->getResource(), $accessRule->getMethod());
         foreach ($unhandledRules as $unhandledRule) {
             $em->remove($unhandledRule);
@@ -85,20 +74,20 @@ class AccessControlService
             return $this->checkAccessToResourceAndMethod($user, $resource);
         }
 
-        if (! is_array($resources)) {
-            throw new InvalidArgumentException();
+        if (!is_array($resources)) {
+            throw new \InvalidArgumentException();
         }
 
         foreach ($resources as $resource => $method) {
             $onlyRouteSpecified = is_numeric($resource);
             if ($onlyRouteSpecified) {
-                $resource  = $method;
+                $resource = $method;
                 $hasAccess = $this->checkAccessToResourceAndMethod($user, $resource);
             } else {
                 $hasAccess = $this->checkAccessToResourceAndMethod($user, $resource, $method);
             }
 
-            if (! $hasAccess) {
+            if (!$hasAccess) {
                 return false;
             }
         }
@@ -106,13 +95,6 @@ class AccessControlService
         return true;
     }
 
-    /**
-     * @param User|null $user
-     * @param string $resource
-     * @param string $method
-     *
-     * @return bool
-     */
     private function checkAccessToResourceAndMethod(?User $user, string $resource, string $method = 'GET'): bool
     {
         $accessRules = $this->getAccessRules($resource, $method);
@@ -121,9 +103,7 @@ class AccessControlService
             $this->markRuleAsUnhandledIfNotExists($resource, $method);
         }
 
-        $everyoneHasAccess = ! empty(array_filter($accessRules, function (AccessRule $rule) {
-            return $rule->isEmpty();
-        }));
+        $everyoneHasAccess = !empty(array_filter($accessRules, fn (AccessRule $rule) => $rule->isEmpty()));
         if (empty($accessRules) || $everyoneHasAccess) {
             return true;
         }
@@ -152,7 +132,7 @@ class AccessControlService
 
     private function userHasAccessToRule(User $user, AccessRule $rule): bool
     {
-        if (count(is_countable($rule->getUsers()) ? $rule->getUsers() : array()) > 0 && ! ($user->isActive() && $this->userIsInRuleUserList($user, $rule))) {
+        if (count(is_countable($rule->getUsers()) ? $rule->getUsers() : []) > 0 && !($user->isActive() && $this->userIsInRuleUserList($user, $rule))) {
             return false;
         }
 
@@ -160,7 +140,7 @@ class AccessControlService
             return false;
         }
 
-        if (count(is_countable($rule->getRoles()) ? $rule->getRoles() : array()) > 0 && ! $this->userRoleHasAccessToRule($user, $rule)) {
+        if (count(is_countable($rule->getRoles()) ? $rule->getRoles() : []) > 0 && !$this->userRoleHasAccessToRule($user, $rule)) {
             return false;
         }
 
@@ -169,10 +149,10 @@ class AccessControlService
 
     private function userHasTeamOrExecutiveBoardAccessToRule(User $user, AccessRule $rule): bool
     {
-        $teamRule = count(is_countable($rule->getTeams()) ? $rule->getTeams() : array()) > 0;
+        $teamRule = count(is_countable($rule->getTeams()) ? $rule->getTeams() : []) > 0;
         $executiveRule = $rule->isForExecutiveBoard();
         $hasTeamAccess = $this->userHasTeamAccessToRule($user, $rule);
-        $hasExecutiveBoardAccess = count(is_countable($user->getActiveExecutiveBoardMemberships()) ? $user->getActiveExecutiveBoardMemberships() : array()) > 0;
+        $hasExecutiveBoardAccess = count(is_countable($user->getActiveExecutiveBoardMemberships()) ? $user->getActiveExecutiveBoardMemberships() : []) > 0;
         if ($teamRule && $executiveRule && !($hasTeamAccess || $hasExecutiveBoardAccess)) {
             return false;
         } elseif ($teamRule && !$executiveRule && !$hasTeamAccess) {
@@ -228,15 +208,13 @@ class AccessControlService
     public function getRoutes(): array
     {
         $resources = $this->router->getRouteCollection()->all();
-        $resources = array_filter($resources, function ($v, string $resource) {
-            return strlen($resource) > 0 && !$this->isPrivateRoute($resource);
-        }, ARRAY_FILTER_USE_BOTH);
+        $resources = array_filter($resources, fn ($v, string $resource) => mb_strlen($resource) > 0 && !$this->isPrivateRoute($resource), ARRAY_FILTER_USE_BOTH);
 
         uasort($resources, function (Route $a, Route $b) {
-            if ($this->isControlPanelRoute($a) && ! $this->isControlPanelRoute($b)) {
-                return - 1;
+            if ($this->isControlPanelRoute($a) && !$this->isControlPanelRoute($b)) {
+                return -1;
             }
-            if ($this->isControlPanelRoute($b) && ! $this->isControlPanelRoute($a)) {
+            if ($this->isControlPanelRoute($b) && !$this->isControlPanelRoute($a)) {
                 return 1;
             }
 
@@ -248,20 +226,20 @@ class AccessControlService
 
     private function isControlPanelRoute(Route $resource): bool
     {
-        return substr($resource->getPath(), 0, 14) === "/kontrollpanel";
+        return mb_substr($resource->getPath(), 0, 14) === '/kontrollpanel';
     }
 
     private function isPrivateRoute(string $route): bool
     {
         return
-            strlen($route) > 0 &&
-            substr($route, 0, 1) === '_' &&
+            mb_strlen($route) > 0 &&
+            mb_substr($route, 0, 1) === '_' &&
             $this->isRoute($route);
     }
 
     public function getPath(string $name): string
     {
-        if (! $this->isRoute($name)) {
+        if (!$this->isRoute($name)) {
             return $name;
         }
 
@@ -287,7 +265,7 @@ class AccessControlService
 
     private function unhandledRuleExists(string $resource, $method): bool
     {
-        return ! empty($this->getUnhandledRules($resource, $method));
+        return !empty($this->getUnhandledRules($resource, $method));
     }
 
     private function getAccessRules(string $resource, string $method)

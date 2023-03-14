@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Department;
+use App\Entity\SupportTicket;
 use App\Repository\DepartmentRepository;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
@@ -24,58 +25,54 @@ class SupportTicketType extends AbstractType
          * @var DepartmentRepository $departmentRepository
          */
         $departmentRepository = $options['department_repository'];
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'Ditt navn',
-            'attr' => array(
-                'autocomplete' => 'name'
-            ),
-            ));
-        $builder->add('email', EmailType::class, array(
+            'attr' => [
+                'autocomplete' => 'name',
+            ],
+            ]);
+        $builder->add('email', EmailType::class, [
             'label' => 'Din e-post',
-            'attr' => array(
-                'autocomplete' => 'email'
-            ),
-            ));
-        $builder->add('subject', TextType::class, array(
-            'label' => 'Emne'));
-        $builder->add('department', HiddenType::class, array(
-            'label' => false));
-        $builder->add('body', TextareaType::class, array(
+            'attr' => [
+                'autocomplete' => 'email',
+            ],
+            ]);
+        $builder->add('subject', TextType::class, [
+            'label' => 'Emne', ]);
+        $builder->add('department', HiddenType::class, [
+            'label' => false, ]);
+        $builder->add('body', TextareaType::class, [
             'label' => 'Melding',
-            'attr' => array(
+            'attr' => [
                 'rows' => '9',
-            ),
-        ));
+            ],
+        ]);
         $builder->add('recaptcha', EWZRecaptchaType::class, [
             'label' => false,
             'mapped' => false,
-            'constraints' => array(
-                new RecaptchaTrue()
-            )
+            'constraints' => [
+                new RecaptchaTrue(),
+            ],
         ]);
-        $builder->add('submit', SubmitType::class, array(
+        $builder->add('submit', SubmitType::class, [
             'label' => 'Send melding',
-            'attr' => array(
-                'class' => 'btn-primary'
-            )));
+            'attr' => [
+                'class' => 'btn-primary',
+            ], ]);
 
         $builder->get('department')
             ->addModelTransformer(new CallbackTransformer(
-                function (Department $department) {
-                    return $department->getId();
-                },
-                function ($id) use ($departmentRepository) {
-                    return $departmentRepository->find($id);
-                }
+                fn (Department $department) => $department->getId(),
+                fn ($id) => $departmentRepository->find($id)
             ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\SupportTicket',
-            'department_repository' => null
-        ));
+        $resolver->setDefaults([
+            'data_class' => SupportTicket::class,
+            'department_repository' => null,
+        ]);
     }
 
     public function getBlockPrefix(): string

@@ -45,14 +45,14 @@ class LoadExecutiveBoardData extends AbstractFixture implements OrderedFixtureIn
 	<li>Items</li>
 </ul>
 
-<p><a href="http://google.com">http://google.com</a></p>');
+<p><a href="https://google.com">https://google.com</a></p>');
         $manager->persist($board);
         $manager->flush();
 
         $this->addReference('board', $board);
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * DepartmentSpecificSemester
+ * DepartmentSpecificSemester.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AdmissionPeriodRepository")
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class AdmissionPeriod implements PeriodInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -26,6 +26,7 @@ class AdmissionPeriod implements PeriodInterface
 
     /**
      * @var Department
+     *
      * @ORM\ManyToOne(targetEntity="Department", inversedBy="admissionPeriods")
      */
     private $department;
@@ -44,6 +45,7 @@ class AdmissionPeriod implements PeriodInterface
 
     /**
      * @var InfoMeeting
+     *
      * @ORM\OneToOne(targetEntity="InfoMeeting", cascade={"remove", "persist"})
      * @Assert\Valid
      */
@@ -51,25 +53,25 @@ class AdmissionPeriod implements PeriodInterface
 
     /**
      * @var Semester
+     *
      * @ORM\ManyToOne(targetEntity="Semester", inversedBy="admissionPeriods")
      */
     private $semester;
 
     public function __toString()
     {
-        return (string) $this->semester->getName().' - '.$this->getDepartment();
+        return (string) $this->semester->getName() . ' - ' . $this->getDepartment();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
-
 
     /**
      * Set department.
@@ -98,7 +100,7 @@ class AdmissionPeriod implements PeriodInterface
     /**
      * Set startDate.
      *
-     * @param DateTime $startDate
+     * @param \DateTime $startDate
      *
      * @return AdmissionPeriod
      */
@@ -112,9 +114,9 @@ class AdmissionPeriod implements PeriodInterface
     /**
      * Get startDate.
      *
-     * @return DateTime
+     * @return \DateTime
      */
-    public function getStartDate(): ?DateTime
+    public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
@@ -122,8 +124,7 @@ class AdmissionPeriod implements PeriodInterface
     /**
      * Set endDate.
      *
-     * @param DateTime $admissionEndDate
-     * @param DateTime $endDate
+     * @param \DateTime $endDate
      *
      * @return AdmissionPeriod
      */
@@ -137,9 +138,9 @@ class AdmissionPeriod implements PeriodInterface
     /**
      * Get endDate.
      *
-     * @return DateTime
+     * @return \DateTime
      */
-    public function getEndDate(): ?DateTime
+    public function getEndDate(): ?\DateTime
     {
         return $this->endDate;
     }
@@ -160,17 +161,16 @@ class AdmissionPeriod implements PeriodInterface
         $this->infoMeeting = $infoMeeting;
     }
 
-
     public function isActive(): bool
     {
-        $now = new DateTime();
+        $now = new \DateTime();
 
         return $this->semester->getStartDate() < $now && $now <= $this->semester->getEndDate();
     }
 
     public function hasActiveAdmission(): bool
     {
-        $now = new DateTime();
+        $now = new \DateTime();
 
         return $this->getStartDate() <= $now && $now <= $this->getEndDate();
     }
@@ -191,6 +191,7 @@ class AdmissionPeriod implements PeriodInterface
     public function setSemester($semester)
     {
         $this->semester = $semester;
+
         return $this;
     }
 

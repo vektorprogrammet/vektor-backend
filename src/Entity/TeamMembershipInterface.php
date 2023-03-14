@@ -4,14 +4,10 @@ namespace App\Entity;
 
 interface TeamMembershipInterface
 {
-
-    /**
-     * @return User
-     */
     public function getUser(): User;
 
     /**
-     * @return string | null
+     * @return string|null
      */
     public function getPositionName();
 

@@ -11,7 +11,7 @@ use App\Service\FileUploader;
 use App\Service\RoleManager;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
-use DateTime;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,29 +21,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReceiptController extends BaseController
 {
-    private Sorter $sorter;
-    private FileUploader $fileUploader;
-    private EventDispatcherInterface $eventDispatcher;
-    private RoleManager $roleManager;
-
-    public function __construct(Sorter $sorter, FileUploader $fileUploader,
-                                EventDispatcherInterface $eventDispatcher, RoleManager $roleManager)
-    {
-        $this->sorter=$sorter;
-        $this->fileUploader=$fileUploader;
-        $this->eventDispatcher=$eventDispatcher;
-        $this->roleManager = $roleManager;
+    public function __construct(
+        private readonly Sorter $sorter,
+        private readonly FileUploader $fileUploader,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly RoleManager $roleManager,
+        private readonly ManagerRegistry $doctrine
+    ) {
     }
 
     public function show(): Response
     {
-        $usersWithReceipts = $this->getDoctrine()->getRepository(User::class)->findAllUsersWithReceipts();
-        $refundedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
-        $pendingReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
-        $rejectedReceipts = $this->getDoctrine()->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REJECTED);
+        $usersWithReceipts = $this->doctrine->getRepository(User::class)->findAllUsersWithReceipts();
+        $refundedReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
+        $pendingReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
+        $rejectedReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REJECTED);
 
         $refundedReceiptStatistics = new ReceiptStatistics($refundedReceipts);
-        $totalPayoutThisYear = $refundedReceiptStatistics->totalPayoutIn((new DateTime())->format('Y'));
+        $totalPayoutThisYear = $refundedReceiptStatistics->totalPayoutIn((new \DateTime())->format('Y'));
         $avgRefundTimeInHours = $refundedReceiptStatistics->averageRefundTimeInHours();
 
         $pendingReceiptStatistics = new ReceiptStatistics($pendingReceipts);
@@ -54,29 +49,29 @@ class ReceiptController extends BaseController
         $sorter->sortUsersByReceiptSubmitTime($usersWithReceipts);
         $sorter->sortUsersByReceiptStatus($usersWithReceipts);
 
-        return $this->render('receipt_admin/show_receipts.html.twig', array(
+        return $this->render('receipt_admin/show_receipts.html.twig', [
             'users_with_receipts' => $usersWithReceipts,
             'current_user' => $this->getUser(),
             'total_payout' => $totalPayoutThisYear,
             'avg_refund_time_in_hours' => $avgRefundTimeInHours,
             'pending_statistics' => $pendingReceiptStatistics,
             'rejected_statistics' => $rejectedReceiptStatistics,
-            'refunded_statistics' => $refundedReceiptStatistics
-        ));
+            'refunded_statistics' => $refundedReceiptStatistics,
+        ]);
     }
 
     public function showIndividual(User $user): Response
     {
-        $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($user);
+        $receipts = $this->doctrine->getRepository(Receipt::class)->findByUser($user);
 
         $sorter = $this->sorter;
         $sorter->sortReceiptsBySubmitTime($receipts);
         $sorter->sortReceiptsByStatus($receipts);
 
-        return $this->render('receipt_admin/show_individual_receipts.html.twig', array(
+        return $this->render('receipt_admin/show_individual_receipts.html.twig', [
             'user' => $user,
             'receipts' => $receipts,
-        ));
+        ]);
     }
 
     public function create(Request $request)
@@ -84,7 +79,7 @@ class ReceiptController extends BaseController
         $receipt = new Receipt();
         $receipt->setUser($this->getUser());
 
-        $receipts = $this->getDoctrine()->getRepository(Receipt::class)->findByUser($this->getUser());
+        $receipts = $this->doctrine->getRepository(Receipt::class)->findByUser($this->getUser());
 
         $sorter = $this->sorter;
         $sorter->sortReceiptsBySubmitTime($receipts);
@@ -94,7 +89,6 @@ class ReceiptController extends BaseController
 
         $form->handleRequest($request);
 
-
         // User has posted a receipt
         if ($form->isSubmitted() && $form->isValid()) {
             $isImageUpload = $request->files->get('receipt', ['picture_path']) !== null;
@@ -102,7 +96,7 @@ class ReceiptController extends BaseController
                 $path = $this->fileUploader->uploadReceipt($request);
                 $receipt->setPicturePath($path);
             }
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($receipt);
             $em->flush();
 
@@ -111,20 +105,18 @@ class ReceiptController extends BaseController
             return $this->redirectToRoute('receipt_create');
         }
         // Else: User is viewing receipt page (no receipt exist: path=null)
-        else {
-            $receipt->setPicturePath("");
+
+        $receipt->setPicturePath('');
+
+        if ($form->isSubmitted() && !$form->isValid() && $receipt->getPicturePath() === '') {
+            $this->addFlash('warning', 'Bildefilen er for stor. Maks størrelse er 2 MiB.');
         }
 
-        if ($form->isSubmitted() && !$form->isValid()&& $receipt->getPicturePath() == "") {
-
-            $this->addFlash('warning', "Bildefilen er for stor. Maks størrelse er 2 MiB.");
-        }
-
-        return $this->render('receipt/my_receipts.html.twig', array(
+        return $this->render('receipt/my_receipts.html.twig', [
             'form' => $form->createView(),
             'receipt' => $receipt,
             'receipts' => $receipts,
-        ));
+        ]);
     }
 
     public function edit(Request $request, Receipt $receipt)
@@ -137,9 +129,9 @@ class ReceiptController extends BaseController
             throw new AccessDeniedException();
         }
 
-        $form = $this->createForm(ReceiptType::class, $receipt, array(
+        $form = $this->createForm(ReceiptType::class, $receipt, [
             'picture_required' => false,
-        ));
+        ]);
         $oldPicturePath = $receipt->getPicturePath();
 
         $form->handleRequest($request);
@@ -156,7 +148,7 @@ class ReceiptController extends BaseController
                 $receipt->setPicturePath($oldPicturePath);
             } // If a new image hasn't been uploaded
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($receipt);
             $em->flush();
 
@@ -165,12 +157,11 @@ class ReceiptController extends BaseController
             return $this->redirectToRoute('receipt_create');
         }
 
-
-        return $this->render('receipt/edit_receipt.html.twig', array(
+        return $this->render('receipt/edit_receipt.html.twig', [
             'form' => $form->createView(),
             'receipt' => $receipt,
             'parent_template' => 'base.html.twig',
-        ));
+        ]);
     }
 
     public function editStatus(Request $request, Receipt $receipt): RedirectResponse
@@ -188,14 +179,14 @@ class ReceiptController extends BaseController
 
         $receipt->setStatus($status);
         if ($status === Receipt::STATUS_REFUNDED && !$receipt->getRefundDate()) {
-            $receipt->setRefundDate(new DateTime());
+            $receipt->setRefundDate(new \DateTime());
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->flush();
 
         if ($status === Receipt::STATUS_REFUNDED) {
-            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt),ReceiptEvent::REFUNDED);
+            $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::REFUNDED);
         } elseif ($status === Receipt::STATUS_REJECTED) {
             $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::REJECTED);
         } elseif ($status === Receipt::STATUS_PENDING) {
@@ -207,9 +198,9 @@ class ReceiptController extends BaseController
 
     public function adminEdit(Request $request, Receipt $receipt)
     {
-        $form = $this->createForm(ReceiptType::class, $receipt, array(
+        $form = $this->createForm(ReceiptType::class, $receipt, [
             'picture_required' => false,
-        ));
+        ]);
         $oldPicturePath = $receipt->getPicturePath();
 
         $form->handleRequest($request);
@@ -226,21 +217,20 @@ class ReceiptController extends BaseController
                 $receipt->setPicturePath($oldPicturePath);
             } // If a new image hasn't been uploaded
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->doctrine->getManager();
             $em->persist($receipt);
             $em->flush();
 
             $this->eventDispatcher->dispatch(new ReceiptEvent($receipt), ReceiptEvent::EDITED);
 
-            return $this->redirectToRoute('receipts_show_individual', array('user' => $receipt->getUser()->getId()));
+            return $this->redirectToRoute('receipts_show_individual', ['user' => $receipt->getUser()->getId()]);
         }
 
-
-        return $this->render('receipt/edit_receipt.html.twig', array(
+        return $this->render('receipt/edit_receipt.html.twig', [
             'form' => $form->createView(),
             'receipt' => $receipt,
             'parent_template' => 'adminBase.html.twig',
-        ));
+        ]);
     }
 
     public function delete(Request $request, Receipt $receipt): RedirectResponse
@@ -257,7 +247,7 @@ class ReceiptController extends BaseController
         // Delete the image file
         $this->fileUploader->deleteReceipt($receipt->getPicturePath());
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($receipt);
         $em->flush();
 

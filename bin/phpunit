@@ -2,7 +2,7 @@
 <?php
 
 if (!ini_get('date.timezone')) {
-    ini_set('date.timezone', 'UTC');
+    ini_set('date.timezone', 'Europe/Oslo');
 }
 
 if (is_file(dirname(__DIR__).'/vendor/phpunit/phpunit/phpunit')) {
