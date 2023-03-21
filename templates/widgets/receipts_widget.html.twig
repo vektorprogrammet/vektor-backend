@@ -1,4 +1,4 @@
-{% if has_access_to('receipts_show') %}
+{% if is_granted_team_leader() %}
     <div class="col-12 col-md-6 col-xxxl-4">
         <div class="card">
             <div class="card-header d-flex justify-content-between">

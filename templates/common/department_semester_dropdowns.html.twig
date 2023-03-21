@@ -1,5 +1,6 @@
 <div class="btn-group">
-    {% if has_access_to('all_departments') %}<div class="mr-3">
+    {% if is_granted_team_leader() or is_granted_admin() %}
+        <div class="mr-3">
     {% include "common/department_dropdown.html.twig" with {
         'pathForDepartment': path,
         'departmentParameterName':  departmentParameterName is defined ? departmentParameterName : 'department' ,
