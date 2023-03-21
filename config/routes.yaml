@@ -29,7 +29,9 @@ teachers:
     path: /laerere
     controller: App\Controller\PublicStaticPageController::showTeacherPage
 
-
+slack:
+    path: /slack
+    controller: App\Controller\SlackTestController::slackTest
 ##########################################
 #                  Kontakt               #
 ##########################################
