@@ -251,7 +251,6 @@ class Department
 
     public function __toString(): string
     {
-//        return '' . $this->getCity();
         return $this->getCity();
     }
 
