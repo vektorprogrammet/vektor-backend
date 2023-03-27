@@ -110,8 +110,7 @@
         },
         "post-install-cmd": [
             "php bin/console ckeditor:install",
-            "php bin/console assets:install public",
-            "@auto-scripts"
+            "php bin/console assets:install public"
         ],
         "post-update-cmd": [
             "@auto-scripts"
