@@ -2,11 +2,9 @@
 
 namespace App\OpenApi;
 
-
 use ApiPlatform\Core\OpenApi\Model;
 use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\OpenApi\OpenApi;
-use ArrayObject;
 
 final class JwtDecorator implements OpenApiFactoryInterface
 {
@@ -14,8 +12,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
 
     public function __construct(
         OpenApiFactoryInterface $decorated
-    )
-    {
+    ) {
         $this->decorated = $decorated;
     }
 
@@ -24,7 +21,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
         $openApi = ($this->decorated)($context);
         $schemas = $openApi->getComponents()->getSchemas();
 
-        $schemas['Token'] = new ArrayObject([
+        $schemas['Token'] = new \ArrayObject([
             'type' => 'object',
             'properties' => [
                 'token' => [
@@ -33,7 +30,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
                 ],
             ],
         ]);
-        $schemas['Credentials'] = new ArrayObject([
+        $schemas['Credentials'] = new \ArrayObject([
             'type' => 'object',
             'properties' => [
                 'username' => [
@@ -48,7 +45,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
         ]);
 
         $schemas = $openApi->getComponents()->getSecuritySchemes() ?? [];
-        $schemas['JWT'] = new ArrayObject([
+        $schemas['JWT'] = new \ArrayObject([
             'type' => 'http',
             'scheme' => 'bearer',
             'bearerFormat' => 'JWT',
@@ -76,7 +73,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
                 null, [],
                 new Model\RequestBody(
                     'Generate new JWT Token',
-                    new ArrayObject([
+                    new \ArrayObject([
                         'application/json' => [
                             'schema' => [
                                 '$ref' => '#/components/schemas/Credentials',

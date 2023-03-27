@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AccountController extends BaseController
 {
-
     public function getCurrentUser(): JsonResponse
     {
         if (!$this->getUser()) {
@@ -17,7 +16,7 @@ class AccountController extends BaseController
         $user = $this->getUser();
 
         return new JsonResponse([
-            'user' => $user->getUsername()
+            'user' => $user->getUsername(),
         ]);
     }
 
