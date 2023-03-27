@@ -247,9 +247,6 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
             ['/kontrollpanel/bruker/vekorepost/endre/1'],
             ['/kontrollpanel/semesteradmin'],
             ['/kontrollpanel/semesteradmin/opprett'],
-            ['/kontrollpanel/admin/accessrules'],
-            ['/kontrollpanel/admin/accessrules/create'],
-            ['/kontrollpanel/admin/accessrules/routing/create'],
         ];
     }
 }

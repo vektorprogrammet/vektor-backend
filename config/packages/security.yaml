@@ -160,6 +160,7 @@ security:
         - { path: ^/efconnect, role: ROLE_TEAM_MEMBER }
         - { path: ^/elfinder, role: ROLE_TEAM_MEMBER }
         - { path: ^/kontrollpanel, role: ROLE_TEAM_MEMBER }
+        - { path: ^/kontrollpanel/utlegg, roles: ROLE_TEAM_MEMBER }
         - { path: ^/api/party, roles: ROLE_TEAM_MEMBER }
         - { path: ^/api/*,       roles: ROLE_TEAM_MEMBER }
 
