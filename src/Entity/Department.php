@@ -25,7 +25,7 @@ class Department
      * @ORM\Column(type="string", length=250)
      * @Assert\NotBlank
      */
-    private string $name;
+    private ?string $name = null;
 
     /**
      * @ORM\Column(name="short_name", type="string", length=50)
@@ -49,7 +49,7 @@ class Department
      * @ORM\Column(type="string", length=250, unique=true)
      * @Assert\NotBlank
      */
-    private string $city;
+    private ?string $city = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -200,7 +200,7 @@ class Department
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -253,8 +253,9 @@ class Department
         return $this->fieldOfStudy;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
+//        return '' . $this->getCity();
         return $this->getCity();
     }
 
@@ -368,10 +369,7 @@ class Department
         return $this->teams;
     }
 
-    /**
-     * @return string
-     */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }

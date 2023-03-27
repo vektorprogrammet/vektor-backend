@@ -699,12 +699,12 @@ departmentadmin_show:
 
 departmentadmin_create_department:
     path: /kontrollpanel/avdelingadmin/opprett
-    controller: App\Controller\DepartmentController::createDepartment
+    controller: App\Controller\DepartmentController::createOrUpdateDepartment
     methods: [GET, POST]
 
 departmentadmin_update_department:
     path: /kontrollpanel/avdelingadmin/update/{id}
-    controller: App\Controller\DepartmentController::updateDepartment
+    controller: App\Controller\DepartmentController::createOrUpdateDepartment
     methods: [GET, POST]
     requirements:
         id: \d+
