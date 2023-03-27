@@ -12,79 +12,69 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Sponsor
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     * @Assert\NotBlank(message="Feletet kan ikke være tomt.")
+     * @Assert\NotBlank(message="Feltet kan ikke være tomt.")
      */
-    protected $name;
+    protected ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Feletet kan ikke være tomt.")
+     * @Assert\NotBlank(message="Feltet kan ikke være tomt.")
      */
-    protected $url;
+    protected ?string $url;
 
     /**
      * Available sizes: "small", "medium" and "large".
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Feletet kan ikke være tomt.")
+     * @Assert\NotBlank(message="Feltet kan ikke være tomt.")
      */
-    protected $size;
+    protected ?string $size;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $logoImagePath;
+    protected ?string $logoImagePath;
 
     /**
-     * Sponsor constructor.
+     * Sponsor constructor. Default image size to medium.
      */
     public function __construct()
     {
         $this->size = 'medium';
     }
 
-    /**
-     * @return string
-     */
-    public function getSize()
+    public function getSize(): string
     {
         return $this->size;
     }
 
-    /**
-     * @param string $size
-     */
-    public function setSize($size)
+    public function setSize(string $size): Sponsor
     {
         $this->size = $size;
+
+        return $this;
     }
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Sponsor
+     * Set Sponsor Name.
      */
-    public function setName($name)
+    public function setName(string $name): Sponsor
     {
         $this->name = $name;
 
@@ -92,23 +82,17 @@ class Sponsor
     }
 
     /**
-     * Get name.
-     *
-     * @return string
+     * Get Name of Sponsor.
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set url.
-     *
-     * @param string $url
-     *
-     * @return Sponsor
+     * Set Sponsor website URL.
      */
-    public function setUrl($url)
+    public function setUrl(?string $url): Sponsor
     {
         $this->url = $url;
 
@@ -116,23 +100,17 @@ class Sponsor
     }
 
     /**
-     * Get url.
-     *
-     * @return string
+     * Get Sponsor URL.
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
     /**
      * Set logoImagePath.
-     *
-     * @param string $logoImagePath
-     *
-     * @return Sponsor
      */
-    public function setLogoImagePath($logoImagePath)
+    public function setLogoImagePath(?string $logoImagePath): Sponsor
     {
         $this->logoImagePath = $logoImagePath;
 
@@ -141,10 +119,8 @@ class Sponsor
 
     /**
      * Get logoImagePath.
-     *
-     * @return string
      */
-    public function getLogoImagePath()
+    public function getLogoImagePath(): string
     {
         return $this->logoImagePath;
     }
