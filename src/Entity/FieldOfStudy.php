@@ -11,45 +11,45 @@ use Doctrine\ORM\Mapping as ORM;
 class FieldOfStudy
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=250)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(name="short_name", type="string", length=50)
      */
-    private $shortName;
+    private string $shortName;
 
     /**
      * @ORM\ManyToOne(targetEntity="Department", inversedBy="fieldOfStudy")
      */
-    private $department;
+    private Department $department;
 
     /**
      * Get id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name.
+     * Set department name.
      *
      * @param string $name
      *
      * @return FieldOfStudy
      */
-    public function setName($name)
+    public function setName(string $name): FieldOfStudy
     {
         $this->name = $name;
 
@@ -57,23 +57,23 @@ class FieldOfStudy
     }
 
     /**
-     * Get name.
+     * Get department name.
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set shortName.
+     * Set department shortName.
      *
      * @param string $shortName
      *
      * @return FieldOfStudy
      */
-    public function setShortName($shortName)
+    public function setShortName(string $shortName): FieldOfStudy
     {
         $this->shortName = $shortName;
 
@@ -81,11 +81,11 @@ class FieldOfStudy
     }
 
     /**
-     * Get shortName.
+     * Get department shortName.
      *
      * @return string
      */
-    public function getShortName()
+    public function getShortName(): string
     {
         return $this->shortName;
     }
@@ -93,11 +93,11 @@ class FieldOfStudy
     /**
      * Set department.
      *
-     * @param Department $department
+     * @param Department|null $department
      *
      * @return FieldOfStudy
      */
-    public function setDepartment(Department $department = null)
+    public function setDepartment(Department $department = null): FieldOfStudy
     {
         $this->department = $department;
 
@@ -109,7 +109,7 @@ class FieldOfStudy
      *
      * @return Department
      */
-    public function getDepartment()
+    public function getDepartment(): Department
     {
         return $this->department;
     }
