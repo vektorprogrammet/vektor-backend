@@ -59,7 +59,7 @@ class SponsorsController extends BaseController
                 $this->fileUploader->deleteSponsor($oldImgPath);
 
                 $sponsor->setLogoImagePath($imgPath);
-            // Else use the old image.
+                // Else use the old image.
             } else {
                 $sponsor->setLogoImagePath($oldImgPath);
             }

@@ -26,27 +26,17 @@ class SponsorsExtension extends AbstractExtension
         ];
     }
 
-    public function getSponsors()
+    public function getSponsors(): array
     {
-        $sponsors = $this->doctrine
+        return $this->doctrine
             ->getRepository(Sponsor::class)
             ->findAll();
-        if (!$sponsors) {
-            return 'No sponsors :-(';
-        }
-
-        return $sponsors;
     }
 
     public function getSponsorsBySize($size): array
     {
-        $sponsors = $this->doctrine
+        return $this->doctrine
             ->getRepository(Sponsor::class)
             ->findBy(['size' => $size]);
-        if (!$sponsors) {
-            return [];
-        }
-
-        return $sponsors;
     }
 }
