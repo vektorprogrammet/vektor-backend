@@ -146,3 +146,7 @@ services:
     App\Service\AdmissionNotifier:
         arguments:
             $sendLimit: '%admission_notifier_limit%'
+
+    App\OpenApi\JwtDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: [ '@App\OpenApi\JwtDecorator.inner' ]

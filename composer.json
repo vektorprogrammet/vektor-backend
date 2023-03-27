@@ -22,6 +22,7 @@
         "friendsofsymfony/rest-bundle": "^3.4",
         "google/apiclient": "^2.12",
         "helios-ag/fm-elfinder-bundle": "^12.2",
+        "lexik/jwt-authentication-bundle": "^2.18",
         "liip/imagine-bundle": "^2.10",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -104,7 +105,8 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "elfinder:install": "symfony-cmd"
+            "elfinder:install": "symfony-cmd",
+            "lexik:jwt:generate-keypair --skip-if-exists": "symfony-cmd"
         },
         "post-install-cmd": [
             "php bin/console ckeditor:install",

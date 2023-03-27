@@ -90,24 +90,15 @@ stand:
 ##########################################
 #             Account                    #
 ##########################################
-api_login:
-    path: /api/account/login
-    controller: App\Controller\AccountController::login
-    methods: [GET, POST]
-
-api_logout:
-    path: /api/account/logout
-    controller: App\Controller\AccountController::logout
-    methods: [POST]
 
 api_account_user:
     path: /api/account/user
-    controller: App\Controller\AccountController::getUser
+    controller: App\Controller\Api\AccountController::getCurrentUser
     methods: [GET]
 
 api_account_get_department:
     path: /api/account/get_department
-    controller: App\Controller\AccountController::getDepartmentApi
+    controller: App\Controller\Api\AccountController::getDepartmentApi
     methods: [GET]
 
 
@@ -236,6 +227,13 @@ assistant_history_edit:
     methods: [GET, POST]
     requirements:
         id: \d+
+
+##########################################
+#                API                     #
+##########################################
+api_login:
+    path: /api/login
+
 
 ##########################################
 #                SSO                     #
