@@ -702,17 +702,17 @@ departmentadmin_create_department:
     controller: App\Controller\DepartmentController::createDepartment
     methods: [GET, POST]
 
+departmentadmin_update_department:
+    path: /kontrollpanel/avdelingadmin/update/{id}
+    controller: App\Controller\DepartmentController::updateDepartment
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
 departmentadmin_delete_department_by_id:
     path: /kontrollpanel/avdelingadmin/slett/{id}
     controller: App\Controller\DepartmentController::deleteDepartmentById
     methods: [POST]
-    requirements:
-        id: \d+
-
-departmentadmin_update:
-    path: /kontrollpanel/avdelingadmin/update/{id}
-    controller: App\Controller\DepartmentController::updateDepartment
-    methods: [GET, POST]
     requirements:
         id: \d+
 

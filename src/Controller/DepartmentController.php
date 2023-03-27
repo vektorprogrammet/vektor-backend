@@ -15,6 +15,9 @@ class DepartmentController extends BaseController
     {
     }
 
+    /**
+     * Page showing all departments.
+     */
     public function show(): Response
     {
         return $this->render('department_admin/index.html.twig', []);
@@ -43,6 +46,9 @@ class DepartmentController extends BaseController
         ]);
     }
 
+    /**
+     * Delete department by id.
+     */
     public function deleteDepartmentById(Department $department): RedirectResponse
     {
         $em = $this->doctrine->getManager();

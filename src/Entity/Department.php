@@ -15,8 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Department
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -25,50 +25,50 @@ class Department
      * @ORM\Column(type="string", length=250)
      * @Assert\NotBlank
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(name="short_name", type="string", length=50)
      * @Assert\NotBlank
      */
-    private $shortName;
+    private string $shortName;
 
     /**
      * @ORM\Column(type="string", length=250)
      * @Assert\NotBlank
      * @Assert\Email
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
-    protected $address;
+    protected string $address;
 
     /**
      * @ORM\Column(type="string", length=250, unique=true)
      * @Assert\NotBlank
      */
-    private $city;
+    private string $city;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Length(max=255)
      */
-    private $latitude;
+    private string $latitude;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Length(max=255)
      */
-    private $longitude;
+    private string $longitude;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $slackChannel;
+    private string $slackChannel;
 
     /**
      * @ORM\ManyToMany(targetEntity="School", inversedBy="departments")
@@ -101,13 +101,13 @@ class Department
      * @Assert\Length(min = 1, max = 255, maxMessage="Path kan maks være 255
      *     tegn."))
      **/
-    private $logoPath;
+    private string $logoPath;
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false,
      *     options={"default" : 1})
      */
-    private $active;
+    private bool $active;
 
     /**
      * Constructor.
@@ -121,10 +121,7 @@ class Department
         $this->active = true;
     }
 
-    /**
-     * @return AdmissionPeriod
-     */
-    public function getCurrentAdmissionPeriod()
+    public function getCurrentAdmissionPeriod(): ?AdmissionPeriod
     {
         $now = new \DateTime();
 
@@ -138,10 +135,7 @@ class Department
         return null;
     }
 
-    /**
-     * @return AdmissionPeriod
-     */
-    public function getLatestAdmissionPeriod()
+    public function getLatestAdmissionPeriod(): AdmissionPeriod
     {
         /** @var AdmissionPeriod[] $admissionPeriods */
         $admissionPeriods = $this->getAdmissionPeriods()->toArray();
@@ -160,10 +154,7 @@ class Department
         return $latestAdmissionPeriod;
     }
 
-    /**
-     * @return AdmissionPeriod
-     */
-    public function getCurrentOrLatestAdmissionPeriod()
+    public function getCurrentOrLatestAdmissionPeriod(): ?AdmissionPeriod
     {
         if (null === $admissionPeriod = $this->getCurrentAdmissionPeriod()) {
             $admissionPeriod = $this->getLatestAdmissionPeriod();
@@ -188,22 +179,16 @@ class Department
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set name.
-     *
-     * @param string $name
-     *
-     * @return Department
      */
-    public function setName($name)
+    public function setName(string $name): Department
     {
         $this->name = $name;
 
@@ -215,19 +200,15 @@ class Department
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Set shortName.
-     *
-     * @param string $shortName
-     *
-     * @return Department
      */
-    public function setShortName($shortName)
+    public function setShortName(string $shortName): Department
     {
         $this->shortName = $shortName;
 
@@ -239,17 +220,15 @@ class Department
      *
      * @return string
      */
-    public function getShortName()
+    public function getShortName(): string
     {
         return $this->shortName;
     }
 
     /**
      * Add fieldOfStudy.
-     *
-     * @return Department
      */
-    public function addFieldOfStudy(FieldOfStudy $fieldOfStudy)
+    public function addFieldOfStudy(FieldOfStudy $fieldOfStudy): Department
     {
         $this->fieldOfStudy[] = $fieldOfStudy;
 
@@ -259,7 +238,7 @@ class Department
     /**
      * Remove fieldOfStudy.
      */
-    public function removeFieldOfStudy(FieldOfStudy $fieldOfStudy)
+    public function removeFieldOfStudy(FieldOfStudy $fieldOfStudy): void
     {
         $this->fieldOfStudy->removeElement($fieldOfStudy);
     }
@@ -269,24 +248,20 @@ class Department
      *
      * @return ArrayCollection
      */
-    public function getFieldOfStudy()
+    public function getFieldOfStudy(): ArrayCollection
     {
         return $this->fieldOfStudy;
     }
 
     public function __toString()
     {
-        return (string) $this->getCity();
+        return $this->getCity();
     }
 
     /**
      * Set email.
-     *
-     * @param string $email
-     *
-     * @return Department
      */
-    public function setEmail($email)
+    public function setEmail(string $email): Department
     {
         $this->email = $email;
 
@@ -295,20 +270,16 @@ class Department
 
     /**
      * Get email.
-     *
-     * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
      * Add schools.
-     *
-     * @return Department
      */
-    public function addSchool(School $schools)
+    public function addSchool(School $schools): Department
     {
         $this->schools[] = $schools;
 
@@ -318,29 +289,23 @@ class Department
     /**
      * Remove schools.
      */
-    public function removeSchool(School $schools)
+    public function removeSchool(School $schools): void
     {
         $this->schools->removeElement($schools);
     }
 
     /**
      * Get schools.
-     *
-     * @return ArrayCollection
      */
-    public function getSchools()
+    public function getSchools(): ArrayCollection
     {
         return $this->schools;
     }
 
     /**
      * Set address.
-     *
-     * @param string $address
-     *
-     * @return Department
      */
-    public function setAddress($address)
+    public function setAddress(string $address): Department
     {
         $this->address = $address;
 
@@ -352,17 +317,15 @@ class Department
      *
      * @return string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
 
     /**
      * Add admission periods.
-     *
-     * @return Department
      */
-    public function addAdmissionPeriod(AdmissionPeriod $admissionPeriod)
+    public function addAdmissionPeriod(AdmissionPeriod $admissionPeriod): Department
     {
         $this->admissionPeriods[] = $admissionPeriod;
 
@@ -371,20 +334,16 @@ class Department
 
     /**
      * Get admission periods.
-     *
-     * @return ArrayCollection
      */
-    public function getAdmissionPeriods()
+    public function getAdmissionPeriods(): ArrayCollection
     {
         return $this->admissionPeriods;
     }
 
     /**
      * Add teams.
-     *
-     * @return Department
      */
-    public function addTeam(Team $teams)
+    public function addTeam(Team $teams): Department
     {
         $this->teams[] = $teams;
 
@@ -394,7 +353,7 @@ class Department
     /**
      * Remove teams.
      */
-    public function removeTeam(Team $teams)
+    public function removeTeam(Team $teams): void
     {
         $this->teams->removeElement($teams);
     }
@@ -404,7 +363,7 @@ class Department
      *
      * @return ArrayCollection
      */
-    public function getTeams()
+    public function getTeams(): ArrayCollection
     {
         return $this->teams;
     }
@@ -412,7 +371,7 @@ class Department
     /**
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -428,33 +387,35 @@ class Department
     /**
      * @return string
      */
-    public function getLatitude()
+    public function getLatitude(): string
     {
         return $this->latitude;
     }
 
     /**
-     * @param string $latitude
+     * Set latitude.
      */
-    public function setLatitude($latitude)
+    public function setLatitude(string $latitude): Department
     {
         $this->latitude = $latitude;
+        return $this;
     }
 
     /**
-     * @return string
+     * get longitude.
      */
-    public function getLongitude()
+    public function getLongitude(): string
     {
         return $this->longitude;
     }
 
     /**
-     * @param string $longitude
+     * set longitude.
      */
-    public function setLongitude($longitude)
+    public function setLongitude(string $longitude): Department
     {
         $this->longitude = $longitude;
+        return $this;
     }
 
     // Used for unit testing
@@ -469,48 +430,51 @@ class Department
     /**
      * @return string
      */
-    public function getSlackChannel()
+    public function getSlackChannel(): string
     {
         return $this->slackChannel;
     }
 
     /**
-     * @param string $slackChannel
+     * set slack channel.
      */
-    public function setSlackChannel($slackChannel)
+    public function setSlackChannel(string $slackChannel): Department
     {
         $this->slackChannel = $slackChannel;
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getLogoPath()
+    public function getLogoPath(): string
     {
         return $this->logoPath;
     }
 
     /**
-     * @param string $logoPath
+     * Update logo path.
      */
-    public function setLogoPath($logoPath)
+    public function setLogoPath(string $logoPath): Department
     {
         $this->logoPath = $logoPath;
+        return $this;
     }
 
     /**
      * @return bool $active
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->active;
     }
 
     /**
-     * @param bool $active
+     * Update active status.
      */
-    public function setActive($active)
+    public function setActive(bool $active): Department
     {
         $this->active = $active;
+        return $this;
     }
 }
