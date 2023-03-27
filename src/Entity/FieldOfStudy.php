@@ -34,8 +34,6 @@ class FieldOfStudy
 
     /**
      * Get id.
-     *
-     * @return int
      */
     public function getId(): int
     {
@@ -44,10 +42,6 @@ class FieldOfStudy
 
     /**
      * Set department name.
-     *
-     * @param string $name
-     *
-     * @return FieldOfStudy
      */
     public function setName(string $name): FieldOfStudy
     {
@@ -58,8 +52,6 @@ class FieldOfStudy
 
     /**
      * Get department name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -68,10 +60,6 @@ class FieldOfStudy
 
     /**
      * Set department shortName.
-     *
-     * @param string $shortName
-     *
-     * @return FieldOfStudy
      */
     public function setShortName(string $shortName): FieldOfStudy
     {
@@ -82,8 +70,6 @@ class FieldOfStudy
 
     /**
      * Get department shortName.
-     *
-     * @return string
      */
     public function getShortName(): string
     {
@@ -92,10 +78,6 @@ class FieldOfStudy
 
     /**
      * Set department.
-     *
-     * @param Department|null $department
-     *
-     * @return FieldOfStudy
      */
     public function setDepartment(Department $department = null): FieldOfStudy
     {
@@ -106,8 +88,6 @@ class FieldOfStudy
 
     /**
      * Get department.
-     *
-     * @return Department
      */
     public function getDepartment(): Department
     {

@@ -54,6 +54,7 @@ class FieldOfStudyController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $fieldOfStudy->setDepartment($user_department);
             $this->doctrine->getManager()->flush();
+
             return $this->redirectToRoute('show_field_of_studies');
         }
 
@@ -64,5 +65,4 @@ class FieldOfStudyController extends BaseController
             'fieldOfStudy' => $fieldOfStudy,
         ]);
     }
-
 }
