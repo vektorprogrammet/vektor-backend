@@ -248,7 +248,7 @@ class Department
      *
      * @return ArrayCollection
      */
-    public function getFieldOfStudy(): ArrayCollection
+    public function getFieldOfStudy()
     {
         return $this->fieldOfStudy;
     }
@@ -297,7 +297,7 @@ class Department
     /**
      * Get schools.
      */
-    public function getSchools(): ArrayCollection
+    public function getSchools()
     {
         return $this->schools;
     }
@@ -335,7 +335,7 @@ class Department
     /**
      * Get admission periods.
      */
-    public function getAdmissionPeriods(): ArrayCollection
+    public function getAdmissionPeriods()
     {
         return $this->admissionPeriods;
     }
@@ -363,7 +363,7 @@ class Department
      *
      * @return ArrayCollection
      */
-    public function getTeams(): ArrayCollection
+    public function getTeams()
     {
         return $this->teams;
     }
