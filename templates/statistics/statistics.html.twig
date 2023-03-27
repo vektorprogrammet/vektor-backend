@@ -38,6 +38,7 @@ semester})) }}
 <div class="row charts" id="applicationCharts">
 </div>
 {% endif %}
+
 {% if assistantHistoryData.count %}
 <header>
     <h3 class="mt-3">Opptaksstatistikk</h3>
@@ -47,6 +48,7 @@ semester})) }}
 <div class="row charts" id="admissionCharts">
 </div>
 {% endif %}
+
 {% if assistantHistoryData.count == 0 and applicationData.count == 0 %}
 <div>
     <h4>Ingen data dette semesteret</h4>
