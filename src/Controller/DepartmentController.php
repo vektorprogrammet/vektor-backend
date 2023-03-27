@@ -56,7 +56,6 @@ class DepartmentController extends BaseController
         ]);
     }
 
-
     /**
      * Delete department by id.
      */
@@ -70,5 +69,4 @@ class DepartmentController extends BaseController
 
         return $this->redirectToRoute('departmentadmin_show');
     }
-
 }

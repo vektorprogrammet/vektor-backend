@@ -64,8 +64,6 @@ class Department
     private string $longitude;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     private string $slackChannel;
@@ -217,8 +215,6 @@ class Department
 
     /**
      * Get shortName.
-     *
-     * @return string
      */
     public function getShortName(): string
     {
@@ -315,8 +311,6 @@ class Department
 
     /**
      * Get address.
-     *
-     * @return string
      */
     public function getAddress(): string
     {
@@ -382,9 +376,6 @@ class Department
         $this->city = $city;
     }
 
-    /**
-     * @return string
-     */
     public function getLatitude(): string
     {
         return $this->latitude;
@@ -396,6 +387,7 @@ class Department
     public function setLatitude(string $latitude): Department
     {
         $this->latitude = $latitude;
+
         return $this;
     }
 
@@ -413,6 +405,7 @@ class Department
     public function setLongitude(string $longitude): Department
     {
         $this->longitude = $longitude;
+
         return $this;
     }
 
@@ -425,9 +418,6 @@ class Department
         }
     }
 
-    /**
-     * @return string
-     */
     public function getSlackChannel(): string
     {
         return $this->slackChannel;
@@ -439,12 +429,10 @@ class Department
     public function setSlackChannel(string $slackChannel): Department
     {
         $this->slackChannel = $slackChannel;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getLogoPath(): string
     {
         return $this->logoPath;
@@ -456,6 +444,7 @@ class Department
     public function setLogoPath(string $logoPath): Department
     {
         $this->logoPath = $logoPath;
+
         return $this;
     }
 
@@ -473,6 +462,7 @@ class Department
     public function setActive(bool $active): Department
     {
         $this->active = $active;
+
         return $this;
     }
 }
