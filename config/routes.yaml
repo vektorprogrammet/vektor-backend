@@ -830,7 +830,7 @@ sponsors_show:
 
 sponsor_create:
     path: /kontrollpanel/sponsor/create
-    controller: App\Controller\SponsorsController::sponsorsShow
+    controller: App\Controller\SponsorsController::sponsorEdit
     methods: [GET, POST]
 
 sponsor_edit:
@@ -842,7 +842,7 @@ sponsor_edit:
 
 sponsor_delete:
     path: /kontrollpanel/sponsor/delete/{id}
-    controller: App\Controller\SponsorsController::deleteSponsor
+    controller: App\Controller\SponsorsController::sponsorDelete
     methods: [GET, POST]
     requirements:
         id: \d+
