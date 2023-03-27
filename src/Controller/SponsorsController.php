@@ -38,6 +38,7 @@ class SponsorsController extends BaseController
     public function sponsorEdit(Request $request, Sponsor $sponsor = null): RedirectResponse|Response
     {
         $isCreate = $sponsor === null;
+
         $oldImgPath = '';
         if ($isCreate) {
             $sponsor = new Sponsor();
@@ -87,7 +88,7 @@ class SponsorsController extends BaseController
     /**
      * Page for deleting a sponsor.
      */
-    public function deleteSponsor(Sponsor $sponsor): RedirectResponse
+    public function sponsorDelete(Sponsor $sponsor): RedirectResponse
     {
         // Delete the sponsor's logo image.
         if ($sponsor->getLogoImagePath()) {

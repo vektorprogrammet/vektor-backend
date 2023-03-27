@@ -41,7 +41,7 @@ class Sponsor
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected ?string $logoImagePath;
+    protected ?string $logoImagePath = null;
 
     /**
      * Sponsor constructor. Default image size to medium.
@@ -120,7 +120,7 @@ class Sponsor
     /**
      * Get logoImagePath.
      */
-    public function getLogoImagePath(): string
+    public function getLogoImagePath(): ?string
     {
         return $this->logoImagePath;
     }
