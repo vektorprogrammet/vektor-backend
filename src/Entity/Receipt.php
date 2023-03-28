@@ -20,7 +20,7 @@ class Receipt
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="receipts")
@@ -31,53 +31,53 @@ class Receipt
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $submitDate;
+    private DateTime $submitDate;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      */
-    private $receiptDate;
+    private DateTime $receiptDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $refundDate;
+    private DateTime $refundDate;
 
     /**
      * @ORM\Column(name="picture_path", type="string", nullable=true)
      */
-    private $picturePath;
+    private ?string $picturePath = null;
 
     /**
      * @ORM\Column(type="string", length=5000)
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      * @Assert\Length(max="5000", maxMessage="Maks 5000 tegn")
      */
-    private $description;
+    private string $description;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
      * @Assert\GreaterThan(0, message="Ugyldig sum")
      */
-    private $sum;
+    private float $sum;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $status;
+    private string $status;
 
     /**
      * @ORM\Column(name="visual_id", type="string", nullable=true)
      */
-    private $visualId;
+    private string $visualId;
 
     public function __construct()
     {
         $this->status = self::STATUS_PENDING;
-        $this->submitDate = new \DateTime();
-        $this->receiptDate = new \DateTime();
+        $this->submitDate = new DateTime();
+        $this->receiptDate = new DateTime();
         $currentTimeInMilliseconds = round(microtime(true) * 1000);
         $this->visualId = dechex($currentTimeInMilliseconds);
     }
@@ -85,7 +85,7 @@ class Receipt
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -96,94 +96,67 @@ class Receipt
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getSubmitDate()
+    public function getSubmitDate(): DateTime
     {
         return $this->submitDate;
     }
 
-    /**
-     * @param \DateTime $submitDate
-     */
-    public function setSubmitDate($submitDate)
+    public function setSubmitDate(DateTime $submitDate): Receipt
     {
         $this->submitDate = $submitDate;
+        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getReceiptDate()
+    public function getReceiptDate(): DateTime
     {
         return $this->receiptDate;
     }
 
-    /**
-     * @param \DateTime $receiptDate
-     */
-    public function setReceiptDate($receiptDate)
+    public function setReceiptDate(DateTime $receiptDate): Receipt
     {
         $this->receiptDate = $receiptDate;
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getPicturePath()
+    public function getPicturePath(): string
     {
         return $this->picturePath;
     }
 
-    /**
-     * @param string $picturePath
-     */
-    public function setPicturePath($picturePath)
+    public function setPicturePath(?string $picturePath): Receipt
     {
         $this->picturePath = $picturePath;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): Receipt
     {
         $this->description = $description;
+        return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getSum()
+    public function getSum(): float
     {
         return $this->sum;
     }
 
-    /**
-     * @param float $sum
-     */
-    public function setSum($sum)
+    public function setSum(float $sum): Receipt
     {
         $this->sum = $sum;
+        return $this;
     }
 
     public function getVisualId(): string
@@ -191,25 +164,21 @@ class Receipt
         return $this->visualId;
     }
 
-    public function setVisualId(string $visualId)
+    public function setVisualId(string $visualId): Receipt
     {
         $this->visualId = $visualId;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     */
-    public function setStatus($status)
+    public function setStatus(string $status): Receipt
     {
         $this->status = $status;
+        return $this;
     }
 
     public function __toString()
@@ -217,19 +186,14 @@ class Receipt
         return $this->visualId;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getRefundDate()
+    public function getRefundDate(): DateTime
     {
         return $this->refundDate;
     }
 
-    /**
-     * @param \DateTime $refundDate
-     */
-    public function setRefundDate($refundDate)
+    public function setRefundDate(DateTime $refundDate): Receipt
     {
         $this->refundDate = $refundDate;
+        return $this;
     }
 }
