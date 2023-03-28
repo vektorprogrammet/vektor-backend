@@ -36,7 +36,7 @@ class FieldOfStudyController extends BaseController
     public function edit(Request $request, FieldOfStudy $fieldOfStudy = null): RedirectResponse|Response
     {
         $isEdit = $fieldOfStudy !== null;
-        $user_department = $this->getUser()->getFieldOfStudy()->getDepartment();
+        $userDepartment = $this->getUser()->getFieldOfStudy()->getDepartment();
 
         // Create new Field of Study if not editing
         if (!$isEdit) {
