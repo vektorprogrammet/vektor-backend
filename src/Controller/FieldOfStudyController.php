@@ -44,7 +44,7 @@ class FieldOfStudyController extends BaseController
         }
 
         // User is not allowed to edit other departments' Field of Studies
-        elseif ($fieldOfStudy->getDepartment() !== $user_department) {
+        elseif ($fieldOfStudy->getDepartment() !== $userDepartment) {
             throw new AccessDeniedException();
         }
 
@@ -52,7 +52,7 @@ class FieldOfStudyController extends BaseController
 
         // If form is submitted and valid, save FoS and redirect
         if ($form->isSubmitted() && $form->isValid()) {
-            $fieldOfStudy->setDepartment($user_department);
+            $fieldOfStudy->setDepartment($userDepartment);
             $this->doctrine->getManager()->flush();
 
             return $this->redirectToRoute('show_field_of_studies');
