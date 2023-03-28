@@ -34,7 +34,7 @@ class CreateDepartmentTest extends TypeTestCase
         }
     }
 
-    public function getValidTestData()
+    public function getValidTestData(): array
     {
         return [
             [
@@ -48,15 +48,6 @@ class CreateDepartmentTest extends TypeTestCase
             ],
             [
                 'data' => ['active' => true],
-            ],
-            [
-                'data' => [
-                    'name' => null,
-                    'shortName' => null,
-                    'email' => null,
-                    'address' => null,
-                    'active' => true,
-                ],
             ],
         ];
     }

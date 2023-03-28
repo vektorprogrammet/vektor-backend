@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="dropdown-menu pt-0" aria-labelledby="options-{{ loop.index }}">
                                     <div class="dropdown-header mb-2"><strong>{{ d }}</strong></div>
-                                    <a href="{{ path('departmentadmin_update', { 'id': d.id }) }}"
+                                    <a href="{{ path('departmentadmin_update_department', { 'id': d.id }) }}"
                                        class="dropdown-item"><i class="fa fa-pencil text-primary"></i> Rediger
                                     </a>
                                     {% if is_granted_admin() %}

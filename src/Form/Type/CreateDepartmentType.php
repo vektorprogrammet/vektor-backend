@@ -25,7 +25,7 @@ class CreateDepartmentType extends AbstractType
                 'label' => 'E-post',
             ])
             ->add('address', TextType::class, [
-                'label' => 'Adresse:',
+                'label' => 'Adresse',
                 'required' => false,
             ])
             ->add('city', TextType::class, [
