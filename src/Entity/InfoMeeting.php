@@ -19,77 +19,64 @@ class InfoMeeting
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $showOnPage;
+    private bool $showOnPage;
 
     /**
      * @ORM\Column(type="datetime", length=250, nullable=true)
-     * @Assert\DateTime()
+     * @Assert\Type("\DateTimeInterface")
      */
-    private $date;
+    private ?DateTime $date = null;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
      */
-    private $room;
+    private string $room;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
      */
-    private $description;
+    private string $description;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
      */
-    private $link;
+    private string $link;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate($date)
+    public function setDate(DateTime $date): InfoMeeting
     {
         $this->date = $date;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoom()
+    public function getRoom(): string
     {
         return $this->room;
     }
 
-    /**
-     * @param string $room
-     */
-    public function setRoom($room)
+    public function setRoom(string $room): InfoMeeting
     {
         $this->room = $room;
+        return $this;
     }
 
     public function __toString()
@@ -97,55 +84,40 @@ class InfoMeeting
         return 'Infomøte';
     }
 
-    /**
-     * @return bool
-     */
-    public function isShowOnPage()
+    public function isShowOnPage(): bool
     {
         return $this->showOnPage;
     }
 
-    /**
-     * @param bool $showOnPage
-     */
-    public function setShowOnPage($showOnPage)
+    public function setShowOnPage(bool $showOnPage): InfoMeeting
     {
         $this->showOnPage = $showOnPage;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
 
-    /**
-     * @param string $link
-     */
-    public function setLink($link)
+    public function setLink(string $link): InfoMeeting
     {
         if (mb_strlen($link) > 0 && mb_substr($link, 0, 4) !== 'http') {
             $link = "https://$link";
         }
 
         $this->link = $link;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): InfoMeeting
     {
         $this->description = $description;
+        return $this;
     }
 }
