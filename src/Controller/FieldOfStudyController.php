@@ -53,7 +53,9 @@ class FieldOfStudyController extends BaseController
         // If form is submitted and valid, save FoS and redirect
         if ($form->isSubmitted() && $form->isValid()) {
             $fieldOfStudy->setDepartment($userDepartment);
-            $this->doctrine->getManager()->flush();
+            $manager = $this->doctrine->getManager();
+            $manager->persist($fieldOfStudy);
+            $manager->flush();
 
             return $this->redirectToRoute('show_field_of_studies');
         }
