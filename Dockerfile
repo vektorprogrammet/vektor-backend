@@ -18,4 +18,4 @@ WORKDIR /app
 
 EXPOSE 8000
 
-CMD ["symfony", "server:start"]
+CMD ["symfony", "serve"]
