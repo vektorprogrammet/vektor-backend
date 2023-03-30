@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * StaticContent.
  */
 #[ORM\Table(name: 'static_content')]
-#[ORM\Entity]
 #[ORM\Entity(repositoryClass: 'App\Repository\StaticContentRepository')]
 class StaticContent
 {

@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'semester')]
-#[ORM\Entity]
 #[ORM\Entity(repositoryClass: 'App\Repository\SemesterRepository')]
 class Semester implements PeriodInterface
 {
@@ -184,7 +183,7 @@ class Semester implements PeriodInterface
         }
         if ($this->year === $semester->getYear()) {
             return !($this->semesterTime === 'Høst' &&
-                     $semester->getSemesterTime() === 'Vår');
+                $semester->getSemesterTime() === 'Vår');
         }
 
         return $this->year < $semester->getYear();
@@ -203,7 +202,7 @@ class Semester implements PeriodInterface
         }
         if ($this->year === $semester->getYear()) {
             return !($this->semesterTime === 'Vår' &&
-                     $semester->getSemesterTime() === 'Høst');
+                $semester->getSemesterTime() === 'Høst');
         }
 
         return $this->year > $semester->getYear();
