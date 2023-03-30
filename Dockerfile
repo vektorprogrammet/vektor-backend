@@ -10,12 +10,12 @@ RUN apt-get update && \
     apt-get update && \
     # Install dependencies
     apt-get -y install nodejs npm symfony-cli\
-                php8.1 php8.1-gd php8.1-dom php8.1-xml \
-                php8.1-pdo php8.1-zip php8.1-mysql php8.1-sqlite && \
+                php8.2 php8.2-gd php8.2-dom php8.2-xml \
+                php8.2-pdo php8.2-zip php8.2-mysql php8.2-sqlite && \
     npm install --global yarn
 
 WORKDIR /app
 
 EXPOSE 8000
 
-CMD ["symfony", "server:start"]
+CMD ["symfony", "serve"]

@@ -18,6 +18,9 @@ class SponsorsController extends BaseController
     ) {
     }
 
+    /**
+     * Page for showing all sponsors.
+     */
     public function sponsorsShow(): Response
     {
         $sponsors = $this->doctrine
@@ -29,9 +32,13 @@ class SponsorsController extends BaseController
         ]);
     }
 
-    public function sponsorEdit(Request $request, Sponsor $sponsor = null)
+    /**
+     * Page for creating and editing sponsors.
+     */
+    public function sponsorEdit(Request $request, Sponsor $sponsor = null): RedirectResponse|Response
     {
         $isCreate = $sponsor === null;
+
         $oldImgPath = '';
         if ($isCreate) {
             $sponsor = new Sponsor();
@@ -41,12 +48,19 @@ class SponsorsController extends BaseController
 
         $form = $this->createForm(SponsorType::class, $sponsor);
         $form->handleRequest($request);
+
+        // If the form is submitted and valid, save the sponsor and redirect to the sponsors page.
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!is_null($request->files->get('sponsor')['logoImagePath'])) {
+            // Check if a new image was uploaded.
+            $fileUpload = $request->files->get('sponsor')['logoImagePath'];
+
+            // If a new image was uploaded, upload it and delete the old one.
+            if ($fileUpload) {
                 $imgPath = $this->fileUploader->uploadSponsor($request);
                 $this->fileUploader->deleteSponsor($oldImgPath);
 
                 $sponsor->setLogoImagePath($imgPath);
+            // Else use the old image.
             } else {
                 $sponsor->setLogoImagePath($oldImgPath);
             }
@@ -63,6 +77,7 @@ class SponsorsController extends BaseController
             return $this->redirectToRoute('sponsors_show');
         }
 
+        // Else: Render the edit/create sponsor form.
         return $this->render('sponsors/sponsor_edit.html.twig', [
             'form' => $form->createView(),
             'sponsor' => $sponsor,
@@ -70,8 +85,12 @@ class SponsorsController extends BaseController
         ]);
     }
 
-    public function deleteSponsor(Sponsor $sponsor): RedirectResponse
+    /**
+     * Page for deleting a sponsor.
+     */
+    public function sponsorDelete(Sponsor $sponsor): RedirectResponse
     {
+        // Delete the sponsor's logo image.
         if ($sponsor->getLogoImagePath()) {
             $this->fileUploader->deleteSponsor($sponsor->getLogoImagePath());
         }

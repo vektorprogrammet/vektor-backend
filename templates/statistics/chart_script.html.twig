@@ -7,20 +7,8 @@
         Chart.defaults.global.animation = false;
         var $applicationCharts = $('#applicationCharts');
         var $admissionCharts = $('#admissionCharts');
-        {% if applicationData.count %}
-        var genderData = [
-            {
-                label: 'Gutt' + ' ({{ (applicationData.maleCount/applicationData.count*100)|round }} %)',
-                value: {{ applicationData.maleCount }},
-                color: getColor(0)
-            },
-            {
-                label: 'Jente' + ' ({{ (applicationData.femaleCount/applicationData.count*100)|round }} %)',
-                value: {{ applicationData.femaleCount }},
-                color: getColor(4)
-            }
 
-        ];
+        {% if applicationData.count %}
         var applicantsData = [
             {
                 label: 'Nye' + ' ({{ ((applicationData.count- applicationData.previousParticipationCount)/applicationData.count*100)|round }} %)',
@@ -82,27 +70,9 @@
 
         renderChart(fieldOfStudyData, 'Studie', $applicationCharts, false);
         renderChart(studyYearData, 'Studieår', $applicationCharts, true);
-        renderChart(genderData, 'Kjønn', $applicationCharts, true);
         renderChart(applicantsData, 'Nye/Gamle Søkere', $applicationCharts, true);
         renderChart(heardAbout, 'Hørt om vektor gjennom', $applicationCharts, true);
         renderChart(admissionData, 'Opptak', $admissionCharts, true);
-        {% endif %}
-
-        {% if assistantHistoryData.count %}
-        var acceptedGenderData = [
-            {
-                label: 'Gutt' + ' ({{ (assistantHistoryData.maleCount/assistantHistoryData.count*100)|round }} %)',
-                value: {{ assistantHistoryData.maleCount }},
-                color: getColor(0)
-            },
-            {
-                label: 'Jente' + ' ({{ (assistantHistoryData.femaleCount/assistantHistoryData.count*100)|round }} %)',
-                value: {{ assistantHistoryData.femaleCount }},
-                color: getColor(4)
-            }
-        ];
-
-        renderChart(acceptedGenderData, 'Kjønn', $admissionCharts, true);
         {% endif %}
 
         function renderChart(data, label, chartRoot, legend) {

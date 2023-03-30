@@ -8,13 +8,14 @@ use App\Entity\AssistantHistory;
 use App\Entity\Department;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ApplicationData
 {
     private Department $department;
     private AdmissionPeriod $admissionPeriod;
-    private readonly \Doctrine\ORM\EntityRepository $applicationRepository;
+    private readonly EntityRepository $applicationRepository;
 
     /**
      * ApplicationData constructor.
@@ -58,27 +59,9 @@ class ApplicationData
         return $this->applicationRepository->numOfGender($this->admissionPeriod, 0);
     }
 
-    public function getMalePercentage(): float
-    {
-        if ($this->getApplicationCount() === 0) {
-            return floatval(0);
-        }
-
-        return round(100 * floatval($this->getMaleCount() / $this->getApplicationCount()), 2);
-    }
-
     public function getFemaleCount(): int
     {
         return $this->applicationRepository->numOfGender($this->admissionPeriod, 1);
-    }
-
-    public function getFemalePercentage(): float
-    {
-        if ($this->getApplicationCount() === 0) {
-            return floatval(0);
-        }
-
-        return round(100 * floatval($this->getFemaleCount() / $this->getApplicationCount()), 2);
     }
 
     public function getPreviousParticipationCount(): int

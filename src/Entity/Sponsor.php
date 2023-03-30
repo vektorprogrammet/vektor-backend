@@ -33,47 +33,37 @@ class Sponsor
     protected $logoImagePath;
 
     /**
-     * Sponsor constructor.
+     * Sponsor constructor. Default image size to medium.
      */
     public function __construct()
     {
         $this->size = 'medium';
     }
 
-    /**
-     * @return string
-     */
-    public function getSize()
+    public function getSize(): string
     {
         return $this->size;
     }
 
-    /**
-     * @param string $size
-     */
-    public function setSize($size)
+    public function setSize(string $size): Sponsor
     {
         $this->size = $size;
+
+        return $this;
     }
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Sponsor
+     * Set Sponsor Name.
      */
-    public function setName($name)
+    public function setName(string $name): Sponsor
     {
         $this->name = $name;
 
@@ -81,23 +71,17 @@ class Sponsor
     }
 
     /**
-     * Get name.
-     *
-     * @return string
+     * Get Name of Sponsor.
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set url.
-     *
-     * @param string $url
-     *
-     * @return Sponsor
+     * Set Sponsor website URL.
      */
-    public function setUrl($url)
+    public function setUrl(?string $url): Sponsor
     {
         $this->url = $url;
 
@@ -105,23 +89,17 @@ class Sponsor
     }
 
     /**
-     * Get url.
-     *
-     * @return string
+     * Get Sponsor URL.
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
     /**
      * Set logoImagePath.
-     *
-     * @param string $logoImagePath
-     *
-     * @return Sponsor
      */
-    public function setLogoImagePath($logoImagePath)
+    public function setLogoImagePath(?string $logoImagePath): Sponsor
     {
         $this->logoImagePath = $logoImagePath;
 
@@ -130,10 +108,8 @@ class Sponsor
 
     /**
      * Get logoImagePath.
-     *
-     * @return string
      */
-    public function getLogoImagePath()
+    public function getLogoImagePath(): ?string
     {
         return $this->logoImagePath;
     }

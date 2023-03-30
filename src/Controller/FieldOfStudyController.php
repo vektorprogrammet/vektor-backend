@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\FieldOfStudy;
 use App\Form\Type\FieldOfStudyType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -15,6 +16,9 @@ class FieldOfStudyController extends BaseController
     {
     }
 
+    /**
+     * Show all Field of Studies.
+     */
     public function show(): Response
     {
         $department = $this->getUser()->getFieldOfStudy()->getDepartment();
@@ -26,23 +30,29 @@ class FieldOfStudyController extends BaseController
         ]);
     }
 
-    public function edit(Request $request, FieldOfStudy $fieldOfStudy = null)
+    /**
+     * Create or edit Field of Study.
+     */
+    public function edit(Request $request, FieldOfStudy $fieldOfStudy = null): RedirectResponse|Response
     {
-        $isEdit = true;
-        if ($fieldOfStudy === null) {
-            $fieldOfStudy = new FieldOfStudy();
-            $isEdit = false;
-        } else {
-            // Check if user is trying to edit FOS from department other than his own
-            if ($fieldOfStudy->getDepartment() !== $this->getUser()->getFieldOfStudy()->getDepartment()) {
-                throw new AccessDeniedException();
-            }
-        }
-        $form = $this->createForm(FieldOfStudyType::class, $fieldOfStudy);
-        $form->handleRequest($request);
+        $isEdit = $fieldOfStudy !== null;
+        $userDepartment = $this->getUser()->getFieldOfStudy()->getDepartment();
 
+        // Create new Field of Study if not editing
+        if (!$isEdit) {
+            $fieldOfStudy = new FieldOfStudy();
+        }
+
+        // User is not allowed to edit other departments' Field of Studies
+        elseif ($fieldOfStudy->getDepartment() !== $userDepartment) {
+            throw new AccessDeniedException();
+        }
+
+        $form = $this->createForm(FieldOfStudyType::class, $fieldOfStudy)->handleRequest($request);
+
+        // If form is submitted and valid, save FoS and redirect
         if ($form->isSubmitted() && $form->isValid()) {
-            $fieldOfStudy->setDepartment($this->getUser()->getFieldOfStudy()->getDepartment());
+            $fieldOfStudy->setDepartment($userDepartment);
             $manager = $this->doctrine->getManager();
             $manager->persist($fieldOfStudy);
             $manager->flush();
@@ -50,6 +60,7 @@ class FieldOfStudyController extends BaseController
             return $this->redirectToRoute('show_field_of_studies');
         }
 
+        // Render create/edit FoS form
         return $this->render('field_of_study/form.html.twig', [
             'form' => $form->createView(),
             'isEdit' => $isEdit,

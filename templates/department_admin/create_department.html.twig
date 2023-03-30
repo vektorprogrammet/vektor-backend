@@ -1,6 +1,7 @@
 {% extends 'adminBase.html.twig' %}
 
-{% set header = department is defined ? 'Avdeling - ' ~ department : 'Opprett avdeling' %}
+{% set header = isEdit ? 'Avdeling - ' ~ department : 'Opprett avdeling' %}
+
 
 {% block title %}
     {{ header }}
