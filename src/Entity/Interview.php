@@ -18,142 +18,100 @@ abstract class InterviewStatusType
     public const NO_CONTACT = 4;
 }
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\InterviewRepository")
- * @ORM\Table(name="interview")
- */
+#[ORM\Table(name: 'interview')]
+#[ORM\Entity(repositoryClass: 'App\Repository\InterviewRepository')]
 class Interview
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $interviewed;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $scheduled;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $lastScheduleChanged;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $room;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Campusnavn kan ikke være mer enn 255 tegn"
-     * )
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Campusnavn kan ikke være mer enn 255 tegn')]
     private $campus;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     * @Assert\Length(
-     *     max=500,
-     *     maxMessage= "Linken kan ikke være mer enn 500 tegn"
-     * )
-     */
+    #[ORM\Column(type: 'string', length: 500, nullable: true)]
+    #[Assert\Length(max: 500, maxMessage: 'Linken kan ikke være mer enn 500 tegn')]
     private $mapLink;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $conducted;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="InterviewSchema")
-     * @ORM\JoinColumn(name="schema_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'InterviewSchema')]
+    #[ORM\JoinColumn(name: 'schema_id', referencedColumnName: 'id')]
     private $interviewSchema; // Bidirectional, may turn out to be unidirectional
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="interviews")
-     * @ORM\JoinColumn(name="interviewer_id", referencedColumnName="id", onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'interviews')]
+    #[ORM\JoinColumn(name: 'interviewer_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private $interviewer; // Unidirectional, may turn out to be bidirectional
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $coInterviewer;
 
-    /**
-     * @ORM\OneToMany(targetEntity="InterviewAnswer", mappedBy="interview", cascade={"persist", "remove"})
-     * @Assert\Valid
-     */
+    #[ORM\OneToMany(targetEntity: 'InterviewAnswer', mappedBy: 'interview', cascade: ['persist', 'remove'])]
+    #[Assert\Valid]
     private $interviewAnswers;
 
     /**
      * @var InterviewScore
-     *
-     * @ORM\OneToOne(targetEntity="InterviewScore", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="interview_score_id", referencedColumnName="id")
-     * @Assert\Valid
      */
+    #[ORM\OneToOne(targetEntity: 'InterviewScore', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'interview_score_id', referencedColumnName: 'id')]
+    #[Assert\Valid]
     private $interviewScore;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     *
      * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     private $interviewStatus;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', cascade: ['persist'])]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $user;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Application", mappedBy="interview")
-     */
+    #[ORM\OneToOne(targetEntity: 'Application', mappedBy: 'interview')]
     private $application;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $responseCode;
 
     /**
-     * @ORM\Column(type="string", nullable=true, length=2000)
-     * @Assert\Length(max=2000)
      *
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 2000)]
+    #[Assert\Length(max: 2000)]
     private $cancelMessage;
 
     /**
-     * @ORM\Column(type="string", length=2000)
-     * @Assert\Length(max=2000)
-     * @Assert\NotBlank(groups={"newTimeRequest"}, message="Meldingsboksen kan ikke være tom")
      *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 2000)]
+    #[Assert\Length(max: 2000)]
+    #[Assert\NotBlank(groups: ['newTimeRequest'], message: 'Meldingsboksen kan ikke være tom')]
     private $newTimeMessage;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", options={"default": 0})
      */
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
     private $numAcceptInterviewRemindersSent;
 
     /**
@@ -182,7 +140,6 @@ class Interview
     /**
      * Set interviewSchema.
      *
-     * @param InterviewSchema $interviewSchema
      *
      * @return Interview
      */
@@ -216,7 +173,6 @@ class Interview
     /**
      * Is the given User the co-interviewer of this Interview?
      *
-     * @param User $user
      *
      * @return bool
      */
@@ -228,7 +184,6 @@ class Interview
     /**
      * Set interviewer.
      *
-     * @param User $coInterviewer
      *
      * @return Interview
      */
@@ -242,7 +197,6 @@ class Interview
     /**
      * Set interviewer.
      *
-     * @param User $interviewer
      *
      * @return Interview
      */
@@ -296,7 +250,6 @@ class Interview
     /**
      * Set interviewScore.
      *
-     * @param InterviewScore $interviewScore
      *
      * @return Interview
      */
@@ -425,7 +378,6 @@ class Interview
     /**
      * Is the given User the interviewer of this Interview?
      *
-     * @param User $user
      *
      * @return bool
      */
@@ -633,9 +585,6 @@ class Interview
         return '';
     }
 
-    /**
-     * @param string $cancelMessage
-     */
     public function setCancelMessage(string $cancelMessage = null)
     {
         $this->cancelMessage = $cancelMessage;

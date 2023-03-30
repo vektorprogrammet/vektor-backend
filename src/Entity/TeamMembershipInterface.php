@@ -22,8 +22,6 @@ interface TeamMembershipInterface
     public function getStartSemester();
 
     /**
-     * @param Semester $semester
-     *
      * @return TeamMembershipInterface
      */
     public function setStartSemester(Semester $semester = null);
@@ -34,8 +32,6 @@ interface TeamMembershipInterface
     public function getEndSemester();
 
     /**
-     * @param Semester $semester
-     *
      * @return TeamMembershipInterface
      */
     public function setEndSemester(Semester $semester = null);

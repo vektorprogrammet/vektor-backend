@@ -11,41 +11,29 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="signature")
- * @ORM\Entity(repositoryClass="App\Repository\SignatureRepository")
- */
+#[ORM\Table(name: 'signature')]
+#[ORM\Entity(repositoryClass: 'App\Repository\SignatureRepository')]
 class Signature
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\Column(name="signature_path", type="string", length=45, nullable=true)
-     */
+    #[ORM\Column(name: 'signature_path', type: 'string', length: 45, nullable: true)]
     private $signaturePath;
 
-    /**
-     * @ORM\Column(type="string", length=250)
-     * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
-     * @Assert\Length(min = 1, max = 250, maxMessage="Beskrivelsen kan maks være 250 tegn."))
-     */
+    #[ORM\Column(type: 'string', length: 250)]
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
+    #[Assert\Length(min: 1, max: 250, maxMessage: 'Beskrivelsen kan maks være 250 tegn.')]
     private $description;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     * @Assert\Length(min = 1, max = 500, maxMessage="Kommentaren kan maks være 500 tegn."))
-     */
+    #[ORM\Column(type: 'string', length: 500, nullable: true)]
+    #[Assert\Length(min: 1, max: 500, maxMessage: 'Kommentaren kan maks være 500 tegn.')]
     private $additional_comment;
 
-    /**
-     * @ORM\OneToOne(targetEntity="User", cascade={"persist"})
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
+    #[ORM\OneToOne(targetEntity: 'User', cascade: ['persist'])]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     protected $user;
 
     /**

@@ -8,68 +8,60 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TeamInterest.
- *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="TeamInterestRepository")
  */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: 'TeamInterestRepository')]
 class TeamInterest implements DepartmentSemesterInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
-     * @Assert\Length(max="255", maxMessage="Navnet ditt kan maksimalt være 255 tegn")
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
+    #[Assert\Length(max: 255, maxMessage: 'Navnet ditt kan maksimalt være 255 tegn')]
     private $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
-     * @Assert\Length(max="255", maxMessage="Emailen din kan maksimalt være 255 tegn")
-     * @Assert\Email(message="Emailen din er ikke formatert riktig")
      */
+    #[ORM\Column(name: 'email', type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
+    #[Assert\Length(max: 255, maxMessage: 'Emailen din kan maksimalt være 255 tegn')]
+    #[Assert\Email(message: 'Emailen din er ikke formatert riktig')]
     private $email;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="timestamp", type="datetime")
      */
+    #[ORM\Column(name: 'timestamp', type: 'datetime')]
     private $timestamp;
 
     /**
      * @var Team[]
-     *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Team", inversedBy="potentialApplicants")
-     * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
-     * @Assert\Count(min=1, minMessage="Du må velge minst ett team")
      */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', inversedBy: 'potentialApplicants')]
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
+    #[Assert\Count(min: 1, minMessage: 'Du må velge minst ett team')]
     private $potentialTeams;
 
     /**
      * @var Semester
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semester")
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Semester')]
     private $semester;
 
     /**
      * @var Department
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Department")
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Department')]
     private $department;
 
     /**

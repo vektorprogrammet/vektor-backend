@@ -4,32 +4,22 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="field_of_study")
- * @ORM\Entity(repositoryClass="App\Repository\FieldOfStudyRepository")
- */
+#[ORM\Table(name: 'field_of_study')]
+#[ORM\Entity(repositoryClass: 'App\Repository\FieldOfStudyRepository')]
 class FieldOfStudy
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=250)
-     */
+    #[ORM\Column(type: 'string', length: 250)]
     private $name;
 
-    /**
-     * @ORM\Column(name="short_name", type="string", length=50)
-     */
+    #[ORM\Column(name: 'short_name', type: 'string', length: 50)]
     private $shortName;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Department", inversedBy="fieldOfStudy")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'fieldOfStudy')]
     private $department;
 
     /**
@@ -93,7 +83,6 @@ class FieldOfStudy
     /**
      * Set department.
      *
-     * @param Department $department
      *
      * @return FieldOfStudy
      */

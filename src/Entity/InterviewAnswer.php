@@ -5,35 +5,27 @@ namespace App\Entity;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="interview_answer")
- */
+#[ORM\Table(name: 'interview_answer')]
+#[ORM\Entity]
 class InterviewAnswer
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Interview", inversedBy="interviewAnswers")
-     * @ORM\JoinColumn(name="interview_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Interview', inversedBy: 'interviewAnswers')]
+    #[ORM\JoinColumn(name: 'interview_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $interview;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="InterviewQuestion")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'InterviewQuestion')]
+    #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id')]
     protected $interviewQuestion;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
      * @CustomAssert\InterviewAnswer(groups={"interview"})
      */
+    #[ORM\Column(type: 'array', nullable: true)]
     protected $answer;
 
     /**
@@ -73,7 +65,6 @@ class InterviewAnswer
     /**
      * Set interview.
      *
-     * @param Interview $interview
      *
      * @return InterviewAnswer
      */
@@ -97,7 +88,6 @@ class InterviewAnswer
     /**
      * Set interviewQuestion.
      *
-     * @param InterviewQuestion $interviewQuestion
      *
      * @return InterviewAnswer
      */

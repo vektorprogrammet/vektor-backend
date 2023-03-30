@@ -8,39 +8,34 @@ class SupportTicket
 {
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     private $name;
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
-     * @Assert\Email()
      */
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private $email;
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     private $subject;
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     private $body;
 
     /**
      * @var Department
-     *
-     * @Assert\NotNull(message="Klarte ikke sende melding til denne avdelingen. Send oss en mail isteden.")
-     * @Assert\Valid()
      */
+    #[Assert\NotNull(message: 'Klarte ikke sende melding til denne avdelingen. Send oss en mail isteden.')]
+    #[Assert\Valid]
     private $department;
 
     public function getName()
