@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'password_reset')]
@@ -97,7 +96,6 @@ class PasswordReset
 
     /**
      * Set user.
-     *
      *
      * @return PasswordReset
      */

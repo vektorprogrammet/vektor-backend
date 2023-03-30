@@ -72,7 +72,6 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     /**
      * Set user.
      *
-     *
      * @return ExecutiveBoardMembership
      */
     public function setUser(User $user = null)
@@ -92,7 +91,6 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
 
     /**
      * Set board.
-     *
      *
      * @return ExecutiveBoardMembership
      */

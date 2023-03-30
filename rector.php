@@ -1,8 +1,8 @@
 <?php
 
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\SetList;
 use Rector\Doctrine\Set\DoctrineSetList;
+use Rector\Set\ValueObject\SetList;
 use Rector\Symfony\Set\SensiolabsSetList;
 use Rector\Symfony\Set\SymfonySetList;
 
@@ -15,6 +15,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::DEAD_CODE,
         DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
         SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
-        SensiolabsSetList::FRAMEWORK_EXTRA_61
+        SensiolabsSetList::FRAMEWORK_EXTRA_61,
     ]);
 };

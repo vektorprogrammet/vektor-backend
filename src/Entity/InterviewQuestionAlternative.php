@@ -59,7 +59,6 @@ class InterviewQuestionAlternative
     /**
      * Set interviewQuestion.
      *
-     *
      * @return InterviewQuestionAlternative
      */
     public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null)

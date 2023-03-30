@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -92,7 +91,6 @@ class Interview
     private $responseCode;
 
     /**
-     *
      * @var string
      */
     #[ORM\Column(type: 'string', nullable: true, length: 2000)]
@@ -100,7 +98,6 @@ class Interview
     private $cancelMessage;
 
     /**
-     *
      * @var string
      */
     #[ORM\Column(type: 'string', length: 2000)]
@@ -140,7 +137,6 @@ class Interview
     /**
      * Set interviewSchema.
      *
-     *
      * @return Interview
      */
     public function setInterviewSchema(InterviewSchema $interviewSchema = null)
@@ -173,7 +169,6 @@ class Interview
     /**
      * Is the given User the co-interviewer of this Interview?
      *
-     *
      * @return bool
      */
     public function isCoInterviewer(User $user = null)
@@ -183,7 +178,6 @@ class Interview
 
     /**
      * Set interviewer.
-     *
      *
      * @return Interview
      */
@@ -196,7 +190,6 @@ class Interview
 
     /**
      * Set interviewer.
-     *
      *
      * @return Interview
      */
@@ -249,7 +242,6 @@ class Interview
 
     /**
      * Set interviewScore.
-     *
      *
      * @return Interview
      */
@@ -377,7 +369,6 @@ class Interview
 
     /**
      * Is the given User the interviewer of this Interview?
-     *
      *
      * @return bool
      */

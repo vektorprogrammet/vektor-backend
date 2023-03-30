@@ -15,18 +15,18 @@ class Sponsor
     protected $id;
 
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
-    #[Assert\NotBlank(message: 'Feletet kan ikke være tomt.')]
+    #[Assert\NotBlank(message: 'Feltet kan ikke være tomt.')]
     protected $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Assert\NotBlank(message: 'Feletet kan ikke være tomt.')]
+    #[Assert\NotBlank(message: 'Feltet kan ikke være tomt.')]
     protected $url;
 
     /**
      * Available sizes: "small", "medium" and "large".
      */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Assert\NotBlank(message: 'Feletet kan ikke være tomt.')]
+    #[Assert\NotBlank(message: 'Feltet kan ikke være tomt.')]
     protected $size;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

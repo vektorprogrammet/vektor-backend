@@ -89,7 +89,6 @@ class TeamMembership implements TeamMembershipInterface
     /**
      * Set user.
      *
-     *
      * @return TeamMembership
      */
     public function setUser(User $user = null)
@@ -109,7 +108,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Set team.
-     *
      *
      * @return TeamMembership
      */
@@ -133,7 +131,6 @@ class TeamMembership implements TeamMembershipInterface
     /**
      * Set position.
      *
-     *
      * @return TeamMembership
      */
     public function setPosition(Position $position = null)
@@ -156,7 +153,6 @@ class TeamMembership implements TeamMembershipInterface
     /**
      * Set startSemester.
      *
-     *
      * @return TeamMembership
      */
     public function setStartSemester(Semester $startSemester = null)
@@ -178,7 +174,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Set endSemester.
-     *
      *
      * @return TeamMembership
      */

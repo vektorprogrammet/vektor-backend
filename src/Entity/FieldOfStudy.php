@@ -68,9 +68,6 @@ class FieldOfStudy
 
     /**
      * Set department.
-     *
-     *
-     * @return FieldOfStudy
      */
     public function setDepartment(Department $department = null): FieldOfStudy
     {

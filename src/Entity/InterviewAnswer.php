@@ -65,7 +65,6 @@ class InterviewAnswer
     /**
      * Set interview.
      *
-     *
      * @return InterviewAnswer
      */
     public function setInterview(Interview $interview = null)
@@ -87,7 +86,6 @@ class InterviewAnswer
 
     /**
      * Set interviewQuestion.
-     *
      *
      * @return InterviewAnswer
      */

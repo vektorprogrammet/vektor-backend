@@ -30,7 +30,6 @@ class CertificateRequest
     /**
      * Set user.
      *
-     *
      * @return CertificateRequest
      */
     public function setUser(User $user = null)

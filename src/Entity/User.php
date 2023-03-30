@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Role\Roles;
 use App\Validator\Constraints as CustomAssert;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -91,9 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
-    /**
-     * @ORM\column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $new_user_code;
 
     /**
@@ -342,7 +339,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Set fieldOfStudy.
-     *
      *
      * @return User
      */

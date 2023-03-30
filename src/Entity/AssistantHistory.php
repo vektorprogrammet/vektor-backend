@@ -59,7 +59,6 @@ class AssistantHistory
     /**
      * Set user.
      *
-     *
      * @return AssistantHistory
      */
     public function setUser(User $user = null)
@@ -81,7 +80,6 @@ class AssistantHistory
 
     /**
      * Set semester.
-     *
      *
      * @return AssistantHistory
      */
@@ -122,7 +120,6 @@ class AssistantHistory
 
     /**
      * Set school.
-     *
      *
      * @return AssistantHistory
      */

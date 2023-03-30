@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Utils\TimeUtil;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -66,7 +65,6 @@ class AdmissionPeriod implements PeriodInterface
 
     /**
      * Set department.
-     *
      *
      * @return AdmissionPeriod
      */
