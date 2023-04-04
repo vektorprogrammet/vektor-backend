@@ -17,7 +17,7 @@ interface TeamInterface
     /**
      * @param string $email
      */
-    public function setEmail($email);
+    public function setEmail(string $email);
 
     /**
      * @return string

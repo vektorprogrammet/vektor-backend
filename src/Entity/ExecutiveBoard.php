@@ -12,22 +12,22 @@ class ExecutiveBoard implements TeamInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 250)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    protected $name;
+    protected ?string $name = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\Email(message: 'Ugyldig e-post')]
-    private $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
     #[ORM\Column(type: 'string', nullable: true, name: 'short_description')]
     #[Assert\Length(maxMessage: 'Maks 125 Tegn', max: 125)]
-    private $shortDescription;
+    private ?string $shortDescription = null;
 
     /**
      * @var ExecutiveBoardMembership[]
@@ -40,49 +40,29 @@ class ExecutiveBoard implements TeamInterface
         return (string) $this->getName();
     }
 
-    public function getType()
+    public function getType(): string
     {
         return 'executive_board';
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return ExecutiveBoard
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -92,7 +72,7 @@ class ExecutiveBoard implements TeamInterface
      *
      * @return $this|ExecutiveBoard
      */
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
