@@ -87,7 +87,7 @@ class AdmissionPeriod implements PeriodInterface
         return $this->infoMeeting;
     }
 
-    public function setInfoMeeting(InfoMeeting $infoMeeting): void
+    public function setInfoMeeting(InfoMeeting $infoMeeting = null): void
     {
         $this->infoMeeting = $infoMeeting;
     }
