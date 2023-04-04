@@ -68,8 +68,6 @@ class ExecutiveBoard implements TeamInterface
     }
 
     /**
-     * @param string $email
-     *
      * @return $this|ExecutiveBoard
      */
     public function setEmail(string $email): self

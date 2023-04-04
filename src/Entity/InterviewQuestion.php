@@ -40,8 +40,6 @@ class InterviewQuestion
     /**
      * Set question.
      *
-     * @param string $question
-     *
      * @return InterviewQuestion
      */
     public function setQuestion(string $question)
@@ -67,8 +65,6 @@ class InterviewQuestion
     /**
      * Set help.
      *
-     * @param string $help
-     *
      * @return InterviewQuestion
      */
     public function setHelp(string $help)
@@ -85,8 +81,6 @@ class InterviewQuestion
 
     /**
      * Set type.
-     *
-     * @param string $type
      *
      * @return InterviewQuestion
      */

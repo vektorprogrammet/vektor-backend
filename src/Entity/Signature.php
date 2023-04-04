@@ -18,52 +18,40 @@ class Signature
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(name: 'signature_path', type: 'string', length: 45, nullable: true)]
-    private $signaturePath;
+    private ?string $signaturePath = null;
 
     #[ORM\Column(type: 'string', length: 250)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(min: 1, max: 250, maxMessage: 'Beskrivelsen kan maks være 250 tegn.')]
-    private $description;
+    private ?string $description = null;
 
     #[ORM\Column(type: 'string', length: 500, nullable: true)]
     #[Assert\Length(min: 1, max: 500, maxMessage: 'Kommentaren kan maks være 500 tegn.')]
-    private $additional_comment;
+    private ?string $additional_comment = null;
 
     #[ORM\OneToOne(targetEntity: 'User', cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     protected $user;
 
-    /**
-     * @return string
-     */
-    public function getSignaturePath()
+    public function getSignaturePath(): ?string
     {
         return $this->signaturePath;
     }
 
-    /**
-     * @param string $signaturePath
-     */
-    public function setSignaturePath($signaturePath)
+    public function setSignaturePath(string $signaturePath): void
     {
         $this->signaturePath = $signaturePath;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -73,10 +61,7 @@ class Signature
         return $this->additional_comment;
     }
 
-    /**
-     * @param string $additional_comment
-     */
-    public function setAdditionalComment($additional_comment): void
+    public function setAdditionalComment(string $additional_comment): void
     {
         $this->additional_comment = $additional_comment;
     }

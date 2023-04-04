@@ -193,8 +193,6 @@ class Team implements TeamInterface
     }
 
     /**
-     * @param string $email
-     *
      * @return $this|Team
      */
     public function setEmail(string $email)

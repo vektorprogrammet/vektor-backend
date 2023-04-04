@@ -54,9 +54,6 @@ class InfoMeeting
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
     public function setDate(\DateTime $date)
     {
         $this->date = $date;
