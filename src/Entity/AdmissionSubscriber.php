@@ -14,30 +14,27 @@ class AdmissionSubscriber
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'E-post må fylles inn')]
     #[Assert\Email(message: 'Dette er ikke en gyldig e-postadresse')]
-    private $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'datetime')]
-    private $timestamp;
+    private ?\DateTime $timestamp = null;
 
-    /**
-     * @var Department
-     */
     #[ORM\ManyToOne(targetEntity: 'Department')]
-    private $department;
+    private ?Department $department = null;
 
     #[ORM\Column(type: 'string')]
-    private $unsubscribeCode;
+    private ?string $unsubscribeCode = null;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
-    private $fromApplication;
+    private ?bool $fromApplication = null;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
-    private $infoMeeting;
+    private ?bool $infoMeeting = null;
 
     public function __construct()
     {
@@ -47,76 +44,47 @@ class AdmissionSubscriber
         $this->unsubscribeCode = bin2hex(openssl_random_pseudo_bytes(12));
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getTimestamp()
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
 
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp($timestamp)
+    public function setTimestamp(\DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    /**
-     * @return string
-     */
-    public function getUnsubscribeCode()
+    public function getUnsubscribeCode(): ?string
     {
         return $this->unsubscribeCode;
     }
 
-    /**
-     * @param string $unsubscribeCode
-     */
-    public function setUnsubscribeCode($unsubscribeCode)
+    public function setUnsubscribeCode(string $unsubscribeCode): void
     {
         $this->unsubscribeCode = $unsubscribeCode;
     }
 
-    /**
-     * @return Department
-     */
-    public function getDepartment()
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
 
-    /**
-     * @param Department $department
-     */
-    public function setDepartment($department): void
+    public function setDepartment(Department $department): void
     {
         $this->department = $department;
     }
@@ -126,34 +94,22 @@ class AdmissionSubscriber
         return $this->department->getCity();
     }
 
-    /**
-     * @return bool
-     */
-    public function getFromApplication()
+    public function getFromApplication(): ?bool
     {
         return $this->fromApplication;
     }
 
-    /**
-     * @param bool $fromApplication
-     */
-    public function setFromApplication($fromApplication): void
+    public function setFromApplication(bool $fromApplication): void
     {
         $this->fromApplication = $fromApplication;
     }
 
-    /**
-     * @return bool
-     */
-    public function getInfoMeeting()
+    public function getInfoMeeting(): ?bool
     {
         return $this->infoMeeting;
     }
 
-    /**
-     * @param bool $infoMeeting
-     */
-    public function setInfoMeeting($infoMeeting): void
+    public function setInfoMeeting(bool $infoMeeting): void
     {
         $this->infoMeeting = $infoMeeting;
     }
