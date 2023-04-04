@@ -2,59 +2,41 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AdmissionSubscriberRepository")
- * @ORM\Table(name="admission_subscriber")
- * @UniqueEntity(
- *      fields={"unsubscribeCode"}
- * )
- */
+#[ORM\Table(name: 'admission_subscriber')]
+#[ORM\Entity(repositoryClass: 'App\Repository\AdmissionSubscriberRepository')]
+#[UniqueEntity(fields: ['unsubscribeCode'])]
 class AdmissionSubscriber
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="E-post må fylles inn")
-     * @Assert\Email(message="Dette er ikke en gyldig e-postadresse")
-     */
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: 'E-post må fylles inn')]
+    #[Assert\Email(message: 'Dette er ikke en gyldig e-postadresse')]
     private $email;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $timestamp;
 
     /**
      * @var Department
-     *
-     * @ORM\ManyToOne(targetEntity="Department")
      */
+    #[ORM\ManyToOne(targetEntity: 'Department')]
     private $department;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private $unsubscribeCode;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default"=false})
-     */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $fromApplication;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default"=false})
-     */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $infoMeeting;
 
     public function __construct()

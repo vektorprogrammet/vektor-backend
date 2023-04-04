@@ -4,23 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="certificate_request")
- * @ORM\Entity(repositoryClass="App\Repository\CertificateRequestRepository")
- */
+#[ORM\Table(name: 'certificate_request')]
+#[ORM\Entity(repositoryClass: 'App\Repository\CertificateRequestRepository')]
 class CertificateRequest
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="certificateRequests")
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     **/
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'certificateRequests')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     protected $user;
 
     /**
@@ -35,8 +29,6 @@ class CertificateRequest
 
     /**
      * Set user.
-     *
-     * @param User $user
      *
      * @return CertificateRequest
      */

@@ -5,23 +5,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="position")
- * @ORM\Entity(repositoryClass="App\Repository\PositionRepository")
- */
+#[ORM\Table(name: 'position')]
+#[ORM\Entity(repositoryClass: 'App\Repository\PositionRepository')]
 class Position
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Dette feltet kan ikke være tomt.")
-     */
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected $name;
 
     public function __toString()

@@ -5,43 +5,32 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="sponsor")
- */
+#[ORM\Table(name: 'sponsor')]
+#[ORM\Entity]
 class Sponsor
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected int $id;
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Assert\NotBlank(message="Feltet kan ikke være tomt.")
-     */
-    protected ?string $name;
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[Assert\NotBlank(message: 'Feltet kan ikke være tomt.')]
+    protected $name;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Feltet kan ikke være tomt.")
-     */
-    protected ?string $url;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Feltet kan ikke være tomt.')]
+    protected $url;
 
     /**
      * Available sizes: "small", "medium" and "large".
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Feltet kan ikke være tomt.")
      */
-    protected ?string $size;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Feltet kan ikke være tomt.')]
+    protected $size;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected ?string $logoImagePath = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected $logoImagePath;
 
     /**
      * Sponsor constructor. Default image size to medium.

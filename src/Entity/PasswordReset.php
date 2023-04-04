@@ -2,36 +2,25 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PasswordResetRepository")
- * @ORM\Table(name="password_reset")
- */
+#[ORM\Table(name: 'password_reset')]
+#[ORM\Entity(repositoryClass: 'App\Repository\PasswordResetRepository')]
 class PasswordReset
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User')]
+    #[ORM\JoinColumn(name: 'user', referencedColumnName: 'id')]
     protected $user;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected $hashedResetCode;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     protected $resetTime;
 
     /**
@@ -107,8 +96,6 @@ class PasswordReset
 
     /**
      * Set user.
-     *
-     * @param User $user
      *
      * @return PasswordReset
      */

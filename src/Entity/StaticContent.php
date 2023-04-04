@@ -6,34 +6,29 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * StaticContent.
- *
- * @ORM\Entity
- * @ORM\Table(name="static_content")
- * @ORM\Entity(repositoryClass="App\Repository\StaticContentRepository")
  */
+#[ORM\Table(name: 'static_content')]
+#[ORM\Entity(repositoryClass: 'App\Repository\StaticContentRepository')]
 class StaticContent
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="html_id", type="string", length=50)
      */
+    #[ORM\Column(name: 'html_id', type: 'string', length: 50)]
     private $htmlId;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="html", type="text")
      */
+    #[ORM\Column(name: 'html', type: 'text')]
     private $html;
 
     /**

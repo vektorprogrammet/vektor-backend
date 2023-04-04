@@ -5,79 +5,64 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="team_membership")
- * @ORM\Entity(repositoryClass="App\Repository\TeamMembershipRepository")
- */
+#[ORM\Table(name: 'team_membership')]
+#[ORM\Entity(repositoryClass: 'App\Repository\TeamMembershipRepository')]
 class TeamMembership implements TeamMembershipInterface
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="teamMemberships")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Assert\Valid
-     * @Assert\NotNull(message="Dette feltet kan ikke være tomt")
-     **/
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'teamMemberships')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[Assert\Valid]
+    #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     protected $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Semester")
-     * @Assert\Valid
-     * @Assert\NotNull(message="Dette feltet kan ikke være tomt")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[Assert\Valid]
+    #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     protected $startSemester;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Semester")
-     * @Assert\Valid
-     */
+    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[Assert\Valid]
     protected $endSemester;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $deletedTeamName;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     * @Assert\NotNull(message="Dette feltet kan ikke være tomt")
      */
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     private $isTeamLeader;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     * @Assert\NotNull(message="Dette feltet kan ikke være tomt")
      */
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     private $isSuspended;
 
     /**
      * @var Team
-     *
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="teamMemberships")
-     * @ORM\JoinColumn(onDelete="SET NULL")
      **/
+    #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'teamMemberships')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     protected $team;
 
     /**
      * @var Position
-     *
-     * @ORM\ManyToOne(targetEntity="Position")
-     * @ORM\JoinColumn(name="position_id", referencedColumnName="id", onDelete="SET NULL")
-     * @Assert\Valid
-     * @Assert\NotNull(message="Dette feltet kan ikke være tomt")
      **/
+    #[ORM\ManyToOne(targetEntity: 'Position')]
+    #[ORM\JoinColumn(name: 'position_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[Assert\Valid]
+    #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     protected $position;
 
     public function __construct()
@@ -104,8 +89,6 @@ class TeamMembership implements TeamMembershipInterface
     /**
      * Set user.
      *
-     * @param User $user
-     *
      * @return TeamMembership
      */
     public function setUser(User $user = null)
@@ -125,8 +108,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Set team.
-     *
-     * @param Team $team
      *
      * @return TeamMembership
      */
@@ -150,8 +131,6 @@ class TeamMembership implements TeamMembershipInterface
     /**
      * Set position.
      *
-     * @param Position $position
-     *
      * @return TeamMembership
      */
     public function setPosition(Position $position = null)
@@ -174,8 +153,6 @@ class TeamMembership implements TeamMembershipInterface
     /**
      * Set startSemester.
      *
-     * @param Semester $startSemester
-     *
      * @return TeamMembership
      */
     public function setStartSemester(Semester $startSemester = null)
@@ -197,8 +174,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Set endSemester.
-     *
-     * @param Semester $endSemester
      *
      * @return TeamMembership
      */
