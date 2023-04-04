@@ -6,74 +6,59 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class SupportTicket
 {
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Email]
-    private $email;
+    private ?string $email = null;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    private $subject;
+    private ?string $subject = null;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    private $body;
+    private ?string $body = null;
 
-    /**
-     * @var Department
-     */
     #[Assert\NotNull(message: 'Klarte ikke sende melding til denne avdelingen. Send oss en mail isteden.')]
     #[Assert\Valid]
-    private $department;
+    private ?Department $department = null;
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
 
-    public function getSubject()
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
 
-    public function setSubject($subject)
+    public function setSubject($subject): void
     {
         $this->subject = $subject;
     }
 
-    public function getBody()
+    public function getBody(): ?string
     {
         return $this->body;
     }
 
-    public function setBody($body)
+    public function setBody($body): void
     {
         $this->body = $body;
     }
@@ -87,15 +72,12 @@ class SupportTicket
         }
     }
 
-    /**
-     * @return Department
-     */
-    public function getDepartment()
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
 
-    public function setDepartment(Department $department)
+    public function setDepartment(Department $department): void
     {
         $this->department = $department;
     }

@@ -51,15 +51,6 @@ class CreateSchoolTest extends TypeTestCase
                     'active' => true,
                 ],
             ],
-            [
-                'data' => [
-                    'name' => null,
-                    'contactPerson' => null,
-                    'phone' => null,
-                    'email' => null,
-                    'active' => true,
-                ],
-            ],
         ];
     }
 }

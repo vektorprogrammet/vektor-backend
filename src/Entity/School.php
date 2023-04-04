@@ -14,15 +14,15 @@ class School
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    protected $name;
+    protected ?string $name = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    protected $contactPerson;
+    protected ?string $contactPerson = null;
 
     #[ORM\ManyToMany(targetEntity: 'Department', mappedBy: 'schools')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
@@ -31,14 +31,14 @@ class School
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Email(message: 'Ikke gyldig e-post.')]
-    protected $email;
+    protected ?string $email = null;
 
-    #[ORM\OneToMany(targetEntity: 'AssistantHistory', mappedBy: 'school')]
+    #[ORM\OneToMany(mappedBy: 'school', targetEntity: 'AssistantHistory')]
     private $assistantHistories;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    protected $phone;
+    protected ?string $phone = null;
 
     /**
      * @var bool
@@ -66,70 +66,36 @@ class School
         $this->active = true;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return School
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Set contactPerson.
-     *
-     * @param string $contactPerson
-     *
-     * @return School
-     */
-    public function setContactPerson($contactPerson)
+    public function setContactPerson(string $contactPerson): self
     {
         $this->contactPerson = $contactPerson;
 
         return $this;
     }
 
-    /**
-     * Get contactPerson.
-     *
-     * @return string
-     */
-    public function getContactPerson()
+    public function getContactPerson(): ?string
     {
         return $this->contactPerson;
     }
 
-    /**
-     * Add departments.
-     *
-     * @return School
-     */
-    public function addDepartment(Department $departments)
+    public function addDepartment(Department $departments): self
     {
         $this->departments[] = $departments;
 
@@ -139,7 +105,7 @@ class School
     /**
      * Remove departments.
      */
-    public function removeDepartment(Department $departments)
+    public function removeDepartment(Department $departments): void
     {
         $this->departments->removeElement($departments);
     }
@@ -161,43 +127,26 @@ class School
      *
      * @return School
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * Get email.
-     *
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * Set phone.
-     *
-     * @param string $phone
-     *
-     * @return School
-     */
-    public function setPhone($phone)
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * Get phone.
-     *
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
