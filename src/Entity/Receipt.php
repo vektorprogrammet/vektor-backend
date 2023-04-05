@@ -15,7 +15,7 @@ class Receipt
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'receipts')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -32,20 +32,20 @@ class Receipt
     private $refundDate;
 
     #[ORM\Column(name: 'picture_path', type: 'string', nullable: true)]
-    private $picturePath;
+    private ?string $picturePath = null;
 
     #[ORM\Column(type: 'string', length: 5000)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(max: 5000, maxMessage: 'Maks 5000 tegn')]
-    private $description;
+    private ?string $description = null;
 
     #[ORM\Column(type: 'float')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\GreaterThan(0, message: 'Ugyldig sum')]
-    private $sum;
+    private ?float $sum = null;
 
     #[ORM\Column(type: 'string')]
-    private $status;
+    private ?string $status = null;
 
     #[ORM\Column(name: 'visual_id', type: 'string', nullable: true)]
     private $visualId;
@@ -75,10 +75,7 @@ class Receipt
         $this->user = $user;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getSubmitDate()
+    public function getSubmitDate(): \DateTime
     {
         return $this->submitDate;
     }
@@ -86,15 +83,12 @@ class Receipt
     /**
      * @param \DateTime $submitDate
      */
-    public function setSubmitDate($submitDate)
+    public function setSubmitDate($submitDate): void
     {
         $this->submitDate = $submitDate;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getReceiptDate()
+    public function getReceiptDate(): \DateTime
     {
         return $this->receiptDate;
     }
@@ -102,23 +96,17 @@ class Receipt
     /**
      * @param \DateTime $receiptDate
      */
-    public function setReceiptDate($receiptDate)
+    public function setReceiptDate($receiptDate): void
     {
         $this->receiptDate = $receiptDate;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getPicturePath()
+    public function getPicturePath(): ?string
     {
         return $this->picturePath;
     }
@@ -131,10 +119,7 @@ class Receipt
         $this->picturePath = $picturePath;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -142,23 +127,17 @@ class Receipt
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return float
-     */
-    public function getSum()
+    public function getSum(): ?float
     {
         return $this->sum;
     }
 
-    /**
-     * @param float $sum
-     */
-    public function setSum($sum)
+    public function setSum(float $sum): void
     {
         $this->sum = $sum;
     }
@@ -168,23 +147,17 @@ class Receipt
         return $this->visualId;
     }
 
-    public function setVisualId(string $visualId)
+    public function setVisualId(string $visualId): void
     {
         $this->visualId = $visualId;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     */
-    public function setStatus($status)
+    public function setStatus(string $status): void
     {
         $this->status = $status;
     }
@@ -202,10 +175,7 @@ class Receipt
         return $this->refundDate;
     }
 
-    /**
-     * @param \DateTime $refundDate
-     */
-    public function setRefundDate($refundDate)
+    public function setRefundDate(\DateTime $refundDate): void
     {
         $this->refundDate = $refundDate;
     }

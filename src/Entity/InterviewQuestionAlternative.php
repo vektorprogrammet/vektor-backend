@@ -12,22 +12,17 @@ class InterviewQuestionAlternative
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Alternativ: Dette feltet kan ikke være tomt.')]
-    protected $alternative;
+    protected ?string $alternative = null;
 
     #[ORM\ManyToOne(targetEntity: 'InterviewQuestion', inversedBy: 'alternatives')]
     #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    protected $interviewQuestion;
+    protected ?InterviewQuestion $interviewQuestion = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -39,19 +34,14 @@ class InterviewQuestionAlternative
      *
      * @return InterviewQuestionAlternative
      */
-    public function setAlternative($alternative)
+    public function setAlternative($alternative): self
     {
         $this->alternative = $alternative;
 
         return $this;
     }
 
-    /**
-     * Get alternative.
-     *
-     * @return string
-     */
-    public function getAlternative()
+    public function getAlternative(): ?string
     {
         return $this->alternative;
     }
@@ -61,19 +51,14 @@ class InterviewQuestionAlternative
      *
      * @return InterviewQuestionAlternative
      */
-    public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null)
+    public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null): self
     {
         $this->interviewQuestion = $interviewQuestion;
 
         return $this;
     }
 
-    /**
-     * Get interviewQuestion.
-     *
-     * @return InterviewQuestion
-     */
-    public function getInterviewQuestion()
+    public function getInterviewQuestion(): ?InterviewQuestion
     {
         return $this->interviewQuestion;
     }

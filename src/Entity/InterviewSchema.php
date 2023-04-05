@@ -14,11 +14,11 @@ class InterviewSchema
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    protected $name;
+    protected ?string $name = null;
 
     #[ORM\JoinTable(name: 'interview_schemas_questions')]
     #[ORM\JoinColumn(name: 'schema_id', referencedColumnName: 'id')]
@@ -35,32 +35,19 @@ class InterviewSchema
         $this->interviewQuestions = new ArrayCollection();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Add questions.
-     *
-     * @return InterviewSchema
-     */
-    public function addInterviewQuestion(InterviewQuestion $questions)
+    public function addInterviewQuestion(InterviewQuestion $questions): self
     {
         $this->interviewQuestions[] = $questions;
 
         return $this;
     }
 
-    /**
-     * Remove questions.
-     */
-    public function removeInterviewQuestion(InterviewQuestion $questions)
+    public function removeInterviewQuestion(InterviewQuestion $questions): void
     {
         $this->interviewQuestions->removeElement($questions);
     }
@@ -82,19 +69,14 @@ class InterviewSchema
      *
      * @return InterviewSchema
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }

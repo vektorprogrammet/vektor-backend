@@ -11,22 +11,19 @@ class PasswordReset
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User')]
     #[ORM\JoinColumn(name: 'user', referencedColumnName: 'id')]
     protected $user;
 
     #[ORM\Column(type: 'string')]
-    protected $hashedResetCode;
+    protected ?string $hashedResetCode = null;
 
     #[ORM\Column(type: 'datetime')]
-    protected $resetTime;
+    protected ?\DateTime $resetTime = null;
 
-    /**
-     * @var string
-     */
-    private $resetCode;
+    private ?string $resetCode = null;
 
     /**
      * PasswordReset constructor.
@@ -36,36 +33,19 @@ class PasswordReset
         $this->setResetTime(new \DateTime());
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set hashedResetCode.
-     *
-     * @param string $hashedResetCode
-     *
-     * @return PasswordReset
-     */
-    public function setHashedResetCode($hashedResetCode)
+    public function setHashedResetCode(string $hashedResetCode): self
     {
         $this->hashedResetCode = $hashedResetCode;
 
         return $this;
     }
 
-    /**
-     * Get hashedResetCode.
-     *
-     * @return string
-     */
-    public function getHashedResetCode()
+    public function getHashedResetCode(): ?string
     {
         return $this->hashedResetCode;
     }
@@ -77,19 +57,14 @@ class PasswordReset
      *
      * @return PasswordReset
      */
-    public function setResetTime($resetTime)
+    public function setResetTime($resetTime): self
     {
         $this->resetTime = $resetTime;
 
         return $this;
     }
 
-    /**
-     * Get resetTime.
-     *
-     * @return \DateTime
-     */
-    public function getResetTime()
+    public function getResetTime(): ?\DateTime
     {
         return $this->resetTime;
     }
@@ -116,10 +91,7 @@ class PasswordReset
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
-    public function getResetCode()
+    public function getResetCode(): ?string
     {
         return $this->resetCode;
     }
@@ -127,7 +99,7 @@ class PasswordReset
     /**
      * @param string $resetCode
      */
-    public function setResetCode($resetCode)
+    public function setResetCode(string $resetCode): void
     {
         $this->resetCode = $resetCode;
     }
