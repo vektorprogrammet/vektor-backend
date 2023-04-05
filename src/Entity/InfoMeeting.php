@@ -17,7 +17,7 @@ class InfoMeeting
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var bool
@@ -31,20 +31,17 @@ class InfoMeeting
 
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
     #[Assert\Length(max: 250)]
-    private $room;
+    private ?string $room = null;
 
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
     #[Assert\Length(max: 250)]
-    private $description;
+    private ?string $description = null;
 
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
     #[Assert\Length(max: 250)]
-    private $link;
+    private ?string $link = null;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -57,26 +54,17 @@ class InfoMeeting
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoom()
+    public function getRoom(): ?string
     {
         return $this->room;
     }
 
-    /**
-     * @param string $room
-     */
-    public function setRoom($room)
+    public function setRoom(string $room): void
     {
         $this->room = $room;
     }
@@ -102,18 +90,12 @@ class InfoMeeting
         $this->showOnPage = $showOnPage;
     }
 
-    /**
-     * @return string
-     */
-    public function getLink()
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
-    /**
-     * @param string $link
-     */
-    public function setLink($link)
+    public function setLink(string $link): void
     {
         if (mb_strlen($link) > 0 && mb_substr($link, 0, 4) !== 'http') {
             $link = "https://$link";
@@ -122,18 +104,12 @@ class InfoMeeting
         $this->link = $link;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }

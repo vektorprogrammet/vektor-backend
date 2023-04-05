@@ -12,133 +12,81 @@ class InterviewScore
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'integer')]
-    #[Assert\NotBlank(groups: ['interview'], message: 'Dette feltet kan ikke være tomt.')]
-    protected $explanatoryPower;
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview'])]
+    protected ?int $explanatoryPower = null;
 
     #[ORM\Column(type: 'integer')]
-    #[Assert\NotBlank(groups: ['interview'], message: 'Dette feltet kan ikke være tomt.')]
-    protected $roleModel;
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview'])]
+    protected ?int $roleModel = null;
 
     #[ORM\Column(type: 'integer')]
-    #[Assert\NotBlank(groups: ['interview'], message: 'Dette feltet kan ikke være tomt.')]
-    protected $suitability;
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview'])]
+    protected ?int $suitability = null;
 
     #[ORM\Column(type: 'string')]
-    #[Assert\NotBlank(groups: ['interview'], message: 'Dette feltet kan ikke være tomt.')]
-    private $suitableAssistant;
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview'])]
+    private ?string $suitableAssistant = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set explanatoryPower.
-     *
-     * @param int $explanatoryPower
-     *
-     * @return InterviewScore
-     */
-    public function setExplanatoryPower($explanatoryPower)
+    public function setExplanatoryPower(int $explanatoryPower): self
     {
         $this->explanatoryPower = $explanatoryPower;
 
         return $this;
     }
 
-    /**
-     * Get explanatoryPower.
-     *
-     * @return int
-     */
-    public function getExplanatoryPower()
+    public function getExplanatoryPower(): ?int
     {
         return $this->explanatoryPower;
     }
 
-    /**
-     * Set roleModel.
-     *
-     * @param int $roleModel
-     *
-     * @return InterviewScore
-     */
-    public function setRoleModel($roleModel)
+    public function setRoleModel(int $roleModel): self
     {
         $this->roleModel = $roleModel;
 
         return $this;
     }
 
-    /**
-     * Get roleModel.
-     *
-     * @return int
-     */
-    public function getRoleModel()
+    public function getRoleModel(): ?int
     {
         return $this->roleModel;
     }
 
-    /**
-     * Set suitability.
-     *
-     * @param int $suitability
-     *
-     * @return InterviewScore
-     */
-    public function setSuitability($suitability)
+    public function setSuitability(int $suitability): self
     {
         $this->suitability = $suitability;
 
         return $this;
     }
 
-    /**
-     * Get suitability.
-     *
-     * @return int
-     */
-    public function getSuitability()
+    public function getSuitability(): ?int
     {
         return $this->suitability;
     }
 
-    /**
-     * Get the sum of all the scores.
-     *
-     * @return int
-     */
-    public function getSum()
+    public function getSum(): ?int
     {
         return $this->explanatoryPower + $this->roleModel + $this->suitability;
     }
 
-    /**
-     * @return string
-     */
-    public function getSuitableAssistant()
+    public function getSuitableAssistant(): ?string
     {
         return $this->suitableAssistant;
     }
 
-    /**
-     * @param string $suitableAssistant
-     */
-    public function setSuitableAssistant($suitableAssistant)
+    public function setSuitableAssistant(string $suitableAssistant): void
     {
         $this->suitableAssistant = $suitableAssistant;
     }
 
-    public function hideScores()
+    public function hideScores(): void
     {
         $this->setExplanatoryPower(0);
         $this->setRoleModel(0);

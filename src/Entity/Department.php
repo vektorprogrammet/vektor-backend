@@ -15,60 +15,57 @@ class Department
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 250)]
     #[Assert\NotBlank]
-    private $name;
+    private ?string $name = null;
 
     #[ORM\Column(name: 'short_name', type: 'string', length: 50)]
     #[Assert\NotBlank]
-    private $shortName;
+    private ?string $shortName = null;
 
     #[ORM\Column(type: 'string', length: 250)]
     #[Assert\NotBlank]
     #[Assert\Email]
-    private $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
-    protected $address;
+    protected ?string $address = null;
 
     #[ORM\Column(type: 'string', length: 250, unique: true)]
     #[Assert\NotBlank]
-    private $city;
+    private ?string $city = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\Length(max: 255)]
-    private $latitude;
+    private ?string $latitude = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\Length(max: 255)]
-    private $longitude;
+    private ?string $longitude = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', nullable: true)]
-    private $slackChannel;
+    private ?string $slackChannel = null;
 
     #[ORM\JoinTable(name: 'department_school')]
     #[ORM\ManyToMany(targetEntity: 'School', inversedBy: 'departments')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     protected $schools;
 
-    #[ORM\OneToMany(targetEntity: 'FieldOfStudy', mappedBy: 'department', cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'FieldOfStudy', cascade: ['remove'])]
     private $fieldOfStudy;
 
-    #[ORM\OneToMany(targetEntity: 'AdmissionPeriod', mappedBy: 'department', cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'AdmissionPeriod', cascade: ['remove'])]
     #[ORM\OrderBy(['startDate' => 'DESC'])]
     private $admissionPeriods;
 
-    #[ORM\OneToMany(targetEntity: 'Team', mappedBy: 'department', cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'Team', cascade: ['remove'])]
     private $teams;
 
     #[ORM\Column(name: 'logo_path', type: 'string', length: 255, nullable: true)]
     #[Assert\Length(min: 1, max: 255, maxMessage: '"Pathkanmaksvære')]
-    private $logoPath;
+    private ?string $logoPath = null;
 
     #[ORM\Column(name: 'active', type: 'boolean', nullable: false, options: ['default' => 1])]
     private $active;
@@ -143,17 +140,11 @@ class Department
         return $start < $now && $now < $end;
     }
 
-    /**
-     * Get id.
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     */
     public function setName(string $name): Department
     {
         $this->name = $name;
@@ -161,19 +152,11 @@ class Department
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Set shortName.
-     */
     public function setShortName(string $shortName): Department
     {
         $this->shortName = $shortName;
@@ -181,17 +164,11 @@ class Department
         return $this;
     }
 
-    /**
-     * Get shortName.
-     */
     public function getShortName(): string
     {
         return $this->shortName;
     }
 
-    /**
-     * Add fieldOfStudy.
-     */
     public function addFieldOfStudy(FieldOfStudy $fieldOfStudy): Department
     {
         $this->fieldOfStudy[] = $fieldOfStudy;
@@ -199,9 +176,6 @@ class Department
         return $this;
     }
 
-    /**
-     * Remove fieldOfStudy.
-     */
     public function removeFieldOfStudy(FieldOfStudy $fieldOfStudy): void
     {
         $this->fieldOfStudy->removeElement($fieldOfStudy);
@@ -222,9 +196,6 @@ class Department
         return $this->getCity();
     }
 
-    /**
-     * Set email.
-     */
     public function setEmail(string $email): Department
     {
         $this->email = $email;
@@ -232,17 +203,11 @@ class Department
         return $this;
     }
 
-    /**
-     * Get email.
-     */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * Add schools.
-     */
     public function addSchool(School $schools): Department
     {
         $this->schools[] = $schools;
@@ -250,25 +215,16 @@ class Department
         return $this;
     }
 
-    /**
-     * Remove schools.
-     */
     public function removeSchool(School $schools): void
     {
         $this->schools->removeElement($schools);
     }
 
-    /**
-     * Get schools.
-     */
     public function getSchools()
     {
         return $this->schools;
     }
 
-    /**
-     * Set address.
-     */
     public function setAddress(string $address): Department
     {
         $this->address = $address;
@@ -276,10 +232,7 @@ class Department
         return $this;
     }
 
-    /**
-     * Get address.
-     */
-    public function getAddress(): string
+    public function getAddress(): ?string
     {
         return $this->address;
     }
@@ -335,22 +288,16 @@ class Department
         return $this->city;
     }
 
-    /**
-     * @param string $city
-     */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
-    public function getLatitude(): string
+    public function getLatitude(): ?string
     {
         return $this->latitude;
     }
 
-    /**
-     * Set latitude.
-     */
     public function setLatitude(string $latitude): Department
     {
         $this->latitude = $latitude;
@@ -358,17 +305,11 @@ class Department
         return $this;
     }
 
-    /**
-     * get longitude.
-     */
-    public function getLongitude(): string
+    public function getLongitude(): ?string
     {
         return $this->longitude;
     }
 
-    /**
-     * set longitude.
-     */
     public function setLongitude(string $longitude): Department
     {
         $this->longitude = $longitude;
@@ -385,14 +326,11 @@ class Department
         }
     }
 
-    public function getSlackChannel(): string
+    public function getSlackChannel(): ?string
     {
         return $this->slackChannel;
     }
 
-    /**
-     * set slack channel.
-     */
     public function setSlackChannel(string $slackChannel): Department
     {
         $this->slackChannel = $slackChannel;
@@ -400,14 +338,11 @@ class Department
         return $this;
     }
 
-    public function getLogoPath(): string
+    public function getLogoPath(): ?string
     {
         return $this->logoPath;
     }
 
-    /**
-     * Update logo path.
-     */
     public function setLogoPath(string $logoPath): Department
     {
         $this->logoPath = $logoPath;
@@ -415,17 +350,11 @@ class Department
         return $this;
     }
 
-    /**
-     * @return bool $active
-     */
     public function isActive(): bool
     {
         return $this->active;
     }
 
-    /**
-     * Update active status.
-     */
     public function setActive(bool $active): Department
     {
         $this->active = $active;

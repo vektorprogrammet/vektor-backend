@@ -11,18 +11,13 @@ class CertificateRequest
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'certificateRequests')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     protected $user;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

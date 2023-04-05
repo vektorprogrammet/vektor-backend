@@ -12,7 +12,7 @@ class InterviewAnswer
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'Interview', inversedBy: 'interviewAnswers')]
     #[ORM\JoinColumn(name: 'interview_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -28,24 +28,12 @@ class InterviewAnswer
     #[ORM\Column(type: 'array', nullable: true)]
     protected $answer;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set answer.
-     *
-     * @param string $answer
-     *
-     * @return InterviewAnswer
-     */
-    public function setAnswer($answer)
+    public function setAnswer(string $answer): self
     {
         $this->answer = $answer;
 

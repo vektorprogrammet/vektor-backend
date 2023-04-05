@@ -76,10 +76,10 @@ class GeoLocation
      */
     public function sortDepartmentsByDistanceFromClient(array $departments): array
     {
-//        $ip = '158.39.3.40'; // Oslo
-//        $ip = '146.185.181.87'; // Server location (Amsterdam)
-//        $ip = '129.241.56.201'; // Trondheim
-//        $ip = '46.230.133.85'; // Mobile (Oslo)
+        //        $ip = '158.39.3.40'; // Oslo
+        //        $ip = '146.185.181.87'; // Server location (Amsterdam)
+        //        $ip = '129.241.56.201'; // Trondheim
+        //        $ip = '46.230.133.85'; // Mobile (Oslo)
 
         $ip = $this->clientIp();
         $coords = $this->findCoordinates($ip);

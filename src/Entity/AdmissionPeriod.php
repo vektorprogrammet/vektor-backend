@@ -13,138 +13,81 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: 'App\Repository\AdmissionPeriodRepository')]
 class AdmissionPeriod implements PeriodInterface
 {
-    /**
-     * @var int
-     */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
-    /**
-     * @var Department
-     */
     #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'admissionPeriods')]
-    private $department;
+    private ?Department $department = null;
 
     #[ORM\Column(name: 'start_date', type: 'datetime', length: 150)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $startDate;
+    private ?\DateTime $startDate = null;
 
     #[ORM\Column(name: 'end_date', type: 'datetime', length: 150)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $endDate;
+    private ?\DateTime $endDate = null;
 
-    /**
-     * @var InfoMeeting
-     */
     #[ORM\OneToOne(targetEntity: 'InfoMeeting', cascade: ['remove', 'persist'])]
     #[Assert\Valid]
-    private $infoMeeting;
+    private ?InfoMeeting $infoMeeting = null;
 
-    /**
-     * @var Semester
-     */
     #[ORM\ManyToOne(targetEntity: 'Semester', inversedBy: 'admissionPeriods')]
-    private $semester;
+    private ?Semester $semester = null;
 
     public function __toString()
     {
         return $this->semester->getName() . ' - ' . $this->getDepartment();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set department.
-     *
-     * @return AdmissionPeriod
-     */
-    public function setDepartment(Department $department = null)
+    public function setDepartment(Department $department = null): self
     {
         $this->department = $department;
 
         return $this;
     }
 
-    /**
-     * Get department.
-     *
-     * @return Department
-     */
-    public function getDepartment()
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
 
-    /**
-     * Set startDate.
-     *
-     * @param \DateTime $startDate
-     *
-     * @return AdmissionPeriod
-     */
-    public function setStartDate($startDate)
+    public function setStartDate(\DateTime $startDate): self
     {
         $this->startDate = $startDate;
 
         return $this;
     }
 
-    /**
-     * Get startDate.
-     *
-     * @return \DateTime
-     */
     public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
 
-    /**
-     * Set endDate.
-     *
-     * @param \DateTime $endDate
-     *
-     * @return AdmissionPeriod
-     */
-    public function setEndDate($endDate)
+    public function setEndDate(\DateTime $endDate): self
     {
         $this->endDate = $endDate;
 
         return $this;
     }
 
-    /**
-     * Get endDate.
-     *
-     * @return \DateTime
-     */
     public function getEndDate(): ?\DateTime
     {
         return $this->endDate;
     }
 
-    /**
-     * @return InfoMeeting
-     */
-    public function getInfoMeeting()
+    public function getInfoMeeting(): ?InfoMeeting
     {
         return $this->infoMeeting;
     }
 
-    /**
-     * @param InfoMeeting $infoMeeting
-     */
-    public function setInfoMeeting($infoMeeting)
+    public function setInfoMeeting(InfoMeeting $infoMeeting = null): void
     {
         $this->infoMeeting = $infoMeeting;
     }
@@ -163,27 +106,19 @@ class AdmissionPeriod implements PeriodInterface
         return $this->getStartDate() <= $now && $now <= $this->getEndDate();
     }
 
-    /**
-     * @return Semester
-     */
-    public function getSemester()
+    public function getSemester(): ?Semester
     {
         return $this->semester;
     }
 
-    /**
-     * @param Semester $semester
-     *
-     * @return AdmissionPeriod
-     */
-    public function setSemester($semester)
+    public function setSemester(Semester $semester): self
     {
         $this->semester = $semester;
 
         return $this;
     }
 
-    public function shouldSendInfoMeetingNotifications()
+    public function shouldSendInfoMeetingNotifications(): bool
     {
         return $this->infoMeeting !== null &&
             $this->infoMeeting->getDate() !== null &&

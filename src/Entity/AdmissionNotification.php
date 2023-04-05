@@ -11,26 +11,23 @@ class AdmissionNotification
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'datetime')]
-    private $timestamp;
+    private ?\DateTime $timestamp = null;
 
     #[ORM\ManyToOne(targetEntity: 'AdmissionSubscriber')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    private $subscriber;
+    private ?AdmissionSubscriber $subscriber = null;
 
     #[ORM\ManyToOne(targetEntity: 'Semester')]
-    private $semester;
+    private ?Semester $semester = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $infoMeeting;
+    private ?bool $infoMeeting = null;
 
-    /**
-     * @var Department
-     */
     #[ORM\ManyToOne(targetEntity: 'Department')]
-    private $department;
+    private ?Department $department = null;
 
     public function __construct()
     {
@@ -38,92 +35,57 @@ class AdmissionNotification
         $this->infoMeeting = false;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getTimestamp()
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
 
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp($timestamp)
+    public function setTimestamp(\DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    /**
-     * @return AdmissionSubscriber
-     */
-    public function getSubscriber()
+    public function getSubscriber(): ?AdmissionSubscriber
     {
         return $this->subscriber;
     }
 
-    /**
-     * @param AdmissionSubscriber $subscriber
-     */
-    public function setSubscriber($subscriber)
+    public function setSubscriber(AdmissionSubscriber $subscriber): void
     {
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * @return Semester
-     */
-    public function getSemester()
+    public function getSemester(): ?Semester
     {
         return $this->semester;
     }
 
-    /**
-     * @param Semester $semester
-     */
-    public function setSemester($semester)
+    public function setSemester(Semester $semester): void
     {
         $this->semester = $semester;
     }
 
-    /**
-     * @return bool
-     */
-    public function getInfoMeeting()
+    public function getInfoMeeting(): ?bool
     {
         return $this->infoMeeting;
     }
 
-    /**
-     * @param bool $bool
-     */
-    public function setInfoMeeting($bool)
+    public function setInfoMeeting(bool $bool): void
     {
         $this->infoMeeting = $bool;
     }
 
-    /**
-     * @return Department
-     */
-    public function getDepartment()
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
 
-    /**
-     * @return AdmissionNotification
-     */
-    public function setDepartment(Department $department)
+    public function setDepartment(Department $department): static
     {
         $this->department = $department;
 

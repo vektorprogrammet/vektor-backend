@@ -5,37 +5,25 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * TeamInterest.
- */
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: 'TeamInterestRepository')]
 class TeamInterest implements DepartmentSemesterInterface
 {
-    /**
-     * @var int
-     */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(name: 'name', type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(max: 255, maxMessage: 'Navnet ditt kan maksimalt være 255 tegn')]
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(name: 'email', type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(max: 255, maxMessage: 'Emailen din kan maksimalt være 255 tegn')]
     #[Assert\Email(message: 'Emailen din er ikke formatert riktig')]
-    private $email;
+    private ?string $email = null;
 
     /**
      * @var \DateTime
@@ -71,22 +59,12 @@ class TeamInterest implements DepartmentSemesterInterface
         $this->timestamp = new \DateTime();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -95,10 +73,8 @@ class TeamInterest implements DepartmentSemesterInterface
      * Get name.
      *
      * @param string $name
-     *
-     * @return TeamInterest
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -109,22 +85,15 @@ class TeamInterest implements DepartmentSemesterInterface
      * Set email.
      *
      * @param string $email
-     *
-     * @return TeamInterest
      */
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * Get email.
-     *
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -175,10 +144,8 @@ class TeamInterest implements DepartmentSemesterInterface
 
     /**
      * Set semester.
-     *
-     * @return TeamInterest
      */
-    public function setSemester(Semester $semester)
+    public function setSemester(Semester $semester): self
     {
         $this->semester = $semester;
 
