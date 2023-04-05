@@ -54,8 +54,6 @@ class PasswordReset
      * Set resetTime.
      *
      * @param \DateTime $resetTime
-     *
-     * @return PasswordReset
      */
     public function setResetTime($resetTime): self
     {
@@ -96,9 +94,6 @@ class PasswordReset
         return $this->resetCode;
     }
 
-    /**
-     * @param string $resetCode
-     */
     public function setResetCode(string $resetCode): void
     {
         $this->resetCode = $resetCode;

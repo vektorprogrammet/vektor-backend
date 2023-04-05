@@ -66,8 +66,6 @@ class InterviewSchema
      * Set name.
      *
      * @param string $name
-     *
-     * @return InterviewSchema
      */
     public function setName($name): self
     {

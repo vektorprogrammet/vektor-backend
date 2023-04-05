@@ -31,8 +31,6 @@ class InterviewQuestionAlternative
      * Set alternative.
      *
      * @param string $alternative
-     *
-     * @return InterviewQuestionAlternative
      */
     public function setAlternative($alternative): self
     {
@@ -48,8 +46,6 @@ class InterviewQuestionAlternative
 
     /**
      * Set interviewQuestion.
-     *
-     * @return InterviewQuestionAlternative
      */
     public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null): self
     {

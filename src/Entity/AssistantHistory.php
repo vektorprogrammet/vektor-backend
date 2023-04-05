@@ -125,8 +125,6 @@ class AssistantHistory
      * Set workdays.
      *
      * @param string $workdays
-     *
-     * @return AssistantHistory
      */
     public function setWorkdays($workdays): self
     {

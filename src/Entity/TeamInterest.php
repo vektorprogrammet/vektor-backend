@@ -73,8 +73,6 @@ class TeamInterest implements DepartmentSemesterInterface
      * Get name.
      *
      * @param string $name
-     *
-     * @return TeamInterest
      */
     public function setName($name): self
     {
@@ -87,8 +85,6 @@ class TeamInterest implements DepartmentSemesterInterface
      * Set email.
      *
      * @param string $email
-     *
-     * @return TeamInterest
      */
     public function setEmail($email): self
     {
@@ -148,8 +144,6 @@ class TeamInterest implements DepartmentSemesterInterface
 
     /**
      * Set semester.
-     *
-     * @return TeamInterest
      */
     public function setSemester(Semester $semester): self
     {

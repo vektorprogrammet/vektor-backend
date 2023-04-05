@@ -123,8 +123,6 @@ class School
     /**
      * Set email.
      *
-     * @param string $email
-     *
      * @return School
      */
     public function setEmail(string $email)
