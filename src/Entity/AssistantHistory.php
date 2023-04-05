@@ -12,7 +12,7 @@ class AssistantHistory
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'assistantHistories')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -21,35 +21,29 @@ class AssistantHistory
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $semester;
+    private ?Semester $semester = null;
 
-    /**
-     * @var Department
-     */
     #[ORM\ManyToOne(targetEntity: 'Department')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(message: 'Region må velges.')]
-    private $department;
+    private ?Department $department = null;
 
     #[ORM\ManyToOne(targetEntity: 'School', inversedBy: 'assistantHistories')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $school;
+    private ?School $school = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $workdays;
+    private ?string $workdays = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $bolk;
+    private ?string $bolk = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $day;
+    private ?string $day = null;
 
     public function activeInGroup($group): bool
     {
@@ -78,32 +72,19 @@ class AssistantHistory
         return $this->user;
     }
 
-    /**
-     * Set semester.
-     *
-     * @return AssistantHistory
-     */
-    public function setSemester(Semester $semester = null)
+    public function setSemester(Semester $semester = null): self
     {
         $this->semester = $semester;
 
         return $this;
     }
 
-    /**
-     * Get semester.
-     *
-     * @return Semester
-     */
-    public function getSemester()
+    public function getSemester(): ?Semester
     {
         return $this->semester;
     }
 
-    /**
-     * @return Department
-     */
-    public function getDepartment()
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
@@ -118,34 +99,19 @@ class AssistantHistory
         return $this;
     }
 
-    /**
-     * Set school.
-     *
-     * @return AssistantHistory
-     */
-    public function setSchool(School $school = null)
+    public function setSchool(School $school = null): self
     {
         $this->school = $school;
 
         return $this;
     }
 
-    /**
-     * Get school.
-     *
-     * @return School
-     */
-    public function getSchool()
+    public function getSchool(): ?School
     {
         return $this->school;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -162,27 +128,19 @@ class AssistantHistory
      *
      * @return AssistantHistory
      */
-    public function setWorkdays($workdays)
+    public function setWorkdays($workdays): self
     {
         $this->workdays = $workdays;
 
         return $this;
     }
 
-    /**
-     * Get workdays.
-     *
-     * @return string
-     */
-    public function getWorkdays()
+    public function getWorkdays(): ?string
     {
         return $this->workdays;
     }
 
-    /**
-     * @return string
-     */
-    public function getBolk()
+    public function getBolk(): ?string
     {
         return $this->bolk;
     }
@@ -190,15 +148,12 @@ class AssistantHistory
     /**
      * @param string $bolk
      */
-    public function setBolk($bolk)
+    public function setBolk($bolk): void
     {
         $this->bolk = $bolk;
     }
 
-    /**
-     * @return string
-     */
-    public function getDay()
+    public function getDay(): ?string
     {
         return $this->day;
     }
@@ -206,7 +161,7 @@ class AssistantHistory
     /**
      * @param string $day
      */
-    public function setDay($day)
+    public function setDay($day): void
     {
         $this->day = $day;
     }

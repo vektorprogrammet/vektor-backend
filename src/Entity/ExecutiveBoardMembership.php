@@ -12,7 +12,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'executiveBoardMemberships')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -20,31 +20,22 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private $user;
 
-    /**
-     * @var ExecutiveBoard
-     **/
     #[ORM\ManyToOne(targetEntity: 'ExecutiveBoard', inversedBy: 'boardMemberships')]
-    private $board;
+    private ?ExecutiveBoard $board = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\Valid]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private $positionName;
 
-    /**
-     * @var Semester
-     */
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[Assert\Valid]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    protected $startSemester;
+    protected ?Semester $startSemester = null;
 
-    /**
-     * @var Semester
-     */
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[Assert\Valid]
-    protected $endSemester;
+    protected ?Semester $endSemester = null;
 
     /**
      * ExecutiveBoardMembership constructor.
@@ -59,12 +50,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
         return (string) $this->getId();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -74,7 +60,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
      *
      * @return ExecutiveBoardMembership
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
@@ -94,27 +80,19 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
      *
      * @return ExecutiveBoardMembership
      */
-    public function setBoard(ExecutiveBoard $board = null)
+    public function setBoard(ExecutiveBoard $board = null): self
     {
         $this->board = $board;
 
         return $this;
     }
 
-    /**
-     * Get board.
-     *
-     * @return ExecutiveBoard
-     */
-    public function getBoard()
+    public function getBoard(): ExecutiveBoard
     {
         return $this->board;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPositionName()
+    public function getPositionName(): ?string
     {
         return $this->positionName;
     }
@@ -124,7 +102,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
      *
      * @return ExecutiveBoardMembership $this
      */
-    public function setPositionName($positionName)
+    public function setPositionName($positionName): self
     {
         $this->positionName = $positionName;
 
@@ -134,35 +112,26 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     /**
      * @return ExecutiveBoardMembership
      */
-    public function setStartSemester(Semester $semester = null)
+    public function setStartSemester(Semester $semester = null): self
     {
         $this->startSemester = $semester;
 
         return $this;
     }
 
-    /**
-     * @return Semester
-     */
-    public function getStartSemester()
+    public function getStartSemester(): ?Semester
     {
         return $this->startSemester;
     }
 
-    /**
-     * @return ExecutiveBoardMembership
-     */
-    public function setEndSemester(Semester $semester = null)
+    public function setEndSemester(Semester $semester = null): self
     {
         $this->endSemester = $semester;
 
         return $this;
     }
 
-    /**
-     * @return Semester|null
-     */
-    public function getEndSemester()
+    public function getEndSemester(): ?Semester
     {
         return $this->endSemester;
     }

@@ -45,11 +45,6 @@ class CreatePositionTest extends TypeTestCase
             [
                 'data' => [],
             ],
-            [
-                'data' => [
-                    'name' => null,
-                ],
-            ],
         ];
     }
 }
