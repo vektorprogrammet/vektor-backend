@@ -16,7 +16,7 @@ class Application implements DepartmentSemesterInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var AdmissionPeriod
@@ -25,8 +25,8 @@ class Application implements DepartmentSemesterInterface
     private $admissionPeriod;
 
     #[ORM\Column(type: 'string', length: 20)]
-    #[Assert\NotBlank(groups: ['admission', 'admission_existing'], message: 'Dette feltet kan ikke være tomt.')]
-    private $yearOfStudy;
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'admission_existing'])]
+    private ?string $yearOfStudy = null;
 
     /**
      * @var bool
@@ -62,19 +62,19 @@ class Application implements DepartmentSemesterInterface
     private $substitute;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Assert\NotBlank(groups: ['interview', 'admission_existing'], message: 'Dette feltet kan ikke være tomt.')]
-    private $language;
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
+    private ?string $language = null;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
-    #[Assert\NotBlank(groups: ['interview', 'admission_existing'], message: 'Dette feltet kan ikke være tomt.')]
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
     private $doublePosition;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private $preferredGroup;
+    private ?string $preferredGroup = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\Length(max: 255, maxMessage: 'Dette feltet kan ikke inneholde mer enn 255 tegn.')]
-    private $preferredSchool;
+    private ?string $preferredSchool = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -85,16 +85,16 @@ class Application implements DepartmentSemesterInterface
     private $previousParticipation;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    private $last_edited;
+    private ?\DateTime $last_edited = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    private $created;
+    private ?\DateTime $created = null;
 
     #[ORM\Column(type: 'array')]
     private $heardAboutFrom;
 
     #[ORM\Column(type: 'boolean')]
-    #[Assert\NotBlank(groups: ['interview', 'admission_existing'], message: 'Dette feltet kan ikke være tomt.')]
+    #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
     private $teamInterest;
 
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', inversedBy: 'potentialMembers')]
@@ -103,19 +103,16 @@ class Application implements DepartmentSemesterInterface
     /**
      * @var Interview
      */
-    #[ORM\OneToOne(targetEntity: 'Interview', cascade: ['persist', 'remove'], inversedBy: 'application')]
+    #[ORM\OneToOne(inversedBy: 'application', targetEntity: 'Interview', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     #[Assert\Valid]
     private $interview;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', nullable: true)]
-    private $specialNeeds;
+    private ?string $specialNeeds = null;
 
     /**
-     * ApplicationInfo constructor.
+     * Application constructor.
      */
     public function __construct()
     {
@@ -133,12 +130,7 @@ class Application implements DepartmentSemesterInterface
         $this->friday = true;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -153,28 +145,20 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @param AdmissionPeriod $admissionPeriod
-     *
-     * @return Application
      */
-    public function setAdmissionPeriod($admissionPeriod)
+    public function setAdmissionPeriod($admissionPeriod): self
     {
         $this->admissionPeriod = $admissionPeriod;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getYearOfStudy()
+    public function getYearOfStudy(): ?string
     {
         return $this->yearOfStudy;
     }
 
-    /**
-     * @param string $yearOfStudy
-     */
-    public function setYearOfStudy($yearOfStudy)
+    public function setYearOfStudy(string $yearOfStudy): void
     {
         $this->yearOfStudy = $yearOfStudy;
     }
@@ -229,18 +213,12 @@ class Application implements DepartmentSemesterInterface
         $this->friday = $friday;
     }
 
-    /**
-     * @return string
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
-    /**
-     * @param string $language
-     */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }
@@ -277,50 +255,32 @@ class Application implements DepartmentSemesterInterface
         $this->doublePosition = $doublePosition;
     }
 
-    /**
-     * @return string
-     */
-    public function getPreferredGroup()
+    public function getPreferredGroup(): ?string
     {
         return $this->preferredGroup;
     }
 
-    /**
-     * @param string $preferredGroup
-     */
-    public function setPreferredGroup($preferredGroup)
+    public function setPreferredGroup(string $preferredGroup): void
     {
         $this->preferredGroup = $preferredGroup;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getLastEdited()
+    public function getLastEdited(): ?\DateTime
     {
         return $this->last_edited;
     }
 
-    /**
-     * @param \DateTime $last_edited
-     */
-    public function setLastEdited($last_edited)
+    public function setLastEdited(\DateTime $last_edited): void
     {
         $this->last_edited = $last_edited;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreated()
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
 
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
     }
@@ -409,23 +369,17 @@ class Application implements DepartmentSemesterInterface
         $this->substitute = $substitute;
     }
 
-    /**
-     * @return string
-     */
-    public function getSpecialNeeds()
+    public function getSpecialNeeds(): ?string
     {
         return $this->specialNeeds;
     }
 
-    /**
-     * @param string $specialNeeds
-     */
-    public function setSpecialNeeds($specialNeeds)
+    public function setSpecialNeeds(string $specialNeeds = null): void
     {
         $this->specialNeeds = $specialNeeds;
     }
 
-    public function getPreferredSchool()
+    public function getPreferredSchool(): ?string
     {
         return $this->preferredSchool;
     }
@@ -451,12 +405,12 @@ class Application implements DepartmentSemesterInterface
         $this->potentialTeams = $potentialTeams;
     }
 
-    public function getSemester()
+    public function getSemester(): ?Semester
     {
         return $this->admissionPeriod->getSemester();
     }
 
-    public function getDepartment()
+    public function getDepartment(): ?Department
     {
         return $this->admissionPeriod->getDepartment();
     }

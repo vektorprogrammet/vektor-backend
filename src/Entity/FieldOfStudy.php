@@ -11,29 +11,23 @@ class FieldOfStudy
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 250)]
-    private $name;
+    private ?string $name = null;
 
     #[ORM\Column(name: 'short_name', type: 'string', length: 50)]
-    private $shortName;
+    private ?string $shortName = null;
 
     #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'fieldOfStudy')]
-    private $department;
+    private ?Department $department = null;
 
-    /**
-     * Get id.
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set department name.
-     */
-    public function setName(string $name): FieldOfStudy
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -51,7 +45,7 @@ class FieldOfStudy
     /**
      * Set department shortName.
      */
-    public function setShortName(string $shortName): FieldOfStudy
+    public function setShortName(string $shortName): self
     {
         $this->shortName = $shortName;
 
@@ -69,17 +63,14 @@ class FieldOfStudy
     /**
      * Set department.
      */
-    public function setDepartment(Department $department = null): FieldOfStudy
+    public function setDepartment(Department $department = null): self
     {
         $this->department = $department;
 
         return $this;
     }
 
-    /**
-     * Get department.
-     */
-    public function getDepartment(): Department
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }

@@ -12,26 +12,20 @@ class Semester implements PeriodInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $semesterTime;
+    private ?string $semesterTime = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $year;
+    private ?string $year = null;
 
     /**
      * @var AdmissionPeriod[]
      */
-    #[ORM\OneToMany(targetEntity: 'App\Entity\AdmissionPeriod', mappedBy: 'semester')]
+    #[ORM\OneToMany(mappedBy: 'semester', targetEntity: 'App\Entity\AdmissionPeriod')]
     private $admissionPeriods;
 
     /**
@@ -42,22 +36,12 @@ class Semester implements PeriodInterface
         return $this->getName();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->semesterTime . ' ' . $this->year;
     }
@@ -91,38 +75,24 @@ class Semester implements PeriodInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getYear()
+    public function getYear(): ?string
     {
         return $this->year;
     }
 
-    /**
-     * @param string $year
-     */
-    public function setYear($year): Semester
+    public function setYear(string $year): Semester
     {
         $this->year = $year;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSemesterTime()
+    public function getSemesterTime(): ?string
     {
         return $this->semesterTime;
     }
 
-    /**
-     * @param string $semesterTime
-     *
-     * @return Semester
-     */
-    public function setSemesterTime($semesterTime)
+    public function setSemesterTime(string $semesterTime): self
     {
         $this->semesterTime = $semesterTime;
 
