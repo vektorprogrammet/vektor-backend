@@ -122,8 +122,6 @@ class TeamInterest implements DepartmentSemesterInterface
      * Set potentialTeams.
      *
      * @param Team[] $potentialTeams
-     *
-     * @return TeamInterest
      */
     public function setPotentialTeams($potentialTeams): self
     {

@@ -237,8 +237,6 @@ class Team implements TeamInterface
 
     /**
      * @param string $description
-     *
-     * @return Team
      */
     public function setDescription($description): self
     {
@@ -334,8 +332,6 @@ class Team implements TeamInterface
 
     /**
      * @param TeamInterest[] $potentialApplicants
-     *
-     * @return Team
      */
     public function setPotentialApplicants($potentialApplicants): self
     {
