@@ -24,51 +24,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(groups: ['admission', 'create_user', 'edit_user'], message: 'Dette feltet kan ikke være tomt.')]
-    private $lastName;
+    private ?string $lastName = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(groups: ['admission', 'create_user', 'edit_user'], message: 'Dette feltet kan ikke være tomt.')]
-    private $firstName;
+    private ?string $firstName = null;
 
-    /**
-     * @var FieldOfStudy
-     */
     #[ORM\ManyToOne(targetEntity: 'FieldOfStudy')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(groups: ['admission', 'edit_user', 'create_user'], message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Valid]
-    private $fieldOfStudy;
+    private ?FieldOfStudy $fieldOfStudy = null;
 
     #[ORM\Column(name: 'gender', type: 'boolean')]
     #[Assert\NotBlank(groups: ['admission', 'create_user'], message: 'Dette feltet kan ikke være tomt.')]
     private $gender;
 
     #[ORM\Column(type: 'string')]
-    private $picture_path;
+    private ?string $picture_path = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(groups: ['admission', 'create_user', 'edit_user'], message: 'Dette feltet kan ikke være tomt.')]
-    private $phone;
+    private ?string $phone = null;
 
     #[ORM\Column(type: 'string', length: 45, nullable: true)]
-    private $accountNumber;
+    private ?string $accountNumber = null;
 
     #[ORM\Column(type: 'string', unique: true, nullable: true)]
     #[Assert\NotBlank(groups: ['username', 'edit_user'], message: 'Dette feltet kan ikke være tomt.')]
-    private $user_name;
+    private ?string $user_name = null;
 
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     #[Assert\NotBlank(groups: ['username', 'edit_user'], message: 'Dette feltet kan ikke være tomt.')]
-    private $password;
+    private ?string $password = null;
 
     #[ORM\Column(type: 'string', unique: true)]
     #[Assert\NotBlank(groups: ['admission', 'create_user', 'edit_user'], message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Email(groups: ['admission', 'create_user', 'edit_user'], message: 'Ikke gyldig e-post.')]
-    private $email;
+    private ?string $email = null;
 
     /**
      * @CustomAssert\UniqueCompanyEmail
@@ -76,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column(type: 'string', unique: true, nullable: true)]
     #[Assert\Email]
-    private $companyEmail;
+    private ?string $companyEmail = null;
 
     #[ORM\Column(name: 'is_active', type: 'boolean')]
     private $isActive;
@@ -85,13 +82,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $reservedFromPopUp;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    private $lastPopUpTime;
+    private ?\DateTime $lastPopUpTime = null;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private $new_user_code;
+    private ?string $new_user_code = null;
 
     /**
      * @var AssistantHistory[]
@@ -132,7 +129,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastPopUpTime = new \DateTime('2000-01-01');
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -182,9 +179,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -212,24 +206,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    /**
-     * Set lastName.
-     *
-     * @return User
-     */
-    public function setLastName(string $lastName)
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
         return $this;
     }
 
-    /**
-     * Set firstName.
-     *
-     * @return User
-     */
-    public function setFirstName(string $firstName)
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -240,22 +224,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Set gender.
      *
      * @param string $gender
-     *
-     * @return User
      */
-    public function setGender($gender)
+    public function setGender($gender): self
     {
         $this->gender = $gender;
 
         return $this;
     }
 
-    /**
-     * Set picture_path.
-     *
-     * @return User
-     */
-    public function setPicturePath(string $picturePath)
+    public function setPicturePath(string $picturePath): self
     {
         $this->picture_path = $picturePath;
 
@@ -270,30 +247,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->picture_path;
     }
 
-    /**
-     * Set phone.
-     *
-     * @return User
-     */
-    public function setPhone(string $phone)
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * Get phone.
-     */
     public function getPhone(): string
     {
         return $this->phone;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountNumber()
+    public function getAccountNumber(): ?string
     {
         return $this->accountNumber;
     }
@@ -306,12 +272,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->accountNumber = $accountNumber;
     }
 
-    /**
-     * Set user_name.
-     *
-     * @return User
-     */
-    public function setUserName(string $userName)
+    public function setUserName(string $userName): self
     {
         $this->user_name = $userName;
 
@@ -337,34 +298,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->user_name;
     }
 
-    /**
-     * Set fieldOfStudy.
-     *
-     * @return User
-     */
-    public function setFieldOfStudy(FieldOfStudy $fieldOfStudy = null)
+    public function setFieldOfStudy(FieldOfStudy $fieldOfStudy = null): self
     {
         $this->fieldOfStudy = $fieldOfStudy;
 
         return $this;
     }
 
-    /**
-     * Get fieldOfStudy.
-     *
-     * @return FieldOfStudy
-     */
-    public function getFieldOfStudy()
+    public function getFieldOfStudy(): ?FieldOfStudy
     {
         return $this->fieldOfStudy;
     }
 
-    /**
-     * Add roles.
-     *
-     * @return User
-     */
-    public function addRole(string $role)
+    public function addRole(string $role): self
     {
         $this->roles[] = $role;
         $this->roles = array_unique($this->roles);
@@ -372,29 +318,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Remove roles.
-     */
     public function removeRole(string $roles)
     {
         $this->roles->removeElement($roles);
     }
 
-    /**
-     * Set new_user_code.
-     *
-     * @return User
-     */
-    public function setNewUserCode(string $newUserCode)
+    public function setNewUserCode(string $newUserCode): self
     {
         $this->new_user_code = $newUserCode;
 
         return $this;
     }
 
-    /**
-     * Get new_user_code.
-     */
     public function getNewUserCode(): ?string
     {
         return $this->new_user_code;

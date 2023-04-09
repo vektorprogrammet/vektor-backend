@@ -12,7 +12,7 @@ class TeamMembership implements TeamMembershipInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'teamMemberships')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
@@ -23,47 +23,32 @@ class TeamMembership implements TeamMembershipInterface
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
-    protected $startSemester;
+    protected ?Semester $startSemester = null;
 
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[Assert\Valid]
-    protected $endSemester;
+    protected ?Semester $endSemester = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', nullable: true)]
-    private $deletedTeamName;
+    private ?string $deletedTeamName = null;
 
-    /**
-     * @var bool
-     */
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     private $isTeamLeader;
 
-    /**
-     * @var bool
-     */
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     private $isSuspended;
 
-    /**
-     * @var Team
-     **/
     #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'teamMemberships')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
-    protected $team;
+    protected ?Team $team = null;
 
-    /**
-     * @var Position
-     **/
     #[ORM\ManyToOne(targetEntity: 'Position')]
     #[ORM\JoinColumn(name: 'position_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
-    protected $position;
+    protected ?Position $position = null;
 
     public function __construct()
     {
@@ -76,76 +61,43 @@ class TeamMembership implements TeamMembershipInterface
         return (string) $this->getId();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set user.
-     *
-     * @return TeamMembership
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get user.
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * Set team.
-     *
-     * @return TeamMembership
-     */
-    public function setTeam(Team $team = null)
+    public function setTeam(Team $team = null): self
     {
         $this->team = $team;
 
         return $this;
     }
 
-    /**
-     * Get team.
-     *
-     * @return Team
-     */
-    public function getTeam()
+    public function getTeam(): ?Team
     {
         return $this->team;
     }
 
-    /**
-     * Set position.
-     *
-     * @return TeamMembership
-     */
-    public function setPosition(Position $position = null)
+    public function setPosition(Position $position = null): self
     {
         $this->position = $position;
 
         return $this;
     }
 
-    /**
-     * Get position.
-     *
-     * @return Position
-     */
-    public function getPosition()
+    public function getPosition(): ?Position
     {
         return $this->position;
     }
@@ -155,41 +107,26 @@ class TeamMembership implements TeamMembershipInterface
      *
      * @return TeamMembership
      */
-    public function setStartSemester(Semester $startSemester = null)
+    public function setStartSemester(Semester $startSemester = null): self
     {
         $this->startSemester = $startSemester;
 
         return $this;
     }
 
-    /**
-     * Get startSemester.
-     *
-     * @return Semester
-     */
-    public function getStartSemester()
+    public function getStartSemester(): ?Semester
     {
         return $this->startSemester;
     }
 
-    /**
-     * Set endSemester.
-     *
-     * @return TeamMembership
-     */
-    public function setEndSemester(Semester $endSemester = null)
+    public function setEndSemester(Semester $endSemester = null): self
     {
         $this->endSemester = $endSemester;
 
         return $this;
     }
 
-    /**
-     * Get endSemester.
-     *
-     * @return Semester
-     */
-    public function getEndSemester()
+    public function getEndSemester(): ?Semester
     {
         return $this->endSemester;
     }
