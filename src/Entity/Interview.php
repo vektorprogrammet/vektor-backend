@@ -313,8 +313,6 @@ class Interview
 
     /**
      * @param string $campus
-     *
-     * @return Interview
      */
     public function setCampus($campus): self
     {

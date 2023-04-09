@@ -145,8 +145,6 @@ class Application implements DepartmentSemesterInterface
 
     /**
      * @param AdmissionPeriod $admissionPeriod
-     *
-     * @return Application
      */
     public function setAdmissionPeriod($admissionPeriod): self
     {

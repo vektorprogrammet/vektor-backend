@@ -27,7 +27,7 @@ class InfoMeeting
 
     #[ORM\Column(type: 'datetime', length: 250, nullable: true)]
     #[Assert\DateTime]
-    private ?DateTime $date = null;
+    private ?\DateTime $date = null;
 
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
     #[Assert\Length(max: 250)]
@@ -46,7 +46,7 @@ class InfoMeeting
         return $this->id;
     }
 
-    public function getDate(): ?DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }

@@ -80,10 +80,6 @@ class Semester implements PeriodInterface
         return $this->year;
     }
 
-    /**
-     * @param string $year
-     * @return Semester
-     */
     public function setYear(string $year): Semester
     {
         $this->year = $year;
@@ -96,10 +92,6 @@ class Semester implements PeriodInterface
         return $this->semesterTime;
     }
 
-    /**
-     * @param string $semesterTime
-     * @return Semester
-     */
     public function setSemesterTime(string $semesterTime): self
     {
         $this->semesterTime = $semesterTime;
