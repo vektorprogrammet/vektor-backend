@@ -11,7 +11,7 @@ class FieldOfStudy
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 250)]
     private $name;
