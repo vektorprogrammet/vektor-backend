@@ -1,7 +1,3 @@
-#app:
-#    resource: "@AppBundle/Controller/"
-#    type:     annotation
-
 #LiipImagineBundle
 #_liip_imagine:
 #    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
@@ -10,8 +6,17 @@
 ##########################################
 #             Static pages               #
 ##########################################
+
+# Reroute / to /api/docs
+redirect_to_api_docs:
+    path: '/'
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: '/api/docs'
+        permanent: true
+
 home:
-    path: /
+    path: /home
     controller: App\Controller\HomeController::show
     methods: [GET]
 
@@ -86,20 +91,6 @@ stand:
     controller: App\Controller\StandController::index
     methods: [GET]
 
-
-##########################################
-#             Account                    #
-##########################################
-
-api_account_user:
-    path: /api/account/user
-    controller: App\Controller\Api\AccountController::getCurrentUser
-    methods: [GET]
-
-api_account_get_department:
-    path: /api/account/get_department
-    controller: App\Controller\Api\AccountController::getDepartmentApi
-    methods: [GET]
 
 
 ##########################################
