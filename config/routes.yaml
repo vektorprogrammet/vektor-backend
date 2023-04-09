@@ -1,22 +1,9 @@
-#LiipImagineBundle
-#_liip_imagine:
-#    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
-
-
 ##########################################
 #             Static pages               #
 ##########################################
 
-# Reroute / to /api/docs
-redirect_to_api_docs:
-    path: '/'
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
-    defaults:
-        path: '/api/docs'
-        permanent: true
-
 home:
-    path: /home
+    path: /
     controller: App\Controller\HomeController::show
     methods: [GET]
 
