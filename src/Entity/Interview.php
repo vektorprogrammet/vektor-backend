@@ -24,30 +24,30 @@ class Interview
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'boolean')]
     private $interviewed;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $scheduled;
+    private ?\DateTime $scheduled = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $lastScheduleChanged;
+    private ?\DateTime $lastScheduleChanged = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private $room;
+    private ?string $room = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 255, maxMessage: 'Campusnavn kan ikke være mer enn 255 tegn')]
-    private $campus;
+    private ?string $campus = null;
 
     #[ORM\Column(type: 'string', length: 500, nullable: true)]
     #[Assert\Length(max: 500, maxMessage: 'Linken kan ikke være mer enn 500 tegn')]
-    private $mapLink;
+    private ?string $mapLink = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $conducted;
+    private ?\DateTime $conducted = null;
 
     #[ORM\ManyToOne(targetEntity: 'InterviewSchema')]
     #[ORM\JoinColumn(name: 'schema_id', referencedColumnName: 'id')]
@@ -71,11 +71,8 @@ class Interview
     #[Assert\Valid]
     private $interviewScore;
 
-    /**
-     * @var int
-     */
     #[ORM\Column(type: 'integer', nullable: false)]
-    private $interviewStatus;
+    private ?int $interviewStatus = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -84,35 +81,23 @@ class Interview
     #[ORM\OneToOne(targetEntity: 'Application', mappedBy: 'interview')]
     private $application;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', nullable: true)]
-    private $responseCode;
+    private ?string $responseCode = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', nullable: true, length: 2000)]
+    #[ORM\Column(type: 'string', length: 2000, nullable: true)]
     #[Assert\Length(max: 2000)]
-    private $cancelMessage;
+    private ?string $cancelMessage = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 2000)]
     #[Assert\Length(max: 2000)]
-    #[Assert\NotBlank(groups: ['newTimeRequest'], message: 'Meldingsboksen kan ikke være tom')]
-    private $newTimeMessage;
+    #[Assert\NotBlank(message: 'Meldingsboksen kan ikke være tom', groups: ['newTimeRequest'])]
+    private ?string $newTimeMessage = null;
 
-    /**
-     * @var int
-     */
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
-    private $numAcceptInterviewRemindersSent;
+    private ?int $numAcceptInterviewRemindersSent = null;
 
     /**
-     * Constructor.
+     * Interview Constructor.
      */
     public function __construct()
     {
@@ -124,22 +109,15 @@ class Interview
         $this->numAcceptInterviewRemindersSent = 0;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
      * Set interviewSchema.
-     *
-     * @return Interview
      */
-    public function setInterviewSchema(InterviewSchema $interviewSchema = null)
+    public function setInterviewSchema(InterviewSchema $interviewSchema = null): self
     {
         $this->interviewSchema = $interviewSchema;
 
@@ -262,7 +240,7 @@ class Interview
         return $this->interviewScore;
     }
 
-    public function getScore()
+    public function getScore(): ?int
     {
         if ($this->interviewScore === null) {
             return 0;
@@ -315,10 +293,7 @@ class Interview
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getRoom()
+    public function getRoom(): ?string
     {
         return $this->room;
     }
@@ -326,15 +301,12 @@ class Interview
     /**
      * @param string $room
      */
-    public function setRoom($room)
+    public function setRoom($room): void
     {
         $this->room = $room;
     }
 
-    /**
-     * @return string
-     */
-    public function getCampus()
+    public function getCampus(): ?string
     {
         return $this->campus;
     }
@@ -344,17 +316,14 @@ class Interview
      *
      * @return Interview
      */
-    public function setCampus($campus)
+    public function setCampus($campus): self
     {
         $this->campus = $campus;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMapLink()
+    public function getMapLink(): ?string
     {
         return $this->mapLink;
     }
@@ -362,7 +331,7 @@ class Interview
     /**
      * @param string mapLink
      */
-    public function setMapLink($mapLink)
+    public function setMapLink($mapLink): void
     {
         $this->mapLink = $mapLink;
     }
@@ -381,10 +350,8 @@ class Interview
      * Set scheduled.
      *
      * @param \DateTime $scheduled
-     *
-     * @return Interview
      */
-    public function setScheduled($scheduled)
+    public function setScheduled($scheduled): self
     {
         $this->scheduled = $scheduled;
         $this->lastScheduleChanged = new \DateTime();
@@ -394,10 +361,8 @@ class Interview
 
     /**
      * Get scheduled.
-     *
-     * @return \DateTime
      */
-    public function getScheduled()
+    public function getScheduled(): ?\DateTime
     {
         return $this->scheduled;
     }
@@ -406,10 +371,8 @@ class Interview
      * Set conducted.
      *
      * @param \DateTime $conducted
-     *
-     * @return Interview
      */
-    public function setConducted($conducted)
+    public function setConducted($conducted): self
     {
         $this->conducted = $conducted;
 
@@ -418,10 +381,8 @@ class Interview
 
     /**
      * Get conducted.
-     *
-     * @return \DateTime
      */
-    public function getConducted()
+    public function getConducted(): ?\DateTime
     {
         return $this->conducted;
     }
@@ -482,27 +443,14 @@ class Interview
 
     public function getInterviewStatusAsColor(): string
     {
-        switch ($this->interviewStatus) {
-            case InterviewStatusType::NO_CONTACT:
-                $color = '#9999ff';
-                break;
-            case InterviewStatusType::PENDING:
-                $color = '#0d97c4';
-                break;
-            case InterviewStatusType::ACCEPTED:
-                $color = '#32CD32';
-                break;
-            case InterviewStatusType::REQUEST_NEW_TIME:
-                $color = '#F08A24';
-                break;
-            case InterviewStatusType::CANCELLED:
-                $color = '#f40f0f';
-                break;
-            default:
-                $color = '#000000';
-        }
-
-        return $color;
+        return match ($this->interviewStatus) {
+            InterviewStatusType::NO_CONTACT => '#9999ff',
+            InterviewStatusType::PENDING => '#0d97c4',
+            InterviewStatusType::ACCEPTED => '#32CD32',
+            InterviewStatusType::REQUEST_NEW_TIME => '#F08A24',
+            InterviewStatusType::CANCELLED => '#f40f0f',
+            default => '#000000',
+        };
     }
 
     public function isPending(): bool
@@ -510,27 +458,27 @@ class Interview
         return $this->interviewStatus === InterviewStatusType::PENDING;
     }
 
-    public function setInterviewStatus(int $interviewStatus)
+    public function setInterviewStatus(int $interviewStatus): void
     {
         $this->interviewStatus = $interviewStatus;
     }
 
-    public function acceptInterview()
+    public function acceptInterview(): void
     {
         $this->setInterviewStatus(InterviewStatusType::ACCEPTED);
     }
 
-    public function requestNewTime()
+    public function requestNewTime(): void
     {
         $this->setInterviewStatus(InterviewStatusType::REQUEST_NEW_TIME);
     }
 
-    public function cancel()
+    public function cancel(): void
     {
         $this->setInterviewStatus(InterviewStatusType::CANCELLED);
     }
 
-    public function resetStatus()
+    public function resetStatus(): void
     {
         $this->setInterviewStatus(InterviewStatusType::PENDING);
     }
@@ -543,15 +491,12 @@ class Interview
         return $this->interviewStatus === InterviewStatusType::CANCELLED;
     }
 
-    /**
-     * @return string
-     */
-    public function getResponseCode()
+    public function getResponseCode(): ?string
     {
         return $this->responseCode;
     }
 
-    public function setResponseCode(string $responseCode)
+    public function setResponseCode(string $responseCode): void
     {
         $this->responseCode = $responseCode;
     }
@@ -576,12 +521,12 @@ class Interview
         return '';
     }
 
-    public function setCancelMessage(string $cancelMessage = null)
+    public function setCancelMessage(string $cancelMessage = null): void
     {
         $this->cancelMessage = $cancelMessage;
     }
 
-    public function setStatus(int $newStatus)
+    public function setStatus(int $newStatus): void
     {
         if ($newStatus >= 0 && $newStatus <= 4) {
             $this->interviewStatus = $newStatus;
@@ -598,7 +543,7 @@ class Interview
     /**
      * @param string $newTimeMessage
      */
-    public function setNewTimeMessage($newTimeMessage)
+    public function setNewTimeMessage($newTimeMessage): void
     {
         $this->newTimeMessage = $newTimeMessage;
     }
@@ -608,17 +553,11 @@ class Interview
         return $this->interviewStatus;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getLastScheduleChanged()
+    public function getLastScheduleChanged(): ?\DateTime
     {
         return $this->lastScheduleChanged;
     }
 
-    /**
-     * @return int
-     */
     public function getNumAcceptInterviewRemindersSent(): ?int
     {
         return $this->numAcceptInterviewRemindersSent;
