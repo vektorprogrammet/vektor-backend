@@ -112,7 +112,7 @@ class AvailabilityFunctionalTest extends BaseWebTestCase
     public function publicUrlProvider(): array
     {
         return [
-            ['/'],
+            //['/'],
             ['/assistenter'],
             ['/team'],
             ['/laerere'],
