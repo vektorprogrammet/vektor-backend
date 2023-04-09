@@ -12,37 +12,34 @@ class SchoolCapacity
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'School', inversedBy: 'capacities')]
     #[ORM\JoinColumn(name: 'school_id', referencedColumnName: 'id')]
-    protected $school;
+    protected ?School $school = null;
 
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[ORM\JoinColumn(name: 'semester_id', referencedColumnName: 'id')]
-    protected $semester;
+    protected ?Semester $semester = null;
 
-    /**
-     * @var Department
-     */
     #[ORM\ManyToOne(targetEntity: 'Department')]
     #[ORM\JoinColumn(name: 'department_id', referencedColumnName: 'id')]
-    protected $department;
+    protected ?Department $department = null;
 
     #[ORM\Column(name: 'monday', type: 'integer')]
-    protected $monday;
+    protected ?int $monday = null;
 
     #[ORM\Column(name: 'tuesday', type: 'integer')]
-    protected $tuesday;
+    protected ?int $tuesday = null;
 
     #[ORM\Column(name: 'wednesday', type: 'integer')]
-    protected $wednesday;
+    protected ?int $wednesday = null;
 
     #[ORM\Column(name: 'thursday', type: 'integer')]
-    protected $thursday;
+    protected ?int $thursday = null;
 
     #[ORM\Column(name: 'friday', type: 'integer')]
-    protected $friday;
+    protected ?int $friday = null;
 
     /**
      * SchoolCapacity constructor.
@@ -56,134 +53,87 @@ class SchoolCapacity
         $this->friday = 0;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getMonday()
+    public function getMonday(): ?int
     {
         return $this->monday;
     }
 
-    /**
-     * @param int $monday
-     */
-    public function setMonday($monday)
+    public function setMonday(int $monday): void
     {
         $this->monday = $monday;
     }
 
-    /**
-     * @return int
-     */
-    public function getTuesday()
+    public function getTuesday(): ?int
     {
         return $this->tuesday;
     }
 
-    /**
-     * @param int $tuesday
-     */
-    public function setTuesday($tuesday)
+    public function setTuesday(int $tuesday): void
     {
         $this->tuesday = $tuesday;
     }
 
-    /**
-     * @return int
-     */
-    public function getWednesday()
+    public function getWednesday(): ?int
     {
         return $this->wednesday;
     }
 
-    /**
-     * @param int $wednesday
-     */
-    public function setWednesday($wednesday)
+    public function setWednesday(int $wednesday): void
     {
         $this->wednesday = $wednesday;
     }
 
-    /**
-     * @return int
-     */
-    public function getThursday()
+    public function getThursday(): ?int
     {
         return $this->thursday;
     }
 
-    /**
-     * @param int $thursday
-     */
-    public function setThursday($thursday)
+    public function setThursday(int $thursday): void
     {
         $this->thursday = $thursday;
     }
 
-    /**
-     * @return int
-     */
-    public function getFriday()
+    public function getFriday(): ?int
     {
         return $this->friday;
     }
 
-    /**
-     * @param int $friday
-     */
-    public function setFriday($friday)
+    public function setFriday(int $friday): void
     {
         $this->friday = $friday;
     }
 
-    /**
-     * @return School
-     */
-    public function getSchool()
+    public function getSchool(): ?School
     {
         return $this->school;
     }
 
-    /**
-     * @param School $school
-     */
-    public function setSchool($school)
+    public function setSchool(School $school): void
     {
         $this->school = $school;
     }
 
-    /**
-     * @return Semester
-     */
-    public function getSemester()
+    public function getSemester(): ?Semester
     {
         return $this->semester;
     }
 
-    /**
-     * @param Semester $semester
-     */
-    public function setSemester($semester)
+    public function setSemester(Semester $semester): void
     {
         $this->semester = $semester;
     }
 
-    public function getDepartment(): Department
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
 
-    public function setDepartment(Department $department): SchoolCapacity
+    public function setDepartment(Department $department): self
     {
         $this->department = $department;
 
