@@ -2,8 +2,15 @@
 #             Static pages               #
 ##########################################
 
+redirect_to_api_docs:
+    path: '/'
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: '/api/docs'
+        permanent: true
+
 home:
-    path: /
+    path: /home
     controller: App\Controller\HomeController::show
     methods: [GET]
 
