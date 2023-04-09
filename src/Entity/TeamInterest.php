@@ -125,7 +125,7 @@ class TeamInterest implements DepartmentSemesterInterface
      *
      * @return TeamInterest
      */
-    public function setPotentialTeams($potentialTeams)
+    public function setPotentialTeams($potentialTeams): self
     {
         $this->potentialTeams = $potentialTeams;
 

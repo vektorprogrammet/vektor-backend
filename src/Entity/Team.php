@@ -240,7 +240,7 @@ class Team implements TeamInterface
      *
      * @return Team
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -319,7 +319,7 @@ class Team implements TeamInterface
     /**
      * @param Application[] $potentialMembers
      */
-    public function setPotentialMembers($potentialMembers)
+    public function setPotentialMembers($potentialMembers): void
     {
         $this->potentialMembers = $potentialMembers;
     }
@@ -337,7 +337,7 @@ class Team implements TeamInterface
      *
      * @return Team
      */
-    public function setPotentialApplicants($potentialApplicants)
+    public function setPotentialApplicants($potentialApplicants): self
     {
         $this->potentialApplicants = $potentialApplicants;
 

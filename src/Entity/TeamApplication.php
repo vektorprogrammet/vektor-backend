@@ -12,25 +12,25 @@ class TeamApplication
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $name;
+    private ?string $name = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Email(message: 'Ikke gyldig e-post.')]
-    private $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\Length(max: 45, maxMessage: 'Dette feltet kan ikke inneholde mer enn 45 tegn')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $fieldOfStudy;
+    private ?string $fieldOfStudy = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $yearOfStudy;
+    private ?string $yearOfStudy = null;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
@@ -41,16 +41,13 @@ class TeamApplication
     private $biography;
 
     #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'applications')]
-    private $team;
+    private ?Team $team = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $phone;
+    private ?string $phone = null;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -58,15 +55,12 @@ class TeamApplication
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -74,15 +68,12 @@ class TeamApplication
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -90,28 +81,22 @@ class TeamApplication
     /**
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return Team
-     */
-    public function getTeam()
+    public function getTeam(): ?Team
     {
         return $this->team;
     }
 
-    public function setTeam(Team $team)
+    public function setTeam(Team $team): void
     {
         $this->team = $team;
     }
 
-    /**
-     * @return string
-     */
-    public function getFieldOfStudy()
+    public function getFieldOfStudy(): ?string
     {
         return $this->fieldOfStudy;
     }
@@ -119,7 +104,7 @@ class TeamApplication
     /**
      * @param string $fieldOfStudy
      */
-    public function setFieldOfStudy($fieldOfStudy)
+    public function setFieldOfStudy($fieldOfStudy): void
     {
         $this->fieldOfStudy = $fieldOfStudy;
     }
@@ -156,10 +141,7 @@ class TeamApplication
         $this->biography = $biography;
     }
 
-    /**
-     * @return string
-     */
-    public function getYearOfStudy()
+    public function getYearOfStudy(): ?string
     {
         return $this->yearOfStudy;
     }
@@ -167,15 +149,12 @@ class TeamApplication
     /**
      * @param string $yearOfStudy
      */
-    public function setYearOfStudy($yearOfStudy)
+    public function setYearOfStudy($yearOfStudy): void
     {
         $this->yearOfStudy = $yearOfStudy;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
