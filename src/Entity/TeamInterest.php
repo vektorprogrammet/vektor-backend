@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table]
-#[ORM\Entity(repositoryClass: 'TeamInterestRepository')]
+#[ORM\Entity(repositoryClass: 'App\Repository\TeamInterestRepository')]
 class TeamInterest implements DepartmentSemesterInterface
 {
     #[ORM\Column(name: 'id', type: 'integer')]
