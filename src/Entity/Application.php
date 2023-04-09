@@ -374,7 +374,7 @@ class Application implements DepartmentSemesterInterface
         return $this->specialNeeds;
     }
 
-    public function setSpecialNeeds(string $specialNeeds): void
+    public function setSpecialNeeds(string $specialNeeds = null): void
     {
         $this->specialNeeds = $specialNeeds;
     }
