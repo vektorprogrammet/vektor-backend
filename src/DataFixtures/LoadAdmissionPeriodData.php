@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: sigtot
- * Date: 02.10.18
- * Time: 19:12.
- */
 
 namespace App\DataFixtures;
 

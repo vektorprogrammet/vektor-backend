@@ -85,7 +85,7 @@ class AdmissionNotification
         return $this->department;
     }
 
-    public function setDepartment(Department $department): static
+    public function setDepartment(Department $department): self
     {
         $this->department = $department;
 

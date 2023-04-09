@@ -34,7 +34,7 @@ class Signature
 
     #[ORM\OneToOne(targetEntity: 'User', cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    protected $user;
+    protected ?User $user = null;
 
     public function getSignaturePath(): ?string
     {
@@ -66,10 +66,7 @@ class Signature
         $this->additional_comment = $additional_comment;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -77,7 +74,7 @@ class Signature
     /**
      * @param User $user
      */
-    public function setUser($user)
+    public function setUser($user): void
     {
         $this->user = $user;
     }

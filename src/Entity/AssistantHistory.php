@@ -16,7 +16,7 @@ class AssistantHistory
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'assistantHistories')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    private $user;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
@@ -52,10 +52,8 @@ class AssistantHistory
 
     /**
      * Set user.
-     *
-     * @return AssistantHistory
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
@@ -67,7 +65,7 @@ class AssistantHistory
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -116,9 +114,9 @@ class AssistantHistory
         return $this->id;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return (string) $this->getId();
+        return $this->getId();
     }
 
     /**
@@ -165,7 +163,7 @@ class AssistantHistory
     }
 
     // Used for unit testing
-    public function fromArray($data = [])
+    public function fromArray($data = []): void
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";

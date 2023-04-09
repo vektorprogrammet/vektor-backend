@@ -176,7 +176,7 @@ class Team implements TeamInterface
     }
 
     // Used for unit testing
-    public function fromArray($data = [])
+    public function fromArray($data = []): void
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";
@@ -237,10 +237,8 @@ class Team implements TeamInterface
 
     /**
      * @param string $description
-     *
-     * @return Team
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -319,7 +317,7 @@ class Team implements TeamInterface
     /**
      * @param Application[] $potentialMembers
      */
-    public function setPotentialMembers($potentialMembers)
+    public function setPotentialMembers($potentialMembers): void
     {
         $this->potentialMembers = $potentialMembers;
     }
@@ -334,10 +332,8 @@ class Team implements TeamInterface
 
     /**
      * @param TeamInterest[] $potentialApplicants
-     *
-     * @return Team
      */
-    public function setPotentialApplicants($potentialApplicants)
+    public function setPotentialApplicants($potentialApplicants): self
     {
         $this->potentialApplicants = $potentialApplicants;
 

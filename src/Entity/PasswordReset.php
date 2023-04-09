@@ -15,7 +15,7 @@ class PasswordReset
 
     #[ORM\ManyToOne(targetEntity: 'User')]
     #[ORM\JoinColumn(name: 'user', referencedColumnName: 'id')]
-    protected $user;
+    protected ?User $user = null;
 
     #[ORM\Column(type: 'string')]
     protected ?string $hashedResetCode = null;
@@ -84,7 +84,7 @@ class PasswordReset
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }

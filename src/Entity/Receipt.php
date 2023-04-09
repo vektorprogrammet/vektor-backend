@@ -19,7 +19,7 @@ class Receipt
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'receipts')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    private $user;
+    private ?User $user = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $submitDate;
@@ -62,7 +62,7 @@ class Receipt
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -70,7 +70,7 @@ class Receipt
     /**
      * @param User $user
      */
-    public function setUser($user)
+    public function setUser($user): void
     {
         $this->user = $user;
     }
@@ -114,7 +114,7 @@ class Receipt
     /**
      * @param string $picturePath
      */
-    public function setPicturePath($picturePath)
+    public function setPicturePath($picturePath): void
     {
         $this->picturePath = $picturePath;
     }

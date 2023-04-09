@@ -12,7 +12,7 @@ class TeamMembership implements TeamMembershipInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'teamMemberships')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
@@ -29,11 +29,8 @@ class TeamMembership implements TeamMembershipInterface
     #[Assert\Valid]
     protected $endSemester;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', nullable: true)]
-    private $deletedTeamName;
+    private ?string $deletedTeamName = null;
 
     /**
      * @var bool
@@ -76,22 +73,15 @@ class TeamMembership implements TeamMembershipInterface
         return (string) $this->getId();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
      * Set user.
-     *
-     * @return TeamMembership
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
@@ -108,10 +98,8 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Set team.
-     *
-     * @return TeamMembership
      */
-    public function setTeam(Team $team = null)
+    public function setTeam(Team $team = null): self
     {
         $this->team = $team;
 
@@ -130,10 +118,8 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Set position.
-     *
-     * @return TeamMembership
      */
-    public function setPosition(Position $position = null)
+    public function setPosition(Position $position = null): self
     {
         $this->position = $position;
 
@@ -152,10 +138,8 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Set startSemester.
-     *
-     * @return TeamMembership
      */
-    public function setStartSemester(Semester $startSemester = null)
+    public function setStartSemester(Semester $startSemester = null): self
     {
         $this->startSemester = $startSemester;
 
@@ -172,12 +156,7 @@ class TeamMembership implements TeamMembershipInterface
         return $this->startSemester;
     }
 
-    /**
-     * Set endSemester.
-     *
-     * @return TeamMembership
-     */
-    public function setEndSemester(Semester $endSemester = null)
+    public function setEndSemester(Semester $endSemester = null): self
     {
         $this->endSemester = $endSemester;
 

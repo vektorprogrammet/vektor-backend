@@ -28,10 +28,7 @@ class Semester implements PeriodInterface
     #[ORM\OneToMany(mappedBy: 'semester', targetEntity: 'App\Entity\AdmissionPeriod')]
     private $admissionPeriods;
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
@@ -67,7 +64,7 @@ class Semester implements PeriodInterface
     }
 
     // Used for unit testing
-    public function fromArray($data = [])
+    public function fromArray($data = []): void
     {
         foreach ($data as $property => $value) {
             $method = "set{$property}";
