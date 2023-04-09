@@ -12,9 +12,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * App\Entity\User.
- */
 #[ORM\Table(name: 'user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[UniqueEntity(fields: ['email'], message: 'Denne Eposten er allerede i bruk.', groups: ['create_user', 'edit_user'])]

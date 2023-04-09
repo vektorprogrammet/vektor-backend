@@ -52,10 +52,8 @@ class InterviewAnswer
 
     /**
      * Set interview.
-     *
-     * @return InterviewAnswer
      */
-    public function setInterview(Interview $interview = null)
+    public function setInterview(Interview $interview = null): self
     {
         $this->interview = $interview;
 
@@ -74,10 +72,8 @@ class InterviewAnswer
 
     /**
      * Set interviewQuestion.
-     *
-     * @return InterviewAnswer
      */
-    public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null)
+    public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null): self
     {
         $this->interviewQuestion = $interviewQuestion;
 
@@ -94,7 +90,7 @@ class InterviewAnswer
         return $this->interviewQuestion;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if (is_string($this->answer)) {
             return $this->answer;

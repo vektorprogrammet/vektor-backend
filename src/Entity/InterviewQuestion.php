@@ -39,10 +39,8 @@ class InterviewQuestion
 
     /**
      * Set question.
-     *
-     * @return InterviewQuestion
      */
-    public function setQuestion(string $question)
+    public function setQuestion(string $question): self
     {
         $this->question = $question;
 
@@ -64,10 +62,8 @@ class InterviewQuestion
 
     /**
      * Set help.
-     *
-     * @return InterviewQuestion
      */
-    public function setHelp(string $help)
+    public function setHelp(string $help): self
     {
         $this->help = $help;
 
@@ -81,10 +77,8 @@ class InterviewQuestion
 
     /**
      * Set type.
-     *
-     * @return InterviewQuestion
      */
-    public function setType(string $type)
+    public function setType(string $type): self
     {
         $this->type = $type;
 
@@ -98,10 +92,8 @@ class InterviewQuestion
 
     /**
      * Add alternatives.
-     *
-     * @return InterviewQuestion
      */
-    public function addAlternative(InterviewQuestionAlternative $alternatives)
+    public function addAlternative(InterviewQuestionAlternative $alternatives): self
     {
         $this->alternatives[] = $alternatives;
 
@@ -113,7 +105,7 @@ class InterviewQuestion
     /**
      * Remove alternatives.
      */
-    public function removeAlternative(InterviewQuestionAlternative $alternatives)
+    public function removeAlternative(InterviewQuestionAlternative $alternatives): void
     {
         $this->alternatives->removeElement($alternatives);
 

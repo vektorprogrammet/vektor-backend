@@ -122,10 +122,8 @@ class School
 
     /**
      * Set email.
-     *
-     * @return School
      */
-    public function setEmail(string $email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -174,7 +172,7 @@ class School
     /**
      * @param bool $international
      */
-    public function setInternational($international)
+    public function setInternational($international): void
     {
         $this->international = $international;
     }
@@ -211,7 +209,7 @@ class School
         return $this->active;
     }
 
-    public function setActive(bool $active): School
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 

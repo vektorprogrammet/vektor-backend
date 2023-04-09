@@ -50,7 +50,7 @@ class InterviewDistribution
         return $this->user;
     }
 
-    public function getInterviewsLeft()
+    public function getInterviewsLeft(): int
     {
         $interviewsLeftCount = 0;
 
