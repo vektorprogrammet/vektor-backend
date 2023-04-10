@@ -6,23 +6,28 @@
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
     "@fortawesome/fontawesome-free": "^5.15.2",
+    "@hotwired/stimulus": "^3.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "ckeditor": "^4.12.1",
     "cropperjs": "^1.5.11",
     "dropzone": "^5.8.1",
+    "is-svg": ">=4.2.2",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "perfect-scrollbar": "^1.5.0",
-    "popper.js": "^1.16.1",
-    "is-svg": ">=4.2.2"
+    "popper.js": "^1.16.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-react": "^7.18.6",
     "@popperjs/core": "^2.9.1",
+    "@symfony/stimulus-bridge": "^3.2.2",
+    "@symfony/webpack-encore": "^4.2.0",
     "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
     "concurrently": "^6.0.0",
+    "core-js": "^3.30.0",
     "cssnano": "^4.1.10",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
@@ -33,7 +38,11 @@
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.1.0",
     "gulp-uglify": "^3.0.2",
-    "node-sass": "^5.0.0"
+    "node-sass": "^5.0.0",
+    "sass-loader": "^13.0.0",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-notifier": "^1.15.0"
   },
   "scripts": {
     "start": "concurrently --kill-others \"php -S localhost:8000 -t public\" \"npm run watch\"",
