@@ -35,6 +35,16 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
+    .addEntry('js/bankAccountNumberValidation', './assets/js/bankAccountNumberValidation.js')
+    .addEntry('js/button_deactivator', './assets/js/button_deactivator.js')
+    .addEntry('js/control_panel', './assets/js/control_panel.js')
+    .addEntry('js/coreui', './assets/js/coreui.js')
+    .addEntry('js/csvGenerator', './assets/js/csvGenerator.js')
+    .addEntry('js/faqCollapse', './assets/js/faqCollapse.js')
+    .addEntry('js/mobile_nav', './assets/js/mobile_nav.js')
+    .addEntry('js/popup_lower', './assets/js/popup_lower.js')
+    .addEntry('js/stupidtable', './assets/js/stupidtable.js')
+
     // Move scss files to build/pages/name_of_file.css
     .addStyleEntry('pages/admin/home', './assets/styles/pages/admin/home.scss')
     .addStyleEntry('pages/about_us_page', './assets/styles/pages/about_us_page.scss')
