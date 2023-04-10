@@ -34,7 +34,24 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('pages/teacher', './assets/styles/pages/teacher.scss')
+
+    // Move scss files to build/pages/name_of_file.css
+    .addStyleEntry('pages/admin/home', './assets/styles/pages/admin/home.scss')
+    .addStyleEntry('pages/about_us_page', './assets/styles/pages/about_us_page.scss')
+    .addStyleEntry('pages/assign_co_interviewer', './assets/styles/pages/assign_co_interviewer.scss')
+    .addStyleEntry('pages/assistants', './assets/styles/pages/assistants.scss')
+    .addStyleEntry('pages/contact_page', './assets/styles/pages/contact_page.scss')
+    .addStyleEntry('pages/existing_admission', './assets/styles/pages/existing_admission.scss')
+    .addStyleEntry('pages/home', './assets/styles/pages/home.scss')
+    .addStyleEntry('pages/members', './assets/styles/pages/members.scss')
+    .addStyleEntry('pages/my_receipts', './assets/styles/pages/my_receipts.scss')
+    .addStyleEntry('pages/parents', './assets/styles/pages/parents.scss')
+    .addStyleEntry('pages/partners', './assets/styles/pages/partners.scss')
+    .addStyleEntry('pages/popup_lower', './assets/styles/pages/popup_lower.scss')
+    .addStyleEntry('pages/profile', './assets/styles/pages/profile.scss')
+    .addStyleEntry('pages/profile_photo', './assets/styles/pages/profile_photo.scss')
+    .addStyleEntry('pages/teacher', './assets/styles/pages/teacher.scss')
+    .addStyleEntry('pages/team', './assets/styles/pages/team.scss')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
