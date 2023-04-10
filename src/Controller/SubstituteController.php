@@ -28,7 +28,8 @@ class SubstituteController extends BaseController
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
 
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         $substitutes = null;

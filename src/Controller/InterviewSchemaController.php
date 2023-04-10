@@ -34,7 +34,7 @@ class InterviewSchemaController extends BaseController
 
     /**
      * Shows and handles the submission of the edit interview schema form.
-     * Uses the same form as the create .
+     * Uses the same form as the creation functionality.
      */
     public function editSchema(Request $request, InterviewSchema $schema): RedirectResponse|Response
     {
@@ -61,7 +61,9 @@ class InterviewSchemaController extends BaseController
      */
     public function showSchemas(): Response
     {
-        $schemas = $this->doctrine->getRepository(InterviewSchema::class)->findAll();
+        $schemas = $this->doctrine
+            ->getRepository(InterviewSchema::class)
+            ->findAll();
 
         return $this->render('interview/schemas.html.twig', ['schemas' => $schemas]);
     }

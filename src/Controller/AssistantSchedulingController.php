@@ -33,9 +33,13 @@ class AssistantSchedulingController extends BaseController
         $user = $this->getUser();
 
         $currentSemester = $this->getCurrentSemester();
-        $currentAdmissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $currentAdmissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($user->getDepartment(), $currentSemester);
-        $applications = $this->doctrine->getRepository(Application::class)->findAllAllocatableApplicationsByAdmissionPeriod($currentAdmissionPeriod);
+
+        $applications = $this->doctrine
+            ->getRepository(Application::class)
+            ->findAllAllocatableApplicationsByAdmissionPeriod($currentAdmissionPeriod);
 
         $assistants = $this->getAssistantAvailableDays($applications);
 
@@ -101,7 +105,9 @@ class AssistantSchedulingController extends BaseController
         $department = $user->getFieldOfStudy()->getDepartment();
         $currentSemester = $this->getCurrentSemester();
         $allCurrentSchoolCapacities = $this->doctrine
-            ->getRepository(SchoolCapacity::class)->findByDepartmentAndSemester($department, $currentSemester);
+            ->getRepository(SchoolCapacity::class)
+            ->findByDepartmentAndSemester($department, $currentSemester);
+
         $schools = $this->generateSchoolsFromSchoolCapacities($allCurrentSchoolCapacities);
 
         return new JsonResponse(json_encode($schools, JSON_THROW_ON_ERROR));

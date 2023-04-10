@@ -55,6 +55,7 @@ class AssistantController extends BaseController
         $department = $this->doctrine
                 ->getRepository(Department::class)
                 ->findOneByCityCaseInsensitive($city);
+
         if ($department !== null) {
             return $this->index($request, $department);
         }
@@ -74,7 +75,10 @@ class AssistantController extends BaseController
         $admissionManager = $this->applicationAdmission;
         $em = $this->doctrine->getManager();
 
-        $departments = $em->getRepository(Department::class)->findActive();
+        $departments = $em
+            ->getRepository(Department::class)
+            ->findActive();
+
         $departments = $this->geoLocation->sortDepartmentsByDistanceFromClient($departments);
         $departmentsWithActiveAdmission = $this->filterService->filterDepartmentsByActiveAdmission($departments, true);
 
@@ -155,7 +159,7 @@ class AssistantController extends BaseController
         if (!$department->activeAdmission()) {
             return $this->index($request, $department);
         }
-        $admissionManager = $this->get(ApplicationAdmission::class);
+        $admissionManager = $this->applicationAdmission;
         $em = $this->doctrine->getManager();
         $application = new Application();
 
@@ -176,7 +180,10 @@ class AssistantController extends BaseController
                 return $this->redirectToRoute('application_stand_form', ['shortName' => $department->getShortName()]);
             }
 
-            $admissionPeriod = $em->getRepository(AdmissionPeriod::class)->findOneWithActiveAdmissionByDepartment($department);
+            $admissionPeriod = $em
+                ->getRepository(AdmissionPeriod::class
+                )->findOneWithActiveAdmissionByDepartment($department);
+
             $application->setAdmissionPeriod($admissionPeriod);
             $em->persist($application);
             $em->flush();

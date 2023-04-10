@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class PublicStaticPageController extends BaseController
+class PublicStaticPageController extends AbstractController
 {
-    // AboutVektorController
+    // AboutController
     public function showAboutPage(): Response
     {
         return $this->render('about/about_vektor.html.twig');

@@ -27,7 +27,10 @@ class TeamController extends BaseController
 
     public function showByDepartmentAndTeam($departmentCity, $teamName): Response
     {
-        $teams = $this->doctrine->getRepository(Team::class)->findByCityAndName($departmentCity, $teamName);
+        $teams = $this->doctrine
+            ->getRepository(Team::class)
+            ->findByCityAndName($departmentCity, $teamName);
+
         if ((is_countable($teams) ? count($teams) : 0) !== 1) {
             throw new NotFoundHttpException('Team not found');
         }

@@ -18,7 +18,9 @@ class SemesterController extends AbstractController
 
     public function show(): Response
     {
-        $semesters = $this->doctrine->getRepository(Semester::class)->findAllOrderedByAge();
+        $semesters = $this->doctrine
+            ->getRepository(Semester::class)
+            ->findAllOrderedByAge();
 
         return $this->render('semester_admin/index.html.twig', [
             'semesters' => $semesters,
@@ -38,7 +40,9 @@ class SemesterController extends AbstractController
         // The fields of the form is checked if they contain the correct information
         if ($form->isSubmitted() && $form->isValid()) {
             // Check if semester already exists
-            $existingSemester = $this->doctrine->getManager()->getRepository(Semester::class)
+            $existingSemester = $this->doctrine
+                ->getManager()
+                ->getRepository(Semester::class)
                 ->findByTimeAndYear($semester->getSemesterTime(), $semester->getYear());
 
             // Return to semester page if semester already exists

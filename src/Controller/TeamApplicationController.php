@@ -27,7 +27,10 @@ class TeamApplicationController extends BaseController
     public function showApplication(TeamApplication $application): Response
     {
         $user = $this->getUser();
-        $activeUserHistoriesInTeam = $this->doctrine->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeamAndUser($application->getTeam(), $user);
+        $activeUserHistoriesInTeam = $this->doctrine
+            ->getRepository(TeamMembership::class)
+            ->findActiveTeamMembershipsByTeamAndUser($application->getTeam(), $user);
+
         if (empty($activeUserHistoriesInTeam) && !$this->isGranted(Roles::TEAM_LEADER)) {
             throw new AccessDeniedException();
         }
@@ -39,9 +42,15 @@ class TeamApplicationController extends BaseController
 
     public function showAllApplications(Team $team): Response
     {
-        $applications = $this->doctrine->getRepository(TeamApplication::class)->findByTeam($team);
+        $applications = $this->doctrine
+            ->getRepository(TeamApplication::class)
+            ->findByTeam($team);
+
         $user = $this->getUser();
-        $activeUserHistoriesInTeam = $this->doctrine->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeamAndUser($team, $user);
+        $activeUserHistoriesInTeam = $this->doctrine
+            ->getRepository(TeamMembership::class)
+            ->findActiveTeamMembershipsByTeamAndUser($team, $user);
+
         if (empty($activeUserHistoriesInTeam) && !$this->isGranted(Roles::TEAM_LEADER)) {
             throw new AccessDeniedException();
         }

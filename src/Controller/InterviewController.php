@@ -48,13 +48,15 @@ class InterviewController extends BaseController
             throw $this->createNotFoundException();
         }
         $department = $this->getUser()->getDepartment();
-        $teams = $this->doctrine->getRepository(Team::class)->findActiveByDepartment($department);
+        $teams = $this->doctrine
+            ->getRepository(Team::class)
+            ->findActiveByDepartment($department);
 
         if ($this->getUser() === $application->getUser()) {
             return $this->render('error/control_panel_error.html.twig', ['error' => 'Du kan ikke intervjue deg selv']);
         }
 
-        // If the interview has not yet been conducted, create up to date answer objects for all questions in schema
+        // If the interview has not yet been conducted, create up-to-date answer objects for all questions in schema
         $interview = $this->interviewManager->initializeInterviewAnswers($application->getInterview());
 
         // Only admin and above, or the assigned interviewer, or the co interviewer should be able to conduct an interview
@@ -157,7 +159,9 @@ class InterviewController extends BaseController
 
         // Get the application objects
         $em = $this->doctrine->getManager();
-        $applications = $em->getRepository(Application::class)->findBy(['id' => $applicationIds]);
+        $applications = $em
+            ->getRepository(Application::class)
+            ->findBy(['id' => $applicationIds]);
 
         // Delete the interviews
         foreach ($applications as $application) {
@@ -177,7 +181,7 @@ class InterviewController extends BaseController
 
     /**
      * Shows and handles the submission of the schedule interview form.
-     * This method can also send an email to the applicant with the info from the submitted form.
+     * This method can also email the applicant with the info from the submitted form.
      */
     public function schedule(Request $request, Application $application): Response
     {
@@ -273,7 +277,10 @@ class InterviewController extends BaseController
             throw $this->createNotFoundException();
         }
         $em = $this->doctrine->getManager();
-        $application = $em->getRepository(Application::class)->find($id);
+        $application = $em
+            ->getRepository(Application::class)
+            ->find($id);
+
         $user = $application->getUser();
         // Finds all the roles above admin in the hierarchy, used to populate dropdown menu with all admins
         $roles = $this->reversedRoleHierarchy->getParentRoles([Roles::TEAM_MEMBER]);
@@ -323,9 +330,17 @@ class InterviewController extends BaseController
             // Get the info from the form
             $data = $request->request->all();
             // Get objects from database
-            $interviewer = $em->getRepository(User::class)->findOneBy(['id' => $data['interview']['interviewer']]);
-            $schema = $em->getRepository(InterviewSchema::class)->findOneBy(['id' => $data['interview']['interviewSchema']]);
-            $applications = $em->getRepository(Application::class)->findBy(['id' => $data['application']['id']]);
+            $interviewer = $em
+                ->getRepository(User::class)
+                ->findOneBy(['id' => $data['interview']['interviewer']]);
+
+            $schema = $em
+                ->getRepository(InterviewSchema::class)
+                ->findOneBy(['id' => $data['interview']['interviewSchema']]);
+
+            $applications = $em
+                ->getRepository(Application::class)
+                ->findBy(['id' => $data['application']['id']]);
 
             // Update or create new interviews for all the given applications
             foreach ($applications as $application) {
@@ -499,8 +514,10 @@ class InterviewController extends BaseController
     {
         $semester = $interview->getApplication()->getSemester();
         $department = $interview->getApplication()->getDepartment();
-        $teamUsers = $this->doctrine->getRepository(User::class)
+        $teamUsers = $this->doctrine
+            ->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
+
         $coInterviewers = array_merge(array_diff($teamUsers, [$interview->getInterviewer(), $interview->getCoInterviewer()]));
         $form = $this->createForm(AddCoInterviewerType::class, null, [
             'teamUsers' => $coInterviewers,

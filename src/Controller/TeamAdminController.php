@@ -31,8 +31,13 @@ class TeamAdminController extends BaseController
         }
 
         // Find teams that are connected to the department of the user
-        $activeTeams = $this->doctrine->getRepository(Team::class)->findActiveByDepartment($department);
-        $inactiveTeams = $this->doctrine->getRepository(Team::class)->findInactiveByDepartment($department);
+        $activeTeams = $this->doctrine
+            ->getRepository(Team::class)
+            ->findActiveByDepartment($department);
+
+        $inactiveTeams = $this->doctrine
+            ->getRepository(Team::class)
+            ->findInactiveByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('team_admin/index.html.twig', [
@@ -110,13 +115,21 @@ class TeamAdminController extends BaseController
     public function showSpecificTeam(Team $team): Response
     {
         // Find all TeamMembership entities based on team
-        $activeTeamMemberships = $this->doctrine->getRepository(TeamMembership::class)->findActiveTeamMembershipsByTeam($team);
-        $inActiveTeamMemberships = $this->doctrine->getRepository(TeamMembership::class)->findInactiveTeamMembershipsByTeam($team);
+        $activeTeamMemberships = $this->doctrine
+            ->getRepository(TeamMembership::class)
+            ->findActiveTeamMembershipsByTeam($team);
+
+        $inActiveTeamMemberships = $this->doctrine
+            ->getRepository(TeamMembership::class)
+            ->findInactiveTeamMembershipsByTeam($team);
+
         usort($activeTeamMemberships, $this->sortTeamMembershipsByEndDate(...));
         usort($inActiveTeamMemberships, $this->sortTeamMembershipsByEndDate(...));
 
         $user = $this->getUser();
-        $currentUserTeamMembership = $this->doctrine->getRepository(TeamMembership::class)->findActiveTeamMembershipsByUser($user);
+        $currentUserTeamMembership = $this->doctrine
+            ->getRepository(TeamMembership::class)
+            ->findActiveTeamMembershipsByUser($user);
         $isUserInTeam = false;
         foreach ($currentUserTeamMembership as $wh) {
             if (in_array($wh, $activeTeamMemberships, true)) {
@@ -182,7 +195,9 @@ class TeamAdminController extends BaseController
     public function showTeamsByDepartment(Department $department): Response
     {
         // Find teams that are connected to the department of the department ID sent in by the request
-        $teams = $this->doctrine->getRepository(Team::class)->findByDepartment($department);
+        $teams = $this->doctrine
+            ->getRepository(Team::class)
+            ->findByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('team_admin/index.html.twig', [

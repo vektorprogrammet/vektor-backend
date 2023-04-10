@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class FeedbackController extends BaseController
+class FeedbackController extends AbstractController
 {
     public function index(): Response
     {

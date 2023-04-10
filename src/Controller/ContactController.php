@@ -28,7 +28,9 @@ class ContactController extends BaseController
     {
         if ($department === null) {
             $department = $this->geoLocation
-                ->findNearestDepartment($this->doctrine->getRepository(Department::class)->findAll());
+                ->findNearestDepartment($this->doctrine
+                    ->getRepository(Department::class)
+                    ->findAll());
         }
 
         $supportTicket = new SupportTicket();
@@ -48,7 +50,10 @@ class ContactController extends BaseController
             return $this->redirectToRoute('contact_department', ['id' => $supportTicket->getDepartment()->getId()]);
         }
 
-        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine
+            ->getRepository(ExecutiveBoard::class)
+            ->findBoard();
+
         $scrollToForm = $form->isSubmitted() && !$form->isValid();
 
         return $this->render('contact/index.html.twig', [

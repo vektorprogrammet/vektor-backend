@@ -33,8 +33,13 @@ class SchoolAdminController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        $inactiveAssistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findInactiveAssistantHistoriesBySchool($school);
-        $activeAssistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesBySchool($school);
+        $inactiveAssistantHistories = $this->doctrine->
+        getRepository(AssistantHistory::class)
+            ->findInactiveAssistantHistoriesBySchool($school);
+
+        $activeAssistantHistories = $this->doctrine
+            ->getRepository(AssistantHistory::class)
+            ->findActiveAssistantHistoriesBySchool($school);
 
         return $this->render('school_admin/specific_school.html.twig', [
             'activeAssistantHistories' => $activeAssistantHistories,
@@ -80,9 +85,13 @@ class SchoolAdminController extends BaseController
 
     public function showUsersByDepartmentSuperadmin(Department $department): Response
     {
-        $activeDepartments = $this->doctrine->getRepository(Department::class)->findActive();
+        $activeDepartments = $this->doctrine
+            ->getRepository(Department::class)
+            ->findActive();
 
-        $users = $this->doctrine->getRepository(User::class)->findAllUsersByDepartment($department);
+        $users = $this->doctrine
+            ->getRepository(User::class)
+            ->findAllUsersByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('school_admin/all_users.html.twig', [
@@ -97,13 +106,17 @@ class SchoolAdminController extends BaseController
         $user = $this->getUser();
 
         // Finds all the departments
-        $activeDepartments = $this->doctrine->getRepository(Department::class)->findActive();
+        $activeDepartments = $this->doctrine
+            ->getRepository(Department::class)
+            ->findActive();
 
         // Find the department of the user
         $department = $user->getFieldOfStudy()->getDepartment();
 
         // Find all the users of the department that are active
-        $users = $this->doctrine->getRepository(User::class)->findAllUsersByDepartment($department);
+        $users = $this->doctrine
+            ->getRepository(User::class)
+            ->findAllUsersByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('school_admin/all_users.html.twig', [
@@ -115,13 +128,17 @@ class SchoolAdminController extends BaseController
 
     public function show(): Response
     {
-        // Finds the department for the current logged in user
+        // Finds the department for the current logged-in user
         $department = $this->getUser()->getDepartment();
 
         // Find schools that are connected to the department of the user
-        $activeSchools = $this->doctrine->getRepository(School::class)->findActiveSchoolsByDepartment($department);
+        $activeSchools = $this->doctrine
+            ->getRepository(School::class)
+            ->findActiveSchoolsByDepartment($department);
 
-        $inactiveSchools = $this->doctrine->getRepository(School::class)->findInactiveSchoolsByDepartment($department);
+        $inactiveSchools = $this->doctrine
+            ->getRepository(School::class)
+            ->findInactiveSchoolsByDepartment($department);
 
         // Return the view with suitable variables
         return $this->render('school_admin/index.html.twig', [
@@ -134,8 +151,13 @@ class SchoolAdminController extends BaseController
     public function showSchoolsByDepartment(Department $department): Response
     {
         // Finds the schools for the given department
-        $activeSchools = $this->doctrine->getRepository(School::class)->findActiveSchoolsByDepartment($department);
-        $inactiveSchools = $this->doctrine->getRepository(School::class)->findInactiveSchoolsByDepartment($department);
+        $activeSchools = $this->doctrine
+            ->getRepository(School::class)
+            ->findActiveSchoolsByDepartment($department);
+
+        $inactiveSchools = $this->doctrine
+            ->getRepository(School::class)
+            ->findInactiveSchoolsByDepartment($department);
 
         // Renders the view with the variables
         return $this->render('school_admin/index.html.twig', [

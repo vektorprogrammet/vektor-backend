@@ -48,11 +48,19 @@ class ProfileController extends BaseController
         $user = $this->getUser();
         $em = $this->doctrine->getManager();
         // Fetch the assistant history of the user
-        $assistantHistory = $em->getRepository(AssistantHistory::class)->findByUser($user);
+        $assistantHistory = $em
+            ->getRepository(AssistantHistory::class)
+            ->findByUser($user);
+
         // Find the team history of the user
-        $teamMemberships = $em->getRepository(TeamMembership::class)->findByUser($user);
+        $teamMemberships = $em
+            ->getRepository(TeamMembership::class)
+            ->findByUser($user);
+
         // Find the executive board history of the user
-        $executiveBoardMemberships = $em->getRepository(ExecutiveBoardMembership::class)->findByUser($user);
+        $executiveBoardMemberships = $em
+            ->getRepository(ExecutiveBoardMembership::class)
+            ->findByUser($user);
 
         // Render the view
         return $this->render('profile/profile.html.twig', [
@@ -73,10 +81,14 @@ class ProfileController extends BaseController
         $em = $this->doctrine->getManager();
 
         // Find the work history of the user
-        $teamMemberships = $em->getRepository(TeamMembership::class)->findByUser($user);
+        $teamMemberships = $em
+            ->getRepository(TeamMembership::class)
+            ->findByUser($user);
 
         // Find the executive board history of the user
-        $executiveBoardMemberships = $em->getRepository(ExecutiveBoardMembership::class)->findByUser($user);
+        $executiveBoardMemberships = $em
+            ->getRepository(ExecutiveBoardMembership::class)
+            ->findByUser($user);
 
         $isGrantedAssistant = ($this->getUser() !== null && $this->RoleManager->userIsGranted($this->getUser(), Roles::ASSISTANT));
 
