@@ -29,6 +29,7 @@
     "concurrently": "^6.0.0",
     "core-js": "^3.30.0",
     "cssnano": "^4.1.10",
+    "file-loader": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-babel": "^8.0.0",
