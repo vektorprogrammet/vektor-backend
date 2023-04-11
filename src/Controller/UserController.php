@@ -38,7 +38,9 @@ class UserController extends BaseController
         if (null !== $activeApplication) {
             $applicationStatus = $this->applicationManager->getApplicationStatus($activeApplication);
         }
-        $activeAssistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($user);
+        $activeAssistantHistories = $this->doctrine
+            ->getRepository(AssistantHistory::class)
+            ->findActiveAssistantHistoriesByUser($user);
 
         return $this->render('my_page/my_page.html.twig', [
             'active_application' => $activeApplication,
@@ -52,7 +54,10 @@ class UserController extends BaseController
         if (!$this->getUser()->isActive()) {
             throw $this->createAccessDeniedException();
         }
-        $activeAssistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesByUser($this->getUser());
+        $activeAssistantHistories = $this->doctrine
+            ->getRepository(AssistantHistory::class)
+            ->findActiveAssistantHistoriesByUser($this->getUser());
+
         if (empty($activeAssistantHistories)) {
             throw $this->createNotFoundException();
         }
@@ -61,7 +66,10 @@ class UserController extends BaseController
         $partnerCount = 0;
 
         foreach ($activeAssistantHistories as $activeHistory) {
-            $schoolHistories = $this->doctrine->getRepository(AssistantHistory::class)->findActiveAssistantHistoriesBySchool($activeHistory->getSchool());
+            $schoolHistories = $this->doctrine
+                ->getRepository(AssistantHistory::class)
+                ->findActiveAssistantHistoriesBySchool($activeHistory->getSchool());
+
             $partners = [];
 
             foreach ($schoolHistories as $sh) {

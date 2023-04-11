@@ -52,7 +52,8 @@ class MailingListController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $users = $this->doctrine->getRepository(User::class)
+        $users = $this->doctrine
+            ->getRepository(User::class)
             ->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $semester);
 
         return $this->render('mailing_list/mailinglist_show.html.twig', [
@@ -64,7 +65,8 @@ class MailingListController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $users = $this->doctrine->getRepository(User::class)
+        $users = $this->doctrine
+            ->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
 
         return $this->render('mailing_list/mailinglist_show.html.twig', [
@@ -76,10 +78,14 @@ class MailingListController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $assistantUsers = $this->doctrine->getRepository(User::class)
+        $assistantUsers = $this->doctrine
+            ->getRepository(User::class)
             ->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $semester);
-        $teamUsers = $this->doctrine->getRepository(User::class)
+
+        $teamUsers = $this->doctrine
+            ->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
+
         $users = array_unique(array_merge($assistantUsers, $teamUsers));
 
         return $this->render('mailing_list/mailinglist_show.html.twig', [

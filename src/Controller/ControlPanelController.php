@@ -21,7 +21,8 @@ class ControlPanelController extends BaseController
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
 
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         // Return the view to be rendered

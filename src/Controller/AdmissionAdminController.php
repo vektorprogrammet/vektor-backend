@@ -14,6 +14,7 @@ use App\Service\InterviewCounter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -77,8 +78,10 @@ class AdmissionAdminController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
+
         if (!$this->isGranted(Roles::TEAM_LEADER) && $this->getUser()->getDepartment() !== $department) {
             throw $this->createAccessDeniedException();
         }
@@ -116,8 +119,10 @@ class AdmissionAdminController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
+
         if (!$this->isGranted(Roles::TEAM_LEADER) && $this->getUser()->getDepartment() !== $department) {
             throw $this->createAccessDeniedException();
         }
@@ -149,7 +154,8 @@ class AdmissionAdminController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         if (!$this->isGranted(Roles::TEAM_LEADER) && $this->getUser()->getDepartment() !== $department) {
@@ -173,10 +179,8 @@ class AdmissionAdminController extends BaseController
     /**
      * Deletes the given application.
      * This method is intended to be called by an Ajax request.
-     *
-     * @return JsonResponse
      */
-    public function deleteApplicationById(Application $application)
+    public function deleteApplicationById(Application $application): JsonResponse
     {
         $em = $this->doctrine->getManager();
 
@@ -188,7 +192,7 @@ class AdmissionAdminController extends BaseController
         ]);
     }
 
-    public function deleteApplicationExistingAssistant(Application $application)
+    public function deleteApplicationExistingAssistant(Application $application): RedirectResponse
     {
         $em = $this->doctrine->getManager();
         $em->remove($application);
@@ -205,10 +209,8 @@ class AdmissionAdminController extends BaseController
     /**
      * Deletes the applications submitted as a list of ids through a form POST request.
      * This method is intended to be called by an Ajax request.
-     *
-     * @return JsonResponse
      */
-    public function bulkDeleteApplication(Request $request)
+    public function bulkDeleteApplication(Request $request): JsonResponse
     {
         // Get the ids from the form
         $applicationIds = array_map('intval', $request->request->get('application')['id']);
@@ -241,6 +243,7 @@ class AdmissionAdminController extends BaseController
         $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $currentSemester);
+
         if ($admissionPeriod === null) {
             throw new BadRequestHttpException();
         }
@@ -286,15 +289,13 @@ class AdmissionAdminController extends BaseController
         ]);
     }
 
-    /**
-     * @return Response|null
-     */
-    public function showTeamInterest(Request $request)
+    public function showTeamInterest(Request $request): ?Response
     {
         $user = $this->getUser();
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
 
         if (!$this->isGranted(Roles::ADMIN) && $user->getDepartment() !== $department) {
@@ -307,6 +308,7 @@ class AdmissionAdminController extends BaseController
             $applicationsWithTeamInterest = $this->doctrine
                 ->getRepository(Application::class)
                 ->findApplicationByTeamInterestAndAdmissionPeriod($admissionPeriod);
+
             $teams = $this->doctrine->getRepository(Team::class)->findByTeamInterestAndAdmissionPeriod($admissionPeriod);
         }
 

@@ -32,8 +32,14 @@ class ExecutiveBoardController extends BaseController
 
     public function showAdmin(): Response
     {
-        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
-        $members = $this->doctrine->getRepository(ExecutiveBoardMembership::class)->findAll();
+        $board = $this->doctrine
+            ->getRepository(ExecutiveBoard::class)
+            ->findBoard();
+
+        $members = $this->doctrine
+            ->getRepository(ExecutiveBoardMembership::class)
+            ->findAll();
+
         $activeMembers = [];
         $inactiveMembers = [];
         foreach ($members as $member) {
@@ -53,7 +59,9 @@ class ExecutiveBoardController extends BaseController
 
     public function addUserToBoard(Request $request, Department $department)
     {
-        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine
+            ->getRepository(ExecutiveBoard::class)
+            ->findBoard();
 
         // Create a new TeamMembership entity
         $member = new ExecutiveBoardMembership();
@@ -99,9 +107,11 @@ class ExecutiveBoardController extends BaseController
         return $this->redirect($this->generateUrl('executive_board_show'));
     }
 
-    public function updateBoard(Request $request)
+    public function updateBoard(Request $request): RedirectResponse|Response
     {
-        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine
+            ->getRepository(ExecutiveBoard::class)
+            ->findBoard();
 
         // Create the form
         $form = $this->createForm(CreateExecutiveBoardType::class, $board);

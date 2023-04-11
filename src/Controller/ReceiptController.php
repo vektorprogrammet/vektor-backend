@@ -32,10 +32,21 @@ class ReceiptController extends BaseController
 
     public function show(): Response
     {
-        $usersWithReceipts = $this->doctrine->getRepository(User::class)->findAllUsersWithReceipts();
-        $refundedReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REFUNDED);
-        $pendingReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
-        $rejectedReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_REJECTED);
+        $usersWithReceipts = $this->doctrine
+            ->getRepository(User::class)
+            ->findAllUsersWithReceipts();
+
+        $refundedReceipts = $this->doctrine
+            ->getRepository(Receipt::class)
+            ->findByStatus(Receipt::STATUS_REFUNDED);
+
+        $pendingReceipts = $this->doctrine
+            ->getRepository(Receipt::class)
+            ->findByStatus(Receipt::STATUS_PENDING);
+
+        $rejectedReceipts = $this->doctrine
+            ->getRepository(Receipt::class)
+            ->findByStatus(Receipt::STATUS_REJECTED);
 
         $refundedReceiptStatistics = new ReceiptStatistics($refundedReceipts);
         $totalPayoutThisYear = $refundedReceiptStatistics->totalPayoutIn((new \DateTime())->format('Y'));
@@ -79,7 +90,9 @@ class ReceiptController extends BaseController
         $receipt = new Receipt();
         $receipt->setUser($this->getUser());
 
-        $receipts = $this->doctrine->getRepository(Receipt::class)->findByUser($this->getUser());
+        $receipts = $this->doctrine
+            ->getRepository(Receipt::class)
+            ->findByUser($this->getUser());
 
         $sorter = $this->sorter;
         $sorter->sortReceiptsBySubmitTime($receipts);

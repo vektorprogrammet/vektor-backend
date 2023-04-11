@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\FieldOfStudy;
 use App\Form\Type\FieldOfStudyType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class FieldOfStudyController extends BaseController
+class FieldOfStudyController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)
     {

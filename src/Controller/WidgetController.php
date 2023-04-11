@@ -28,13 +28,16 @@ class WidgetController extends BaseController
     {
         $department = $this->getDepartmentOrThrow404($request);
         $semester = $this->getSemesterOrThrow404($request);
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
+
         $applicationsAssignedToUser = [];
 
         if ($admissionPeriod !== null) {
-            $applicationRepo = $this->doctrine->getRepository(Application::class);
-            $applicationsAssignedToUser = $applicationRepo->findAssignedByUserAndAdmissionPeriod($this->getUser(), $admissionPeriod);
+            $applicationsAssignedToUser = $this->doctrine
+                ->getRepository(Application::class)
+                ->findAssignedByUserAndAdmissionPeriod($this->getUser(), $admissionPeriod);
         }
 
         return $this->render('widgets/interviews_widget.html.twig', ['applications' => $applicationsAssignedToUser]);
@@ -42,15 +45,20 @@ class WidgetController extends BaseController
 
     public function receipts(): Response
     {
-        $usersWithReceipts = $this->doctrine->getRepository(User::class)->findAllUsersWithReceipts();
+        $usersWithReceipts = $this->doctrine
+            ->getRepository(User::class)
+            ->findAllUsersWithReceipts();
+
         $sorter = $this->sorter;
 
         $sorter->sortUsersByReceiptSubmitTime($usersWithReceipts);
         $sorter->sortUsersByReceiptStatus($usersWithReceipts);
 
-        $pendingReceipts = $this->doctrine->getRepository(Receipt::class)->findByStatus(Receipt::STATUS_PENDING);
-        $pendingReceiptStatistics = new ReceiptStatistics($pendingReceipts);
+        $pendingReceipts = $this->doctrine
+            ->getRepository(Receipt::class)
+            ->findByStatus(Receipt::STATUS_PENDING);
 
+        $pendingReceiptStatistics = new ReceiptStatistics($pendingReceipts);
         $hasReceipts = !empty($pendingReceipts);
 
         return $this->render('widgets/receipts_widget.html.twig', [
@@ -72,8 +80,10 @@ class WidgetController extends BaseController
 
         $admissionStatistics = $this->admissionStatistics;
 
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
+
         $applicationsInSemester = [];
         if ($admissionPeriod !== null) {
             $applicationsInSemester = $this->doctrine

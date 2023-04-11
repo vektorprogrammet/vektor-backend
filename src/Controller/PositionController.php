@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Position;
 use App\Form\Type\CreatePositionType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PositionController extends BaseController
+class PositionController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)
     {
@@ -18,7 +19,9 @@ class PositionController extends BaseController
     public function showPositions(): Response
     {
         // Find all the positions
-        $positions = $this->doctrine->getRepository(Position::class)->findAll();
+        $positions = $this->doctrine
+            ->getRepository(Position::class)
+            ->findAll();
 
         // Return the view with suitable variables
         return $this->render('team_admin/show_positions.html.twig', [
@@ -26,7 +29,7 @@ class PositionController extends BaseController
         ]);
     }
 
-    public function editPosition(Request $request, Position $position = null)
+    public function editPosition(Request $request, Position $position = null): RedirectResponse|Response
     {
         $isCreate = $position === null;
         if ($isCreate) {

@@ -20,9 +20,14 @@ class BoardAndTeamController extends BaseController
     public function show(): Response
     {
         // Find all departments
-        $departments = $this->doctrine->getRepository(Department::class)->findActive();
+        $departments = $this->doctrine
+            ->getRepository(Department::class)
+            ->findActive();
+
         $departments = $this->geoLocation->sortDepartmentsByDistanceFromClient($departments);
-        $board = $this->doctrine->getRepository(ExecutiveBoard::class)->findBoard();
+        $board = $this->doctrine
+            ->getRepository(ExecutiveBoard::class)
+            ->findBoard();
 
         $numberOfTeams = 0;
         foreach ($departments as $department) {

@@ -19,8 +19,14 @@ class HomeController extends BaseController
         $assistantsCount = is_countable($this->doctrine->getRepository(User::class)->findAssistants()) ? count($this->doctrine->getRepository(User::class)->findAssistants()) : 0;
         $teamMembersCount = is_countable($this->doctrine->getRepository(User::class)->findTeamMembers()) ? count($this->doctrine->getRepository(User::class)->findTeamMembers()) : 0;
 
-        $departments = $this->doctrine->getRepository(Department::class)->findAll();
-        $departmentsWithActiveAdmission = $this->doctrine->getRepository(Department::class)->findAllWithActiveAdmission();
+        $departments = $this->doctrine
+            ->getRepository(Department::class)
+            ->findAll();
+
+        $departmentsWithActiveAdmission = $this->doctrine
+            ->getRepository(Department::class)
+            ->findAllWithActiveAdmission();
+
         $departmentsWithActiveAdmission = $geoLocation->sortDepartmentsByDistanceFromClient($departmentsWithActiveAdmission);
         $closestDepartment = $geoLocation->findNearestDepartment($departments);
         $ipWasLocated = $geoLocation->findCoordinatesOfCurrentRequest();

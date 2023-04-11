@@ -29,14 +29,24 @@ class StandController extends BaseController
 
         $admissionStatistics = $this->AdmissionStatistics;
 
-        $subscribers = $this->doctrine->getRepository(AdmissionSubscriber::class)->findFromWebByDepartment($department);
-        $subscribersInDepartmentAndSemester = $this->doctrine->getRepository(AdmissionSubscriber::class)
+        $subscribers = $this->doctrine
+            ->getRepository(AdmissionSubscriber::class)
+            ->findFromWebByDepartment($department);
+
+        $subscribersInDepartmentAndSemester = $this->doctrine
+            ->getRepository(AdmissionSubscriber::class)
             ->findFromWebByDepartmentAndSemester($department, $semester);
+
         $subData = $admissionStatistics->generateGraphDataFromSubscribersInSemester($subscribersInDepartmentAndSemester, $semester);
 
-        $applications = $this->doctrine->getRepository(Application::class)->findByDepartment($department);
-        $admissionPeriod = $this->doctrine->getRepository(AdmissionPeriod::class)
+        $applications = $this->doctrine
+            ->getRepository(Application::class)
+            ->findByDepartment($department);
+
+        $admissionPeriod = $this->doctrine
+            ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
+
         $applicationsInSemester = [];
         $appData = null;
         if ($admissionPeriod !== null) {

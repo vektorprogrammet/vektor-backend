@@ -17,8 +17,10 @@ class SignatureController extends BaseController
     public function showSignatureImage($imageName): BinaryFileResponse
     {
         $user = $this->getUser();
+        $signature = $this->doctrine
+            ->getRepository(Signature::class)
+            ->findByUser($user);
 
-        $signature = $this->doctrine->getRepository(Signature::class)->findByUser($user);
         if ($signature === null) {
             throw new NotFoundHttpException('Signature not found');
         }

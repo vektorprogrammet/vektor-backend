@@ -10,14 +10,15 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdmissionSubscriberController extends BaseController
 {
-    public function __construct(private readonly ManagerRegistry $doctrine)
+    public function __construct(private readonly ManagerRegistry $doctrine, private readonly AdmissionNotifier $admissionNotifier)
     {
     }
 
-    public function subscribePage(Request $request, Department $department)
+    public function subscribePage(Request $request, Department $department): RedirectResponse|Response
     {
         $subscriber = new AdmissionSubscriber();
         $subscriber->setDepartment($department);
@@ -27,7 +28,7 @@ class AdmissionSubscriberController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get(AdmissionNotifier::class)->createSubscription($department, $subscriber->getEmail(), $subscriber->getInfoMeeting());
+                $this->admissionNotifier->createSubscription($department, $subscriber->getEmail(), $subscriber->getInfoMeeting());
                 $this->addFlash('success', $subscriber->getEmail() . ' har blitt meldt på interesselisten. Du vil få en e-post når opptaket starter');
             } catch (\InvalidArgumentException) {
                 $this->addFlash('danger', 'Kunne ikke melde ' . $subscriber->getEmail() . ' på interesselisten. Vennligst prøv igjen.');
@@ -66,7 +67,10 @@ class AdmissionSubscriberController extends BaseController
 
     public function unsubscribe($code): RedirectResponse
     {
-        $subscriber = $this->doctrine->getRepository(AdmissionSubscriber::class)->findByUnsubscribeCode($code);
+        $subscriber = $this->doctrine
+            ->getRepository(AdmissionSubscriber::class)
+            ->findByUnsubscribeCode($code);
+
         $this->addFlash('title', 'Opptaksvarsel - Avmelding');
         if (!$subscriber) {
             $this->addFlash('message', 'Du vil ikke lengre motta varsler om opptak');

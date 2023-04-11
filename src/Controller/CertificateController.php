@@ -26,9 +26,14 @@ class CertificateController extends BaseController
         $semester = $this->getSemesterOrThrow404($request);
         $em = $this->doctrine->getManager();
 
-        $assistants = $em->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($department, $semester);
+        $assistants = $em
+            ->getRepository(AssistantHistory::class)
+            ->findByDepartmentAndSemester($department, $semester);
 
-        $signature = $this->doctrine->getRepository(Signature::class)->findByUser($this->getUser());
+        $signature = $this->doctrine
+            ->getRepository(Signature::class)
+            ->findByUser($this->getUser());
+
         $oldPath = '';
         if ($signature === null) {
             $signature = new Signature();
@@ -62,7 +67,9 @@ class CertificateController extends BaseController
         }
 
         // Finds all the certificate requests
-        $certificateRequests = $this->doctrine->getRepository(CertificateRequest::class)->findAll();
+        $certificateRequests = $this->doctrine
+            ->getRepository(CertificateRequest::class)
+            ->findAll();
 
         return $this->render('certificate/index.html.twig', [
             'certificateRequests' => $certificateRequests,

@@ -25,10 +25,14 @@ class ParticipantHistoryController extends BaseController
         }
 
         // Find all team memberships by department
-        $teamMemberships = $this->doctrine->getRepository(TeamMembership::class)->findTeamMembershipsByDepartment($department);
+        $teamMemberships = $this->doctrine
+            ->getRepository(TeamMembership::class)
+            ->findTeamMembershipsByDepartment($department);
 
         // Find all assistantHistories by department
-        $assistantHistories = $this->doctrine->getRepository(AssistantHistory::class)->findByDepartmentAndSemester($department, $semester);
+        $assistantHistories = $this->doctrine
+            ->getRepository(AssistantHistory::class)
+            ->findByDepartmentAndSemester($department, $semester);
 
         return $this->render('participant_history/index.html.twig', [
             'teamMemberships' => $teamMemberships,
