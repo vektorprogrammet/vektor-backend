@@ -181,8 +181,8 @@ class AssistantController extends BaseController
             }
 
             $admissionPeriod = $em
-                ->getRepository(AdmissionPeriod::class
-                )->findOneWithActiveAdmissionByDepartment($department);
+                ->getRepository(AdmissionPeriod::class)
+                ->findOneWithActiveAdmissionByDepartment($department);
 
             $application->setAdmissionPeriod($admissionPeriod);
             $em->persist($application);
