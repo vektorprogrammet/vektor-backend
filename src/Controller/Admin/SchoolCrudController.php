@@ -27,7 +27,7 @@ class SchoolCrudController extends AbstractCrudController
             TextField::new('phone'),
             BooleanField::new('active'),
             BooleanField::new('international'),
-            AssociationField::new('departments'),
+            AssociationField::new('department'),
         ];
     }
 }

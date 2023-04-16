@@ -80,9 +80,9 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
         // Assert that we have the correct amount of data
         $this->assertEquals(1, $crawler->filter('h2:contains("Skoler i Bergen")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Blussuvoll")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Kari Johansen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("kari@mail.com")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Selsbakk")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("Vibeke Hansen")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("Vibeke@mail.com")')->count());
         $this->assertEquals(1, $crawler->filter('td:contains("Internasjonal")')->count());
     }
 
@@ -102,7 +102,7 @@ class SchoolAdminControllerTest extends BaseWebTestCase
         $this->assertEquals(1, $crawler->filter('td:contains("Rasdal Håland")')->count());
     }
 
-    public function testShowUsersByDepartmentSuperadmin()
+    public function testShowUsersByDepartmentAdmin()
     {
         $client = $this->createAdminClient();
 
@@ -110,9 +110,9 @@ class SchoolAdminControllerTest extends BaseWebTestCase
 
         // Assert that we have the correct amount of data
         $this->assertEquals(1, $crawler->filter('h2:contains("Skoler i Bergen")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Blussuvoll")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("Kari Johansen")')->count());
-        $this->assertEquals(1, $crawler->filter('td:contains("kari@mail.com")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Selsbakk")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("Vibeke Hansen")')->count());
+        $this->assertEquals(1, $crawler->filter('td:contains("Vibeke@mail.com")')->count());
         $this->assertEquals(1, $crawler->filter('td:contains("Internasjonal")')->count());
 
         // Assert a specific 200 status code

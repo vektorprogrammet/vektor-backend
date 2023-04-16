@@ -11,6 +11,14 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+
+        $school0 = new School();
+        $school0->setName('Blussuvoll');
+        $school0->setContactPerson('Kari Johansen');
+        $school0->setEmail('kari@mail.com');
+        $school0->setPhone('22386722');
+        $school0->setInternational(true);
+
         $school1 = new School();
         $school1->setName('Gimse');
         $school1->setContactPerson('Per Olsen');
@@ -22,13 +30,13 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
         $school2->setContactPerson('Vibeke Hansen');
         $school2->setEmail('Vibeke@mail.com');
         $school2->setPhone('22386722');
+        $school2->setInternational(true);
 
         $school3 = new School();
-        $school3->setName('Blussuvoll');
-        $school3->setContactPerson('Kari Johansen');
-        $school3->setEmail('kari@mail.com');
+        $school3->setName('Strinda');
+        $school3->setContactPerson('Peter Andersen');
+        $school3->setEmail('ped@mail.com');
         $school3->setPhone('22386722');
-        $school3->setInternational(true);
 
         $school4 = new School();
         $school4->setName('Katta');
@@ -37,6 +45,7 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
         $school4->setPhone('13424567');
         $school4->setActive(false);
 
+        $manager->persist($school0);
         $manager->persist($school1);
         $manager->persist($school2);
         $manager->persist($school3);
@@ -55,6 +64,7 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->flush();
 
+        $this->addReference('school-0', $school0);
         $this->addReference('school-1', $school1);
         $this->addReference('school-2', $school2);
         $this->addReference('school-3', $school3);

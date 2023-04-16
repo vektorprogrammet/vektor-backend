@@ -201,7 +201,7 @@ class SchoolAdminController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Set the department of the school
-            $school->addDepartment($department);
+            $school->setDepartment($department);
             $department->addSchool($school);
             // If valid insert into database
             $em = $this->doctrine->getManager();

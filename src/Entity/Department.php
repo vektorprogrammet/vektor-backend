@@ -49,7 +49,7 @@ class Department
     private ?string $slackChannel = null;
 
     #[ORM\JoinTable(name: 'department_school')]
-    #[ORM\ManyToMany(targetEntity: 'School', inversedBy: 'departments')]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'School')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     protected $schools;
 

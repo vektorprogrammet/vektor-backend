@@ -24,9 +24,9 @@ class School
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $contactPerson = null;
 
-    #[ORM\ManyToMany(targetEntity: 'Department', mappedBy: 'schools')]
+    #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'schools')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
-    protected $departments;
+    protected ?Department $department = null;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
@@ -61,7 +61,6 @@ class School
 
     public function __construct()
     {
-        $this->departments = new ArrayCollection();
         $this->international = false;
         $this->active = true;
     }
@@ -95,31 +94,17 @@ class School
         return $this->contactPerson;
     }
 
-    public function addDepartment(Department $departments): self
+    public function getDepartment(): ?Department
     {
-        $this->departments[] = $departments;
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): self
+    {
+        $this->department = $department;
 
         return $this;
     }
-
-    /**
-     * Remove departments.
-     */
-    public function removeDepartment(Department $departments): void
-    {
-        $this->departments->removeElement($departments);
-    }
-
-    /**
-     * Get departments.
-     *
-     * @return Collection
-     */
-    public function getDepartments()
-    {
-        return $this->departments;
-    }
-
     /**
      * Set email.
      */
@@ -179,10 +164,8 @@ class School
 
     public function belongsToDepartment(Department $department): bool
     {
-        foreach ($this->departments as $dep) {
-            if ($dep === $department) {
-                return true;
-            }
+        if ($this->department === $department) {
+            return true;
         }
 
         return false;
