@@ -15,6 +15,7 @@
 - php8.2-sqlite3
 - php8.2-xml
 - php8.2-mbstring
+- php8.2-intl
 
 ### Setup:
 
