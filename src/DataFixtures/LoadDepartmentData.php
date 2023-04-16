@@ -16,7 +16,6 @@ class LoadDepartmentData extends AbstractFixture implements OrderedFixtureInterf
         $department1->setShortName('NTNU');
         $department1->setEmail('NTNU@mail.com');
         $department1->addSchool($this->getReference('school-1'));
-        $department1->addSchool($this->getReference('school-2'));
         $department1->addSchool($this->getReference('school-4'));
         $department1->addSchool($this->getReference('school-00'));
         $department1->addSchool($this->getReference('school-01'));
@@ -35,6 +34,21 @@ class LoadDepartmentData extends AbstractFixture implements OrderedFixtureInterf
         $department1->setLogoPath('/images/department_images/ntnu.png');
         $manager->persist($department1);
 
+        // Set school <=> department relation
+        $this->getReference('school-0')->setDepartment($department1);
+        $this->getReference('school-1')->setDepartment($department1);
+        $this->getReference('school-00')->setDepartment($department1);
+        $this->getReference('school-01')->setDepartment($department1);
+        $this->getReference('school-02')->setDepartment($department1);
+        $this->getReference('school-03')->setDepartment($department1);
+        $this->getReference('school-04')->setDepartment($department1);
+        $this->getReference('school-05')->setDepartment($department1);
+        $this->getReference('school-06')->setDepartment($department1);
+        $this->getReference('school-07')->setDepartment($department1);
+        $this->getReference('school-08')->setDepartment($department1);
+        $this->getReference('school-09')->setDepartment($department1);
+
+        // DEPARTMENT 2
         $department2 = new Department();
         $department2->setName('Universitetet i Bergen');
         $department2->setShortName('UiB');
@@ -47,6 +61,10 @@ class LoadDepartmentData extends AbstractFixture implements OrderedFixtureInterf
         $department2->setLogoPath('/images/department_images/hist.png');
         $manager->persist($department2);
 
+        // Set school <=> department relation
+        $this->getReference('school-2')->setDepartment($department2);
+
+        // DEPARTMENT 3
         $department3 = new Department();
         $department3->setName('Norges miljø- og biovitenskapelige universitet');
         $department3->setShortName('NMBU');
@@ -59,6 +77,10 @@ class LoadDepartmentData extends AbstractFixture implements OrderedFixtureInterf
         $department3->setLogoPath('/images/department_images/nmbu.png');
         $manager->persist($department3);
 
+        // Set school <=> department relation
+        $this->getReference('school-3')->setDepartment($department3);
+
+        // Department 4
         $department4 = new Department();
         $department4->setName('Universitetet i Oslo');
         $department4->setShortName('UiO');
@@ -70,6 +92,9 @@ class LoadDepartmentData extends AbstractFixture implements OrderedFixtureInterf
         $department4->setLongitude('10.721170');
         $department4->setLogoPath('/images/department_images/uio.png');
         $manager->persist($department4);
+
+        // Set school <=> department relation
+        $this->getReference('school-4')->setDepartment($department4);
 
         $manager->flush();
 

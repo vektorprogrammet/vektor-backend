@@ -34,8 +34,8 @@ class SchoolEntityUnitTest extends TestCase
         $this->assertEquals('Vibeke', $school->getContactPerson());
     }
 
-    // Check whether the addDepartment function is working correctly
-    public function testAddDepartment()
+    // Check whether the setDepartment function is working correctly
+    public function testSetDepartment()
     {
         // new entity
         $school = new School();
@@ -44,50 +44,12 @@ class SchoolEntityUnitTest extends TestCase
         $department1 = new Department();
         $department1->setName('NTNU');
 
-        // Use the addDepartment method
-        $school->addDepartment($department1);
+        // Use the setDepartment method
+        $school->setDepartment($department1);
 
-        // Departments are stored in an array
-        $departments = $school->getDepartments();
+        $school_dep = $school->getDepartment();
 
-        // Loop through the array and check for matches
-        foreach ($departments as $d) {
-            if ($department1 === $d) {
-                // Assert the result
-                $this->assertEquals($department1, $d);
-            }
-        }
-    }
-
-    // Check whether the removeDepartment function is working correctly
-    public function testRemoveDepartment()
-    {
-        // new entity
-        $school = new School();
-
-        $department1 = new Department();
-        $department1->setName('Department1');
-        $department2 = new Department();
-        $department2->setName('Department2');
-        $department3 = new Department();
-        $department3->setName('Department3');
-
-        // Use the addDepartment method
-        $school->addDepartment($department1);
-        $school->addDepartment($department2);
-        $school->addDepartment($department3);
-
-        // Remove $department1
-        $school->removeDepartment($department1);
-
-        // Departments are stored in an array
-        $departments = $school->getDepartments();
-
-        // Loop through the array
-        foreach ($departments as $d) {
-            // Assert the result
-            $this->assertNotEquals($department1, $d);
-        }
+        $this->assertEquals($school_dep, $department1);
     }
 
     // Check whether the setEmail unction is working correctly

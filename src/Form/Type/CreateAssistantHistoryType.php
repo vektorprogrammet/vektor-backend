@@ -45,9 +45,8 @@ class CreateAssistantHistoryType extends AbstractType
                 'class' => School::class,
                 'query_builder' => fn (EntityRepository $er) => $er->createQueryBuilder('s')
                     ->orderBy('s.name', 'ASC')
-                    ->JOIN('s.departments', 'd')
-                    // Since it is a many to many bidirectional relationship we have to use the MEMBER OF function
-                    ->where(':department MEMBER OF s.departments')
+                    ->JOIN('s.department', 'd')
+                    ->where(':department = s.department')
                     ->andWhere('s.active = true')
                     ->setParameter('department', $this->department),
             ])

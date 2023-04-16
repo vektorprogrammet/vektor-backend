@@ -55,8 +55,8 @@ class SchoolRepository extends EntityRepository
     {
         return $this->createQueryBuilder('school')
             ->select('school')
-            ->join('school.departments', 'departments')
-            ->where('departments = :department')
+            ->join('school.department', 'dep')
+            ->where('dep = :department')
             ->setParameter('department', $department);
     }
 }
