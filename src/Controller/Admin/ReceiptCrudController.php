@@ -25,9 +25,9 @@ class ReceiptCrudController extends AbstractCrudController
             ->hideOnForm();
         yield AssociationField::new('user')
             ->hideOnForm();
-        yield TextField::new("description");
+        yield TextField::new('description');
         yield NumberField::new('sum');
-        yield TextField::new("picturePath")
+        yield TextField::new('picturePath')
             ->hideOnIndex();
         yield TextField::new('status');
         yield DateTimeField::new('submitDate')

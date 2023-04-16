@@ -43,6 +43,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Sponsor', 'fas fa-money-bill', Sponsor::class);
         yield MenuItem::linkToCrud('Team', 'fas fa-people-group', Team::class);
         yield MenuItem::linkToCrud('Receipt', 'fas fa-dollar-sign', Receipt::class);
-
     }
 }
