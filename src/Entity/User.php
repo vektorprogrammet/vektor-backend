@@ -75,12 +75,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name: 'is_active', type: 'boolean')]
     private $isActive;
 
-    #[ORM\Column(type: 'boolean', nullable: false)]
-    private $reservedFromPopUp;
-
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private $lastPopUpTime;
-
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
@@ -122,8 +116,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isActive = true;
         $this->picture_path = 'images/defaultProfile.png';
         $this->receipts = new ArrayCollection();
-        $this->reservedFromPopUp = false;
-        $this->lastPopUpTime = new \DateTime('2000-01-01');
     }
 
     public function getId(): ?int
@@ -614,29 +606,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $activeTeamMemberships;
-    }
-
-    public function getReservedFromPopUp(): bool
-    {
-        return $this->reservedFromPopUp;
-    }
-
-    public function setReservedFromPopUp(bool $reservedFromPopUp): void
-    {
-        $this->reservedFromPopUp = $reservedFromPopUp;
-    }
-
-    public function getLastPopUpTime(): \DateTime
-    {
-        return $this->lastPopUpTime;
-    }
-
-    /**
-     * @param \DateTime $lastPopUpTime
-     */
-    public function setLastPopUpTime($lastPopUpTime): void
-    {
-        $this->lastPopUpTime = $lastPopUpTime;
     }
 
     /**
