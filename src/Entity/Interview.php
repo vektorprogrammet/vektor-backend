@@ -52,14 +52,16 @@ class Interview
     #[ORM\ManyToOne(targetEntity: 'InterviewSchema')]
     #[ORM\JoinColumn(name: 'schema_id', referencedColumnName: 'id')]
     private $interviewSchema; // Bidirectional, may turn out to be unidirectional
+
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'interviews')]
     #[ORM\JoinColumn(name: 'interviewer_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private $interviewer; // Unidirectional, may turn out to be bidirectional
+
     #[ORM\ManyToOne(targetEntity: 'User')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $coInterviewer;
 
-    #[ORM\OneToMany(targetEntity: 'InterviewAnswer', mappedBy: 'interview', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'interview', targetEntity: 'InterviewAnswer', cascade: ['persist', 'remove'])]
     #[Assert\Valid]
     private $interviewAnswers;
 
@@ -78,7 +80,7 @@ class Interview
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $user;
 
-    #[ORM\OneToOne(targetEntity: 'Application', mappedBy: 'interview')]
+    #[ORM\OneToOne(mappedBy: 'interview', targetEntity: 'Application')]
     private $application;
 
     #[ORM\Column(type: 'string', nullable: true)]

@@ -12,6 +12,7 @@ class Receipt
     public const STATUS_PENDING = 'pending';
     public const STATUS_REFUNDED = 'refunded';
     public const STATUS_REJECTED = 'rejected';
+
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

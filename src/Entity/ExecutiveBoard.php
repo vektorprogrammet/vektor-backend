@@ -25,14 +25,14 @@ class ExecutiveBoard implements TeamInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
-    #[ORM\Column(type: 'string', nullable: true, name: 'short_description')]
-    #[Assert\Length(maxMessage: 'Maks 125 Tegn', max: 125)]
+    #[ORM\Column(name: 'short_description', type: 'string', nullable: true)]
+    #[Assert\Length(max: 125, maxMessage: 'Maks 125 Tegn')]
     private ?string $shortDescription = null;
 
     /**
      * @var ExecutiveBoardMembership[]
      */
-    #[ORM\OneToMany(targetEntity: 'ExecutiveBoardMembership', mappedBy: 'board')]
+    #[ORM\OneToMany(mappedBy: 'board', targetEntity: 'ExecutiveBoardMembership')]
     private $boardMemberships;
 
     public function __toString()

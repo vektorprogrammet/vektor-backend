@@ -48,7 +48,7 @@ class School
     /**
      * @var SchoolCapacity[]
      */
-    #[ORM\OneToMany(targetEntity: 'SchoolCapacity', mappedBy: 'school')]
+    #[ORM\OneToMany(mappedBy: 'school', targetEntity: 'SchoolCapacity')]
     private $capacities;
 
     /**

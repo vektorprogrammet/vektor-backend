@@ -37,8 +37,8 @@ class Team implements TeamInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
-    #[ORM\Column(type: 'string', nullable: true, name: 'short_description')]
-    #[Assert\Length(maxMessage: 'Maks 125 Tegn', max: 125)]
+    #[ORM\Column(name: 'short_description', type: 'string', nullable: true)]
+    #[Assert\Length(max: 125, maxMessage: 'Maks 125 Tegn')]
     private $shortDescription;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -66,7 +66,7 @@ class Team implements TeamInterface
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     private $active;
 
-    #[ORM\OneToMany(targetEntity: 'TeamApplication', mappedBy: 'team')]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamApplication')]
     private $applications;
 
     public function isActive(): bool
@@ -82,7 +82,7 @@ class Team implements TeamInterface
     /**
      * @var TeamMembership[]
      */
-    #[ORM\OneToMany(targetEntity: 'TeamMembership', mappedBy: 'team')]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamMembership')]
     private $teamMemberships;
 
     /**

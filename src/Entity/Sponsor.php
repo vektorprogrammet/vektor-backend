@@ -45,7 +45,7 @@ class Sponsor
         return $this->size;
     }
 
-    public function setSize(string $size): Sponsor
+    public function setSize(string $size): self
     {
         $this->size = $size;
 
@@ -57,7 +57,7 @@ class Sponsor
         return $this->id;
     }
 
-    public function setName(string $name): Sponsor
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -69,7 +69,7 @@ class Sponsor
         return $this->name;
     }
 
-    public function setUrl(string $url): Sponsor
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -81,7 +81,7 @@ class Sponsor
         return $this->url;
     }
 
-    public function setLogoImagePath(?string $logoImagePath): Sponsor
+    public function setLogoImagePath(?string $logoImagePath): self
     {
         $this->logoImagePath = $logoImagePath;
 

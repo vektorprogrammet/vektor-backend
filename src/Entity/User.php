@@ -84,28 +84,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var AssistantHistory[]
      */
-    #[ORM\OneToMany(targetEntity: 'AssistantHistory', mappedBy: 'user')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'AssistantHistory')]
     private $assistantHistories;
 
     /**
      * @var TeamMembership[]
      */
-    #[ORM\OneToMany(targetEntity: 'TeamMembership', mappedBy: 'user')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'TeamMembership')]
     private $teamMemberships;
 
     /**
      * @var ExecutiveBoardMembership[]
      */
-    #[ORM\OneToMany(targetEntity: 'ExecutiveBoardMembership', mappedBy: 'user')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'ExecutiveBoardMembership')]
     private $executiveBoardMemberships;
 
-    #[ORM\OneToMany(targetEntity: 'CertificateRequest', mappedBy: 'user')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'CertificateRequest')]
     protected $certificateRequests;
 
-    #[ORM\OneToMany(targetEntity: 'Interview', mappedBy: 'interviewer')]
+    #[ORM\OneToMany(mappedBy: 'interviewer', targetEntity: 'Interview')]
     private $interviews;
 
-    #[ORM\OneToMany(targetEntity: 'Receipt', mappedBy: 'user')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'Receipt')]
     private $receipts;
 
     public function __construct()
