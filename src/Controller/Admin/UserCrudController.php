@@ -33,7 +33,8 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('email');
         yield TextField::new('companyEmail');
 //        yield TextField::new('roles');
-        yield TextField::new('picture_path');
+        yield TextField::new('picture_path')
+            ->hideOnIndex();
         yield BooleanField::new('isActive');
         yield TextField::new('new_user_code')
             ->hideOnIndex();
