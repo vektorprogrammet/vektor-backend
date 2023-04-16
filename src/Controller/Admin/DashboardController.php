@@ -7,6 +7,7 @@ use App\Entity\FieldOfStudy;
 use App\Entity\School;
 use App\Entity\Semester;
 use App\Entity\Sponsor;
+use App\Entity\Team;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -39,6 +40,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Department', 'fas fa-building', Department::class);
         yield MenuItem::linkToCrud('Semester', 'fas fa-calendar-days', Semester::class);
         yield MenuItem::linkToCrud('Sponsor', 'fas fa-money-bill', Sponsor::class);
+        yield MenuItem::linkToCrud('Team', 'fas fa-people-group', Team::class);
 
     }
 }
