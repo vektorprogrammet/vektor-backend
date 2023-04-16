@@ -9,6 +9,7 @@ use App\Entity\School;
 use App\Entity\Semester;
 use App\Entity\Sponsor;
 use App\Entity\Team;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -43,5 +44,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Sponsor', 'fas fa-money-bill', Sponsor::class);
         yield MenuItem::linkToCrud('Team', 'fas fa-people-group', Team::class);
         yield MenuItem::linkToCrud('Receipt', 'fas fa-dollar-sign', Receipt::class);
+        yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
     }
 }

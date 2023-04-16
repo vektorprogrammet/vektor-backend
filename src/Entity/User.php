@@ -277,7 +277,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Get user_name.
      */
-    public function getUserIdentifier(): string
+    public function getUserIdentifier(): ?string
     {
         return $this->user_name;
     }
@@ -288,7 +288,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Required for now because UserInterface has this method.
      * DO NOT use this method. Use "getUserIdentifier()" instead.
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->user_name;
     }
