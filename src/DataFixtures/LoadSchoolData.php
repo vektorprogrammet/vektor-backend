@@ -11,7 +11,6 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-
         $school0 = new School();
         $school0->setName('Blussuvoll');
         $school0->setContactPerson('Kari Johansen');
