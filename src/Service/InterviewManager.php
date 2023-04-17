@@ -51,7 +51,7 @@ class InterviewManager
         $existingQuestions = array_map(fn (InterviewAnswer $interviewAnswer) => $interviewAnswer->getInterviewQuestion(), $existingAnswers);
 
         foreach ($interview->getInterviewSchema()->getInterviewQuestions() as $interviewQuestion) {
-            $interviewAlreadyHasQuestion = array_search($interviewQuestion, $existingQuestions, true) !== false;
+            $interviewAlreadyHasQuestion = in_array($interviewQuestion, $existingQuestions, true);
             if ($interviewAlreadyHasQuestion) {
                 continue;
             }

@@ -21,11 +21,9 @@ class AdmissionNotifier
         private readonly EntityManagerInterface $em,
         private readonly EmailSender $emailSender,
         private readonly LoggerInterface $logger,
-        private ValidatorInterface $validator,
+        private readonly ValidatorInterface $validator,
         private readonly int $sendLimit
-    ) {
-        $this->validator = $validator;
-    }
+    ) {}
 
     /**
      * @throws \InvalidArgumentException
@@ -71,8 +69,8 @@ class AdmissionNotifier
                     if ($notificationsSent >= $this->sendLimit) {
                         break;
                     }
-                    $hasApplied = array_search($subscriber->getEmail(), $applicationEmails, true) !== false;
-                    $alreadyNotified = array_search($subscriber->getEmail(), $notificationEmails, true) !== false;
+                    $hasApplied = in_array($subscriber->getEmail(), $applicationEmails, true);
+                    $alreadyNotified = in_array($subscriber->getEmail(), $notificationEmails, true);
                     $subscribedMoreThanOneYearAgo = $subscriber->getTimestamp()->diff(new \DateTime())->y >= 1;
                     if ($hasApplied || $alreadyNotified || $subscribedMoreThanOneYearAgo) {
                         continue;
@@ -123,8 +121,8 @@ class AdmissionNotifier
                     if ($notificationsSent >= $this->sendLimit) {
                         break;
                     }
-                    $hasApplied = array_search($subscriber->getEmail(), $applicationEmails, true) !== false;
-                    $alreadyNotified = array_search($subscriber->getEmail(), $notificationEmails, true) !== false;
+                    $hasApplied = in_array($subscriber->getEmail(), $applicationEmails, true);
+                    $alreadyNotified = in_array($subscriber->getEmail(), $notificationEmails, true);
                     $subscribedMoreThanOneYearAgo = $subscriber->getTimestamp()->diff(new \DateTime())->y >= 1;
                     if ($hasApplied || $alreadyNotified || $subscribedMoreThanOneYearAgo || !$subscriber->getInfoMeeting()) {
                         continue;

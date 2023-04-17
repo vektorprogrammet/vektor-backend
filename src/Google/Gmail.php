@@ -32,7 +32,7 @@ class Gmail extends GoogleService implements MailerInterface
             return;
         }
 
-        if (array_search('SENT', $res->getLabelIds(), true) !== false && !$disableLogging) {
+        if (in_array('SENT', $res->getLabelIds(), true) && !$disableLogging) {
             $this->logger->info("Email sent to {$this->recipientsToHeader($message->getTo())}: `{$message->getSubject()}`");
         } else {
             $this->logger->notice(

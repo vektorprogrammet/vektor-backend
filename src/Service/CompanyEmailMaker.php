@@ -25,12 +25,12 @@ class CompanyEmailMaker
 
         // self::EMAIL_DOMAIN is constant @vektorprogrammet.no
         $email = preg_replace('/\s+/', '.', $firstName) . self::EMAIL_DOMAIN;
-        if (array_search($email, $allEmails, true) !== false) {
+        if (in_array($email, $allEmails, true)) {
             $email = preg_replace('/\s+/', '.', $fullName) . self::EMAIL_DOMAIN;
         }
 
         $i = 2;
-        while (array_search($email, $allEmails, true) !== false) {
+        while (in_array($email, $allEmails, true)) {
             $email = preg_replace('/\s+/', '.', $fullName) . $i . self::EMAIL_DOMAIN;
             ++$i;
         }
