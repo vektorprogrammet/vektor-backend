@@ -34,11 +34,11 @@ class TeamApplication
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $motivationText;
+    private ?string $motivationText = null;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $biography;
+    private ?string $biography = null;
 
     #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'applications')]
     private ?Team $team = null;
@@ -65,10 +65,7 @@ class TeamApplication
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -78,10 +75,7 @@ class TeamApplication
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -101,42 +95,27 @@ class TeamApplication
         return $this->fieldOfStudy;
     }
 
-    /**
-     * @param string $fieldOfStudy
-     */
-    public function setFieldOfStudy($fieldOfStudy): void
+    public function setFieldOfStudy(string $fieldOfStudy): void
     {
         $this->fieldOfStudy = $fieldOfStudy;
     }
 
-    /**
-     * @return string
-     */
-    public function getMotivationText()
+    public function getMotivationText(): ?string
     {
         return $this->motivationText;
     }
 
-    /**
-     * @param string $motivationText
-     */
-    public function setMotivationText($motivationText)
+    public function setMotivationText(string $motivationText): void
     {
         $this->motivationText = $motivationText;
     }
 
-    /**
-     * @return string
-     */
-    public function getBiography()
+    public function getBiography(): ?string
     {
         return $this->biography;
     }
 
-    /**
-     * @param string $biography
-     */
-    public function setBiography($biography)
+    public function setBiography(string $biography): void
     {
         $this->biography = $biography;
     }
@@ -146,10 +125,7 @@ class TeamApplication
         return $this->yearOfStudy;
     }
 
-    /**
-     * @param string $yearOfStudy
-     */
-    public function setYearOfStudy($yearOfStudy): void
+    public function setYearOfStudy(string $yearOfStudy): void
     {
         $this->yearOfStudy = $yearOfStudy;
     }
@@ -159,10 +135,7 @@ class TeamApplication
         return $this->phone;
     }
 
-    /**
-     * @param string $phone
-     */
-    public function setPhone($phone): void
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }

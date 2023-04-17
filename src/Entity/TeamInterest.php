@@ -25,11 +25,8 @@ class TeamInterest implements DepartmentSemesterInterface
     #[Assert\Email(message: 'Emailen din er ikke formatert riktig')]
     private ?string $email = null;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'timestamp', type: 'datetime')]
-    private $timestamp;
+    private ?\DateTime $timestamp = null;
 
     /**
      * @var Team[]
@@ -39,17 +36,11 @@ class TeamInterest implements DepartmentSemesterInterface
     #[Assert\Count(min: 1, minMessage: 'Du må velge minst ett team')]
     private $potentialTeams;
 
-    /**
-     * @var Semester
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Semester')]
-    private $semester;
+    private ?Semester $semester = null;
 
-    /**
-     * @var Department
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Department')]
-    private $department;
+    private ?Department $department = null;
 
     /**
      * TeamInterest constructor.
@@ -69,24 +60,14 @@ class TeamInterest implements DepartmentSemesterInterface
         return $this->name;
     }
 
-    /**
-     * Get name.
-     *
-     * @param string $name
-     */
-    public function setName($name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Set email.
-     *
-     * @param string $email
-     */
-    public function setEmail($email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -98,12 +79,7 @@ class TeamInterest implements DepartmentSemesterInterface
         return $this->email;
     }
 
-    /**
-     * Get timestamp.
-     *
-     * @return \DateTime
-     */
-    public function getTimestamp()
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
@@ -130,19 +106,11 @@ class TeamInterest implements DepartmentSemesterInterface
         return $this;
     }
 
-    /**
-     * Get semester.
-     *
-     * @return Semester
-     */
-    public function getSemester()
+    public function getSemester(): ?Semester
     {
         return $this->semester;
     }
 
-    /**
-     * Set semester.
-     */
     public function setSemester(Semester $semester): self
     {
         $this->semester = $semester;

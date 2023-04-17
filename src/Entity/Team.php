@@ -15,37 +15,35 @@ class Team implements TeamInterface
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    protected ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 250)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    protected $name;
+    protected ?string $name = null;
 
-    /**
-     * @CustomAssert\UniqueCompanyEmail
-     * @CustomAssert\VektorEmail
-     */
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\Email(message: 'Ugyldig e-post')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være blankt.')]
-    private $email;
+    #[CustomAssert\UniqueCompanyEmail]
+    #[CustomAssert\VektorEmail]
+    private ?string $email = null;
 
     #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'teams')]
     #[Assert\NotNull(message: 'Avdeling kan ikke være null')]
-    protected $department;
+    protected ?Department $department = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private $description;
+    private ?string $description = null;
 
     #[ORM\Column(name: 'short_description', type: 'string', nullable: true)]
     #[Assert\Length(max: 125, maxMessage: 'Maks 125 Tegn')]
-    private $shortDescription;
+    private ?string $shortDescription = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $acceptApplication;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $deadline;
+    private ?\DateTime $deadline = null;
 
     /**
      * Applications with team interest.
@@ -85,10 +83,7 @@ class Team implements TeamInterface
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamMembership')]
     private $teamMemberships;
 
-    /**
-     * @return bool
-     */
-    public function getAcceptApplication()
+    public function getAcceptApplication(): bool
     {
         return $this->acceptApplication;
     }
@@ -114,63 +109,36 @@ class Team implements TeamInterface
         return (string) $this->getName();
     }
 
-    public function getType()
+    public function getType(): string
     {
         return 'team';
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Team
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Set department.
-     *
-     * @return Team
-     */
-    public function setDepartment(Department $department = null)
+    public function setDepartment(Department $department = null): self
     {
         $this->department = $department;
 
         return $this;
     }
 
-    /**
-     * Get department.
-     *
-     * @return Department
-     */
-    public function getDepartment()
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
@@ -184,38 +152,24 @@ class Team implements TeamInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @return $this|Team
-     */
-    public function setEmail(string $email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDeadline()
+    public function getDeadline(): ?\DateTime
     {
         return $this->deadline;
     }
 
-    /**
-     * @param \DateTime $deadline
-     *
-     * @return Team
-     */
-    public function setDeadline($deadline)
+    public function setDeadline(\DateTime $deadline = null): self
     {
         $now = new \DateTime();
         if ($this->acceptApplication && $now <= $deadline) {
@@ -227,17 +181,11 @@ class Team implements TeamInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
     public function setDescription($description): self
     {
         $this->description = $description;
@@ -245,20 +193,12 @@ class Team implements TeamInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortDescription()
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
 
-    /**
-     * @param string $shortDescription
-     *
-     * @return Team
-     */
-    public function setShortDescription($shortDescription)
+    public function setShortDescription($shortDescription): self
     {
         $this->shortDescription = $shortDescription;
 
@@ -363,10 +303,7 @@ class Team implements TeamInterface
         $this->applications = $applications;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAcceptApplicationAndDeadline()
+    public function getAcceptApplicationAndDeadline(): bool
     {
         $now = new \DateTime();
 

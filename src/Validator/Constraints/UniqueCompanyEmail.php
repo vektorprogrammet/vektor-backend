@@ -4,9 +4,7 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[\Attribute]
 class UniqueCompanyEmail extends Constraint
 {
     public string $message = 'E-posten "{{ email }}" er allerede i bruk';
