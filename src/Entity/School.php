@@ -38,12 +38,9 @@ class School
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $phone = null;
 
-    /**
-     * @var bool
-     */
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $international;
+    private ?bool $international = null;
 
     /**
      * @var SchoolCapacity[]
@@ -145,10 +142,7 @@ class School
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isInternational()
+    public function isInternational(): ?bool
     {
         return $this->international;
     }

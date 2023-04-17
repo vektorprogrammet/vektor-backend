@@ -27,10 +27,10 @@ class Receipt
 
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $receiptDate;
+    private ?\DateTime $receiptDate = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $refundDate;
+    private ?\DateTime $refundDate = null;
 
     #[ORM\Column(name: 'picture_path', type: 'string', nullable: true)]
     private ?string $picturePath = null;
@@ -49,7 +49,7 @@ class Receipt
     private ?string $status = null;
 
     #[ORM\Column(name: 'visual_id', type: 'string', nullable: true)]
-    private $visualId;
+    private ?string $visualId = null;
 
     public function __construct()
     {

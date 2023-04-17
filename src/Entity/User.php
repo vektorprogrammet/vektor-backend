@@ -71,7 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $companyEmail = null;
 
     #[ORM\Column(name: 'is_active', type: 'boolean')]
-    private $isActive;
+    private bool $isActive;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
