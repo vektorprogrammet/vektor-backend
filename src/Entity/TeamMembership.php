@@ -96,7 +96,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Get team.
-     *
      */
     public function getTeam(): ?Team
     {
@@ -135,7 +134,6 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Get startSemester.
-     *
      */
     public function getStartSemester(): ?Semester
     {
