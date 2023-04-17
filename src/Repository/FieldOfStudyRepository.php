@@ -8,34 +8,6 @@ use Doctrine\ORM\EntityRepository;
 
 class FieldOfStudyRepository extends EntityRepository
 {
-    /*	Perhaps not needed anymore?
-
-    public function findFieldOfStudyByName($shortName){
-        $stmt = $this
-                    ->getConnection()
-                   ->prepare('
-                    SELECT *
-                    FROM Field_of_study F
-                    WHERE shortName = :shortName
-                    ');
-
-        $stmt->bindValue('shortName', $shortName);
-        $stmt->execute();
-
-        return $stmt->fetchAll();
-    }
-<<<<<<< Updated upstream
-    */
-
-    public function findAllFieldOfStudy()
-    {
-        return $this->createQueryBuilder('FieldOfStudy')
-            ->select('FieldOfStudy')
-            ->distinct()
-            ->getQuery()
-            ->getResult();
-    }
-
     /**
      * @return FieldOfStudy[]
      */

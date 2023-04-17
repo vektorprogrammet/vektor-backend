@@ -63,6 +63,7 @@ class DbSubscriber implements EventSubscriber
             return;
         }
 
+        # TODO: fix next line, set to Role ASSISTANT
         $defaultRole = $this->manager->getRepository(Role::class)->findByRoleName(Roles::ASSISTANT);
         $user->addRole($defaultRole);
     }

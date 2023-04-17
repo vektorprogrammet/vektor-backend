@@ -12,30 +12,6 @@ use Doctrine\ORM\NoResultException;
 class SchoolCapacityRepository extends EntityRepository
 {
     /**
-     * @param Department $school
-     * @param Semester   $semester
-     *
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     *
-     * @return SchoolCapacity
-     */
-    public function findBySchoolAndSemester($school, $semester)
-    {
-        $schoolCapacities = $this->getEntityManager()->createQuery('
-		SELECT sc
-		FROM App:SchoolCapacity sc
-		WHERE sc.school = :school
-		AND sc.semester = :semester
-		')
-            ->setParameter('school', $school)
-            ->setParameter('semester', $semester)
-            ->getSingleResult();
-
-        return $schoolCapacities;
-    }
-
-    /**
      * @return SchoolCapacity[]
      */
     public function findByDepartmentAndSemester(Department $department, Semester $semester)

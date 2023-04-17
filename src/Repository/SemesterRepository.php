@@ -84,19 +84,4 @@ class SemesterRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    /**
-     * @throws NonUniqueResultException|ORMException
-     */
-    public function getNextActive(Semester $semester): ?Semester
-    {
-        if ($semester === $this->findOrCreateCurrentSemester()) {
-            return null;
-        }
-        if ($semester->getSemesterTime() === 'Høst') {
-            return $this->findByTimeAndYear('Vår', (string) ((int) $semester->getYear() + 1));
-        }
-
-        return $this->findByTimeAndYear('Høst', $semester->getYear());
-    }
 }
