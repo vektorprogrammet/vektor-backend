@@ -22,9 +22,7 @@ class InterviewAnswer
     #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id')]
     protected $interviewQuestion;
 
-    /**
-     * @CustomAssert\InterviewAnswer(groups={"interview"})
-     */
+    #[CustomAssert\InterviewAnswer(groups: ["interview"])]
     #[ORM\Column(type: 'array', nullable: true)]
     protected $answer;
 

@@ -6,11 +6,9 @@ use App\Validator\Constraints as CustomAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @CustomAssert\ApplicationEmail(groups={"admission"})
- */
 #[ORM\Table(name: 'application')]
 #[ORM\Entity(repositoryClass: 'App\Repository\ApplicationRepository')]
+#[CustomAssert\ApplicationEmail(groups: ['admission'])]
 class Application implements DepartmentSemesterInterface
 {
     #[ORM\Column(type: 'integer')]
