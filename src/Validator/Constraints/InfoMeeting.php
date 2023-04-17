@@ -5,10 +5,10 @@ namespace App\Validator\Constraints;
 use Attribute;
 use Symfony\Component\Validator\Constraint;
 
-#[Attribute]
+#[\Attribute]
 class InfoMeeting extends Constraint
 {
-    public $message = 'Infomøtet må ha en dato for å kunne vises på nettsiden';
+    public string $message = 'Infomøtet må ha en dato for å kunne vises på nettsiden';
 
     public function getTargets(): string|array
     {

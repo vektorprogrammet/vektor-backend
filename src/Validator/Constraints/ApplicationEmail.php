@@ -5,10 +5,10 @@ namespace App\Validator\Constraints;
 use Attribute;
 use Symfony\Component\Validator\Constraint;
 
-#[Attribute]
+#[\Attribute]
 class ApplicationEmail extends Constraint
 {
-    public $message = 'En søknad med {{ email }} har allerede blitt registert';
+    public string $message = 'En søknad med {{ email }} har allerede blitt registert';
 
     public function getTargets(): string|array
     {
