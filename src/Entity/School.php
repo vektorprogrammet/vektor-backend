@@ -38,9 +38,10 @@ class School
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $phone = null;
 
+    # TODO: dette feltet settes til 0 eller 1. Vi burde bruke bool
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private ?bool $international = null;
+    private $international;
 
     /**
      * @var SchoolCapacity[]
