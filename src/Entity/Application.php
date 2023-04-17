@@ -65,6 +65,7 @@ class Application implements DepartmentSemesterInterface
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
+    # TODO: refactor to use actual boolean values (not 1, 2..)
     private $doublePosition;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -89,22 +90,21 @@ class Application implements DepartmentSemesterInterface
     private ?\DateTime $created = null;
 
     #[ORM\Column(type: 'array')]
+    # TODO: type array is deprecated
     private $heardAboutFrom;
 
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
+    # TODO: refactor to use actual boolean values (not 1, 2..)
     private $teamInterest;
 
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', inversedBy: 'potentialMembers')]
     private $potentialTeams;
 
-    /**
-     * @var Interview
-     */
     #[ORM\OneToOne(inversedBy: 'application', targetEntity: 'Interview', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     #[Assert\Valid]
-    private $interview;
+    private ?Interview $interview = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $specialNeeds = null;

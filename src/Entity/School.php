@@ -52,6 +52,7 @@ class School
     /**
      * @var bool
      */
+    # TODO: refactor to use actual boolean values (not 1, 2..)
     #[ORM\Column(type: 'boolean', options: ['default' => 1])]
     private $active;
 
