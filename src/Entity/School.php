@@ -38,7 +38,7 @@ class School
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $phone = null;
 
-    # TODO: dette feltet settes til 0 eller 1. Vi burde bruke bool
+    // TODO: dette feltet settes til 0 eller 1. Vi burde bruke bool
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private $international;
@@ -52,7 +52,7 @@ class School
     /**
      * @var bool
      */
-    # TODO: refactor to use actual boolean values (not 1, 2..)
+    // TODO: refactor to use actual boolean values (not 1, 2..)
     #[ORM\Column(type: 'boolean', options: ['default' => 1])]
     private $active;
 

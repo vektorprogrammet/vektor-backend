@@ -67,7 +67,7 @@ class Department
     #[Assert\Length(min: 1, max: 255, maxMessage: '"Pathkanmaksvære')]
     private ?string $logoPath = null;
 
-    # TODO: refactor to use actual boolean values (not 1, 2..)
+    // TODO: refactor to use actual boolean values (not 1, 2..)
     #[ORM\Column(name: 'active', type: 'boolean', nullable: false, options: ['default' => 1])]
     private $active;
 
