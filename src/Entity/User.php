@@ -64,12 +64,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(message: 'Ikke gyldig e-post.', groups: ['admission', 'create_user', 'edit_user'])]
     private ?string $email = null;
 
-    /**
-     * @CustomAssert\UniqueCompanyEmail
-     * @CustomAssert\VektorEmail
-     */
     #[ORM\Column(type: 'string', unique: true, nullable: true)]
     #[Assert\Email]
+    #[CustomAssert\UniqueCompanyEmail]
+    #[CustomAssert\VektorEmail]
     private ?string $companyEmail = null;
 
     #[ORM\Column(name: 'is_active', type: 'boolean')]
