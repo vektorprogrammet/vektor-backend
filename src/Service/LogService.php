@@ -146,18 +146,11 @@ class LogService implements LoggerInterface
 
     private function getLogColor($level): string
     {
-        switch ($level) {
-            case 'INFO':
-                return '#6fceee';
-            case 'WARNING':
-                return '#fd7e14';
-            case 'CRITICAL':
-            case 'ERROR':
-            case 'ALERT':
-            case 'EMERGENCY':
-                return '#dc3545';
-            default:
-                return '#007bff';
-        }
+        return match ($level) {
+            'INFO' => '#6fceee',
+            'WARNING' => '#fd7e14',
+            'CRITICAL', 'ERROR', 'ALERT', 'EMERGENCY' => '#dc3545',
+            default => '#007bff',
+        };
     }
 }
