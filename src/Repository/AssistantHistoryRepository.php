@@ -53,7 +53,7 @@ class AssistantHistoryRepository extends EntityRepository
      */
     public function findActiveAssistantHistoriesByUser($user): array
     {
-        # TODO: Rewrite to use QueryBuilder
+        // TODO: Rewrite to use QueryBuilder
         $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 		
@@ -81,7 +81,7 @@ class AssistantHistoryRepository extends EntityRepository
      */
     public function findActiveAssistantHistoriesBySchool(School $school): array
     {
-        # TODO: Rewrite to use QueryBuilder
+        // TODO: Rewrite to use QueryBuilder
         $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 
@@ -109,7 +109,7 @@ class AssistantHistoryRepository extends EntityRepository
      */
     public function findInactiveAssistantHistoriesBySchool(School $school): array
     {
-        # TODO: Rewrite to use QueryBuilder
+        // TODO: Rewrite to use QueryBuilder
         $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 		

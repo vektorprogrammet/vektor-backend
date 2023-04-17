@@ -66,7 +66,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
     public function findAllUsersByDepartment($department)
     {
-        # TODO: Refactor to use QueryBuilder
+        // TODO: Refactor to use QueryBuilder
         $users = $this->getEntityManager()->createQuery('
 		
 		SELECT u
@@ -84,7 +84,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
     public function findAllActiveUsersByDepartment($department)
     {
-        # TODO: Refactor to use QueryBuilder
+        // TODO: Refactor to use QueryBuilder
         $users = $this->getEntityManager()->createQuery('
 		
 		SELECT u

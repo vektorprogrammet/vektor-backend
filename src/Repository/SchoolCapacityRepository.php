@@ -6,8 +6,6 @@ use App\Entity\Department;
 use App\Entity\SchoolCapacity;
 use App\Entity\Semester;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 
 class SchoolCapacityRepository extends EntityRepository
 {

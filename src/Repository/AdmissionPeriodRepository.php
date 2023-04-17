@@ -25,7 +25,6 @@ class AdmissionPeriodRepository extends EntityRepository
             ->getResult();
     }
 
-
     /**
      * @throws NonUniqueResultException
      */

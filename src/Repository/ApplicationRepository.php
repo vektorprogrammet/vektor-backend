@@ -158,7 +158,6 @@ class ApplicationRepository extends EntityRepository
             ->getResult();
     }
 
-
     /**
      * @return array
      */
@@ -206,7 +205,6 @@ class ApplicationRepository extends EntityRepository
             ->getResult();
     }
 
-
     /**
      * @return int
      */
@@ -251,7 +249,6 @@ class ApplicationRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-
 
     /**
      * @return Application[]

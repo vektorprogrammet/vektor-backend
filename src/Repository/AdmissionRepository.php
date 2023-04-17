@@ -2,9 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Department;
-use App\Entity\Semester;
-use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class AdmissionRepository extends EntityRepository
@@ -40,7 +37,6 @@ class AdmissionRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
 
     /**
      * Finds all applications that have been assigned an interview that has not yet been conducted.
