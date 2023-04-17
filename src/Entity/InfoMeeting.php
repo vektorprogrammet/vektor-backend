@@ -80,7 +80,7 @@ class InfoMeeting
     /**
      * @param bool $showOnPage
      */
-    public function setShowOnPage($showOnPage)
+    public function setShowOnPage($showOnPage): void
     {
         $this->showOnPage = $showOnPage;
     }

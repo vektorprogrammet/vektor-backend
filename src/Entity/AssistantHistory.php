@@ -79,10 +79,7 @@ class AssistantHistory
         return $this->department;
     }
 
-    /**
-     * @return AssistantHistory
-     */
-    public function setDepartment(Department $department)
+    public function setDepartment(Department $department): self
     {
         $this->department = $department;
 

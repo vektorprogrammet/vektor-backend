@@ -51,7 +51,7 @@ class Interview
 
     #[ORM\ManyToOne(targetEntity: 'InterviewSchema')]
     #[ORM\JoinColumn(name: 'schema_id', referencedColumnName: 'id')]
-    private $interviewSchema; // Bidirectional, may turn out to be unidirectional
+    private ?InterviewSchema $interviewSchema = null; // Bidirectional, may turn out to be unidirectional
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'interviews')]
     #[ORM\JoinColumn(name: 'interviewer_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
@@ -65,13 +65,10 @@ class Interview
     #[Assert\Valid]
     private $interviewAnswers;
 
-    /**
-     * @var InterviewScore
-     */
     #[ORM\OneToOne(targetEntity: 'InterviewScore', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'interview_score_id', referencedColumnName: 'id')]
     #[Assert\Valid]
-    private $interviewScore;
+    private ?InterviewScore $interviewScore = null;
 
     #[ORM\Column(type: 'integer', nullable: false)]
     private ?int $interviewStatus = null;
@@ -81,7 +78,7 @@ class Interview
     private $user;
 
     #[ORM\OneToOne(mappedBy: 'interview', targetEntity: 'Application')]
-    private $application;
+    private ?Application $application = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $responseCode = null;
@@ -128,10 +125,8 @@ class Interview
 
     /**
      * Get interviewSchema.
-     *
-     * @return InterviewSchema
      */
-    public function getInterviewSchema()
+    public function getInterviewSchema(): ?InterviewSchema
     {
         return $this->interviewSchema;
     }
@@ -148,20 +143,16 @@ class Interview
 
     /**
      * Is the given User the co-interviewer of this Interview?
-     *
-     * @return bool
      */
-    public function isCoInterviewer(User $user = null)
+    public function isCoInterviewer(User $user = null): bool
     {
         return $user && $this->getCoInterviewer() && $user->getId() === $this->getCoInterviewer()->getId();
     }
 
     /**
      * Set interviewer.
-     *
-     * @return Interview
      */
-    public function setCoInterviewer(User $coInterviewer = null)
+    public function setCoInterviewer(User $coInterviewer = null): self
     {
         $this->coInterviewer = $coInterviewer;
 
@@ -170,10 +161,8 @@ class Interview
 
     /**
      * Set interviewer.
-     *
-     * @return Interview
      */
-    public function setInterviewer(User $interviewer = null)
+    public function setInterviewer(User $interviewer = null): self
     {
         $this->interviewer = $interviewer;
 
@@ -192,10 +181,8 @@ class Interview
 
     /**
      * Add interviewAnswers.
-     *
-     * @return Interview
      */
-    public function addInterviewAnswer(InterviewAnswer $interviewAnswers)
+    public function addInterviewAnswer(InterviewAnswer $interviewAnswers): self
     {
         $this->interviewAnswers[] = $interviewAnswers;
 
@@ -205,7 +192,7 @@ class Interview
     /**
      * Remove interviewAnswers.
      */
-    public function removeInterviewAnswer(InterviewAnswer $interviewAnswers)
+    public function removeInterviewAnswer(InterviewAnswer $interviewAnswers): void
     {
         $this->interviewAnswers->removeElement($interviewAnswers);
     }
@@ -222,10 +209,8 @@ class Interview
 
     /**
      * Set interviewScore.
-     *
-     * @return Interview
      */
-    public function setInterviewScore(InterviewScore $interviewScore = null)
+    public function setInterviewScore(InterviewScore $interviewScore = null): self
     {
         $this->interviewScore = $interviewScore;
 
@@ -234,10 +219,8 @@ class Interview
 
     /**
      * Get interviewScore.
-     *
-     * @return InterviewScore
      */
-    public function getInterviewScore()
+    public function getInterviewScore(): ?InterviewScore
     {
         return $this->interviewScore;
     }
@@ -255,10 +238,8 @@ class Interview
      * Set interviewed.
      *
      * @param bool $interviewed
-     *
-     * @return Interview
      */
-    public function setInterviewed($interviewed)
+    public function setInterviewed($interviewed): self
     {
         $this->interviewed = $interviewed;
 
@@ -286,7 +267,7 @@ class Interview
     /**
      * @param bool $cancelled
      */
-    public function setCancelled($cancelled)
+    public function setCancelled($cancelled): void
     {
         if ($cancelled === true) {
             $this->cancel();
@@ -398,47 +379,31 @@ class Interview
     /**
      * @param User $user
      */
-    public function setUser($user)
+    public function setUser($user): void
     {
         $this->user = $user;
     }
 
-    public function isDraft()
+    public function isDraft(): bool
     {
         return !$this->interviewed && $this->interviewScore !== null;
     }
 
-    /**
-     * @return Application
-     */
-    public function getApplication()
+    public function getApplication(): ?Application
     {
         return $this->application;
     }
 
     public function getInterviewStatusAsString(): string
     {
-        switch ($this->interviewStatus) {
-            case InterviewStatusType::NO_CONTACT:
-                $status = 'Ikke satt opp';
-                break;
-            case InterviewStatusType::PENDING:
-                $status = 'Ingen svar';
-                break;
-            case InterviewStatusType::ACCEPTED:
-                $status = 'Akseptert';
-                break;
-            case InterviewStatusType::REQUEST_NEW_TIME:
-                $status = 'Ny tid ønskes';
-                break;
-            case InterviewStatusType::CANCELLED:
-                $status = 'Kansellert';
-                break;
-            default:
-                $status = 'Ingen svar';
-        }
-
-        return $status;
+        return match ($this->interviewStatus) {
+            InterviewStatusType::NO_CONTACT => 'Ikke satt opp',
+            InterviewStatusType::PENDING => 'Ingen svar',
+            InterviewStatusType::ACCEPTED => 'Akseptert',
+            InterviewStatusType::REQUEST_NEW_TIME => 'Ny tid ønskes',
+            InterviewStatusType::CANCELLED => 'Kansellert',
+            default => 'Ingen svar',
+        };
     }
 
     public function getInterviewStatusAsColor(): string
@@ -483,10 +448,7 @@ class Interview
         $this->setInterviewStatus(InterviewStatusType::PENDING);
     }
 
-    /**
-     * @return bool
-     */
-    public function isCancelled()
+    public function isCancelled(): bool
     {
         return $this->interviewStatus === InterviewStatusType::CANCELLED;
     }
@@ -573,7 +535,7 @@ class Interview
     /**
      * Increments number of accept-interview reminders sent.
      */
-    public function incrementNumAcceptInterviewRemindersSent()
+    public function incrementNumAcceptInterviewRemindersSent(): void
     {
         ++$this->numAcceptInterviewRemindersSent;
     }

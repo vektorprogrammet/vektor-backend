@@ -25,7 +25,7 @@ class Semester implements PeriodInterface
     /**
      * @var AdmissionPeriod[]
      */
-    #[ORM\OneToMany(mappedBy: 'semester', targetEntity: 'App\Entity\AdmissionPeriod')]
+    #[ORM\OneToMany(mappedBy: 'semester', targetEntity: 'AdmissionPeriod')]
     private $admissionPeriods;
 
     public function __toString(): string

@@ -16,7 +16,7 @@ class InterviewAnswer
 
     #[ORM\ManyToOne(targetEntity: 'Interview', inversedBy: 'interviewAnswers')]
     #[ORM\JoinColumn(name: 'interview_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    protected $interview;
+    protected ?Interview $interview = null;
 
     #[ORM\ManyToOne(targetEntity: 'InterviewQuestion')]
     #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id')]
@@ -48,9 +48,6 @@ class InterviewAnswer
         return $this->answer;
     }
 
-    /**
-     * Set interview.
-     */
     public function setInterview(Interview $interview = null): self
     {
         $this->interview = $interview;
@@ -58,12 +55,7 @@ class InterviewAnswer
         return $this;
     }
 
-    /**
-     * Get interview.
-     *
-     * @return Interview
-     */
-    public function getInterview()
+    public function getInterview(): ?Interview
     {
         return $this->interview;
     }

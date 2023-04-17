@@ -31,15 +31,15 @@ class TeamInterest implements DepartmentSemesterInterface
     /**
      * @var Team[]
      */
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', inversedBy: 'potentialApplicants')]
+    #[ORM\ManyToMany(targetEntity: 'Team', inversedBy: 'potentialApplicants')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Count(min: 1, minMessage: 'Du må velge minst ett team')]
     private $potentialTeams;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Semester')]
+    #[ORM\ManyToOne(targetEntity: 'Semester')]
     private ?Semester $semester = null;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Department')]
+    #[ORM\ManyToOne(targetEntity: 'Department')]
     private ?Department $department = null;
 
     /**

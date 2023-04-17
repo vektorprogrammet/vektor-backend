@@ -97,7 +97,7 @@ class ExecutiveBoard implements TeamInterface
     /**
      * @param string $shortDescription
      */
-    public function setShortDescription($shortDescription): self
+    public function setShortDescription(string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
 
