@@ -77,7 +77,7 @@ class Semester implements PeriodInterface
         return $this->year;
     }
 
-    public function setYear(string $year): Semester
+    public function setYear(string $year): self
     {
         $this->year = $year;
 
