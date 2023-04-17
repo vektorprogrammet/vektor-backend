@@ -50,9 +50,6 @@ class AssistantHistory
         return mb_strpos($this->bolk, "Bolk $group") !== false;
     }
 
-    /**
-     * Set user.
-     */
     public function setUser(User $user = null): self
     {
         $this->user = $user;
@@ -60,11 +57,6 @@ class AssistantHistory
         return $this;
     }
 
-    /**
-     * Get user.
-     *
-     * @return User
-     */
     public function getUser(): ?User
     {
         return $this->user;

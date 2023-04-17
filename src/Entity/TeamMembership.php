@@ -18,49 +18,37 @@ class TeamMembership implements TeamMembershipInterface
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
-    protected $user;
+    protected ?User $user;
 
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
-    protected $startSemester;
+    protected ?Semester $startSemester;
 
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[Assert\Valid]
-    protected $endSemester;
+    protected ?Semester $endSemester = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $deletedTeamName = null;
 
-    /**
-     * @var bool
-     */
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
-    private $isTeamLeader;
+    private bool $isTeamLeader = false;
 
-    /**
-     * @var bool
-     */
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
-    private $isSuspended;
+    private bool $isSuspended;
 
-    /**
-     * @var Team
-     **/
     #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'teamMemberships')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
-    protected $team;
+    protected ?Team $team = null;
 
-    /**
-     * @var Position
-     **/
     #[ORM\ManyToOne(targetEntity: 'Position')]
     #[ORM\JoinColumn(name: 'position_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
-    protected $position;
+    protected ?Position $position = null;
 
     public function __construct()
     {
@@ -108,10 +96,8 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Get team.
-     *
-     * @return Team
      */
-    public function getTeam()
+    public function getTeam(): ?Team
     {
         return $this->team;
     }
@@ -131,7 +117,7 @@ class TeamMembership implements TeamMembershipInterface
      *
      * @return Position
      */
-    public function getPosition()
+    public function getPosition(): ?Position
     {
         return $this->position;
     }
@@ -148,10 +134,8 @@ class TeamMembership implements TeamMembershipInterface
 
     /**
      * Get startSemester.
-     *
-     * @return Semester
      */
-    public function getStartSemester()
+    public function getStartSemester(): ?Semester
     {
         return $this->startSemester;
     }
@@ -163,20 +147,12 @@ class TeamMembership implements TeamMembershipInterface
         return $this;
     }
 
-    /**
-     * Get endSemester.
-     *
-     * @return Semester
-     */
-    public function getEndSemester()
+    public function getEndSemester(): ?Semester
     {
         return $this->endSemester;
     }
 
-    /**
-     * @return bool
-     */
-    public function isActiveInSemester(Semester $semester)
+    public function isActiveInSemester(Semester $semester): bool
     {
         $semesterStartLaterThanTeamMembership = $semester->getStartDate() >= $this->getStartSemester()->getStartDate();
         $semesterEndsBeforeTeamMembership = $this->getEndSemester() === null || $semester->getEndDate() <= $this->getEndSemester()->getEndDate();
@@ -184,7 +160,7 @@ class TeamMembership implements TeamMembershipInterface
         return $semesterStartLaterThanTeamMembership && $semesterEndsBeforeTeamMembership;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         $department = $this->team->getDepartment();
         $activeSemester = $department->getCurrentOrLatestAdmissionPeriod()->getSemester();
@@ -216,10 +192,7 @@ class TeamMembership implements TeamMembershipInterface
         return $this->isTeamLeader;
     }
 
-    /**
-     * @param bool $isTeamLeader
-     */
-    public function setIsTeamLeader($isTeamLeader)
+    public function setIsTeamLeader(bool $isTeamLeader)
     {
         $this->isTeamLeader = $isTeamLeader;
     }
@@ -229,10 +202,7 @@ class TeamMembership implements TeamMembershipInterface
         return $this->isSuspended;
     }
 
-    /**
-     * @param bool $isSuspended
-     */
-    public function setIsSuspended($isSuspended)
+    public function setIsSuspended(bool $isSuspended): void
     {
         $this->isSuspended = $isSuspended;
     }

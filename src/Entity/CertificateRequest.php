@@ -22,12 +22,7 @@ class CertificateRequest
         return $this->id;
     }
 
-    /**
-     * Set user.
-     *
-     * @return CertificateRequest
-     */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 

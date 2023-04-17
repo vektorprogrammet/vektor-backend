@@ -40,7 +40,7 @@ class Team implements TeamInterface
     private ?string $shortDescription = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    private $acceptApplication;
+    private ?bool $acceptApplication = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $deadline = null;
@@ -62,7 +62,7 @@ class Team implements TeamInterface
     private $potentialApplicants;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
-    private $active;
+    private bool $active;
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamApplication')]
     private $applications;

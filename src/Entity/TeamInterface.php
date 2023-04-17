@@ -16,10 +16,7 @@ interface TeamInterface
 
     public function setEmail(string $email);
 
-    /**
-     * @return string
-     */
-    public function getType();
+    public function getType(): string;
 
     /**
      * @return string

@@ -23,7 +23,7 @@ class ExecutiveBoard implements TeamInterface
     private ?string $email = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private $description;
+    private ?string $description = null;
 
     #[ORM\Column(name: 'short_description', type: 'string', nullable: true)]
     #[Assert\Length(max: 125, maxMessage: 'Maks 125 Tegn')]
@@ -67,9 +67,6 @@ class ExecutiveBoard implements TeamInterface
         return $this->email;
     }
 
-    /**
-     * @return $this|ExecutiveBoard
-     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -77,40 +74,30 @@ class ExecutiveBoard implements TeamInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
      * @param string $description
-     *
-     * @return ExecutiveBoard
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortDescription()
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
 
     /**
      * @param string $shortDescription
-     *
-     * @return ExecutiveBoard
      */
-    public function setShortDescription($shortDescription)
+    public function setShortDescription($shortDescription): self
     {
         $this->shortDescription = $shortDescription;
 
@@ -133,18 +120,12 @@ class ExecutiveBoard implements TeamInterface
         return $this->boardMemberships;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAcceptApplication()
+    public function getAcceptApplication(): bool
     {
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAcceptApplicationAndDeadline()
+    public function getAcceptApplicationAndDeadline(): bool
     {
         return false;
     }
