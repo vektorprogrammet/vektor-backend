@@ -23,7 +23,8 @@ class AdmissionNotifier
         private readonly LoggerInterface $logger,
         private readonly ValidatorInterface $validator,
         private readonly int $sendLimit
-    ) {}
+    ) {
+    }
 
     /**
      * @throws \InvalidArgumentException
