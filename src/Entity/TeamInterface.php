@@ -4,44 +4,23 @@ namespace App\Entity;
 
 interface TeamInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): ?string;
 
-    /**
-     * @return string
-     */
-    public function getEmail();
+    public function getEmail(): ?string;
 
     public function setEmail(string $email);
 
     public function getType(): string;
 
-    /**
-     * @return string
-     */
-    public function getDescription();
+    public function getDescription(): ?string;
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description);
+    public function setDescription(string $description);
 
-    /**
-     * @return string
-     */
-    public function getShortDescription();
+    public function getShortDescription(): ?string;
 
-    /**
-     * @param string $shortDescription
-     */
-    public function setShortDescription($shortDescription);
+    public function setShortDescription(string $shortDescription);
 
-    /**
-     * @return bool
-     */
-    public function getAcceptApplication();
+    public function getAcceptApplication(): bool;
 
     /**
      * @return TeamMembershipInterface

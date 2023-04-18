@@ -16,11 +16,8 @@ class Application implements DepartmentSemesterInterface
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    /**
-     * @var AdmissionPeriod
-     */
     #[ORM\ManyToOne(targetEntity: 'AdmissionPeriod')]
-    private $admissionPeriod;
+    private ?AdmissionPeriod $admissionPeriod = null;
 
     #[ORM\Column(type: 'string', length: 20)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'admission_existing'])]
@@ -98,7 +95,7 @@ class Application implements DepartmentSemesterInterface
     // TODO: refactor to use actual boolean values (not 1, 2..)
     private $teamInterest;
 
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', inversedBy: 'potentialMembers')]
+    #[ORM\ManyToMany(targetEntity: 'Team', inversedBy: 'potentialMembers')]
     private $potentialTeams;
 
     #[ORM\OneToOne(inversedBy: 'application', targetEntity: 'Interview', cascade: ['persist', 'remove'])]
@@ -133,10 +130,7 @@ class Application implements DepartmentSemesterInterface
         return $this->id;
     }
 
-    /**
-     * @return AdmissionPeriod
-     */
-    public function getAdmissionPeriod()
+    public function getAdmissionPeriod(): ?AdmissionPeriod
     {
         return $this->admissionPeriod;
     }
@@ -303,10 +297,7 @@ class Application implements DepartmentSemesterInterface
         $this->heardAboutFrom = $heardAboutFrom;
     }
 
-    /**
-     * @return Interview
-     */
-    public function getInterview()
+    public function getInterview(): ?Interview
     {
         return $this->interview;
     }
@@ -314,7 +305,7 @@ class Application implements DepartmentSemesterInterface
     /**
      * @param Interview $interview
      */
-    public function setInterview($interview)
+    public function setInterview($interview): void
     {
         $this->interview = $interview;
     }

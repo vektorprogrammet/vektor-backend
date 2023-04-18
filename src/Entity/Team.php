@@ -50,7 +50,7 @@ class Team implements TeamInterface
      *
      * @var Application[]
      */
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Application', mappedBy: 'potentialTeams')]
+    #[ORM\ManyToMany(targetEntity: 'Application', mappedBy: 'potentialTeams')]
     private $potentialMembers;
 
     /**
@@ -58,7 +58,7 @@ class Team implements TeamInterface
      *
      * @var TeamInterest[]
      */
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\TeamInterest', mappedBy: 'potentialTeams')]
+    #[ORM\ManyToMany(targetEntity: 'TeamInterest', mappedBy: 'potentialTeams')]
     private $potentialApplicants;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
@@ -198,7 +198,7 @@ class Team implements TeamInterface
         return $this->shortDescription;
     }
 
-    public function setShortDescription($shortDescription): self
+    public function setShortDescription(string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
 

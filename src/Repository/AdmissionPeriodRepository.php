@@ -8,9 +8,6 @@ use App\Entity\Semester;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
-/**
- * AdmissionPeriodRepository.
- */
 class AdmissionPeriodRepository extends EntityRepository
 {
     /**
@@ -24,23 +21,6 @@ class AdmissionPeriodRepository extends EntityRepository
             ->addOrderBy('s.year', 'DESC')
             ->addOrderBy('s.semesterTime', 'ASC')
             ->setParameter('department', $department)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @return AdmissionPeriod[]
-     */
-    public function findByDepartmentAndTime(Department $department, string $time, string $year): array
-    {
-        return $this->createQueryBuilder('dss')
-            ->where('dss.department = :department')
-            ->join('semester', 's')
-            ->andWhere('s.semesterTime = :time')
-            ->andWhere('s.year = :year')
-            ->setParameter('department', $department)
-            ->setParameter('time', $time)
-            ->setParameter('year', $year)
             ->getQuery()
             ->getResult();
     }

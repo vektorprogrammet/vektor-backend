@@ -174,17 +174,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
 
-    public function setActive($isActive)
+    public function setActive($isActive): void
     {
         $this->isActive = $isActive;
     }
 
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): void
     {
         $this->roles = $roles;
     }
@@ -198,10 +198,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Set lastName.
-     *
-     * @return User
      */
-    public function setLastName(string $lastName)
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -314,7 +312,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Remove roles.
      */
-    public function removeRole(string $roles)
+    public function removeRole(string $roles): void
     {
         $this->roles->removeElement($roles);
     }
@@ -365,22 +363,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param array $assistantHistories
      */
-    public function setAssistantHistories($assistantHistories)
+    public function setAssistantHistories($assistantHistories): void
     {
         $this->assistantHistories = $assistantHistories;
     }
 
-    public function addAssistantHistory(AssistantHistory $assistantHistory)
+    public function addAssistantHistory(AssistantHistory $assistantHistory): void
     {
         $this->assistantHistories[] = $assistantHistory;
     }
 
     /**
      * Add certificateRequests.
-     *
-     * @return User
      */
-    public function addCertificateRequest(CertificateRequest $certificateRequests)
+    public function addCertificateRequest(CertificateRequest $certificateRequests): self
     {
         $this->certificateRequests[] = $certificateRequests;
 
@@ -390,7 +386,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Remove certificateRequests.
      */
-    public function removeCertificateRequest(CertificateRequest $certificateRequests)
+    public function removeCertificateRequest(CertificateRequest $certificateRequests): void
     {
         $this->certificateRequests->removeElement($certificateRequests);
     }
@@ -494,7 +490,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param Receipt
      */
-    public function addReceipt($receipt)
+    public function addReceipt($receipt): void
     {
         $this->receipts->add($receipt);
     }
@@ -616,10 +612,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @param TeamMembershipInterface[] $memberships
-     *
-     * @return User $this
      */
-    public function setMemberships($memberships)
+    public function setMemberships($memberships): self
     {
         $teamMemberships = [];
         $boardMemberships = [];

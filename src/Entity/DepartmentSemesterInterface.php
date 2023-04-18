@@ -7,13 +7,7 @@ namespace App\Entity;
  */
 interface DepartmentSemesterInterface
 {
-    /**
-     * @return Department
-     */
-    public function getDepartment();
+    public function getDepartment(): ?Department;
 
-    /**
-     * @return Semester
-     */
-    public function getSemester();
+    public function getSemester(): ?Semester;
 }

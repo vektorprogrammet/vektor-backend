@@ -174,7 +174,7 @@ class RoleManager
             return false;
         }
 
-        $roleNeedsToUpdate = array_search($role, $user->getRoles(), true) === false;
+        $roleNeedsToUpdate = !in_array($role, $user->getRoles(), true);
 
         if ($roleNeedsToUpdate) {
             $user->setRoles([$role]);

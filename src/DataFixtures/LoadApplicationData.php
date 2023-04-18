@@ -185,11 +185,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $interview6->setCancelMessage('
         Jeg er en kjiping som ikke orker å være vektorassistent.
         Jeg har haugevis av unnskyldninger på lager for å slippe unna disse greine.
-        Helst ikke kontakt meg igjen. Ever.
-        Jeg har haugevis av unnskyldninger på lager for å slippe unna disse greine.
-        Jeg er en kjiping som ikke orker å være vektorassistent.
-        Helst ikke kontakt meg igjen. Ever.
-        Jeg er en kjiping som ikke orker å være vektorassistent.');
+        Helst ikke kontakt meg igjen. Ever.');
         $application6->setInterview($interview6);
 
         $manager->persist($application6);

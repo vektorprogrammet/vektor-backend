@@ -66,6 +66,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
     public function findAllUsersByDepartment($department)
     {
+        // TODO: Refactor to use QueryBuilder
         $users = $this->getEntityManager()->createQuery('
 		
 		SELECT u
@@ -83,6 +84,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
     public function findAllActiveUsersByDepartment($department)
     {
+        // TODO: Refactor to use QueryBuilder
         $users = $this->getEntityManager()->createQuery('
 		
 		SELECT u
@@ -111,21 +113,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->getResult();
     }
 
-    public function findAllUsersByDepartmentAndRoles($department, $roles)
-    {
-        return $this->createQueryBuilder('u')
-            ->select('u')
-            ->join('u.roles', 'r')
-            ->join('u.fieldOfStudy', 'f')
-            ->join('f.department', 'd')
-            ->where('r.role IN (:roles)')
-            ->andWhere('d.id = :department')
-            ->setParameter('roles', $roles)
-            ->setParameter('department', $department)
-            ->getQuery()
-            ->getResult();
-    }
-
     public function findAllUsersWithReceipts()
     {
         return $this->createQueryBuilder('user')
@@ -133,22 +120,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->join('user.receipts', 'receipt')
             ->getQuery()
             ->getResult();
-    }
-
-    /**
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     *
-     * @return User
-     */
-    public function findUserByUsername($username)
-    {
-        return $this->createQueryBuilder('User')
-            ->select('User')
-            ->where('User.user_name = :username')
-            ->setParameter('username', $username)
-            ->getQuery()
-            ->getSingleResult();
     }
 
     /**
@@ -184,16 +155,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->setParameter('email', $email)
             ->getQuery()
             ->getOneOrNullResult();
-    }
-
-    public function findUserById($id)
-    {
-        return $this->createQueryBuilder('User')
-            ->select('User')
-            ->where('User.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getSingleResult();
     }
 
     /**

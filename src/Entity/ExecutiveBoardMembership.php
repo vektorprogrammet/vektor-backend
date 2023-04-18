@@ -26,7 +26,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\Valid]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
-    private $positionName;
+    private ?string $positionName = null;
 
     #[ORM\ManyToOne(targetEntity: 'Semester')]
     #[Assert\Valid]
@@ -129,7 +129,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
         return $this->endSemester;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         $now = new \DateTime();
         $termEndsInFuture = $this->endSemester === null || $this->endSemester->getEndDate() > $now;

@@ -34,20 +34,6 @@ class AssistantHistoryRepository extends EntityRepository
     /**
      * @return AssistantHistory[]
      */
-    public function findMostRecentByUser(User $user): array
-    {
-        return $this
-            ->findByUserInit($user)
-            ->join('assistantHistory.semester', 'sm')
-            ->addOrderBy('sm.year', 'DESC')
-            ->addOrderBy('sm.semesterTime', 'ASC') // Vår < Høst
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @return AssistantHistory[]
-     */
     public function findByDepartmentAndSemester(Department $department, Semester $semester): array
     {
         return $this->createQueryBuilder('assistantHistory')
@@ -67,6 +53,7 @@ class AssistantHistoryRepository extends EntityRepository
      */
     public function findActiveAssistantHistoriesByUser($user): array
     {
+        // TODO: Rewrite to use QueryBuilder
         $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 		
@@ -94,6 +81,7 @@ class AssistantHistoryRepository extends EntityRepository
      */
     public function findActiveAssistantHistoriesBySchool(School $school): array
     {
+        // TODO: Rewrite to use QueryBuilder
         $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 
@@ -119,33 +107,9 @@ class AssistantHistoryRepository extends EntityRepository
     /**
      * @return AssistantHistory[]
      */
-    public function findAllActiveAssistantHistories(): array
-    {
-        $today = new \DateTime('now');
-        $assistantHistories = $this->getEntityManager()->createQuery('
-		
-		SELECT ahistory
-		FROM App:AssistantHistory ahistory
-		JOIN ahistory.school school
-		JOIN ahistory.semester semester
-		JOIN ahistory.user user 
-		WHERE semester.year = :year
-	    AND semester.semesterTime = :semesterTime	
-		')
-            ->setParameters([
-                'year' => SemesterUtil::timeToYear($today),
-                'semesterTime' => SemesterUtil::timeToSemesterTime($today),
-            ])
-            ->getResult();
-
-        return $assistantHistories;
-    }
-
-    /**
-     * @return AssistantHistory[]
-     */
     public function findInactiveAssistantHistoriesBySchool(School $school): array
     {
+        // TODO: Rewrite to use QueryBuilder
         $today = new \DateTime('now');
         $assistantHistories = $this->getEntityManager()->createQuery('
 		

@@ -8,30 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class DepartmentRepository extends EntityRepository
 {
-    public function findAllDepartments()
-    {
-        $departments = $this->getEntityManager()->createQuery('
-			SELECT d
-			FROM App:Department d
-		')
-            ->getResult();
-
-        return $departments;
-    }
-
-    public function findDepartmentById($id)
-    {
-        $departments = $this->getEntityManager()->createQuery('
-			SELECT d
-			FROM App:Department d
-			WHERE d.id = :id
-		')
-            ->setParameter('id', $id)
-            ->getResult();
-
-        return $departments;
-    }
-
     public function findAllWithActiveAdmission()
     {
         return array_filter($this->findAll(), function (Department $department) {
@@ -50,15 +26,6 @@ class DepartmentRepository extends EntityRepository
         ')
             ->setParameter('shortName', $shortName)
             ->getOneOrNullResult();
-    }
-
-    public function findAllDepartment()
-    {
-        $this->createQueryBuilder('Department')
-            ->select('Department')
-            ->distinct()
-            ->getQuery()
-            ->getResult();
     }
 
     /**
