@@ -21,7 +21,7 @@ class PasswordResetType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'passwordReset'; // This must be unique
+        return 'passwordReset';
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
