@@ -106,9 +106,6 @@ class Application implements DepartmentSemesterInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $specialNeeds = null;
 
-    /**
-     * Application constructor.
-     */
     public function __construct()
     {
         $this->last_edited = new \DateTime();

@@ -85,8 +85,6 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Get potentialTeams.
-     *
      * @return Team[]
      */
     public function getPotentialTeams()
@@ -95,8 +93,6 @@ class TeamInterest implements DepartmentSemesterInterface
     }
 
     /**
-     * Set potentialTeams.
-     *
      * @param Team[] $potentialTeams
      */
     public function setPotentialTeams($potentialTeams): self

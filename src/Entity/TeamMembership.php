@@ -66,9 +66,6 @@ class TeamMembership implements TeamMembershipInterface
         return $this->id;
     }
 
-    /**
-     * Set user.
-     */
     public function setUser(User $user = null): self
     {
         $this->user = $user;
@@ -76,17 +73,11 @@ class TeamMembership implements TeamMembershipInterface
         return $this;
     }
 
-    /**
-     * Get user.
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * Set team.
-     */
     public function setTeam(Team $team = null): self
     {
         $this->team = $team;
@@ -94,17 +85,11 @@ class TeamMembership implements TeamMembershipInterface
         return $this;
     }
 
-    /**
-     * Get team.
-     */
     public function getTeam(): ?Team
     {
         return $this->team;
     }
 
-    /**
-     * Set position.
-     */
     public function setPosition(Position $position = null): self
     {
         $this->position = $position;
@@ -113,8 +98,6 @@ class TeamMembership implements TeamMembershipInterface
     }
 
     /**
-     * Get position.
-     *
      * @return Position
      */
     public function getPosition(): ?Position
@@ -122,9 +105,6 @@ class TeamMembership implements TeamMembershipInterface
         return $this->position;
     }
 
-    /**
-     * Set startSemester.
-     */
     public function setStartSemester(Semester $startSemester = null): self
     {
         $this->startSemester = $startSemester;
@@ -132,9 +112,6 @@ class TeamMembership implements TeamMembershipInterface
         return $this;
     }
 
-    /**
-     * Get startSemester.
-     */
     public function getStartSemester(): ?Semester
     {
         return $this->startSemester;

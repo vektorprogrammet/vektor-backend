@@ -43,9 +43,6 @@ class Semester implements PeriodInterface
         return $this->semesterTime . ' ' . $this->year;
     }
 
-    /**
-     * Get semester start date.
-     */
     public function getStartDate(): \DateTime
     {
         $startMonth = $this->semesterTime === 'Vår' ? '01' : '08';
@@ -53,9 +50,6 @@ class Semester implements PeriodInterface
         return date_create($this->year . '-' . $startMonth . '-01 00:00:00');
     }
 
-    /**
-     * Get semester end date.
-     */
     public function getEndDate(): \DateTime
     {
         $endMonth = $this->semesterTime === 'Vår' ? '07' : '12';

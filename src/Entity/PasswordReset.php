@@ -25,9 +25,6 @@ class PasswordReset
 
     private ?string $resetCode = null;
 
-    /**
-     * PasswordReset constructor.
-     */
     public function __construct()
     {
         $this->setResetTime(new \DateTime());
@@ -51,8 +48,6 @@ class PasswordReset
     }
 
     /**
-     * Set resetTime.
-     *
      * @param \DateTime $resetTime
      */
     public function setResetTime($resetTime): self
@@ -68,8 +63,6 @@ class PasswordReset
     }
 
     /**
-     * Set user.
-     *
      * @return PasswordReset
      */
     public function setUser(User $user = null)
@@ -80,8 +73,6 @@ class PasswordReset
     }
 
     /**
-     * Get user.
-     *
      * @return User
      */
     public function getUser(): ?User

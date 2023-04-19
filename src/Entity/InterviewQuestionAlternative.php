@@ -28,8 +28,6 @@ class InterviewQuestionAlternative
     }
 
     /**
-     * Set alternative.
-     *
      * @param string $alternative
      */
     public function setAlternative($alternative): self
@@ -44,9 +42,6 @@ class InterviewQuestionAlternative
         return $this->alternative;
     }
 
-    /**
-     * Set interviewQuestion.
-     */
     public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null): self
     {
         $this->interviewQuestion = $interviewQuestion;

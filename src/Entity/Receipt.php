@@ -23,7 +23,7 @@ class Receipt
     private ?User $user = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $submitDate;
+    private ?\DateTime $submitDate = null;
 
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
@@ -165,10 +165,7 @@ class Receipt
         return $this->visualId;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getRefundDate()
+    public function getRefundDate(): ?\DateTime
     {
         return $this->refundDate;
     }

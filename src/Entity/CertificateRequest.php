@@ -30,8 +30,6 @@ class CertificateRequest
     }
 
     /**
-     * Get user.
-     *
      * @return User
      */
     public function getUser()

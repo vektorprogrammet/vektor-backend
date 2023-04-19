@@ -37,9 +37,6 @@ class InterviewQuestion
         return $this->id;
     }
 
-    /**
-     * Set question.
-     */
     public function setQuestion(string $question): self
     {
         $this->question = $question;
@@ -52,17 +49,11 @@ class InterviewQuestion
         return $this->question;
     }
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->alternatives = new ArrayCollection();
     }
 
-    /**
-     * Set help.
-     */
     public function setHelp(string $help): self
     {
         $this->help = $help;
@@ -75,9 +66,6 @@ class InterviewQuestion
         return $this->help;
     }
 
-    /**
-     * Set type.
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -90,9 +78,6 @@ class InterviewQuestion
         return $this->type;
     }
 
-    /**
-     * Add alternatives.
-     */
     public function addAlternative(InterviewQuestionAlternative $alternatives): self
     {
         $this->alternatives[] = $alternatives;
@@ -102,9 +87,6 @@ class InterviewQuestion
         return $this;
     }
 
-    /**
-     * Remove alternatives.
-     */
     public function removeAlternative(InterviewQuestionAlternative $alternatives): void
     {
         $this->alternatives->removeElement($alternatives);
@@ -113,8 +95,6 @@ class InterviewQuestion
     }
 
     /**
-     * Get alternatives.
-     *
      * @return Collection
      */
     public function getAlternatives()
