@@ -8,9 +8,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UserSubscriber implements EventSubscriberInterface
 {
-    /**
-     * UserSubscriber Constructor.
-     */
     public function __construct(private readonly LoggerInterface $logger)
     {
     }

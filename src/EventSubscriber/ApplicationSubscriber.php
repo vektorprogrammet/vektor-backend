@@ -11,9 +11,6 @@ use Twig\Environment;
 
 class ApplicationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * ApplicationAdmissionSubscriber constructor.
-     */
     public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly AdmissionNotifier $admissionNotifier, private readonly UserRegistration $userRegistrationService)
     {
     }
