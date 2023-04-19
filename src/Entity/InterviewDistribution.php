@@ -8,9 +8,6 @@ class InterviewDistribution
     private $interviews;
     private $totalCount;
 
-    /**
-     * InterviewDistribution constructor.
-     */
     public function __construct(User $user, AdmissionPeriod $admissionPeriod)
     {
         $this->user = $user;

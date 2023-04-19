@@ -71,9 +71,6 @@ class Department
     #[ORM\Column(name: 'active', type: 'boolean', nullable: false, options: ['default' => 1])]
     private $active;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->schools = new ArrayCollection();
@@ -183,8 +180,6 @@ class Department
     }
 
     /**
-     * Get fieldOfStudy.
-     *
      * @return ArrayCollection
      */
     public function getFieldOfStudy()
@@ -248,17 +243,11 @@ class Department
         return $this;
     }
 
-    /**
-     * Get admission periods.
-     */
     public function getAdmissionPeriods()
     {
         return $this->admissionPeriods;
     }
 
-    /**
-     * Add teams.
-     */
     public function addTeam(Team $teams): Department
     {
         $this->teams[] = $teams;
@@ -266,17 +255,12 @@ class Department
         return $this;
     }
 
-    /**
-     * Remove teams.
-     */
     public function removeTeam(Team $teams): void
     {
         $this->teams->removeElement($teams);
     }
 
     /**
-     * Get teams.
-     *
      * @return ArrayCollection
      */
     public function getTeams()

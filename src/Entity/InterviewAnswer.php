@@ -39,8 +39,6 @@ class InterviewAnswer
     }
 
     /**
-     * Get answer.
-     *
      * @return string
      */
     public function getAnswer()
@@ -60,9 +58,6 @@ class InterviewAnswer
         return $this->interview;
     }
 
-    /**
-     * Set interviewQuestion.
-     */
     public function setInterviewQuestion(InterviewQuestion $interviewQuestion = null): self
     {
         $this->interviewQuestion = $interviewQuestion;
@@ -71,8 +66,6 @@ class InterviewAnswer
     }
 
     /**
-     * Get interviewQuestion.
-     *
      * @return InterviewQuestion
      */
     public function getInterviewQuestion()

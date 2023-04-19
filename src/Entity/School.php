@@ -103,9 +103,6 @@ class School
         return $this;
     }
 
-    /**
-     * Set email.
-     */
     public function setEmail(string $email): self
     {
         $this->email = $email;

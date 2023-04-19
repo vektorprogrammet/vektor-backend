@@ -33,7 +33,7 @@ class Sponsor
     protected ?string $logoImagePath = null;
 
     /**
-     * Sponsor constructor. Default image size to medium.
+     * Default image size to medium.
      */
     public function __construct()
     {

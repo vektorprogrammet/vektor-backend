@@ -37,9 +37,6 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     #[Assert\Valid]
     protected ?Semester $endSemester = null;
 
-    /**
-     * ExecutiveBoardMembership constructor.
-     */
     public function __construct()
     {
         $this->positionName = '';
@@ -55,9 +52,6 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
         return $this->id;
     }
 
-    /**
-     * Set user.
-     */
     public function setUser(User $user = null): self
     {
         $this->user = $user;
@@ -65,17 +59,11 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
         return $this;
     }
 
-    /**
-     * Get user.
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * Set board.
-     */
     public function setBoard(ExecutiveBoard $board = null): self
     {
         $this->board = $board;
@@ -95,8 +83,6 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
 
     /**
      * @param string $positionName
-     *
-     * @return ExecutiveBoardMembership $this
      */
     public function setPositionName($positionName): self
     {

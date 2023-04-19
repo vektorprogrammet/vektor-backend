@@ -27,9 +27,6 @@ class InterviewSchema
     #[Assert\Valid]
     protected $interviewQuestions; // Unidirectional, may turn out to be bidirectional
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->interviewQuestions = new ArrayCollection();
@@ -53,8 +50,6 @@ class InterviewSchema
     }
 
     /**
-     * Get questions.
-     *
      * @return Collection
      */
     public function getInterviewQuestions()
@@ -63,8 +58,6 @@ class InterviewSchema
     }
 
     /**
-     * Set name.
-     *
      * @param string $name
      */
     public function setName($name): self

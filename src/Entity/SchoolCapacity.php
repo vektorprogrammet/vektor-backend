@@ -41,9 +41,6 @@ class SchoolCapacity
     #[ORM\Column(name: 'friday', type: 'integer')]
     protected ?int $friday = null;
 
-    /**
-     * SchoolCapacity constructor.
-     */
     public function __construct()
     {
         $this->monday = 0;

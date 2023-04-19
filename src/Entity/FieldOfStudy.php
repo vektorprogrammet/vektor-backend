@@ -34,17 +34,11 @@ class FieldOfStudy
         return $this;
     }
 
-    /**
-     * Get department name.
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set department shortName.
-     */
     public function setShortName(string $shortName): self
     {
         $this->shortName = $shortName;
@@ -52,17 +46,11 @@ class FieldOfStudy
         return $this;
     }
 
-    /**
-     * Get department shortName.
-     */
     public function getShortName(): string
     {
         return $this->shortName;
     }
 
-    /**
-     * Set department.
-     */
     public function setDepartment(Department $department = null): self
     {
         $this->department = $department;

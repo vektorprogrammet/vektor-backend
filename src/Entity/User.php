@@ -196,9 +196,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    /**
-     * Set lastName.
-     */
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
@@ -227,9 +224,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Get picture_path.
-     */
     public function getPicturePath(): ?string
     {
         return $this->picture_path;
@@ -242,9 +236,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Get phone.
-     */
     public function getPhone(): string
     {
         return $this->phone;
@@ -309,9 +300,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Remove roles.
-     */
     public function removeRole(string $roles): void
     {
         $this->roles->removeElement($roles);
@@ -324,9 +312,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Get new_user_code.
-     */
     public function getNewUserCode(): ?string
     {
         return $this->new_user_code;
@@ -373,9 +358,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->assistantHistories[] = $assistantHistory;
     }
 
-    /**
-     * Add certificateRequests.
-     */
     public function addCertificateRequest(CertificateRequest $certificateRequests): self
     {
         $this->certificateRequests[] = $certificateRequests;
@@ -383,17 +365,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Remove certificateRequests.
-     */
     public function removeCertificateRequest(CertificateRequest $certificateRequests): void
     {
         $this->certificateRequests->removeElement($certificateRequests);
     }
 
     /**
-     * Get certificateRequests.
-     *
      * @return Collection
      */
     public function getCertificateRequests()

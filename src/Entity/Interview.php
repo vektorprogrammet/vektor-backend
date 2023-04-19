@@ -95,9 +95,6 @@ class Interview
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
     private ?int $numAcceptInterviewRemindersSent = null;
 
-    /**
-     * Interview Constructor.
-     */
     public function __construct()
     {
         $this->interviewAnswers = new ArrayCollection();
@@ -113,9 +110,6 @@ class Interview
         return $this->id;
     }
 
-    /**
-     * Set interviewSchema.
-     */
     public function setInterviewSchema(InterviewSchema $interviewSchema = null): self
     {
         $this->interviewSchema = $interviewSchema;
@@ -123,17 +117,12 @@ class Interview
         return $this;
     }
 
-    /**
-     * Get interviewSchema.
-     */
     public function getInterviewSchema(): ?InterviewSchema
     {
         return $this->interviewSchema;
     }
 
     /**
-     * Get coInterviewer.
-     *
      * @return User
      */
     public function getCoInterviewer()
@@ -141,17 +130,11 @@ class Interview
         return $this->coInterviewer;
     }
 
-    /**
-     * Is the given User the co-interviewer of this Interview?
-     */
     public function isCoInterviewer(User $user = null): bool
     {
         return $user && $this->getCoInterviewer() && $user->getId() === $this->getCoInterviewer()->getId();
     }
 
-    /**
-     * Set interviewer.
-     */
     public function setCoInterviewer(User $coInterviewer = null): self
     {
         $this->coInterviewer = $coInterviewer;
@@ -159,9 +142,6 @@ class Interview
         return $this;
     }
 
-    /**
-     * Set interviewer.
-     */
     public function setInterviewer(User $interviewer = null): self
     {
         $this->interviewer = $interviewer;
@@ -170,8 +150,6 @@ class Interview
     }
 
     /**
-     * Get interviewer.
-     *
      * @return User
      */
     public function getInterviewer()
@@ -179,9 +157,6 @@ class Interview
         return $this->interviewer;
     }
 
-    /**
-     * Add interviewAnswers.
-     */
     public function addInterviewAnswer(InterviewAnswer $interviewAnswers): self
     {
         $this->interviewAnswers[] = $interviewAnswers;
@@ -189,17 +164,12 @@ class Interview
         return $this;
     }
 
-    /**
-     * Remove interviewAnswers.
-     */
     public function removeInterviewAnswer(InterviewAnswer $interviewAnswers): void
     {
         $this->interviewAnswers->removeElement($interviewAnswers);
     }
 
     /**
-     * Get interviewAnswers.
-     *
      * @return Collection
      */
     public function getInterviewAnswers()
@@ -207,9 +177,6 @@ class Interview
         return $this->interviewAnswers;
     }
 
-    /**
-     * Set interviewScore.
-     */
     public function setInterviewScore(InterviewScore $interviewScore = null): self
     {
         $this->interviewScore = $interviewScore;
@@ -217,9 +184,6 @@ class Interview
         return $this;
     }
 
-    /**
-     * Get interviewScore.
-     */
     public function getInterviewScore(): ?InterviewScore
     {
         return $this->interviewScore;
@@ -235,8 +199,6 @@ class Interview
     }
 
     /**
-     * Set interviewed.
-     *
      * @param bool $interviewed
      */
     public function setInterviewed($interviewed): self
@@ -247,8 +209,6 @@ class Interview
     }
 
     /**
-     * Get interviewed.
-     *
      * @return bool
      */
     public function getInterviewed()
@@ -310,7 +270,7 @@ class Interview
     }
 
     /**
-     * @param string mapLink
+     * @param string $mapLink
      */
     public function setMapLink($mapLink): void
     {
@@ -318,8 +278,6 @@ class Interview
     }
 
     /**
-     * Is the given User the interviewer of this Interview?
-     *
      * @return bool
      */
     public function isInterviewer(User $user = null)
@@ -328,8 +286,6 @@ class Interview
     }
 
     /**
-     * Set scheduled.
-     *
      * @param \DateTime $scheduled
      */
     public function setScheduled($scheduled): self
@@ -340,17 +296,12 @@ class Interview
         return $this;
     }
 
-    /**
-     * Get scheduled.
-     */
     public function getScheduled(): ?\DateTime
     {
         return $this->scheduled;
     }
 
     /**
-     * Set conducted.
-     *
      * @param \DateTime $conducted
      */
     public function setConducted($conducted): self
@@ -360,9 +311,6 @@ class Interview
         return $this;
     }
 
-    /**
-     * Get conducted.
-     */
     public function getConducted(): ?\DateTime
     {
         return $this->conducted;
