@@ -14,9 +14,6 @@ class ReceiptEvent extends Event
     final public const EDITED = 'receipt.edited';
     final public const DELETED = 'receipt.deleted';
 
-    /**
-     * ReceiptEvent constructor.
-     */
     public function __construct(private readonly Receipt $receipt)
     {
     }

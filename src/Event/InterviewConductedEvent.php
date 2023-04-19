@@ -9,9 +9,6 @@ class InterviewConductedEvent extends Event
 {
     final public const NAME = 'interview.conducted';
 
-    /**
-     * InterviewConductedEvent constructor.
-     */
     public function __construct(private readonly Application $application)
     {
     }

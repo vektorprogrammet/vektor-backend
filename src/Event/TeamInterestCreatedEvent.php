@@ -9,9 +9,6 @@ class TeamInterestCreatedEvent extends Event
 {
     final public const NAME = 'team_interest.created';
 
-    /**
-     * TeamInterestCreatedEvent constructor.
-     */
     public function __construct(private readonly TeamInterest $teamInterest)
     {
     }
