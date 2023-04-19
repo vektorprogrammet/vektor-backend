@@ -6,6 +6,7 @@ use App\Entity\InterviewSchema;
 use App\Form\Type\InterviewSchemaType;
 use App\Role\Roles;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * InterviewController is the controller responsible for interview s,
  * such as showing, assigning and conducting interviews.
  */
-class InterviewSchemaController extends BaseController
+class InterviewSchemaController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)
     {

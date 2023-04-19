@@ -6,9 +6,10 @@ use App\Entity\Department;
 use App\Entity\User;
 use App\Service\GeoLocation;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomeController extends BaseController
+class HomeController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)
     {

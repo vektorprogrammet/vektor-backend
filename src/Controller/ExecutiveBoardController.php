@@ -9,11 +9,12 @@ use App\Form\Type\CreateExecutiveBoardMembershipType;
 use App\Form\Type\CreateExecutiveBoardType;
 use App\Service\RoleManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ExecutiveBoardController extends BaseController
+class ExecutiveBoardController extends AbstractController
 {
     public function __construct(
         private readonly RoleManager $roleManager,

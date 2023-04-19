@@ -7,12 +7,13 @@ use App\Entity\Department;
 use App\Form\Type\AdmissionSubscriberType;
 use App\Service\AdmissionNotifier;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdmissionSubscriberController extends BaseController
+class AdmissionSubscriberController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine, private readonly AdmissionNotifier $admissionNotifier)
     {
@@ -57,7 +58,7 @@ class AdmissionSubscriberController extends BaseController
         }
 
         try {
-            $this->get(AdmissionNotifier::class)->createSubscription($department, $email, $infoMeeting);
+            $this->admissionNotifier->createSubscription($department, $email, $infoMeeting);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse($e->getMessage(), 400);
         }

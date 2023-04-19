@@ -20,6 +20,7 @@ use App\Role\Roles;
 use App\Service\ApplicationManager;
 use App\Service\InterviewManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -31,7 +32,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * InterviewController is the controller responsible for interview s,
  * such as showing, assigning and conducting interviews.
  */
-class InterviewController extends BaseController
+class InterviewController extends AbstractController
 {
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,

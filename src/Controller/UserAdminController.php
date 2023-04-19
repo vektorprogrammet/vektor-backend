@@ -8,11 +8,12 @@ use App\Form\Type\CreateUserType;
 use App\Role\Roles;
 use App\Service\UserRegistration;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserAdminController extends BaseController
+class UserAdminController extends AbstractController
 {
     public function __construct(
         private readonly UserRegistration $userRegistration,

@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class SsoController extends BaseController
+class SsoController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)
     {
