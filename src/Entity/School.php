@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,7 +34,7 @@ class School
     protected ?string $email = null;
 
     #[ORM\OneToMany(mappedBy: 'school', targetEntity: 'AssistantHistory')]
-    private $assistantHistories;
+    private Collection $assistantHistories;
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
@@ -43,11 +45,8 @@ class School
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private $international;
 
-    /**
-     * @var SchoolCapacity[]
-     */
     #[ORM\OneToMany(mappedBy: 'school', targetEntity: 'SchoolCapacity')]
-    private $capacities;
+    private Collection $capacities;
 
     /**
      * @var bool
@@ -60,6 +59,8 @@ class School
     {
         $this->international = false;
         $this->active = true;
+        $this->assistantHistories = new ArrayCollection();
+        $this->capacities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,18 +164,12 @@ class School
         return false;
     }
 
-    /**
-     * @return AssistantHistory[]
-     */
-    public function getAssistantHistories()
+    public function getAssistantHistories(): Collection
     {
         return $this->assistantHistories;
     }
 
-    /**
-     * @return SchoolCapacity[]
-     */
-    public function getCapacities()
+    public function getCapacities(): Collection
     {
         return $this->capacities;
     }
