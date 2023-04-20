@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -51,17 +52,17 @@ class Department
     #[ORM\JoinTable(name: 'department_school')]
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'School')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
-    protected $schools;
+    protected Collection $schools;
 
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'FieldOfStudy', cascade: ['remove'])]
-    private $fieldOfStudy;
+    private Collection $fieldOfStudy;
 
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'AdmissionPeriod', cascade: ['remove'])]
     #[ORM\OrderBy(['startDate' => 'DESC'])]
-    private $admissionPeriods;
+    private Collection $admissionPeriods;
 
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'Team', cascade: ['remove'])]
-    private $teams;
+    private Collection $teams;
 
     #[ORM\Column(name: 'logo_path', type: 'string', length: 255, nullable: true)]
     #[Assert\Length(min: 1, max: 255, maxMessage: '"Pathkanmaksvære')]
@@ -169,7 +170,7 @@ class Department
 
     public function addFieldOfStudy(FieldOfStudy $fieldOfStudy): Department
     {
-        $this->fieldOfStudy[] = $fieldOfStudy;
+        $this->fieldOfStudy->add($fieldOfStudy);
 
         return $this;
     }
@@ -179,10 +180,7 @@ class Department
         $this->fieldOfStudy->removeElement($fieldOfStudy);
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getFieldOfStudy()
+    public function getFieldOfStudy(): Collection
     {
         return $this->fieldOfStudy;
     }
@@ -192,7 +190,7 @@ class Department
         return $this->getCity();
     }
 
-    public function setEmail(string $email): Department
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -204,9 +202,9 @@ class Department
         return $this->email;
     }
 
-    public function addSchool(School $schools): Department
+    public function addSchool(School $schools): self
     {
-        $this->schools[] = $schools;
+        $this->schools->add($schools);
 
         return $this;
     }
@@ -216,12 +214,12 @@ class Department
         $this->schools->removeElement($schools);
     }
 
-    public function getSchools()
+    public function getSchools(): Collection
     {
         return $this->schools;
     }
 
-    public function setAddress(string $address): Department
+    public function setAddress(string $address): self
     {
         $this->address = $address;
 
@@ -233,24 +231,21 @@ class Department
         return $this->address;
     }
 
-    /**
-     * Add admission periods.
-     */
-    public function addAdmissionPeriod(AdmissionPeriod $admissionPeriod): Department
+    public function addAdmissionPeriod(AdmissionPeriod $admissionPeriod): self
     {
-        $this->admissionPeriods[] = $admissionPeriod;
+        $this->admissionPeriods->add($admissionPeriod);
 
         return $this;
     }
 
-    public function getAdmissionPeriods()
+    public function getAdmissionPeriods(): Collection
     {
         return $this->admissionPeriods;
     }
 
-    public function addTeam(Team $teams): Department
+    public function addTeam(Team $teams): self
     {
-        $this->teams[] = $teams;
+        $this->teams->add($teams);
 
         return $this;
     }
@@ -260,10 +255,7 @@ class Department
         $this->teams->removeElement($teams);
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getTeams()
+    public function getTeams(): Collection
     {
         return $this->teams;
     }
