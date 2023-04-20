@@ -38,11 +38,12 @@
   "scripts": {
     "start": "concurrently --kill-others \"php -S localhost:8000 -t public\" \"npm run watch\"",
     "setup": "php ./composer.phar install --no-scripts && npm install && npm run build:dev && mkdir -p ./var/data && touch ./var/data/dev.db  && php bin/console doctrine:schema:drop --force --env=dev && php bin/console doctrine:schema:create --env=dev && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:fixtures:load --env=dev -n && php bin/console doctrine:migrations:sync-metadata-storage --env=dev -n",
+    "setup:api": "php ./composer.phar install --no-scripts && mkdir -p ./var/data && touch ./var/data/dev.db  && php bin/console doctrine:schema:drop --force --env=dev && php bin/console doctrine:schema:create --env=dev && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:fixtures:load --env=dev -n && php bin/console doctrine:migrations:sync-metadata-storage --env=dev -n",
     "watch": "gulp",
     "build:dev": "gulp build:dev",
     "db:update": "mkdir -p ./var/data && rm -rf ./var/data/dev.db && touch ./var/data/dev.db && php bin/console doctrine:schema:update --force --env=dev && php bin/console doctrine:migrations:sync-metadata-storage && php bin/console doctrine:fixtures:load -n --env=dev && php bin/console doctrine:migrations:version -n --delete --all --env=dev && php bin/console doctrine:migrations:version -n --add --all --env=dev",
     "docker:build": "docker build -t vektor-backend .",
-    "docker:setup": "yarn docker:run yarn install && yarn docker:run php composer.phar install && yarn docker:run yarn build:dev",
+    "docker:setup": "yarn docker:run php composer.phar install",
     "docker:run": "docker run -p 8000:8000 -v $PWD:/app vektor-backend"
   },
   "repository": {

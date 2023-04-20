@@ -9,10 +9,9 @@ RUN apt-get update && \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list && \
     apt-get update && \
     # Install dependencies
-    apt-get -y install nodejs npm symfony-cli\
+    apt-get -y install npm symfony-cli\
                 php8.2 php8.2-gd php8.2-dom php8.2-xml \
                 php8.2-pdo php8.2-zip php8.2-mysql php8.2-sqlite && \
-    npm install --global yarn
 
 WORKDIR /app
 
