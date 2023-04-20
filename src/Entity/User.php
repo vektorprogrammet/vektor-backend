@@ -79,40 +79,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $new_user_code = null;
 
-    /**
-     * @var AssistantHistory[]
-     */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'AssistantHistory')]
-    private $assistantHistories;
+    private Collection $assistantHistories;
 
-    /**
-     * @var TeamMembership[]
-     */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'TeamMembership')]
-    private $teamMemberships;
+    private Collection $teamMemberships;
 
-    /**
-     * @var ExecutiveBoardMembership[]
-     */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'ExecutiveBoardMembership')]
-    private $executiveBoardMemberships;
+    private Collection $executiveBoardMemberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'CertificateRequest')]
-    protected $certificateRequests;
+    protected Collection $certificateRequests;
 
     #[ORM\OneToMany(mappedBy: 'interviewer', targetEntity: 'Interview')]
-    private $interviews;
+    private Collection $interviews;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'Receipt')]
-    private $receipts;
+    private Collection $receipts;
 
     public function __construct()
     {
         $this->roles = [];
-        $this->certificateRequests = new ArrayCollection();
-        $this->interviews = new ArrayCollection();
         $this->isActive = true;
         $this->picture_path = 'images/defaultProfile.png';
+        $this->assistantHistories = new ArrayCollection();
+        $this->teamMemberships = new ArrayCollection();
+        $this->executiveBoardMemberships = new ArrayCollection();
+        $this->certificateRequests = new ArrayCollection();
+        $this->interviews = new ArrayCollection();
         $this->receipts = new ArrayCollection();
     }
 
@@ -246,10 +240,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->accountNumber;
     }
 
-    /**
-     * @param string $accountNumber
-     */
-    public function setAccountNumber($accountNumber): void
+    public function setAccountNumber(string $accountNumber): void
     {
         $this->accountNumber = $accountNumber;
     }
@@ -317,10 +308,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->new_user_code;
     }
 
-    /**
-     * @return array
-     */
-    public function getAssistantHistories()
+    public function getAssistantHistories(): Collection
     {
         return $this->assistantHistories;
     }
@@ -345,9 +333,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return false;
     }
 
-    /**
-     * @param array $assistantHistories
-     */
     public function setAssistantHistories($assistantHistories): void
     {
         $this->assistantHistories = $assistantHistories;
@@ -370,10 +355,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->certificateRequests->removeElement($certificateRequests);
     }
 
-    /**
-     * @return Collection
-     */
-    public function getCertificateRequests()
+    public function getCertificateRequests(): Collection
     {
         return $this->certificateRequests;
     }
@@ -440,34 +422,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return null;
     }
 
-    /**
-     * @return TeamMembership[]
-     */
-    public function getTeamMemberships()
+    public function getTeamMemberships(): Collection
     {
         return $this->teamMemberships;
     }
 
-    /**
-     * @return Interview[]
-     */
-    public function getInterviews()
+    public function getInterviews(): array
     {
         return $this->interviews->toArray();
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getReceipts()
+    public function getReceipts(): Collection
     {
         return $this->receipts;
     }
 
-    /**
-     * @param Receipt
-     */
-    public function addReceipt($receipt): void
+    public function addReceipt(Receipt $receipt): void
     {
         $this->receipts->add($receipt);
     }
@@ -537,24 +507,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->companyEmail = $companyEmail;
     }
 
-    /**
-     * @return ExecutiveBoardMembership[]
-     */
-    public function getExecutiveBoardMemberships()
+    public function getExecutiveBoardMemberships(): Collection
     {
         return $this->executiveBoardMemberships;
     }
 
-    /**
-     * @return ExecutiveBoardMembership[]
-     */
-    public function getActiveExecutiveBoardMemberships()
+    public function getActiveExecutiveBoardMemberships(): Collection
     {
-        $activeExecutiveBoardMemberships = [];
+        $activeExecutiveBoardMemberships = new ArrayCollection();
         if ($this->executiveBoardMemberships !== null) {
             foreach ($this->executiveBoardMemberships as $executiveBoardMembership) {
                 if ($executiveBoardMembership->isActive()) {
-                    $activeExecutiveBoardMemberships[] = $executiveBoardMembership;
+                    $activeExecutiveBoardMemberships->add($executiveBoardMembership);
                 }
             }
         }
@@ -562,16 +526,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $activeExecutiveBoardMemberships;
     }
 
-    /**
-     * @return TeamMembership[]
-     */
-    public function getActiveTeamMemberships()
+    public function getActiveTeamMemberships(): Collection
     {
-        $activeTeamMemberships = [];
+        $activeTeamMemberships = new ArrayCollection();
+
         if ($this->teamMemberships !== null) {
             foreach ($this->teamMemberships as $teamMembership) {
                 if ($teamMembership->isActive()) {
-                    $activeTeamMemberships[] = $teamMembership;
+                    $activeTeamMemberships->add($teamMembership);
                 }
             }
         }
@@ -579,27 +541,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $activeTeamMemberships;
     }
 
-    /**
-     * @return TeamMembershipInterface[]
-     */
-    public function getActiveMemberships()
+    public function getActiveMemberships(): array
     {
-        return array_merge($this->getActiveTeamMemberships(), $this->getActiveExecutiveBoardMemberships());
+        return array_merge(
+            $this->getActiveTeamMemberships()->toArray(),
+            $this->getActiveExecutiveBoardMemberships()->toArray()
+        );
     }
 
-    /**
-     * @param TeamMembershipInterface[] $memberships
-     */
     public function setMemberships($memberships): self
     {
-        $teamMemberships = [];
-        $boardMemberships = [];
+        $teamMemberships = new ArrayCollection();
+        $boardMemberships = new ArrayCollection();
+
         foreach ($memberships as $membership) {
             if ($membership->getTeam()->getType() === 'team') {
-                $teamMemberships[] = $membership;
+                $teamMemberships->add($membership);
             }
             if ($membership->getTeam()->getType() === 'executive_board') {
-                $boardMemberships[] = $membership;
+                $boardMemberships->add($membership);
             }
         }
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -51,17 +52,17 @@ class Department
     #[ORM\JoinTable(name: 'department_school')]
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'School')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
-    protected $schools;
+    protected Collection $schools;
 
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'FieldOfStudy', cascade: ['remove'])]
-    private $fieldOfStudy;
+    private Collection $fieldOfStudy;
 
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'AdmissionPeriod', cascade: ['remove'])]
     #[ORM\OrderBy(['startDate' => 'DESC'])]
-    private $admissionPeriods;
+    private Collection $admissionPeriods;
 
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'Team', cascade: ['remove'])]
-    private $teams;
+    private Collection $teams;
 
     #[ORM\Column(name: 'logo_path', type: 'string', length: 255, nullable: true)]
     #[Assert\Length(min: 1, max: 255, maxMessage: '"Pathkanmaksvære')]
@@ -179,10 +180,7 @@ class Department
         $this->fieldOfStudy->removeElement($fieldOfStudy);
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getFieldOfStudy()
+    public function getFieldOfStudy(): Collection
     {
         return $this->fieldOfStudy;
     }
@@ -243,7 +241,7 @@ class Department
         return $this;
     }
 
-    public function getAdmissionPeriods()
+    public function getAdmissionPeriods(): Collection
     {
         return $this->admissionPeriods;
     }
@@ -260,10 +258,7 @@ class Department
         $this->teams->removeElement($teams);
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getTeams()
+    public function getTeams(): Collection
     {
         return $this->teams;
     }

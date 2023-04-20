@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,11 +31,14 @@ class ExecutiveBoard implements TeamInterface
     #[Assert\Length(max: 125, maxMessage: 'Maks 125 Tegn')]
     private ?string $shortDescription = null;
 
-    /**
-     * @var ExecutiveBoardMembership[]
-     */
     #[ORM\OneToMany(mappedBy: 'board', targetEntity: 'ExecutiveBoardMembership')]
-    private $boardMemberships;
+    private Collection $boardMemberships;
+
+
+    public function __construct()
+    {
+        $this->boardMemberships = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -79,10 +84,7 @@ class ExecutiveBoard implements TeamInterface
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -101,18 +103,12 @@ class ExecutiveBoard implements TeamInterface
         return $this;
     }
 
-    /**
-     * @return ExecutiveBoardMembership[]
-     */
-    public function getBoardMemberships()
+    public function getBoardMemberships(): Collection
     {
         return $this->boardMemberships;
     }
 
-    /**
-     * @return ExecutiveBoardMembership[]
-     */
-    public function getTeamMemberships()
+    public function getTeamMemberships(): Collection
     {
         return $this->boardMemberships;
     }
@@ -127,26 +123,19 @@ class ExecutiveBoard implements TeamInterface
         return false;
     }
 
-    /**
-     * @return ExecutiveBoardMembership[]
-     */
-    public function getActiveTeamMemberships()
+    public function getActiveTeamMemberships(): Collection
     {
-        $activeTeamMemberships = [];
-
+        $activeTeamMemberships = new ArrayCollection();
         foreach ($this->getTeamMemberships() as $teamMembership) {
             if ($teamMembership->isActive()) {
-                $activeTeamMemberships[] = $teamMembership;
+                $activeTeamMemberships->add($teamMembership);
             }
         }
 
         return $activeTeamMemberships;
     }
 
-    /**
-     * @return User[]
-     */
-    public function getActiveUsers()
+    public function getActiveUsers(): array
     {
         $activeUsers = [];
 

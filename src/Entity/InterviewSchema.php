@@ -25,7 +25,7 @@ class InterviewSchema
     #[ORM\InverseJoinColumn(name: 'question_id', referencedColumnName: 'id')]
     #[ORM\ManyToMany(targetEntity: 'InterviewQuestion', cascade: ['persist'])]
     #[Assert\Valid]
-    protected $interviewQuestions; // Unidirectional, may turn out to be bidirectional
+    protected Collection $interviewQuestions; // Unidirectional, may turn out to be bidirectional
 
     public function __construct()
     {
@@ -39,7 +39,7 @@ class InterviewSchema
 
     public function addInterviewQuestion(InterviewQuestion $questions): self
     {
-        $this->interviewQuestions[] = $questions;
+        $this->interviewQuestions->add($questions);
 
         return $this;
     }
@@ -49,10 +49,7 @@ class InterviewSchema
         $this->interviewQuestions->removeElement($questions);
     }
 
-    /**
-     * @return Collection
-     */
-    public function getInterviewQuestions()
+    public function getInterviewQuestions(): Collection
     {
         return $this->interviewQuestions;
     }
