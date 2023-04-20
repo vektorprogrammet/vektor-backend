@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Form\Type\CreateDepartmentType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DepartmentController extends BaseController
+class DepartmentController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)
     {

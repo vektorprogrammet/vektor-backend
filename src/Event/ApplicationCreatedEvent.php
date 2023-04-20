@@ -9,9 +9,6 @@ class ApplicationCreatedEvent extends Event
 {
     final public const NAME = 'application.admission';
 
-    /**
-     * ApplicationAdmissionEvent constructor.
-     */
     public function __construct(private readonly Application $application)
     {
     }

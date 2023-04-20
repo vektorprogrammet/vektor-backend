@@ -10,9 +10,6 @@ use Twig\Environment;
 
 class TeamApplicationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * ApplicationAdmissionSubscriber constructor.
-     */
     public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly RequestStack $requestStack)
     {
     }

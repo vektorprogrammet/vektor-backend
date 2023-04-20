@@ -6,11 +6,12 @@ use App\Entity\User;
 use App\Role\Roles;
 use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProfilePhotoController extends BaseController
+class ProfilePhotoController extends AbstractController
 {
     public function __construct(
         private readonly FileUploader $fileUploader,

@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Role\Roles;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class TeamController extends BaseController
+class TeamController extends AbstractController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)
     {

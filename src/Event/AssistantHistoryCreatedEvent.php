@@ -9,9 +9,6 @@ class AssistantHistoryCreatedEvent extends Event
 {
     final public const NAME = 'assistant_history.created';
 
-    /**
-     * ApplicationAdmissionEvent constructor.
-     */
     public function __construct(private readonly AssistantHistory $assistantHistory)
     {
     }

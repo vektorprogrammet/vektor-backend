@@ -12,6 +12,7 @@ use App\Service\RoleManager;
 use App\Service\Sorter;
 use App\Utils\ReceiptStatistics;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ReceiptController extends BaseController
+class ReceiptController extends AbstractController
 {
     public function __construct(
         private readonly Sorter $sorter,

@@ -11,12 +11,13 @@ use App\Form\Type\CreateAssistantHistoryType;
 use App\Form\Type\CreateSchoolType;
 use App\Role\Roles;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SchoolAdminController extends BaseController
+class SchoolAdminController extends AbstractController
 {
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,

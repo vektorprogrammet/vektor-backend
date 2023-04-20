@@ -20,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,7 +31,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class ProfileController extends BaseController
+class ProfileController extends AbstractController
 {
     public function __construct(
         private readonly RoleManager $RoleManager,
@@ -38,7 +39,8 @@ class ProfileController extends BaseController
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TokenStorageInterface $tokenStorage,
         private readonly RequestStack $requestStack,
-        private readonly ManagerRegistry $doctrine
+        private readonly ManagerRegistry $doctrine,
+        private readonly UserRegistration $userRegistration,
     ) {
     }
 
@@ -130,7 +132,7 @@ class ProfileController extends BaseController
 
     public function activateNewUser(Request $request, $newUserCode)
     {
-        $user = $this->get(UserRegistration::class)->activateUserByNewUserCode($newUserCode);
+        $user = $this->userRegistration->activateUserByNewUserCode($newUserCode);
 
         if ($user === null) {
             return $this->render('error/error_message.html.twig', [

@@ -8,15 +8,13 @@ use App\Form\Type\PasswordResetType;
 use App\Service\LogService;
 use App\Service\PasswordManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class PasswordResetController.
- */
-class PasswordResetController extends BaseController
+class PasswordResetController extends AbstractController
 {
     public function __construct(
         private readonly LogService $logService,

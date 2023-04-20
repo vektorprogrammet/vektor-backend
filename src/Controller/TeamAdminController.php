@@ -11,12 +11,13 @@ use App\Event\TeamMembershipEvent;
 use App\Form\Type\CreateTeamMembershipType;
 use App\Form\Type\CreateTeamType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TeamAdminController extends BaseController
+class TeamAdminController extends AbstractController
 {
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,

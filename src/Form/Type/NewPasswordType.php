@@ -39,6 +39,6 @@ class NewPasswordType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'newPassword'; // This must be unique
+        return 'newPassword';
     }
 }

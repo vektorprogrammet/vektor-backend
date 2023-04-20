@@ -11,10 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-/**
- * SubstituteController is the controller responsible for substitute assistants,
- * such as showing, modifying and deleting substitutes.
- */
 class SubstituteController extends BaseController
 {
     public function __construct(private readonly ManagerRegistry $doctrine)

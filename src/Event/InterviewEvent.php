@@ -10,9 +10,6 @@ class InterviewEvent extends Event
     final public const SCHEDULE = 'interview.schedule';
     final public const COASSIGN = 'interview.coassign';
 
-    /**
-     * ReceiptEvent constructor.
-     */
     public function __construct(private readonly Interview $interview, private $data = [])
     {
     }

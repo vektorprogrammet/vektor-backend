@@ -6,11 +6,12 @@ use App\Entity\Sponsor;
 use App\Form\Type\SponsorType;
 use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SponsorsController extends BaseController
+class SponsorsController extends AbstractController
 {
     public function __construct(
         private readonly FileUploader $fileUploader,

@@ -9,9 +9,6 @@ class TeamApplicationCreatedEvent extends Event
 {
     final public const NAME = 'team_application.created';
 
-    /**
-     * TeamApplicationCreatedEvent constructor.
-     */
     public function __construct(private readonly TeamApplication $teamApplication)
     {
     }

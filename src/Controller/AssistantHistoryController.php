@@ -7,10 +7,11 @@ use App\Form\Type\CreateAssistantHistoryType;
 use App\Role\Roles;
 use App\Service\LogService;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class AssistantHistoryController extends BaseController
+class AssistantHistoryController extends AbstractController
 {
     public function __construct(
         private readonly LogService $logService,

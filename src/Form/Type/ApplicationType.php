@@ -12,7 +12,6 @@ class ApplicationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // The fields that populate the form
         $builder
             ->add('user', CreateUserOnApplicationType::class, [
                 'label' => '',
@@ -43,6 +42,6 @@ class ApplicationType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'application'; // This must be unique
+        return 'application';
     }
 }
