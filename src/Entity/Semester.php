@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,11 +23,8 @@ class Semester implements PeriodInterface
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $year = null;
 
-    /**
-     * @var AdmissionPeriod[]
-     */
     #[ORM\OneToMany(mappedBy: 'semester', targetEntity: 'AdmissionPeriod')]
-    private $admissionPeriods;
+    private Collection $admissionPeriods;
 
     public function __toString(): string
     {
@@ -97,22 +95,14 @@ class Semester implements PeriodInterface
         return $this->getStartDate() < $now && $now <= $this->getEndDate();
     }
 
-    /**
-     * @return AdmissionPeriod[]
-     */
-    public function getAdmissionPeriods()
+    public function getAdmissionPeriods(): Collection
     {
         return $this->admissionPeriods;
     }
 
-    /**
-     * @param AdmissionPeriod $admissionPeriods
-     *
-     * @return Semester
-     */
-    public function setAdmissionPeriods($admissionPeriods)
+    public function setAdmissionPeriods(AdmissionPeriod $admissionPeriods): self
     {
-        $this->admissionPeriods = $admissionPeriods;
+        $this->admissionPeriods->add($admissionPeriods);
 
         return $this;
     }
