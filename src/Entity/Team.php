@@ -67,6 +67,12 @@ class Team implements TeamInterface
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamApplication')]
     private $applications;
 
+    /**
+     * @var TeamMembership[]
+     */
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamMembership')]
+    private $teamMemberships;
+
     public function isActive(): bool
     {
         return $this->active;
@@ -76,12 +82,6 @@ class Team implements TeamInterface
     {
         $this->active = $active;
     }
-
-    /**
-     * @var TeamMembership[]
-     */
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamMembership')]
-    private $teamMemberships;
 
     public function getAcceptApplication(): bool
     {
