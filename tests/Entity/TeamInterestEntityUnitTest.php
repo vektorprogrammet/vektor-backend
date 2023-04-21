@@ -6,6 +6,7 @@ use App\Entity\Department;
 use App\Entity\Semester;
 use App\Entity\Team;
 use App\Entity\TeamInterest;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class TeamInterestEntityUnitTest extends TestCase
@@ -32,9 +33,15 @@ class TeamInterestEntityUnitTest extends TestCase
 
     public function testSetPotentialTeams()
     {
-        $teams = [new Team(), new Team()];
-        $this->teamInterest->setPotentialTeams($teams);
-        $this->assertEquals($teams, $this->teamInterest->getPotentialTeams());
+        $teams_arr = new ArrayCollection();
+        $team1 = new Team();
+        $team2 = new Team();
+        $teams_arr->add($team1);
+        $teams_arr->add($team2);
+
+        $this->teamInterest->setPotentialTeams($team1);
+        $this->teamInterest->setPotentialTeams($team2);
+        $this->assertEquals($teams_arr, $this->teamInterest->getPotentialTeams());
     }
 
     public function testSetSemester()

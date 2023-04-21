@@ -7,6 +7,7 @@ use App\Entity\Interview;
 use App\Entity\InterviewAnswer;
 use App\Entity\InterviewScore;
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -101,10 +102,8 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $application3->setPreferredGroup('Bolk 1');
         $application3->setDoublePosition(true);
         $application3->setTeamInterest(true);
-        $application3->setPotentialTeams([
-            $this->getReference('team-1'),
-            $this->getReference('team-2'),
-        ]);
+        $application3->setPotentialTeams($this->getReference('team-1'));
+        $application3->setPotentialTeams($this->getReference('team-2'));
 
         $manager->persist($application3);
 
@@ -122,7 +121,7 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $interview4->setInterviewSchema($this->getReference('ischema-1'));
         $interview4->setUser($this->getReference('user-13'));
         $application4->setTeamInterest(true);
-        $application4->setPotentialTeams([$this->getReference('team-1')]);
+        $application4->setPotentialTeams($this->getReference('team-1'));
         $application4->setInterview($interview4);
 
         // Create answer objects for all the questions in the schema
@@ -277,8 +276,8 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $this->setReference('application-1', $application1);
         $this->setReference('application-2', $application2);
 
-        $this->getReference('team-1')->setPotentialMembers([$application3, $application4]);
-        $this->getReference('team-2')->setPotentialMembers([$application3]);
+        $this->getReference('team-1')->setPotentialMembers(new ArrayCollection([$application3, $application4]));
+        $this->getReference('team-2')->setPotentialMembers(new ArrayCollection([$application3]));
 
         $manager->flush();
     }
