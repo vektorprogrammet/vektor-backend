@@ -21,204 +21,47 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
     public function load(ObjectManager $manager)
     {
-        $user1 = new User();
-        $user1->setActive('1');
-        $user1->setEmail('petter@stud.ntnu.no');
-        $user1->setCompanyEmail('petter@vektorprogrammet.no');
-        $user1->setFirstName('Petter');
-        $user1->setLastName('Johansen');
-        $user1->setGender('0');
-        $user1->setPhone('95347865');
-        $user1->setUserName('petjo');
-        $user1->setPassword('1234');
-        $user1->addRole(Roles::ADMIN);
-        $user1->setFieldOfStudy($this->getReference('fos-1'));
-        $user1->setPicturePath('images/profile1.jpg');
-        $user1->setAccountNumber('1234.56.78903');
-        $manager->persist($user1);
 
-        $user2 = new User();
-        $user2->setActive('1');
-        $user2->setEmail('ida@stud.ntnu.no');
-        $user2->setFirstName('Ida');
-        $user2->setLastName('Andreassen');
-        $user2->setGender('1');
-        $user2->setPhone('95267841');
-        $user2->setUserName('idaan');
-        $user2->setPassword('1234');
-        $user2->addRole(Roles::TEAM_MEMBER);
-        $user2->setFieldOfStudy($this->getReference('fos-2'));
-        $user2->setPicturePath('images/profile2.jpg');
-        $user2->setAccountNumber('1234.56.78903');
-        $manager->persist($user2);
+        // reference, active, email, company_email, firstname, lastname, gender, phone, username, password, role, fos, picture_path, account_number
 
-        $user3 = new User();
-        $user3->setActive('1');
-        $user3->setEmail('kristoffer@stud.ntnu.no');
-        $user3->setFirstName('Kristoffer');
-        $user3->setLastName('Bø');
-        $user3->setGender('0');
-        $user3->setPhone('95148725');
-        $user3->setUserName('kribo');
-        $user3->setPassword('1234');
-        $user3->addRole(Roles::ASSISTANT);
-        $user3->setFieldOfStudy($this->getReference('fos-3'));
-        $user3->setPicturePath('images/profile3.jpg');
-        $manager->persist($user3);
+        $user_array = [
+            ['user1',  '1', 'petter@stud.ntnu.no',     'petter@vektorprogrammet.no', 'Petter',      'Johansen',             '0', '95347865', 'petjo',    '1234', ROLES::ADMIN,       'fos-1', 'images/profile1.jpg',       '1234.56.78903'],
+            ['user2',  '1', 'ida@stud.ntnu.no',        'vek2@vektorprogrammet.no',   'Ida',         'Andreassen',           '1', '95267841', 'idaan',    '1234', ROLES::TEAM_MEMBER, 'fos-2', 'images/profile2.jpg',       '1234.56.78903'],
+            ['user3',  '1', 'kristoffer@stud.ntnu.no', 'vek3@vektorprogrammet.no',   'Kristoffer',  'Bø',                   '0', '95148725', 'kribo',    '1234', ROLES::ASSISTANT,   'fos-3', 'images/profile3.jpg',       '1234.56.78903'],
+            ['user4',  '1', 'alm@mail.com',            'vek4@vektorprogrammet.no',   'Thomas',      'Alm',                  '0', '12312312', 'thomas',   '1234', ROLES::TEAM_MEMBER, 'fos-1', 'images/profile4.jpg',       '1234.56.78903'],
+            ['user5',  '1', 'a@b.c',                   'vek5@vektorprogrammet.no',   'Reidun',      'Persdatter Ødegaard',  '1', '92269548', 'reidun',   '1234', ROLES::ADMIN,       'fos-1', 'images/profile5.jpg',       '1234.56.78903'],
+            ['user6',  '1', 'b@b.c',                   'vek6@vektorprogrammet.no',   'Siri',        'Brenna Eskeland',      '1', '99540025', 'siri',     '1234', ROLES::ADMIN,       'fos-1', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user7',  '1', 'c@b.c',                   'vek7@vektorprogrammet.no',   'Eirik',       'Myrvoll-Nilsen',       '0', '93093824', 'eirik',    '1234', ROLES::TEAM_LEADER, 'fos-1', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user8',  '1', 'd@b.c',                   'vek8@vektorprogrammet.no',   'Ruben',       'Ravnå',                '0', '98059155', 'ruben',    '1234', ROLES::ADMIN,       'fos-1', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user9',  '1', 'e@b.c',                   'vek9@vektorprogrammet.no',   'Liv',         'Rasdal Håland',        '1', '45506381', 'liv',      '1234', ROLES::TEAM_LEADER, 'fos-1', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user10', '1', 'f@b.c',                   'vek10@vektorprogrammet.no',  'Johannes',    'Bogen',                '0', '95480124', 'johannes', '1234', ROLES::TEAM_LEADER, 'fos-1', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user11', '1', 'g@b.c',                   'vek11@vektorprogrammet.no',  'Cecilie',     'Teisberg',             '1', '45688060', 'cecilie',  '1234', ROLES::TEAM_LEADER, 'fos-1', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user12', '1', 'h@b.c',                   'vek12@vektorprogrammet.no',  'Håkon',       'Nøstvik',              '0', '99413718', 'haakon',   '1234', ROLES::TEAM_LEADER, 'fos-1', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user13', '1', 'i@b.c',                   'vek13@vektorprogrammet.no',  'Maulisha',    'Thavarajan',           '1', '45439367', 'maulisha', '1234', ROLES::TEAM_LEADER, 'fos-4', 'images/defaultProfile.png', '1234.56.78903'],
+            ['user14', '1', 'ij@b.c',                  'vek14@vektorprogrammet.no',  'Åse',         'Thavarajan',           '1', '45439369', 'aase',     '1234', ROLES::TEAM_LEADER, 'fos-4', 'images/defaultProfile.png', '1234.56.78903'],
+        ];
 
-        $user4 = new User();
-        $user4->setActive('1');
-        $user4->setEmail('alm@mail.com');
-        $user4->setFirstName('Thomas');
-        $user4->setLastName('Alm');
-        $user4->setGender('0');
-        $user4->setPhone('12312312');
-        $user4->setUserName('thomas');
-        $user4->setPassword('123');
-        $user4->addRole(Roles::TEAM_MEMBER);
-        $user4->setFieldOfStudy($this->getReference('fos-1'));
-        $user4->setPicturePath('images/profile4.jpg');
-        $manager->persist($user4);
+        // Create users from array
+        foreach ($user_array as $item) {
+            $user = new User();
+            $user->setActive($item[1]);
+            $user->setEmail($item[2]);
+            $user->setCompanyEmail($item[3]);
+            $user->setFirstName($item[4]);
+            $user->setLastName($item[5]);
+            $user->setGender($item[6]);
+            $user->setPhone($item[7]);
+            $user->setUserName($item[8]);
+            $user->setPassword($item[9]);
+            $user->addRole($item[10]);
+            $user->setFieldOfStudy($this->getReference($item[11]));
+            $user->setPicturePath($item[12]);
+            $user->setAccountNumber($item[13]);
+            $manager->persist($user);
+            $this->addReference($item[0], $user);
 
-        $user5 = new User();
-        $user5->setActive('1');
-        $user5->setEmail('a@b.c');
-        $user5->setFirstName('Reidun');
-        $user5->setLastName('Persdatter Ødegaard');
-        $user5->setGender('1');
-        $user5->setPhone('92269548');
-        $user5->setUserName('reidun');
-        $user5->setPassword('123');
-        $user5->addRole(Roles::ADMIN);
-        $user5->setFieldOfStudy($this->getReference('fos-1'));
-        $user5->setPicturePath('images/profile5.jpg');
-        $manager->persist($user5);
+        }
 
-        $user6 = new User();
-        $user6->setActive('1');
-        $user6->setEmail('b@b.c');
-        $user6->setFirstName('Siri');
-        $user6->setLastName('Brenna Eskeland');
-        $user6->setGender('1');
-        $user6->setPhone('99540025');
-        $user6->setUserName('siri');
-        $user6->setPassword('123');
-        $user6->addRole(Roles::ADMIN);
-        $user6->setFieldOfStudy($this->getReference('fos-1'));
-        $user6->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user6);
-
-        $user7 = new User();
-        $user7->setActive('1');
-        $user7->setEmail('c@b.c');
-        $user7->setFirstName('Eirik');
-        $user7->setLastName('Myrvoll-Nilsen');
-        $user7->setGender('0');
-        $user7->setPhone('93093824');
-        $user7->setUserName('eirik');
-        $user7->setPassword('123');
-        $user7->addRole(Roles::TEAM_LEADER);
-        $user7->setFieldOfStudy($this->getReference('fos-1'));
-        $user7->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user7);
-
-        $user8 = new User();
-        $user8->setActive('1');
-        $user8->setEmail('d@b.c');
-        $user8->setFirstName('Ruben');
-        $user8->setLastName('Ravnå');
-        $user8->setGender('0');
-        $user8->setPhone('98059155');
-        $user8->setUserName('ruben');
-        $user8->setPassword('123');
-        $user8->addRole(Roles::ADMIN);
-        $user8->setFieldOfStudy($this->getReference('fos-1'));
-        $user8->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user8);
-
-        $user9 = new User();
-        $user9->setActive('1');
-        $user9->setEmail('e@b.c');
-        $user9->setFirstName('Liv');
-        $user9->setLastName('Rasdal Håland');
-        $user9->setGender('1');
-        $user9->setPhone('45506381');
-        $user9->setUserName('liv');
-        $user9->setPassword('123');
-        $user9->addRole(Roles::TEAM_LEADER);
-        $user9->setFieldOfStudy($this->getReference('fos-1'));
-        $user9->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user9);
-
-        $user10 = new User();
-        $user10->setActive('1');
-        $user10->setEmail('f@b.c');
-        $user10->setFirstName('Johannes');
-        $user10->setLastName('Bogen');
-        $user10->setGender('0');
-        $user10->setPhone('95480124');
-        $user10->setUserName('johannes');
-        $user10->setPassword('123');
-        $user10->addRole(Roles::TEAM_LEADER);
-        $user10->setFieldOfStudy($this->getReference('fos-1'));
-        $user10->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user10);
-
-        $user11 = new User();
-        $user11->setActive('1');
-        $user11->setEmail('g@b.c');
-        $user11->setFirstName('Cecilie');
-        $user11->setLastName('Teisberg');
-        $user11->setGender('1');
-        $user11->setPhone('45688060');
-        $user11->setUserName('cecilie');
-        $user11->setPassword('123');
-        $user11->addRole(Roles::TEAM_LEADER);
-        $user11->setFieldOfStudy($this->getReference('fos-1'));
-        $user11->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user11);
-
-        $user12 = new User();
-        $user12->setActive('1');
-        $user12->setEmail('h@b.c');
-        $user12->setFirstName('Håkon');
-        $user12->setLastName('Nøstvik');
-        $user12->setGender('0');
-        $user12->setPhone('99413718');
-        $user12->setUserName('haakon');
-        $user12->setPassword('123');
-        $user12->addRole(Roles::TEAM_LEADER);
-        $user12->setFieldOfStudy($this->getReference('fos-1'));
-        $user12->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user12);
-
-        $user13 = new User();
-        $user13->setActive('1');
-        $user13->setEmail('i@b.c');
-        $user13->setFirstName('Maulisha');
-        $user13->setLastName('Thavarajan');
-        $user13->setGender('1');
-        $user13->setPhone('45439367');
-        $user13->setUserName('maulisha');
-        $user13->setPassword('123');
-        $user13->addRole(Roles::TEAM_LEADER);
-        $user13->setFieldOfStudy($this->getReference('fos-4'));
-        $user13->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user13);
-
-        $user14 = new User();
-        $user14->setActive('1');
-        $user14->setEmail('ij@b.c');
-        $user14->setFirstName('Åse');
-        $user14->setLastName('Thavarajan');
-        $user14->setGender('1');
-        $user14->setPhone('45439369');
-        $user14->setUserName('aase');
-        $user14->setPassword('123');
-        $user14->addRole(Roles::TEAM_LEADER);
-        $user14->setFieldOfStudy($this->getReference('fos-4'));
-        $user14->setPicturePath('images/defaultProfile.png');
-        $manager->persist($user14);
 
         $userInTeam1 = new User();
         $userInTeam1->setActive('1');
@@ -479,10 +322,10 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $this->setReference('user-11', $user11);
         $this->setReference('user-12', $user12);
         $this->setReference('user-13', $user13);
+        $this->setReference('user-14', $user14);
         $this->setReference('user-16', $user16);
         $this->setReference('user-20', $user20);
         $this->setReference('user-21', $user21);
-        $this->setReference('user-14', $user14);
         $this->setReference('userInTeam1', $userInTeam1);
         $this->setReference('user-assistant', $userAssistant);
         $this->setReference('user-team-member', $userTeamMember);
