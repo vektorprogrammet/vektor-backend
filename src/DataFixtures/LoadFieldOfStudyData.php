@@ -11,43 +11,26 @@ class LoadFieldOfStudyData extends AbstractFixture implements OrderedFixtureInte
 {
     public function load(ObjectManager $manager)
     {
-        $fos1 = new FieldOfStudy();
-        $fos1->setName('Bachelor i informatikk');
-        $fos1->setShortName('BIT');
-        $fos1->setDepartment($this->getReference('dep-1'));
-        $manager->persist($fos1);
+        //  [reference, fos_name, fos_short_name, department_reference]
+        $fieldOfStudyData = [
+            ['fos-1', 'Bachelor i informatikk',               'BIT',  'dep-1'],
+            ['fos-2', 'Datateknologi',                        'MIDT', 'dep-1'],
+            ['fos-3', 'Bachelor i økonomi og administrasjon', 'BITA', 'dep-2'],
+            ['fos-4', 'Miljøfysikk og fornybar energi',       'MFE',  'dep-3'],
+            ['fos-5', 'Matematikk og økonomi (bachelor)',     'MAEC', 'dep-4'],
+        ];
 
-        $fos2 = new FieldOfStudy();
-        $fos2->setName('Datateknologi');
-        $fos2->setShortName('MIDT');
-        $fos2->setDepartment($this->getReference('dep-1'));
-        $manager->persist($fos2);
-
-        $fos3 = new FieldOfStudy();
-        $fos3->setName('Bachelor i økonomi og administrasjon');
-        $fos3->setShortName('BITA');
-        $fos3->setDepartment($this->getReference('dep-2'));
-        $manager->persist($fos3);
-
-        $fos4 = new FieldOfStudy();
-        $fos4->setName('Miljøfysikk og fornybar energi');
-        $fos4->setShortName('MFE');
-        $fos4->setDepartment($this->getReference('dep-3'));
-        $manager->persist($fos4);
-
-        $fos5 = new FieldOfStudy();
-        $fos5->setName('Matematikk og økonomi (bachelor)');
-        $fos5->setShortName('MAEC');
-        $fos5->setDepartment($this->getReference('dep-4'));
-        $manager->persist($fos5);
+        // Create field-of-studies from array
+        foreach ($fieldOfStudyData as $data) {
+            $fos = new FieldOfStudy();
+            $fos->setName($data[1]);
+            $fos->setShortName($data[2]);
+            $fos->setDepartment($this->getReference($data[3]));
+            $manager->persist($fos);
+            $this->addReference($data[0], $fos);
+        }
 
         $manager->flush();
-
-        $this->addReference('fos-1', $fos1);
-        $this->addReference('fos-2', $fos2);
-        $this->addReference('fos-3', $fos3);
-        $this->addReference('fos-4', $fos4);
-        $this->addReference('fos-5', $fos5);
     }
 
     public function getOrder(): int

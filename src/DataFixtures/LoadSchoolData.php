@@ -11,63 +11,43 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $school0 = new School();
-        $school0->setName('Blussuvoll');
-        $school0->setContactPerson('Kari Johansen');
-        $school0->setEmail('kari@mail.com');
-        $school0->setPhone('22386722');
-        $school0->setInternational(true);
+        //  Array of schools to be created
+        //  [reference, school_name, contact_person, email, phone, active, international]
+        $schools_arr = [
+            ['school-0', 'Blussuvoll', 'Kari Johansen',  'kari@mail.com',   '22386722', true, true],
+            ['school-1', 'Gimse',      'Per Olsen',      'Per@mail.com',    '99887722', true, false],
+            ['school-2', 'Selsbakk',   'Vibeke Hansen',  'Vibeke@mail.com', '22386722', true, true],
+            ['school-3', 'Strinda',    'Peter Andersen', 'ped@mail.com',    '22386722', true, false],
+            ['school-4', 'Katta',      'Jon Støvneng',   'jas@mail.com',    '13424567', false, false],
+        ];
 
-        $school1 = new School();
-        $school1->setName('Gimse');
-        $school1->setContactPerson('Per Olsen');
-        $school1->setEmail('Per@mail.com');
-        $school1->setPhone('99887722');
+        // Create schools from array
+        foreach ($schools_arr as $school) {
+            $school_obj = new School();
+            $school_obj->setName($school[1]);
+            $school_obj->setContactPerson($school[2]);
+            $school_obj->setEmail($school[3]);
+            $school_obj->setPhone($school[4]);
+            $school_obj->setActive($school[5]);
+            $school_obj->setInternational($school[6]);
+            $manager->persist($school_obj);
+            $this->addReference($school[0], $school_obj);
+        }
 
-        $school2 = new School();
-        $school2->setName('Selsbakk');
-        $school2->setContactPerson('Vibeke Hansen');
-        $school2->setEmail('Vibeke@mail.com');
-        $school2->setPhone('22386722');
-        $school2->setInternational(true);
-
-        $school3 = new School();
-        $school3->setName('Strinda');
-        $school3->setContactPerson('Peter Andersen');
-        $school3->setEmail('ped@mail.com');
-        $school3->setPhone('22386722');
-
-        $school4 = new School();
-        $school4->setName('Katta');
-        $school4->setContactPerson('Jon Andreas Støvneng');
-        $school4->setEmail('jas@mail.com');
-        $school4->setPhone('13424567');
-        $school4->setActive(false);
-
-        $manager->persist($school0);
-        $manager->persist($school1);
-        $manager->persist($school2);
-        $manager->persist($school3);
-        $manager->persist($school4);
-
+        // Create 10 schools with random names
         for ($i = 0; $i < 10; ++$i) {
             $school = new School();
             $school->setName('Skole ' . $i);
             $school->setContactPerson('Kontaktperson ' . $i);
             $school->setEmail('skole@mail.com');
             $school->setPhone('12345678');
+            $school->setActive(true);
             $school->setInternational(false);
             $manager->persist($school);
             $this->addReference('school-0' . $i, $school);
         }
 
         $manager->flush();
-
-        $this->addReference('school-0', $school0);
-        $this->addReference('school-1', $school1);
-        $this->addReference('school-2', $school2);
-        $this->addReference('school-3', $school3);
-        $this->addReference('school-4', $school4);
     }
 
     public function getOrder(): int
