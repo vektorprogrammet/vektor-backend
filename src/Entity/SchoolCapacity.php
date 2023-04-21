@@ -15,15 +15,15 @@ class SchoolCapacity
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'School', inversedBy: 'capacities')]
+    #[ORM\ManyToOne(targetEntity: School::class, inversedBy: 'capacities')]
     #[ORM\JoinColumn(name: 'school_id', referencedColumnName: 'id')]
     protected ?School $school = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[ORM\ManyToOne(targetEntity: Semester::class)]
     #[ORM\JoinColumn(name: 'semester_id', referencedColumnName: 'id')]
     protected ?Semester $semester = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department')]
+    #[ORM\ManyToOne(targetEntity: Department::class)]
     #[ORM\JoinColumn(name: 'department_id', referencedColumnName: 'id')]
     protected ?Department $department = null;
 

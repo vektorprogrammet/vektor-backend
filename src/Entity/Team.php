@@ -29,7 +29,7 @@ class Team implements TeamInterface
     #[CustomAssert\VektorEmail]
     private ?string $email = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'teams')]
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'teams')]
     #[Assert\NotNull(message: 'Avdeling kan ikke være null')]
     protected ?Department $department = null;
 
@@ -51,7 +51,7 @@ class Team implements TeamInterface
      *
      * @var Application[]
      */
-    #[ORM\ManyToMany(targetEntity: 'Application', mappedBy: 'potentialTeams')]
+    #[ORM\ManyToMany(targetEntity: Application::class, mappedBy: 'potentialTeams')]
     private $potentialMembers;
 
     /**
@@ -59,19 +59,19 @@ class Team implements TeamInterface
      *
      * @var TeamInterest[]
      */
-    #[ORM\ManyToMany(targetEntity: 'TeamInterest', mappedBy: 'potentialTeams')]
+    #[ORM\ManyToMany(targetEntity: TeamInterest::class, mappedBy: 'potentialTeams')]
     private $potentialApplicants;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     private bool $active;
 
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamApplication')]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamApplication::class)]
     private $applications;
 
     /**
      * @var TeamMembership[]
      */
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: 'TeamMembership')]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamMembership::class)]
     private $teamMemberships;
 
     public function isActive(): bool

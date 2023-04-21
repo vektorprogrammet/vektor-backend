@@ -14,7 +14,7 @@ class CertificateRequest
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'certificateRequests')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'certificateRequests')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     protected $user;
 

@@ -33,7 +33,7 @@ class ExecutiveBoard implements TeamInterface
     /**
      * @var ExecutiveBoardMembership[]
      */
-    #[ORM\OneToMany(mappedBy: 'board', targetEntity: 'ExecutiveBoardMembership')]
+    #[ORM\OneToMany(mappedBy: 'board', targetEntity: ExecutiveBoardMembership::class)]
     private $boardMemberships;
 
     public function __toString()

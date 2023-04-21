@@ -15,21 +15,21 @@ class AssistantHistory
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'assistantHistories')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'assistantHistories')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[ORM\ManyToOne(targetEntity: Semester::class)]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?Semester $semester = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department')]
+    #[ORM\ManyToOne(targetEntity: Department::class)]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(message: 'Region må velges.')]
     private ?Department $department = null;
 
-    #[ORM\ManyToOne(targetEntity: 'School', inversedBy: 'assistantHistories')]
+    #[ORM\ManyToOne(targetEntity: School::class, inversedBy: 'assistantHistories')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?School $school = null;

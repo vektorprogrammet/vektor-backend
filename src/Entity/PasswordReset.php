@@ -14,7 +14,7 @@ class PasswordReset
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user', referencedColumnName: 'id')]
     protected ?User $user = null;
 

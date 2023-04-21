@@ -14,11 +14,11 @@ class InterviewAnswer
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Interview', inversedBy: 'interviewAnswers')]
+    #[ORM\ManyToOne(targetEntity: Interview::class, inversedBy: 'interviewAnswers')]
     #[ORM\JoinColumn(name: 'interview_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected ?Interview $interview = null;
 
-    #[ORM\ManyToOne(targetEntity: 'InterviewQuestion')]
+    #[ORM\ManyToOne(targetEntity: InterviewQuestion::class)]
     #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id')]
     protected ?InterviewQuestion $interviewQuestion = null;
 

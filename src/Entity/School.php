@@ -25,7 +25,7 @@ class School
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $contactPerson = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'schools')]
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'schools')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     protected ?Department $department = null;
 
@@ -34,7 +34,7 @@ class School
     #[Assert\Email(message: 'Ikke gyldig e-post.')]
     protected ?string $email = null;
 
-    #[ORM\OneToMany(mappedBy: 'school', targetEntity: 'AssistantHistory')]
+    #[ORM\OneToMany(mappedBy: 'school', targetEntity: AssistantHistory::class)]
     private Collection $assistantHistories;
 
     #[ORM\Column(type: 'string')]
@@ -46,7 +46,7 @@ class School
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private $international;
 
-    #[ORM\OneToMany(mappedBy: 'school', targetEntity: 'SchoolCapacity')]
+    #[ORM\OneToMany(mappedBy: 'school', targetEntity: SchoolCapacity::class)]
     private Collection $capacities;
 
     /**

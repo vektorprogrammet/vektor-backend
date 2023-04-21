@@ -15,18 +15,18 @@ class TeamMembership implements TeamMembershipInterface
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'teamMemberships')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'teamMemberships')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     protected ?User $user;
 
-    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[ORM\ManyToOne(targetEntity: Semester::class)]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     protected ?Semester $startSemester;
 
-    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[ORM\ManyToOne(targetEntity: Semester::class)]
     #[Assert\Valid]
     protected ?Semester $endSemester = null;
 
@@ -41,11 +41,11 @@ class TeamMembership implements TeamMembershipInterface
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     private bool $isSuspended;
 
-    #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'teamMemberships')]
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'teamMemberships')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     protected ?Team $team = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Position')]
+    #[ORM\ManyToOne(targetEntity: Position::class)]
     #[ORM\JoinColumn(name: 'position_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[Assert\Valid]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]

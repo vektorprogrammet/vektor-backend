@@ -27,7 +27,7 @@ class Signature
     #[Assert\Length(min: 1, max: 500, maxMessage: 'Kommentaren kan maks være 500 tegn.')]
     private ?string $additional_comment = null;
 
-    #[ORM\OneToOne(targetEntity: 'User', cascade: ['persist'])]
+    #[ORM\OneToOne(targetEntity: User::class, cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     protected ?User $user = null;
 

@@ -19,7 +19,7 @@ class AdmissionPeriod implements PeriodInterface
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'admissionPeriods')]
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'admissionPeriods')]
     private ?Department $department = null;
 
     #[ORM\Column(name: 'start_date', type: 'datetime', length: 150)]
@@ -30,11 +30,11 @@ class AdmissionPeriod implements PeriodInterface
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?\DateTime $endDate = null;
 
-    #[ORM\OneToOne(targetEntity: 'InfoMeeting', cascade: ['remove', 'persist'])]
+    #[ORM\OneToOne(targetEntity: InfoMeeting::class, cascade: ['remove', 'persist'])]
     #[Assert\Valid]
     private ?InfoMeeting $infoMeeting = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Semester', inversedBy: 'admissionPeriods')]
+    #[ORM\ManyToOne(targetEntity: Semester::class, inversedBy: 'admissionPeriods')]
     private ?Semester $semester = null;
 
     public function __toString()

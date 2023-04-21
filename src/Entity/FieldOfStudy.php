@@ -20,7 +20,7 @@ class FieldOfStudy
     #[ORM\Column(name: 'short_name', type: 'string', length: 50)]
     private ?string $shortName = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'fieldOfStudy')]
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'fieldOfStudy')]
     private ?Department $department = null;
 
     public function getId(): ?int

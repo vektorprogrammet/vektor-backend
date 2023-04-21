@@ -24,7 +24,7 @@ class Semester implements PeriodInterface
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $year = null;
 
-    #[ORM\OneToMany(mappedBy: 'semester', targetEntity: 'AdmissionPeriod')]
+    #[ORM\OneToMany(mappedBy: 'semester', targetEntity: AdmissionPeriod::class)]
     private Collection $admissionPeriods;
 
     public function __toString(): string

@@ -19,7 +19,7 @@ class Receipt
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'receipts')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'receipts')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $user = null;
 

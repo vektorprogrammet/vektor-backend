@@ -15,13 +15,13 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'executiveBoardMemberships')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'executiveBoardMemberships')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Assert\Valid]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private $user;
 
-    #[ORM\ManyToOne(targetEntity: 'ExecutiveBoard', inversedBy: 'boardMemberships')]
+    #[ORM\ManyToOne(targetEntity: ExecutiveBoard::class, inversedBy: 'boardMemberships')]
     private ?ExecutiveBoard $board = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -29,12 +29,12 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $positionName = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[ORM\ManyToOne(targetEntity: Semester::class)]
     #[Assert\Valid]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?Semester $startSemester = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Semester')]
+    #[ORM\ManyToOne(targetEntity: Semester::class)]
     #[Assert\Valid]
     protected ?Semester $endSemester = null;
 

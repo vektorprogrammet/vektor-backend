@@ -41,7 +41,7 @@ class TeamApplication
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $biography = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'applications')]
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'applications')]
     private ?Team $team = null;
 
     #[ORM\Column(type: 'string')]

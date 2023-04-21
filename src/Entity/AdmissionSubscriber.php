@@ -25,7 +25,7 @@ class AdmissionSubscriber
     #[ORM\Column(type: 'datetime')]
     private ?\DateTime $timestamp = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department')]
+    #[ORM\ManyToOne(targetEntity: Department::class)]
     private ?Department $department = null;
 
     #[ORM\Column(type: 'string')]
