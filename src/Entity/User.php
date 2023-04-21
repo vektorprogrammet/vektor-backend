@@ -80,11 +80,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $new_user_code = null;
 
-    /**
-     * @var AssistantHistory[]
-     */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: AssistantHistory::class)]
-    private $assistantHistories;
+    private Collection $assistantHistories;
 
     /**
      * @var TeamMembership[]
@@ -99,7 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $executiveBoardMemberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CertificateRequest::class)]
-    protected $certificateRequests;
+    protected Collection $certificateRequests;
 
     #[ORM\OneToMany(mappedBy: 'interviewer', targetEntity: Interview::class)]
     private Collection $interviews;
@@ -115,6 +112,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isActive = true;
         $this->picture_path = 'images/defaultProfile.png';
         $this->receipts = new ArrayCollection();
+        $this->assistantHistories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -318,10 +316,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->new_user_code;
     }
 
-    /**
-     * @return array
-     */
-    public function getAssistantHistories()
+    public function getAssistantHistories(): Collection
     {
         return $this->assistantHistories;
     }
@@ -346,22 +341,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return false;
     }
 
-    /**
-     * @param array $assistantHistories
-     */
-    public function setAssistantHistories($assistantHistories): void
+    public function setAssistantHistories(ArrayCollection $assistantHistories): void
     {
         $this->assistantHistories = $assistantHistories;
     }
 
     public function addAssistantHistory(AssistantHistory $assistantHistory): void
     {
-        $this->assistantHistories[] = $assistantHistory;
+        $this->assistantHistories->add($assistantHistory);
     }
 
-    public function addCertificateRequest(CertificateRequest $certificateRequests): self
+    public function addCertificateRequest(CertificateRequest $certificateRequest): self
     {
-        $this->certificateRequests[] = $certificateRequests;
+        $this->certificateRequests->add($certificateRequest);
 
         return $this;
     }
@@ -371,10 +363,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->certificateRequests->removeElement($certificateRequests);
     }
 
-    /**
-     * @return Collection
-     */
-    public function getCertificateRequests()
+    public function getCertificateRequests(): Collection
     {
         return $this->certificateRequests;
     }
@@ -400,7 +389,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     The methods below are taken from the login guide on Symfony.com, which can be found here:
     https://symfony.com/doc/current/cookbook/security/form_login_setup.html
     https://symfony.com/doc/current/cookbook/security/entity_provider.html
-
 
     */
 
