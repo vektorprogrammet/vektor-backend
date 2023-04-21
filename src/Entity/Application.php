@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\ApplicationRepository;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'application')]
-#[ORM\Entity(repositoryClass: 'App\Repository\ApplicationRepository')]
+#[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 #[CustomAssert\ApplicationEmail(groups: ['admission'])]
 class Application implements DepartmentSemesterInterface
 {
@@ -16,7 +17,7 @@ class Application implements DepartmentSemesterInterface
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'AdmissionPeriod')]
+    #[ORM\ManyToOne(targetEntity: AdmissionPeriod::class)]
     private ?AdmissionPeriod $admissionPeriod = null;
 
     #[ORM\Column(type: 'string', length: 20)]
@@ -72,7 +73,7 @@ class Application implements DepartmentSemesterInterface
     #[Assert\Length(max: 255, maxMessage: 'Dette feltet kan ikke inneholde mer enn 255 tegn.')]
     private ?string $preferredSchool = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', cascade: ['persist'])]
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Assert\Valid]
     private $user;
@@ -95,10 +96,10 @@ class Application implements DepartmentSemesterInterface
     // TODO: refactor to use actual boolean values (not 1, 2..)
     private $teamInterest;
 
-    #[ORM\ManyToMany(targetEntity: 'Team', inversedBy: 'potentialMembers')]
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'potentialMembers')]
     private $potentialTeams;
 
-    #[ORM\OneToOne(inversedBy: 'application', targetEntity: 'Interview', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'application', targetEntity: Interview::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     #[Assert\Valid]
     private ?Interview $interview = null;

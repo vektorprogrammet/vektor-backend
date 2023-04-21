@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\PositionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'position')]
-#[ORM\Entity(repositoryClass: 'App\Repository\PositionRepository')]
+#[ORM\Entity(repositoryClass: PositionRepository::class)]
 class Position
 {
     #[ORM\Column(type: 'integer')]

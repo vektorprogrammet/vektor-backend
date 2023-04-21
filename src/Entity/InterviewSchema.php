@@ -23,7 +23,7 @@ class InterviewSchema
     #[ORM\JoinTable(name: 'interview_schemas_questions')]
     #[ORM\JoinColumn(name: 'schema_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'question_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: 'InterviewQuestion', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: InterviewQuestion::class, cascade: ['persist'])]
     #[Assert\Valid]
     protected Collection $interviewQuestions; // Unidirectional, may turn out to be bidirectional
 

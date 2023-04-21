@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\SignatureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'signature')]
-#[ORM\Entity(repositoryClass: 'App\Repository\SignatureRepository')]
+#[ORM\Entity(repositoryClass: SignatureRepository::class)]
 class Signature
 {
     #[ORM\Id]
@@ -26,7 +27,7 @@ class Signature
     #[Assert\Length(min: 1, max: 500, maxMessage: 'Kommentaren kan maks være 500 tegn.')]
     private ?string $additional_comment = null;
 
-    #[ORM\OneToOne(targetEntity: 'User', cascade: ['persist'])]
+    #[ORM\OneToOne(targetEntity: User::class, cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     protected ?User $user = null;
 

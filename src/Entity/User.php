@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use App\Role\Roles;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'user')]
-#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Denne Eposten er allerede i bruk.', groups: ['create_user', 'edit_user'])]
 #[UniqueEntity(fields: ['user_name'], message: 'Dette brukernavnet er allerede i bruk.', groups: ['create_user', 'username', 'edit_user'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -31,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'create_user', 'edit_user'])]
     private ?string $firstName = null;
 
-    #[ORM\ManyToOne(targetEntity: 'FieldOfStudy')]
+    #[ORM\ManyToOne(targetEntity: FieldOfStudy::class)]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'edit_user', 'create_user'])]
     #[Assert\Valid]
@@ -82,28 +83,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var AssistantHistory[]
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'AssistantHistory')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: AssistantHistory::class)]
     private $assistantHistories;
 
     /**
      * @var TeamMembership[]
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'TeamMembership')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TeamMembership::class)]
     private $teamMemberships;
 
     /**
      * @var ExecutiveBoardMembership[]
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'ExecutiveBoardMembership')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ExecutiveBoardMembership::class)]
     private $executiveBoardMemberships;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'CertificateRequest')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CertificateRequest::class)]
     protected $certificateRequests;
 
-    #[ORM\OneToMany(mappedBy: 'interviewer', targetEntity: 'Interview')]
+    #[ORM\OneToMany(mappedBy: 'interviewer', targetEntity: Interview::class)]
     private $interviews;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: 'Receipt')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Receipt::class)]
     private $receipts;
 
     public function __construct()

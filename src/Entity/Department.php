@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\DepartmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'department')]
-#[ORM\Entity(repositoryClass: 'App\Repository\DepartmentRepository')]
+#[ORM\Entity(repositoryClass: DepartmentRepository::class)]
 #[UniqueEntity(fields: ['city'])]
 class Department
 {
@@ -50,18 +51,18 @@ class Department
     private ?string $slackChannel = null;
 
     #[ORM\JoinTable(name: 'department_school')]
-    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'School')]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: School::class)]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     protected Collection $schools;
 
-    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'FieldOfStudy', cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: FieldOfStudy::class, cascade: ['remove'])]
     private Collection $fieldOfStudy;
 
-    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'AdmissionPeriod', cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: AdmissionPeriod::class, cascade: ['remove'])]
     #[ORM\OrderBy(['startDate' => 'DESC'])]
     private Collection $admissionPeriods;
 
-    #[ORM\OneToMany(mappedBy: 'department', targetEntity: 'Team', cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: Team::class, cascade: ['remove'])]
     private Collection $teams;
 
     #[ORM\Column(name: 'logo_path', type: 'string', length: 255, nullable: true)]

@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\PasswordResetRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'password_reset')]
-#[ORM\Entity(repositoryClass: 'App\Repository\PasswordResetRepository')]
+#[ORM\Entity(repositoryClass: PasswordResetRepository::class)]
 class PasswordReset
 {
     #[ORM\Id]
@@ -13,7 +14,7 @@ class PasswordReset
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user', referencedColumnName: 'id')]
     protected ?User $user = null;
 

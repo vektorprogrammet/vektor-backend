@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\FieldOfStudyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'field_of_study')]
-#[ORM\Entity(repositoryClass: 'App\Repository\FieldOfStudyRepository')]
+#[ORM\Entity(repositoryClass: FieldOfStudyRepository::class)]
 class FieldOfStudy
 {
     #[ORM\Column(type: 'integer')]
@@ -19,7 +20,7 @@ class FieldOfStudy
     #[ORM\Column(name: 'short_name', type: 'string', length: 50)]
     private ?string $shortName = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department', inversedBy: 'fieldOfStudy')]
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'fieldOfStudy')]
     private ?Department $department = null;
 
     public function getId(): ?int

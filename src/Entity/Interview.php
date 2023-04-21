@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\InterviewRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,7 +19,7 @@ abstract class InterviewStatusType
 }
 
 #[ORM\Table(name: 'interview')]
-#[ORM\Entity(repositoryClass: 'App\Repository\InterviewRepository')]
+#[ORM\Entity(repositoryClass: InterviewRepository::class)]
 class Interview
 {
     #[ORM\Id]
@@ -49,23 +50,23 @@ class Interview
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $conducted = null;
 
-    #[ORM\ManyToOne(targetEntity: 'InterviewSchema')]
+    #[ORM\ManyToOne(targetEntity: InterviewSchema::class)]
     #[ORM\JoinColumn(name: 'schema_id', referencedColumnName: 'id')]
     private ?InterviewSchema $interviewSchema = null; // Bidirectional, may turn out to be unidirectional
 
-    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'interviews')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'interviews')]
     #[ORM\JoinColumn(name: 'interviewer_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private $interviewer; // Unidirectional, may turn out to be bidirectional
 
-    #[ORM\ManyToOne(targetEntity: 'User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private $coInterviewer;
 
-    #[ORM\OneToMany(mappedBy: 'interview', targetEntity: 'InterviewAnswer', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'interview', targetEntity: InterviewAnswer::class, cascade: ['persist', 'remove'])]
     #[Assert\Valid]
     private Collection $interviewAnswers;
 
-    #[ORM\OneToOne(targetEntity: 'InterviewScore', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: InterviewScore::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'interview_score_id', referencedColumnName: 'id')]
     #[Assert\Valid]
     private ?InterviewScore $interviewScore = null;
@@ -73,11 +74,11 @@ class Interview
     #[ORM\Column(type: 'integer', nullable: false)]
     private ?int $interviewStatus = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', cascade: ['persist'])]
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $user;
 
-    #[ORM\OneToOne(mappedBy: 'interview', targetEntity: 'Application')]
+    #[ORM\OneToOne(mappedBy: 'interview', targetEntity: Application::class)]
     private ?Application $application = null;
 
     #[ORM\Column(type: 'string', nullable: true)]

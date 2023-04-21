@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\InfoMeetingRepository;
 use App\Validator\Constraints as CustomAssert;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[CustomAssert\InfoMeeting]
 #[ORM\Table(name: 'infomeeting')]
-#[ORM\Entity(repositoryClass: 'App\Repository\InfoMeetingRepository')]
+#[ORM\Entity(repositoryClass: InfoMeetingRepository::class)]
 class InfoMeeting
 {
     #[ORM\Column(type: 'integer')]

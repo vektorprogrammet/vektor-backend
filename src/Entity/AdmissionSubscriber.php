@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\AdmissionSubscriberRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'admission_subscriber')]
-#[ORM\Entity(repositoryClass: 'App\Repository\AdmissionSubscriberRepository')]
+#[ORM\Entity(repositoryClass: AdmissionSubscriberRepository::class)]
 #[UniqueEntity(fields: ['unsubscribeCode'])]
 class AdmissionSubscriber
 {
@@ -24,7 +25,7 @@ class AdmissionSubscriber
     #[ORM\Column(type: 'datetime')]
     private ?\DateTime $timestamp = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Department')]
+    #[ORM\ManyToOne(targetEntity: Department::class)]
     private ?Department $department = null;
 
     #[ORM\Column(type: 'string')]

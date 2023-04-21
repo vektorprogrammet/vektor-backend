@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\TeamApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'team_application')]
-#[ORM\Entity(repositoryClass: 'App\Repository\TeamApplicationRepository')]
+#[ORM\Entity(repositoryClass: TeamApplicationRepository::class)]
 class TeamApplication
 {
     #[ORM\Id]
@@ -40,7 +41,7 @@ class TeamApplication
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $biography = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Team', inversedBy: 'applications')]
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'applications')]
     private ?Team $team = null;
 
     #[ORM\Column(type: 'string')]

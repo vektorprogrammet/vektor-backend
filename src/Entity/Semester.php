@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\SemesterRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'semester')]
-#[ORM\Entity(repositoryClass: 'App\Repository\SemesterRepository')]
+#[ORM\Entity(repositoryClass: SemesterRepository::class)]
 class Semester implements PeriodInterface
 {
     #[ORM\Column(type: 'integer')]
@@ -23,7 +24,7 @@ class Semester implements PeriodInterface
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $year = null;
 
-    #[ORM\OneToMany(mappedBy: 'semester', targetEntity: 'AdmissionPeriod')]
+    #[ORM\OneToMany(mappedBy: 'semester', targetEntity: AdmissionPeriod::class)]
     private Collection $admissionPeriods;
 
     public function __toString(): string
