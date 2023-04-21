@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TeamRepository;
 use App\Validator\Constraints as CustomAssert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -46,33 +48,31 @@ class Team implements TeamInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $deadline = null;
 
-    /**
-     * Applications with team interest.
-     *
-     * @var Application[]
-     */
+    /** Applications with team interest. */
     #[ORM\ManyToMany(targetEntity: Application::class, mappedBy: 'potentialTeams')]
-    private $potentialMembers;
+    private Collection $potentialMembers;
 
-    /**
-     * TeamInterest entities not corresponding to any Application.
-     *
-     * @var TeamInterest[]
-     */
+    /** TeamInterest entities not corresponding to any Application. */
     #[ORM\ManyToMany(targetEntity: TeamInterest::class, mappedBy: 'potentialTeams')]
-    private $potentialApplicants;
+    private Collection $potentialApplicants;
 
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     private bool $active;
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamApplication::class)]
-    private $applications;
+    private Collection $applications;
 
-    /**
-     * @var TeamMembership[]
-     */
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamMembership::class)]
-    private $teamMemberships;
+    private Collection $teamMemberships;
+
+    public function __construct()
+    {
+        $this->active = true;
+        $this->applications = new ArrayCollection();
+        $this->teamMemberships = new ArrayCollection();
+        $this->potentialMembers = new ArrayCollection();
+        $this->potentialApplicants = new ArrayCollection();
+    }
 
     public function isActive(): bool
     {
@@ -89,20 +89,11 @@ class Team implements TeamInterface
         return $this->acceptApplication;
     }
 
-    /**
-     * @return Team
-     */
-    public function setAcceptApplication(bool $acceptApplication)
+    public function setAcceptApplication(bool $acceptApplication): self
     {
         $this->acceptApplication = $acceptApplication;
 
         return $this;
-    }
-
-    public function __construct()
-    {
-        $this->active = true;
-        $this->teamMemberships = [];
     }
 
     public function __toString()
@@ -206,22 +197,16 @@ class Team implements TeamInterface
         return $this;
     }
 
-    /**
-     * @return TeamMembership[]
-     */
-    public function getTeamMemberships()
+    public function getTeamMemberships(): Collection
     {
         return $this->teamMemberships;
     }
 
-    /**
-     * @return TeamMembership[]
-     */
-    public function getActiveTeamMemberships()
+    public function getActiveTeamMemberships(): array
     {
         $histories = [];
 
-        foreach ($this->teamMemberships as $wh) {
+        foreach ($this->teamMemberships->toArray() as $wh) {
             $semester = $wh->getUser()->getDepartment()->getCurrentOrLatestAdmissionPeriod()->getSemester();
             if ($semester !== null && $wh->isActiveInSemester($semester)) {
                 $histories[] = $wh;
@@ -231,10 +216,7 @@ class Team implements TeamInterface
         return $histories;
     }
 
-    /**
-     * @return User[]
-     */
-    public function getActiveUsers()
+    public function getActiveUsers(): array
     {
         $activeUsers = [];
 
@@ -247,41 +229,29 @@ class Team implements TeamInterface
         return $activeUsers;
     }
 
-    /**
-     * @return Application[]
-     */
-    public function getPotentialMembers()
+    public function getPotentialMembers(): Collection
     {
         return $this->potentialMembers;
     }
 
-    /**
-     * @param Application[] $potentialMembers
-     */
-    public function setPotentialMembers($potentialMembers): void
+    public function setPotentialMembers(ArrayCollection $potentialMembers): void
     {
         $this->potentialMembers = $potentialMembers;
     }
 
-    /**
-     * @return TeamInterest[]
-     */
-    public function getPotentialApplicants()
+    public function getPotentialApplicants(): Collection
     {
         return $this->potentialApplicants;
     }
 
-    /**
-     * @param TeamInterest[] $potentialApplicants
-     */
-    public function setPotentialApplicants($potentialApplicants): self
+    public function setPotentialApplicants(ArrayCollection $potentialApplicants): self
     {
         $this->potentialApplicants = $potentialApplicants;
 
         return $this;
     }
 
-    public function getNumberOfPotentialMembersAndApplicantsInSemester($semester)
+    public function getNumberOfPotentialMembersAndApplicantsInSemester($semester): int
     {
         $array = array_merge($this->potentialApplicants->toArray(), $this->potentialMembers->toArray());
         $array = array_filter($array, function (DepartmentSemesterInterface $a) use ($semester) {
@@ -291,17 +261,14 @@ class Team implements TeamInterface
         return count($array);
     }
 
-    /**
-     * @return TeamApplication[]
-     */
-    public function getApplications()
+    public function getApplications(): Collection
     {
         return $this->applications;
     }
 
     public function setApplications(TeamApplication $applications): void
     {
-        $this->applications = $applications;
+        $this->applications->add($applications);
     }
 
     public function getAcceptApplicationAndDeadline(): bool

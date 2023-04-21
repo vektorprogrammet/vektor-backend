@@ -7,6 +7,7 @@ use App\Entity\Interview;
 use App\Entity\InterviewAnswer;
 use App\Entity\InterviewScore;
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -275,8 +276,8 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
         $this->setReference('application-1', $application1);
         $this->setReference('application-2', $application2);
 
-        $this->getReference('team-1')->setPotentialMembers([$application3, $application4]);
-        $this->getReference('team-2')->setPotentialMembers([$application3]);
+        $this->getReference('team-1')->setPotentialMembers(new ArrayCollection([$application3, $application4]));
+        $this->getReference('team-2')->setPotentialMembers(new ArrayCollection([$application3]));
 
         $manager->flush();
     }
