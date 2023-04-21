@@ -68,7 +68,7 @@ done when doing `yarn start`)
 
 ### Dev:
 Load db-schema:
-`php bin/console doctrine:schema:update --force`
+`php bin/console doctrine:schema:update --force --complete`
 
 Load fixtures:
 `php bin/console doctrine:fixtures:load`
@@ -86,7 +86,7 @@ Then Run:
 
 ## Tests
 **Run all tests:**\
-`php bin/phpunit --configuration phpunit.xml.dist`
+`php bin/phpunit
 
 **Run individual test:**\
 `php bin/phpunit "path/to/test/TestName.php"`
