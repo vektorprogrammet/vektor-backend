@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\CertificateRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'certificate_request')]
-#[ORM\Entity(repositoryClass: 'App\Repository\CertificateRequestRepository')]
+#[ORM\Entity(repositoryClass: CertificateRequestRepository::class)]
 class CertificateRequest
 {
     #[ORM\Column(type: 'integer')]

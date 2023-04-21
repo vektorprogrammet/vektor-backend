@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\AdmissionNotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'admission_notification')]
-#[ORM\Entity(repositoryClass: 'App\Repository\AdmissionNotificationRepository')]
+#[ORM\Entity(repositoryClass: AdmissionNotificationRepository::class)]
 class AdmissionNotification
 {
     #[ORM\Id]

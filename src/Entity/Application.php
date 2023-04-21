@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\ApplicationRepository;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'application')]
-#[ORM\Entity(repositoryClass: 'App\Repository\ApplicationRepository')]
+#[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 #[CustomAssert\ApplicationEmail(groups: ['admission'])]
 class Application implements DepartmentSemesterInterface
 {

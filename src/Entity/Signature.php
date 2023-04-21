@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\SignatureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'signature')]
-#[ORM\Entity(repositoryClass: 'App\Repository\SignatureRepository')]
+#[ORM\Entity(repositoryClass: SignatureRepository::class)]
 class Signature
 {
     #[ORM\Id]

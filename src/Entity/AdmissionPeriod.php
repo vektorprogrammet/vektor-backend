@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\AdmissionPeriodRepository;
 use App\Utils\TimeUtil;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * DepartmentSpecificSemester.
  */
 #[ORM\Table]
-#[ORM\Entity(repositoryClass: 'App\Repository\AdmissionPeriodRepository')]
+#[ORM\Entity(repositoryClass: AdmissionPeriodRepository::class)]
 class AdmissionPeriod implements PeriodInterface
 {
     #[ORM\Column(name: 'id', type: 'integer')]

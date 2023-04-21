@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\TeamInterestRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table]
-#[ORM\Entity(repositoryClass: 'App\Repository\TeamInterestRepository')]
+#[ORM\Entity(repositoryClass: TeamInterestRepository::class)]
 class TeamInterest implements DepartmentSemesterInterface
 {
     #[ORM\Column(name: 'id', type: 'integer')]

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use App\Role\Roles;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'user')]
-#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Denne Eposten er allerede i bruk.', groups: ['create_user', 'edit_user'])]
 #[UniqueEntity(fields: ['user_name'], message: 'Dette brukernavnet er allerede i bruk.', groups: ['create_user', 'username', 'edit_user'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

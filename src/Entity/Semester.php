@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\SemesterRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'semester')]
-#[ORM\Entity(repositoryClass: 'App\Repository\SemesterRepository')]
+#[ORM\Entity(repositoryClass: SemesterRepository::class)]
 class Semester implements PeriodInterface
 {
     #[ORM\Column(type: 'integer')]

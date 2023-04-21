@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\AssistantHistoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'assistant_history')]
-#[ORM\Entity(repositoryClass: 'App\Repository\AssistantHistoryRepository')]
+#[ORM\Entity(repositoryClass: AssistantHistoryRepository::class)]
 class AssistantHistory
 {
     #[ORM\Column(type: 'integer')]

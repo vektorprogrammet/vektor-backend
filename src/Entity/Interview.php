@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\InterviewRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,7 +19,7 @@ abstract class InterviewStatusType
 }
 
 #[ORM\Table(name: 'interview')]
-#[ORM\Entity(repositoryClass: 'App\Repository\InterviewRepository')]
+#[ORM\Entity(repositoryClass: InterviewRepository::class)]
 class Interview
 {
     #[ORM\Id]

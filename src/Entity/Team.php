@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\TeamRepository;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'team')]
-#[ORM\Entity(repositoryClass: 'App\Repository\TeamRepository')]
+#[ORM\Entity(repositoryClass: TeamRepository::class)]
 #[UniqueEntity(fields: ['department', 'name'], message: 'Et team med dette navnet finnes allerede i avdelingen.')]
 class Team implements TeamInterface
 {

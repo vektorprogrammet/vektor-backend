@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\TeamMembershipRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'team_membership')]
-#[ORM\Entity(repositoryClass: 'App\Repository\TeamMembershipRepository')]
+#[ORM\Entity(repositoryClass: TeamMembershipRepository::class)]
 class TeamMembership implements TeamMembershipInterface
 {
     #[ORM\Column(type: 'integer')]

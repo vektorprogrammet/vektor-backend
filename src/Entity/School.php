@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'school')]
-#[ORM\Entity(repositoryClass: 'App\Repository\SchoolRepository')]
+#[ORM\Entity(repositoryClass: SchoolRepository::class)]
 class School
 {
     #[ORM\Id]

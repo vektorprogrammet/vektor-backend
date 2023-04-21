@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\FieldOfStudyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'field_of_study')]
-#[ORM\Entity(repositoryClass: 'App\Repository\FieldOfStudyRepository')]
+#[ORM\Entity(repositoryClass: FieldOfStudyRepository::class)]
 class FieldOfStudy
 {
     #[ORM\Column(type: 'integer')]
