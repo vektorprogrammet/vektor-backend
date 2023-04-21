@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AdmissionNotification
 {
     #[ORM\Id]
-    #[ORM\Column(type: TYPES::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
