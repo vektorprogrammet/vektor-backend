@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TeamInterestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,13 +31,10 @@ class TeamInterest implements DepartmentSemesterInterface
     #[ORM\Column(name: 'timestamp', type: 'datetime')]
     private ?\DateTime $timestamp = null;
 
-    /**
-     * @var Team[]
-     */
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'potentialApplicants')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Count(min: 1, minMessage: 'Du må velge minst ett team')]
-    private $potentialTeams;
+    private Collection $potentialTeams;
 
     #[ORM\ManyToOne(targetEntity: Semester::class)]
     private ?Semester $semester = null;
@@ -49,6 +48,7 @@ class TeamInterest implements DepartmentSemesterInterface
     public function __construct()
     {
         $this->timestamp = new \DateTime();
+        $this->potentialTeams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,20 +85,14 @@ class TeamInterest implements DepartmentSemesterInterface
         return $this->timestamp;
     }
 
-    /**
-     * @return Team[]
-     */
-    public function getPotentialTeams()
+    public function getPotentialTeams(): Collection
     {
         return $this->potentialTeams;
     }
 
-    /**
-     * @param Team[] $potentialTeams
-     */
-    public function setPotentialTeams($potentialTeams): self
+    public function setPotentialTeams($potentialTeam): self
     {
-        $this->potentialTeams = $potentialTeams;
+        $this->potentialTeams->add($potentialTeam);
 
         return $this;
     }
@@ -120,7 +114,7 @@ class TeamInterest implements DepartmentSemesterInterface
         return $this->department;
     }
 
-    public function setDepartment(Department $department): TeamInterest
+    public function setDepartment(Department $department): self
     {
         $this->department = $department;
 

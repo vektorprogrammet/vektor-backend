@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ApplicationRepository;
 use App\Validator\Constraints as CustomAssert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -97,7 +99,7 @@ class Application implements DepartmentSemesterInterface
     private $teamInterest;
 
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'potentialMembers')]
-    private $potentialTeams;
+    private Collection $potentialTeams;
 
     #[ORM\OneToOne(inversedBy: 'application', targetEntity: Interview::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
@@ -109,6 +111,7 @@ class Application implements DepartmentSemesterInterface
 
     public function __construct()
     {
+        $this->potentialTeams = new ArrayCollection();
         $this->last_edited = new \DateTime();
         $this->created = new \DateTime();
         $this->substitute = false;
@@ -376,20 +379,14 @@ class Application implements DepartmentSemesterInterface
         $this->preferredSchool = $preferredSchool;
     }
 
-    /**
-     * @return Team[]
-     */
-    public function getPotentialTeams()
+    public function getPotentialTeams(): Collection
     {
         return $this->potentialTeams;
     }
 
-    /**
-     * @param Team[] $potentialTeams
-     */
-    public function setPotentialTeams($potentialTeams)
+    public function setPotentialTeams($potentialTeam): void
     {
-        $this->potentialTeams = $potentialTeams;
+        $this->potentialTeams->add($potentialTeam);
     }
 
     public function getSemester(): ?Semester

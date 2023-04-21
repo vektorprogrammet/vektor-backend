@@ -145,7 +145,7 @@ class Department
         return $this->id;
     }
 
-    public function setName(string $name): Department
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -157,7 +157,7 @@ class Department
         return $this->name;
     }
 
-    public function setShortName(string $shortName): Department
+    public function setShortName(string $shortName): self
     {
         $this->shortName = $shortName;
 
@@ -169,7 +169,7 @@ class Department
         return $this->shortName;
     }
 
-    public function addFieldOfStudy(FieldOfStudy $fieldOfStudy): Department
+    public function addFieldOfStudy(FieldOfStudy $fieldOfStudy): self
     {
         $this->fieldOfStudy->add($fieldOfStudy);
 
@@ -276,7 +276,7 @@ class Department
         return $this->latitude;
     }
 
-    public function setLatitude(string $latitude): Department
+    public function setLatitude(string $latitude): self
     {
         $this->latitude = $latitude;
 
@@ -288,7 +288,7 @@ class Department
         return $this->longitude;
     }
 
-    public function setLongitude(string $longitude): Department
+    public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
 
@@ -309,7 +309,7 @@ class Department
         return $this->slackChannel;
     }
 
-    public function setSlackChannel(string $slackChannel): Department
+    public function setSlackChannel(string $slackChannel): self
     {
         $this->slackChannel = $slackChannel;
 
@@ -321,7 +321,7 @@ class Department
         return $this->logoPath;
     }
 
-    public function setLogoPath(string $logoPath): Department
+    public function setLogoPath(string $logoPath): self
     {
         $this->logoPath = $logoPath;
 
@@ -333,7 +333,7 @@ class Department
         return $this->active;
     }
 
-    public function setActive(bool $active): Department
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 
