@@ -27,10 +27,7 @@ class ReceiptStatistics
         }, 0.0);
     }
 
-    /**
-     * @return int
-     */
-    public function averageRefundTimeInHours()
+    public function averageRefundTimeInHours(): int
     {
         $receipts = array_filter($this->receipts, fn (Receipt $receipt) => $receipt->getRefundDate() !== null && $receipt->getRefundDate() > $this->refundDateImplementationDate);
 
