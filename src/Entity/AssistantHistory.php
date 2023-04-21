@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AssistantHistoryRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: AssistantHistoryRepository::class)]
 class AssistantHistory
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
@@ -34,15 +35,15 @@ class AssistantHistory
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?School $school = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $workdays = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $bolk = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $day = null;
 

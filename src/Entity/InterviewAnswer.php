@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Validator\Constraints as CustomAssert;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'interview_answer')]
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class InterviewAnswer
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 

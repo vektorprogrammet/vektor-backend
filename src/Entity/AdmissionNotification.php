@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AdmissionNotificationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'admission_notification')]
@@ -10,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 class AdmissionNotification
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: TYPES::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $timestamp = null;
 
     #[ORM\ManyToOne(targetEntity: AdmissionSubscriber::class)]
@@ -24,7 +25,7 @@ class AdmissionNotification
     #[ORM\ManyToOne(targetEntity: Semester::class)]
     private ?Semester $semester = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $infoMeeting = null;
 
     #[ORM\ManyToOne(targetEntity: Department::class)]

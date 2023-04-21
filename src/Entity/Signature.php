@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SignatureRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,19 +12,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Signature
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\Column(name: 'signature_path', type: 'string', length: 45, nullable: true)]
+    #[ORM\Column(name: 'signature_path', type: Types::STRING, length: 45, nullable: true)]
     private ?string $signaturePath = null;
 
-    #[ORM\Column(type: 'string', length: 250)]
+    #[ORM\Column(type: Types::STRING, length: 250)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(min: 1, max: 250, maxMessage: 'Beskrivelsen kan maks være 250 tegn.')]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'string', length: 500, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 500, nullable: true)]
     #[Assert\Length(min: 1, max: 500, maxMessage: 'Kommentaren kan maks være 500 tegn.')]
     private ?string $additional_comment = null;
 

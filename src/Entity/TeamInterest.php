@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TeamInterestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,23 +13,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: TeamInterestRepository::class)]
 class TeamInterest implements DepartmentSemesterInterface
 {
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\Column(name: 'name', type: 'string', length: 255)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 255)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(max: 255, maxMessage: 'Navnet ditt kan maksimalt være 255 tegn')]
     private ?string $name = null;
 
-    #[ORM\Column(name: 'email', type: 'string', length: 255)]
+    #[ORM\Column(name: 'email', type: Types::STRING, length: 255)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(max: 255, maxMessage: 'Emailen din kan maksimalt være 255 tegn')]
     #[Assert\Email(message: 'Emailen din er ikke formatert riktig')]
     private ?string $email = null;
 
-    #[ORM\Column(name: 'timestamp', type: 'datetime')]
+    #[ORM\Column(name: 'timestamp', type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $timestamp = null;
 
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'potentialApplicants')]

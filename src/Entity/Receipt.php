@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReceiptRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,7 +16,7 @@ class Receipt
     public const STATUS_REJECTED = 'rejected';
 
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
@@ -23,33 +24,33 @@ class Receipt
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $user = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $submitDate = null;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?\DateTime $receiptDate = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $refundDate = null;
 
-    #[ORM\Column(name: 'picture_path', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'picture_path', type: Types::STRING, nullable: true)]
     private ?string $picturePath = null;
 
-    #[ORM\Column(type: 'string', length: 5000)]
+    #[ORM\Column(type: Types::STRING, length: 5000)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Length(max: 5000, maxMessage: 'Maks 5000 tegn')]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'float')]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\GreaterThan(0, message: 'Ugyldig sum')]
     private ?float $sum = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     private ?string $status = null;
 
-    #[ORM\Column(name: 'visual_id', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'visual_id', type: Types::STRING, nullable: true)]
     private ?string $visualId = null;
 
     public function __construct()

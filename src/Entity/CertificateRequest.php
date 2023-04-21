@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\CertificateRequestRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'certificate_request')]
 #[ORM\Entity(repositoryClass: CertificateRequestRepository::class)]
 class CertificateRequest
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;

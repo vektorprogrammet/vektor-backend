@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PasswordResetRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'password_reset')]
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PasswordReset
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
@@ -18,10 +19,10 @@ class PasswordReset
     #[ORM\JoinColumn(name: 'user', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     protected ?string $hashedResetCode = null;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     protected ?\DateTime $resetTime = null;
 
     private ?string $resetCode = null;

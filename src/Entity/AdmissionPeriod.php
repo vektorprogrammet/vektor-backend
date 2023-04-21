@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AdmissionPeriodRepository;
 use App\Utils\TimeUtil;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: AdmissionPeriodRepository::class)]
 class AdmissionPeriod implements PeriodInterface
 {
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
@@ -22,11 +23,11 @@ class AdmissionPeriod implements PeriodInterface
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'admissionPeriods')]
     private ?Department $department = null;
 
-    #[ORM\Column(name: 'start_date', type: 'datetime', length: 150)]
+    #[ORM\Column(name: 'start_date', type: Types::DATETIME_MUTABLE, length: 150)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?\DateTime $startDate = null;
 
-    #[ORM\Column(name: 'end_date', type: 'datetime', length: 150)]
+    #[ORM\Column(name: 'end_date', type: Types::DATETIME_MUTABLE, length: 150)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?\DateTime $endDate = null;
 

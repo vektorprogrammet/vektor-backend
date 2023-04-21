@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AdmissionSubscriberRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,28 +14,28 @@ use Symfony\Component\Validator\Constraints as Assert;
 class AdmissionSubscriber
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'E-post må fylles inn')]
     #[Assert\Email(message: 'Dette er ikke en gyldig e-postadresse')]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $timestamp = null;
 
     #[ORM\ManyToOne(targetEntity: Department::class)]
     private ?Department $department = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     private ?string $unsubscribeCode = null;
 
-    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     private ?bool $fromApplication = null;
 
-    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     private ?bool $infoMeeting = null;
 
     public function __construct()

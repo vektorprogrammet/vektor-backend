@@ -3,21 +3,22 @@
 namespace App\Entity;
 
 use App\Repository\FieldOfStudyRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'field_of_study')]
 #[ORM\Entity(repositoryClass: FieldOfStudyRepository::class)]
 class FieldOfStudy
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 250)]
+    #[ORM\Column(type: Types::STRING, length: 250)]
     private ?string $name = null;
 
-    #[ORM\Column(name: 'short_name', type: 'string', length: 50)]
+    #[ORM\Column(name: 'short_name', type: Types::STRING, length: 50)]
     private ?string $shortName = null;
 
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'fieldOfStudy')]

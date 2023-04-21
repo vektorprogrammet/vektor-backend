@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\InterviewRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -23,31 +24,31 @@ abstract class InterviewStatusType
 class Interview
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private $interviewed;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $scheduled = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $lastScheduleChanged = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $room = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 255, maxMessage: 'Campusnavn kan ikke være mer enn 255 tegn')]
     private ?string $campus = null;
 
-    #[ORM\Column(type: 'string', length: 500, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 500, nullable: true)]
     #[Assert\Length(max: 500, maxMessage: 'Linken kan ikke være mer enn 500 tegn')]
     private ?string $mapLink = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $conducted = null;
 
     #[ORM\ManyToOne(targetEntity: InterviewSchema::class)]
@@ -71,7 +72,7 @@ class Interview
     #[Assert\Valid]
     private ?InterviewScore $interviewScore = null;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
     private ?int $interviewStatus = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'])]
@@ -81,19 +82,19 @@ class Interview
     #[ORM\OneToOne(mappedBy: 'interview', targetEntity: Application::class)]
     private ?Application $application = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $responseCode = null;
 
-    #[ORM\Column(type: 'string', length: 2000, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 2000, nullable: true)]
     #[Assert\Length(max: 2000)]
     private ?string $cancelMessage = null;
 
-    #[ORM\Column(type: 'string', length: 2000)]
+    #[ORM\Column(type: Types::STRING, length: 2000)]
     #[Assert\Length(max: 2000)]
     #[Assert\NotBlank(message: 'Meldingsboksen kan ikke være tom', groups: ['newTimeRequest'])]
     private ?string $newTimeMessage = null;
 
-    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private ?int $numAcceptInterviewRemindersSent = null;
 
     public function __construct()

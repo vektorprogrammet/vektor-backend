@@ -6,6 +6,7 @@ use App\Repository\ApplicationRepository;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[CustomAssert\ApplicationEmail(groups: ['admission'])]
 class Application implements DepartmentSemesterInterface
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
@@ -22,56 +23,56 @@ class Application implements DepartmentSemesterInterface
     #[ORM\ManyToOne(targetEntity: AdmissionPeriod::class)]
     private ?AdmissionPeriod $admissionPeriod = null;
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'admission_existing'])]
     private ?string $yearOfStudy = null;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private $monday;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private $tuesday;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private $wednesday;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private $thursday;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private $friday;
 
-    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     private $substitute;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
     private ?string $language = null;
 
-    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
     // TODO: refactor to use actual boolean values (not 1, 2..)
     private $doublePosition;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $preferredGroup = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Length(max: 255, maxMessage: 'Dette feltet kan ikke inneholde mer enn 255 tegn.')]
     private ?string $preferredSchool = null;
 
@@ -80,20 +81,20 @@ class Application implements DepartmentSemesterInterface
     #[Assert\Valid]
     private $user;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private $previousParticipation;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
     private ?\DateTime $last_edited = null;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
     private ?\DateTime $created = null;
 
     #[ORM\Column(type: 'array')]
     // TODO: type array is deprecated
     private $heardAboutFrom;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['interview', 'admission_existing'])]
     // TODO: refactor to use actual boolean values (not 1, 2..)
     private $teamInterest;
@@ -106,7 +107,7 @@ class Application implements DepartmentSemesterInterface
     #[Assert\Valid]
     private ?Interview $interview = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $specialNeeds = null;
 
     public function __construct()
