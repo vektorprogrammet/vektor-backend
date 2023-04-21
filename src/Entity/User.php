@@ -102,10 +102,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected $certificateRequests;
 
     #[ORM\OneToMany(mappedBy: 'interviewer', targetEntity: Interview::class)]
-    private $interviews;
+    private Collection $interviews;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Receipt::class)]
-    private $receipts;
+    private Collection $receipts;
 
     public function __construct()
     {
@@ -449,26 +449,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->teamMemberships;
     }
 
-    /**
-     * @return Interview[]
-     */
-    public function getInterviews()
+    public function getInterviews(): array
     {
         return $this->interviews->toArray();
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getReceipts()
+    public function getReceipts(): Collection
     {
         return $this->receipts;
     }
 
-    /**
-     * @param Receipt
-     */
-    public function addReceipt($receipt): void
+    public function addReceipt(Receipt $receipt): void
     {
         $this->receipts->add($receipt);
     }
