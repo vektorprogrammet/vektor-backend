@@ -30,7 +30,12 @@ class InterviewQuestion
 
     #[ORM\OneToMany(mappedBy: 'interviewQuestion', targetEntity: 'InterviewQuestionAlternative', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Assert\Valid]
-    protected $alternatives;
+    protected Collection $alternatives;
+
+    public function __construct()
+    {
+        $this->alternatives = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -47,11 +52,6 @@ class InterviewQuestion
     public function getQuestion(): ?string
     {
         return $this->question;
-    }
-
-    public function __construct()
-    {
-        $this->alternatives = new ArrayCollection();
     }
 
     public function setHelp(string $help): self
