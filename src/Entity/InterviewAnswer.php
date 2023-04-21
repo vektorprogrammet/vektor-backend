@@ -20,7 +20,7 @@ class InterviewAnswer
 
     #[ORM\ManyToOne(targetEntity: 'InterviewQuestion')]
     #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id')]
-    protected $interviewQuestion;
+    protected ?InterviewQuestion $interviewQuestion = null;
 
     #[CustomAssert\InterviewAnswer(groups: ['interview'])]
     #[ORM\Column(type: 'array', nullable: true)]
@@ -65,10 +65,7 @@ class InterviewAnswer
         return $this;
     }
 
-    /**
-     * @return InterviewQuestion
-     */
-    public function getInterviewQuestion()
+    public function getInterviewQuestion(): ?InterviewQuestion
     {
         return $this->interviewQuestion;
     }

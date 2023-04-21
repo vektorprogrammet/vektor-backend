@@ -63,7 +63,7 @@ class Interview
 
     #[ORM\OneToMany(mappedBy: 'interview', targetEntity: 'InterviewAnswer', cascade: ['persist', 'remove'])]
     #[Assert\Valid]
-    private $interviewAnswers;
+    private Collection $interviewAnswers;
 
     #[ORM\OneToOne(targetEntity: 'InterviewScore', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'interview_score_id', referencedColumnName: 'id')]
@@ -159,7 +159,7 @@ class Interview
 
     public function addInterviewAnswer(InterviewAnswer $interviewAnswers): self
     {
-        $this->interviewAnswers[] = $interviewAnswers;
+        $this->interviewAnswers->add($interviewAnswers);
 
         return $this;
     }
@@ -169,10 +169,7 @@ class Interview
         $this->interviewAnswers->removeElement($interviewAnswers);
     }
 
-    /**
-     * @return Collection
-     */
-    public function getInterviewAnswers()
+    public function getInterviewAnswers(): Collection
     {
         return $this->interviewAnswers;
     }
