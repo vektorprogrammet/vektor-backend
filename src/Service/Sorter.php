@@ -8,10 +8,7 @@ use App\Entity\User;
 
 class Sorter
 {
-    /**
-     * @return int
-     */
-    protected function userWithNewestReceipt(User $user1, User $user2)
+    protected function userWithNewestReceipt(User $user1, User $user2): int
     {
         $user1Receipts = $user1->getReceipts()->toArray();
         $user2Receipts = $user2->getReceipts()->toArray();
