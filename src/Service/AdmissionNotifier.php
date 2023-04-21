@@ -29,7 +29,7 @@ class AdmissionNotifier
     /**
      * @throws \InvalidArgumentException
      */
-    public function createSubscription(Department $department, string $email, bool $infoMeeting = false, bool $fromApplication = false)
+    public function createSubscription(Department $department, string $email, bool $infoMeeting = false, bool $fromApplication = false): void
     {
         $alreadySubscribed = $this->em->getRepository(AdmissionSubscriber::class)->findByEmailAndDepartment($email, $department);
         if ($alreadySubscribed) {
@@ -51,7 +51,7 @@ class AdmissionNotifier
         $this->em->flush();
     }
 
-    public function sendAdmissionNotifications()
+    public function sendAdmissionNotifications(): void
     {
         $departments = $this->em->getRepository(Department::class)->findActive();
         $semester = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester();
@@ -89,7 +89,7 @@ class AdmissionNotifier
         }
     }
 
-    private function sendAdmissionNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
+    private function sendAdmissionNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department): void
     {
         $this->emailSender->sendAdmissionStartedNotification($subscriber);
         $notification = new AdmissionNotification();
@@ -100,7 +100,7 @@ class AdmissionNotifier
         $this->em->flush();
     }
 
-    public function sendInfoMeetingNotifications()
+    public function sendInfoMeetingNotifications(): void
     {
         $departments = $this->em->getRepository(Department::class)->findActive();
         $semester = $this->em->getRepository(Semester::class)->findOrCreateCurrentSemester();
@@ -140,7 +140,7 @@ class AdmissionNotifier
         }
     }
 
-    private function sendInfoMeetingNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department)
+    private function sendInfoMeetingNotification(AdmissionSubscriber $subscriber, Semester $semester, Department $department): void
     {
         $this->emailSender->sendInfoMeetingNotification($subscriber);
         $notification = new AdmissionNotification();
