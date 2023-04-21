@@ -31,7 +31,6 @@ class LoadFieldOfStudyData extends AbstractFixture implements OrderedFixtureInte
         }
 
         $manager->flush();
-
     }
 
     public function getOrder(): int

@@ -11,7 +11,6 @@ class LoadSchoolData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-
         //  Array of schools to be created
         //  [reference, school_name, contact_person, email, phone, active, international]
         $schools_arr = [
