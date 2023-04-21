@@ -6,6 +6,7 @@ use App\Repository\TeamRepository;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,16 +16,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['department', 'name'], message: 'Et team med dette navnet finnes allerede i avdelingen.')]
 class Team implements TeamInterface
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 250)]
+    #[ORM\Column(type: Types::STRING, length: 250)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $name = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Email(message: 'Ugyldig e-post')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være blankt.')]
     #[CustomAssert\UniqueCompanyEmail]
@@ -35,17 +36,17 @@ class Team implements TeamInterface
     #[Assert\NotNull(message: 'Avdeling kan ikke være null')]
     protected ?Department $department = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(name: 'short_description', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'short_description', type: Types::STRING, nullable: true)]
     #[Assert\Length(max: 125, maxMessage: 'Maks 125 Tegn')]
     private ?string $shortDescription = null;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private ?bool $acceptApplication = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $deadline = null;
 
     /** Applications with team interest. */
@@ -56,7 +57,7 @@ class Team implements TeamInterface
     #[ORM\ManyToMany(targetEntity: TeamInterest::class, mappedBy: 'potentialTeams')]
     private Collection $potentialApplicants;
 
-    #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private bool $active;
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamApplication::class)]

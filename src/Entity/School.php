@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,15 +14,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class School
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $name = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $contactPerson = null;
 
@@ -29,7 +30,7 @@ class School
     #[ORM\JoinColumn(onDelete: 'cascade')]
     protected ?Department $department = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Email(message: 'Ikke gyldig e-post.')]
     protected ?string $email = null;
@@ -37,12 +38,12 @@ class School
     #[ORM\OneToMany(mappedBy: 'school', targetEntity: AssistantHistory::class)]
     private Collection $assistantHistories;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $phone = null;
 
     // TODO: dette feltet settes til 0 eller 1. Vi burde bruke bool
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private $international;
 
@@ -53,7 +54,7 @@ class School
      * @var bool
      */
     // TODO: refactor to use actual boolean values (not 1, 2..)
-    #[ORM\Column(type: 'boolean', options: ['default' => 1])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => 1])]
     private $active;
 
     public function __construct()

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,19 +13,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 class InterviewQuestion
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 5000)]
+    #[ORM\Column(type: Types::STRING, length: 5000)]
     #[Assert\NotBlank(message: 'Spørsmål: Dette feltet kan ikke være tomt.')]
     #[Assert\Length(max: 5000, maxMessage: 'Spørsmål: Maks 5000 tegn')]
     protected ?string $question = null;
 
-    #[ORM\Column(type: 'string', length: 5000, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 5000, nullable: true)]
     protected ?string $help = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $type = null;
 

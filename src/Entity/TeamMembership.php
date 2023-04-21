@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TeamMembershipRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: TeamMembershipRepository::class)]
 class TeamMembership implements TeamMembershipInterface
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
@@ -30,14 +31,14 @@ class TeamMembership implements TeamMembershipInterface
     #[Assert\Valid]
     protected ?Semester $endSemester = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $deletedTeamName = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     private bool $isTeamLeader = false;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     #[Assert\NotNull(message: 'Dette feltet kan ikke være tomt')]
     private bool $isSuspended;
 

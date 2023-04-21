@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ExecutiveBoardMembershipRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ExecutiveBoardMembershipRepository::class)]
 class ExecutiveBoardMembership implements TeamMembershipInterface
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
@@ -24,7 +25,7 @@ class ExecutiveBoardMembership implements TeamMembershipInterface
     #[ORM\ManyToOne(targetEntity: ExecutiveBoard::class, inversedBy: 'boardMemberships')]
     private ?ExecutiveBoard $board = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\Valid]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $positionName = null;

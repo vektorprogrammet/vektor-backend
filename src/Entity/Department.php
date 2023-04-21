@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\DepartmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,40 +15,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['city'])]
 class Department
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 250)]
+    #[ORM\Column(type: Types::STRING, length: 250)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\Column(name: 'short_name', type: 'string', length: 50)]
+    #[ORM\Column(name: 'short_name', type: Types::STRING, length: 50)]
     #[Assert\NotBlank]
     private ?string $shortName = null;
 
-    #[ORM\Column(type: 'string', length: 250)]
+    #[ORM\Column(type: Types::STRING, length: 250)]
     #[Assert\NotBlank]
     #[Assert\Email]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'string', length: 250, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 250, nullable: true)]
     protected ?string $address = null;
 
-    #[ORM\Column(type: 'string', length: 250, unique: true)]
+    #[ORM\Column(type: Types::STRING, length: 250, unique: true)]
     #[Assert\NotBlank]
     private ?string $city = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Length(max: 255)]
     private ?string $latitude = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Length(max: 255)]
     private ?string $longitude = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $slackChannel = null;
 
     #[ORM\JoinTable(name: 'department_school')]
@@ -65,12 +66,12 @@ class Department
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: Team::class, cascade: ['remove'])]
     private Collection $teams;
 
-    #[ORM\Column(name: 'logo_path', type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(name: 'logo_path', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(min: 1, max: 255, maxMessage: '"Pathkanmaksvære')]
     private ?string $logoPath = null;
 
     // TODO: refactor to use actual boolean values (not 1, 2..)
-    #[ORM\Column(name: 'active', type: 'boolean', nullable: false, options: ['default' => 1])]
+    #[ORM\Column(name: 'active', type: Types::BOOLEAN, nullable: false, options: ['default' => 1])]
     private $active;
 
     public function __construct()

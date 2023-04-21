@@ -7,6 +7,7 @@ use App\Role\Roles;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -19,16 +20,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['user_name'], message: 'Dette brukernavnet er allerede i bruk.', groups: ['create_user', 'username', 'edit_user'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'create_user', 'edit_user'])]
     private ?string $lastName = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'create_user', 'edit_user'])]
     private ?string $firstName = null;
 
@@ -38,46 +39,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Valid]
     private ?FieldOfStudy $fieldOfStudy = null;
 
-    #[ORM\Column(name: 'gender', type: 'boolean')]
+    #[ORM\Column(name: 'gender', type: Types::BOOLEAN)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'create_user'])]
     private $gender;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     private ?string $picture_path = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'create_user', 'edit_user'])]
     private ?string $phone = null;
 
-    #[ORM\Column(type: 'string', length: 45, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 45, nullable: true)]
     private ?string $accountNumber = null;
 
-    #[ORM\Column(type: 'string', unique: true, nullable: true)]
+    #[ORM\Column(type: Types::STRING, unique: true, nullable: true)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['username', 'edit_user'])]
     private ?string $user_name = null;
 
-    #[ORM\Column(type: 'string', length: 64, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 64, nullable: true)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['username', 'edit_user'])]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'string', unique: true)]
+    #[ORM\Column(type: Types::STRING, unique: true)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.', groups: ['admission', 'create_user', 'edit_user'])]
     #[Assert\Email(message: 'Ikke gyldig e-post.', groups: ['admission', 'create_user', 'edit_user'])]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'string', unique: true, nullable: true)]
+    #[ORM\Column(type: Types::STRING, unique: true, nullable: true)]
     #[Assert\Email]
     #[CustomAssert\UniqueCompanyEmail]
     #[CustomAssert\VektorEmail]
     private ?string $companyEmail = null;
 
-    #[ORM\Column(name: 'is_active', type: 'boolean')]
+    #[ORM\Column(name: 'is_active', type: Types::BOOLEAN)]
     private bool $isActive;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $new_user_code = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: AssistantHistory::class)]

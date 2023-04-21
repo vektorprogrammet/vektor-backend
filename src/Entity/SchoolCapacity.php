@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SchoolCapacityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'school_capacity')]
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SchoolCapacity
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
@@ -27,19 +28,19 @@ class SchoolCapacity
     #[ORM\JoinColumn(name: 'department_id', referencedColumnName: 'id')]
     protected ?Department $department = null;
 
-    #[ORM\Column(name: 'monday', type: 'integer')]
+    #[ORM\Column(name: 'monday', type: Types::INTEGER)]
     protected ?int $monday = null;
 
-    #[ORM\Column(name: 'tuesday', type: 'integer')]
+    #[ORM\Column(name: 'tuesday', type: Types::INTEGER)]
     protected ?int $tuesday = null;
 
-    #[ORM\Column(name: 'wednesday', type: 'integer')]
+    #[ORM\Column(name: 'wednesday', type: Types::INTEGER)]
     protected ?int $wednesday = null;
 
-    #[ORM\Column(name: 'thursday', type: 'integer')]
+    #[ORM\Column(name: 'thursday', type: Types::INTEGER)]
     protected ?int $thursday = null;
 
-    #[ORM\Column(name: 'friday', type: 'integer')]
+    #[ORM\Column(name: 'friday', type: Types::INTEGER)]
     protected ?int $friday = null;
 
     public function __construct()

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TeamApplicationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,40 +12,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 class TeamApplication
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $name = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     #[Assert\Email(message: 'Ikke gyldig e-post.')]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\Length(max: 45, maxMessage: 'Dette feltet kan ikke inneholde mer enn 45 tegn')]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $fieldOfStudy = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $yearOfStudy = null;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $motivationText = null;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $biography = null;
 
     #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'applications')]
     private ?Team $team = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     private ?string $phone = null;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ExecutiveBoardRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,23 +11,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ExecutiveBoardRepository::class)]
 class ExecutiveBoard implements TeamInterface
 {
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 250)]
+    #[ORM\Column(type: Types::STRING, length: 250)]
     #[Assert\NotBlank(message: 'Dette feltet kan ikke være tomt.')]
     protected ?string $name = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Email(message: 'Ugyldig e-post')]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(name: 'short_description', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'short_description', type: Types::STRING, nullable: true)]
     #[Assert\Length(max: 125, maxMessage: 'Maks 125 Tegn')]
     private ?string $shortDescription = null;
 
