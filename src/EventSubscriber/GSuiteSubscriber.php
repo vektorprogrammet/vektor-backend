@@ -15,8 +15,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GSuiteSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly LoggerInterface $logger, private readonly GoogleAPI $googleAPI, private readonly CompanyEmailMaker $emailMaker, private readonly GoogleUsers $userService, private readonly GoogleGroups $groupService, private readonly GoogleDrive $driveService)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly GoogleAPI $googleAPI,
+        private readonly CompanyEmailMaker $emailMaker,
+        private readonly GoogleUsers $userService,
+        private readonly GoogleGroups $groupService,
+        private readonly GoogleDrive $driveService
+    ) {
     }
 
     /**

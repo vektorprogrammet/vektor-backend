@@ -14,8 +14,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AssistantHistorySubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly UserRegistration $userRegistrationService, private readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly UserRegistration $userRegistrationService,
+        private readonly RequestStack $requestStack
+    ) {
     }
 
     /**

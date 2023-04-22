@@ -11,8 +11,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class TeamMembershipSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly LoggerInterface $logger, private readonly RoleManager $roleManager, private readonly EntityManagerInterface $em, private readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly RoleManager $roleManager,
+        private readonly EntityManagerInterface $em,
+        private readonly RequestStack $requestStack
+    ) {
     }
 
     /**

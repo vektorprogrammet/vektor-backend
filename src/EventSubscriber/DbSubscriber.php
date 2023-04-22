@@ -9,7 +9,6 @@ use App\Entity\InterviewQuestionAlternative;
 use App\Entity\InterviewScore;
 use App\Entity\PasswordReset;
 use App\Entity\Role;
-use App\Entity\UnhandledAccessRule;
 use App\Entity\User;
 use App\Role\Roles;
 use Doctrine\Common\EventSubscriber;
@@ -28,11 +27,11 @@ class DbSubscriber implements EventSubscriber
         AdmissionNotification::class,
     ];
 
-    public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $manager, string $env)
-    {
-        if ($env === 'staging') {
-            $this->ignoredClasses[] = UnhandledAccessRule::class;
-        }
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly EntityManagerInterface $manager,
+        string $env
+    ) {
     }
 
     /**

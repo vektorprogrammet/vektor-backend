@@ -9,8 +9,10 @@ use Twig\Environment;
 
 class IntroductionEmailSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly MailingInterface $mailer, private readonly Environment $twig)
-    {
+    public function __construct(
+        private readonly MailingInterface $mailer,
+        private readonly Environment $twig
+    ) {
     }
 
     /**

@@ -11,8 +11,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ReceiptSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly LoggerInterface $logger, private readonly EmailSender $emailSender, private readonly TokenStorageInterface $tokenStorage, private readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly EmailSender $emailSender,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly RequestStack $requestStack
+    ) {
     }
 
     public static function getSubscribedEvents(): array
