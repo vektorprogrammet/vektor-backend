@@ -2,10 +2,10 @@
 
 namespace App\Service;
 
-use App\Mailer\MailerInterface;
+use App\Mailer\MailingInterface;
 use Nexy\Slack\Attachment;
 
-class SlackMailer implements MailerInterface
+class SlackMailer implements MailingInterface
 {
     /**
      * SlackMailer constructor.

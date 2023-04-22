@@ -36,7 +36,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind: 
             App\Sms\SmsSenderInterface: '@App\Sms\SmsSender'
-            App\Mailer\MailerInterface: '@App\Mailer\Mailer'
+            App\Mailer\MailingInterface: '@App\Mailer\Mailer'
             Psr\Log\LoggerInterface: '@App\Service\LogService'
             $env: '%kernel.environment%'
 
