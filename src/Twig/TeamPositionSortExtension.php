@@ -11,8 +11,10 @@ use Twig\TwigFilter;
 
 class TeamPositionSortExtension extends AbstractExtension
 {
-    public function __construct(private readonly Sorter $sorter, private readonly FilterService $filterService)
-    {
+    public function __construct(
+        private readonly Sorter $sorter,
+        private readonly FilterService $filterService
+    ) {
     }
 
     public function getFilters(): array

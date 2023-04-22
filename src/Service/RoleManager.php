@@ -29,8 +29,12 @@ class RoleManager
     /**
      * RoleManager constructor.
      */
-    public function __construct(private readonly AuthorizationCheckerInterface $authorizationChecker, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger, private readonly GoogleUsers $googleUserService)
-    {
+    public function __construct(
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger,
+        private readonly GoogleUsers $googleUserService
+    ) {
     }
 
     public function isValidRole(string $role): bool

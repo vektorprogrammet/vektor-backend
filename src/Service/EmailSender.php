@@ -14,8 +14,13 @@ class EmailSender
     /**
      * EmailSender constructor.
      */
-    public function __construct(private readonly MailingInterface $mailer, private readonly Environment $twig, private readonly RouterInterface $router, private readonly string $defaultEmail, private readonly string $economyEmail)
-    {
+    public function __construct(
+        private readonly MailingInterface $mailer,
+        private readonly Environment $twig,
+        private readonly RouterInterface $router,
+        private readonly string $defaultEmail,
+        private readonly string $economyEmail
+    ) {
     }
 
     public function sendSupportTicketToDepartment(SupportTicket $supportTicket)

@@ -13,8 +13,11 @@ use Twig\TwigFunction;
 
 class RoleExtension extends AbstractExtension
 {
-    public function __construct(private readonly AuthorizationCheckerInterface $authorizationChecker, private readonly TokenStorageInterface $tokenStorage, private readonly RoleManager $roleManager)
-    {
+    public function __construct(
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly RoleManager $roleManager
+    ) {
     }
 
     public function getName(): string

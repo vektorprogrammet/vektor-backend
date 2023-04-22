@@ -25,8 +25,16 @@ class InterviewManager
     /**
      * InterviewManager constructor.
      */
-    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly AuthorizationCheckerInterface $authorizationChecker, private readonly Mailer $mailer, private readonly Environment $twig, private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly RouterInterface $router, private readonly SmsSenderInterface $smsSender)
-    {
+    public function __construct(
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly Mailer $mailer,
+        private readonly Environment $twig,
+        private readonly LoggerInterface $logger,
+        private readonly EntityManagerInterface $em,
+        private readonly RouterInterface $router,
+        private readonly SmsSenderInterface $smsSender
+    ) {
     }
 
     /**

@@ -11,8 +11,11 @@ class LoginManager
     /**
      * LoginManager constructor.
      */
-    public function __construct(private readonly Environment $twig, private readonly AuthenticationUtils $authenticationUtils, private readonly RouterInterface $router)
-    {
+    public function __construct(
+        private readonly Environment $twig,
+        private readonly AuthenticationUtils $authenticationUtils,
+        private readonly RouterInterface $router
+    ) {
     }
 
     public function renderLogin(string $message, string $redirectPath)

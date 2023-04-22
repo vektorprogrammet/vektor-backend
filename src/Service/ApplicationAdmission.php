@@ -19,8 +19,11 @@ class ApplicationAdmission
     /**
      * ApplicationAdmission constructor.
      */
-    public function __construct(private readonly EntityManagerInterface $em, private readonly Environment $twig, private readonly LoginManager $loginManager)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly Environment $twig,
+        private readonly LoginManager $loginManager
+    ) {
     }
 
     public function createApplicationForExistingAssistant(User $user): Application

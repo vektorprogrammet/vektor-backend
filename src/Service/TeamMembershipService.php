@@ -13,8 +13,10 @@ class TeamMembershipService
     /**
      * TeamMembershipService constructor.
      */
-    public function __construct(private readonly EntityManagerInterface $em, private readonly EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly EventDispatcherInterface $dispatcher
+    ) {
     }
 
     public function updateTeamMemberships(): array

@@ -6,8 +6,11 @@ class GoogleAPI
 {
     private $disabled;
 
-    public function __construct(array $apiOptions, private readonly GoogleUsers $userService, private readonly GoogleGroups $groupService)
-    {
+    public function __construct(
+        array $apiOptions,
+        private readonly GoogleUsers $userService,
+        private readonly GoogleGroups $groupService
+    ) {
         $this->disabled = $apiOptions['disabled'];
     }
 

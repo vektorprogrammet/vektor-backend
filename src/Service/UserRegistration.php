@@ -13,8 +13,11 @@ class UserRegistration
     /**
      * UserRegistration constructor.
      */
-    public function __construct(private readonly Environment $twig, private readonly EntityManagerInterface $em, private readonly MailingInterface $mailer)
-    {
+    public function __construct(
+        private readonly Environment $twig,
+        private readonly EntityManagerInterface $em,
+        private readonly MailingInterface $mailer
+    ) {
     }
 
     public function setNewUserCode(User $user): string

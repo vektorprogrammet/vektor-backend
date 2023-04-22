@@ -13,8 +13,11 @@ class PasswordManager
     /**
      * PasswordManager constructor.
      */
-    public function __construct(private readonly EntityManagerInterface $em, private readonly MailingInterface $mailer, private readonly Environment $twig)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly MailingInterface $mailer,
+        private readonly Environment $twig
+    ) {
     }
 
     public function generateRandomResetCode(): string
