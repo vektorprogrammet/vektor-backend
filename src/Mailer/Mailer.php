@@ -10,9 +10,9 @@ class Mailer implements MailingInterface
     private Gmail|SlackMailer|\Swift_Mailer|null $mailer = null;
 
     public function __construct(string $env,
-                                Gmail $gmail,
-                                \Swift_Mailer $swiftMailer,
-                                SlackMailer $slackMailer)
+        Gmail $gmail,
+        \Swift_Mailer $swiftMailer,
+        SlackMailer $slackMailer)
     {
         if ($env === 'prod') {
             $this->mailer = $gmail;
