@@ -8,9 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccountController extends BaseController
 {
-    /**
-     * @Route("/api/account/user", name="api_account_user", methods={"GET"})
-     */
+    #[Route('/api/account/user', name: 'api_account_user', methods: ['GET'])]
     public function getCurrentUser(): JsonResponse
     {
         if (!$this->getUser()) {
@@ -24,9 +22,7 @@ class AccountController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/api/account/department", name="api_account_get_department", methods={"GET"})
-     */
+    #[Route('/api/account/department', name: 'api_account_get_department', methods: ['GET'])]
     public function getDepartmentApi(): JsonResponse
     {
         if (!$this->getUser()) {
