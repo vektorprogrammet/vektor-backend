@@ -330,30 +330,6 @@ send_user_activation_mail:
 ##########################################
 #               Receipt                  #
 ##########################################
-receipts_show:
-    path: /kontrollpanel/utlegg
-    controller: App\Controller\ReceiptController::show
-    methods: [GET]
-
-receipts_show_individual:
-    path: /kontrollpanel/utlegg/{user}
-    controller: App\Controller\ReceiptController::showIndividual
-    methods: [GET]
-    requirements:
-        receipt: \d+
-
-receipt_create:
-    path: /utlegg
-    controller: App\Controller\ReceiptController::create
-    methods: [GET, POST]
-
-receipt_edit:
-    path: /utlegg/rediger/{receipt}
-    controller: App\Controller\ReceiptController::edit
-    methods: [GET, POST]
-    requirements:
-        receipt: \d+
-
 receipt_edit_status:
     path: /kontrollpanel/utlegg/status/{receipt}
     controller: App\Controller\ReceiptController::editStatus
@@ -681,11 +657,6 @@ school_capacity_edit:
 ##########################################
 #              Sponsor                   #
 ##########################################
-sponsors_show:
-    path: /kontrollpanel/sponsorer
-    controller: App\Controller\SponsorsController::sponsorsShow
-    methods: [GET]
-
 sponsor_create:
     path: /kontrollpanel/sponsor/create
     controller: App\Controller\SponsorsController::sponsorEdit
@@ -698,12 +669,6 @@ sponsor_edit:
     requirements:
         id: \d+
 
-sponsor_delete:
-    path: /kontrollpanel/sponsor/delete/{id}
-    controller: App\Controller\SponsorsController::sponsorDelete
-    methods: [GET, POST]
-    requirements:
-        id: \d+
 
 ##########################################
 #              Interview                 #
@@ -894,10 +859,6 @@ edit_field_of_study:
     controller: App\Controller\FieldOfStudyController::edit
     methods: [GET, POST]
 
-show_field_of_studies:
-    path: /kontrollpanel/linjer
-    controller: App\Controller\FieldOfStudyController::show
-    methods: [GET]
 
 ##########################################
 #           Executive board              #

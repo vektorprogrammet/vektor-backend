@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReceiptController extends AbstractController
@@ -31,6 +32,7 @@ class ReceiptController extends AbstractController
     ) {
     }
 
+    #[Route('/kontrollpanel/utlegg', name: 'receipts_show', methods: ['GET'])]
     public function show(): Response
     {
         $usersWithReceipts = $this->doctrine
@@ -72,6 +74,10 @@ class ReceiptController extends AbstractController
         ]);
     }
 
+    #[Route('/kontrollpanel/utlegg/{user}',
+        name: 'receipts_show_individual',
+        requirements: ['user' => '\d+'],
+        methods: ['GET'])]
     public function showIndividual(User $user): Response
     {
         $receipts = $this->doctrine->getRepository(Receipt::class)->findByUser($user);
@@ -86,6 +92,7 @@ class ReceiptController extends AbstractController
         ]);
     }
 
+    #[Route('/utlegg', name: 'receipt_create', methods: ['GET', 'POST'])]
     public function create(Request $request)
     {
         $receipt = new Receipt();
@@ -133,6 +140,10 @@ class ReceiptController extends AbstractController
         ]);
     }
 
+    #[Route('/utlegg/rediger/{receipt}',
+        name: 'receipt_edit',
+        requirements: ['receipt' => '\d+'],
+        methods: ['GET', 'POST'])]
     public function edit(Request $request, Receipt $receipt)
     {
         $user = $this->getUser();
