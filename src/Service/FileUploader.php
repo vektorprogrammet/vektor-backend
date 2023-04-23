@@ -13,8 +13,12 @@ class FileUploader
     /**
      * FileUploader constructor.
      */
-    public function __construct(private readonly string $signatureFolder, private readonly string $logoFolder, private readonly string $receiptFolder, private readonly string $profilePhotoFolder)
-    {
+    public function __construct(
+        private readonly string $signatureFolder,
+        private readonly string $logoFolder,
+        private readonly string $receiptFolder,
+        private readonly string $profilePhotoFolder
+    ) {
     }
 
     /**

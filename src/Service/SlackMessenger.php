@@ -12,8 +12,13 @@ class SlackMessenger
     /**
      * SlackMessenger constructor.
      */
-    public function __construct(private readonly NotifierInterface $slackClient, private readonly string $notificationChannel, private readonly string $logChannel, private readonly bool $disableDelivery, private readonly Logger $logger)
-    {
+    public function __construct(
+        private readonly NotifierInterface $slackClient,
+        private readonly string $notificationChannel,
+        private readonly string $logChannel,
+        private readonly bool $disableDelivery,
+        private readonly Logger $logger
+    ) {
     }
 
     public function notify(string $messageBody)

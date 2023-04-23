@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\User;
-use App\Mailer\MailerInterface;
+use App\Mailer\MailingInterface;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Environment;
@@ -13,8 +13,11 @@ class UserRegistration
     /**
      * UserRegistration constructor.
      */
-    public function __construct(private readonly Environment $twig, private readonly EntityManagerInterface $em, private readonly MailerInterface $mailer)
-    {
+    public function __construct(
+        private readonly Environment $twig,
+        private readonly EntityManagerInterface $em,
+        private readonly MailingInterface $mailer
+    ) {
     }
 
     public function setNewUserCode(User $user): string

@@ -2,7 +2,7 @@
 
 namespace App\Mailer;
 
-interface MailerInterface
+interface MailingInterface
 {
     public function send(\Swift_Message $message, bool $disableLogging = false);
 }

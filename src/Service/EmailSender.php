@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\AdmissionSubscriber;
 use App\Entity\Receipt;
 use App\Entity\SupportTicket;
-use App\Mailer\MailerInterface;
+use App\Mailer\MailingInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -14,8 +14,13 @@ class EmailSender
     /**
      * EmailSender constructor.
      */
-    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly RouterInterface $router, private readonly string $defaultEmail, private readonly string $economyEmail)
-    {
+    public function __construct(
+        private readonly MailingInterface $mailer,
+        private readonly Environment $twig,
+        private readonly RouterInterface $router,
+        private readonly string $defaultEmail,
+        private readonly string $economyEmail
+    ) {
     }
 
     public function sendSupportTicketToDepartment(SupportTicket $supportTicket)

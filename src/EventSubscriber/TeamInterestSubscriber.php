@@ -3,14 +3,17 @@
 namespace App\EventSubscriber;
 
 use App\Event\TeamInterestCreatedEvent;
-use App\Mailer\MailerInterface;
+use App\Mailer\MailingInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
 class TeamInterestSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly RequestStack $requestStack)
+    public function __construct(
+        private readonly MailingInterface $mailer,
+        private readonly Environment $twig,
+        private readonly RequestStack $requestStack)
     {
     }
 

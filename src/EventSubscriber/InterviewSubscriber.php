@@ -4,7 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Event\InterviewConductedEvent;
 use App\Event\InterviewEvent;
-use App\Mailer\MailerInterface;
+use App\Mailer\MailingInterface;
 use App\Service\InterviewManager;
 use App\Service\InterviewNotificationManager;
 use App\Service\SbsData;
@@ -18,8 +18,17 @@ use Twig\Environment;
 
 class InterviewSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly LoggerInterface $logger, private readonly SbsData $sbsData, private readonly InterviewNotificationManager $notificationManager, private readonly InterviewManager $interviewManager, private readonly SmsSenderInterface $smsSender, private readonly RouterInterface $router, private readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly MailingInterface $mailer,
+        private readonly Environment $twig,
+        private readonly LoggerInterface $logger,
+        private readonly SbsData $sbsData,
+        private readonly InterviewNotificationManager $notificationManager,
+        private readonly InterviewManager $interviewManager,
+        private readonly SmsSenderInterface $smsSender,
+        private readonly RouterInterface $router,
+        private readonly RequestStack $requestStack
+    ) {
     }
 
     /**

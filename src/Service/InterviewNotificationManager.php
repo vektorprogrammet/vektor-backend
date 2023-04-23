@@ -12,8 +12,11 @@ class InterviewNotificationManager
     /**
      * InterviewNotificationManager constructor.
      */
-    public function __construct(private readonly SlackMessenger $slackMessenger, private readonly ApplicationData $applicationData, private readonly RouterInterface $router)
-    {
+    public function __construct(
+        private readonly SlackMessenger $slackMessenger,
+        private readonly ApplicationData $applicationData,
+        private readonly RouterInterface $router
+    ) {
     }
 
     public function sendApplicationCountNotification(Department $department, Semester $semester)

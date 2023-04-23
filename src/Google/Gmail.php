@@ -2,9 +2,9 @@
 
 namespace App\Google;
 
-use App\Mailer\MailerInterface;
+use App\Mailer\MailingInterface;
 
-class Gmail extends GoogleService implements MailerInterface
+class Gmail extends GoogleService implements MailingInterface
 {
     private $defaultEmail;
 

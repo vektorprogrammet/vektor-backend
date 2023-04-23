@@ -10,8 +10,10 @@ use Twig\TwigFunction;
 
 class DepartmentExtension extends AbstractExtension
 {
-    public function __construct(private readonly GeoLocation $geoLocationService, private readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        private readonly GeoLocation $geoLocationService,
+        private readonly EntityManagerInterface $em
+    ) {
     }
 
     public function getName(): string

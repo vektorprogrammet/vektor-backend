@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\ApplicationCreatedEvent;
-use App\Mailer\MailerInterface;
+use App\Mailer\MailingInterface;
 use App\Service\AdmissionNotifier;
 use App\Service\UserRegistration;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -11,7 +11,11 @@ use Twig\Environment;
 
 class ApplicationSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly AdmissionNotifier $admissionNotifier, private readonly UserRegistration $userRegistrationService)
+    public function __construct(
+        private readonly MailingInterface $mailer,
+        private readonly Environment $twig,
+        private readonly AdmissionNotifier $admissionNotifier,
+        private readonly UserRegistration $userRegistrationService)
     {
     }
 

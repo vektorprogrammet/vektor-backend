@@ -11,8 +11,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class SupportTicketSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly EmailSender $emailSender, private readonly SlackMessenger $slackMessenger, private readonly RequestStack $requestStack, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly EmailSender $emailSender,
+        private readonly SlackMessenger $slackMessenger,
+        private readonly RequestStack $requestStack,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     /**

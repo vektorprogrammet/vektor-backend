@@ -34,16 +34,10 @@ class AssistantController extends BaseController
 
     /**
      * @deprecated This resource is only here to serve old urls (e.g. in old emails)
-     *
-     * @Route("/opptak/{shortName}",
-     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
-     * @Route("/avdeling/{shortName}",
-     *     requirements={"shortName"="(NTNU|NMBU|UiB|UIB|UiO|UIO)"})
-     * @Route("/opptak/avdeling/{id}",
-     *     requirements={"id"="\d+"},
-     *     methods={"GET", "POST"}
-     *     )
-     */
+     **/
+    #[Route('/opptak/{shortName}', requirements: ['shortName' => '(NTNU|NMBU|UiB|UIB|UiO|UIO)'])]
+    #[Route('/avdeling/{shortName}', requirements: ['shortName' => '(NTNU|NMBU|UiB|UIB|UiO|UIO)'])]
+    #[Route('/opptak/avdeling/{id}', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function admissionByShortName(Request $request, Department $department): Response
     {
         return $this->index($request, $department);

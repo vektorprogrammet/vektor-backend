@@ -10,8 +10,13 @@ class LogService implements LoggerInterface
     /**
      * LogService constructor.
      */
-    public function __construct(private readonly LoggerInterface $monoLogger, private readonly SlackMessenger $slackMessenger, private readonly UserService $userService, private readonly RequestStack $requestStack, private readonly string $env)
-    {
+    public function __construct(
+        private readonly LoggerInterface $monoLogger,
+        private readonly SlackMessenger $slackMessenger,
+        private readonly UserService $userService,
+        private readonly RequestStack $requestStack,
+        private readonly string $env
+    ) {
     }
 
     /**

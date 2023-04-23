@@ -17,8 +17,11 @@ class AssistantHistoryData
     /**
      * AssistantHistoryData constructor.
      */
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $ts, GeoLocation $geoLocation)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        TokenStorageInterface $ts,
+        GeoLocation $geoLocation
+    ) {
         $this->assistantHistoryRepository = $em->getRepository(AssistantHistory::class);
         $user = $ts->getToken()->getUser();
         $departments = $em->getRepository(Department::class)->findAll();
