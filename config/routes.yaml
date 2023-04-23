@@ -9,39 +9,6 @@ redirect_to_api_docs:
         path: '/api/docs'
         permanent: true
 
-home:
-    path: /home
-    controller: App\Controller\HomeController::show
-    methods: [GET]
-
-about:
-    path: /omvektor
-    controller: App\Controller\PublicStaticPageController::showAboutPage
-    methods: [GET]
-
-parents:
-    path: /foreldre
-    controller: App\Controller\PublicStaticPageController::showParentsPage
-    methods: [GET]
-
-teachers:
-    path: /laerere
-    controller: App\Controller\PublicStaticPageController::showTeacherPage
-
-
-##########################################
-#                  Kontakt               #
-##########################################
-contact_department:
-    path: /kontakt/avdeling/{id}
-    controller: App\Controller\ContactController::index
-    methods: [GET, POST]
-
-contact:
-    path: /kontakt
-    controller: App\Controller\ContactController::index
-    methods: [GET, POST]
-
 
 ##########################################
 #                Control Panel           #
