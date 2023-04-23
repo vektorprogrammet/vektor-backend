@@ -13,7 +13,6 @@ use Twig\Environment;
 
 class EmailSender
 {
-
     public function __construct(
         private readonly MailingInterface $mailer,
         private readonly Environment $twig,

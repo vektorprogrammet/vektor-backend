@@ -94,7 +94,7 @@ class PasswordManager
         // Sends an email with the url for resetting the password
         $emailMessage = (new TemplatedEmail())
             ->subject('Tilbakestill passord for vektorprogrammet.no')
-            ->from(New Address('ikkesvar@vektorprogrammet.no', 'Vektorprogrammet.no'))
+            ->from(new Address('ikkesvar@vektorprogrammet.no', 'Vektorprogrammet.no'))
             ->to($passwordReset->getUser()->getEmail())
             ->htmlTemplate('reset_password/new_password_email.txt.twig')
             ->context([
