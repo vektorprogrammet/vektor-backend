@@ -7,6 +7,7 @@ use App\Service\SbsData;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ControlPanelController extends BaseController
 {
@@ -16,6 +17,7 @@ class ControlPanelController extends BaseController
     ) {
     }
 
+    #[Route('/kontrollpanel', name: 'control_panel', methods: ['GET'])]
     public function show(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);

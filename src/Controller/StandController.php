@@ -10,6 +10,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class StandController extends BaseController
 {
@@ -22,6 +23,7 @@ class StandController extends BaseController
     /**
      * @throws NonUniqueResultException
      */
+    #[Route('/kontrollpanel/stand', name: 'stand', methods: ['GET'])]
     public function index(Request $request): Response
     {
         $department = $this->getDepartmentOrThrow404($request);

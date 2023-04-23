@@ -1,23 +1,10 @@
-##########################################
-#             Static pages               #
-##########################################
-
+# Redirect from / to /api/docs
 redirect_to_api_docs:
     path: '/'
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
     defaults:
         path: '/api/docs'
         permanent: true
-
-
-##########################################
-#                Control Panel           #
-##########################################
-
-control_panel:
-    path: /kontrollpanel
-    controller: App\Controller\ControlPanelController::show
-    methods: [GET]
 
 
 ##########################################
@@ -29,29 +16,6 @@ certificate_show:
     methods: [GET, POST]
     defaults:
         id: null
-
-
-##########################################
-#             Semester                   #
-##########################################
-semester_show:
-    path: /kontrollpanel/semesteradmin
-    controller: App\Controller\SemesterController::show
-    methods: [GET]
-
-semester_create:
-    path: /kontrollpanel/semesteradmin/opprett
-    controller: App\Controller\SemesterController::createSemester
-    methods: [GET, POST]
-
-##########################################
-#             Stand                      #
-##########################################
-stand:
-    path: /kontrollpanel/stand
-    controller: App\Controller\StandController::index
-    methods: [GET]
-
 
 
 ##########################################
@@ -187,14 +151,7 @@ api_login:
     path: /api/login
 
 
-##########################################
-#                SSO                     #
-##########################################
 
-sso_login:
-    path: /sso/login
-    controller: App\Controller\SsoController::login
-    methods: [POST]
 
 ##########################################
 #                Login                   #
@@ -365,20 +322,6 @@ admission_unsubscribe:
     methods: [POST]
     requirements:
         code: \w+
-
-
-##########################################
-#                User                    #
-##########################################
-my_page:
-    path: /min-side
-    controller: App\Controller\UserController::myPage
-    methods: [GET]
-
-my_partners:
-    path: /profil/partnere
-    controller: App\Controller\UserController::myPartner
-    methods: [GET]
 
 
 ##########################################

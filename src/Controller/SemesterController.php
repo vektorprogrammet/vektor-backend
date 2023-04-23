@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SemesterController extends AbstractController
 {
@@ -16,6 +17,7 @@ class SemesterController extends AbstractController
     {
     }
 
+    #[Route('/kontrollpanel/semesteradmin', name: 'semester_show', methods: ['GET'])]
     public function show(): Response
     {
         $semesters = $this->doctrine
@@ -27,6 +29,7 @@ class SemesterController extends AbstractController
         ]);
     }
 
+    #[Route('/kontrollpanel/semesteradmin/opprett', name: 'semester_create', methods: ['GET', 'POST'])]
     public function createSemester(Request $request)
     {
         $semester = new Semester();
@@ -63,14 +66,5 @@ class SemesterController extends AbstractController
         return $this->render('semester_admin/create_semester.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    public function delete(Semester $semester): JsonResponse
-    {
-        $em = $this->doctrine->getManager();
-        $em->remove($semester);
-        $em->flush();
-
-        return new JsonResponse(['success' => true]);
     }
 }
