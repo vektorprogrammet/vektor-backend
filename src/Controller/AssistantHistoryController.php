@@ -39,12 +39,6 @@ class AssistantHistoryController extends AbstractController
         return $this->redirectToRoute('participanthistory_show');
     }
 
-//assistant_history_edit:
-//path: /kontrollpanel/deltakerhistorikk/rediger/{id}
-//controller: App\Controller\AssistantHistoryController::edit
-//    methods: [GET, POST]
-//    requirements:
-//        id: \d+
     #[Route('/kontrollpanel/deltakerhistorikk/rediger/{id}',
         name: 'assistant_history_edit',
         requirements: ['id' => '\d+'],
