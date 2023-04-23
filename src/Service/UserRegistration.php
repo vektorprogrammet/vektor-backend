@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Mailer\MailingInterface;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Twig\Environment;
 
 class UserRegistration
@@ -32,20 +33,21 @@ class UserRegistration
         return $newUserCode;
     }
 
-    public function createActivationEmail(User $user, $newUserCode): \Swift_Message
+    public function createActivationEmail(User $user, $newUserCode): TemplatedEmail
     {
-        return (new \Swift_Message())
-            ->setSubject('Velkommen til Vektorprogrammet!')
-            ->setFrom(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
-            ->setReplyTo($user->getFieldOfStudy()->getDepartment()->getEmail())
-            ->setTo($user->getEmail())
-            ->setBody($this->twig->render('new_user/create_new_user_email.txt.twig', [
+        return (new TemplatedEmail())
+            ->subject('Velkommen til Vektorprogrammet!')
+            ->from('vektorprogrammet@vektorprogrammet.no', 'Vektorprogrammet')
+            ->replyTo($user->getFieldOfStudy()->getDepartment()->getEmail())
+            ->to($user->getEmail())
+            ->htmlTemplate('new_user/create_new_user_email.html.twig')
+            ->context([
                 'newUserCode' => $newUserCode,
                 'name' => $user->getFullName(),
-            ]));
+            ]);
     }
 
-    public function sendActivationCode(User $user)
+    public function sendActivationCode(User $user): void
     {
         $newUserCode = $this->setNewUserCode($user);
 

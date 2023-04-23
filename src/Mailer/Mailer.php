@@ -4,14 +4,16 @@ namespace App\Mailer;
 
 use App\Google\Gmail;
 use App\Service\SlackMailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class Mailer implements MailingInterface
 {
-    private Gmail|SlackMailer|\Swift_Mailer|null $mailer = null;
+    private Gmail|SlackMailer|MailerInterface|null $mailer = null;
 
     public function __construct(string $env,
         Gmail $gmail,
-        \Swift_Mailer $swiftMailer,
+        MailerInterface $swiftMailer,
         SlackMailer $slackMailer)
     {
         if ($env === 'prod') {
@@ -23,7 +25,7 @@ class Mailer implements MailingInterface
         }
     }
 
-    public function send(\Swift_Message $message, bool $disableLogging = false)
+    public function send(Email $message, bool $disableLogging = false)
     {
         if ($this->mailer instanceof Gmail) {
             $this->mailer->send($message, $disableLogging);

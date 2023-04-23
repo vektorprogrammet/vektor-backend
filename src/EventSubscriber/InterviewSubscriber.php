@@ -11,8 +11,10 @@ use App\Service\SbsData;
 use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -61,16 +63,17 @@ class InterviewSubscriber implements EventSubscriberInterface
         $interviewer = $application->getInterview()->getInterviewer();
 
         // Send email to the interviewee with a summary of the interview
-        $emailMessage = (new \Swift_Message())
-            ->setSubject('Vektorprogrammet intervju')
-            ->setReplyTo([$interviewer->getDepartment()->getEmail() => 'Vektorprogrammet'])
-            ->setTo($application->getUser()->getEmail())
-            ->setReplyTo($interviewer->getEmail())
-            ->setBody($this->twig->render('interview/interview_summary_email.html.twig', [
+        $emailMessage = (new TemplatedEmail())
+            ->subject('Vektorprogrammet intervju')
+            ->replyTo([$interviewer->getDepartment()->getEmail() => 'Vektorprogrammet'])
+            ->to($application->getUser()->getEmail())
+            ->replyTo($interviewer->getEmail())
+            ->htmlTemplate('interview/interview_summary_email.html.twig')
+            ->context([
                 'application' => $application,
                 'interviewer' => $interviewer,
-            ]))
-            ->setContentType('text/html');
+            ]);
+
         $this->mailer->send($emailMessage);
     }
 
@@ -150,7 +153,7 @@ class InterviewSubscriber implements EventSubscriberInterface
             $this->router->generate(
                 'interview_response',
                 ['responseCode' => $interview->getResponseCode()],
-                RouterInterface::ABSOLUTE_URL
+                UrlGeneratorInterface::ABSOLUTE_URL
             ) .
             "\n\n" .
             "Mvh $interviewer, Vektorprogrammet\n" .
@@ -169,14 +172,16 @@ class InterviewSubscriber implements EventSubscriberInterface
     public function sendCoAssignedEmail(InterviewEvent $event)
     {
         $interview = $event->getInterview();
-        $emailMessage = (new \Swift_Message())
-            ->setSubject('Vektorprogrammet intervju')
-            ->setFrom(['vektorbot@vektorprogrammet.no' => 'Vektorprogrammet'])
-            ->setTo($interview->getInterviewer()->getEmail())
-            ->setReplyTo($interview->getCoInterviewer()->getEmail())
-            ->setBody($this->twig->render('interview/co_interviewer_email.html.twig', [
+        $emailMessage = (new TemplatedEmail())
+            ->subject('Vektorprogrammet intervju')
+            ->from(['vektorbot@vektorprogrammet.no' => 'Vektorprogrammet'])
+            ->to($interview->getInterviewer()->getEmail())
+            ->replyTo($interview->getCoInterviewer()->getEmail())
+            ->htmlTemplate('interview/co_interviewer_email.html.twig')
+            ->context([
                 'interview' => $interview,
-            ]));
+            ]);
+
         $this->mailer->send($emailMessage);
     }
 }

@@ -6,14 +6,13 @@ use App\Entity\AdmissionSubscriber;
 use App\Entity\Receipt;
 use App\Entity\SupportTicket;
 use App\Mailer\MailingInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
 class EmailSender
 {
-    /**
-     * EmailSender constructor.
-     */
+
     public function __construct(
         private readonly MailingInterface $mailer,
         private readonly Environment $twig,
@@ -23,101 +22,105 @@ class EmailSender
     ) {
     }
 
-    public function sendSupportTicketToDepartment(SupportTicket $supportTicket)
+    public function sendSupportTicketToDepartment(SupportTicket $supportTicket): void
     {
-        $message = (new \Swift_Message())
-            ->setSubject('Nytt kontaktskjema')
-            ->setFrom($this->defaultEmail)
-            ->setReplyTo($supportTicket->getEmail())
-            ->setTo($supportTicket->getDepartment()->getEmail())
-            ->setBody($this->twig->render('admission/contactEmail.txt.twig', ['contact' => $supportTicket]));
+        $message = (new TemplatedEmail())
+            ->subject('Nytt kontaktskjema')
+            ->from($this->defaultEmail)
+            ->replyTo($supportTicket->getEmail())
+            ->to($supportTicket->getDepartment()->getEmail())
+            ->htmlTemplate('admission/contactEmail.html.twig')
+            ->context(['contact' => $supportTicket]);
         $this->mailer->send($message);
     }
 
-    public function sendSupportTicketReceipt(SupportTicket $supportTicket)
+    public function sendSupportTicketReceipt(SupportTicket $supportTicket): void
     {
-        $receipt = (new \Swift_Message())
-            ->setSubject('Kvittering for kontaktskjema')
-            ->setFrom($this->defaultEmail)
-            ->setReplyTo($supportTicket->getDepartment()->getEmail())
-            ->setTo($supportTicket->getEmail())
-            ->setBody($this->twig->render('admission/receiptEmail.txt.twig', ['contact' => $supportTicket]));
+        $receipt = (new TemplatedEmail())
+            ->subject('Kvittering for kontaktskjema')
+            ->from($this->defaultEmail)
+            ->replyTo($supportTicket->getDepartment()->getEmail())
+            ->to($supportTicket->getEmail())
+            ->htmlTemplate('admission/receiptEmail.html.twig')
+            ->context(['contact' => $supportTicket]);
         $this->mailer->send($receipt);
     }
 
-    public function sendPaidReceiptConfirmation(Receipt $receipt)
+    public function sendPaidReceiptConfirmation(Receipt $receipt): void
     {
-        $message = (new \Swift_Message())
-            ->setSubject('Vi har tilbakebetalt penger for utlegget ditt')
-            ->setFrom($this->economyEmail)
-            ->setFrom([$this->economyEmail => 'Økonomi - Vektorprogrammet'])
-            ->setTo($receipt->getUser()->getEmail())
-            ->setBody($this->twig->render('receipt/confirmation_email.txt.twig', [
+        $message = (new TemplatedEmail())
+            ->subject('Vi har tilbakebetalt penger for utlegget ditt')
+            ->from($this->economyEmail, 'Økonomi - Vektorprogrammet')
+            ->to($receipt->getUser()->getEmail())
+            ->htmlTemplate('receipt/confirmation_email.html.twig')
+            ->context([
                 'name' => $receipt->getUser()->getFullName(),
                 'account_number' => $receipt->getUser()->getAccountNumber(),
-                'receipt' => $receipt, ]));
+                'receipt' => $receipt]);
 
         $this->mailer->send($message);
     }
 
-    public function sendRejectedReceiptConfirmation(Receipt $receipt)
+    public function sendRejectedReceiptConfirmation(Receipt $receipt): void
     {
-        $message = (new \Swift_Message())
-                                 ->setSubject('Refusjon for utlegget ditt har blitt avvist')
-                                 ->setFrom([$this->economyEmail => 'Økonomi - Vektorprogrammet'])
-                                 ->setReplyTo($this->economyEmail)
-                                 ->setTo($receipt->getUser()->getEmail())
-                                 ->setBody($this->twig->render('receipt/rejected_email.txt.twig', [
-                                     'name' => $receipt->getUser()->getFullName(),
-                                     'receipt' => $receipt, ]));
+        $message = (new TemplatedEmail())
+            ->subject('Refusjon for utlegget ditt har blitt avvist')
+            ->from($this->economyEmail, 'Økonomi - Vektorprogrammet')
+            ->replyTo($this->economyEmail)
+            ->to($receipt->getUser()->getEmail())
+            ->htmlTemplate('receipt/rejected_email.html.twig')
+            ->context([
+                'name' => $receipt->getUser()->getFullName(),
+                'receipt' => $receipt]);
 
         $this->mailer->send($message);
     }
 
-    public function sendReceiptCreatedNotification(Receipt $receipt)
+    public function sendReceiptCreatedNotification(Receipt $receipt): void
     {
-        $message = (new \Swift_Message())
-                                 ->setSubject('Nytt utlegg fra ' . $receipt->getUser())
-                                 ->setFrom('vektorbot@vektorprogrammet.no')
-                                 ->setTo($this->economyEmail)
-                                 ->setBody($this->twig->render('receipt/created_email.html.twig', [
-                                      'url' => $this->router->generate('receipts_show_individual', ['user' => $receipt->getUser()->getId()]),
-                                     'name' => $receipt->getUser()->getFullName(),
-                                     'accountNumber' => $receipt->getUser()->getAccountNumber(),
-                                     'receipt' => $receipt, ]), 'text/html')
-                                 ->setContentType('text/html');
+        $message = (new TemplatedEmail())
+            ->subject('Nytt utlegg fra ' . $receipt->getUser())
+            ->from('vektorbot@vektorprogrammet.no')
+            ->to($this->economyEmail)
+            ->htmlTemplate('receipt/created_email.html.twig')
+            ->context([
+                'url' => $this->router->generate('receipts_show_individual', ['user' => $receipt->getUser()->getId()]),
+                'name' => $receipt->getUser()->getFullName(),
+                'accountNumber' => $receipt->getUser()->getAccountNumber(),
+                'receipt' => $receipt,
+            ]);
 
         $this->mailer->send($message);
     }
 
-    public function sendAdmissionStartedNotification(AdmissionSubscriber $subscriber)
+    public function sendAdmissionStartedNotification(AdmissionSubscriber $subscriber): void
     {
-        $message = (new \Swift_Message())
-             ->setSubject('Opptak for vektorassistenter har åpnet!')
-             ->setFrom($this->defaultEmail)
-             ->setTo($subscriber->getEmail())
-             ->setBody($this->twig->render('admission/notification_email.html.twig', [
-                 'department' => $subscriber->getDepartment(),
-                 'infoMeeting' => $subscriber->getDepartment()->getCurrentAdmissionPeriod()->getInfoMeeting(),
-                 'subscriber' => $subscriber,
-             ]))
-             ->setContentType('text/html');
+        $message = (new TemplatedEmail())
+            ->subject('Opptak for vektorassistenter har åpnet!')
+            ->from($this->defaultEmail)
+            ->to($subscriber->getEmail())
+            ->htmlTemplate('admission/notification_email.html.twig')
+            ->context([
+                'department' => $subscriber->getDepartment(),
+                'infoMeeting' => $subscriber->getDepartment()->getCurrentAdmissionPeriod()->getInfoMeeting(),
+                'subscriber' => $subscriber,
+            ]);
 
         $this->mailer->send($message, true);
     }
 
-    public function sendInfoMeetingNotification(AdmissionSubscriber $subscriber)
+    public function sendInfoMeetingNotification(AdmissionSubscriber $subscriber): void
     {
-        $message = (new \Swift_Message())
-            ->setSubject('Infomøte i dag!')
-            ->setFrom($this->defaultEmail)
-            ->setTo($subscriber->getEmail())
-            ->setBody($this->twig->render('admission/info_meeting_email.html.twig', [
+        $message = (new TemplatedEmail())
+            ->subject('Infomøte i dag!')
+            ->from($this->defaultEmail)
+            ->to($subscriber->getEmail())
+            ->htmlTemplate('admission/info_meeting_email.html.twig')
+            ->context([
                 'department' => $subscriber->getDepartment(),
                 'infoMeeting' => $subscriber->getDepartment()->getCurrentAdmissionPeriod()->getInfoMeeting(),
                 'subscriber' => $subscriber,
-            ]))
-            ->setContentType('text/html');
+            ]);
         $this->mailer->send($message, true);
     }
 }

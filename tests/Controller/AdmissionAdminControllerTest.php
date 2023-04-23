@@ -201,10 +201,7 @@ class AdmissionAdminControllerTest extends BaseWebTestCase
         $this->assertEquals($count_status + 1, $crawler->filter('td:contains(' . $status . ')')->count());
     }
 
-    /**
-     * @return string
-     */
-    private function getResponseCodeFromEmail($client)
+    private function getResponseCodeFromEmail($client): string
     {
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
         $this->assertEquals(1, $mailCollector->getMessageCount());
