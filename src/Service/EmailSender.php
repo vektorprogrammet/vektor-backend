@@ -7,6 +7,7 @@ use App\Entity\Receipt;
 use App\Entity\SupportTicket;
 use App\Mailer\MailingInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -29,7 +30,7 @@ class EmailSender
             ->from($this->defaultEmail)
             ->replyTo($supportTicket->getEmail())
             ->to($supportTicket->getDepartment()->getEmail())
-            ->htmlTemplate('admission/contactEmail.html.twig')
+            ->htmlTemplate('admission/contactEmail.txt.twig')
             ->context(['contact' => $supportTicket]);
         $this->mailer->send($message);
     }
@@ -41,7 +42,7 @@ class EmailSender
             ->from($this->defaultEmail)
             ->replyTo($supportTicket->getDepartment()->getEmail())
             ->to($supportTicket->getEmail())
-            ->htmlTemplate('admission/receiptEmail.html.twig')
+            ->htmlTemplate('admission/receiptEmail.txt.twig')
             ->context(['contact' => $supportTicket]);
         $this->mailer->send($receipt);
     }
@@ -50,9 +51,9 @@ class EmailSender
     {
         $message = (new TemplatedEmail())
             ->subject('Vi har tilbakebetalt penger for utlegget ditt')
-            ->from($this->economyEmail, 'Økonomi - Vektorprogrammet')
+            ->from(new Address($this->economyEmail, 'Økonomi - Vektorprogrammet'))
             ->to($receipt->getUser()->getEmail())
-            ->htmlTemplate('receipt/confirmation_email.html.twig')
+            ->htmlTemplate('receipt/confirmation_email.txt.twig')
             ->context([
                 'name' => $receipt->getUser()->getFullName(),
                 'account_number' => $receipt->getUser()->getAccountNumber(),
@@ -65,10 +66,10 @@ class EmailSender
     {
         $message = (new TemplatedEmail())
             ->subject('Refusjon for utlegget ditt har blitt avvist')
-            ->from($this->economyEmail, 'Økonomi - Vektorprogrammet')
+            ->from(new Address($this->economyEmail, 'Økonomi - Vektorprogrammet'))
             ->replyTo($this->economyEmail)
             ->to($receipt->getUser()->getEmail())
-            ->htmlTemplate('receipt/rejected_email.html.twig')
+            ->htmlTemplate('receipt/rejected_email.txt.twig')
             ->context([
                 'name' => $receipt->getUser()->getFullName(),
                 'receipt' => $receipt]);

@@ -7,6 +7,7 @@ use App\Mailer\MailingInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class TeamInterestSubscriber implements EventSubscriberInterface
@@ -34,7 +35,7 @@ class TeamInterestSubscriber implements EventSubscriberInterface
 
         $receipt = (new TemplatedEmail())
             ->subject('Teaminteresse i Vektorprogrammet')
-            ->from([$fromEmail => "Vektorprogrammet $department"])
+            ->from(new Address($fromEmail, "Vektorprogrammet $department"))
             ->replyTo($fromEmail)
             ->to($teamInterest->getEmail())
             ->htmlTemplate('team_interest/team_interest_receipt.html.twig')

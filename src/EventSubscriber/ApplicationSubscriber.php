@@ -66,6 +66,7 @@ class ApplicationSubscriber implements EventSubscriberInterface
             ->subject('Søknad - Vektorassistent')
             ->replyTo($application->getDepartment()->getEmail())
             ->to($application->getUser()->getEmail())
+            ->from('vektorbot@vektorprogrammet.no')
             ->htmlTemplate($template)
             ->context([
                 'application' => $application,

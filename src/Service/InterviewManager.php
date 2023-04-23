@@ -14,6 +14,7 @@ use App\Sms\SmsSenderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -90,6 +91,7 @@ class InterviewManager
             ->subject('Intervju for vektorprogrammet')
             ->to($data['to'])
             ->replyTo($data['from'])
+            ->from('vektorbot@vektorprogrammet.no')
             ->htmlTemplate('interview/email.html.twig')
             ->context(
                 [
@@ -121,12 +123,13 @@ class InterviewManager
             $message = (new TemplatedEmail())
                 ->subject("[$user] Intervju: Ønske om ny tid")
                 ->to($interviewer->getEmail())
+//                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+                ->from('vektorbot@vektorprogrammet.no')
                 ->htmlTemplate('interview/reschedule_email.html.twig')
                 ->context([
                     'interview' => $interview,
                     'application' => $application,
-                ])
-                ->type('text/html');
+                ]);
 
             $this->mailer->send($message);
         }
@@ -147,11 +150,12 @@ class InterviewManager
             $message = (new TemplatedEmail())
                 ->subject("[$user] Intervju: Kansellert")
                 ->to($interviewer->getEmail())
+//                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+                ->from('vektorbot@vektorprogrammet.no')
                 ->htmlTemplate('interview/cancel_email.html.twig')
                 ->context([
                     'interview' => $interview,
-                ])
-                ->setType('text/html');
+                ]);
 
             $this->mailer->send($message);
         }
@@ -182,12 +186,13 @@ class InterviewManager
         $message = (new TemplatedEmail())
             ->subject('Dine intervjuer dette semesteret')
             ->to($interviewer->getEmail())
+//            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+            ->from('vektorbot@vektorprogrammet.no')
             ->htmlTemplate('interview/schedule_of_interviews_email.html.twig')
             ->context([
                 'interviews' => $interviews,
                 'interviewer' => $interviewer,
-            ])
-            ->setType('text/html');
+            ]);
 
         $this->mailer->send($message);
     }
@@ -211,11 +216,11 @@ class InterviewManager
         $message = (new TemplatedEmail())
             ->subject('Påminnelse om intervju med Vektorprogrammet')
             ->to($interview->getUser()->getEmail())
+            ->from('ikkesvar@vektorprogrammet.no')
             ->htmlTemplate('interview/accept_interview_reminder_email.html.twig')
             ->context([
                 'interview' => $interview,
-            ])
-            ->setType('text/html');
+            ]);
 
         $this->mailer->send($message);
 

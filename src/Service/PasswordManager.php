@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Mailer\MailingInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class PasswordManager
@@ -93,9 +94,9 @@ class PasswordManager
         // Sends an email with the url for resetting the password
         $emailMessage = (new TemplatedEmail())
             ->subject('Tilbakestill passord for vektorprogrammet.no')
-            ->from('ikkesvar@vektorprogrammet.no', 'Vektorprogrammet')
+            ->from(New Address('ikkesvar@vektorprogrammet.no', 'Vektorprogrammet.no'))
             ->to($passwordReset->getUser()->getEmail())
-            ->htmlTemplate('reset_password/new_password_email.html.twig')
+            ->htmlTemplate('reset_password/new_password_email.txt.twig')
             ->context([
                     'resetCode' => $passwordReset->getResetCode(),
                     'user' => $passwordReset->getUser(),

@@ -7,6 +7,7 @@ use App\Mailer\MailingInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class TeamApplicationSubscriber implements EventSubscriberInterface
@@ -43,9 +44,10 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
             $email = $team->getDepartment()->getEmail();
         }
 
+        $email = $team->getName();
         $receipt = (new TemplatedEmail())
             ->subject('Søknad til ' . $team->getName() . ' mottatt')
-            ->from([$email => $team->getName()])
+            ->from(new Address($email, $team->getName()))
             ->replyTo($email)
             ->to($application->getEmail())
             ->htmlTemplate('team/receipt.html.twig')
@@ -67,7 +69,7 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
 
         $receipt = (new TemplatedEmail())
             ->subject('Ny søker til ' . $team->getName())
-            ->from(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
+            ->from(new Address('vektorprogrammet@vektorprogrammet.no', 'Vektorprogrammet'))
             ->replyTo($application->getEmail())
             ->to($email)
             ->htmlTemplate('team/application_email.html.twig')

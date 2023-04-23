@@ -7,6 +7,7 @@ use App\Mailer\MailingInterface;
 use App\Role\Roles;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class UserRegistration
@@ -37,10 +38,10 @@ class UserRegistration
     {
         return (new TemplatedEmail())
             ->subject('Velkommen til Vektorprogrammet!')
-            ->from('vektorprogrammet@vektorprogrammet.no', 'Vektorprogrammet')
+            ->from(new Address('vektorprogrammet@vektorprogrammet.no', 'Vektorprogrammet'))
             ->replyTo($user->getFieldOfStudy()->getDepartment()->getEmail())
             ->to($user->getEmail())
-            ->htmlTemplate('new_user/create_new_user_email.html.twig')
+            ->htmlTemplate('new_user/create_new_user_email.txt.twig')
             ->context([
                 'newUserCode' => $newUserCode,
                 'name' => $user->getFullName(),

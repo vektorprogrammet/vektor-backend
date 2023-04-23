@@ -14,7 +14,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -65,9 +65,9 @@ class InterviewSubscriber implements EventSubscriberInterface
         // Send email to the interviewee with a summary of the interview
         $emailMessage = (new TemplatedEmail())
             ->subject('Vektorprogrammet intervju')
-            ->replyTo([$interviewer->getDepartment()->getEmail() => 'Vektorprogrammet'])
+            ->replyTo(new Address($interviewer->getDepartment()->getEmail(), 'Vektorprogrammet'))
             ->to($application->getUser()->getEmail())
-            ->replyTo($interviewer->getEmail())
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet.no'))
             ->htmlTemplate('interview/interview_summary_email.html.twig')
             ->context([
                 'application' => $application,
@@ -153,7 +153,7 @@ class InterviewSubscriber implements EventSubscriberInterface
             $this->router->generate(
                 'interview_response',
                 ['responseCode' => $interview->getResponseCode()],
-                UrlGeneratorInterface::ABSOLUTE_URL
+                RouterInterface::ABSOLUTE_URL
             ) .
             "\n\n" .
             "Mvh $interviewer, Vektorprogrammet\n" .
@@ -174,7 +174,7 @@ class InterviewSubscriber implements EventSubscriberInterface
         $interview = $event->getInterview();
         $emailMessage = (new TemplatedEmail())
             ->subject('Vektorprogrammet intervju')
-            ->from(['vektorbot@vektorprogrammet.no' => 'Vektorprogrammet'])
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
             ->to($interview->getInterviewer()->getEmail())
             ->replyTo($interview->getCoInterviewer()->getEmail())
             ->htmlTemplate('interview/co_interviewer_email.html.twig')
