@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Service\GeoLocation;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BoardAndTeamController extends BaseController
 {
@@ -17,6 +18,7 @@ class BoardAndTeamController extends BaseController
     ) {
     }
 
+    #[Route('/team', name: 'team', methods: ['GET'])]
     public function show(): Response
     {
         // Find all departments

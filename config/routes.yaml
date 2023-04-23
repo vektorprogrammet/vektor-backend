@@ -32,23 +32,8 @@ statistics_application_show:
 
 
 ##########################################
-#            BoardAndTeam                #
-##########################################
-
-team:
-    path: /team
-    controller: App\Controller\BoardAndTeamController::show
-    methods: [GET]
-
-##########################################
 #               Profile                  #
 ##########################################
-
-profile:
-    path: /profile
-    controller: App\Controller\ProfileController::show
-    methods: [GET]
-
 profile_activate_with_user_code:
     path: /bruker/aktiver/{newUserCode}
     controller: App\Controller\ProfileController::activateNewUser
@@ -123,34 +108,12 @@ profile_upload_photo:
     requirements:
         id: \d+
 
-##########################################
-#          Participant History           #
-##########################################
-
-participanthistory_show:
-    path: /kontrollpanel/deltakerhistorikk
-    controller: App\Controller\ParticipantHistoryController::show
-    methods: [GET]
-
-assistant_history_delete:
-    path: /kontrollpanel/deltakerhistorikk/slett/{id}
-    controller: App\Controller\AssistantHistoryController::delete
-    methods: [POST]
-
-assistant_history_edit:
-    path: /kontrollpanel/deltakerhistorikk/rediger/{id}
-    controller: App\Controller\AssistantHistoryController::edit
-    methods: [GET, POST]
-    requirements:
-        id: \d+
 
 ##########################################
 #                API                     #
 ##########################################
 api_login:
     path: /api/login
-
-
 
 
 ##########################################
@@ -1048,12 +1011,4 @@ admission_show_by_city_case_insensitive:
 admission_show_specific_department_by_city_case_insensitive:
     path: /avdeling/{city}
     controller: App\Controller\AssistantController::admissionCaseInsensitive
-    methods: [GET]
-
-##########################################
-#               Feedback                 #
-##########################################
-feedback_admin_index:
-    path: /kontrollpanel/feedback
-    controller: App\Controller\FeedbackController::index
     methods: [GET]

@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AssistantHistoryController extends AbstractController
 {
@@ -19,6 +20,7 @@ class AssistantHistoryController extends AbstractController
     ) {
     }
 
+    #[Route('/kontrollpanel/deltakerhistorikk/slett/{id}', name: 'assistant_history_delete', methods: ['POST'])]
     public function delete(AssistantHistory $assistantHistory): RedirectResponse
     {
         if (!$this->isGranted(Roles::ADMIN) && $assistantHistory->getUser()->getDepartment() !== $this->getUser()->getDepartment()) {
@@ -37,6 +39,16 @@ class AssistantHistoryController extends AbstractController
         return $this->redirectToRoute('participanthistory_show');
     }
 
+//assistant_history_edit:
+//path: /kontrollpanel/deltakerhistorikk/rediger/{id}
+//controller: App\Controller\AssistantHistoryController::edit
+//    methods: [GET, POST]
+//    requirements:
+//        id: \d+
+    #[Route('/kontrollpanel/deltakerhistorikk/rediger/{id}',
+        name: 'assistant_history_edit',
+        requirements: ['id' => '\d+'],
+        methods: ['GET', 'POST'])]
     public function edit(Request $request, AssistantHistory $assistantHistory)
     {
         $em = $this->doctrine->getManager();
