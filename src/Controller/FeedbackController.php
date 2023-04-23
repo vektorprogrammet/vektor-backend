@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FeedbackController extends AbstractController
 {
-
     #[Route('/kontrollpanel/feedback', name: 'feedback_admin_index')]
     public function index(): Response
     {
