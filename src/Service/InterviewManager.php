@@ -91,7 +91,7 @@ class InterviewManager
             ->subject('Intervju for vektorprogrammet')
             ->to($data['to'])
             ->replyTo($data['from'])
-            ->from('vektorbot@vektorprogrammet.no')
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
             ->htmlTemplate('interview/email.html.twig')
             ->context(
                 [
@@ -123,8 +123,7 @@ class InterviewManager
             $message = (new TemplatedEmail())
                 ->subject("[$user] Intervju: Ønske om ny tid")
                 ->to($interviewer->getEmail())
-//                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
-                ->from('vektorbot@vektorprogrammet.no')
+                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
                 ->htmlTemplate('interview/reschedule_email.html.twig')
                 ->context([
                     'interview' => $interview,
@@ -150,8 +149,7 @@ class InterviewManager
             $message = (new TemplatedEmail())
                 ->subject("[$user] Intervju: Kansellert")
                 ->to($interviewer->getEmail())
-//                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
-                ->from('vektorbot@vektorprogrammet.no')
+                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
                 ->htmlTemplate('interview/cancel_email.html.twig')
                 ->context([
                     'interview' => $interview,
@@ -186,8 +184,7 @@ class InterviewManager
         $message = (new TemplatedEmail())
             ->subject('Dine intervjuer dette semesteret')
             ->to($interviewer->getEmail())
-//            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
-            ->from('vektorbot@vektorprogrammet.no')
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
             ->htmlTemplate('interview/schedule_of_interviews_email.html.twig')
             ->context([
                 'interviews' => $interviews,
