@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SponsorsController extends AbstractController
 {
@@ -22,6 +23,7 @@ class SponsorsController extends AbstractController
     /**
      * Page for showing all sponsors.
      */
+    #[Route('/kontrollpanel/sponsorer', name: 'sponsors_show', methods: ['GET'])]
     public function sponsorsShow(): Response
     {
         $sponsors = $this->doctrine
@@ -89,6 +91,10 @@ class SponsorsController extends AbstractController
     /**
      * Page for deleting a sponsor.
      */
+    #[Route('/kontrollpanel/sponsor/delete/{id}',
+        name: 'sponsor_delete',
+        requirements: ['id' => '\d+'],
+        methods: ['GET', 'POST'])]
     public function sponsorDelete(Sponsor $sponsor): RedirectResponse
     {
         // Delete the sponsor's logo image.

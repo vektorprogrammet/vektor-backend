@@ -8,6 +8,7 @@ use App\Service\GeoLocation;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
@@ -15,6 +16,7 @@ class HomeController extends AbstractController
     {
     }
 
+    #[Route('/home', name: 'home', methods: ['GET'])]
     public function show(GeoLocation $geoLocation): Response
     {
         $assistantsCount = is_countable($this->doctrine->getRepository(User::class)->findAssistants()) ? count($this->doctrine->getRepository(User::class)->findAssistants()) : 0;

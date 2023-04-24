@@ -8,6 +8,7 @@ use App\Role\Roles;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipantHistoryController extends BaseController
 {
@@ -15,6 +16,7 @@ class ParticipantHistoryController extends BaseController
     {
     }
 
+    #[Route('/kontrollpanel/deltakerhistorikk', name: 'participanthistory_show', methods: ['GET'])]
     public function show(Request $request): ?Response
     {
         $department = $this->getDepartmentOrThrow404($request);

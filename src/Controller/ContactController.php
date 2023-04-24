@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends AbstractController
 {
@@ -25,6 +26,11 @@ class ContactController extends AbstractController
     ) {
     }
 
+    #[Route('/kontakt', name: 'contact', methods: ['GET', 'POST'])]
+    #[Route('/kontakt/avdeling/{id}',
+        name: 'contact_department',
+        requirements: ['id' => '\d+'],
+        methods: ['GET', 'POST'])]
     public function index(Request $request, Department $department = null): Response
     {
         if ($department === null) {

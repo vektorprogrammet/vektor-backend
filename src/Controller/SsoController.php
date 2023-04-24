@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SsoController extends AbstractController
 {
@@ -15,6 +16,7 @@ class SsoController extends AbstractController
     {
     }
 
+    #[Route('/sso/login', name: 'sso_login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
         $response = new JsonResponse();

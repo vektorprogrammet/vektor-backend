@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FieldOfStudyController extends AbstractController
@@ -20,6 +21,7 @@ class FieldOfStudyController extends AbstractController
     /**
      * Show all Field of Studies.
      */
+    #[Route('/kontrollpanel/linjer', name: 'show_field_of_studies', methods: ['GET'])]
     public function show(): Response
     {
         $department = $this->getUser()->getFieldOfStudy()->getDepartment();

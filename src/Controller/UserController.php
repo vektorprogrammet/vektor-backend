@@ -8,6 +8,7 @@ use App\Entity\AssistantHistory;
 use App\Service\ApplicationManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends BaseController
 {
@@ -17,6 +18,7 @@ class UserController extends BaseController
     ) {
     }
 
+    #[Route('/min-side', name: 'my_page', methods: ['GET'])]
     public function myPage(): Response
     {
         $user = $this->getUser();
@@ -49,6 +51,7 @@ class UserController extends BaseController
         ]);
     }
 
+    #[Route('/profil/partnere', name: 'my_partners', methods: ['GET'])]
     public function myPartner(): Response
     {
         if (!$this->getUser()->isActive()) {
