@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Department;
 use App\Entity\FieldOfStudy;
+use App\Entity\Linjeforening;
 use App\Entity\Receipt;
 use App\Entity\School;
 use App\Entity\Semester;
@@ -47,5 +48,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Receipt', 'fas fa-dollar-sign', Receipt::class);
         yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('TeamApplication', 'fas fa-envelope', TeamApplication::class);
+        yield MenuItem::linkToCrud('Linjeforening', 'fas fa-fire', Linjeforening::class);
     }
 }

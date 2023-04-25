@@ -24,6 +24,9 @@ class FieldOfStudy
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'fieldOfStudy')]
     private ?Department $department = null;
 
+    #[ORM\OneToOne(mappedBy: 'fieldOfStudy', cascade: ['persist', 'remove'])]
+    private ?Linjeforening $linjeforening = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,5 +71,22 @@ class FieldOfStudy
     public function __toString()
     {
         return $this->getShortName();
+    }
+
+    public function getLinjeforening(): ?Linjeforening
+    {
+        return $this->linjeforening;
+    }
+
+    public function setLinjeforening(Linjeforening $linjeforening): self
+    {
+        // set the owning side of the relation if necessary
+        if ($linjeforening->getFOS() !== $this) {
+            $linjeforening->setFOS($this);
+        }
+
+        $this->linjeforening = $linjeforening;
+
+        return $this;
     }
 }
