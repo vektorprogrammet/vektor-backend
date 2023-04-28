@@ -5,16 +5,19 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Entity\ExecutiveBoard;
 use App\Entity\User;
+use App\Service\DepartmentSemesterService;
 use App\Service\GeoLocation;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BoardAndTeamController extends BaseController
+class BoardAndTeamController extends AbstractController
 {
     public function __construct(
         private readonly GeoLocation $geoLocation,
-        private readonly ManagerRegistry $doctrine
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
     ) {
     }
 
@@ -38,7 +41,7 @@ class BoardAndTeamController extends BaseController
 
         $departmentStats = [];
         foreach ($departments as $department) {
-            $currentSemester = $this->getCurrentSemester();
+            $currentSemester = $this->departmentSemesterService->getCurrentSemester();
             $userRepository = $this->doctrine->getRepository(User::class);
             $departmentStats[$department->getCity()] = [
                 'numTeamMembers' => sizeof($userRepository->findUsersInDepartmentWithTeamMembershipInSemester($department, $currentSemester)),
