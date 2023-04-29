@@ -106,13 +106,13 @@ class Sorter
             $teamMemberships2 = $user2->getActiveMemberships();
 
             // Check if empty or null
-            if ($teamMemberships2 === null || empty($teamMemberships2)) {
-                if ($teamMemberships1 === null || empty($teamMemberships1)) {
+            if (empty($teamMemberships2)) {
+                if (empty($teamMemberships1)) {
                     return 0; // Both null or empty
                 }
 
                 return -1; // If 2 is empty, but not 1:TeamMember 1 comes first
-            } elseif ($teamMemberships1 === null || empty($teamMemberships1)) {
+            } elseif (empty($teamMemberships1)) {
                 return 1; // If 1 is empty, but not 2: 2 comes first
             }
 
@@ -146,10 +146,7 @@ class Sorter
         usort($teamMemberships, $this->compareTeamMemberships(...));
     }
 
-    /**
-     * @return int
-     */
-    private function compareTeamMemberships(TeamMembershipInterface $teamMembership1, TeamMembershipInterface $teamMembership2)
+    private function compareTeamMemberships(TeamMembershipInterface $teamMembership1, TeamMembershipInterface $teamMembership2): int
     {
         return $this->comparePositions($teamMembership1->getPositionName(), $teamMembership2->getPositionName());
     }
