@@ -20,8 +20,7 @@ class AssistantSchedulingController extends AbstractController
     public function __construct(
         private readonly ManagerRegistry $doctrine,
         private readonly DepartmentSemesterService $departmentSemesterService,
-    )
-    {
+    ) {
     }
 
     public function index(): Response
