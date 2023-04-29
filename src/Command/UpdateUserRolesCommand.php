@@ -42,7 +42,7 @@ HELP
     }
 
     /**
-     * This method is executed before the the execute() method. It's main purpose
+     * This method is executed before the execute-method. It's main purpose
      * is to initialize the variables used in the rest of the command methods.
      */
     protected function initialize(InputInterface $input, OutputInterface $output)

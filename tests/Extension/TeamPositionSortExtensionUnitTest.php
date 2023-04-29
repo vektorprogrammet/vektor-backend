@@ -22,9 +22,9 @@ class TeamPositionSortExtensionUnitTest extends TestCase
     private readonly Semester $activeSemester;
     private readonly AdmissionPeriod $latestAdmissionPeriod;
 
-    public function __construct($name = null, array $data = [], $dataName = '')
+    protected function setUp(): void
     {
-        parent::__construct($name, $data, $dataName);
+        parent::setUp();
         $this->sortExtension = new TeamPositionSortExtension(new Sorter(), new FilterService());
 
         $this->activeSemester = new Semester();

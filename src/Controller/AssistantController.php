@@ -11,11 +11,10 @@ use App\Form\Type\ApplicationType;
 use App\Service\ApplicationAdmission;
 use App\Service\FilterService;
 use App\Service\GeoLocation;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -30,6 +29,7 @@ class AssistantController extends AbstractController
         private readonly KernelInterface $kernel,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ManagerRegistry $doctrine,
+        private readonly FormFactoryInterface $formFactory,
     ) {
     }
 
@@ -89,7 +89,7 @@ class AssistantController extends AbstractController
         $formViews = [];
 
         foreach ($departments as $department) {
-            $form = $this->get('form.factory')->createNamedBuilder('application_' . $department->getId(), ApplicationType::class, $application, [
+            $form = $this->formFactory->createNamedBuilder('application_' . $department->getId(), ApplicationType::class, $application, [
                 'validation_groups' => ['admission'],
                 'departmentId' => $department->getId(),
                 'environment' => $this->kernel->getEnvironment(),
@@ -145,10 +145,6 @@ class AssistantController extends AbstractController
         return $this->render('admission/application_confirmation.html.twig');
     }
 
-    /**
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
     public function subscribePage(Request $request, Department $department): Response
     {
         if (!$department->activeAdmission()) {
@@ -158,7 +154,8 @@ class AssistantController extends AbstractController
         $em = $this->doctrine->getManager();
         $application = new Application();
 
-        $form = $this->get('form.factory')->createNamedBuilder('application_' . $department->getId(), ApplicationType::class, $application, [
+        $form = $this->formFactory
+            ->createNamedBuilder('application_' . $department->getId(), ApplicationType::class, $application, [
             'validation_groups' => ['admission'],
             'departmentId' => $department->getId(),
             'environment' => $this->kernel->getEnvironment(),

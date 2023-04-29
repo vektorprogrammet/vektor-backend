@@ -9,13 +9,15 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
     public function __construct(
-        private readonly ManagerRegistry $doctrine)
-    {
+        private readonly ManagerRegistry $doctrine,
+        private readonly AuthorizationCheckerInterface $authorizationChecker
+    ) {
     }
 
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -41,7 +43,7 @@ class SecurityController extends AbstractController
      */
     public function loginRedirect(): RedirectResponse
     {
-        if ($this->get('security.authorization_checker')->isGranted(Roles::TEAM_MEMBER)) {
+        if ($this->authorizationChecker->isGranted(Roles::TEAM_MEMBER)) {
             return $this->redirectToRoute('control_panel');
         } elseif ($this->doctrine->getRepository(Application::class)->findActiveByUser($this->getUser())) {
             return $this->redirectToRoute('my_page');
