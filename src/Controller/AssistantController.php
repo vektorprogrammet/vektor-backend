@@ -154,7 +154,8 @@ class AssistantController extends AbstractController
         $em = $this->doctrine->getManager();
         $application = new Application();
 
-        $form = $this->formFactory->createNamedBuilder('application_' . $department->getId(), ApplicationType::class, $application, [
+        $form = $this->formFactory
+            ->createNamedBuilder('application_' . $department->getId(), ApplicationType::class, $application, [
             'validation_groups' => ['admission'],
             'departmentId' => $department->getId(),
             'environment' => $this->kernel->getEnvironment(),

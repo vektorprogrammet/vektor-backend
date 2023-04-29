@@ -146,7 +146,9 @@ class Sorter
         usort($teamMemberships, $this->compareTeamMemberships(...));
     }
 
-    private function compareTeamMemberships(TeamMembershipInterface $teamMembership1, TeamMembershipInterface $teamMembership2): int
+    private function compareTeamMemberships(
+        TeamMembershipInterface $teamMembership1,
+        TeamMembershipInterface $teamMembership2): int
     {
         return $this->comparePositions($teamMembership1->getPositionName(), $teamMembership2->getPositionName());
     }
