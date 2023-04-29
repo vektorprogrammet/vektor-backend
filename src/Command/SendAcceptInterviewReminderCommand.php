@@ -9,9 +9,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendAcceptInterviewReminderCommand extends Command
 {
-    // TODO: Use dependency-injection for dependencies
-    private InterviewManager $interviewManager;
 
+    public function __construct(private readonly InterviewManager $interviewManager)
+    {
+        parent::__construct();
+    }
     /**
      * {@inheritdoc}
      */
@@ -27,7 +29,6 @@ class SendAcceptInterviewReminderCommand extends Command
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->interviewManager = $this->getContainer()->get(InterviewManager::class);
     }
 
     /**

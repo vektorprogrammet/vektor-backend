@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Service\RoleManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,15 +12,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateUserRolesCommand extends Command
 {
-    public function __construct(private readonly RoleManager $roleManager)
+    public function __construct(
+        private readonly RoleManager $roleManager,
+        private readonly EntityManagerInterface $entityManager)
     {
         parent::__construct();
     }
 
-    /**
-     * @var ObjectManager
-     */
-    private $entityManager;
     private int $rolesUpdatedCount;
 
     /**
@@ -47,8 +46,6 @@ HELP
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->entityManager = $this->getContainer()->get('doctrine')->getManager();
-
         $this->rolesUpdatedCount = 0;
     }
 

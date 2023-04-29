@@ -9,8 +9,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendAdmissionNotificationsCommand extends Command
 {
-    // TODO: Use dependency-injection for dependencies
-    private AdmissionNotifier $notifier;
+    public function __construct(private readonly AdmissionNotifier $notifier)
+    {
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -24,7 +26,6 @@ class SendAdmissionNotificationsCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->notifier = $this->getContainer()->get(AdmissionNotifier::class);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
