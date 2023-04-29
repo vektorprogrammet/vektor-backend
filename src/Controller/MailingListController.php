@@ -4,15 +4,19 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\GenerateMailingListType;
+use App\Service\DepartmentSemesterService;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class MailingListController extends BaseController
+class MailingListController extends AbstractController
 {
-    public function __construct(private readonly ManagerRegistry $doctrine)
-    {
+    public function __construct(
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
+    ) {
     }
 
     public function show(Request $request): Response
@@ -50,8 +54,9 @@ class MailingListController extends BaseController
 
     public function showAssistants(Request $request): Response
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
         $users = $this->doctrine
             ->getRepository(User::class)
             ->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $semester);
@@ -63,8 +68,9 @@ class MailingListController extends BaseController
 
     public function showTeam(Request $request): Response
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
         $users = $this->doctrine
             ->getRepository(User::class)
             ->findUsersInDepartmentWithTeamMembershipInSemester($department, $semester);
@@ -76,8 +82,10 @@ class MailingListController extends BaseController
 
     public function showAll(Request $request): Response
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
+
         $assistantUsers = $this->doctrine
             ->getRepository(User::class)
             ->findUsersWithAssistantHistoryInDepartmentAndSemester($department, $semester);

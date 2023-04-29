@@ -6,24 +6,28 @@ use App\Entity\AssistantHistory;
 use App\Entity\CertificateRequest;
 use App\Entity\Signature;
 use App\Form\Type\CreateSignatureType;
+use App\Service\DepartmentSemesterService;
 use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CertificateController extends BaseController
+class CertificateController extends AbstractController
 {
     public function __construct(
         private readonly FileUploader $fileUploader,
-        private readonly ManagerRegistry $doctrine
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
     ) {
     }
 
     public function show(Request $request): RedirectResponse|Response
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
         $em = $this->doctrine->getManager();
 
         $assistants = $em

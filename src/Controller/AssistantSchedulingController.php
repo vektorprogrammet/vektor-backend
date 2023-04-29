@@ -7,15 +7,20 @@ use App\AssistantScheduling\School;
 use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\SchoolCapacity;
+use App\Service\DepartmentSemesterService;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class AssistantSchedulingController extends BaseController
+class AssistantSchedulingController extends AbstractController
 {
-    public function __construct(private readonly ManagerRegistry $doctrine)
+    public function __construct(
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
+    )
     {
     }
 
@@ -32,7 +37,7 @@ class AssistantSchedulingController extends BaseController
     {
         $user = $this->getUser();
 
-        $currentSemester = $this->getCurrentSemester();
+        $currentSemester = $this->departmentSemesterService->getCurrentSemester();
         $currentAdmissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($user->getDepartment(), $currentSemester);
@@ -102,8 +107,9 @@ class AssistantSchedulingController extends BaseController
     public function getSchools(): JsonResponse
     {
         $user = $this->getUser();
-        $department = $user->getFieldOfStudy()->getDepartment();
-        $currentSemester = $this->getCurrentSemester();
+        $department = $user->getDepartment();
+        $currentSemester = $this->departmentSemesterService->getCurrentSemester();
+
         $allCurrentSchoolCapacities = $this->doctrine
             ->getRepository(SchoolCapacity::class)
             ->findByDepartmentAndSemester($department, $currentSemester);

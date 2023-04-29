@@ -2,11 +2,11 @@
 
 namespace App\Controller\Api;
 
-use App\Controller\BaseController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AccountController extends BaseController
+class AccountController extends AbstractController
 {
     #[Route('/api/account/user', name: 'api_account_user', methods: ['GET'])]
     public function getCurrentUser(): JsonResponse

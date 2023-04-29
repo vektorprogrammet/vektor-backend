@@ -10,8 +10,10 @@ use App\Entity\User;
 use App\Event\ApplicationCreatedEvent;
 use App\Form\Type\ApplicationType;
 use App\Role\Roles;
+use App\Service\DepartmentSemesterService;
 use App\Service\InterviewCounter;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,12 +25,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * AdmissionAdminController is the controller responsible for administrative admission s,
  * such as showing and deleting applications.
  */
-class AdmissionAdminController extends BaseController
+class AdmissionAdminController extends AbstractController
 {
     public function __construct(
         private readonly InterviewCounter $InterviewCounter,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly ManagerRegistry $doctrine
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
     ) {
     }
 
@@ -45,8 +48,9 @@ class AdmissionAdminController extends BaseController
 
     public function showNewApplications(Request $request): Response
     {
-        $semester = $this->getSemesterOrThrow404($request);
-        $department = $this->getDepartmentOrThrow404($request);
+        $user = $this->getUser();
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
 
         $admissionPeriod = $this->doctrine
                 ->getRepository(AdmissionPeriod::class)
@@ -76,8 +80,10 @@ class AdmissionAdminController extends BaseController
      */
     public function showAssignedApplications(Request $request)
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
+
         $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
@@ -117,8 +123,10 @@ class AdmissionAdminController extends BaseController
      */
     public function showInterviewedApplications(Request $request)
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
+
         $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
@@ -152,8 +160,10 @@ class AdmissionAdminController extends BaseController
      */
     public function showExistingApplications(Request $request)
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
+
         $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
@@ -238,8 +248,9 @@ class AdmissionAdminController extends BaseController
     public function createApplication(Request $request)
     {
         $em = $this->doctrine->getManager();
+        $currentSemester = $this->departmentSemesterService->getCurrentSemester();
         $department = $this->getUser()->getDepartment();
-        $currentSemester = $this->getCurrentSemester();
+
         $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $currentSemester);
@@ -292,8 +303,9 @@ class AdmissionAdminController extends BaseController
     public function showTeamInterest(Request $request): ?Response
     {
         $user = $this->getUser();
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
+
         $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);

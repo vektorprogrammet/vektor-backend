@@ -6,15 +6,18 @@ use App\Entity\AdmissionPeriod;
 use App\Entity\Application;
 use App\Entity\AssistantHistory;
 use App\Service\ApplicationManager;
+use App\Service\DepartmentSemesterService;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends BaseController
+class UserController extends AbstractController
 {
     public function __construct(
         private readonly ApplicationManager $applicationManager,
-        private readonly ManagerRegistry $doctrine
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
     ) {
     }
 
@@ -22,9 +25,9 @@ class UserController extends BaseController
     public function myPage(): Response
     {
         $user = $this->getUser();
-
         $department = $user->getDepartment();
-        $semester = $this->getCurrentSemester();
+        $semester = $this->departmentSemesterService->getCurrentSemester();
+
         $admissionPeriod = $this->doctrine
             ->getRepository(AdmissionPeriod::class)
             ->findOneByDepartmentAndSemester($department, $semester);
@@ -95,7 +98,7 @@ class UserController extends BaseController
             ];
         }
 
-        $semester = $this->getCurrentSemester();
+        $semester = $this->departmentSemesterService->getCurrentSemester();
 
         return $this->render('user/my_partner.html.twig', [
             'partnerInformations' => $partnerInformations,
