@@ -16,8 +16,8 @@ class SecurityController extends AbstractController
 {
     public function __construct(
         private readonly ManagerRegistry $doctrine,
-        private readonly AuthorizationCheckerInterface $authorizationChecker,)
-    {
+        private readonly AuthorizationCheckerInterface $authorizationChecker
+    ) {
     }
 
     public function login(AuthenticationUtils $authenticationUtils): Response
