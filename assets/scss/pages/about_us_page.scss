@@ -27,9 +27,6 @@
       display: flex;
       align-items:center;
       justify-content: space-between;
-      &:hover, &:visited {
-        background-color: #eee;
-      }
 
       margin-top: 10px;
       padding-right: 75px!important;
@@ -39,8 +36,6 @@
       @media (max-width: 766px) {
         font-size: 16px;
       }
-      cursor: pointer;
-
     }
 
     .icons {
