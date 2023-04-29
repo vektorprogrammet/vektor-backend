@@ -14,13 +14,14 @@ use App\Service\GeoLocation;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AssistantController extends BaseController
+class AssistantController extends AbstractController
 {
     public function __construct(
         private readonly ApplicationAdmission $applicationAdmission,
@@ -28,7 +29,7 @@ class AssistantController extends BaseController
         private readonly FilterService $filterService,
         private readonly KernelInterface $kernel,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly ManagerRegistry $doctrine
+        private readonly ManagerRegistry $doctrine,
     ) {
     }
 

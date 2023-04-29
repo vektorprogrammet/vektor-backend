@@ -6,18 +6,21 @@ use App\Entity\Department;
 use App\Entity\TeamInterest;
 use App\Event\TeamInterestCreatedEvent;
 use App\Form\Type\TeamInterestType;
+use App\Service\DepartmentSemesterService;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class TeamInterestController extends BaseController
+class TeamInterestController extends AbstractController
 {
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly ManagerRegistry $doctrine
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
     ) {
     }
 
@@ -26,7 +29,7 @@ class TeamInterestController extends BaseController
      */
     public function showTeamInterestForm(Department $department, Request $request): RedirectResponse|Response
     {
-        $semester = $this->getCurrentSemester();
+        $semester = $this->departmentSemesterService->getCurrentSemester();
         if ($semester === null) {
             throw new BadRequestHttpException('No current semester');
         }

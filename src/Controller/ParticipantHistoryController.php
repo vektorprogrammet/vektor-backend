@@ -5,22 +5,27 @@ namespace App\Controller;
 use App\Entity\AssistantHistory;
 use App\Entity\TeamMembership;
 use App\Role\Roles;
+use App\Service\DepartmentSemesterService;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ParticipantHistoryController extends BaseController
+class ParticipantHistoryController extends AbstractController
 {
-    public function __construct(private readonly ManagerRegistry $doctrine)
-    {
+    public function __construct(
+        private readonly ManagerRegistry $doctrine,
+        private readonly DepartmentSemesterService $departmentSemesterService,
+    ) {
     }
 
     #[Route('/kontrollpanel/deltakerhistorikk', name: 'participanthistory_show', methods: ['GET'])]
     public function show(Request $request): ?Response
     {
-        $department = $this->getDepartmentOrThrow404($request);
-        $semester = $this->getSemesterOrThrow404($request);
+        $user = $this->getUser();
+        $department = $this->departmentSemesterService->getDepartmentOrThrow404($request, $user);
+        $semester = $this->departmentSemesterService->getSemesterOrThrow404($request);
 
         if (!$this->isGranted(Roles::TEAM_LEADER) && $department !== $this->getUser()->getDepartment()) {
             throw $this->createAccessDeniedException();
