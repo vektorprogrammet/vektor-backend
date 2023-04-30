@@ -167,18 +167,6 @@
             "config/packages/fos_ckeditor.yaml"
         ]
     },
-    "friendsofsymfony/rest-bundle": {
-        "version": "3.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.2",
-            "ref": "fa845143b7e0a4c70aedd1a88c549e6d977e9ae5"
-        },
-        "files": [
-            "config/packages/fos_rest.yaml"
-        ]
-    },
     "google/apiclient": {
         "version": "2.0",
         "recipe": {
@@ -837,9 +825,6 @@
     },
     "webmozart/assert": {
         "version": "1.10.0"
-    },
-    "willdurand/jsonp-callback-validator": {
-        "version": "v1.1.0"
     },
     "willdurand/negotiation": {
         "version": "3.0.0"
