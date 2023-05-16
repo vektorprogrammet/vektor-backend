@@ -21,10 +21,10 @@ class LinjeforeningCrudController extends AbstractCrudController
        yield IdField::new('id')
            ->onlyOnIndex();
        yield TextField::new('name');
-        yield AssociationField::new('fieldOfStudy')
-            ->setFormTypeOptions([
-                'choice_label' => 'name',
-            ]);
+       yield AssociationField::new('fieldOfStudy')
+           ->setFormTypeOptions([
+               'choice_label' => 'name',
+           ]);
        yield TextField::new('contact_person');
     }
 }
