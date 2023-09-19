@@ -16,9 +16,6 @@ class UpdateTeamMembershipCommand extends Command
 
     private TeamMembershipService $notifier;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this

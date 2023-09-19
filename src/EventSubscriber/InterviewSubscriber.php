@@ -102,15 +102,15 @@ class InterviewSubscriber implements EventSubscriberInterface
         $semester = $application->getSemester();
 
         if (
-            $this->sbsData->getInterviewedAssistantsCount() === 10 ||
-            $this->sbsData->getInterviewedAssistantsCount() % 25 === 0
+            $this->sbsData->getInterviewedAssistantsCount() === 10
+            || $this->sbsData->getInterviewedAssistantsCount() % 25 === 0
         ) {
             $this->notificationManager->sendApplicationCountNotification($department, $semester);
         }
 
         if (
-            $this->sbsData->applicantsNotYetInterviewedCount() <= 0 &&
-            $this->sbsData->getStep() >= 4
+            $this->sbsData->applicantsNotYetInterviewedCount() <= 0
+            && $this->sbsData->getStep() >= 4
         ) {
             $this->notificationManager->sendInterviewsCompletedNotification($department, $semester);
         }

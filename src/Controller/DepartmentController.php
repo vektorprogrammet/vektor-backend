@@ -27,7 +27,7 @@ class DepartmentController extends AbstractController
     /**
      * Create or update department.
      */
-    public function createOrUpdateDepartment(Request $request, ?Department $department = null): RedirectResponse|Response
+    public function createOrUpdateDepartment(Request $request, Department $department = null): RedirectResponse|Response
     {
         $isEdit = $department !== null;
         if (!$isEdit) {

@@ -122,8 +122,8 @@ class InterviewController extends AbstractController
         }
 
         // Only accessible for admin and above, or team members belonging to the same department as the interview
-        if (!$this->interviewManager->loggedInUserCanSeeInterview($interview) ||
-            $this->getUser() === $application->getUser()
+        if (!$this->interviewManager->loggedInUserCanSeeInterview($interview)
+            || $this->getUser() === $application->getUser()
         ) {
             throw $this->createAccessDeniedException();
         }

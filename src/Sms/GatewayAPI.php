@@ -85,11 +85,11 @@ class GatewayAPI implements SmsSenderInterface
         $number = preg_replace('/\s+/', '', $number);
 
         $startsWithCountryCode =
-            mb_strlen($number) === 8 + mb_strlen((string) $countryCode) &&
-            $this->startsWith($number, $countryCode);
+            mb_strlen($number) === 8 + mb_strlen((string) $countryCode)
+            && $this->startsWith($number, $countryCode);
         $startsWithPlusCountryCode =
-            mb_strlen($number) === 9 + mb_strlen((string) $countryCode) &&
-            $this->startsWith($number, "+$countryCode");
+            mb_strlen($number) === 9 + mb_strlen((string) $countryCode)
+            && $this->startsWith($number, "+$countryCode");
 
         if (mb_strlen($number) === 8) {
             return $countryCode . $number;
@@ -108,16 +108,16 @@ class GatewayAPI implements SmsSenderInterface
         $number = preg_replace('/\s+/', '', $number);
 
         $startsWithCountryCode =
-            mb_strlen($number) === 8 + mb_strlen((string) $countryCode) &&
-            $this->startsWith($number, $countryCode);
+            mb_strlen($number) === 8 + mb_strlen((string) $countryCode)
+            && $this->startsWith($number, $countryCode);
         $startsWithPlusCountryCode =
-            mb_strlen($number) === 9 + mb_strlen((string) $countryCode) &&
-            $this->startsWith($number, "+$countryCode");
+            mb_strlen($number) === 9 + mb_strlen((string) $countryCode)
+            && $this->startsWith($number, "+$countryCode");
 
         return
-            mb_strlen($number) === 8 ||
-            $startsWithCountryCode ||
-            $startsWithPlusCountryCode;
+            mb_strlen($number) === 8
+            || $startsWithCountryCode
+            || $startsWithPlusCountryCode;
     }
 
     private function startsWith(string $string, string $search)

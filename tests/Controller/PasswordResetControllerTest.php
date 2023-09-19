@@ -28,7 +28,7 @@ class PasswordResetControllerTest extends BaseWebTestCase
         $form['_remember_me'] = false;
         $client->submit($form);
 
-        $crawler = $client->request('GET', '/home'); // /home because of redirect to api from root
+        $crawler = $client->request('GET', '/');
 
         return $crawler->filter('nav span:contains("Logg inn")')->count() === 0;
     }

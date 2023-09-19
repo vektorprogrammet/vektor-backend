@@ -192,9 +192,9 @@ class ReceiptController extends AbstractController
     public function editStatus(Request $request, Receipt $receipt): RedirectResponse
     {
         $status = $request->get('status');
-        if ($status !== Receipt::STATUS_PENDING &&
-            $status !== Receipt::STATUS_REFUNDED &&
-            $status !== Receipt::STATUS_REJECTED) {
+        if ($status !== Receipt::STATUS_PENDING
+            && $status !== Receipt::STATUS_REFUNDED
+            && $status !== Receipt::STATUS_REJECTED) {
             throw new BadRequestHttpException('Invalid status');
         }
 

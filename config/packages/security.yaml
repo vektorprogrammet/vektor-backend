@@ -33,19 +33,6 @@ security:
                 class: App\Entity\User
                 property: companyEmail
     firewalls:
-        login:
-            pattern: ^/api/login
-            stateless: true
-            json_login:
-                provider: chain_provider
-                check_path: /api/login
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-        api:
-            pattern:   ^/api
-            stateless: true
-            jwt:
-                provider: chain_provider
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -88,10 +75,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        #PUBLIC ROUTES
-        - { path: ^/api/docs, roles: PUBLIC_ACCESS } # Allows accessing API documentations and Swagger UI
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
-
         #ROLE_ADMIN = admin user
         - { path: ^/kontrollpanel/admin, roles: ROLE_ADMIN }
         - { path: ^/kontrollpanel/semesteradmin, roles: ROLE_ADMIN }
@@ -162,7 +145,6 @@ security:
         - { path: ^/kontrollpanel, role: ROLE_TEAM_MEMBER }
         - { path: ^/kontrollpanel/utlegg, roles: ROLE_TEAM_MEMBER }
         - { path: ^/api/party, roles: ROLE_TEAM_MEMBER }
-        - { path: ^/api/*,       roles: ROLE_TEAM_MEMBER }
 
 
         #ROLE_USER = assistant user

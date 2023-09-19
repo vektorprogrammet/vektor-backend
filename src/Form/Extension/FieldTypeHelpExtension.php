@@ -28,9 +28,6 @@ class FieldTypeHelpExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

@@ -16,9 +16,6 @@ class SendListOfScheduledInterviewsCommand extends Command
     private InterviewManager $interviewManager;
     private EntityManagerInterface $em;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this

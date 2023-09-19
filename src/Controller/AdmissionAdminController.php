@@ -38,8 +38,6 @@ class AdmissionAdminController extends AbstractController
     /**
      * Shows the admission admin page. Shows only applications for the department of the logged in user.
      * This works as the restricted admission management method, only allowing users to manage applications within their department.
-     *
-     * @return Response
      */
     public function show(Request $request): ?Response
     {

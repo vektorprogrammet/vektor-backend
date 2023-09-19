@@ -10,7 +10,7 @@ class HomeControllerTest extends BaseWebTestCase
     {
         // Create anonymous client
         $client = static::createClient();
-        $crawler = $client->request('GET', '/home');
+        $crawler = $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Vektorprogrammet');

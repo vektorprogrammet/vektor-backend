@@ -108,8 +108,8 @@ class Department
 
         foreach ($admissionPeriods as $admissionPeriod) {
             if (
-                $admissionPeriod->getSemester()->getStartDate() < $now &&
-                $admissionPeriod->getSemester()->getEndDate() > $latestAdmissionPeriod->getSemester()->getEndDate()
+                $admissionPeriod->getSemester()->getStartDate() < $now
+                && $admissionPeriod->getSemester()->getEndDate() > $latestAdmissionPeriod->getSemester()->getEndDate()
             ) {
                 $latestAdmissionPeriod = $admissionPeriod;
             }

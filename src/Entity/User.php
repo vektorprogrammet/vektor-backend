@@ -166,9 +166,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -393,9 +390,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     */
 
-    /**
-     * {@inheritdoc}
-     */
     public function eraseCredentials()
     {
     }
@@ -420,9 +414,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isActive;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSalt(): ?string
     {
         // you *may* need a real salt depending on your encoder

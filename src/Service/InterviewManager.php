@@ -44,9 +44,9 @@ class InterviewManager
     {
         $user = $this->tokenStorage->getToken()->getUser();
 
-        return $this->authorizationChecker->isGranted(Roles::TEAM_LEADER) ||
-               $interview->isInterviewer($user) ||
-               $interview->isCoInterviewer($user);
+        return $this->authorizationChecker->isGranted(Roles::TEAM_LEADER)
+               || $interview->isInterviewer($user)
+               || $interview->isCoInterviewer($user);
     }
 
     public function initializeInterviewAnswers(Interview $interview): Interview
@@ -175,10 +175,10 @@ class InterviewManager
         foreach ($interviews as $interview) {
             $status = $interview->getInterviewStatus();
 
-            if ($status === InterviewStatusType::NO_CONTACT ||
-                 $status === InterviewStatusType::PENDING ||
-                 $status === InterviewStatusType::REQUEST_NEW_TIME ||
-                 $status === InterviewStatusType::ACCEPTED
+            if ($status === InterviewStatusType::NO_CONTACT
+                 || $status === InterviewStatusType::PENDING
+                 || $status === InterviewStatusType::REQUEST_NEW_TIME
+                 || $status === InterviewStatusType::ACCEPTED
             ) {
                 $nothingMoreToDo = false;
                 break;

@@ -20,9 +20,6 @@ class AssetExtension extends AbstractExtension
         $this->rootDir = $appKernel->getProjectDir();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
