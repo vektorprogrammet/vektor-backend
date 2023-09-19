@@ -92,6 +92,6 @@ crashlytics-build.properties
 # php-cs-fixer
 /tools
 .php-cs-fixer.cache
-###> lexik/jwt-authentication-bundle ###
-/config/jwt/*.pem
-###< lexik/jwt-authentication-bundle ###
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
