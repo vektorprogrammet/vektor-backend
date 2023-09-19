@@ -122,10 +122,10 @@ class AdmissionPeriod implements PeriodInterface
 
     public function shouldSendInfoMeetingNotifications(): bool
     {
-        return $this->infoMeeting !== null &&
-            $this->infoMeeting->getDate() !== null &&
-            $this->infoMeeting->isShowOnPage() &&
-            TimeUtil::dateTimeIsToday($this->infoMeeting->getDate()) &&
-            TimeUtil::dateTimeIsInTheFuture($this->infoMeeting->getDate());
+        return $this->infoMeeting !== null
+            && $this->infoMeeting->getDate() !== null
+            && $this->infoMeeting->isShowOnPage()
+            && TimeUtil::dateTimeIsToday($this->infoMeeting->getDate())
+            && TimeUtil::dateTimeIsInTheFuture($this->infoMeeting->getDate());
     }
 }

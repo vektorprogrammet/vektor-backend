@@ -74,9 +74,6 @@ class PasswordReset
         return $this;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): ?User
     {
         return $this->user;

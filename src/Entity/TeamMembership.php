@@ -99,9 +99,6 @@ class TeamMembership implements TeamMembershipInterface
         return $this;
     }
 
-    /**
-     * @return Position
-     */
     public function getPosition(): ?Position
     {
         return $this->position;

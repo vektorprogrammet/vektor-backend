@@ -12,9 +12,6 @@ class RouteDisplayExtension extends AbstractExtension
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [

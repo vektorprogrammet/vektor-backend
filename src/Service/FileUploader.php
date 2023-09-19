@@ -79,8 +79,8 @@ class FileUploader
             $validType = explode('/', (string) $valid_mime_type)[0];
             $validSubType = explode('/', (string) $valid_mime_type)[1];
 
-            if ($fileType === $validType &&
-                ($fileSubType === $validSubType || $validSubType === '*')) {
+            if ($fileType === $validType
+                && ($fileSubType === $validSubType || $validSubType === '*')) {
                 return $file;
             }
         }

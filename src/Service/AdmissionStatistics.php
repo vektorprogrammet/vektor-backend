@@ -103,7 +103,7 @@ class AdmissionStatistics
                 continue;
             }
             $cumulative = $populatedAppData[$dates[$index - 1]];
-            $populatedAppData[$date] = $populatedAppData[$date] + $cumulative;
+            $populatedAppData[$date] += $cumulative;
         }
 
         return $populatedAppData;

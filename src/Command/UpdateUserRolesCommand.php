@@ -22,9 +22,6 @@ class UpdateUserRolesCommand extends Command
     private $entityManager;
     private int $rolesUpdatedCount;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this

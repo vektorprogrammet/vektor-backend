@@ -62,9 +62,6 @@ class Receipt
         $this->visualId = dechex($currentTimeInMilliseconds);
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): ?User
     {
         return $this->user;

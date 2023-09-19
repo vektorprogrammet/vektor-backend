@@ -28,8 +28,8 @@ class SchoolAdminController extends AbstractController
     public function showSpecificSchool(School $school): Response
     {
         // This prevents admins to see other departments' schools
-        if (!$this->isGranted(Roles::TEAM_LEADER) &&
-            !$school->belongsToDepartment($this->getUser()->getDepartment())
+        if (!$this->isGranted(Roles::TEAM_LEADER)
+            && !$school->belongsToDepartment($this->getUser()->getDepartment())
         ) {
             throw $this->createAccessDeniedException();
         }
@@ -237,6 +237,7 @@ class SchoolAdminController extends AbstractController
 
             return new JsonResponse($response);
         }
+
         // Send a response to ajax
         return new JsonResponse($response);
     }
@@ -259,6 +260,7 @@ class SchoolAdminController extends AbstractController
 
             return new JsonResponse($response);
         }
+
         // Send a response to ajax
         return new JsonResponse($response);
     }

@@ -85,8 +85,8 @@ class UserController extends AbstractController
                 if ($sh->getDay() !== $activeHistory->getDay()) {
                     continue;
                 }
-                if ($activeHistory->activeInGroup(1) && $sh->activeInGroup(1) ||
-                    $activeHistory->activeInGroup(2) && $sh->activeInGroup(2)) {
+                if ($activeHistory->activeInGroup(1) && $sh->activeInGroup(1)
+                    || $activeHistory->activeInGroup(2) && $sh->activeInGroup(2)) {
                     $partners[] = $sh;
                     ++$partnerCount;
                 }

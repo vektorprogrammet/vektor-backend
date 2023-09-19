@@ -45,9 +45,9 @@ class RoleManager
     public function canChangeToRole(string $role): bool
     {
         return
-            $role !== Roles::ADMIN &&
-            $role !== Roles::ALIAS_ADMIN &&
-            $this->isValidRole($role)
+            $role !== Roles::ADMIN
+            && $role !== Roles::ALIAS_ADMIN
+            && $this->isValidRole($role)
         ;
     }
 
@@ -74,9 +74,9 @@ class RoleManager
         // Can't create admins
         // Only team leaders and admins can create users with higher permissions than ASSISTANT
         return
-            $role !== Roles::ADMIN &&
-            !(!$this->authorizationChecker->isGranted(Roles::TEAM_LEADER) &&
-                $role !== Roles::ASSISTANT)
+            $role !== Roles::ADMIN
+            && !(!$this->authorizationChecker->isGranted(Roles::TEAM_LEADER)
+                && $role !== Roles::ASSISTANT)
         ;
     }
 
@@ -87,8 +87,8 @@ class RoleManager
         $tryingToChangeAdmin = $this->userIsGranted($user, Roles::ADMIN);
 
         return
-            ($loggedInAsAdmin || !$tryingToChangeAdmin) &&
-            $this->canChangeToRole($role);
+            ($loggedInAsAdmin || !$tryingToChangeAdmin)
+            && $this->canChangeToRole($role);
     }
 
     public function userIsGranted(User $user, string $role): bool

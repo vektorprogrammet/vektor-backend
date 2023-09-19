@@ -121,6 +121,7 @@ class UserAdminController extends AbstractController
         } else {
             throw $this->createAccessDeniedException();
         }
+
         // Redirect to useradmin page, set department to that of the deleted user
         return $this->redirectToRoute('useradmin_filter_users_by_department', ['id' => $user->getDepartment()->getId()]);
     }

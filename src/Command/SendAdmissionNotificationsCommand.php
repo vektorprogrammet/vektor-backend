@@ -12,9 +12,6 @@ class SendAdmissionNotificationsCommand extends Command
     // TODO: Use dependency-injection for dependencies
     private AdmissionNotifier $notifier;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
