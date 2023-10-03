@@ -3,10 +3,10 @@
 namespace App\Controller\Api;
 
 use App\Core\Application\UseCase\FieldOfStudyUseCase;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Attributes as OA;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[OA\Tag(name: 'Field of study', description: 'Field of study API endpoints')]
 #[Route('/api/field-of-study')]

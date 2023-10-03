@@ -2,11 +2,9 @@
 
 namespace App\Core\Application\DTO;
 
-
 use App\Core\Domain\Entity\Department;
-use JsonSerializable;
 
-class DepartmentDTO implements JsonSerializable
+class DepartmentDTO implements \JsonSerializable
 {
     private ?int $id = null;
     private ?string $name = null;
@@ -36,7 +34,7 @@ class DepartmentDTO implements JsonSerializable
             $department->getCity()
         );
     }
-    
+
     public function toEntity(): Department
     {
         return new Department(
@@ -87,8 +85,7 @@ class DepartmentDTO implements JsonSerializable
             'shortName' => $this->shortName,
             'email' => $this->email,
             'logoPath' => $this->logoPath,
-            'city' => $this->city
+            'city' => $this->city,
         ];
     }
-
 }

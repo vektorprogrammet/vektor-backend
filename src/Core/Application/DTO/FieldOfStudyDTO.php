@@ -3,9 +3,8 @@
 namespace App\Core\Application\DTO;
 
 use App\Core\Domain\Entity\FieldOfStudy;
-use JsonSerializable;
 
-class FieldOfStudyDTO implements JsonSerializable
+class FieldOfStudyDTO implements \JsonSerializable
 {
     private ?int $id = null;
     private ?string $name = null;
@@ -32,9 +31,10 @@ class FieldOfStudyDTO implements JsonSerializable
 
     public function toEntity(): FieldOfStudy
     {
-        $fieldOfStudy = new  FieldOfStudy();
+        $fieldOfStudy = new FieldOfStudy();
         $fieldOfStudy->setName($this->name);
         $fieldOfStudy->setShortName($this->shortName);
+
         return $fieldOfStudy;
     }
 
@@ -44,8 +44,7 @@ class FieldOfStudyDTO implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'shortName' => $this->shortName,
-            'department' => $this->department
+            'department' => $this->department,
         ];
     }
-
 }

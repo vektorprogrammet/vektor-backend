@@ -3,12 +3,10 @@
 namespace App\Controller\Api;
 
 use App\Core\Application\UseCase\SemesterUseCase;
-use App\Core\Application\UseCase\Interfaces\Persistence\ISemesterRepository;
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Attributes as OA;
-use Psr\Log\LoggerInterface;
 
 #[OA\Tag(name: 'Semester', description: 'Semester API endpoints')]
 #[Route('/api/semester')]
@@ -19,7 +17,7 @@ class SemesterApiController extends AbstractController
     }
 
     /**
-     * Get the current active semester
+     * Get the current active semester.
      */
     #[Route('/current', name: 'api_semester_current', methods: ['GET'])]
     public function getCurrentSemester(): JsonResponse
@@ -28,7 +26,7 @@ class SemesterApiController extends AbstractController
     }
 
     /**
-     * List all semesters
+     * List all semesters.
      */
     #[Route('/all', name: 'api_semester_all', methods: ['GET'])]
     public function getAllSemesters(): JsonResponse

@@ -2,8 +2,8 @@
 
 namespace App\Core\Infrastructure\Persistence;
 
-use App\Core\Domain\Entity\AdmissionPeriod;
 use App\Core\Application\UseCase\Interfaces\Persistence\IAdmissionPeriodRepository;
+use App\Core\Domain\Entity\AdmissionPeriod;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,7 +22,8 @@ class AdmissionPeriodRepository extends ServiceEntityRepository implements IAdmi
     public function findActiveByDepartmentId(int $departmentId): ?AdmissionPeriod
     {
         $now = new \DateTime();
-        //Find one by where start date is less than now and end date is greater than now
+
+        // Find one by where start date is less than now and end date is greater than now
         return $this->createQueryBuilder('admissionPeriod')
             ->andWhere('admissionPeriod.department = :departmentId')
             ->andWhere('admissionPeriod.startDate <= :now')

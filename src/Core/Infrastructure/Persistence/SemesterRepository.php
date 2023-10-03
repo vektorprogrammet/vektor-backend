@@ -2,15 +2,14 @@
 
 namespace App\Core\Infrastructure\Persistence;
 
-use App\Core\Domain\Entity\Semester;
 use App\Core\Application\UseCase\Interfaces\Persistence\ISemesterRepository;
 use App\Core\Application\Util\SemesterUtil;
-use DateTime;
+use App\Core\Domain\Entity\Semester;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class SemesterRepository extends ServiceEntityRepository implements ISemesterRepository {
-
+class SemesterRepository extends ServiceEntityRepository implements ISemesterRepository
+{
     public function __construct(ManagerRegistry $registry, private SemesterUtil $semesterUtil)
     {
         parent::__construct($registry, Semester::class);
@@ -21,7 +20,7 @@ class SemesterRepository extends ServiceEntityRepository implements ISemesterRep
         return $this->find($id);
     }
 
-    public function findSemesterByDate(DateTime $date): ?Semester
+    public function findSemesterByDate(\DateTime $date): ?Semester
     {
         return $this->createQueryBuilder('Semester')
             ->select('Semester')
@@ -46,5 +45,4 @@ class SemesterRepository extends ServiceEntityRepository implements ISemesterRep
         $this->getEntityManager()->remove($semester);
         $this->getEntityManager()->flush();
     }
-
 }

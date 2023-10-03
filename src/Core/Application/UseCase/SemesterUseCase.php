@@ -4,7 +4,6 @@ namespace App\Core\Application\UseCase;
 
 use App\Core\Application\DTO\SemesterDTO;
 use App\Core\Application\UseCase\Interfaces\Persistence\ISemesterRepository;
-use DateTime;
 use Psr\Log\LoggerInterface;
 
 class SemesterUseCase
@@ -15,12 +14,14 @@ class SemesterUseCase
 
     public function getCurrentSemester(): ?SemesterDTO
     {
-        $date_now = new DateTime();
+        $date_now = new \DateTime();
         $semester = $this->semesterRepository->findSemesterByDate($date_now);
         if ($semester === null) {
-            $this->logger->warning("[{method}] Trying to get current semester, but it does not exist", ['method' => __METHOD__]);
+            $this->logger->warning('[{method}] Trying to get current semester, but it does not exist', ['method' => __METHOD__]);
+
             return null;
         }
+
         return SemesterDTO::createFromEntity($semester);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Core\Domain\Entity;
 
 use App\Core\Domain\Interfaces\IPeriod;
@@ -122,10 +123,10 @@ class AdmissionPeriod implements IPeriod
 
     public function shouldSendInfoMeetingNotifications(): bool
     {
-        return $this->infoMeeting !== null &&
-            $this->infoMeeting->getDate() !== null &&
-            $this->infoMeeting->isShowOnPage() &&
-            TimeUtil::dateTimeIsToday($this->infoMeeting->getDate()) &&
-            TimeUtil::dateTimeIsInTheFuture($this->infoMeeting->getDate());
+        return $this->infoMeeting !== null
+            && $this->infoMeeting->getDate() !== null
+            && $this->infoMeeting->isShowOnPage()
+            && TimeUtil::dateTimeIsToday($this->infoMeeting->getDate())
+            && TimeUtil::dateTimeIsInTheFuture($this->infoMeeting->getDate());
     }
 }

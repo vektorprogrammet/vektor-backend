@@ -136,8 +136,8 @@ class Semester implements IPeriod
             return true;
         }
         if ($this->year === $semester->getYear()) {
-            return !($this->semesterTime === 'Høst' &&
-                $semester->getSemesterTime() === 'Vår');
+            return !($this->semesterTime === 'Høst'
+                && $semester->getSemesterTime() === 'Vår');
         }
 
         return $this->year < $semester->getYear();
@@ -155,8 +155,8 @@ class Semester implements IPeriod
             return true;
         }
         if ($this->year === $semester->getYear()) {
-            return !($this->semesterTime === 'Vår' &&
-                $semester->getSemesterTime() === 'Høst');
+            return !($this->semesterTime === 'Vår'
+                && $semester->getSemesterTime() === 'Høst');
         }
 
         return $this->year > $semester->getYear();
