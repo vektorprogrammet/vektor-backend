@@ -2,13 +2,12 @@
 
 namespace App\Core\Domain\Entity;
 
-use App\Repository\ReceiptRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'receipt')]
-#[ORM\Entity(repositoryClass: ReceiptRepository::class)]
+#[ORM\Entity]
 class Receipt
 {
     public const STATUS_PENDING = 'pending';

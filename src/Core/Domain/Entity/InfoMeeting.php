@@ -2,7 +2,6 @@
 
 namespace App\Core\Domain\Entity;
 
-use App\Repository\InfoMeetingRepository;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[CustomAssert\InfoMeeting]
 #[ORM\Table(name: 'infomeeting')]
-#[ORM\Entity(repositoryClass: InfoMeetingRepository::class)]
+#[ORM\Entity]
 class InfoMeeting
 {
     #[ORM\Column(type: Types::INTEGER)]

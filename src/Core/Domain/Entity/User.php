@@ -2,8 +2,6 @@
 
 namespace App\Core\Domain\Entity;
 
-use App\Repository\UserRepository;
-use App\Role\Roles;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'user')]
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Entity]
 #[UniqueEntity(fields: ['email'], message: 'Denne Eposten er allerede i bruk.', groups: ['create_user', 'edit_user'])]
 #[UniqueEntity(fields: ['user_name'], message: 'Dette brukernavnet er allerede i bruk.', groups: ['create_user', 'username', 'edit_user'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -96,19 +94,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ExecutiveBoardMembership::class)]
     private $executiveBoardMemberships;
 
-    #[ORM\OneToMany(mappedBy: 'interviewer', targetEntity: Interview::class)]
-    private Collection $interviews;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Receipt::class)]
-    private Collection $receipts;
-
     public function __construct()
     {
         $this->roles = [];
-        $this->interviews = new ArrayCollection();
         $this->isActive = true;
         $this->picture_path = 'images/defaultProfile.png';
-        $this->receipts = new ArrayCollection();
         $this->assistantHistories = new ArrayCollection();
     }
 
@@ -295,7 +285,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeRole(string $roles): void
     {
-        $this->roles->removeElement($roles);
+        // remove role from array
+        $this->roles = array_diff($this->roles, [$roles]);
     }
 
     public function setNewUserCode(string $newUserCode): self
@@ -408,76 +399,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->teamMemberships;
     }
 
-    public function getInterviews(): array
-    {
-        return $this->interviews->toArray();
-    }
-
-    public function getReceipts(): Collection
-    {
-        return $this->receipts;
-    }
-
-    public function addReceipt(Receipt $receipt): void
-    {
-        $this->receipts->add($receipt);
-    }
-
-    public function hasPendingReceipts(): bool
-    {
-        $numberOfPendingReceipts = $this->getNumberOfPendingReceipts();
-
-        return $numberOfPendingReceipts !== 0;
-    }
-
-    public function getNumberOfPendingReceipts(): int
-    {
-        $num = 0;
-        foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_PENDING) {
-                ++$num;
-            }
-        }
-
-        return $num;
-    }
-
-    public function getTotalPendingReceiptSum(): float
-    {
-        $totalSum = 0.0;
-        foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_PENDING) {
-                $totalSum += $receipt->getSum();
-            }
-        }
-
-        return $totalSum;
-    }
-
-    public function getTotalRefundedReceiptSum(): float
-    {
-        $totalSum = 0.0;
-        foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_REFUNDED) {
-                $totalSum += $receipt->getSum();
-            }
-        }
-
-        return $totalSum;
-    }
-
-    public function getTotalRejectedReceiptSum(): float
-    {
-        $totalSum = 0.0;
-        foreach ($this->receipts as $receipt) {
-            if ($receipt->getStatus() === Receipt::STATUS_REJECTED) {
-                $totalSum += $receipt->getSum();
-            }
-        }
-
-        return $totalSum;
-    }
-
     public function getCompanyEmail(): ?string
     {
         return $this->companyEmail;
@@ -514,31 +435,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return TeamMembership[]
-     */
-    public function getActiveTeamMemberships()
-    {
-        $activeTeamMemberships = [];
-        if ($this->teamMemberships !== null) {
-            foreach ($this->teamMemberships as $teamMembership) {
-                if ($teamMembership->isActive()) {
-                    $activeTeamMemberships[] = $teamMembership;
-                }
-            }
-        }
-
-        return $activeTeamMemberships;
-    }
-
-    /**
-     * @return TeamMembershipInterface[]
-     */
-    public function getActiveMemberships()
-    {
-        return array_merge($this->getActiveTeamMemberships(), $this->getActiveExecutiveBoardMemberships());
-    }
-
-    /**
      * @param TeamMembershipInterface[] $memberships
      */
     public function setMemberships($memberships): self
@@ -558,16 +454,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->executiveBoardMemberships = $boardMemberships;
 
         return $this;
-    }
-
-    public function isAdmin(): bool
-    {
-        foreach ($this->roles as $role) {
-            if ($role->getRole() === Roles::ADMIN) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

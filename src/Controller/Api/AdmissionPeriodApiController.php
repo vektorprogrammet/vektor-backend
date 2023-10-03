@@ -10,14 +10,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[OA\Tag(name: 'Admission Period', description: 'Admission Period API endpoints')]
-#[Route('/api/admission-period')]
+#[Route('/api')]
 class AdmissionPeriodApiController extends AbstractController
 {
     public function __construct(private AdmissionPeriodUseCase $admissionPeriodUseCase)
     {
     }
 
-    #[Route('/current/department/{departmentId}', name: 'api_admission_period_current', methods: ['GET'])]
+    #[Route('/department/{departmentId}/admission-period/current', name: 'api_admission_period_current', methods: ['GET'])]
     public function getCurrentAdmissionPeriod(int $departmentId): JsonResponse
     {
         $department = new DepartmentDTO($departmentId, null, null, null, null, null);
@@ -25,7 +25,7 @@ class AdmissionPeriodApiController extends AbstractController
         return new JsonResponse($this->admissionPeriodUseCase->getCurrentAdmissionPeriod($department));
     }
 
-    #[Route('/all', name: 'api_admission_period_all', methods: ['GET'])]
+    #[Route('/admission-period/all', name: 'api_admission_period_all', methods: ['GET'])]
     public function getAllAdmissionPeriods(): JsonResponse
     {
         return new JsonResponse($this->admissionPeriodUseCase->getAllAdmissionPeriods());

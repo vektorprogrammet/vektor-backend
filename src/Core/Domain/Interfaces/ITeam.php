@@ -26,14 +26,4 @@ interface ITeam
      * @return TeamMembershipInterface
      */
     public function getTeamMemberships();
-
-    /**
-     * @return TeamMembershipInterface
-     */
-    public function getActiveTeamMemberships();
-
-    /**
-     * @return User
-     */
-    public function getActiveUsers();
 }

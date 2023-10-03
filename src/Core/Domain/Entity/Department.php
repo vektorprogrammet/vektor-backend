@@ -50,11 +50,10 @@ class Department
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $slackChannel = null;
 
-    /*
     #[ORM\JoinTable(name: 'department_school')]
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: School::class)]
     #[ORM\JoinColumn(onDelete: 'cascade')]
-    protected Collection $schools;*/
+    protected Collection $schools;
 
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: FieldOfStudy::class, cascade: ['remove'])]
     private Collection $fieldOfStudy;
@@ -63,9 +62,8 @@ class Department
     #[ORM\OrderBy(['startDate' => 'DESC'])]
     private Collection $admissionPeriods;
 
-    /*
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: Team::class, cascade: ['remove'])]
-    private Collection $teams;*/
+    private Collection $teams;
 
     #[ORM\Column(name: 'logo_path', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(min: 1, max: 255, maxMessage: '"Pathkanmaksvære')]
@@ -82,64 +80,6 @@ class Department
         $this->admissionPeriods = new ArrayCollection();
         $this->teams = new ArrayCollection();
         $this->active = true;
-    }
-
-    public function getCurrentAdmissionPeriod(): ?AdmissionPeriod
-    {
-        $now = new \DateTime();
-
-        /** @var AdmissionPeriod $admissionPeriod */
-        foreach ($this->admissionPeriods as $admissionPeriod) {
-            if ($now > $admissionPeriod->getSemester()->getStartDate() && $now < $admissionPeriod->getSemester()->getEndDate()) {
-                return $admissionPeriod;
-            }
-        }
-
-        return null;
-    }
-
-    public function getLatestAdmissionPeriod(): AdmissionPeriod
-    {
-        /** @var AdmissionPeriod[] $admissionPeriods */
-        $admissionPeriods = $this->getAdmissionPeriods()->toArray();
-
-        $latestAdmissionPeriod = current($admissionPeriods);
-
-        $now = new \DateTime();
-
-        foreach ($admissionPeriods as $admissionPeriod) {
-            if (
-                $admissionPeriod->getSemester()->getStartDate() < $now
-                && $admissionPeriod->getSemester()->getEndDate() > $latestAdmissionPeriod->getSemester()->getEndDate()
-            ) {
-                $latestAdmissionPeriod = $admissionPeriod;
-            }
-        }
-
-        return $latestAdmissionPeriod;
-    }
-
-    public function getCurrentOrLatestAdmissionPeriod(): ?AdmissionPeriod
-    {
-        if (null === $admissionPeriod = $this->getCurrentAdmissionPeriod()) {
-            $admissionPeriod = $this->getLatestAdmissionPeriod();
-        }
-
-        return $admissionPeriod;
-    }
-
-    public function activeAdmission(): bool
-    {
-        $admissionPeriod = $this->getCurrentAdmissionPeriod();
-        if (!$admissionPeriod) {
-            return false;
-        }
-
-        $start = $admissionPeriod->getStartDate();
-        $end = $admissionPeriod->getEndDate();
-        $now = new \DateTime();
-
-        return $start < $now && $now < $end;
     }
 
     public function getId(): ?int
@@ -295,15 +235,6 @@ class Department
         $this->longitude = $longitude;
 
         return $this;
-    }
-
-    // Used for unit testing
-    public function fromArray($data = []): void
-    {
-        foreach ($data as $property => $value) {
-            $method = "set{$property}";
-            $this->$method($value);
-        }
     }
 
     public function getSlackChannel(): ?string

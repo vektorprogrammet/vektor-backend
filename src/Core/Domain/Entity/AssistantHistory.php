@@ -149,13 +149,4 @@ class AssistantHistory
     {
         $this->day = $day;
     }
-
-    // Used for unit testing
-    public function fromArray($data = []): void
-    {
-        foreach ($data as $property => $value) {
-            $method = "set{$property}";
-            $this->$method($value);
-        }
-    }
 }

@@ -2,13 +2,11 @@
 
 namespace App\Core\Domain\Entity;
 
-use App\Repository\SchoolCapacityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'school_capacity')]
-#[ORM\Entity(repositoryClass: SchoolCapacityRepository::class)]
-#[ORM\HasLifecycleCallbacks]
+#[ORM\Entity]
 class SchoolCapacity
 {
     #[ORM\Id]

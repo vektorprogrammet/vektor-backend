@@ -2,9 +2,8 @@
 
 namespace App\Core\Domain\Entity;
 
-use App\Core\Domain\Interfaces\IHasDepartmentSemester;
 use App\Core\Domain\Interfaces\ITeam;
-use App\Entity\TeamInterest;
+use App\Entity\TeamMembership;
 use App\Validator\Constraints as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'team')]
-#[ORM\Entity(repositoryClass: TeamRepository::class)]
+#[ORM\Entity]
 #[UniqueEntity(fields: ['department', 'name'], message: 'Et team med dette navnet finnes allerede i avdelingen.')]
 class Team implements ITeam
 {
@@ -51,19 +50,8 @@ class Team implements ITeam
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $deadline = null;
 
-    /** Applications with team interest. */
-    #[ORM\ManyToMany(targetEntity: Application::class, mappedBy: 'potentialTeams')]
-    private Collection $potentialMembers;
-
-    /** TeamInterest entities not corresponding to any Application. */
-    #[ORM\ManyToMany(targetEntity: TeamInterest::class, mappedBy: 'potentialTeams')]
-    private Collection $potentialApplicants;
-
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private bool $active;
-
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamApplication::class)]
-    private Collection $applications;
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamMembership::class)]
     private Collection $teamMemberships;
@@ -71,10 +59,7 @@ class Team implements ITeam
     public function __construct()
     {
         $this->active = true;
-        $this->applications = new ArrayCollection();
         $this->teamMemberships = new ArrayCollection();
-        $this->potentialMembers = new ArrayCollection();
-        $this->potentialApplicants = new ArrayCollection();
     }
 
     public function isActive(): bool
@@ -138,15 +123,6 @@ class Team implements ITeam
         return $this->department;
     }
 
-    // Used for unit testing
-    public function fromArray($data = []): void
-    {
-        foreach ($data as $property => $value) {
-            $method = "set{$property}";
-            $this->$method($value);
-        }
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -203,81 +179,5 @@ class Team implements ITeam
     public function getTeamMemberships(): Collection
     {
         return $this->teamMemberships;
-    }
-
-    public function getActiveTeamMemberships(): array
-    {
-        $histories = [];
-
-        foreach ($this->teamMemberships->toArray() as $wh) {
-            $semester = $wh->getUser()->getDepartment()->getCurrentOrLatestAdmissionPeriod()->getSemester();
-            if ($semester !== null && $wh->isActiveInSemester($semester)) {
-                $histories[] = $wh;
-            }
-        }
-
-        return $histories;
-    }
-
-    public function getActiveUsers(): array
-    {
-        $activeUsers = [];
-
-        foreach ($this->getActiveTeamMemberships() as $activeTeamMembership) {
-            if (!in_array($activeTeamMembership->getUser(), $activeUsers, true)) {
-                $activeUsers[] = $activeTeamMembership->getUser();
-            }
-        }
-
-        return $activeUsers;
-    }
-
-    public function getPotentialMembers(): Collection
-    {
-        return $this->potentialMembers;
-    }
-
-    public function setPotentialMembers(ArrayCollection $potentialMembers): void
-    {
-        $this->potentialMembers = $potentialMembers;
-    }
-
-    public function getPotentialApplicants(): Collection
-    {
-        return $this->potentialApplicants;
-    }
-
-    public function setPotentialApplicants(ArrayCollection $potentialApplicants): self
-    {
-        $this->potentialApplicants = $potentialApplicants;
-
-        return $this;
-    }
-
-    public function getNumberOfPotentialMembersAndApplicantsInSemester($semester): int
-    {
-        $array = array_merge($this->potentialApplicants->toArray(), $this->potentialMembers->toArray());
-        $array = array_filter($array, function (IHasDepartmentSemester $a) use ($semester) {
-            return $a->getSemester() === $semester;
-        });
-
-        return count($array);
-    }
-
-    public function getApplications(): Collection
-    {
-        return $this->applications;
-    }
-
-    public function setApplications(TeamApplication $applications): void
-    {
-        $this->applications->add($applications);
-    }
-
-    public function getAcceptApplicationAndDeadline(): bool
-    {
-        $now = new \DateTime();
-
-        return ($this->acceptApplication && $now < $this->deadline) || ($this->acceptApplication && $this->deadline === null);
     }
 }

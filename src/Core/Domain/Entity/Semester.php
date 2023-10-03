@@ -3,14 +3,13 @@
 namespace App\Core\Domain\Entity;
 
 use App\Core\Domain\Interfaces\IPeriod;
-use App\Repository\SemesterRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'semester')]
-#[ORM\Entity(repositoryClass: SemesterRepository::class)]
+#[ORM\Entity]
 class Semester implements IPeriod
 {
     #[ORM\Column(type: Types::INTEGER)]
@@ -56,15 +55,6 @@ class Semester implements IPeriod
         $endMonth = $this->semesterTime === 'Vår' ? '07' : '12';
 
         return date_create($this->year . '-' . $endMonth . '-31 23:59:59');
-    }
-
-    // Used for unit testing
-    public function fromArray($data = []): void
-    {
-        foreach ($data as $property => $value) {
-            $method = "set{$property}";
-            $this->$method($value);
-        }
     }
 
     public function getYear(): ?string
