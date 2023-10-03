@@ -3,16 +3,14 @@
 namespace App\Controller\Api;
 
 use App\Core\Application\DTO\DepartmentDTO;
-use App\Core\Application\Service\AuthorizationService;
 use App\Core\Application\UseCase\DepartmentUseCase;
-use App\Core\Application\UseCase\Interfaces\Persistence\IDepartmentRepository;
 use App\Core\Domain\Entity\User;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use OpenApi\Attributes as OA;
-use Psr\Log\LoggerInterface;
 
 #[OA\Tag(name: 'Department', description: 'Department API endpoints')]
 #[Route('/api/department')]
@@ -26,6 +24,7 @@ class DepartmentApiController extends AbstractController
     /**
      * Get all departments
      */
+    #[OA\Response(response: 200, description: 'Departments found', content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: DepartmentDTO::class))))]
     #[Route('/all', name: 'api_department_all', methods: ['GET'])]
     public function getAllDepartments(): JsonResponse
     {
@@ -35,6 +34,7 @@ class DepartmentApiController extends AbstractController
     /**
      * Get a department by id
      */
+    #[OA\Response(response: 200, description: 'Department found', content: new Model(type: DepartmentDTO::class))]
     #[Route('/{id}', name: 'api_department_by_id', methods: ['GET'])]
     public function getDepartmentById(int $id): JsonResponse
     {
@@ -44,7 +44,8 @@ class DepartmentApiController extends AbstractController
     /**
      * Create a department
      */
-    #[OA\RequestBody("", required: true, description: 'Department data')]
+    #[OA\RequestBody(content: new Model(type: DepartmentDTO::class), description: 'Department to create', required: true)]
+    #[OA\Response(response: 200, description: 'Department created', content: new Model(type: DepartmentDTO::class))]
     #[Route('/create', name: 'api_department_create', methods: ['POST'])]
     public function createDepartment(Request $request): JsonResponse
     {
@@ -68,8 +69,7 @@ class DepartmentApiController extends AbstractController
         if ($result === null) {
             return new JsonResponse(['message' => 'Could not create department'], 400);
         }
-        
+
         return new JsonResponse($result);
     }
-    
 }
