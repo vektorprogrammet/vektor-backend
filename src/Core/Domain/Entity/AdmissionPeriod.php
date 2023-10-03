@@ -3,8 +3,6 @@
 namespace App\Core\Domain\Entity;
 
 use App\Core\Domain\Interfaces\IPeriod;
-use App\Repository\AdmissionPeriodRepository;
-use App\Utils\TimeUtil;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * DepartmentSpecificSemester.
  */
 #[ORM\Table]
-#[ORM\Entity(repositoryClass: AdmissionPeriodRepository::class)]
+#[ORM\Entity]
 class AdmissionPeriod implements IPeriod
 {
     #[ORM\Column(name: 'id', type: Types::INTEGER)]
@@ -119,14 +117,5 @@ class AdmissionPeriod implements IPeriod
         $this->semester = $semester;
 
         return $this;
-    }
-
-    public function shouldSendInfoMeetingNotifications(): bool
-    {
-        return $this->infoMeeting !== null
-            && $this->infoMeeting->getDate() !== null
-            && $this->infoMeeting->isShowOnPage()
-            && TimeUtil::dateTimeIsToday($this->infoMeeting->getDate())
-            && TimeUtil::dateTimeIsInTheFuture($this->infoMeeting->getDate());
     }
 }

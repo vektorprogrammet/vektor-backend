@@ -2,13 +2,12 @@
 
 namespace App\Core\Domain\Entity;
 
-use App\Repository\TeamApplicationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'team_application')]
-#[ORM\Entity(repositoryClass: TeamApplicationRepository::class)]
+#[ORM\Entity]
 class TeamApplication
 {
     #[ORM\Id]

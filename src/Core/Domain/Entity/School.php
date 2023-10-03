@@ -2,7 +2,6 @@
 
 namespace App\Core\Domain\Entity;
 
-use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -10,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'school')]
-#[ORM\Entity(repositoryClass: SchoolRepository::class)]
+#[ORM\Entity]
 class School
 {
     #[ORM\Id]
@@ -133,15 +132,6 @@ class School
     public function __toString()
     {
         return $this->getName();
-    }
-
-    // Used for unit testing
-    public function fromArray($data = []): void
-    {
-        foreach ($data as $property => $value) {
-            $method = "set{$property}";
-            $this->$method($value);
-        }
     }
 
     public function isInternational(): ?bool
