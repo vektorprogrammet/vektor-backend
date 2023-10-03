@@ -1,14 +1,13 @@
 <?php
+
 namespace App\Core\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 #[ORM\Table(name: 'department')]
 #[ORM\Entity]
@@ -110,8 +109,8 @@ class Department
 
         foreach ($admissionPeriods as $admissionPeriod) {
             if (
-                $admissionPeriod->getSemester()->getStartDate() < $now &&
-                $admissionPeriod->getSemester()->getEndDate() > $latestAdmissionPeriod->getSemester()->getEndDate()
+                $admissionPeriod->getSemester()->getStartDate() < $now
+                && $admissionPeriod->getSemester()->getEndDate() > $latestAdmissionPeriod->getSemester()->getEndDate()
             ) {
                 $latestAdmissionPeriod = $admissionPeriod;
             }
@@ -345,7 +344,7 @@ class Department
 
     public function isValid(): bool
     {
-        return $this->name !== null 
+        return $this->name !== null
             && $this->shortName !== null
             && $this->email !== null
             && $this->city !== null;

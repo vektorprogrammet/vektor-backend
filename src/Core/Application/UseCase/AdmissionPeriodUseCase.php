@@ -18,8 +18,10 @@ class AdmissionPeriodUseCase
         $admissionPeriod = $this->admissionPeriodRepository->findActiveByDepartmentId($department->getId());
         if ($admissionPeriod === null) {
             $this->logger->info("[{method}] Trying to get current admission period for department with id {$department->getId()}, but it does not exist", ['method' => __METHOD__]);
+
             return null;
         }
+
         return AdmissionPeriodDTO::createFromEntity($admissionPeriod);
     }
 
@@ -30,6 +32,7 @@ class AdmissionPeriodUseCase
         foreach ($admissionPeriods as $admissionPeriod) {
             $admissionPeriodDTOs[] = AdmissionPeriodDTO::createFromEntity($admissionPeriod);
         }
+
         return $admissionPeriodDTOs;
     }
 }

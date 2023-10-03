@@ -2,9 +2,9 @@
 
 namespace App\Tests\Core\Infrastructure\Persistence;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Doctrine\ORM\EntityManager;
 use App\Core\Domain\Entity\Semester;
+use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class SemesterRepositoryTest extends KernelTestCase
 {
@@ -27,7 +27,6 @@ class SemesterRepositoryTest extends KernelTestCase
 
         $this->assertCount(5, $semesters);
     }
-
 
     protected function tearDown(): void
     {

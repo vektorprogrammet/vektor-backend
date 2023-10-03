@@ -8,12 +8,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class FieldOfStudyRepository extends ServiceEntityRepository implements IFieldOfStudyRepository
 {
-
     public function __construct(\Doctrine\Persistence\ManagerRegistry $registry)
     {
         parent::__construct($registry, FieldOfStudy::class);
     }
-
 
     public function findByDepartmentId(int $departmentId): array
     {

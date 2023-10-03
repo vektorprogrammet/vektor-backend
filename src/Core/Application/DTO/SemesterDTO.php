@@ -3,9 +3,8 @@
 namespace App\Core\Application\DTO;
 
 use App\Core\Domain\Entity\Semester;
-use JsonSerializable;
 
-class SemesterDTO implements JsonSerializable
+class SemesterDTO implements \JsonSerializable
 {
     private ?int $id = null;
     private ?string $semesterTime = null;
@@ -74,7 +73,7 @@ class SemesterDTO implements JsonSerializable
             'year' => $this->year,
             'name' => $this->name,
             'startDate' => $this->startDate,
-            'endDate' => $this->endDate
+            'endDate' => $this->endDate,
         ];
     }
 }
