@@ -21,7 +21,7 @@
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "google/apiclient": "^2.12",
-        "helios-ag/fm-elfinder-bundle": "^12.2",
+        "helios-ag/fm-elfinder-bundle": "^12.3",
         "liip/imagine-bundle": "^2.10",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
