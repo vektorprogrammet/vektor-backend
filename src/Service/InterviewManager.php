@@ -13,6 +13,9 @@ use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -74,7 +77,7 @@ class InterviewManager
         return $interview;
     }
 
-    public function assignInterviewerToApplication(User $interviewer, Application $application)
+    public function assignInterviewerToApplication(User $interviewer, Application $application): void
     {
         $interview = $application->getInterview();
         if (!$interview) {
@@ -86,32 +89,37 @@ class InterviewManager
         $interview->setInterviewer($interviewer);
     }
 
-    public function sendScheduleEmail(Interview $interview, array $data)
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function sendScheduleEmail(Interview $interview, array $data): void
     {
-        $message = (new \Swift_Message())
-            ->setSubject('Intervju for vektorprogrammet')
-            ->setTo($data['to'])
-            ->setReplyTo($data['from'])
-            ->setBody(
-                $this->twig->render(
-                    'interview/email.html.twig',
-                    ['message' => $data['message'],
-                        'datetime' => $data['datetime'],
-                        'room' => $data['room'],
-                        'campus' => $data['campus'],
-                        'mapLink' => $data['mapLink'],
-                        'fromName' => $interview->getInterviewer()->getFirstName() . ' ' . $interview->getInterviewer()->getLastName(),
-                        'fromMail' => $data['from'],
-                        'fromPhone' => $interview->getInterviewer()->getPhone(),
-                        'responseCode' => $interview->getResponseCode(),
-                    ]
-                ),
-                'text/html'
+        $message = (new TemplatedEmail())
+            ->subject('Intervju for vektorprogrammet')
+            ->to($data['to'])
+            ->replyTo($data['from'])
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+            ->htmlTemplate('interview/email.html.twig')
+            ->context(
+                [
+                    'message' => $data['message'],
+                    'datetime' => $data['datetime'],
+                    'room' => $data['room'],
+                    'campus' => $data['campus'],
+                    'mapLink' => $data['mapLink'],
+                    'fromName' => $interview->getInterviewer()->getFirstName() . ' ' . $interview->getInterviewer()->getLastName(),
+                    'fromMail' => $data['from'],
+                    'fromPhone' => $interview->getInterviewer()->getPhone(),
+                    'responseCode' => $interview->getResponseCode(),
+                ]
             );
         $this->mailer->send($message);
     }
 
-    public function sendRescheduleEmail(Interview $interview)
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function sendRescheduleEmail(Interview $interview): void
     {
         $application = $this->em->getRepository(Application::class)->findOneBy(['interview' => $interview]);
         $user = $interview->getUser();
@@ -122,24 +130,24 @@ class InterviewManager
         }
 
         foreach ($interviewers as $interviewer) {
-            $message = (new \Swift_Message())
-                ->setSubject("[$user] Intervju: Ønske om ny tid")
-                ->setTo($interviewer->getEmail())
-                ->setBody(
-                    $this->twig->render(
-                        'interview/reschedule_email.html.twig',
-                        ['interview' => $interview,
-                            'application' => $application,
-                        ]
-                    ),
-                    'text/html'
-                );
+            $message = (new TemplatedEmail())
+                ->subject("[$user] Intervju: Ønske om ny tid")
+                ->to($interviewer->getEmail())
+                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+                ->htmlTemplate('interview/reschedule_email.html.twig')
+                ->context([
+                    'interview' => $interview,
+                    'application' => $application,
+                ]);
 
             $this->mailer->send($message);
         }
     }
 
-    public function sendCancelEmail(Interview $interview)
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function sendCancelEmail(Interview $interview): void
     {
         $user = $interview->getUser();
 
@@ -151,23 +159,23 @@ class InterviewManager
 
         // Send mail to interviewer and co-interviewer
         foreach ($interviewers as $interviewer) {
-            $message = (new \Swift_Message())
-                ->setSubject("[$user] Intervju: Kansellert")
-                ->setTo($interviewer->getEmail())
-                ->setBody(
-                    $this->twig->render(
-                        'interview/cancel_email.html.twig',
-                        ['interview' => $interview,
-                        ]
-                    ),
-                    'text/html'
-                );
+            $message = (new TemplatedEmail())
+                ->subject("[$user] Intervju: Kansellert")
+                ->to($interviewer->getEmail())
+                ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+                ->htmlTemplate('interview/cancel_email.html.twig')
+                ->context([
+                    'interview' => $interview,
+                ]);
 
             $this->mailer->send($message);
         }
     }
 
-    public function sendInterviewScheduleToInterviewer(User $interviewer)
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function sendInterviewScheduleToInterviewer(User $interviewer): void
     {
         $interviews = $this->em->getRepository(Interview::class)->findUncompletedInterviewsByInterviewerInCurrentSemester($interviewer);
 
@@ -189,24 +197,20 @@ class InterviewManager
             return;
         }
 
-        $message = (new \Swift_Message())
-             ->setSubject('Dine intervjuer dette semesteret')
-             ->setTo($interviewer->getEmail())
-             ->setBody(
-                 $this->twig->render(
-                     'interview/schedule_of_interviews_email.html.twig',
-                     [
-                         'interviews' => $interviews,
-                         'interviewer' => $interviewer,
-                     ]
-                 ),
-                 'text/html'
-             );
+        $message = (new TemplatedEmail())
+            ->subject('Dine intervjuer dette semesteret')
+            ->to($interviewer->getEmail())
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+            ->htmlTemplate('interview/schedule_of_interviews_email.html.twig')
+            ->context([
+                'interviews' => $interviews,
+                'interviewer' => $interviewer,
+            ]);
 
         $this->mailer->send($message);
     }
 
-    public function sendAcceptInterviewReminders()
+    public function sendAcceptInterviewReminders(): void
     {
         $interviews = $this->em->getRepository(Interview::class)->findAcceptInterviewNotificationRecipients(new \DateTime());
         /** @var Interview $interview */
@@ -220,20 +224,19 @@ class InterviewManager
         }
     }
 
-    private function sendAcceptInterviewReminderToInterviewee(Interview $interview)
+    /**
+     * @throws TransportExceptionInterface
+     */
+    private function sendAcceptInterviewReminderToInterviewee(Interview $interview): void
     {
-        $message = (new \Swift_Message())
-            ->setSubject('Påminnelse om intervju med Vektorprogrammet')
-            ->setTo($interview->getUser()->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'interview/accept_interview_reminder_email.html.twig',
-                    [
-                        'interview' => $interview,
-                    ]
-                ),
-                'text/html'
-            );
+        $message = (new TemplatedEmail())
+            ->subject('Påminnelse om intervju med Vektorprogrammet')
+            ->to($interview->getUser()->getEmail())
+            ->from('ikkesvar@vektorprogrammet.no')
+            ->htmlTemplate('interview/accept_interview_reminder_email.html.twig')
+            ->context([
+                'interview' => $interview,
+            ]);
 
         $this->mailer->send($message);
 

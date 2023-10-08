@@ -3,12 +3,13 @@
 namespace App\Google;
 
 use App\Mailer\MailingInterface;
+use Symfony\Component\Mime\Email;
 
 class Gmail extends GoogleService implements MailingInterface
 {
     private $defaultEmail;
 
-    public function send(\Swift_Message $message, bool $disableLogging = false)
+    public function send(Email $message, bool $disableLogging = false)
     {
         if ($this->disabled) {
             if (!$disableLogging) {
@@ -18,7 +19,7 @@ class Gmail extends GoogleService implements MailingInterface
             return;
         }
 
-        $message->setFrom([$this->defaultEmail => 'Vektorprogrammet']);
+        $message->from([$this->defaultEmail => 'Vektorprogrammet']);
 
         $client = $this->getClient();
         $service = new \Google_Service_Gmail($client);

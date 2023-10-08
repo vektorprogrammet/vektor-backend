@@ -11,8 +11,10 @@ use App\Service\SbsData;
 use App\Sms\Sms;
 use App\Sms\SmsSenderInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -55,26 +57,26 @@ class InterviewSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function sendInterviewReceipt(InterviewConductedEvent $event)
+    public function sendInterviewReceipt(InterviewConductedEvent $event): void
     {
         $application = $event->getApplication();
         $interviewer = $application->getInterview()->getInterviewer();
 
         // Send email to the interviewee with a summary of the interview
-        $emailMessage = (new \Swift_Message())
-            ->setSubject('Vektorprogrammet intervju')
-            ->setReplyTo([$interviewer->getDepartment()->getEmail() => 'Vektorprogrammet'])
-            ->setTo($application->getUser()->getEmail())
-            ->setReplyTo($interviewer->getEmail())
-            ->setBody($this->twig->render('interview/interview_summary_email.html.twig', [
+        $emailMessage = (new TemplatedEmail())
+            ->subject('Vektorprogrammet intervju')
+            ->replyTo(new Address($interviewer->getDepartment()->getEmail(), 'Vektorprogrammet'))
+            ->to($application->getUser()->getEmail())
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet.no'))
+            ->htmlTemplate('interview/interview_summary_email.html.twig')
+            ->context([
                 'application' => $application,
                 'interviewer' => $interviewer,
-            ]))
-            ->setContentType('text/html');
+            ]);
         $this->mailer->send($emailMessage);
     }
 
-    public function addFlashMessage(InterviewConductedEvent $event)
+    public function addFlashMessage(InterviewConductedEvent $event): void
     {
         $user = $event->getApplication()->getUser();
         $message = "Intervjuet med $user ble lagret. En kvittering med et sammendrag av
@@ -83,7 +85,7 @@ class InterviewSubscriber implements EventSubscriberInterface
         $this->requestStack->getSession()->getFlashBag()->add('success', $message);
     }
 
-    public function logEvent(InterviewConductedEvent $event)
+    public function logEvent(InterviewConductedEvent $event): void
     {
         $application = $event->getApplication();
 
@@ -94,7 +96,7 @@ class InterviewSubscriber implements EventSubscriberInterface
         $this->logger->info("$department: New interview with $interviewee registered");
     }
 
-    public function sendSlackNotifications(InterviewConductedEvent $event)
+    public function sendSlackNotifications(InterviewConductedEvent $event): void
     {
         $application = $event->getApplication();
 
@@ -116,12 +118,12 @@ class InterviewSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function sendScheduleEmail(InterviewEvent $event)
+    public function sendScheduleEmail(InterviewEvent $event): void
     {
         $this->interviewManager->sendScheduleEmail($event->getInterview(), $event->getData());
     }
 
-    public function sendScheduleSms(InterviewEvent $event)
+    public function sendScheduleSms(InterviewEvent $event): void
     {
         $interview = $event->getInterview();
         $data = $event->getData();
@@ -166,17 +168,18 @@ class InterviewSubscriber implements EventSubscriberInterface
         $this->smsSender->send($sms);
     }
 
-    public function sendCoAssignedEmail(InterviewEvent $event)
+    public function sendCoAssignedEmail(InterviewEvent $event): void
     {
         $interview = $event->getInterview();
-        $emailMessage = (new \Swift_Message())
-            ->setSubject('Vektorprogrammet intervju')
-            ->setFrom(['vektorbot@vektorprogrammet.no' => 'Vektorprogrammet'])
-            ->setTo($interview->getInterviewer()->getEmail())
-            ->setReplyTo($interview->getCoInterviewer()->getEmail())
-            ->setBody($this->twig->render('interview/co_interviewer_email.html.twig', [
+        $emailMessage = (new TemplatedEmail())
+            ->subject('Vektorprogrammet intervju')
+            ->from(new Address('vektorbot@vektorprogrammet.no', 'Vektorprogrammet'))
+            ->to($interview->getInterviewer()->getEmail())
+            ->replyTo($interview->getCoInterviewer()->getEmail())
+            ->htmlTemplate('interview/co_interviewer_email.html.twig')
+            ->context([
                 'interview' => $interview,
-            ]));
+            ]);
         $this->mailer->send($emailMessage);
     }
 }

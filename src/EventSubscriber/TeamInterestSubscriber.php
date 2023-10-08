@@ -4,8 +4,10 @@ namespace App\EventSubscriber;
 
 use App\Event\TeamInterestCreatedEvent;
 use App\Mailer\MailingInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class TeamInterestSubscriber implements EventSubscriberInterface
@@ -25,25 +27,25 @@ class TeamInterestSubscriber implements EventSubscriberInterface
         ]];
     }
 
-    public function sendConfirmationMail(TeamInterestCreatedEvent $event)
+    public function sendConfirmationMail(TeamInterestCreatedEvent $event): void
     {
         $teamInterest = $event->getTeamInterest();
         $department = $teamInterest->getDepartment();
         $fromEmail = $department->getEmail();
 
-        $receipt = (new \Swift_Message())
-            ->setSubject('Teaminteresse i Vektorprogrammet')
-            ->setFrom([$fromEmail => "Vektorprogrammet $department"])
-            ->setReplyTo($fromEmail)
-            ->setTo($teamInterest->getEmail())
-            ->setBody($this->twig->render('team_interest/team_interest_receipt.html.twig', [
+        $receipt = (new TemplatedEmail())
+            ->subject('Teaminteresse i Vektorprogrammet')
+            ->from(new Address($fromEmail, "Vektorprogrammet $department"))
+            ->replyTo($fromEmail)
+            ->to($teamInterest->getEmail())
+            ->htmlTemplate('team_interest/team_interest_receipt.html.twig')
+            ->context([
                 'teamInterest' => $teamInterest,
-            ]))
-            ->setContentType('text/html');
+            ]);
         $this->mailer->send($receipt);
     }
 
-    public function addFlashMessage()
+    public function addFlashMessage(): void
     {
         $this->requestStack
             ->getSession()
