@@ -16,7 +16,7 @@ class PasswordResetControllerTest extends BaseWebTestCase
      *
      * @return bool login successful
      */
-    private function loginSuccessful($password)
+    private function loginSuccessful($password): bool
     {
         self::ensureKernelShutdown();
         $client = self::createClient();
@@ -56,10 +56,9 @@ class PasswordResetControllerTest extends BaseWebTestCase
 
         // Assert email sent
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $mailCollector = $client->getProfile()->getCollector('swiftmailer');
-        $this->assertEquals(1, $mailCollector->getMessageCount());
-        $message = $mailCollector->getMessages()[0];
-        $body = $message->getBody();
+        $this->assertEmailCount(1);
+        $message = $this->getMailerMessage(0);
+        $body = $message->getHtmlBody();
 
         // Get reset link from email
         $start = mb_strpos((string) $body, '/resetpassord/');
@@ -71,8 +70,7 @@ class PasswordResetControllerTest extends BaseWebTestCase
 
     private function assertNoEmailSent($client)
     {
-        $mailCollector = $client->getProfile()->getCollector('swiftmailer');
-        $this->assertEquals(0, $mailCollector->getMessageCount());
+        $this->assertEmailCount(0);
     }
 
     public function testResetPasswordAction()
