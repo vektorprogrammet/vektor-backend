@@ -107,7 +107,7 @@
             "elfinder:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "php bin/console ckeditor:install",
+            "php bin/console ckeditor:install --tag=4.22.1",
             "php bin/console assets:install public"
         ],
         "post-update-cmd": [
