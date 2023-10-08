@@ -4,8 +4,10 @@ namespace App\EventSubscriber;
 
 use App\Event\TeamApplicationCreatedEvent;
 use App\Mailer\MailingInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class TeamApplicationSubscriber implements EventSubscriberInterface
@@ -33,7 +35,7 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function sendConfirmationMail(TeamApplicationCreatedEvent $event)
+    public function sendConfirmationMail(TeamApplicationCreatedEvent $event): void
     {
         $application = $event->getTeamApplication();
         $team = $application->getTeam();
@@ -42,18 +44,19 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
             $email = $team->getDepartment()->getEmail();
         }
 
-        $receipt = (new \Swift_Message())
-            ->setSubject('Søknad til ' . $team->getName() . ' mottatt')
-            ->setFrom([$email => $team->getName()])
-            ->setReplyTo($email)
-            ->setTo($application->getEmail())
-            ->setBody($this->twig->render('team/receipt.html.twig', [
+        $receipt = (new TemplatedEmail())
+            ->subject('Søknad til ' . $team->getName() . ' mottatt')
+            ->from(new Address($email, $team->getName()))
+            ->replyTo($email)
+            ->to($application->getEmail())
+            ->htmlTemplate('team/receipt.html.twig')
+            ->context([
                 'team' => $team,
-            ]));
+            ]);
         $this->mailer->send($receipt);
     }
 
-    public function sendApplicationToTeamMail(TeamApplicationCreatedEvent $event)
+    public function sendApplicationToTeamMail(TeamApplicationCreatedEvent $event): void
     {
         $application = $event->getTeamApplication();
         $team = $application->getTeam();
@@ -62,18 +65,19 @@ class TeamApplicationSubscriber implements EventSubscriberInterface
             $email = $team->getDepartment()->getEmail();
         }
 
-        $receipt = (new \Swift_Message())
-            ->setSubject('Ny søker til ' . $team->getName())
-            ->setFrom(['vektorprogrammet@vektorprogrammet.no' => 'Vektorprogrammet'])
-            ->setReplyTo($application->getEmail())
-            ->setTo($email)
-            ->setBody($this->twig->render('team/application_email.html.twig', [
+        $receipt = (new TemplatedEmail())
+            ->subject('Ny søker til ' . $team->getName())
+            ->from(new Address('vektorprogrammet@vektorprogrammet.no', 'Vektorprogrammet'))
+            ->replyTo($application->getEmail())
+            ->to($email)
+            ->htmlTemplate('team/application_email.html.twig')
+            ->context([
                 'application' => $application,
-            ]));
+            ]);
         $this->mailer->send($receipt);
     }
 
-    public function addFlashMessage()
+    public function addFlashMessage(): void
     {
         $this->requestStack->getSession()->getFlashBag()->add('success', 'Søknaden er mottatt.');
     }

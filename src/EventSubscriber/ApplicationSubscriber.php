@@ -6,6 +6,7 @@ use App\Event\ApplicationCreatedEvent;
 use App\Mailer\MailingInterface;
 use App\Service\AdmissionNotifier;
 use App\Service\UserRegistration;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Environment;
 
@@ -34,7 +35,7 @@ class ApplicationSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function createAdmissionSubscriber(ApplicationCreatedEvent $event)
+    public function createAdmissionSubscriber(ApplicationCreatedEvent $event): void
     {
         $application = $event->getApplication();
         $department = $application->getUser()->getDepartment();
@@ -46,7 +47,7 @@ class ApplicationSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function sendConfirmationMail(ApplicationCreatedEvent $event)
+    public function sendConfirmationMail(ApplicationCreatedEvent $event): void
     {
         $application = $event->getApplication();
         $user = $application->getUser();
@@ -61,20 +62,17 @@ class ApplicationSubscriber implements EventSubscriberInterface
         }
 
         // Send a confirmation email with a copy of the application
-        $emailMessage = (new \Swift_Message())
-            ->setSubject('Søknad - Vektorassistent')
-            ->setReplyTo($application->getDepartment()->getEmail())
-            ->setTo($application->getUser()->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    $template,
-                    [
-                        'application' => $application,
-                        'newUserCode' => $newUserCode,
-                    ]
-                ),
-                'text/html'
-            );
+        $emailMessage = (new TemplatedEmail())
+            ->subject('Søknad - Vektorassistent')
+            ->replyTo($application->getDepartment()->getEmail())
+            ->to($application->getUser()->getEmail())
+            ->from('vektorbot@vektorprogrammet.no')
+            ->htmlTemplate($template)
+            ->context([
+                'application' => $application,
+                'newUserCode' => $newUserCode,
+            ]);
+
         $this->mailer->send($emailMessage);
     }
 }
