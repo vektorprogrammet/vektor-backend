@@ -49,7 +49,7 @@
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "5.4.*",
         "symfony/security-bundle": "5.4.*",
-        "symfony/serializer": "5.4.*",
+        "symfony/serializer": "6.3.*",
         "symfony/slack-notifier": "5.4.*",
         "symfony/string": "5.4.*",
         "symfony/swiftmailer-bundle": "^3.5",
