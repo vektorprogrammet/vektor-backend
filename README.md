@@ -77,7 +77,7 @@ Load fixtures:
 Install:
 ```
 mkdir -p tools/php-cs-fixer
-composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer --dev
 ```
 
 Then Run:
@@ -86,7 +86,7 @@ Then Run:
 
 ## Tests
 **Run all tests:**\
-`php bin/phpunit
+`php bin/phpunit`
 
 **Run individual test:**\
 `php bin/phpunit "path/to/test/TestName.php"`
