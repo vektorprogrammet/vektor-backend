@@ -4,7 +4,7 @@ namespace App\Sms;
 
 class SmsSender implements SmsSenderInterface
 {
-    private \App\Sms\GatewayAPI|\App\Sms\SlackSms|null $smsSender = null;
+    private GatewayAPI|SlackSms|null $smsSender = null;
 
     public function __construct(string $env, GatewayAPI $gatewayAPI, SlackSms $slackSms)
     {

@@ -51,7 +51,6 @@
         "symfony/serializer": "5.4.*",
         "symfony/slack-notifier": "5.4.*",
         "symfony/string": "5.4.*",
-        "symfony/swiftmailer-bundle": "^3.5",
         "symfony/twig-bundle": "^5.4",
         "symfony/validator": "5.4.*",
         "symfony/web-link": "5.4.*",
