@@ -11,7 +11,6 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-openssl": "*",
-        "api-platform/core": "^2.7",
         "doctrine/annotations": "^1.14",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
