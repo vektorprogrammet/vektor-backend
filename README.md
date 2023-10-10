@@ -90,3 +90,12 @@ Then Run:
 
 **Run individual test:**\
 `php bin/phpunit "path/to/test/TestName.php"`
+
+
+## API
+To generate SSL keys:\
+`php bin/console lexik:jwt:generate-keypair`
+
+To get JWT token:\
+`curl -X POST -H "Content-Type: application/json" http://localhost:8000/api/login -d '{"username":"<username>","password":"<password>"}'`
+
