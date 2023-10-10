@@ -20,7 +20,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-
+            Core: 
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Core/Domain/Entity'
+                prefix: 'App\Core\Domain\Entity'
+                alias: Core
 when@test:
     doctrine:
         dbal:
