@@ -47,7 +47,7 @@
         "symfony/property-info": "5.4.*",
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "5.4.*",
-        "symfony/security-bundle": "5.4.*",
+        "symfony/security-bundle": "6.1.*",
         "symfony/serializer": "5.4.*",
         "symfony/slack-notifier": "5.4.*",
         "symfony/string": "5.4.*",
