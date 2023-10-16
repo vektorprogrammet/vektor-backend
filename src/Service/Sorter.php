@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Receipt;
+use App\Entity\TeamMembership;
 use App\Entity\TeamMembershipInterface;
 use App\Entity\User;
 
@@ -189,5 +190,18 @@ class Sorter
 
         // General compare
         return strcmp($position1, $position2);
+    }
+
+    /**
+     * @param TeamMembership[] $teamMemberships
+     */
+    public function sortTeamMembershipsByStartDate(array &$teamMemberships): void
+    {
+        usort($teamMemberships, $this->teamMembershipLatestStartDate(...));
+    }
+
+    protected function teamMembershipLatestStartDate(TeamMembership $a, TeamMembership $b): int
+    {
+        return $a->getStartSemester()->getStartDate() <=> $b->getStartSemester()->getStartDate();
     }
 }

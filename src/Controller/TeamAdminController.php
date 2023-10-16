@@ -10,6 +10,7 @@ use App\Event\TeamEvent;
 use App\Event\TeamMembershipEvent;
 use App\Form\Type\CreateTeamMembershipType;
 use App\Form\Type\CreateTeamType;
+use App\Service\Sorter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -124,8 +125,10 @@ class TeamAdminController extends AbstractController
             ->getRepository(TeamMembership::class)
             ->findInactiveTeamMembershipsByTeam($team);
 
-        usort($activeTeamMemberships, $this->sortTeamMembershipsByEndDate(...));
-        usort($inActiveTeamMemberships, $this->sortTeamMembershipsByEndDate(...));
+        $sorter = new Sorter();
+
+        $sorter->sortTeamMembershipsByStartDate($activeTeamMemberships);
+        $sorter->sortTeamMembershipsByStartDate($inActiveTeamMemberships);
 
         $user = $this->getUser();
         $currentUserTeamMembership = $this->doctrine
@@ -145,11 +148,6 @@ class TeamAdminController extends AbstractController
             'inActiveTeamMemberships' => $inActiveTeamMemberships,
             'isUserInTeam' => $isUserInTeam,
         ]);
-    }
-
-    private function sortTeamMembershipsByEndDate(TeamMembership $a, TeamMembership $b): bool
-    {
-        return $a->getStartSemester()->getStartDate() < $b->getStartSemester()->getStartDate();
     }
 
     public function updateTeam(Request $request, Team $team)

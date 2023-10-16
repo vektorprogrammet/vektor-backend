@@ -16,7 +16,7 @@ class SemesterRepositoryTest extends KernelTestCase
 
         $this->entityManager = $kernel->getContainer()
             ->get('doctrine')
-            ->getManager();
+            ->getManager('core');
     }
 
     public function testFindAll(): void

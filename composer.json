@@ -11,7 +11,6 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-openssl": "*",
-        "api-platform/core": "^2.7",
         "doctrine/annotations": "^1.14",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -110,7 +109,7 @@
             "elfinder:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "php bin/console ckeditor:install",
+            "php bin/console ckeditor:install --tag=4.22.1",
             "php bin/console assets:install public"
         ],
         "post-update-cmd": [
