@@ -23,5 +23,4 @@ class SchoolApiController extends AbstractController
     {
         return new JsonResponse($this->schoolUseCase->getSchoolsByDepartmentId($departmentId));
     }
-
 }

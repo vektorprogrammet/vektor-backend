@@ -2,16 +2,16 @@
 
 namespace App\Core\Infrastructure\Persistence;
 
+use App\Core\Application\UseCase\Interfaces\Persistence\ISchoolRepository;
 use App\Core\Domain\Entity\School;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use App\Core\Application\UseCase\Interfaces\Persistence\ISchoolRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 class SchoolRepository extends ServiceEntityRepository implements ISchoolRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry , School::class);
+        parent::__construct($registry, School::class);
     }
 
     public function findByDepartmentId(int $departmentId): array
