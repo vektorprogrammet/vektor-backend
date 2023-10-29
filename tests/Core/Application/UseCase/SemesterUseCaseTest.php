@@ -2,6 +2,7 @@
 
 namespace App\Tests\Core\Application\UseCase;
 
+use App\Core\Application\DTO\SemesterDTO;
 use App\Core\Application\UseCase\Interfaces\Persistence\ISemesterRepository;
 use App\Core\Application\UseCase\SemesterUseCase;
 use App\Core\Application\Util\SemesterUtil;
@@ -22,7 +23,8 @@ class SemesterUseCaseTest extends TestCase
                 new Semester(4, 2021, 2),
             ]);
 
-        $semesterUseCase = new SemesterUseCase($semesterRepository);
+        $logger = $this->createMock(\Psr\Log\LoggerInterface::class);
+        $semesterUseCase = new SemesterUseCase($semesterRepository, $logger);
         $semesters = $semesterUseCase->getAllSemesters();
         $this->assertCount(4, $semesters);
     }
@@ -36,8 +38,9 @@ class SemesterUseCaseTest extends TestCase
             ->method('findSemesterByDate')
             ->willReturn($repositorySemester);
 
-        $semesterUseCase = new SemesterUseCase($semesterRepository);
+        $logger = $this->createMock(\Psr\Log\LoggerInterface::class);
+        $semesterUseCase = new SemesterUseCase($semesterRepository, $logger);
         $semester = $semesterUseCase->getCurrentSemester();
-        $this->assertEquals($repositorySemester, $semester);
+        $this->assertEquals(SemesterDTO::createFromEntity($repositorySemester), $semester);
     }
 }
