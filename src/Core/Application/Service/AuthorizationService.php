@@ -6,11 +6,18 @@ use App\Core\Domain\Entity\User;
 
 class AuthorizationService
 {
+    private static $roleHierarchy = [
+        'ROLE_ANONYMOUS' => [],
+        'ROLE_USER' => ['ROLE_ANONYMOUS'],
+        'ROLE_TEAMLEADER' => ['ROLE_USER'],
+        'ROLE_ADMIN' => ['ROLE_TEAMLEADER'],
+    ];
+
     private static $rolesWithPermissions = [
         'ROLE_ANONYMOUS' => [], // This role is used for unauthenticated users
         'ROLE_USER' => [],
         'ROLE_TEAMLEADER' => ['Department::Create'],
-        'ROLE_ADMIN' => ['Department::Create', 'Department::Update', 'Department::Delete'],
+        'ROLE_ADMIN' => ['Department::Update', 'Department::Delete'],
     ];
 
     // This method checks if a user has a specific permission
@@ -36,8 +43,16 @@ class AuthorizationService
     // This method checks if a role has a specific permission
     private static function roleHasPermission(string $role, string $permissionToCheck): bool
     {
-        // Get the permissions associated with the role
         // Check if the role has the permission
-        return in_array($permissionToCheck, self::$rolesWithPermissions[$role], true);
+        if (in_array($permissionToCheck, self::$rolesWithPermissions[$role])) {
+            return true; // Role has the permission
+        }
+        // Check if any of the role's parents have the permission
+        foreach (self::$roleHierarchy[$role] as $parentRole) {
+            if (self::roleHasPermission($parentRole, $permissionToCheck)) {
+                return true; // Role has the permission
+            }
+        }
+        return false; // Role does not have the permission
     }
 }
