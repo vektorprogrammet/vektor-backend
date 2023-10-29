@@ -5,10 +5,11 @@ namespace App\Core\Infrastructure\Persistence;
 use App\Core\Application\UseCase\Interfaces\Persistence\IFieldOfStudyRepository;
 use App\Core\Domain\Entity\FieldOfStudy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 class FieldOfStudyRepository extends ServiceEntityRepository implements IFieldOfStudyRepository
 {
-    public function __construct(\Doctrine\Persistence\ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FieldOfStudy::class);
     }
