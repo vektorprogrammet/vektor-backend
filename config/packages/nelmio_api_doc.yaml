@@ -1,0 +1,52 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Vektor Backend
+            description: API for Vektorprogrammet
+            version: 0.1.0
+        components:
+            securitySchemes:
+                Bearer:
+                    type: apiKey
+                    description: 'Authorization: Bearer {jwt}'
+                    name: Authorization
+                    in: header
+                    scheme: Bearer
+        security:
+            - Bearer: []
+        paths:
+            /api/login:
+                post:
+                    tags:
+                        - Login
+                    summary: Login into the api.
+                    requestBody:
+                        content:
+                            application/json:
+                                schema:
+                                    properties:
+                                        username:
+                                            type: string
+                                        password:
+                                            type: string
+                                    type: object
+                    responses:
+                        '200':
+                            description: OK
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            token:
+                                                type: string
+                                            refresh_token:
+                                                type: string
+                        '401':
+                            description: Invalid credentials
+                        '400':
+                            description: Invalid JSON.
+                    security: []
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
