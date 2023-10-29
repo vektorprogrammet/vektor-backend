@@ -44,7 +44,7 @@ class AuthorizationService
     private static function roleHasPermission(string $role, string $permissionToCheck): bool
     {
         // Check if the role has the permission
-        if (in_array($permissionToCheck, self::$rolesWithPermissions[$role])) {
+        if (in_array($permissionToCheck, self::$rolesWithPermissions[$role], true)) {
             return true; // Role has the permission
         }
         // Check if any of the role's parents have the permission
@@ -53,6 +53,7 @@ class AuthorizationService
                 return true; // Role has the permission
             }
         }
+
         return false; // Role does not have the permission
     }
 }

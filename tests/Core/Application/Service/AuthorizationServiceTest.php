@@ -6,9 +6,8 @@ use App\Core\Application\Service\AuthorizationService;
 use App\Core\Domain\Entity\User;
 use PHPUnit\Framework\TestCase;
 
-
-class AuthorizationServiceTest extends TestCase {
-
+class AuthorizationServiceTest extends TestCase
+{
     public function testTeamLeaderCanCreateDepartment(): void
     {
         $authorizationService = new AuthorizationService();
