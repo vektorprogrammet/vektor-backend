@@ -45,15 +45,6 @@ class CreateTeamType extends AbstractType
             ->add('active', CheckboxType::class, [
                 'label' => 'Aktivt team',
                 'required' => false,
-            ])
-            ->add('description', CKEditorType::class, [
-                'required' => false,
-                'config' => [
-                    'height' => 500,
-                    'filebrowserBrowseRoute' => 'elfinder',
-                    'filebrowserBrowseRouteParameters' => ['instance' => 'team_editor'], ],
-                'label' => 'Lang beskrivelse (valgfritt)',
-                'attr' => ['class' => 'hide'], // Graceful loading, hides the textarea that is replaced by ckeditor
             ]);
     }
 
