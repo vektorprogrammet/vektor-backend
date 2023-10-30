@@ -87,13 +87,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var TeamMembership[]
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TeamMembership::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TeamMembership::class, cascade: ['remove'])]
     private $teamMemberships;
 
     /**
      * @var ExecutiveBoardMembership[]
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ExecutiveBoardMembership::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ExecutiveBoardMembership::class, cascade: ['remove'])]
     private $executiveBoardMemberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CertificateRequest::class)]
