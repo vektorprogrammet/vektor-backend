@@ -3,7 +3,6 @@
 namespace App\Form\Type;
 
 use App\Entity\ExecutiveBoard;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -29,15 +28,6 @@ class CreateExecutiveBoardType extends AbstractType
             ])
             ->add('preview', SubmitType::class, [
                 'label' => 'Forhåndsvis',
-            ])
-            ->add('description', CKEditorType::class, [
-                'required' => false,
-                'config' => [
-                    'height' => 500,
-                    'filebrowserBrowseRoute' => 'elfinder',
-                    'filebrowserBrowseRouteParameters' => ['instance' => 'team_editor'], ],
-                'label' => 'Lang beskrivelse (valgfritt)',
-                'attr' => ['class' => 'hide'], // Graceful loading, hides the textarea that is replaced by ckeditor
             ]);
     }
 
