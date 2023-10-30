@@ -37,7 +37,7 @@ Run commands in docker image:
 `yarn start`
 
 ##### Alternatively
-`symfony serve` (requires Symfony CLI)
+`symfony serve -port 8000` (requires Symfony CLI)
 
 ##### Start server on Docker
 `yarn docker:run`
@@ -103,3 +103,5 @@ Pass the token in subsequent api calls.
 Example shown using Postman:
 ![image](https://github.com/vektorprogrammet/vektor-backend/assets/46197518/b7a36722-93de-4b10-9853-0a8c36d0faa6)
 
+### Api docs:
+`https://localhost:8000/api/doc.json`
