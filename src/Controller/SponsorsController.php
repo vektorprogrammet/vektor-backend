@@ -63,6 +63,7 @@ class SponsorsController extends AbstractController
                 $this->fileUploader->deleteSponsor($oldImgPath);
 
                 $sponsor->setLogoImagePath($imgPath);
+
             // Else use the old image.
             } else {
                 $sponsor->setLogoImagePath($oldImgPath);
