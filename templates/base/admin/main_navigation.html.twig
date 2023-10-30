@@ -245,16 +245,7 @@
                     ]
                 } %}
             {% endif %}
-
-            {% include 'base/admin/nav_link.html.twig' with {
-                route: 'feedback_admin_index',
-                icon: 'thumbs-up',
-                name: 'Feedback',
-                activeRoutes: [
-                    'feedback_admin_index'
-                ]
-            } %}
-
+            
             {% if is_granted_admin() %}
                 <li class="c-sidebar-nav-title">Admin</li>
                 {% include 'base/admin/nav_link.html.twig' with {
