@@ -45,7 +45,7 @@ class Gmail extends GoogleService implements MailingInterface
         }
     }
 
-    private function swiftMessageToGmailMessage(\Swift_Message $message)
+    private function swiftMessageToGmailMessage(Email $message)
     {
         $subject = $message->getSubject();
         $body = $this->encodeBody($message->getBody());
