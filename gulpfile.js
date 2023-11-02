@@ -94,9 +94,6 @@ async function vendor () {
   r = r && gulp.src('node_modules/cropperjs/dist/*')
     .pipe(gulp.dest('public/vendor/cropperjs/'));
 
-  r = r && gulp.src(['node_modules/ckeditor/**/*', path.src + 'js/ckeditor/**/*'])
-      .pipe(gulp.dest('public/vendor/ckeditor/'));
-
   r = r && gulp.src('node_modules/bootstrap/dist/js/bootstrap.min.js')
     .pipe(gulp.dest('public/js'));
 
