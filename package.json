@@ -8,7 +8,6 @@
     "@fortawesome/fontawesome-free": "^5.15.2",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-    "ckeditor": "^4.12.1",
     "cropperjs": "^1.5.11",
     "dropzone": "^5.8.1",
     "jquery": "^3.6.0",
