@@ -6,6 +6,8 @@ use App\Entity\PasswordReset;
 use App\Entity\User;
 use App\Mailer\MailingInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 class PasswordManager
@@ -87,17 +89,19 @@ class PasswordManager
         return $passwordReset;
     }
 
-    public function sendResetCode(PasswordReset $passwordReset)
+    public function sendResetCode(PasswordReset $passwordReset): void
     {
-        // Sends a email with the url for resetting the password
-        $emailMessage = (new \Swift_Message())
-            ->setSubject('Tilbakestill passord for vektorprogrammet.no')
-            ->setFrom(['ikkesvar@vektorprogrammet.no' => 'Vektorprogrammet'])
-            ->setTo($passwordReset->getUser()->getEmail())
-            ->setBody($this->twig->render('reset_password/new_password_email.txt.twig', [
-                'resetCode' => $passwordReset->getResetCode(),
-                'user' => $passwordReset->getUser(),
-            ]));
+        // Sends an email with the url for resetting the password
+        $emailMessage = (new TemplatedEmail())
+            ->subject('Tilbakestill passord for vektorprogrammet.no')
+            ->from(new Address('ikkesvar@vektorprogrammet.no', 'Vektorprogrammet.no'))
+            ->to($passwordReset->getUser()->getEmail())
+            ->htmlTemplate('reset_password/new_password_email.txt.twig')
+            ->context([
+                    'resetCode' => $passwordReset->getResetCode(),
+                    'user' => $passwordReset->getUser(),
+                ]
+            );
         $this->mailer->send($emailMessage);
     }
 }

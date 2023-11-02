@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Event\TeamMembershipEvent;
 use App\Mailer\MailingInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Environment;
 
@@ -30,7 +31,7 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function sendWelcomeToTeamEmail(TeamMembershipEvent $event)
+    public function sendWelcomeToTeamEmail(TeamMembershipEvent $event): void
     {
         $teamMembership = $event->getTeamMembership();
 
@@ -43,21 +44,21 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
 
         $position = $teamMembership->getPositionName();
 
-        $message = (new \Swift_Message())
-            ->setSubject('Velkommen til ' . $team->getName())
-            ->setFrom('vektorbot@vektorprogrammet.no')
-            ->setTo($user->getEmail())
-            ->setBody($this->twig->render('team_admin/welcome_team_membership_mail.html.twig', [
+        $message = (new TemplatedEmail())
+            ->subject('Velkommen til ' . $team->getName())
+            ->from('vektorbot@vektorprogrammet.no')
+            ->to($user->getEmail())
+            ->htmlTemplate('team_admin/welcome_team_membership_mail.html.twig')
+            ->context([
                 'name' => $user->getFirstName(),
                 'team' => $team->getName(),
                 'position' => $position,
                 'companyEmail' => $user->getCompanyEmail(),
-            ]))
-            ->setContentType('text/html');
+            ]);
         $this->mailer->send($message);
     }
 
-    public function sendGoogleEmail(TeamMembershipEvent $event)
+    public function sendGoogleEmail(TeamMembershipEvent $event): void
     {
         $teamMembership = $event->getTeamMembership();
         $user = $teamMembership->getUser();
@@ -66,14 +67,14 @@ class IntroductionEmailSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $message = (new \Swift_Message())
-            ->setSubject('Fullfør oppsettet med din Vektor-epost')
-            ->setFrom('vektorbot@vektorprogrammet.no')
-            ->setTo($user->getCompanyEmail())
-            ->setBody($this->twig->render('team_admin/welcome_google_mail.html.twig', [
+        $message = (new TemplatedEmail())
+            ->subject('Fullfør oppsettet med din Vektor-epost')
+            ->from('vektorbot@vektorprogrammet.no')
+            ->to($user->getCompanyEmail())
+            ->htmlTemplate('team_admin/welcome_google_mail.html.twig')
+            ->context([
                 'name' => $user->getFirstName(),
-            ]))
-            ->setContentType('text/html');
+            ]);
         $this->mailer->send($message);
     }
 }

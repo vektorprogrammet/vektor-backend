@@ -2,7 +2,9 @@
 
 namespace App\Mailer;
 
+use Symfony\Component\Mime\Email;
+
 interface MailingInterface
 {
-    public function send(\Swift_Message $message, bool $disableLogging = false);
+    public function send(Email $message, bool $disableLogging = false);
 }
