@@ -10,10 +10,10 @@ parameters:
     private_uploads: "../Private filer"
 
     # Profile photos
-    profile_photos: 'images/Profile photos'
+    profile_photos: 'images/profile_photos'
 
     # Logo images
-    logo_images: 'images/Logo images'
+    logo_images: 'images/logo_images'
 
     # Signature images
     signature_images: '../signatures'
@@ -89,10 +89,10 @@ services:
     # FileUploader
     App\Service\FileUploader:
         arguments:
-            $logoFolder: 'images/Logo images'
+            $logoFolder: 'images/logo_images'
             $signatureFolder: './signatures'
             $receiptFolder: 'images/receipts'
-            $profilePhotoFolder: 'images/Profile photos'
+            $profilePhotoFolder: 'images/profile_photos'
 
     # GeoLocation
     App\Service\GeoLocation:
